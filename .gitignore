@@ -1,0 +1,9 @@
+*.*~
+*.swp
+
+*.sqlite3
+*.pyc
+*.egg
+*.tar.gr
+
+*/local_settings.py
