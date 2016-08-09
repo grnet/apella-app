@@ -4,6 +4,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext as _
 
+# Users related models
+
 
 class UserProfile(AbstractUser):
 
@@ -21,3 +23,6 @@ class UserProfile(AbstractUser):
     father_name_latin = models.CharField(max_length=30, blank=True)
     id_passport = models.CharField(max_length=20, blank=False)
     phone = models.CharField(max_length=20, blank=False)
+
+
+# Non users related models
