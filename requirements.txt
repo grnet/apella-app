@@ -1,2 +1,6 @@
 Django==1.9
+django-extensions==1.7.1
+pydotplus==2.0.2
+pyparsing==2.1.6
+six==1.10.0
 wsgiref==0.1.2

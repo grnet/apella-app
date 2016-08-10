@@ -27,6 +27,18 @@ $ python manage.py migrate
 $ python manage.py runserver
 ```
 
+Generate a graphviz graph of app models
+---------------------------------------
 
-
-
+1. For mac users:
+```
+$ brew install graphviz
+```
+2. If needed, reinstall python packages
+```
+$ pip install -r requirments.txt
+```
+3. Export apella_db.png
+```
+$ python manage.py graph_models -a -o apella_db.png
+```
