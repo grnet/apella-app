@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import UserProfile
-from .models import DomesticProfessor, ForeignProfessor
+from .models import ApellaUser, Position, Candidacy
 
-admin.site.register(UserProfile)
-admin.site.register(DomesticProfessor)
-admin.site.register(ForeignProfessor)
+admin.site.register(ApellaUser)
+admin.site.register(Position)
+admin.site.register(Candidacy)
