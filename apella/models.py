@@ -23,8 +23,8 @@ class Position(models.Model):
         ('1', 'Draft'),
         ('2', 'Posted'),
         ('3', 'Electing'),
-        ('4', 'Closed'),
-        ('5', 'Cancelled')
+        ('4', 'Successful'),
+        ('5', 'Failed')
     )
 
     id = models.AutoField(primary_key=True)
@@ -44,8 +44,9 @@ class Candidacy(models.Model):
     Model for candidacies
     """
     STATES = (
-        ('1', 'Active'),
-        ('2', 'Cancelled')
+        ('1', 'Draft'),
+        ('2', 'Posted'),
+        ('3', 'Cancelled')
     )
 
     candidate = models.ForeignKey(ApellaUser, blank=False)
