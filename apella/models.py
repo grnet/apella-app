@@ -43,10 +43,10 @@ class Position(models.Model):
     committee = models.ManyToManyField(
             ApellaUser, blank=True, related_name='committee_duty')
     elected = models.ForeignKey(
-            ApellaUser, blank=True, related_name='elected_positions')
+            ApellaUser, blank=True, null=True, related_name='elected_positions')
     state = models.CharField(choices=STATES, max_length=1, default='1')
-    start_date = models.DateField(blank=True)
-    end_date = models.DateField(blank=True)
+    starts_at = models.DateField(blank=True, null=True)
+    ends_at = models.DateField(blank=True, null=True)
 
 
 class Candidacy(models.Model):
@@ -62,5 +62,5 @@ class Candidacy(models.Model):
 
     candidate = models.ForeignKey(ApellaUser, blank=False)
     position = models.ForeignKey(Position, blank=False)
-    submit_date = models.DateField(blank=True)
+    submitted_at = models.DateField(blank=True, null=True)
     state = models.CharField(choices=STATES, max_length=1, default='1')
