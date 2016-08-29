@@ -5,14 +5,14 @@ from apella.models import ApellaUser
 
 
 class Command(BaseCommand):
-    help = 'Creates a user'
+    help = 'Create a user'
     args = '<username password>'
 
     option_list = BaseCommand.option_list + (
         make_option('--role',
                     dest='role',
                     default=2,
-                    choices=[1, 2, 3, 4],
+                    choices=[x[0] for x in ApellaUser.ROLES],
                     help='Choose a role for the user'),
         )
 
