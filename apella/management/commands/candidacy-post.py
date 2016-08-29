@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import Candidacy
-from django.utils import timezone
+from datetime import datetime
+
 
 class Command(BaseCommand):
     help = 'Post a candidacy'
@@ -17,7 +18,7 @@ class Command(BaseCommand):
                 raise CommandError(
                         "Cannot post candidacy, invalid initial state")
             candidacy.state = '2'
-            candidacy.submitted_at = timezone.now()
+            candidacy.submitted_at = datetime.now()
             candidacy.save()
         except ValueError:
             raise CommandError("Candidacy id must be an integer")
