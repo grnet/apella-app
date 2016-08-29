@@ -45,8 +45,8 @@ class Position(models.Model):
     elected = models.ForeignKey(
             ApellaUser, blank=True, null=True, related_name='elected_positions')
     state = models.CharField(choices=STATES, max_length=1, default='1')
-    starts_at = models.DateField(blank=True, null=True)
-    ends_at = models.DateField(blank=True, null=True)
+    starts_at = models.DateTimeField(blank=True, null=True)
+    ends_at = models.DateTimeField(blank=True, null=True)
 
 
 class Candidacy(models.Model):
@@ -62,5 +62,5 @@ class Candidacy(models.Model):
 
     candidate = models.ForeignKey(ApellaUser, blank=False)
     position = models.ForeignKey(Position, blank=False)
-    submitted_at = models.DateField(blank=True, null=True)
+    submitted_at = models.DateTimeField(blank=True, null=True)
     state = models.CharField(choices=STATES, max_length=1, default='1')
