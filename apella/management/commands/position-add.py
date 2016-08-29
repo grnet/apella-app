@@ -20,7 +20,7 @@ class Command(BaseCommand):
             p = Position.objects.create(title=title, author=position_author)
             self.stdout.write(
                 "Created position %s : title = %s author = %s" %
-                (p.pk, title, position_author.username))
+                (p.pk, p.title, p.author.username))
         except ValueError:
             raise CommandError("Author id must be an integer")
         except ApellaUser.DoesNotExist:
