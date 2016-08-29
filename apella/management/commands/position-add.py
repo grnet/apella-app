@@ -15,7 +15,7 @@ class Command(BaseCommand):
             position_author = ApellaUser.objects.get(id=author)
             if position_author.role != '1':
                 raise CommandError(
-                    "Only institution managers are allowed to create" +
+                    "Only institution managers are allowed to create " +
                     "new positions")
             p = Position.objects.create(title=title, author=position_author)
             self.stdout.write(
