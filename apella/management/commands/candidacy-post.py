@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import Candidacy
-from datetime import datetime
+from django.utils import timezone
 
 
 class Command(BaseCommand):
@@ -15,7 +15,7 @@ class Command(BaseCommand):
         try:
             candidacy = Candidacy.objects.get(id=candidacy_id)
             candidacy.state = '2'
-            candidacy.submitted_at = datetime.now()
+            candidacy.submitted_at = timezone.now()
             candidacy.save()
             self.stdout.write("Posted candidacy %s" % candidacy_id)
         except ValueError:
