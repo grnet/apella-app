@@ -1,10 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import ApellaUser, Position, Candidacy
+from apella.management.utils import get_user
 
 
 class Command(BaseCommand):
     help = 'Create a candidacy for a position for the given user'
-    args = '<position id> <candidate id>'
+    args = '<position id> <candidate id or username>'
 
     def handle(self, *args, **options):
         if len(args) != 2:
@@ -13,7 +14,7 @@ class Command(BaseCommand):
 
         try:
             position = Position.objects.get(id=position_id)
-            candidate = ApellaUser.objects.get(id=candidate_id)
+            candidate = get_user(candidate_id)
             c = Candidacy.objects.create(
                     position=position, candidate=candidate)
             self.stdout.write(
