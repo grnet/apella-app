@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import Position
 
-from optpare import make_option
+from optparse import make_option
 
 
 class Command(BaseCommand):
@@ -32,6 +32,7 @@ class Command(BaseCommand):
             position.ends_at = ends_at
             position.state = '2'
             position.save()
+            self.stdout.write("Posted position %s" % position_id)
         except ValueError:
             raise CommandError("Position id must be an integer")
         except ValidationError as ve:

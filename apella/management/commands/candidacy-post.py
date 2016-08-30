@@ -17,6 +17,7 @@ class Command(BaseCommand):
             candidacy.state = '2'
             candidacy.submitted_at = datetime.now()
             candidacy.save()
+            self.stdout.write("Posted candidacy %s" % candidacy_id)
         except ValueError:
             raise CommandError("Candidacy id must be an integer")
         except Candidacy.DoesNotExist:
