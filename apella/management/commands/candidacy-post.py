@@ -14,9 +14,6 @@ class Command(BaseCommand):
 
         try:
             candidacy = Candidacy.objects.get(id=candidacy_id)
-            if candidacy.state != '1':
-                raise CommandError(
-                        "Cannot post candidacy, invalid initial state")
             candidacy.state = '2'
             candidacy.submitted_at = datetime.now()
             candidacy.save()

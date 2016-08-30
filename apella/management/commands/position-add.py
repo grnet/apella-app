@@ -39,11 +39,6 @@ class Command(BaseCommand):
 
         position_author = get_user(author)
         if position_author:
-            if position_author.role != '1':
-                raise CommandError(
-                    "Only institution managers are allowed to create " +
-                    "new positions")
-
             p = Position.objects.create(
                     title=title, author=position_author,
                     starts_at=starts_at, ends_at=ends_at)
