@@ -1,13 +1,22 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.core.exceptions import ValidationError
 from apella.models import ApellaUser, Position
 
 from optparse import make_option
 
 
+def get_user(identifier, **kwargs):
+    try:
+        if identifier.isdigit():
+            return ApellaUser.objects.get(id=int(identifier))
+        else:
+            return ApellaUser.objects.get(username__iexact=identifier)
+    except (ApellaUser.DoesNotExist):
+        return None
+
+
 class Command(BaseCommand):
     help = 'Create a position with the given title and author'
-    args = '<title> <author id>'
+    args = '<title> <author>'
 
     option_list = BaseCommand.option_list + (
         make_option('--start',
@@ -28,8 +37,8 @@ class Command(BaseCommand):
         starts_at = options['starts_at']
         ends_at = options['ends_at']
 
-        try:
-            position_author = ApellaUser.objects.get(id=author)
+        position_author = get_user(author)
+        if position_author:
             if position_author.role != '1':
                 raise CommandError(
                     "Only institution managers are allowed to create " +
@@ -41,9 +50,5 @@ class Command(BaseCommand):
             self.stdout.write(
                 "Created position %s : title = %s author = %s" %
                 (p.pk, p.title, p.author.username))
-        except ValueError:
-            raise CommandError("<author id> : Expecting an integer")
-        except ValidationError as ve:
-            raise CommandError(ve)
-        except ApellaUser.DoesNotExist:
-            raise CommandError("User %s does not exist" % author)
+        else:
+            self.stdout.write("User %s does not exist" % author)
