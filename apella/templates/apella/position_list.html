@@ -1,0 +1,28 @@
+{% extends "apella/index.html" %}
+{% load apella_extras %}
+{% block content %}
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Position ID</th>
+            <th>Author</th>
+            <th>State</th>
+            <th>Starts at</th>
+            <th>Ends at</th>
+        </tr>
+    {% for position in object_list %}
+        <tr>
+            <td>{{ position.title }}</td>
+            <td>{{ position.pk }}</td>
+            <td>{{ position.author }}</td>
+            <td>{{ position.state }}</td>
+            <td>{{ position.starts_at }}</td>
+            <td>{{ position.ends_at }}</td>
+        </tr>
+    {% empty %}
+        <tr colspan="6">
+            <td>No positions yet.</td>
+        </tr>
+    {% endfor %}
+    </ul>
+{% endblock %}
