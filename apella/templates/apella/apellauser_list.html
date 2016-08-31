@@ -1,0 +1,24 @@
+{% extends "apella/index.html" %}
+{% load apella_extras %}
+{% block content %}
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>User ID</th>
+            <th>Role ID</th>
+            <th>Role</th>
+        </tr>
+    {% for user in object_list %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.pk }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.role|role }}</td>
+        </tr>
+    {% empty %}
+        <tr colspan="4">
+            <td>No users yet.</td>
+        </tr>
+    {% endfor %}
+    </ul>
+{% endblock %}
