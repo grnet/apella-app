@@ -1,6 +1,9 @@
 {% extends "apella/index.html" %}
 {% load apella_extras %}
 {% block content %}
+    <p>
+        <a href="{% url 'position-new' %}">Add position</a>
+    </p>
     <table>
         <tr>
             <th>Title</th>
@@ -12,7 +15,11 @@
         </tr>
     {% for position in object_list %}
         <tr>
-            <td>{{ position.title }}</td>
+            <td>
+                <a href="{% url 'position-edit' position_id=position.pk %}">
+                    {{ position.title }}
+                </a>
+            </td>
             <td>{{ position.pk }}</td>
             <td>{{ position.author }}</td>
             <td>{{ position.state }}</td>

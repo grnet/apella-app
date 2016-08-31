@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.views.generic.list import ListView
 
 from apella.models import ApellaUser, Position
+from apella.forms import ApellaUserForm, PositionForm
 
 class UserListView(ListView):
 
@@ -30,6 +31,17 @@ def user_detail(request, user_id):
     return render(request, 'apella/index.html', context)
 
 
-def position_detail(request, position_id):
-    context = {}
-    return render(request, 'apella/index.html', context)
+def position_edit(request, position_id=None):
+    if position_id:
+        position = get_object_or_404(Position, pk=position_id)
+    else:
+        position = Position()
+    form = PositionForm(request.POST or None, instance=position)
+    if request.method == 'POST':
+        if form.is_valid():
+            position = form.save(commit=False)
+            position.save()
+            return redirect('position-edit', position_id=position.pk)
+    else:
+        form = PositionForm(instance=position)
+    return render(request, 'apella/position_detail.html', {'form' : form})
