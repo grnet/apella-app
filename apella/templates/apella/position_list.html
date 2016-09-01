@@ -12,6 +12,7 @@
             <th>State</th>
             <th>Starts at</th>
             <th>Ends at</th>
+            <th>Action</th>
         </tr>
     {% for position in object_list %}
         <tr>
@@ -25,6 +26,11 @@
             <td>{{ position.state }}</td>
             <td>{{ position.starts_at }}</td>
             <td>{{ position.ends_at }}</td>
+            <td>
+                <a href="{% url 'candidacy-new' position_id=position.pk %}">
+                    Create candidacy
+                </a>
+            </td>
         </tr>
     {% empty %}
         <tr colspan="6">

@@ -11,7 +11,9 @@
     {% for candidacy in object_list %}
         <tr>
             <td>
+                <a href="{% url 'candidacy-edit' candidacy_id=candidacy.pk %}">
                     {{ candidacy.pk }}
+                </a>
             </td>
             <td>{{ candidacy.candidate.username }}</td>
             <td>{{ candidacy.position.pk }} - {{ candidacy.position.title }}</td>

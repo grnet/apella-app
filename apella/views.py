@@ -4,7 +4,7 @@ from django.template import loader
 from django.views.generic.list import ListView
 
 from apella.models import ApellaUser, Position, Candidacy
-from apella.forms import ApellaUserForm, PositionForm
+from apella.forms import ApellaUserForm, PositionForm, CandidacyForm
 
 class UserListView(ListView):
 
@@ -53,3 +53,21 @@ def position_edit(request, position_id=None):
     else:
         form = PositionForm(instance=position)
     return render(request, 'apella/position_detail.html', {'form' : form})
+
+def candidacy_edit(request, candidacy_id=None, position_id=None):
+    if candidacy_id:
+        candidacy = get_object_or_404(Candidacy, pk=candidacy_id)
+    elif position_id:
+        position = get_object_or_404(Position, pk=position_id)
+        candidacy = Candidacy(position=position)
+    else:
+        candidacy = Candidacy()
+    form = CandidacyForm(request.POST or None, instance=candidacy)
+    if request.method == 'POST':
+        if form.is_valid():
+            candidacy = form.save()
+            candidacy.save()
+            return redirect('candidacy-list')
+    else:
+        form = CandidacyForm(instance=candidacy)
+    return render(request, 'apella/candidacy_detail.html', {'form' : form})
