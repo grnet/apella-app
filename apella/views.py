@@ -34,10 +34,21 @@ def index(request):
     context = {}
     return render(request, 'apella/index.html', context)
 
-def user_detail(request, user_id):
-    context = {}
-    return render(request, 'apella/index.html', context)
 
+def user_edit(request, user_id=None):
+    if user_id:
+        user = get_object_or_404(ApellaUser, pk=user_id)
+    else:
+        user = ApellaUser()
+    form = ApellaUserForm(request.POST or None, instance=user)
+    if request.method == 'POST':
+        if form.is_valid():
+            user = form.save()
+            user.save()
+            return redirect('user-list')
+    else:
+        form = ApellaUserForm(instance=user)
+    return render(request, 'apella/apellauser_detail.html', {'form' : form})
 
 def position_edit(request, position_id=None):
     if position_id:
