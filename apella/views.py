@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic.list import ListView
 
-from apella.models import ApellaUser, Position
+from apella.models import ApellaUser, Position, Candidacy
 from apella.forms import ApellaUserForm, PositionForm
 
 class UserListView(ListView):
@@ -20,6 +20,14 @@ class PositionListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PositionListView, self).get_context_data(**kwargs)
+        return context
+
+class CandidacyListView(ListView):
+
+    model = Candidacy
+
+    def get_context_data(self, **kwargs):
+        context = super(CandidacyListView, self).get_context_data(**kwargs)
         return context
 
 def index(request):
@@ -39,9 +47,9 @@ def position_edit(request, position_id=None):
     form = PositionForm(request.POST or None, instance=position)
     if request.method == 'POST':
         if form.is_valid():
-            position = form.save(commit=False)
+            position = form.save()
             position.save()
-            return redirect('position-edit', position_id=position.pk)
+            return redirect('position-list')
     else:
         form = PositionForm(instance=position)
     return render(request, 'apella/position_detail.html', {'form' : form})
