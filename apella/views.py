@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic.list import ListView
 
-from apella.models import ApellaUser, Position, Candidacy
-from apella.forms import ApellaUserForm, PositionForm, CandidacyForm
+from apella.models import ApellaUser, Position, Candidacy, Institution
+from apella.forms import ApellaUserForm, PositionForm, CandidacyForm,\
+        InstitutionForm
 
 class UserListView(ListView):
 
@@ -28,6 +29,14 @@ class CandidacyListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CandidacyListView, self).get_context_data(**kwargs)
+        return context
+
+class InstitutionListView(ListView):
+
+    model = Institution
+
+    def get_context_data(self, **kwargs):
+        context = super(InstitutionListView, self).get_context_data(**kwargs)
         return context
 
 def index(request):
@@ -82,3 +91,19 @@ def candidacy_edit(request, candidacy_id=None, position_id=None):
     else:
         form = CandidacyForm(instance=candidacy)
     return render(request, 'apella/candidacy_detail.html', {'form' : form})
+
+
+def institution_edit(request, institution_id=None):
+    if institution_id:
+        institution = get_object_or_404(Institution, pk=institution_id)
+    else:
+        institution = Institution()
+    form = InstitutionForm(request.POST or None, instance=institution)
+    if request.method == 'POST':
+        if form.is_valid():
+            institution = form.save()
+            institution.save()
+            return redirect('institution-list')
+    else:
+        form = InstitutionForm(instance=institution)
+    return render(request, 'apella/institution_detail.html', {'form' : form})

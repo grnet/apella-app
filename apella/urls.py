@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url
 
 from apella import views
-from apella.views import UserListView, PositionListView, CandidacyListView
+from apella.views import UserListView, PositionListView, CandidacyListView,\
+        InstitutionListView
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
@@ -17,5 +18,10 @@ urlpatterns = patterns('',
         views.candidacy_edit, name='candidacy-new'),
     url(r'^candidacies/(?P<candidacy_id>\d+)/edit/$',
         views.candidacy_edit, name='candidacy-edit'),
+    url(r'^institutions/$',
+        InstitutionListView.as_view(), name='institution-list'),
+    url(r'^institutions/new/$', views.institution_edit, name='institution-new'),
+    url(r'^institutions/(?P<institution_id>\d+)/$',
+        views.institution_edit, name='institution-edit'),
 
 )

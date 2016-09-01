@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from apella.models import ApellaUser, Position, Candidacy
+from apella.models import ApellaUser, Position, Candidacy,\
+        Institution
 
 class ApellaUserForm(ModelForm):
     class Meta:
@@ -9,10 +10,14 @@ class ApellaUserForm(ModelForm):
 class PositionForm(ModelForm):
     class Meta:
         model = Position
-        fields = ['title', 'author', 'state', 'starts_at',
-                  'ends_at', 'electors', 'committee', 'elected']
+        fields = '__all__'
 
 class CandidacyForm(ModelForm):
     class Meta:
         model = Candidacy
+        fields = '__all__'
+
+class InstitutionForm(ModelForm):
+    class Meta:
+        model = Institution
         fields = '__all__'

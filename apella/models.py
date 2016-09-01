@@ -21,6 +21,11 @@ class ApellaUser(AbstractUser):
     )
     role = models.CharField(choices=ROLES, max_length=1, default='2')
 
+class Institution(models.Model):
+    """
+    Model for Institutions
+    """
+    title = models.CharField(max_length=150, blank=False)
 
 class Position(models.Model):
 
@@ -38,6 +43,7 @@ class Position(models.Model):
     title = models.CharField(max_length=50, blank=False)
     author = models.ForeignKey(
             ApellaUser, blank=False, related_name='authored_positions')
+    institution = models.ForeignKey(Institution, blank=False, null=False)
     electors = models.ManyToManyField(
             ApellaUser, blank=True, related_name='elector_duty')
     committee = models.ManyToManyField(
