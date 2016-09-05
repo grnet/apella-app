@@ -17,7 +17,8 @@ management.call_command('user-add', 'elector', '12345', role='3')
 management.call_command('user-add', 'committee', '12345', role='4')
 
 p_out = StringIO()
-management.call_command('position-add', 'New position', 'manager', stdout=p_out)
+management.call_command(
+    'position-add', 'New position', 'manager', 1, stdout=p_out)
 print(p_out.getvalue())
 ints = [int(s) for s in p_out.getvalue().split() if s.isdigit()]
 position_id = ints[0]
