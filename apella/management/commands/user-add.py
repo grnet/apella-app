@@ -6,7 +6,7 @@ from apella.models import ApellaUser
 
 class Command(BaseCommand):
     help = 'Create a user'
-    args = '<username password>'
+    args = '<username> <password>'
 
     option_list = BaseCommand.option_list + (
         make_option('--role',
@@ -27,7 +27,5 @@ class Command(BaseCommand):
                                           role=options['role'])
 
             self.stdout.write("User with id: %s created" % a.pk)
-        except BaseException, e:
-            raise CommandError(e)
         except:
-            self.stdout.write("Operation failed")
+            raise

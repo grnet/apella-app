@@ -20,4 +20,4 @@ class Command(BaseCommand):
                 self.stdout.write('%s\t%s\t\t%s\t%s' % (
                     user.id, user.username, user.role, role))
         except:
-            self.stdout.write('Operation failed')
+            raise

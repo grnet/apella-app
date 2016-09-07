@@ -8,6 +8,7 @@
         <tr>
             <th>Title</th>
             <th>Position ID</th>
+            <th>Institution</th>
             <th>Author</th>
             <th>State</th>
             <th>Starts at</th>
@@ -22,6 +23,7 @@
                 </a>
             </td>
             <td>{{ position.pk }}</td>
+            <td>{{ position.institution.title }}</td>
             <td>{{ position.author }}</td>
             <td>{{ position.state }}</td>
             <td>{{ position.starts_at }}</td>
