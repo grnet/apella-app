@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.abspath(os.getcwd())
+APELLA_DIR = os.path.join("/", "tmp", "apella")
+
+if not os.path.exists(APELLA_DIR):
+    os.makedirs(APELLA_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -60,7 +64,7 @@ WSGI_APPLICATION = 'apella_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(APELLA_DIR, 'db.sqlite3'),
     }
 }
 
