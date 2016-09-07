@@ -27,6 +27,13 @@ class Institution(models.Model):
     """
     title = models.CharField(max_length=150, blank=False)
 
+class Department(models.Model):
+    """
+    Model for Institutions
+    """
+    title = models.CharField(max_length=150, blank=False)
+    institution = models.ForeignKey(Institution, blank=False, null=False)
+
 class Position(models.Model):
 
     """
@@ -43,7 +50,7 @@ class Position(models.Model):
     title = models.CharField(max_length=50, blank=False)
     author = models.ForeignKey(
             ApellaUser, blank=False, related_name='authored_positions')
-    institution = models.ForeignKey(Institution, blank=False, null=False)
+    department = models.ForeignKey(Department, blank=False, null=False)
     electors = models.ManyToManyField(
             ApellaUser, blank=True, related_name='elector_duty')
     committee = models.ManyToManyField(
@@ -70,3 +77,16 @@ class Candidacy(models.Model):
     position = models.ForeignKey(Position, blank=False)
     submitted_at = models.DateTimeField(blank=True, null=True)
     state = models.CharField(choices=STATES, max_length=1, default='1')
+
+class Registry(models.Model):
+    """
+    Model for registries
+    """
+    TYPES = (
+        ('1', 'Internal'),
+        ('2', 'External')
+    )
+
+    department = models.CharField(max_length=200, blank=False)
+    type = models.CharField(choices=TYPES, max_length=1, default='1')
+    members = models.ManyToManyField(ApellaUser, blank=False, null=False)

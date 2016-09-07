@@ -52,6 +52,16 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Department',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=150)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Institution',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -71,13 +81,31 @@ class Migration(migrations.Migration):
                 ('ends_at', models.DateTimeField(null=True, blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to=settings.AUTH_USER_MODEL)),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),
+                ('department', models.ForeignKey(to='apella.Department')),
                 ('elected', models.ForeignKey(related_name='elected_positions', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
                 ('electors', models.ManyToManyField(related_name='elector_duty', to=settings.AUTH_USER_MODEL, blank=True)),
-                ('institution', models.ForeignKey(to='apella.Institution')),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Registry',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('department', models.CharField(max_length=200)),
+                ('type', models.CharField(default='1', max_length=1, choices=[('1', 'Internal'), ('2', 'External')])),
+                ('members', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='department',
+            name='institution',
+            field=models.ForeignKey(to='apella.Institution'),
+            preserve_default=True,
         ),
         migrations.AddField(
             model_name='candidacy',
