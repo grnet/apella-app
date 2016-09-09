@@ -20,6 +20,7 @@ class ApellaUser(AbstractUser):
         ('4', 'Committee')
     )
     role = models.CharField(choices=ROLES, max_length=1, default='2')
+    files = models.CharField(max_length=200)
 
 class Institution(models.Model):
     """
@@ -48,6 +49,7 @@ class Position(models.Model):
     )
 
     title = models.CharField(max_length=50, blank=False)
+    description = models.CharField(max_length=300, blank=False)
     author = models.ForeignKey(
             ApellaUser, blank=False, related_name='authored_positions')
     department = models.ForeignKey(Department, blank=False, null=False)
@@ -77,16 +79,21 @@ class Candidacy(models.Model):
     position = models.ForeignKey(Position, blank=False)
     submitted_at = models.DateTimeField(blank=True, null=True)
     state = models.CharField(choices=STATES, max_length=1, default='1')
+    files = models.CharField(max_length=200)
 
 class Registry(models.Model):
     """
     Model for registries
     """
+    class Meta:
+        # Each department can have only one internal and one external registry
+        unique_together = (("department", "type"),)
+
     TYPES = (
         ('1', 'Internal'),
         ('2', 'External')
     )
 
-    department = models.CharField(max_length=200, blank=False)
+    department = models.ForeignKey(Department, blank=False)
     type = models.CharField(choices=TYPES, max_length=1, default='1')
     members = models.ManyToManyField(ApellaUser, blank=False, null=False)

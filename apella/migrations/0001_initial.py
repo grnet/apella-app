@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
                 ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('role', models.CharField(default='2', max_length=1, choices=[('1', 'Insitution Manager'), ('2', 'Candidate'), ('3', 'Elector'), ('4', 'Committee')])),
+                ('files', models.CharField(max_length=200)),
                 ('groups', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions')),
             ],
@@ -45,6 +46,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('submitted_at', models.DateTimeField(null=True, blank=True)),
                 ('state', models.CharField(default='1', max_length=1, choices=[('1', 'Draft'), ('2', 'Posted'), ('3', 'Cancelled')])),
+                ('files', models.CharField(max_length=200)),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -76,6 +78,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=50)),
+                ('description', models.CharField(max_length=300)),
                 ('state', models.CharField(default='1', max_length=1, choices=[('1', 'Draft'), ('2', 'Posted'), ('3', 'Electing'), ('4', 'Successful'), ('5', 'Failed')])),
                 ('starts_at', models.DateTimeField(null=True, blank=True)),
                 ('ends_at', models.DateTimeField(null=True, blank=True)),
@@ -93,13 +96,17 @@ class Migration(migrations.Migration):
             name='Registry',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('department', models.CharField(max_length=200)),
                 ('type', models.CharField(default='1', max_length=1, choices=[('1', 'Internal'), ('2', 'External')])),
+                ('department', models.ForeignKey(to='apella.Department')),
                 ('members', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.AlterUniqueTogether(
+            name='registry',
+            unique_together=set([('department', 'type')]),
         ),
         migrations.AddField(
             model_name='department',
