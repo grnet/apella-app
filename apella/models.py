@@ -17,7 +17,8 @@ class ApellaUser(AbstractUser):
         ('1', 'Insitution Manager'),
         ('2', 'Candidate'),
         ('3', 'Elector'),
-        ('4', 'Committee')
+        ('4', 'Committee'),
+        ('5', 'Assistant'),
     )
     role = models.CharField(choices=ROLES, max_length=1, default='2')
     files = models.CharField(max_length=200)

@@ -52,6 +52,19 @@
     }
 },
 {
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "assistant",
+        "role": "5",
+        "arg2": "12345"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "5"},
+        "change" : "new user"
+    }
+},
+{
     "user": "1",
     "action": "institution-add",
     "input": {
