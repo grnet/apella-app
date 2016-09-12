@@ -79,9 +79,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=50)),
                 ('description', models.CharField(max_length=300)),
+                ('fek', models.URLField()),
+                ('fek_posted_at', models.DateField()),
                 ('state', models.CharField(default='1', max_length=1, choices=[('1', 'Draft'), ('2', 'Posted'), ('3', 'Electing'), ('4', 'Successful'), ('5', 'Failed')])),
                 ('starts_at', models.DateTimeField(null=True, blank=True)),
                 ('ends_at', models.DateTimeField(null=True, blank=True)),
+                ('assistants', models.ManyToManyField(related_name='assistant_duty', to=settings.AUTH_USER_MODEL, blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to=settings.AUTH_USER_MODEL)),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),
                 ('department', models.ForeignKey(to='apella.Department')),
@@ -104,9 +107,41 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model,),
         ),
+        migrations.CreateModel(
+            name='Subject',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=200)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SubjectArea',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=200)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='subject',
+            name='area',
+            field=models.ForeignKey(to='apella.SubjectArea'),
+            preserve_default=True,
+        ),
         migrations.AlterUniqueTogether(
             name='registry',
             unique_together=set([('department', 'type')]),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='subject',
+            field=models.ForeignKey(to='apella.Subject'),
+            preserve_default=True,
         ),
         migrations.AddField(
             model_name='department',

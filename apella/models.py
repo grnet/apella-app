@@ -35,6 +35,20 @@ class Department(models.Model):
     title = models.CharField(max_length=150, blank=False)
     institution = models.ForeignKey(Institution, blank=False, null=False)
 
+class SubjectArea(models.Model):
+    """
+    Model for Subject areas
+    """
+    title = models.CharField(max_length=200, blank=False, null=False)
+
+class Subject(models.Model):
+    """
+    Model for Subjects
+    """
+    title = models.CharField(max_length=200, blank=False, null=False)
+    area = models.ForeignKey(SubjectArea, blank=False, null=False)
+
+
 class Position(models.Model):
 
     """
@@ -53,12 +67,19 @@ class Position(models.Model):
     author = models.ForeignKey(
             ApellaUser, blank=False, related_name='authored_positions')
     department = models.ForeignKey(Department, blank=False, null=False)
+    subject = models.ForeignKey(Subject, blank=False, null=False)
+    fek = models.URLField(blank=False, null=False)
+    fek_posted_at = models.DateField(blank=False, null=False)
+
+    assistants = models.ManyToManyField(
+            ApellaUser, blank=True, related_name='assistant_duty')
     electors = models.ManyToManyField(
             ApellaUser, blank=True, related_name='elector_duty')
     committee = models.ManyToManyField(
             ApellaUser, blank=True, related_name='committee_duty')
     elected = models.ForeignKey(
             ApellaUser, blank=True, null=True, related_name='elected_positions')
+
     state = models.CharField(choices=STATES, max_length=1, default='1')
     starts_at = models.DateTimeField(blank=True, null=True)
     ends_at = models.DateTimeField(blank=True, null=True)
