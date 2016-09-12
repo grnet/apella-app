@@ -9,10 +9,8 @@
             <th>Title</th>
             <th>Position ID</th>
             <th>Department</th>
-            <th>Author</th>
+            <th>Subject</th>
             <th>State</th>
-            <th>Starts at</th>
-            <th>Ends at</th>
             <th>Action</th>
         </tr>
     {% for position in object_list %}
@@ -24,10 +22,8 @@
             </td>
             <td>{{ position.pk }}</td>
             <td>{{ position.department.title }}</td>
-            <td>{{ position.author }}</td>
+            <td>{{ position.subject.title }}</td>
             <td>{{ position.state }}</td>
-            <td>{{ position.starts_at }}</td>
-            <td>{{ position.ends_at }}</td>
             <td>
                 <a href="{% url 'candidacy-new' position_id=position.pk %}">
                     Create candidacy

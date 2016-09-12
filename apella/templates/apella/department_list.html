@@ -1,0 +1,29 @@
+{% extends "apella/index.html" %}
+{% load apella_extras %}
+{% block content %}
+    <p>
+        <a href="{% url 'department-new' %}">Add department</a>
+    </p>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Institution</th>
+        </tr>
+    {% for department in object_list %}
+        <tr>
+            <td>
+                <a href="{% url 'department-edit' department_id=department.pk %}">
+                    {{ department.pk }}
+                </a>
+            </td>
+            <td>{{ department.title }}</td>
+            <td>{{ department.institution.title }}</td>
+        </tr>
+    {% empty %}
+        <tr colspan="4">
+            <td>No departments yet.</td>
+        </tr>
+    {% endfor %}
+    </ul>
+{% endblock %}

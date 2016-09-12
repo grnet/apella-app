@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Apella</title>
+    </head>
+    <body>
+        <h1>Subject Area</h1>
+        <form method="POST" class="post-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>

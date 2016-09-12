@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic.list import ListView
 
-from apella.models import ApellaUser, Position, Candidacy, Institution
+from apella.models import ApellaUser, Position, Candidacy, Institution,\
+        Department, SubjectArea, Subject
 from apella.forms import ApellaUserForm, PositionForm, CandidacyForm,\
-        InstitutionForm
+        InstitutionForm, DepartmentForm, SubjectAreaForm, SubjectForm
 
 class UserListView(ListView):
 
@@ -37,6 +38,30 @@ class InstitutionListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(InstitutionListView, self).get_context_data(**kwargs)
+        return context
+
+class DepartmentListView(ListView):
+
+    model = Department
+
+    def get_context_data(self, **kwargs):
+        context = super(DepartmentListView, self).get_context_data(**kwargs)
+        return context
+
+class SubjectAreaListView(ListView):
+
+    model = SubjectArea
+
+    def get_context_data(self, **kwargs):
+        context = super(SubjectAreaListView, self).get_context_data(**kwargs)
+        return context
+
+class SubjectListView(ListView):
+
+    model = Subject
+
+    def get_context_data(self, **kwargs):
+        context = super(SubjectListView, self).get_context_data(**kwargs)
         return context
 
 def index(request):
@@ -107,3 +132,48 @@ def institution_edit(request, institution_id=None):
     else:
         form = InstitutionForm(instance=institution)
     return render(request, 'apella/institution_detail.html', {'form' : form})
+
+def department_edit(request, department_id=None):
+    if department_id:
+        department = get_object_or_404(Department, pk=department_id)
+    else:
+        department = Department()
+    form = DepartmentForm(request.POST or None, instance=department)
+    if request.method == 'POST':
+        if form.is_valid():
+            department = form.save()
+            department.save()
+            return redirect('department-list')
+    else:
+        form = DepartmentForm(instance=department)
+    return render(request, 'apella/department_detail.html', {'form' : form})
+
+def subject_area_edit(request, subject_area_id=None):
+    if subject_area_id:
+        subject_area = get_object_or_404(SubjectArea, pk=subject_area_id)
+    else:
+        subject_area = SubjectArea()
+    form = SubjectAreaForm(request.POST or None, instance=subject_area)
+    if request.method == 'POST':
+        if form.is_valid():
+            subject_area = form.save()
+            subject_area.save()
+            return redirect('subject-area-list')
+    else:
+        form = SubjectAreaForm(instance=subject_area)
+    return render(request, 'apella/subjectarea_detail.html', {'form' : form})
+
+def subject_edit(request, subject_id=None):
+    if subject_id:
+        subject = get_object_or_404(Subject, pk=subject_id)
+    else:
+        subject = Subject()
+    form = SubjectForm(request.POST or None, instance=subject)
+    if request.method == 'POST':
+        if form.is_valid():
+            subject = form.save()
+            subject.save()
+            return redirect('subject-list')
+    else:
+        form = SubjectForm(instance=subject)
+    return render(request, 'apella/subject_detail.html', {'form' : form})
