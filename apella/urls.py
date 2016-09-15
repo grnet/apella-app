@@ -3,13 +3,15 @@ from django.conf.urls import patterns, url
 from apella import views
 from apella.views import *
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', views.index, name='index'),
     url(r'^users/$', UserListView.as_view(), name='user-list'),
     url(r'^users/new/$', views.user_edit, name='user-new'),
     url(r'^users/(?P<user_id>\d+)/$', views.user_edit, name='user-edit'),
     url(r'^positions/$', PositionListView.as_view(), name='position-list'),
-    url(r'^positions/([\w-]+)/$', PositionListView.as_view(), name='position-list'),
+    url(r'^positions/([\w-]+)/$',
+        PositionListView.as_view(), name='position-list'),
     url(r'^positions/new$', views.position_edit, name='position-new'),
     url(r'^positions/(?P<position_id>\d+)/edit/$',
         views.position_edit, name='position-edit'),
@@ -20,7 +22,8 @@ urlpatterns = patterns('',
         views.candidacy_edit, name='candidacy-edit'),
     url(r'^institutions/$',
         InstitutionListView.as_view(), name='institution-list'),
-    url(r'^institutions/new/$', views.institution_edit, name='institution-new'),
+    url(r'^institutions/new/$',
+        views.institution_edit, name='institution-new'),
     url(r'^institutions/(?P<institution_id>\d+)/$',
         views.institution_edit, name='institution-edit'),
     url(r'^departments/$',

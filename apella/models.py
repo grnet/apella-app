@@ -23,11 +23,13 @@ class ApellaUser(AbstractUser):
     role = models.CharField(choices=ROLES, max_length=1, default='2')
     files = models.CharField(max_length=200)
 
+
 class Institution(models.Model):
     """
     Model for Institutions
     """
     title = models.CharField(max_length=150, blank=False)
+
 
 class Department(models.Model):
     """
@@ -36,11 +38,13 @@ class Department(models.Model):
     title = models.CharField(max_length=150, blank=False)
     institution = models.ForeignKey(Institution, blank=False, null=False)
 
+
 class SubjectArea(models.Model):
     """
     Model for Subject areas
     """
     title = models.CharField(max_length=200, blank=False, null=False)
+
 
 class Subject(models.Model):
     """
@@ -80,7 +84,8 @@ class Position(models.Model):
     committee = models.ManyToManyField(
             ApellaUser, blank=True, related_name='committee_duty')
     elected = models.ForeignKey(
-            ApellaUser, blank=True, null=True, related_name='elected_positions')
+            ApellaUser, blank=True, null=True,
+            related_name='elected_positions')
 
     state = models.CharField(choices=STATES, max_length=1, default='2')
     starts_at = models.DateTimeField(blank=True, null=True)
@@ -103,6 +108,7 @@ class Candidacy(models.Model):
     submitted_at = models.DateTimeField(blank=True, null=True)
     state = models.CharField(choices=STATES, max_length=1, default='1')
     files = models.CharField(max_length=200)
+
 
 class Registry(models.Model):
     """
