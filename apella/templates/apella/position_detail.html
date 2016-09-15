@@ -5,6 +5,7 @@
     <body>
         <h1>Position</h1>
         <form method="POST" class="post-form">{% csrf_token %}
+            <p>Code {{ form.position_code }}</p>
             {{ form.as_p }}
             <button type="submit" class="save btn btn-default">Save</button>
         </form>

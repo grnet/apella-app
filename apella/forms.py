@@ -8,6 +8,7 @@ class ApellaUserForm(ModelForm):
         fields = ['username', 'password', 'role']
 
 class PositionForm(ModelForm):
+    position_code = 'APELLA'
     class Meta:
         model = Position
         fields = '__all__'

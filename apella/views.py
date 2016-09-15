@@ -90,6 +90,7 @@ def position_edit(request, position_id=None):
     else:
         position = Position()
     form = PositionForm(request.POST or None, instance=position)
+
     if request.method == 'POST':
         if form.is_valid():
             position = form.save()
@@ -97,6 +98,10 @@ def position_edit(request, position_id=None):
             return redirect('position-list')
     else:
         form = PositionForm(instance=position)
+
+    if position.pk:
+        form.position_code += str(position.pk)
+
     return render(request, 'apella/position_detail.html', {'form' : form})
 
 def candidacy_edit(request, candidacy_id=None, position_id=None):

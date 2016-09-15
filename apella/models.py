@@ -63,8 +63,9 @@ class Position(models.Model):
         ('5', 'Failed')
     )
 
-    title = models.CharField(max_length=50, blank=False)
-    description = models.CharField(max_length=300, blank=False)
+    title = models.CharField(max_length=50, blank=False, null=False)
+    description = models.CharField(max_length=300, blank=False, null=False)
+    discipline = models.CharField(max_length=300, blank=False, null=False)
     author = models.ForeignKey(
             ApellaUser, blank=False, related_name='authored_positions')
     department = models.ForeignKey(Department, blank=False, null=False)
@@ -81,7 +82,7 @@ class Position(models.Model):
     elected = models.ForeignKey(
             ApellaUser, blank=True, null=True, related_name='elected_positions')
 
-    state = models.CharField(choices=STATES, max_length=1, default='1')
+    state = models.CharField(choices=STATES, max_length=1, default='2')
     starts_at = models.DateTimeField(blank=True, null=True)
     ends_at = models.DateTimeField(blank=True, null=True)
 

@@ -6,8 +6,8 @@
     </p>
     <table>
         <tr>
+            <th>Code</th>
             <th>Title</th>
-            <th>Position ID</th>
             <th>Department</th>
             <th>Subject</th>
             <th>State</th>
@@ -17,10 +17,10 @@
         <tr>
             <td>
                 <a href="{% url 'position-edit' position_id=position.pk %}">
-                    {{ position.title }}
+                    APELLA{{ position.pk }}
                 </a>
             </td>
-            <td>{{ position.pk }}</td>
+            <td>{{ position.title }}</td>
             <td>{{ position.department.title }}</td>
             <td>{{ position.subject.title }}</td>
             <td>{{ position.state }}</td>
