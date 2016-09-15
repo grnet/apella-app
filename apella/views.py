@@ -16,13 +16,22 @@ class UserListView(ListView):
         context = super(UserListView, self).get_context_data(**kwargs)
         return context
 
+
 class PositionListView(ListView):
 
     model = Position
 
+    def get_queryset(self):
+        try:
+            self.department = get_object_or_404(Department, id=self.args[0])
+            return Position.objects.filter(department=self.department)
+        except IndexError:
+            return Position.objects.all()
+
     def get_context_data(self, **kwargs):
         context = super(PositionListView, self).get_context_data(**kwargs)
         return context
+
 
 class CandidacyListView(ListView):
 
