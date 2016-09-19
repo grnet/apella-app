@@ -16,6 +16,8 @@ urlpatterns = patterns(
     url(r'^positions/(?P<position_id>\d+)/edit/$',
         views.position_edit, name='position-edit'),
     url(r'^candidacies/$', CandidacyListView.as_view(), name='candidacy-list'),
+    url(r'^candidacies/([\w-]+)/$',
+        CandidacyListView.as_view(), name='candidacy-list'),
     url(r'^candidacies/new/(?P<position_id>\d+)/$',
         views.candidacy_edit, name='candidacy-new'),
     url(r'^candidacies/(?P<candidacy_id>\d+)/edit/$',

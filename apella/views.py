@@ -36,6 +36,13 @@ class CandidacyListView(ListView):
 
     model = Candidacy
 
+    def get_queryset(self):
+        try:
+            self.candidate = get_object_or_404(ApellaUser, id=self.args[0])
+            return Candidacy.objects.filter(candidate=self.candidate)
+        except IndexError:
+            return Candidacy.objects.all()
+
     def get_context_data(self, **kwargs):
         context = super(CandidacyListView, self).get_context_data(**kwargs)
         return context
