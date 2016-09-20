@@ -8,7 +8,7 @@ from apella.management.utils import get_user
 
 
 class Command(BaseCommand):
-    help = 'Create a registry of the given type ' + \
+    help = 'Create or update a registry of the given type ' + \
         str([str(x[0]) + ':' + str(x[1]) for x in Registry.TYPES]).strip('[]')
     args = '<department_id> <type>'
 
@@ -53,7 +53,13 @@ class Command(BaseCommand):
                 "Created registry %s for department %s, type %s" %
                 (registry.pk, registry.department.title, registry.type))
         except IntegrityError:
-            raise CommandError(
-                "Unique constraint failed. There is already" +
-                " a registry of type %s for department %s" %
-                (type, department_id))
+            if users:
+                registry = Registry.objects.get(
+                    department=department, type=type)
+                registry.members = users
+                registry.save()
+            else:
+                raise CommandError(
+                    "Unique constraint failed. There is already" +
+                    " a registry of type %s for department %s" %
+                    (type, department_id))
