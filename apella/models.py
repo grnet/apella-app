@@ -106,7 +106,7 @@ class Candidacy(models.Model):
     candidate = models.ForeignKey(ApellaUser, blank=False)
     position = models.ForeignKey(Position, blank=False)
     submitted_at = models.DateTimeField(blank=True, null=True)
-    state = models.CharField(choices=STATES, max_length=1, default='1')
+    state = models.CharField(choices=STATES, max_length=1, default='2')
     files = models.CharField(max_length=200)
 
 
