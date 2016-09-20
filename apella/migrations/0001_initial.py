@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('submitted_at', models.DateTimeField(null=True, blank=True)),
-                ('state', models.CharField(default='1', max_length=1, choices=[('1', 'Draft'), ('2', 'Posted'), ('3', 'Cancelled')])),
+                ('state', models.CharField(default='2', max_length=1, choices=[('1', 'Draft'), ('2', 'Posted'), ('3', 'Cancelled')])),
                 ('files', models.CharField(max_length=200)),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
@@ -109,6 +109,17 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='School',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=150)),
+                ('institution', models.ForeignKey(to='apella.Institution')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Subject',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -145,9 +156,15 @@ class Migration(migrations.Migration):
             preserve_default=True,
         ),
         migrations.AddField(
+            model_name='position',
+            name='subject_area',
+            field=models.ForeignKey(to='apella.SubjectArea'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
             model_name='department',
-            name='institution',
-            field=models.ForeignKey(to='apella.Institution'),
+            name='school',
+            field=models.ForeignKey(to='apella.School'),
             preserve_default=True,
         ),
         migrations.AddField(

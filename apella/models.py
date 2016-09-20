@@ -31,12 +31,20 @@ class Institution(models.Model):
     title = models.CharField(max_length=150, blank=False)
 
 
-class Department(models.Model):
+class School(models.Model):
     """
-    Model for Institutions
+    Model for Schools
     """
     title = models.CharField(max_length=150, blank=False)
     institution = models.ForeignKey(Institution, blank=False, null=False)
+
+
+class Department(models.Model):
+    """
+    Model for Departments
+    """
+    title = models.CharField(max_length=150, blank=False)
+    school = models.ForeignKey(School, blank=False, null=False)
 
 
 class SubjectArea(models.Model):
@@ -73,6 +81,7 @@ class Position(models.Model):
     author = models.ForeignKey(
             ApellaUser, blank=False, related_name='authored_positions')
     department = models.ForeignKey(Department, blank=False, null=False)
+    subject_area = models.ForeignKey(SubjectArea, blank=False, null=False)
     subject = models.ForeignKey(Subject, blank=False, null=False)
     fek = models.URLField(blank=False, null=False)
     fek_posted_at = models.DateField(blank=False, null=False)

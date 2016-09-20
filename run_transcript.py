@@ -6,6 +6,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "apella_app.settings")
 
 import json
 import django
+from collections import OrderedDict
 
 django.setup()
 
@@ -24,7 +25,7 @@ def run_command(command, input=None):
     management.call_command(command, *args, **dict(options))
 
 with open(sys.argv[1]) as jdata:
-    data = json.load(jdata)
+    data = json.load(jdata, object_pairs_hook=OrderedDict)
 
 for a in data["actions"]:
     try:

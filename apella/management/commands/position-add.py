@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ValidationError
-from apella.models import ApellaUser, Position, Department, Subject
+from apella.models import ApellaUser, Position, Department,\
+        Subject, SubjectArea
 from apella.management.utils import get_user
 
 from optparse import make_option
@@ -9,7 +10,7 @@ from optparse import make_option
 class Command(BaseCommand):
     help = 'Create a position with the given title and author'
     args = '<title> <author id or username> <department id> <description>' + \
-        ' <subject> <fek url> <fek posted at>'
+        ' <subject area> <subject> <fek url> <fek posted at>'
 
     option_list = BaseCommand.option_list + (
         make_option('--start',
@@ -23,11 +24,11 @@ class Command(BaseCommand):
                         )
 
     def handle(self, *args, **options):
-        if len(args) != 7:
+        if len(args) != 8:
             raise CommandError("Invalid number of arguments")
 
         title, author, department_id, description, \
-            subject_id, fek, fek_posted_at = args[:7]
+            subject_area_id, subject_id, fek, fek_posted_at = args[:8]
         # TODO: validate dates
         starts_at = options['starts_at']
         ends_at = options['ends_at']
@@ -35,12 +36,14 @@ class Command(BaseCommand):
         try:
             position_author = get_user(author)
             department = Department.objects.get(id=department_id)
+            subject_area = SubjectArea.objects.get(id=subject_area_id)
             subject = Subject.objects.get(id=subject_id)
 
             p = Position.objects.create(
                     title=title, author=position_author,
                     department=department, description=description,
                     fek=fek, fek_posted_at=fek_posted_at,
+                    subject_area=subject_area,
                     subject=subject, starts_at=starts_at, ends_at=ends_at)
 
             self.stdout.write(
