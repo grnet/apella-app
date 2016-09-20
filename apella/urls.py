@@ -45,5 +45,6 @@ urlpatterns = patterns(
         name='subject-new'),
     url(r'^subjects/(?P<subject_id>\d+)/$',
         views.subject_edit, name='subject-edit'),
+    url(r'^registries/$', RegistryListView.as_view(), name='registry-list'),
 
 )

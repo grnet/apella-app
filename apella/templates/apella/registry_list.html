@@ -1,0 +1,28 @@
+{% extends "apella/index.html" %}
+{% load apella_extras %}
+{% block content %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Department</th>
+            <th>Members</th>
+        </tr>
+    {% for registry in object_list %}
+        <tr>
+            <td>
+                {{ registry.pk }}
+            </td>
+            <td>{{ registry.type }}</td>
+            <td>{{ registry.department.title }}</td>
+            {% for member in registry.members.all %}
+                <td>{{ member.username }}</td>
+            {% endfor %}
+        </tr>
+    {% empty %}
+        <tr colspan="4">
+            <td>No departments yet.</td>
+        </tr>
+    {% endfor %}
+    </ul>
+{% endblock %}

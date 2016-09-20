@@ -75,6 +75,15 @@ class SubjectAreaListView(ListView):
         return context
 
 
+class RegistryListView(ListView):
+
+    model = Registry
+
+    def get_context_data(self, **kwargs):
+        context = super(RegistryListView, self).get_context_data(**kwargs)
+        return context
+
+
 class SubjectListView(ListView):
 
     model = Subject
