@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import apella.validators
 import django.utils.timezone
 from django.conf import settings
 import django.core.validators
@@ -81,10 +82,10 @@ class Migration(migrations.Migration):
                 ('description', models.CharField(max_length=300)),
                 ('discipline', models.CharField(max_length=300)),
                 ('fek', models.URLField()),
-                ('fek_posted_at', models.DateField()),
+                ('fek_posted_at', models.DateField(validators=[apella.validators.before_today_validator])),
                 ('state', models.CharField(default='2', max_length=1, choices=[('1', 'Draft'), ('2', 'Posted'), ('3', 'Electing'), ('4', 'Successful'), ('5', 'Failed')])),
-                ('starts_at', models.DateTimeField(null=True, blank=True)),
-                ('ends_at', models.DateTimeField(null=True, blank=True)),
+                ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
+                ('ends_at', models.DateTimeField()),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to=settings.AUTH_USER_MODEL, blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to=settings.AUTH_USER_MODEL)),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),

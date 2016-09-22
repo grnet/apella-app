@@ -12,26 +12,13 @@ class Command(BaseCommand):
     args = '<title> <author id or username> <department id> <description>' + \
         ' <subject area> <subject> <fek url> <fek posted at>'
 
-    option_list = BaseCommand.option_list + (
-        make_option('--start',
-                    dest='starts_at',
-                    help='The date and time the position starts accepting' +
-                    ' candidacies.'),
-        make_option('--end',
-                    dest='ends_at',
-                    help='The date and time the position stops accepting' +
-                    ' candidacies.'),
-                        )
-
     def handle(self, *args, **options):
-        if len(args) != 8:
+        if len(args) != 10:
             raise CommandError("Invalid number of arguments")
 
-        title, author, department_id, description, \
-            subject_area_id, subject_id, fek, fek_posted_at = args[:8]
-        # TODO: validate dates
-        starts_at = options['starts_at']
-        ends_at = options['ends_at']
+        title, author, department_id, description,\
+            subject_area_id, subject_id, fek, fek_posted_at,\
+            starts_at, ends_at = args[:10]
 
         try:
             position_author = get_user(author)

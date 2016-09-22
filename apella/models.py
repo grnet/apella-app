@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from apella.validators import before_today_validator, after_today_validator
 
 
 class ApellaUser(AbstractUser):
@@ -84,7 +85,8 @@ class Position(models.Model):
     subject_area = models.ForeignKey(SubjectArea, blank=False, null=False)
     subject = models.ForeignKey(Subject, blank=False, null=False)
     fek = models.URLField(blank=False, null=False)
-    fek_posted_at = models.DateField(blank=False, null=False)
+    fek_posted_at = models.DateField(
+        blank=False, null=False, validators=[before_today_validator])
 
     assistants = models.ManyToManyField(
             ApellaUser, blank=True, related_name='assistant_duty')
@@ -97,8 +99,9 @@ class Position(models.Model):
             related_name='elected_positions')
 
     state = models.CharField(choices=STATES, max_length=1, default='2')
-    starts_at = models.DateTimeField(blank=True, null=True)
-    ends_at = models.DateTimeField(blank=True, null=True)
+    starts_at = models.DateTimeField(
+        blank=False, null=False, validators=[after_today_validator])
+    ends_at = models.DateTimeField(blank=False, null=False)
 
 
 class Candidacy(models.Model):

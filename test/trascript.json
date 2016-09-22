@@ -133,7 +133,9 @@
         "arg5" : "1",
         "arg6" : "1",
         "arg7" : "http://www.google.com",
-        "arg8" : "2016-08-15"
+        "arg8" : "2016-08-15",
+        "arg9" : "2016-09-30",
+        "arg10" : "2016-10-30"
     },
     "db_state_change" : {
         "object" : {"Position" : "1"},
