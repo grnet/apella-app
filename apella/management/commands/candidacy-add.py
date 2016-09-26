@@ -16,7 +16,7 @@ class Command(BaseCommand):
             position = Position.objects.get(id=position_id)
             candidate = get_user(candidate_id)
             c = Candidacy.objects.create(
-                    position=position, candidate=candidate)
+                position=position, candidate=candidate)
             self.stdout.write(
                 "Created candidacy %s : candidate = %s position = %s" %
                 (c.pk, c.candidate.username, c.position.id))

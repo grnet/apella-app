@@ -3,8 +3,8 @@ position_resource = {
      'fields': ('id', 'url', 'title', 'description', 'discipline', 'author',
                 'department', 'subject_area', 'subject', 'fek',
                 'fek_posted_at', 'assistants', 'electors', 'committee',
-                'state', 'starts_at', 'ends_at'),
-     'read_only_fields': ('id', 'url'),
+                'state', 'starts_at', 'ends_at', 'created_at', 'updated_at'),
+     'read_only_fields': ('id', 'url', 'created_at', 'updated_at'),
      'filter_fields': ('title',),
      'allowable_operations': (
          'list', 'retrieve', 'create', 'update', 'delete')
@@ -20,8 +20,9 @@ apellauser_resource = {
 candidacy_resource = {
     'model': 'apella.models.Candidacy',
     'fields': ('id', 'url', 'candidate', 'position',
-               'submitted_at', 'state', 'files'),
-    'read_only_fields': ('id', 'url', 'submitted_at'),
+               'submitted_at', 'state', 'others_can_view',
+               'updated_at'),
+    'read_only_fields': ('id', 'url', 'submitted_at', 'updated_at'),
     'filter_fields': ('candidate', 'position', 'state',)
 }
 

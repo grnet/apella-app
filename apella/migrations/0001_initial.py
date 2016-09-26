@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import datetime
 import apella.validators
 import django.utils.timezone
 from django.conf import settings
@@ -30,7 +31,6 @@ class Migration(migrations.Migration):
                 ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('role', models.CharField(default='2', max_length=1, choices=[('1', 'Insitution Manager'), ('2', 'Candidate'), ('3', 'Elector'), ('4', 'Committee'), ('5', 'Assistant')])),
-                ('files', models.CharField(max_length=200)),
                 ('groups', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions')),
             ],
@@ -45,9 +45,15 @@ class Migration(migrations.Migration):
             name='Candidacy',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('submitted_at', models.DateTimeField(null=True, blank=True)),
                 ('state', models.CharField(default='2', max_length=1, choices=[('1', 'Draft'), ('2', 'Posted'), ('3', 'Cancelled')])),
-                ('files', models.CharField(max_length=200)),
+                ('others_can_view', models.BooleanField(default=False)),
+                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 9, 26, 11, 18, 12, 865822))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 9, 26, 11, 18, 12, 865850))),
+                ('cv', models.CharField(max_length=200)),
+                ('diploma', models.CharField(max_length=200)),
+                ('publication', models.CharField(max_length=200)),
+                ('self_evaluation', models.CharField(max_length=200)),
+                ('additional_files', models.CharField(max_length=200)),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -86,6 +92,8 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(default='2', max_length=1, choices=[('1', 'Draft'), ('2', 'Posted'), ('3', 'Electing'), ('4', 'Successful'), ('5', 'Failed')])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
+                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 9, 26, 11, 18, 12, 862839))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 9, 26, 11, 18, 12, 862866))),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to=settings.AUTH_USER_MODEL, blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to=settings.AUTH_USER_MODEL)),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),

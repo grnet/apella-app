@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from apella.validators import before_today_validator, after_today_validator
 
@@ -22,7 +23,6 @@ class ApellaUser(AbstractUser):
         ('5', 'Assistant'),
     )
     role = models.CharField(choices=ROLES, max_length=1, default='2')
-    files = models.CharField(max_length=200)
 
 
 class Institution(models.Model):
@@ -102,6 +102,12 @@ class Position(models.Model):
     starts_at = models.DateTimeField(
         blank=False, null=False, validators=[after_today_validator])
     ends_at = models.DateTimeField(blank=False, null=False)
+    created_at = models.DateTimeField(blank=False, default=timezone.now())
+    updated_at = models.DateTimeField(blank=False, default=timezone.now())
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super(Position, self).save(*args, **kwargs)
 
 
 class Candidacy(models.Model):
@@ -117,9 +123,20 @@ class Candidacy(models.Model):
 
     candidate = models.ForeignKey(ApellaUser, blank=False)
     position = models.ForeignKey(Position, blank=False)
-    submitted_at = models.DateTimeField(blank=True, null=True)
     state = models.CharField(choices=STATES, max_length=1, default='2')
-    files = models.CharField(max_length=200)
+    others_can_view = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(blank=False, default=timezone.now())
+    updated_at = models.DateTimeField(blank=False, default=timezone.now())
+    # files
+    cv = models.CharField(max_length=200)
+    diploma = models.CharField(max_length=200)
+    publication = models.CharField(max_length=200)
+    self_evaluation = models.CharField(max_length=200)
+    additional_files = models.CharField(max_length=200)
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super(Candidacy, self).save(*args, **kwargs)
 
 
 class Registry(models.Model):
