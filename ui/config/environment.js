@@ -14,12 +14,16 @@ module.exports = function(environment) {
     },
 
     APP: {
+      backend_host: '/api'
       // Here you can pass flags/options to your application instance
       // when it is created
     }
   };
 
   if (environment === 'development') {
+    ENV['ember-cli-mirage'] = {
+        enabled: false
+    }
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
