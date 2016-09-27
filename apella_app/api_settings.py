@@ -6,7 +6,8 @@ position_resource = {
                    'fek_posted_at', 'assistants', 'electors', 'committee',
                    'state', 'starts_at', 'ends_at', 'created_at',
                    'updated_at'],
-        'read_only_fields': ['id', 'url', 'created_at', 'updated_at']
+        'read_only_fields': ['id', 'url', 'created_at', 'updated_at'],
+        'custom_mixins': ['apella.mixins.PositionMixin']
     },
     'filter_fields': ['title', ],
     'allowable_operations': ['list', 'retrieve', 'create', 'update', 'delete']
