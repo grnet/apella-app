@@ -1,6 +1,6 @@
 import Mirage from 'ember-cli-mirage';
 
-const MODELS = ['managers'];
+const MODELS = [/*'managers'*/];
 
 export default function() {
 
