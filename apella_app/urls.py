@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
-from apimas.container import Container
+from apimas.modeling.container import Container
 import api_settings
 
 admin.autodiscover()
