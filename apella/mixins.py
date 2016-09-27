@@ -10,9 +10,6 @@ def validate_dates_interval(start, end):
 
 class PositionMixin(object):
 
-    def create(self, validated_data):
-        ends_at = validated_data['ends_at']
-        starts_at = validated_data['starts_at']
-        validate_dates_interval(starts_at, ends_at)
-
-        return super(PositionMixin, self).create(validated_data)
+    def validate(self, data):
+        validate_dates_interval(data['starts_at'], data['ends_at'])
+        return super(PositionMixin, self).validate(data)
