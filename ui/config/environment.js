@@ -6,6 +6,9 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/ui/',
     locationType: 'auto',
+    i18n : {
+      defaultLocale: 'gr'
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -14,7 +17,7 @@ module.exports = function(environment) {
     },
 
     APP: {
-      backend_host: '/api'
+      backend_host: 'http://127.0.0.1:8000/api'
       // Here you can pass flags/options to your application instance
       // when it is created
     }

@@ -34,7 +34,7 @@ const ApiParams = Ember.Object.extend({
   },
 
   relURL(id) {
-    return urlJoin(this.apiBase, this.ns, this.path, this.type.modelName, id) + '/';
+    return urlJoin(this.apiBase, this.ns, this.path || Ember.Inflector.inflector.pluralize(this.type.modelName), id) + '/';
   }
 });
 
