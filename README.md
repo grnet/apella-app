@@ -37,7 +37,7 @@ $ python manage.py migrate
 ```
 5. If you want to initialize database with dummy data, run
 ```
-$ python run_transcript.py test/trascript.json
+$ python run_transcript.py trascript.json
 ```
 
 6. Run server

@@ -3,7 +3,7 @@ from datetime import timedelta
 
 
 def validate_dates_interval(start, end):
-    if end - timedelta(days=30) < start:
+    if end - start < timedelta(days=30):
         raise serializers.ValidationError(
             'End date should be 30 days after start date')
 
