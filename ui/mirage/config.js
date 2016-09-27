@@ -1,26 +1,37 @@
+import Mirage from 'ember-cli-mirage';
+
+const MODELS = ['managers'];
+
 export default function() {
 
-  // These comments are here to help you get started. Feel free to delete them.
+  for (let model of MODELS) {
+    let related = [];
+    if (Ember.isArray(model)) {
+      [model, related] = model;
+    }
+    let collection = `/${model}`;
+    let item = `/${model}/:id`;
 
-  /*
-    Config (with defaults).
+    this.get(collection);
+    this.post(collection);
+    this.get(item);
+    this.put(item);
+    this.patch(item);
 
-    Note: these only affect routes defined *after* them!
-  */
+    this.del(item, function(schema, request) {
+      let id = request.params.id;
+      let record = schema[model].find(id);
 
-  // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server
-  // this.namespace = '';    // make this `api`, for example, if your API is namespaced
-  // this.timing = 400;      // delay for each request, automatically set to 0 during testing
+      for (let rel of related) {
+        let ref = record.modelName + 'Id';
+        let query = {};
+        query[ref] = parseInt(id);
+        let rels = schema[rel].where(query);
+        rels.destroy();
+      }
+      record.destroy();
+    });
+  }
 
-  /*
-    Shorthand cheatsheet:
-
-    this.get('/posts');
-    this.post('/posts');
-    this.get('/posts/:id');
-    this.put('/posts/:id'); // or this.patch
-    this.del('/posts/:id');
-
-    http://www.ember-cli-mirage.com/docs/v0.2.x/shorthands/
-  */
-}
+  this.get('countries');
+};
