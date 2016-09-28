@@ -4,6 +4,7 @@ from rest_framework import serializers
 from django.test import TestCase
 from apella.validators import before_today_validator, after_today_validator
 from apella.mixins import validate_dates_interval
+from apella_app import settings
 
 
 class ValidatorTest(TestCase):
@@ -30,7 +31,12 @@ class ValidatorTest(TestCase):
         start = datetime.now()
         end = start + timedelta(days=29)
         self.assertRaises(
-            serializers.ValidationError, validate_dates_interval, start, end)
+            serializers.ValidationError,
+            validate_dates_interval,
+            start,
+            end,
+            settings.START_DATE_END_DATE_INTERVAL)
 
         end += timedelta(days=1)
-        validate_dates_interval(start, end)
+        validate_dates_interval(
+            start, end, settings.START_DATE_END_DATE_INTERVAL)

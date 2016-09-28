@@ -122,6 +122,8 @@ LOGGING = {
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'apella.ApellaUser'
 
+START_DATE_END_DATE_INTERVAL = 30
+
 try:
     from local_settings import *
 except ImportError, exp:
