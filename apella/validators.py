@@ -1,5 +1,6 @@
 from datetime import datetime, date, timedelta
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
 
 
 def before_today_validator(value):
@@ -12,7 +13,7 @@ def before_today_validator(value):
     """
     now = datetime.now().date() if type(value) is date else datetime.now()
     if value and value > now:
-        raise ValidationError('Date should be before today')
+        raise ValidationError(_('Date should be before today'))
 
 
 def after_today_validator(value):
@@ -25,4 +26,4 @@ def after_today_validator(value):
     """
     now = datetime.now().date() if type(value) is date else datetime.now()
     if value and value < now:
-        raise ValidationError('Date should be after today')
+        raise ValidationError(_('Date should be after today'))
