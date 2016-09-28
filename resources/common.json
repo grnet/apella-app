@@ -1,0 +1,28 @@
+{
+    "USER_ROLES": [
+        ["1", "Institution Manager"],
+        ["2", "Candidate"],
+        ["3", "Elector"],
+        ["4", "Committee"],
+        ["5", "Assistant"]
+    ],
+
+    "POSITION_STATES": [
+        ["1", "Draft"],
+        ["2", "Posted"],
+        ["3", "Electing"],
+        ["4", "Successful"],
+        ["5", "Failed"]
+    ],
+
+    "CANDIDACY_STATES": [
+        ["1", "Draft"],
+        ["2", "Posted"],
+        ["3", "Cancelled"]
+    ],
+
+    "REGISTRY_TYPES": [
+        ["1", "Internal"],
+        ["2", "External"]
+    ]
+}

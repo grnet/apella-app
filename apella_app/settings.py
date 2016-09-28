@@ -123,6 +123,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'apella.ApellaUser'
 
 START_DATE_END_DATE_INTERVAL = 30
+RESOURCES_FILE = os.path.join(BASE_DIR, 'resources/common.json')
 
 try:
     from local_settings import *

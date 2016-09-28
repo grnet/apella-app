@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import Position
+from apella import common
 
 
 class Command(BaseCommand):
@@ -13,7 +14,7 @@ class Command(BaseCommand):
         if positions:
             self.stdout.write('ID\tTitle\tAuthor\tState')
         for position in positions:
-            p_state = [str(p[1]) for p in Position.STATES
+            p_state = [str(p[1]) for p in common.POSITION_STATES
                        if p[0] == position.state]
             self.stdout.write('%s\t%s\t%s\t%s (%s)' % (
                 position.id, position.title, position.author, position.state,

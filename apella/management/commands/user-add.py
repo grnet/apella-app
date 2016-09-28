@@ -2,6 +2,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import ApellaUser
+from apella import common
 
 
 class Command(BaseCommand):
@@ -12,7 +13,7 @@ class Command(BaseCommand):
         make_option('--role',
                     dest='role',
                     default=2,
-                    choices=[x[0] for x in ApellaUser.ROLES],
+                    choices=[x[0] for x in common.USER_ROLES],
                     help='Choose a role for the user'),
         )
 

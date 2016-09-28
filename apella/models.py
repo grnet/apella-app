@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from apella.validators import before_today_validator, after_today_validator
+from apella import common
 
 
 class ApellaUser(AbstractUser):
@@ -15,14 +16,8 @@ class ApellaUser(AbstractUser):
     `django.contib.auth.models` which define common fields such as first name,
     last name, email, etc
     """
-    ROLES = (
-        ('1', 'Insitution Manager'),
-        ('2', 'Candidate'),
-        ('3', 'Elector'),
-        ('4', 'Committee'),
-        ('5', 'Assistant'),
-    )
-    role = models.CharField(choices=ROLES, max_length=1, default='2')
+    role = models.CharField(
+        choices=common.USER_ROLES, max_length=1, default='2')
 
 
 class Institution(models.Model):
@@ -68,14 +63,6 @@ class Position(models.Model):
     """
     Model for positions
     """
-    STATES = (
-        ('1', 'Draft'),
-        ('2', 'Posted'),
-        ('3', 'Electing'),
-        ('4', 'Successful'),
-        ('5', 'Failed')
-    )
-
     title = models.CharField(max_length=50, blank=False, null=False)
     description = models.CharField(max_length=300, blank=False, null=False)
     discipline = models.CharField(max_length=300, blank=False, null=False)
@@ -98,7 +85,8 @@ class Position(models.Model):
             ApellaUser, blank=True, null=True,
             related_name='elected_positions')
 
-    state = models.CharField(choices=STATES, max_length=1, default='2')
+    state = models.CharField(
+        choices=common.POSITION_STATES, max_length=1, default='2')
     starts_at = models.DateTimeField(
         blank=False, null=False, validators=[after_today_validator])
     ends_at = models.DateTimeField(blank=False, null=False)
@@ -115,15 +103,10 @@ class Candidacy(models.Model):
     """
     Model for candidacies
     """
-    STATES = (
-        ('1', 'Draft'),
-        ('2', 'Posted'),
-        ('3', 'Cancelled')
-    )
-
     candidate = models.ForeignKey(ApellaUser, blank=False)
     position = models.ForeignKey(Position, blank=False)
-    state = models.CharField(choices=STATES, max_length=1, default='2')
+    state = models.CharField(
+        choices=common.CANDIDACY_STATES, max_length=1, default='2')
     others_can_view = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(blank=False, default=timezone.now())
     updated_at = models.DateTimeField(blank=False, default=timezone.now())
@@ -147,11 +130,7 @@ class Registry(models.Model):
         # Each department can have only one internal and one external registry
         unique_together = (("department", "type"),)
 
-    TYPES = (
-        ('1', 'Internal'),
-        ('2', 'External')
-    )
-
     department = models.ForeignKey(Department, blank=False)
-    type = models.CharField(choices=TYPES, max_length=1, default='1')
+    type = models.CharField(
+        choices=common.REGISTRY_TYPES, max_length=1, default='1')
     members = models.ManyToManyField(ApellaUser, blank=False, null=False)
