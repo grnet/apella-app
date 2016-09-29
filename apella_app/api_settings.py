@@ -36,7 +36,8 @@ candidacy_resource = {
 institution_resource = {
     'model': 'apella.models.Institution',
     'field_schema': {
-        'fields': ['id', 'url', 'title'],
+        'fields': ['id', 'url', 'title', 'organization',
+                   'regulatory_framework'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': ['title', ],

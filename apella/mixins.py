@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from datetime import timedelta
-from apella_app import settings
+from django.conf import settings
 
 
 def validate_dates_interval(start, end, interval):

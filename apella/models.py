@@ -25,6 +25,8 @@ class Institution(models.Model):
     Model for Institutions
     """
     title = models.CharField(max_length=150, blank=False)
+    organization = models.URLField(blank=True)
+    regulatory_framework = models.URLField(blank=True)
 
 
 class School(models.Model):
@@ -72,7 +74,7 @@ class Position(models.Model):
     subject_area = models.ForeignKey(SubjectArea, blank=False, null=False)
     subject = models.ForeignKey(Subject, blank=False, null=False)
     fek = models.URLField(blank=False, null=False)
-    fek_posted_at = models.DateField(
+    fek_posted_at = models.DateTimeField(
         blank=False, null=False, validators=[before_today_validator])
 
     assistants = models.ManyToManyField(
