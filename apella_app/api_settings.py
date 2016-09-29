@@ -28,7 +28,8 @@ candidacy_resource = {
         'fields': ['id', 'url', 'candidate', 'position',
                    'submitted_at', 'state', 'others_can_view',
                    'updated_at'],
-        'read_only_fields': ['id', 'url', 'submitted_at', 'updated_at']
+        'read_only_fields': ['id', 'url', 'submitted_at', 'updated_at'],
+        'custom_mixins': ['apella.mixins.CandidacyMixin']
     },
     'filter_fields': ['candidate', 'position', 'state', ]
 }

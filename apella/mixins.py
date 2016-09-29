@@ -1,12 +1,20 @@
 from rest_framework import serializers
 from datetime import timedelta
 from django.conf import settings
+from django.utils import timezone
 
 
 def validate_dates_interval(start, end, interval):
     if end - start < timedelta(days=interval):
         raise serializers.ValidationError(
             'End date should be %s days after start date' % interval)
+
+
+def validate_position_dates(start, end):
+    if timezone.now() < start:
+        raise serializers.ValidationError('Position opens at %s' % start)
+    if timezone.now() > end:
+        raise serializers.ValidationError('Position closed at %s' % end)
 
 
 class PositionMixin(object):
@@ -17,3 +25,11 @@ class PositionMixin(object):
             data['ends_at'],
             settings.START_DATE_END_DATE_INTERVAL)
         return super(PositionMixin, self).validate(data)
+
+
+class CandidacyMixin(object):
+
+    def validate(self, data):
+        validate_position_dates(
+            data['position'].starts_at, data['position'].ends_at)
+        return super(CandidacyMixin, self).validate(data)
