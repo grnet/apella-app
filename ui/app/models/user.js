@@ -10,6 +10,6 @@ const ROLES = [
 
 export default DS.Model.extend({
   username: DS.attr(),
-  role: DS.attr({type: 'select', attr: { choices: ROLES}}),
+  role: DS.attr({type: 'select', choices: ROLES}),
 
 });

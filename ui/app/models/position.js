@@ -27,7 +27,7 @@ export default DS.Model.extend({
   electors: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
   committee: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
   elected: DS.belongsTo('user', {attrs: {optionLabelAttr: 'username'}}),
-  state: DS.attr({type: 'select', attr: { choices: STATES}}),
+  state: DS.attr({type: 'select', choices: STATES}),
   starts_at: DS.attr('date'),
   ends_at: DS.attr('date'),
   created_at: DS.attr('date'),
