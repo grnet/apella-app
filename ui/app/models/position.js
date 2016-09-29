@@ -32,4 +32,8 @@ export default DS.Model.extend({
   ends_at: DS.attr('date'),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
+  // Use in candidacy select list
+  id_and_title: Ember.computed('id', 'title', function() {
+    return `${this.get('id')} -  ${this.get('title')}`;
+  })
 });

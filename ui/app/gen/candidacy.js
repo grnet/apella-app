@@ -1,34 +1,22 @@
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 
+const mandatory = [validate.presence(true)],
+      max_chars = validate.length({max: 200}),
+      mandatory_with_max_chars = [mandatory, max_chars];
+
+
 export default gen.CRUDGen.extend({
   modelName: 'candidacy',
   common: {
-  validators: {
-    candidate: [
-      validate.presence(true),
-    ],
-    position: [
-      validate.presence(true),
-      validate.format({type: 'url'}),
-    ],
-    cv: [
-      validate.presence(true),
-      validate.length({max: 200})
-    ],
-    diploma: [
-      validate.presence(true),
-      validate.length({max: 200})
-    ],
-    publication: [
-      validate.presence(true),
-      validate.length({max: 200})
-    ],
-    additionalFiles: [
-      validate.presence(true),
-      validate.length({max: 200})
-    ]
-  }
+    validators: {
+      candidate: mandatory,
+      position: mandatory,
+      cv: mandatory_with_max_chars,
+      diploma: mandatory_with_max_chars,
+      publication: mandatory_with_max_chars,
+      additionalFiles: mandatory_with_max_chars,
+    }
   },
   create: {
     page: {
@@ -60,4 +48,9 @@ export default gen.CRUDGen.extend({
       }
     ],
   },
+  list: {
+    menu: {
+      icon: 'assignment'
+    }
+  }
 });

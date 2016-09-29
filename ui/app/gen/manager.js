@@ -6,6 +6,9 @@ export default gen.CRUDGen.extend({
     fields: ['id', 'username', 'last_name'],
     row: {
       icon: 'person',
+    },
+    menu: {
+      icon: 'do not disturb on'
     }
   },
   create:{

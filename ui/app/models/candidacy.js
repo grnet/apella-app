@@ -1,8 +1,8 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  candidate: DS.belongsTo('user', {label: 'candidacy.label.candidate', attrs:{type: 'select', optionLabelAttr: 'username'}}),
-  position: DS.attr({label: 'candidacy.label.position'}),
+  candidate: DS.belongsTo('user', {label: 'candidacy.label.candidate', attrs: {type: 'select', optionLabelAttr: 'username'}}),
+  position: DS.belongsTo('position', {label: 'candidacy.label.position', attrs: {type: 'select', optionLabelAttr: 'id_and_title'}}),
   state: DS.attr({label: 'candidacy.label.state'}),
   othersCanView: DS.attr({label: 'candidacy.label.others_can_view'}),
   submittedAt: DS.attr('date'),
