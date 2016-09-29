@@ -46,5 +46,17 @@ export default {
       additional_files: "Complementary documents",
       candidate: "Candidate"
     }
+  },
+  position: {
+    fek_section: {
+      title: 'FEK',
+    }
+  },
+  fieldsets:{
+    labels: {
+        basic_info: 'Basic info',
+        details: 'Details',
+      }
   }
+
 };

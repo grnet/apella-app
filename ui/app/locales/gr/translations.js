@@ -46,5 +46,16 @@ export default {
       additional_files: "Συμπληρωματικά Έγγραφα",
       candidate: "Υποψήφιος"
     }
+  },
+  position: {
+    fek_section: {
+      title: 'ΦΕΚ',
+    }
+  },
+  fieldsets:{
+    labels: {
+        basic_info: 'Βασικά στοιχεία',
+        details: 'Λεπτομέρειες',
+      }
   }
 };
