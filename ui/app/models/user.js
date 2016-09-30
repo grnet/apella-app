@@ -1,15 +1,10 @@
 import DS from 'ember-data';
+import ENV from 'ui/config/environment';
 
-const ROLES = [
-  ['1', 'Insitution Manager'],
-  ['2', 'Candidate'],
-  ['3', 'Elector'],
-  ['4', 'Committee'],
-  ['5', 'Assistant'],
-]
+const CHOICES = ENV.APP.resource_choices;
 
 export default DS.Model.extend({
   username: DS.attr(),
-  role: DS.attr({type: 'select', choices: ROLES}),
+  role: DS.attr({type: 'select', choices: CHOICES.USER_ROLES}),
 
 });

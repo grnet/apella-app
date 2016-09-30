@@ -1,12 +1,7 @@
 import DS from 'ember-data';
+import ENV from 'ui/config/environment';
 
-const STATES = [
-    ['1', 'Draft'],
-    ['2', 'Posted'],
-    ['3', 'Electing'],
-    ['4', 'Successful'],
-    ['5', 'Failed']
-]
+const CHOICES = ENV.APP.resource_choices;
 
 export default DS.Model.extend({
   title: DS.attr(),
@@ -27,7 +22,7 @@ export default DS.Model.extend({
   electors: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
   committee: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
   elected: DS.belongsTo('user', {attrs: {optionLabelAttr: 'username'}}),
-  state: DS.attr({type: 'select', choices: STATES}),
+  state: DS.attr({type: 'select', choices: CHOICES.POSITION_STATES}),
   starts_at: DS.attr('date'),
   ends_at: DS.attr('date'),
   created_at: DS.attr('date'),
