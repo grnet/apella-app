@@ -16,7 +16,8 @@ position_resource = {
 apellauser_resource = {
     'model': 'apella.models.ApellaUser',
     'field_schema': {
-        'fields': ['id', 'url', 'username', 'role'],
+        'fields': ['id', 'url', 'username', 'password', 'role',
+                   'first_name', 'last_name'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': ['username', ]
@@ -89,6 +90,16 @@ registry_resource = {
     'filter_fields': ['department', 'type', ]
 }
 
+institutionmanager_resource = {
+    'model': 'apella.models.InstitutionManager',
+    'field_schema': {
+        'fields': ['id', 'url', 'user', 'institution', 'authority',
+                   'authority_full_name', 'manager_role'],
+        'read_only_fields': ['id', 'url']
+    },
+    'filter_fields': ['institution', 'manager_role', ]
+}
+
 API_SCHEMA = {
     'resources': {
         'positions': position_resource,
@@ -99,6 +110,7 @@ API_SCHEMA = {
         'departments': department_resource,
         'subject-areas': subject_area_resource,
         'subjects': subject_resource,
-        'registries': registry_resource
+        'registries': registry_resource,
+        'institution-managers': institutionmanager_resource
     }
 }

@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ValidationError
-from apella.models import ApellaUser, Position, Department,\
-        Subject, SubjectArea
+from apella.models import Position, Department, Subject, SubjectArea,\
+    InstitutionManager
 from apella.management.utils import get_user
 
 from optparse import make_option
@@ -9,8 +9,8 @@ from optparse import make_option
 
 class Command(BaseCommand):
     help = 'Create a position with the given title and author'
-    args = '<title> <author id or username> <department id> <description>' + \
-        ' <subject area> <subject> <fek url> <fek posted at>'
+    args = '<title> <author id> <department id> <description>' + \
+        ' <subject area> <subject> <fek url> <fek posted at> <start> <end>'
 
     def handle(self, *args, **options):
         if len(args) != 10:
@@ -21,7 +21,7 @@ class Command(BaseCommand):
             starts_at, ends_at = args[:10]
 
         try:
-            position_author = get_user(author)
+            position_author = InstitutionManager.objects.get(id=author)
             department = Department.objects.get(id=department_id)
             subject_area = SubjectArea.objects.get(id=subject_area_id)
             subject = Subject.objects.get(id=subject_id)
@@ -35,11 +35,12 @@ class Command(BaseCommand):
 
             self.stdout.write(
                 "Created position %s : title = %s author = %s" %
-                (p.pk, p.title, p.author.username))
+                (p.pk, p.title, p.author.user.username))
         except ValidationError as ve:
             raise CommandError(ve)
-        except ApellaUser.DoesNotExist:
-            raise CommandError("User %s does not exist" % author)
+        except InstitutionManager.DoesNotExist:
+            raise CommandError(
+                "Institution manager %s does not exist" % author)
         except Department.DoesNotExist:
             raise CommandError("Department %s does not exist" % department_id)
         except Subject.DoesNotExist:

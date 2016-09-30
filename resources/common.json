@@ -24,5 +24,16 @@
     "REGISTRY_TYPES": [
         ["1", "Internal"],
         ["2", "External"]
+    ],
+
+    "AUTHORITIES": [
+        ["1", "Dean"],
+        ["2", "President"]
+    ],
+
+    "MANAGER_ROLES": [
+        ["1", "Manager"],
+        ["2", "Assistant"],
+        ["3", "Substitute"]
     ]
 }

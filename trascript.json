@@ -13,6 +13,30 @@
     }
 },
 {
+    "user": "1",
+    "action": "institution-add",
+    "input": {
+        "arg1": "University of Crete"
+    },
+    "db_state_change" : {
+        "object" : {"Institution" : "1"},
+        "change" : "new institution"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "1",
+        "role": "1",
+        "arg2": "1"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "1"},
+        "change" : "new user"
+    }
+},
+{
     "user": "admin",
     "action": "user-add",
     "input": {
@@ -62,17 +86,6 @@
     "db_state_change" : {
         "object" : {"ApellaUser" : "5"},
         "change" : "new user"
-    }
-},
-{
-    "user": "1",
-    "action": "institution-add",
-    "input": {
-        "arg1": "University of Crete"
-    },
-    "db_state_change" : {
-        "object" : {"Institution" : "1"},
-        "change" : "new institution"
     }
 },
 {

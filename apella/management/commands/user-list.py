@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import ApellaUser
+from apella import common
 
 
 class Command(BaseCommand):
@@ -11,7 +12,7 @@ class Command(BaseCommand):
 
         try:
             users = ApellaUser.objects.all()
-            roles_dict = dict(ApellaUser.ROLES)
+            roles_dict = dict(common.USER_ROLES)
             if users:
                 self.stdout.write('ID\tUsername\tRole_ID\t Role')
             for user in users:

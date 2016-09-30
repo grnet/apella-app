@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
@@ -18,6 +16,7 @@ class ApellaUser(AbstractUser):
     """
     role = models.CharField(
         choices=common.USER_ROLES, max_length=1, default='2')
+    father_name = models.CharField(max_length=50)
 
 
 class Institution(models.Model):
@@ -27,6 +26,18 @@ class Institution(models.Model):
     title = models.CharField(max_length=150, blank=False)
     organization = models.URLField(blank=True)
     regulatory_framework = models.URLField(blank=True)
+
+
+class InstitutionManager(models.Model):
+    """
+    Model for institution managers, assistants and manager substitutes
+    """
+    user = models.ForeignKey(ApellaUser, blank=False, null=False)
+    institution = models.ForeignKey(Institution, blank=False, null=False)
+    authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
+    authority_full_name = models.CharField(max_length=150)
+    manager_role = models.CharField(
+        choices=common.MANAGER_ROLES, blank=False, max_length=1)
 
 
 class School(models.Model):
@@ -69,7 +80,7 @@ class Position(models.Model):
     description = models.CharField(max_length=300, blank=False, null=False)
     discipline = models.CharField(max_length=300, blank=False, null=False)
     author = models.ForeignKey(
-            ApellaUser, blank=False, related_name='authored_positions')
+            InstitutionManager, blank=False, related_name='authored_positions')
     department = models.ForeignKey(Department, blank=False, null=False)
     subject_area = models.ForeignKey(SubjectArea, blank=False, null=False)
     subject = models.ForeignKey(Subject, blank=False, null=False)
@@ -78,7 +89,7 @@ class Position(models.Model):
         blank=False, null=False, validators=[before_today_validator])
 
     assistants = models.ManyToManyField(
-            ApellaUser, blank=True, related_name='assistant_duty')
+            InstitutionManager, blank=True, related_name='assistant_duty')
     electors = models.ManyToManyField(
             ApellaUser, blank=True, related_name='elector_duty')
     committee = models.ManyToManyField(
