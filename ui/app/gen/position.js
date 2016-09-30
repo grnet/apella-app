@@ -25,9 +25,9 @@ export default gen.CRUDGen.extend({
       },
     }, {
       label: 'fieldsets.labels.details',
-      fields: ['electors', 'committee', 'assistants', 'elected'],
+      fields: ['electors', 'committee', 'assistants', 'elected', 'starts_at', 'ends_at'],
       layout: {
-        flex: [50, 50, 50, 50]
+        flex: [50, 50, 50, 50, 50, 50]
       }
 
     }],
