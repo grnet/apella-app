@@ -1,11 +1,11 @@
 import gen from 'ember-gen/lib/gen';
 
 export default gen.CRUDGen.extend({
-  modelName: 'manager',
+  modelName: 'institution-manager',
   common: {
     menu: {
-      icon: 'do not disturb on',
-      label: 'manager.menu_label'
+      label: 'manager.menu_label',
+      icon: 'sentiment very satisfied'
     }
   },
   list: {

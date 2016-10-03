@@ -10,5 +10,4 @@ export default DS.Model.extend({
     let role_id = `${this.get('role')}`;
     return (CHOICES.USER_ROLES.find(x => x[0] == role_id) || [0, ''])[1]
   }),
-
 });
