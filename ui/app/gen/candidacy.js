@@ -9,6 +9,10 @@ const mandatory = [validate.presence(true)],
 export default gen.CRUDGen.extend({
   modelName: 'candidacy',
   common: {
+    menu: {
+      icon: 'assignment',
+      label: 'candidacy.menu_label'
+    },
     validators: {
       candidate: mandatory,
       position: mandatory,
@@ -48,9 +52,4 @@ export default gen.CRUDGen.extend({
       }
     ],
   },
-  list: {
-    menu: {
-      icon: 'assignment'
-    }
-  }
 });

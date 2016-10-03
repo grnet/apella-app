@@ -18,6 +18,7 @@ export default {
   'ends_at.label': 'Λήξη',
   'area.label': 'Θεματική περιοχή',
   manager: {
+    menu_label: "Διαχειριστές Ιδρύματος",
     label: {
       username: "Όνομα Χρήστη",
       last_name: "Επώνυμο",
@@ -38,6 +39,7 @@ export default {
     }
   },
   candidacy: {
+    menu_label: "Υποψηφιότητες",
     page_title: 'Υποβολή Νέας Υποψηφιότητας',
     position_section: {
       title: "Στοιχεία Θέσης",
@@ -63,6 +65,7 @@ export default {
     }
   },
   position: {
+    menu_label: "Θέσεις",
     fek_section: {
       title: 'ΦΕΚ',
     }
@@ -72,5 +75,23 @@ export default {
         basic_info: 'Βασικά στοιχεία',
         details: 'Λεπτομέρειες',
       }
-  }
+  },
+  institution: {
+    menu_label: "Ιδρύματα"
+  },
+  user: {
+    menu_label: "Χρήστες"
+  },
+  school: {
+    menu_label: "Σχολές"
+  },
+  department: {
+    menu_label: "Τμήματα"
+  },
+  subject_area : {
+    menu_label: "Γνωστικά Αντικείμενα"
+  },
+  subject: {
+    menu_label: "Υποκατηγορίες Γνωστικών Αντικειμένων"
+  },
 };

@@ -4,7 +4,8 @@ export default gen.CRUDGen.extend({
   modelName: 'school',
   common: {
     menu: {
-      icon: 'account_balance'
+      icon: 'account_balance',
+      label: 'school.menu_label'
     }
   }
 });

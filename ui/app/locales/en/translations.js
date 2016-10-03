@@ -18,6 +18,7 @@ export default {
   'ends_at.label': 'Ends at',
   'area.label': 'Subject area',
   manager: {
+    menu_label: "Institution Managers",
     label: {
       username: "Username",
       last_name: "Last Name",
@@ -38,7 +39,8 @@ export default {
     }
   },
   candidacy: {
-    page_title: 'New Candidacy',
+    menu_label: "Candidacies",
+    page_title: "New Candidacy",
     position_section: {
       title: "Position Information",
       subtitle: "All related info will be placed here."
@@ -63,6 +65,7 @@ export default {
     }
   },
   position: {
+    menu_label: "Positions",
     fek_section: {
       title: 'FEK',
     }
@@ -72,6 +75,24 @@ export default {
         basic_info: 'Basic info',
         details: 'Details',
       }
-  }
+  },
+  institution: {
+    menu_label: "Institutions"
+  },
+  user: {
+    menu_label: "Users"
+  },
+  school: {
+    menu_label: "Schools"
+  },
+  department: {
+    menu_label: "Departments"
+  },
+  subject_area : {
+    menu_label: "Thematic Areas"
+  },
+  subject: {
+    menu_label: "Sub Thematic Areas"
+  },
 
 };

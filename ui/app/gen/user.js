@@ -5,6 +5,7 @@ export default gen.CRUDGen.extend({
   common: {
     menu: {
       icon: 'face',
+      label: 'user.menu_label'
     }
   }
 });

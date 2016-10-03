@@ -5,6 +5,7 @@ export default gen.CRUDGen.extend({
   common: {
     menu: {
       icon: 'location_city',
+      label: 'institution.menu_label'
     }
   },
 });

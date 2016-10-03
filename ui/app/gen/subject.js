@@ -4,7 +4,8 @@ export default gen.CRUDGen.extend({
   modelName: 'subject',
   common: {
     menu: {
-      icon: 'local_library'
+      icon: 'local_library',
+      label: 'subject.menu_label'
     }
   }
 });

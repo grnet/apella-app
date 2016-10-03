@@ -6,6 +6,7 @@ export default gen.CRUDGen.extend({
   common: {
     menu: {
       icon: 'business_center',
+      label: 'position.menu_label'
     },
     validators: {
       title: [validate.presence(true), validate.length({min:4, max:50})],
