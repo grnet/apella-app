@@ -96,7 +96,7 @@ API_SCHEMA = {
         'institutions': institution_resource,
         'schools': school_resource,
         'departments': department_resource,
-        'subject_areas': subject_area_resource,
+        'subject-areas': subject_area_resource,
         'subjects': subject_resource,
         'registries': registry_resource
     }
