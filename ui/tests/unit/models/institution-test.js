@@ -6,7 +6,10 @@ moduleForModel('institution', 'Unit | Model | institution', {
 });
 
 test('it exists', function(assert) {
-  let model = this.subject();
+  let model = this.subject({
+    id: 1,
+    title: 'institution title',
+  });
   // let store = this.store();
   assert.ok(!!model);
 });
