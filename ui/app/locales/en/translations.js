@@ -4,23 +4,26 @@ export default {
   'description.label': 'Description',
   'school.label': 'School',
   'department.label': 'Department',
-  'subject.label': 'Subject',
-  'subject_area.label': 'Subject Area',
-  'fek.label': 'FEK',
-  'fek_posted_at.label': 'FEK publish date',
+  'subject.label': 'Theme',
+  'subject_area.label': 'Thematic Area',
+  'fek.label': 'FEK (Government Gazette)',
+  'fek_posted_at.label': 'FEK (Government Gazette) date',
   'electors.label': 'Electors',
   'committee.label': 'Committee',
   'assistants.label': 'Assistants',
   'elected.label': 'Elected',
   'state.label': 'State',
   'discipline.label': 'Discipline',
-  'starts_at.label': 'Starts at',
-  'ends_at.label': 'Ends at',
+  'starts_at.label': 'Submission Opening Date',
+  'ends_at.label': 'Submission End Date',
   'area.label': 'Subject area',
+  'author.label': 'Author',
+  'username.label': 'Username',
+  'role.label': 'Role',
   manager: {
     menu_label: "Institution Managers",
+    create_title: "New manager",
     label: {
-      username: "Username",
       last_name: "Last Name",
       last_name_latin: "Last Name with Latin Characters",
       first_name: "First Name",
@@ -40,7 +43,7 @@ export default {
   },
   candidacy: {
     menu_label: "Candidacies",
-    page_title: "New Candidacy",
+    create_title: "New Candidacy",
     position_section: {
       title: "Position Information",
       subtitle: "All related info will be placed here."
@@ -66,6 +69,7 @@ export default {
   },
   position: {
     menu_label: "Positions",
+    create_title: "New position",
     fek_section: {
       title: 'FEK',
     }
@@ -77,22 +81,27 @@ export default {
       }
   },
   institution: {
-    menu_label: "Institutions"
+    menu_label: "Institutions",
+    create_title: "New institution",
   },
   user: {
-    menu_label: "Users"
+    menu_label: "Users",
+    create_title: "New user",
   },
   school: {
-    menu_label: "Schools"
+    menu_label: "Schools",
+    create_title: "New school",
   },
   department: {
-    menu_label: "Departments"
+    menu_label: "Departments",
+    create_title: "New department",
   },
   subject_area : {
-    menu_label: "Thematic Areas"
+    menu_label: "Thematic Areas",
+    create_title: "New thematic area",
   },
   subject: {
-    menu_label: "Sub Thematic Areas"
+    menu_label: "Themes",
+    create_title: "New theme",
   },
-
 };

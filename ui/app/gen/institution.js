@@ -8,4 +8,14 @@ export default gen.CRUDGen.extend({
       label: 'institution.menu_label'
     }
   },
+  list: {
+    page: {
+      title: 'institution.menu_label',
+    }
+  },
+  create: {
+    page: {
+      title: 'institution.create_title'
+    },
+  }
 });

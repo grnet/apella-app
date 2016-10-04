@@ -7,5 +7,15 @@ export default gen.CRUDGen.extend({
       icon: 'domain',
       label: 'department.menu_label'
     }
+  },
+  list: {
+    page: {
+      title: 'department.menu_label',
+    }
+  },
+  create: {
+    page: {
+      title: 'department.create_title'
+    },
   }
 });

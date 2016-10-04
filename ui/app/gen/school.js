@@ -7,5 +7,15 @@ export default gen.CRUDGen.extend({
       icon: 'account_balance',
       label: 'school.menu_label'
     }
-  }
+  },
+  list: {
+    page: {
+      title: 'school.menu_label',
+    }
+  },
+  create: {
+    page: {
+      title: 'school.create_title'
+    },
+  },
 });

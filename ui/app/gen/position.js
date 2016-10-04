@@ -32,5 +32,17 @@ export default gen.CRUDGen.extend({
         flex: [50, 50, 50, 50]
       },
     }],
-  }
+  },
+  list: {
+    page: {
+      title: 'position.menu_label',
+    }
+  },
+  create: {
+    page: {
+      title: 'position.create_title'
+    },
+  },
+
+
 });

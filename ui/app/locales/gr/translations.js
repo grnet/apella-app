@@ -17,10 +17,13 @@ export default {
   'starts_at.label': 'Ημερομηνία Έναρξης Υποβολών',
   'ends_at.label': 'Ημερομηνία Λήξης Υποβολών',
   'area.label': 'Θεματική περιοχή',
+  'author.label': 'Συντάκτης',
+  'username.label': 'Όνομα Χρήστη',
+  'role.label': 'Ρόλος',
   manager: {
     menu_label: "Διαχειριστές Ιδρύματος",
+    create_title: "Νέος διαχειριστής",
     label: {
-      username: "Όνομα Χρήστη",
       last_name: "Επώνυμο",
       last_name_latin: "Επώνυμο με λατινικούς χαρακτήρες",
       first_name: "Όνομα",
@@ -40,7 +43,7 @@ export default {
   },
   candidacy: {
     menu_label: "Υποψηφιότητες",
-    page_title: 'Υποβολή Νέας Υποψηφιότητας',
+    create_title: 'Υποβολή Νέας Υποψηφιότητας',
     position_section: {
       title: "Στοιχεία Θέσης",
       subtitle: "Όποια στοιχεία θέσης χρειάζονται θα τοποθετηθούν εδώ."
@@ -66,6 +69,7 @@ export default {
   },
   position: {
     menu_label: "Θέσεις",
+    create_title: "Νέα θέση",
     fek_section: {
       title: 'ΦΕΚ',
     }
@@ -77,21 +81,27 @@ export default {
       }
   },
   institution: {
-    menu_label: "Ιδρύματα"
+    menu_label: "Ιδρύματα",
+    create_title: "Νέο ίδρυμα",
   },
   user: {
-    menu_label: "Χρήστες"
+    menu_label: "Χρήστες",
+    create_title: "Νέος χρήστης",
   },
   school: {
-    menu_label: "Σχολές"
+    menu_label: "Σχολές",
+    create_title: "Νέα σχολή",
   },
   department: {
-    menu_label: "Τμήματα"
+    menu_label: "Τμήματα",
+    create_title: "Νέο τμήμα",
   },
   subject_area : {
-    menu_label: "Γνωστικά Αντικείμενα"
+    menu_label: "Θεματικές περιοχές",
+    create_title: "Νέα θεματική περιοχή",
   },
   subject: {
-    menu_label: "Υποκατηγορίες Γνωστικών Αντικειμένων"
+    menu_label: "Θέμα",
+    create_title: "Νέο θέμα",
   },
 };

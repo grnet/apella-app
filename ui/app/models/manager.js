@@ -2,7 +2,7 @@ import DS from 'ember-data';
 
 
 export default DS.Model.extend({
-  username: DS.attr({label: 'manager.label.username'}),
+  username: DS.attr(),
   last_name: DS.attr({label: 'manager.label.last_name'}),
   last_name_latin: DS.attr({label: 'manager.label.last_name_latin'}),
   first_name: DS.attr({label: 'manager.label.first_name'}),

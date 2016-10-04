@@ -9,12 +9,23 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    page: {
+      title: 'manager.menu_label',
+    },
+    label: 'manager.menu_label',
     fields: ['id', 'username', 'last_name'],
+    menu: {
+      label: 'manager.menu_label',
+    },
     row: {
+      label: 'manager.menu_label',
       icon: 'person',
     },
   },
-  create:{
+  create: {
+    page: {
+      title: 'manager.create_title'
+    },
   },
   details: {
     fields: ['id', 'username', 'last_name'],

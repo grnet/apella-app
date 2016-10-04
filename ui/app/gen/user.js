@@ -7,5 +7,15 @@ export default gen.CRUDGen.extend({
       icon: 'face',
       label: 'user.menu_label'
     }
+  },
+  list: {
+    page: {
+      title: 'user.menu_label',
+    }
+  },
+  create: {
+    page: {
+      title: 'user.create_title',
+    }
   }
 });

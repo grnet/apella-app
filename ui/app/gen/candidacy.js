@@ -22,9 +22,14 @@ export default gen.CRUDGen.extend({
       additionalFiles: mandatory_with_max_chars,
     }
   },
+  list: {
+    page: {
+      title: 'candidacy.menu_label',
+    }
+  },
   create: {
     page: {
-      title: 'candidacy.page_title'
+      title: 'candidacy.create_title'
     },
     fieldsets: [
     {
