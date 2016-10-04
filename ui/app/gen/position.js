@@ -15,7 +15,7 @@ export default gen.CRUDGen.extend({
     },
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: ['title',
+      fields: ['title', 'author',
               ['state', {
                 attrs: {
                   readonly: true,
@@ -23,7 +23,7 @@ export default gen.CRUDGen.extend({
               }],
               'description', 'discipline', 'department', 'subject_area', 'subject'],
       layout: {
-        flex: [50, 50, 100, 50, 50, 50, 50]
+        flex: [100, 50, 50, 100, 50, 50, 50, 50]
       }
     }, {
       label: 'fieldsets.labels.details',
