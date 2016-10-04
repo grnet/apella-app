@@ -13,6 +13,10 @@ django.setup()
 from django.core import management
 from apella.management.commands import *
 
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+
 def run_command(command, input=None):
     args = []
     options = []
@@ -21,7 +25,7 @@ def run_command(command, input=None):
             if key.startswith('arg'):
                 args.append(str(input[key]))
             else:
-                options.append((key,str(input[key])))
+                options.append((key, str(input[key])))
     management.call_command(command, *args, **dict(options))
 
 with open(sys.argv[1]) as jdata:

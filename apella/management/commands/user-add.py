@@ -1,11 +1,11 @@
 from optparse import make_option
-
 from django.core.management.base import BaseCommand, CommandError
+from apella.management.utils import ApellaCommand
 from apella.models import ApellaUser
 from apella import common
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'Create a user'
     args = '<username> <password>'
 

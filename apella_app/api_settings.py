@@ -38,11 +38,21 @@ candidacy_resource = {
 institution_resource = {
     'model': 'apella.models.Institution',
     'field_schema': {
-        'fields': ['id', 'url', 'title', 'organization',
-                   'regulatory_framework'],
-        'read_only_fields': ['id', 'url']
-    },
-    'filter_fields': ['title', ],
+        'fields': ['id', 'url', 'organization',
+                   'regulatory_framework', 'el', 'en'],
+        'read_only_fields': ['id', 'url'],
+        'nested_objects': {
+            'el': {
+                'model_field': 'el',
+                'field_schema': {'fields': ['title']}
+            },
+            'en': {
+                'model_field': 'en',
+                'field_schema': {'fields': ['title']}
+            }
+        },
+        'custom_mixins': ['apella.mixins.MultiLangMixin']
+    }
 }
 
 school_resource = {
@@ -66,19 +76,40 @@ department_resource = {
 subject_area_resource = {
     'model': 'apella.models.SubjectArea',
     'field_schema': {
-        'fields': ['id', 'url', 'title'],
-        'read_only_fields': ['id', 'url']
-    },
-    'filter_fields': ['title', ]
+        'fields': ['id', 'url', 'el', 'en'],
+        'read_only_fields': ['id', 'url'],
+        'nested_objects': {
+            'el': {
+                'model_field': 'el',
+                'field_schema': {'fields': ['title']}
+            },
+            'en': {
+                'model_field': 'en',
+                'field_schema': {'fields': ['title']}
+            }
+        },
+        'custom_mixins': ['apella.mixins.MultiLangMixin']
+    }
 }
 
 subject_resource = {
     'model': 'apella.models.Subject',
     'field_schema': {
-        'fields': ['id', 'url', 'title', 'area'],
-        'read_only_fields': ['id', 'url']
+        'fields': ['id', 'url', 'area', 'el', 'en'],
+        'read_only_fields': ['id', 'url'],
+        'nested_objects': {
+            'el': {
+                'model_field': 'el',
+                'field_schema': {'fields': ['title']}
+            },
+            'en': {
+                'model_field': 'en',
+                'field_schema': {'fields': ['title']}
+            }
+        },
+        'custom_mixins': ['apella.mixins.MultiLangMixin']
     },
-    'filter_fields': ['title', 'area', ]
+    'filter_fields': ['area', ]
 }
 
 registry_resource = {

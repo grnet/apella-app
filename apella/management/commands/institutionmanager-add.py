@@ -1,12 +1,11 @@
 from optparse import make_option
-
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import InstitutionManager, Institution, ApellaUser
 from apella import common
-from apella.management.utils import get_user
+from apella.management.utils import get_user, ApellaCommand
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'Create an institution manager'
     args = '<user id or username> <institution id>'
 

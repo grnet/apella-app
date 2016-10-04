@@ -1,13 +1,12 @@
 from optparse import make_option
-
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.db.utils import IntegrityError
 from apella.models import Department, Registry, ApellaUser
-from apella.management.utils import get_user
+from apella.management.utils import get_user, ApellaCommand
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'Create or update a registry of the given type ' + \
         str([str(x[0]) + ':' + str(x[1]) for x in Registry.TYPES]).strip('[]')
     args = '<department_id> <type>'

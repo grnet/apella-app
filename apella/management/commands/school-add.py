@@ -1,10 +1,10 @@
 from optparse import make_option
-
 from django.core.management.base import BaseCommand, CommandError
+from apella.management.utils import ApellaCommand
 from apella.models import Institution, School
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'Create a school for the given institution'
     args = '<institution id> <title>'
 
@@ -19,7 +19,7 @@ class Command(BaseCommand):
                 title=title, institution=institution)
             self.stdout.write(
                 "Created school %s : %s for institution: %s" %
-                (school.pk, school.title, school.institution.title))
+                (school.pk, school.title, school.institution.id))
         except Institution.DoesNotExist:
             raise CommandError(
                 "Institution %s does not exist" % institution_id)

@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import Position
-
 from optparse import make_option
 
 

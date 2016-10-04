@@ -124,9 +124,11 @@ AUTH_USER_MODEL = 'apella.ApellaUser'
 
 START_DATE_END_DATE_INTERVAL = 30
 RESOURCES_FILE = os.path.join(BASE_DIR, 'resources/common.json')
+LANGUAGES = {'el', 'en'}
 
 try:
     from local_settings import *
+    from api_settings import *
 except ImportError, exp:
     pass
 from api_settings import *

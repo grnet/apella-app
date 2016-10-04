@@ -16,16 +16,40 @@ class ApellaUser(AbstractUser):
     """
     role = models.CharField(
         choices=common.USER_ROLES, max_length=1, default='2')
-    father_name = models.CharField(max_length=50)
+
+
+class InstitutionFields(models.Model):
+    """
+    Abstract model to include fields in different languages
+    """
+    title = models.CharField(max_length=150, blank=True)
+
+    class meta:
+        abstract = True
+
+
+class InstitutionEl(InstitutionFields):
+    """
+    Institution fields in Greek
+    """
+    pass
+
+
+class InstitutionEn(InstitutionFields):
+    """
+    Institution fields in English
+    """
+    pass
 
 
 class Institution(models.Model):
     """
-    Model for Institutions
+    Model for Institutions.
     """
-    title = models.CharField(max_length=150, blank=False)
     organization = models.URLField(blank=True)
     regulatory_framework = models.URLField(blank=True)
+    el = models.ForeignKey(InstitutionEl, blank=True, null=True)
+    en = models.ForeignKey(InstitutionEn, blank=True, null=True)
 
 
 class InstitutionManager(models.Model):
@@ -56,19 +80,57 @@ class Department(models.Model):
     school = models.ForeignKey(School, blank=False, null=False)
 
 
+class SubjectAreaFields(models.Model):
+    """
+    Abstract model to include fields in different languages
+    """
+    title = models.CharField(max_length=200, blank=True)
+
+    class meta:
+        abstract = True
+
+
+class SubjectAreaEl(SubjectAreaFields):
+    pass
+
+
+class SubjectAreaEn(SubjectAreaFields):
+    pass
+
+
 class SubjectArea(models.Model):
     """
     Model for Subject areas
     """
-    title = models.CharField(max_length=200, blank=False, null=False)
+    el = models.ForeignKey(SubjectAreaEl, blank=True, null=True)
+    en = models.ForeignKey(SubjectAreaEn, blank=True, null=True)
+
+
+class SubjectFields(models.Model):
+    """
+    Abstract model to include fields in different languages
+    """
+    title = models.CharField(max_length=200, blank=True)
+
+    class meta:
+        abstract = True
+
+
+class SubjectEl(SubjectFields):
+    pass
+
+
+class SubjectEn(SubjectFields):
+    pass
 
 
 class Subject(models.Model):
     """
     Model for Subjects
     """
-    title = models.CharField(max_length=200, blank=False, null=False)
     area = models.ForeignKey(SubjectArea, blank=False, null=False)
+    el = models.ForeignKey(SubjectEl, blank=True, null=True)
+    en = models.ForeignKey(SubjectEn, blank=True, null=True)
 
 
 class Position(models.Model):

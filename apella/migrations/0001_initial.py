@@ -31,7 +31,6 @@ class Migration(migrations.Migration):
                 ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('role', models.CharField(default=b'2', max_length=1, choices=[['1', 'Institution Manager'], ['2', 'Candidate'], ['3', 'Elector'], ['4', 'Committee'], ['5', 'Assistant']])),
-                ('father_name', models.CharField(max_length=50)),
                 ('groups', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions')),
             ],
@@ -48,8 +47,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Cancelled']])),
                 ('others_can_view', models.BooleanField(default=False)),
-                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 9, 30, 8, 5, 46, 734724))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 9, 30, 8, 5, 46, 734748))),
+                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 10, 5, 9, 37, 11, 103337))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 5, 9, 37, 11, 103361))),
                 ('cv', models.CharField(max_length=200)),
                 ('diploma', models.CharField(max_length=200)),
                 ('publication', models.CharField(max_length=200)),
@@ -75,13 +74,40 @@ class Migration(migrations.Migration):
             name='Institution',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=150)),
                 ('organization', models.URLField(blank=True)),
                 ('regulatory_framework', models.URLField(blank=True)),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='InstitutionFields',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=150, blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='InstitutionEn',
+            fields=[
+                ('institutionfields_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='apella.InstitutionFields')),
+            ],
+            options={
+            },
+            bases=('apella.institutionfields',),
+        ),
+        migrations.CreateModel(
+            name='InstitutionEl',
+            fields=[
+                ('institutionfields_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='apella.InstitutionFields')),
+            ],
+            options={
+            },
+            bases=('apella.institutionfields',),
         ),
         migrations.CreateModel(
             name='InstitutionManager',
@@ -109,8 +135,8 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Electing'], ['4', 'Successful'], ['5', 'Failed']])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
-                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 9, 30, 8, 5, 46, 732189))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 9, 30, 8, 5, 46, 732215))),
+                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 10, 5, 9, 37, 11, 100747))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 5, 9, 37, 11, 100772))),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),
@@ -149,7 +175,6 @@ class Migration(migrations.Migration):
             name='Subject',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=200)),
             ],
             options={
             },
@@ -159,16 +184,95 @@ class Migration(migrations.Migration):
             name='SubjectArea',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=200)),
             ],
             options={
             },
             bases=(models.Model,),
         ),
+        migrations.CreateModel(
+            name='SubjectAreaFields',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=200, blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SubjectAreaEn',
+            fields=[
+                ('subjectareafields_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='apella.SubjectAreaFields')),
+            ],
+            options={
+            },
+            bases=('apella.subjectareafields',),
+        ),
+        migrations.CreateModel(
+            name='SubjectAreaEl',
+            fields=[
+                ('subjectareafields_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='apella.SubjectAreaFields')),
+            ],
+            options={
+            },
+            bases=('apella.subjectareafields',),
+        ),
+        migrations.CreateModel(
+            name='SubjectFields',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=200, blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SubjectEn',
+            fields=[
+                ('subjectfields_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='apella.SubjectFields')),
+            ],
+            options={
+            },
+            bases=('apella.subjectfields',),
+        ),
+        migrations.CreateModel(
+            name='SubjectEl',
+            fields=[
+                ('subjectfields_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='apella.SubjectFields')),
+            ],
+            options={
+            },
+            bases=('apella.subjectfields',),
+        ),
+        migrations.AddField(
+            model_name='subjectarea',
+            name='el',
+            field=models.ForeignKey(blank=True, to='apella.SubjectAreaEl', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='subjectarea',
+            name='en',
+            field=models.ForeignKey(blank=True, to='apella.SubjectAreaEn', null=True),
+            preserve_default=True,
+        ),
         migrations.AddField(
             model_name='subject',
             name='area',
             field=models.ForeignKey(to='apella.SubjectArea'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='subject',
+            name='el',
+            field=models.ForeignKey(blank=True, to='apella.SubjectEl', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='subject',
+            name='en',
+            field=models.ForeignKey(blank=True, to='apella.SubjectEn', null=True),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(
@@ -185,6 +289,18 @@ class Migration(migrations.Migration):
             model_name='position',
             name='subject_area',
             field=models.ForeignKey(to='apella.SubjectArea'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='institution',
+            name='el',
+            field=models.ForeignKey(blank=True, to='apella.InstitutionEl', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='institution',
+            name='en',
+            field=models.ForeignKey(blank=True, to='apella.InstitutionEn', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

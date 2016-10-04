@@ -1,9 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import ApellaUser, Position, Candidacy
-from apella.management.utils import get_user
+from apella.management.utils import get_user, ApellaCommand
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'Create a candidacy for a position for the given user'
     args = '<position id> <candidate id or username>'
 

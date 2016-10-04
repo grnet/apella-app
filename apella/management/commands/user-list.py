@@ -1,9 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
+from apella.management.utils import ApellaCommand
 from apella.models import ApellaUser
 from apella import common
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'List users'
 
     def handle(self, *args, **options):

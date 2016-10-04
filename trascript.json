@@ -16,7 +16,8 @@
     "user": "1",
     "action": "institution-add",
     "input": {
-        "arg1": "University of Crete"
+        "arg1": "Πανεπιστήμιο Κρήτης",
+        "en": "University of Crete"
     },
     "db_state_change" : {
         "object" : {"Institution" : "1"},
@@ -116,7 +117,8 @@
     "user": "1",
     "action": "subjectarea-add",
     "input": {
-        "arg1": "Mathematics"
+        "arg1": "Μαθηματικά",
+        "en": "Mathematics"
     },
     "db_state_change" : {
         "object" : {"SubjectArea" : "1"},
@@ -127,8 +129,9 @@
     "user": "1",
     "action": "subject-add",
     "input": {
-        "arg1": "Algebra",
-        "arg2" : "1"
+        "arg1": "Άλγεβρα",
+        "arg2": "1",
+        "en": "Algebra"
     },
     "db_state_change" : {
         "object" : {"Subject" : "1"},

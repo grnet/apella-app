@@ -3,14 +3,13 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
 from apimas.modeling.container import Container
-import api_settings
 
 admin.autodiscover()
 controller = Container('api')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    controller.create_api_views(api_settings.API_SCHEMA)
+    controller.create_api_views(settings.API_SCHEMA)
 ]
 
 ui_prefix = getattr(settings, 'UI_PREFIX', 'ui/')

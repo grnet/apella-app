@@ -1,9 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
+from apella.management.utils import ApellaCommand
 from apella.models import Candidacy
 from django.utils import timezone
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'Post a candidacy'
     args = '<candidacy id>'
 

@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
+from apella.management.utils import ApellaCommand
 from apella.models import Candidacy
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'List candidacies'
 
     def handle(self, *args, **options):

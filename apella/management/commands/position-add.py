@@ -2,12 +2,12 @@ from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ValidationError
 from apella.models import Position, Department, Subject, SubjectArea,\
     InstitutionManager
-from apella.management.utils import get_user
+from apella.management.utils import get_user, ApellaCommand
 
 from optparse import make_option
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'Create a position with the given title and author'
     args = '<title> <author id> <department id> <description>' + \
         ' <subject area> <subject> <fek url> <fek posted at> <start> <end>'

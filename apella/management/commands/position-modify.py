@@ -1,11 +1,10 @@
 from optparse import make_option
-
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import ApellaUser, Position
-from apella.management.utils import get_user
+from apella.management.utils import get_user, ApellaCommand
 
 
-class Command(BaseCommand):
+class Command(ApellaCommand):
     help = 'Update a position'
     args = '<position ID>'
 
@@ -20,7 +19,6 @@ class Command(BaseCommand):
                     dest='committee',
                     help='Choose committee for the position'),
         )
-
 
     def handle(self, *args, **options):
         if len(args) != 1:
@@ -41,14 +39,14 @@ class Command(BaseCommand):
                 position.elected = elected
                 position.state = '4'
                 position.save()
-                self.stdout.write("%s has been elected for position %s" %
-                        (elected.username, position.id))
+                self.stdout.write(
+                    "%s has been elected for position %s" %
+                    (elected.username, position.id))
 
             except ApellaUser.DoesNotExist:
                 raise CommandError("Invalid elected ID")
             except:
                 raise CommandError("Operation failed")
-
 
         if electors:
             try:
@@ -70,7 +68,6 @@ class Command(BaseCommand):
 
             except TypeError:
                     print 'Electors should be comma separated user ids'
-
 
         if committee:
             try:
