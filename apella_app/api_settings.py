@@ -17,7 +17,7 @@ apellauser_resource = {
     'model': 'apella.models.ApellaUser',
     'field_schema': {
         'fields': ['id', 'url', 'username', 'role'],
-        'read_only_fields': ['id', 'url', 'username']
+        'read_only_fields': ['id', 'url']
     },
     'filter_fields': ['username', ]
 }
