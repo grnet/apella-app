@@ -1,9 +1,10 @@
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 
-const mandatory = [validate.presence(true)],
+const presence = validate.presence(true),
       max_chars = validate.length({max: 200}),
-      mandatory_with_max_chars = [mandatory, max_chars];
+      mandatory = [validate.presence(true)],
+      mandatory_with_max_chars = [presence, max_chars];
 
 
 export default gen.CRUDGen.extend({
