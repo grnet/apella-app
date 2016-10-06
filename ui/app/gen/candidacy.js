@@ -24,6 +24,7 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    fields: ['candidate.username', 'position.title', 'submittedAt'],
     page: {
       title: 'candidacy.menu_label',
     }

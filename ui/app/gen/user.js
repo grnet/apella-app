@@ -9,6 +9,7 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    fields: ['username', 'role_verbose'],
     page: {
       title: 'user.menu_label',
     }
