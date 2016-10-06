@@ -7,6 +7,7 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/ui/',
     locationType: 'auto',
+    moment: {},
     i18n : {
       defaultLocale: 'gr'
     },
