@@ -59,6 +59,9 @@ class InstitutionEn(InstitutionFields):
 
 
 class Institution(models.Model):
+    category = models.CharField(
+        choices=common.INSTITUTION_CATEGORIES, blank=False, null=False,
+        max_length=15, default='1')
     organization = models.URLField(blank=True)
     regulatory_framework = models.URLField(blank=True)
     el = models.ForeignKey(InstitutionEl, blank=True, null=True)
@@ -102,7 +105,8 @@ class DepartmentEn(DepartmentFields):
 
 
 class Department(models.Model):
-    school = models.ForeignKey(School, blank=False, null=False)
+    school = models.ForeignKey(School, blank=True, null=True)
+    institution = models.ForeignKey(Institution, blank=False, null=False)
     el = models.ForeignKey(DepartmentEl, blank=True, null=True)
     en = models.ForeignKey(DepartmentEn, blank=True, null=True)
 

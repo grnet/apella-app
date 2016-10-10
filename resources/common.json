@@ -51,5 +51,10 @@
         ["Diploma", "Diploma"],
         ["Publication", "Publication"],
         ["Additional file", "Additional file"]
+    ],
+
+    "INSTITUTION_CATEGORIES": [
+        ["Institution", "Institution"],
+        ["Research", "Research Center"]
     ]
 }

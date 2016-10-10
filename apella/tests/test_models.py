@@ -35,7 +35,8 @@ class CandidacyTest(TestCase):
         institution_en = InstitutionEn.objects.create(
             title='University of Crete')
         institution = Institution.objects.create(
-                el=institution_el, en=institution_en)
+            category='Institution',
+            el=institution_el, en=institution_en)
         self.author = InstitutionManager.objects.create(
                 user=author,
                 institution=institution,
@@ -51,7 +52,8 @@ class CandidacyTest(TestCase):
         department_en = DepartmentEn.objects.create(
             title='Applied Mathematics')
         self.department = Department.objects.create(
-            el=department_el, en=department_en, school=school)
+            el=department_el, en=department_en, school=school,
+            institution=institution)
         subject_area_el = SubjectAreaEl.objects.create(title='Μαθηματικά')
         subject_area_en = SubjectAreaEn.objects.create(title='Mathematics')
         subject_area = SubjectArea(el=subject_area_el, en=subject_area_en)

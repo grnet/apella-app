@@ -52,7 +52,7 @@ candidacy_resource = {
 institution_resource = {
     'model': 'apella.models.Institution',
     'field_schema': {
-        'fields': ['id', 'url', 'organization',
+        'fields': ['id', 'url', 'organization', 'category',
                    'regulatory_framework', 'el', 'en'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
@@ -92,7 +92,7 @@ school_resource = {
 department_resource = {
     'model': 'apella.models.Department',
     'field_schema': {
-        'fields': ['id', 'url', 'school', 'el', 'en'],
+        'fields': ['id', 'url', 'institution', 'school', 'el', 'en'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'el': {

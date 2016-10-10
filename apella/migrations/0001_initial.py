@@ -125,6 +125,7 @@ class Migration(migrations.Migration):
             name='Institution',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('category', models.CharField(default=b'1', max_length=15, choices=[['Institution', 'Institution'], ['Research', 'Research Center']])),
                 ('organization', models.URLField(blank=True)),
                 ('regulatory_framework', models.URLField(blank=True)),
             ],
@@ -375,8 +376,13 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='department',
+            name='institution',
+            field=models.ForeignKey(to='apella.Institution'),
+        ),
+        migrations.AddField(
+            model_name='department',
             name='school',
-            field=models.ForeignKey(to='apella.School'),
+            field=models.ForeignKey(blank=True, to='apella.School', null=True),
         ),
         migrations.AddField(
             model_name='candidacy',
