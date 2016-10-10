@@ -1,7 +1,7 @@
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from apella.management.utils import ApellaCommand
-from apella.models import ApellaUser
+from apella.models import ApellaUser, ApellaUserEl, ApellaUserEn
 from apella import common
 
 
@@ -23,9 +23,14 @@ class Command(ApellaCommand):
         username, password = args[:2]
 
         try:
+            el = ApellaUserEl.objects.create()
+            en = ApellaUserEn.objects.create()
+
             a = ApellaUser.objects.create(username=username,
                                           password=password,
-                                          role=options['role'])
+                                          role=options['role'],
+                                          el=el,
+                                          en=en)
 
             self.stdout.write("User with id: %s created" % a.pk)
         except:

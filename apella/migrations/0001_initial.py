@@ -31,8 +31,6 @@ class Migration(migrations.Migration):
                 ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('role', models.CharField(default=b'2', max_length=1, choices=[['1', 'Institution Manager'], ['2', 'Candidate'], ['3', 'Elector'], ['4', 'Committee'], ['5', 'Assistant']])),
-                ('groups', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions')),
             ],
             options={
                 'abstract': False,
@@ -42,13 +40,43 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='ApellaUserFields',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('first_name', models.CharField(max_length=200)),
+                ('last_name', models.CharField(max_length=300)),
+                ('father_name', models.CharField(max_length=200)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ApellaUserEn',
+            fields=[
+                ('apellauserfields_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='apella.ApellaUserFields')),
+            ],
+            options={
+            },
+            bases=('apella.apellauserfields',),
+        ),
+        migrations.CreateModel(
+            name='ApellaUserEl',
+            fields=[
+                ('apellauserfields_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='apella.ApellaUserFields')),
+            ],
+            options={
+            },
+            bases=('apella.apellauserfields',),
+        ),
+        migrations.CreateModel(
             name='Candidacy',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Cancelled']])),
                 ('others_can_view', models.BooleanField(default=False)),
-                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 10, 5, 9, 37, 11, 103337))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 5, 9, 37, 11, 103361))),
+                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 10, 10, 13, 48, 28, 752373))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 10, 13, 48, 28, 752400))),
                 ('cv', models.CharField(max_length=200)),
                 ('diploma', models.CharField(max_length=200)),
                 ('publication', models.CharField(max_length=200)),
@@ -135,8 +163,8 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Electing'], ['4', 'Successful'], ['5', 'Failed']])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
-                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 10, 5, 9, 37, 11, 100747))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 5, 9, 37, 11, 100772))),
+                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 10, 10, 13, 48, 28, 748495))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 10, 13, 48, 28, 748554))),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),
@@ -313,6 +341,30 @@ class Migration(migrations.Migration):
             model_name='candidacy',
             name='position',
             field=models.ForeignKey(to='apella.Position'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='apellauser',
+            name='el',
+            field=models.ForeignKey(to='apella.ApellaUserEl', blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='apellauser',
+            name='en',
+            field=models.ForeignKey(to='apella.ApellaUserEn', blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='apellauser',
+            name='groups',
+            field=models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='apellauser',
+            name='user_permissions',
+            field=models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions'),
             preserve_default=True,
         ),
     ]

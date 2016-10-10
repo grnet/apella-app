@@ -17,8 +17,21 @@ apellauser_resource = {
     'model': 'apella.models.ApellaUser',
     'field_schema': {
         'fields': ['id', 'url', 'username', 'password', 'role',
-                   'first_name', 'last_name'],
-        'read_only_fields': ['id', 'url']
+                   'el', 'en'],
+        'read_only_fields': ['id', 'url'],
+        'nested_objects': {
+            'el': {
+                'model_field': 'el',
+                'field_schema': {'fields': ['first_name', 'last_name',
+                                            'father_name']}
+            },
+            'en': {
+                'model_field': 'en',
+                'field_schema': {'fields': ['first_name', 'last_name',
+                                            'father_name']}
+            }
+        },
+        'custom_mixins': ['apella.mixins.MultiLangMixin']
     },
     'filter_fields': ['username', ]
 }

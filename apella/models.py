@@ -5,6 +5,23 @@ from apella.validators import before_today_validator, after_today_validator
 from apella import common
 
 
+class ApellaUserFields(models.Model):
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=300)
+    father_name = models.CharField(max_length=200)
+
+    class meta:
+        abstract = True
+
+
+class ApellaUserEl(ApellaUserFields):
+    pass
+
+
+class ApellaUserEn(ApellaUserFields):
+    pass
+
+
 class ApellaUser(AbstractUser):
 
     """
@@ -16,6 +33,8 @@ class ApellaUser(AbstractUser):
     """
     role = models.CharField(
         choices=common.USER_ROLES, max_length=1, default='2')
+    el = models.ForeignKey(ApellaUserEl, blank=True)
+    en = models.ForeignKey(ApellaUserEn, blank=True)
 
 
 class InstitutionFields(models.Model):
