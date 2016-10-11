@@ -14,7 +14,9 @@
         }
     }
 }
-
+body md-toolbar.md-tall {
+    height: 0 !important;
+}
 .language-select {
     position: absolute;
     right: 20px;

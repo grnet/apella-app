@@ -15,7 +15,6 @@ export default Ember.Component.extend({
     setLocale(e) {
       console.log(e, '000000000');
       console.log(this.get('loc'));
-      debugger;
       this.set('i18n.locale', this.$('select').val());
     }
   }
