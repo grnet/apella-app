@@ -1,7 +1,7 @@
 import DS from 'ember-data';
+import gen from 'ember-gen/lib/attrs';
 
 export default DS.Model.extend({
-  title: DS.attr(),
-  area: DS.belongsTo('subject_area', {attrs: {optionLabelAttr: 'title'}}),
-
+  title: gen.attr(),
+  area: gen.belongsTo('subject_area', {attrs: {optionLabelAttr: 'title'}}),
 });
