@@ -1,7 +1,7 @@
 import DS from 'ember-data';
+import gen from 'ember-gen/lib/attrs';
 
 export default DS.Model.extend({
-  title: DS.attr(),
-  institution: DS.belongsTo('institution', {attrs: {optionLabelAttr: 'title'}}),
-
+  title: gen.attr(),
+  institution: gen.belongsTo('institution', {attrs: {optionLabelAttr: 'title'}}),
 });

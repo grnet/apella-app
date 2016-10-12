@@ -9,6 +9,8 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    tableLayout: true,
+    selectable: true,
     fields: ['title', 'school.title'],
     page: {
       title: 'department.menu_label',
