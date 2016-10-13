@@ -31,7 +31,7 @@ apellauser_resource = {
                                             'father_name']}
             }
         },
-        'custom_mixins': ['apella.mixins.MultiLangMixin']
+        'custom_mixins': ['apella.mixins.NestedWritableObjectsMixin']
     },
     'filter_fields': ['username', ]
 }
@@ -64,7 +64,7 @@ institution_resource = {
                 'field_schema': {'fields': ['title']}
             }
         },
-        'custom_mixins': ['apella.mixins.MultiLangMixin']
+        'custom_mixins': ['apella.mixins.NestedWritableObjectsMixin']
     }
 }
 
@@ -101,7 +101,7 @@ subject_area_resource = {
                 'field_schema': {'fields': ['title']}
             }
         },
-        'custom_mixins': ['apella.mixins.MultiLangMixin']
+        'custom_mixins': ['apella.mixins.NestedWritableObjectsMixin']
     }
 }
 
@@ -120,7 +120,7 @@ subject_resource = {
                 'field_schema': {'fields': ['title']}
             }
         },
-        'custom_mixins': ['apella.mixins.MultiLangMixin']
+        'custom_mixins': ['apella.mixins.NestedWritableObjectsMixin']
     },
     'filter_fields': ['area', ]
 }
@@ -139,9 +139,35 @@ institutionmanager_resource = {
     'field_schema': {
         'fields': ['id', 'url', 'user', 'institution', 'authority',
                    'authority_full_name', 'manager_role'],
+        'nested_objects': {
+            'user': {
+                'model_field': 'user',
+                'field_schema': apellauser_resource['field_schema']
+            },
+        },
+        'custom_mixins': ['apella.mixins.NestedWritableObjectsMixin'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': ['institution', 'manager_role', ]
+}
+
+professor_resource = {
+    'model': 'apella.models.Professor',
+    'field_schema': {
+        'fields': ['id', 'url', 'user', 'institution', 'rank',
+                   'is_foreign', 'speaks_greek'],
+        'read_only_fields': ['id', 'url']
+    },
+    'filter_fields': ['institution', ]
+}
+
+candidate_resource = {
+    'model': 'apella.models.Candidate',
+    'field_schema': {
+        'fields': ['id', 'url', 'user'],
+        'read_only_fields': ['id', 'url']
+    },
+    'filter_fields': []
 }
 
 API_SCHEMA = {
@@ -155,6 +181,8 @@ API_SCHEMA = {
         'subject-areas': subject_area_resource,
         'subjects': subject_resource,
         'registries': registry_resource,
-        'institution-managers': institutionmanager_resource
+        'institution-managers': institutionmanager_resource,
+        'professors': professor_resource,
+        'candidates': candidate_resource
     }
 }

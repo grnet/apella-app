@@ -35,12 +35,12 @@ class ApellaUser(AbstractUser):
         choices=common.USER_ROLES, max_length=1, default='2')
     el = models.ForeignKey(ApellaUserEl, blank=True)
     en = models.ForeignKey(ApellaUserEn, blank=True)
+    id_passport = models.CharField(max_length=20, blank=False, null=False)
+    mobile_phone_number = models.CharField(max_length=30)
+    home_phone_number = models.CharField(max_length=30)
 
 
 class InstitutionFields(models.Model):
-    """
-    Abstract model to include fields in different languages
-    """
     title = models.CharField(max_length=150, blank=True)
 
     class Meta:
@@ -48,33 +48,54 @@ class InstitutionFields(models.Model):
 
 
 class InstitutionEl(InstitutionFields):
-    """
-    Institution fields in Greek
-    """
     pass
 
 
 class InstitutionEn(InstitutionFields):
-    """
-    Institution fields in English
-    """
     pass
 
 
 class Institution(models.Model):
-    """
-    Model for Institutions.
-    """
     organization = models.URLField(blank=True)
     regulatory_framework = models.URLField(blank=True)
     el = models.ForeignKey(InstitutionEl, blank=True, null=True)
     en = models.ForeignKey(InstitutionEn, blank=True, null=True)
 
 
+class ApellaFile(models.Model):
+    file_kind = models.CharField(choices=common.FILE_KINDS, max_length=1)
+    file_path = models.CharField(max_length=500)
+    updated_at = models.DateTimeField(blank=False, default=timezone.now())
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super(ApellaFile, self).save(*args, **kwargs)
+
+
+class Professor(models.Model):
+    user = models.ForeignKey(ApellaUser, blank=False, null=False)
+    institution = models.ForeignKey(Institution, blank=False, null=False)
+    rank = models.CharField(
+        choices=common.RANKS, blank=False, null=False, max_length=1)
+    is_foreign = models.BooleanField(default=False)
+    speaks_greek = models.BooleanField(default=True)
+    cv_url = models.URLField(blank=True)
+    fek = models.URLField(blank=False)
+    fek_discipline = models.CharField(max_length=300)
+    discipline_free_text = models.CharField(max_length=300)
+
+
+class Candidate(models.Model):
+    user = models.ForeignKey(ApellaUser, blank=False, null=False)
+
+
+class UserFiles(models.Model):
+    apella_file = models.ForeignKey(ApellaFile, related_name='user_files')
+    apella_user = models.ForeignKey(ApellaUser, related_name='user_files')
+    deleted = models.BooleanField(default=False, db_index=True)
+
+
 class InstitutionManager(models.Model):
-    """
-    Model for institution managers, assistants and manager substitutes
-    """
     user = models.ForeignKey(ApellaUser, blank=False, null=False)
     institution = models.ForeignKey(Institution, blank=False, null=False)
     authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
@@ -84,25 +105,16 @@ class InstitutionManager(models.Model):
 
 
 class School(models.Model):
-    """
-    Model for Schools
-    """
     title = models.CharField(max_length=150, blank=False)
     institution = models.ForeignKey(Institution, blank=False, null=False)
 
 
 class Department(models.Model):
-    """
-    Model for Departments
-    """
     title = models.CharField(max_length=150, blank=False)
     school = models.ForeignKey(School, blank=False, null=False)
 
 
 class SubjectAreaFields(models.Model):
-    """
-    Abstract model to include fields in different languages
-    """
     title = models.CharField(max_length=200, blank=True)
 
     class Meta:
@@ -118,17 +130,11 @@ class SubjectAreaEn(SubjectAreaFields):
 
 
 class SubjectArea(models.Model):
-    """
-    Model for Subject areas
-    """
     el = models.ForeignKey(SubjectAreaEl, blank=True, null=True)
     en = models.ForeignKey(SubjectAreaEn, blank=True, null=True)
 
 
 class SubjectFields(models.Model):
-    """
-    Abstract model to include fields in different languages
-    """
     title = models.CharField(max_length=200, blank=True)
 
     class Meta:
@@ -144,19 +150,12 @@ class SubjectEn(SubjectFields):
 
 
 class Subject(models.Model):
-    """
-    Model for Subjects
-    """
     area = models.ForeignKey(SubjectArea, blank=False, null=False)
     el = models.ForeignKey(SubjectEl, blank=True, null=True)
     en = models.ForeignKey(SubjectEn, blank=True, null=True)
 
 
 class Position(models.Model):
-
-    """
-    Model for positions
-    """
     title = models.CharField(max_length=50, blank=False, null=False)
     description = models.CharField(max_length=300, blank=False, null=False)
     discipline = models.CharField(max_length=300, blank=False, null=False)
@@ -192,11 +191,14 @@ class Position(models.Model):
         super(Position, self).save(*args, **kwargs)
 
 
-class Candidacy(models.Model):
+class PositionFiles(models.Model):
+    position_file = models.ForeignKey(
+        ApellaFile, related_name='position_files')
+    position = models.ForeignKey(Position, related_name='position_files')
+    deleted = models.BooleanField(default=False, db_index=True)
 
-    """
-    Model for candidacies
-    """
+
+class Candidacy(models.Model):
     candidate = models.ForeignKey(ApellaUser, blank=False)
     position = models.ForeignKey(Position, blank=False)
     state = models.CharField(
@@ -204,27 +206,25 @@ class Candidacy(models.Model):
     others_can_view = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(blank=False, default=timezone.now())
     updated_at = models.DateTimeField(blank=False, default=timezone.now())
-    # files
-    cv = models.CharField(max_length=200)
-    diploma = models.CharField(max_length=200)
-    publication = models.CharField(max_length=200)
-    self_evaluation = models.CharField(max_length=200)
-    additional_files = models.CharField(max_length=200)
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         super(Candidacy, self).save(*args, **kwargs)
 
 
-class Registry(models.Model):
-    """
-    Model for registries
-    """
-    class Meta:
-        # Each department can have only one internal and one external registry
-        unique_together = (("department", "type"),)
+class CandidacyFiles(object):
+    candidacy_file = models.ForeignKey(
+        ApellaFile, related_name='candidacy_files')
+    candidacy = models.ForeignKey(Candidacy, related_name='candidacy_files')
+    deleted = models.BooleanField(default=False, db_index=True)
 
+
+class Registry(models.Model):
     department = models.ForeignKey(Department, blank=False)
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=1, default='1')
     members = models.ManyToManyField(ApellaUser, blank=False, null=False)
+
+    class Meta:
+        # Each department can have only one internal and one external registry
+        unique_together = (("department", "type"),)

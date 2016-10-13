@@ -35,5 +35,18 @@
         ["1", "Manager"],
         ["2", "Assistant"],
         ["3", "Substitute"]
+    ],
+
+    "RANKS": [
+        ["Professor", "Professor"],
+        ["Associate Professor", "Associate Professor"],
+        ["Assistant Professor", "Assistant Professor"]
+    ],
+
+    "FILE_KINDS": [
+        ["CV", "CV"],
+        ["Diploma", "Diploma"],
+        ["Publication", "Publication"],
+        ["Additional file", "Additional file"]
     ]
 }

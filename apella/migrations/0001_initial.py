@@ -32,6 +32,9 @@ class Migration(migrations.Migration):
                 ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('role', models.CharField(default=b'2', max_length=1, choices=[['1', 'Institution Manager'], ['2', 'Candidate'], ['3', 'Elector'], ['4', 'Committee'], ['5', 'Assistant']])),
+                ('id_passport', models.CharField(max_length=20)),
+                ('mobile_phone_number', models.CharField(max_length=30)),
+                ('home_phone_number', models.CharField(max_length=30)),
             ],
             options={
                 'abstract': False,
@@ -40,6 +43,15 @@ class Migration(migrations.Migration):
             },
             managers=[
                 ('objects', django.contrib.auth.models.UserManager()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='ApellaFile',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('file_kind', models.CharField(max_length=1, choices=[['CV', 'CV'], ['Diploma', 'Diploma'], ['Publication', 'Publication'], ['Additional file', 'Additional file']])),
+                ('file_path', models.CharField(max_length=500)),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 911907))),
             ],
         ),
         migrations.CreateModel(
@@ -72,14 +84,16 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Cancelled']])),
                 ('others_can_view', models.BooleanField(default=False)),
-                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 10, 17, 14, 42, 28, 629660))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 17, 14, 42, 28, 629687))),
-                ('cv', models.CharField(max_length=200)),
-                ('diploma', models.CharField(max_length=200)),
-                ('publication', models.CharField(max_length=200)),
-                ('self_evaluation', models.CharField(max_length=200)),
-                ('additional_files', models.CharField(max_length=200)),
+                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 924185))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 924214))),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Candidate',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -140,14 +154,38 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Electing'], ['4', 'Successful'], ['5', 'Failed']])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
-                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 10, 17, 14, 42, 28, 626377))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 17, 14, 42, 28, 626405))),
+                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 919460))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 919485))),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),
                 ('department', models.ForeignKey(to='apella.Department')),
                 ('elected', models.ForeignKey(related_name='elected_positions', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
                 ('electors', models.ManyToManyField(related_name='elector_duty', to=settings.AUTH_USER_MODEL, blank=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='PositionFiles',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('deleted', models.BooleanField(default=False, db_index=True)),
+                ('position', models.ForeignKey(related_name='position_files', to='apella.Position')),
+                ('position_file', models.ForeignKey(related_name='position_files', to='apella.ApellaFile')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Professor',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('rank', models.CharField(max_length=1, choices=[['Professor', 'Professor'], ['Associate Professor', 'Associate Professor'], ['Assistant Professor', 'Assistant Professor']])),
+                ('is_foreign', models.BooleanField(default=False)),
+                ('speaks_greek', models.BooleanField(default=True)),
+                ('cv_url', models.URLField(blank=True)),
+                ('fek', models.URLField()),
+                ('fek_discipline', models.CharField(max_length=300)),
+                ('discipline_free_text', models.CharField(max_length=300)),
+                ('institution', models.ForeignKey(to='apella.Institution')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -218,6 +256,15 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
+        ),
+        migrations.CreateModel(
+            name='UserFiles',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('deleted', models.BooleanField(default=False, db_index=True)),
+                ('apella_file', models.ForeignKey(related_name='user_files', to='apella.ApellaFile')),
+                ('apella_user', models.ForeignKey(related_name='user_files', to=settings.AUTH_USER_MODEL)),
+            ],
         ),
         migrations.AddField(
             model_name='subjectarea',
