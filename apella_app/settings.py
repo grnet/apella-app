@@ -129,3 +129,4 @@ try:
     from local_settings import *
 except ImportError, exp:
     pass
+from api_settings import *
