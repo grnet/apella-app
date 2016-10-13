@@ -76,6 +76,24 @@ class MultiLangMixin(object):
 
         return super(MultiLangMixin, self).update(instance, validated_data)
 
+    def to_internal_value(self, data):
+        v = defaultdict(dict)
+        for field, value in data.items():
+            pop = False
+            for lang in settings.LANGUAGES:
+                try:
+                    locale_value = value.get(lang)
+                    if locale_value:
+                        v[lang][field] = locale_value
+                        pop = True
+                except AttributeError:
+                    pass
+            if pop:
+                data.pop(field)
+        data.update(v)
+        data = super(MultiLangMixin, self).to_internal_value(data)
+        return data
+
     def to_representation(self, instance):
         data = super(MultiLangMixin, self).to_representation(instance)
         v = defaultdict(dict)
