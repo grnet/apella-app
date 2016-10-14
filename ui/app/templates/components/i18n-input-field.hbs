@@ -1,0 +1,11 @@
+{{#each locales as |locale|}}
+  {{paper-input
+      label=(concat label ' (' locale.id ')')
+      value=(readonly (get value locale.id))
+      errors=(if displayErrors (get errorsI18N locale.id))
+      disabled=fattrs.disabled
+      isTouched=(or isTouched displayErrors)
+      onChange=(action 'handleChange' locale.id)
+      type='text'
+  }}
+{{/each}}
