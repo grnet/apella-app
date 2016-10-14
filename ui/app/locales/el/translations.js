@@ -93,4 +93,22 @@ export default {
     menu_label: "Θέμα",
     create_title: "Νέο θέμα",
   },
+  registry: {
+    menu_label: "Μητρώα",
+    main_section: {
+      title: "Στοιχεία Μητρώου"
+    },
+    members_section: {
+      title: "Μέλη Μητρώου"
+    }
+  },
+  general: {
+    create_label: "Δημιουργία",
+    type_label: "Είδος"
+  },
+  item: {
+    actions: {
+      label: "Ενέργειες"
+    }
+  }
 };

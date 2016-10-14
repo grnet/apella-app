@@ -93,4 +93,22 @@ export default {
     menu_label: "Themes",
     create_title: "New theme",
   },
+  registry: {
+    menu_label: "Registries",
+    main_section: {
+      title: "Registry Information"
+    },
+    members_section: {
+      title: "Registry Members"
+    }
+  },
+  general: {
+    create_label: "New",
+    type_label: "Type",
+  },
+  item: {
+    actions: {
+      label: "Actions"
+    }
+  }
 };
