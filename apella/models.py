@@ -10,7 +10,7 @@ class ApellaUserFields(models.Model):
     last_name = models.CharField(max_length=300)
     father_name = models.CharField(max_length=200)
 
-    class meta:
+    class Meta:
         abstract = True
 
 
@@ -43,7 +43,7 @@ class InstitutionFields(models.Model):
     """
     title = models.CharField(max_length=150, blank=True)
 
-    class meta:
+    class Meta:
         abstract = True
 
 
@@ -105,7 +105,7 @@ class SubjectAreaFields(models.Model):
     """
     title = models.CharField(max_length=200, blank=True)
 
-    class meta:
+    class Meta:
         abstract = True
 
 
@@ -131,7 +131,7 @@ class SubjectFields(models.Model):
     """
     title = models.CharField(max_length=200, blank=True)
 
-    class meta:
+    class Meta:
         abstract = True
 
 
