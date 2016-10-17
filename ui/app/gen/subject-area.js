@@ -2,6 +2,7 @@ import gen from 'ember-gen/lib/gen';
 
 export default gen.CRUDGen.extend({
   modelName: 'subject_area',
+  path: 'subject_areas',
   common: {
     menu: {
       icon: 'school',

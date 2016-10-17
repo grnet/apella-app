@@ -4,6 +4,7 @@ import {i18nValidate} from 'ui/validators/i18n';
 
 export default gen.CRUDGen.extend({
   modelName: 'institution',
+  path: 'institutions',
   common: {
     menu: {
       icon: 'location_city',

@@ -9,6 +9,7 @@ const presence = validate.presence(true),
 
 export default gen.CRUDGen.extend({
   modelName: 'candidacy',
+  path: 'candidacies',
   common: {
     menu: {
       icon: 'assignment',

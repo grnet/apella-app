@@ -2,6 +2,7 @@ import gen from 'ember-gen/lib/gen';
 
 export default gen.CRUDGen.extend({
   modelName: 'school',
+  path: 'schools',
   common: {
     menu: {
       icon: 'account_balance',

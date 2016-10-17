@@ -2,6 +2,7 @@ import gen from 'ember-gen/lib/gen';
 
 export default gen.CRUDGen.extend({
   modelName: 'department',
+  path: 'departments',
   common: {
     menu: {
       icon: 'domain',

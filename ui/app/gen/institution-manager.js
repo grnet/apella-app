@@ -2,6 +2,7 @@ import gen from 'ember-gen/lib/gen';
 
 export default gen.CRUDGen.extend({
   modelName: 'institution-manager',
+  path: 'managers',
   common: {
     menu: {
       label: 'manager.menu_label',

@@ -4,6 +4,7 @@ import {afterToday, beforeToday} from 'ui/validators/dates';
 
 export default gen.CRUDGen.extend({
   modelName: 'position',
+  path: 'positions',
   common: {
     menu: {
       icon: 'business_center',
