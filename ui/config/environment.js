@@ -9,7 +9,8 @@ module.exports = function(environment) {
     locationType: 'auto',
     moment: {},
     i18n : {
-      defaultLocale: 'el'
+      defaultLocale: 'el',
+      locales: ['el', 'en']
     },
     EmberENV: {
       FEATURES: {

@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import _ from 'lodash/lodash';
+import ENV from 'ui/config/environment';
 
 export function i18nValidate(validators) {
   return (key, newValue, oldValue, changes) => {
@@ -6,8 +8,20 @@ export function i18nValidate(validators) {
     // It will be used by the component to extract errors for each language
     var errors_lang = {};
     var result = true;
+    var locales = ENV.i18n.locales;
 
-    Object.keys(newValue).forEach(function(lang){
+    if (_.isUndefined(newValue)) {
+      newValue = {};
+    }
+
+    // normalize newValue
+    for (var locale of locales) {
+      if (!(locale in newValue)) {
+          newValue[locale] = undefined;
+      }
+    }
+
+   Object.keys(newValue).forEach(function(lang){
       let newVal = newValue[lang];
       // oldValue might be not set yet (for example when creating a new model)
       let oldVal = '';
