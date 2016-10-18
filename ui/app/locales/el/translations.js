@@ -104,7 +104,10 @@ export default {
   },
   general: {
     create_label: "Δημιουργία",
-    type_label: "Είδος"
+    type_label: "Είδος",
+    id_label: "Κωδικός",
+    edit_label: "Τροποποίηση"
+
   },
   item: {
     actions: {

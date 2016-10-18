@@ -105,6 +105,8 @@ export default {
   general: {
     create_label: "New",
     type_label: "Type",
+    id_label: "ID",
+    edit_label: "Edit"
   },
   item: {
     actions: {

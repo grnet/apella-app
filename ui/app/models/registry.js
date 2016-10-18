@@ -8,8 +8,7 @@ const { computed, get } = Ember,
 export default DS.Model.extend({
   type: DS.attr({type: 'select', choices: CHOICES.REGISTRY_TYPES, defaultValue: 2}),
   department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title'}}),
-  // ToDo: Replace belongsTo with hasMany
-  members: DS.belongsTo('user', {attrs: {optionLabelAttr: 'username'}}),
+  members: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
 
   type_verbose: computed('type',function() {
     let id = get(this, 'id') + '';
