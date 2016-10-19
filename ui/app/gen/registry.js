@@ -30,7 +30,7 @@ let members = Users.extend({
     layout: 'table',
     sortBy: 'id:asc',
     fields: [
-      field('id', {label: 'general.id_label', type: 'text'}),
+      field('id', {label: 'common.id_label', type: 'text'}),
       field('username', {label: 'username.label', type: 'text'}),
       field('role_verbose', {label: 'role.label', type: 'text'}),
     ],
@@ -47,7 +47,7 @@ export default gen.CRUDGen.extend({
   common: {
     fieldsets: [{
       label: 'registry.main_section.title',
-      fields: [field('type', {label: 'general.type_label'}), 'department'],
+      fields: [field('type', {label: 'common.type_label'}), 'department'],
       layout: {
         flex: [30, 70]
       }
@@ -68,9 +68,9 @@ export default gen.CRUDGen.extend({
      title: 'registry.menu_label'
     },
     fields: [
-      field('institution.title', {label: "institution.label", type: 'text'}),
+      field('institution.title', {label: 'institution.label', type: 'text'}),
       field('department.title', {label: 'department.label', type: 'text'}),
-      field('type_verbose', {label: 'general.type_label', type: 'text'})
+      field('type_verbose', {label: 'common.type_label', type: 'text'})
     ],
     row: {
       actions: ['details', 'edit', 'remove']
@@ -78,7 +78,7 @@ export default gen.CRUDGen.extend({
   },
   create: {
     page: {
-      title: 'general.create_label'
+      title: 'common.create_label'
     },
   },
   record: {
@@ -90,7 +90,7 @@ export default gen.CRUDGen.extend({
   },
   edit: {
     page: {
-      title: 'general.edit_label'
+      title: 'common.edit_label'
     }
   },
   nested: {

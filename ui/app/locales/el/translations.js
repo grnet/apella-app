@@ -21,44 +21,44 @@ export default {
   'username.label': 'Όνομα Χρήστη',
   'role.label': 'Ρόλος',
   manager: {
-    menu_label: "Διαχειριστές Ιδρύματος",
-    create_title: "Νέος διαχειριστής",
+    menu_label: 'Διαχειριστές Ιδρύματος',
+    create_title: 'Νέος διαχειριστής',
     label: {
-      user: "Όνομα Χρήστη",
-      authority_type: "Αρχή Πιστοποίησης",
-      authority_full_name: "Ονοματεπώνυμο",
-      role: "Ρόλος"
+      user: 'Όνομα Χρήστη',
+      authority_type: 'Αρχή Πιστοποίησης',
+      authority_full_name: 'Ονοματεπώνυμο',
+      role: 'Ρόλος'
     }
   },
   candidacy: {
-    menu_label: "Υποψηφιότητες",
+    menu_label: 'Υποψηφιότητες',
     create_title: 'Υποβολή Νέας Υποψηφιότητας',
     position_section: {
-      title: "Στοιχεία Θέσης",
-      subtitle: "Όποια στοιχεία θέσης χρειάζονται θα τοποθετηθούν εδώ."
+      title: 'Στοιχεία Θέσης',
+      subtitle: 'Όποια στοιχεία θέσης χρειάζονται θα τοποθετηθούν εδώ.'
   },
   candidate_section: {
-    title: "Στοιχεία Υποψηφίου",
-    subtitle: "Τα παρακάτω στοιχεία μπορείτε να τα τροποποποίησετε στο προφίλ σας."
+    title: 'Στοιχεία Υποψηφίου',
+    subtitle: 'Τα παρακάτω στοιχεία μπορείτε να τα τροποποποίησετε στο προφίλ σας.'
   },
   candidacy_section: {
-    title: "Στοιχεία Υποψηφιότητας"
+    title: 'Στοιχεία Υποψηφιότητας'
   },
     label: {
-      position: "Θέση",
-      state: "Κατάσταση",
-      others_can_view: "Ορατό σε άλλους",
-      cv: "Βιογραφικό",
-      diploma: "Αντίγραφα Πτυχίων",
-      publication: "Αρχεία Δημοσιεύσεων",
-      self_evaluation: "Έκθεση Αυτοαξιολόγησης",
-      additional_files: "Συμπληρωματικά Έγγραφα",
-      candidate: "Υποψήφιος"
+      position: 'Θέση',
+      state: 'Κατάσταση',
+      others_can_view: 'Ορατό σε άλλους',
+      cv: 'Βιογραφικό',
+      diploma: 'Αντίγραφα Πτυχίων',
+      publication: 'Αρχεία Δημοσιεύσεων',
+      self_evaluation: 'Έκθεση Αυτοαξιολόγησης',
+      additional_files: 'Συμπληρωματικά Έγγραφα',
+      candidate: 'Υποψήφιος'
     }
   },
   position: {
-    menu_label: "Θέσεις",
-    create_title: "Νέα θέση",
+    menu_label: 'Θέσεις',
+    create_title: 'Νέα θέση',
     fek_section: {
       title: 'ΦΕΚ',
     }
@@ -70,48 +70,48 @@ export default {
       }
   },
   institution: {
-    menu_label: "Ιδρύματα",
-    create_title: "Νέο ίδρυμα",
+    menu_label: 'Ιδρύματα',
+    create_title: 'Νέο ίδρυμα',
   },
   user: {
-    menu_label: "Χρήστες",
-    create_title: "Νέος χρήστης",
+    menu_label: 'Χρήστες',
+    create_title: 'Νέος χρήστης',
   },
   school: {
-    menu_label: "Σχολές",
-    create_title: "Νέα σχολή",
+    menu_label: 'Σχολές',
+    create_title: 'Νέα σχολή',
   },
   department: {
-    menu_label: "Τμήματα",
-    create_title: "Νέο τμήμα",
+    menu_label: 'Τμήματα',
+    create_title: 'Νέο τμήμα',
   },
   subject_area : {
-    menu_label: "Θεματικές περιοχές",
-    create_title: "Νέα θεματική περιοχή",
+    menu_label: 'Θεματικές περιοχές',
+    create_title: 'Νέα θεματική περιοχή',
   },
   subject: {
-    menu_label: "Θέμα",
-    create_title: "Νέο θέμα",
+    menu_label: 'Θέμα',
+    create_title: 'Νέο θέμα',
   },
   registry: {
-    menu_label: "Μητρώα",
+    menu_label: 'Μητρώα',
     main_section: {
-      title: "Στοιχεία Μητρώου"
+      title: 'Στοιχεία Μητρώου'
     },
     members_section: {
-      title: "Μέλη Μητρώου"
+      title: 'Μέλη Μητρώου'
     }
   },
-  general: {
-    create_label: "Δημιουργία",
-    type_label: "Είδος",
-    id_label: "Κωδικός",
-    edit_label: "Τροποποίηση"
+  common: {
+    create_label: 'Δημιουργία',
+    type_label: 'Είδος',
+    id_label: 'Κωδικός',
+    edit_label: 'Τροποποίηση'
 
   },
   item: {
     actions: {
-      label: "Ενέργειες"
+      label: 'Ενέργειες'
     }
   }
 };

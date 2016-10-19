@@ -21,44 +21,44 @@ export default {
   'username.label': 'Username',
   'role.label': 'Role',
   manager: {
-    menu_label: "Institution Managers",
-    create_title: "New manager",
+    menu_label: 'Institution Managers',
+    create_title: 'New manager',
     label: {
-      user: "Username",
-      authority_type: "Verification Authority",
-      authority_full_name: "Full name",
-      role: "Role"
+      user: 'Username',
+      authority_type: 'Verification Authority',
+      authority_full_name: 'Full name',
+      role: 'Role'
     }
   },
   candidacy: {
-    menu_label: "Candidacies",
-    create_title: "New Candidacy",
+    menu_label: 'Candidacies',
+    create_title: 'New Candidacy',
     position_section: {
-      title: "Position Information",
-      subtitle: "All related info will be placed here."
+      title: 'Position Information',
+      subtitle: 'All related info will be placed here.'
     },
     candidate_section: {
-      title: "Candidate Info",
-      subtitle: "You can modify these fields by editing your profile."
+      title: 'Candidate Info',
+      subtitle: 'You can modify these fields by editing your profile.'
     },
     candidacy_section: {
-      title: "Candidacy Fields"
+      title: 'Candidacy Fields'
     },
     label: {
-      position: "Position",
-      state: "State",
-      others_can_view: "Visible to others",
-      cv: "Curriculum Vitae",
-      diploma: "Diplomas",
-      publication: "Publications",
-      self_evaluation: "Self Evaluation Report",
-      additional_files: "Complementary documents",
-      candidate: "Candidate"
+      position: 'Position',
+      state: 'State',
+      others_can_view: 'Visible to others',
+      cv: 'Curriculum Vitae',
+      diploma: 'Diplomas',
+      publication: 'Publications',
+      self_evaluation: 'Self Evaluation Report',
+      additional_files: 'Complementary documents',
+      candidate: 'Candidate'
     }
   },
   position: {
-    menu_label: "Positions",
-    create_title: "New position",
+    menu_label: 'Positions',
+    create_title: 'New position',
     fek_section: {
       title: 'FEK',
     }
@@ -70,47 +70,47 @@ export default {
       }
   },
   institution: {
-    menu_label: "Institutions",
-    create_title: "New institution",
+    menu_label: 'Institutions',
+    create_title: 'New institution',
   },
   user: {
-    menu_label: "Users",
-    create_title: "New user",
+    menu_label: 'Users',
+    create_title: 'New user',
   },
   school: {
-    menu_label: "Schools",
-    create_title: "New school",
+    menu_label: 'Schools',
+    create_title: 'New school',
   },
   department: {
-    menu_label: "Departments",
-    create_title: "New department",
+    menu_label: 'Departments',
+    create_title: 'New department',
   },
   subject_area : {
-    menu_label: "Thematic Areas",
-    create_title: "New thematic area",
+    menu_label: 'Thematic Areas',
+    create_title: 'New thematic area',
   },
   subject: {
-    menu_label: "Themes",
-    create_title: "New theme",
+    menu_label: 'Themes',
+    create_title: 'New theme',
   },
   registry: {
-    menu_label: "Registries",
+    menu_label: 'Registries',
     main_section: {
-      title: "Registry Information"
+      title: 'Registry Information'
     },
     members_section: {
-      title: "Registry Members"
+      title: 'Registry Members'
     }
   },
-  general: {
-    create_label: "New",
-    type_label: "Type",
-    id_label: "ID",
-    edit_label: "Edit"
+  common: {
+    create_label: 'New',
+    type_label: 'Type',
+    id_label: 'ID',
+    edit_label: 'Edit'
   },
   item: {
     actions: {
-      label: "Actions"
+      label: 'Actions'
     }
   }
 };
