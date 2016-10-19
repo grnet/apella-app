@@ -1,4 +1,5 @@
 import gen from 'ember-gen/lib/gen';
+import {field} from 'ember-gen';
 
 export default gen.CRUDGen.extend({
   modelName: 'school',
@@ -10,9 +11,8 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
-    tableLayout: true,
-    selectable: true,
-    fields: ['title', 'institution.title'],
+    layout: 'table',
+    fields: ['title', field('institution.title_current', {label: 'institution.label', type: 'text'})],
     page: {
       title: 'school.menu_label',
     }

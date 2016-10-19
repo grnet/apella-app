@@ -1,4 +1,5 @@
 import gen from 'ember-gen/lib/gen';
+import validate from 'ember-gen/validate';
 
 export default gen.CRUDGen.extend({
   modelName: 'department',
@@ -7,11 +8,14 @@ export default gen.CRUDGen.extend({
     menu: {
       icon: 'domain',
       label: 'department.menu_label'
+    },
+    validators: {
+      title: [validate.presence(true), validate.length({min:4, max:50})],
     }
   },
   list: {
-    tableLayout: true,
-    selectable: true,
+    layout: 'table',
+    sortBy: 'title:asc',
     fields: ['title', 'school.title'],
     page: {
       title: 'department.menu_label',

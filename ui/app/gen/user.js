@@ -10,6 +10,8 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    layout: 'table',
+    sortBy: 'username:asc',
     fields: ['username', 'role_verbose'],
     page: {
       title: 'user.menu_label',

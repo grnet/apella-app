@@ -1,5 +1,6 @@
 export default {
   'title.label': 'Title',
+  'title_current.label': 'Title',
   'institution.label': 'Institution',
   'description.label': 'Description',
   'school.label': 'School',
@@ -17,9 +18,12 @@ export default {
   'starts_at.label': 'Submission Opening Date',
   'ends_at.label': 'Submission End Date',
   'area.label': 'Subject area',
+  'area.label': 'Subject area',
   'author.label': 'Author',
   'username.label': 'Username',
   'role.label': 'Role',
+  'organization.label': 'Organization',
+  'regulatory_framework.label': 'Internal Regulation',
   manager: {
     menu_label: 'Institution Managers',
     create_title: 'New manager',

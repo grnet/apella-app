@@ -1,5 +1,6 @@
 export default {
   'title.label': 'Τίτλος',
+  'title_current.label': 'Τίτλος',
   'institution.label': 'Ίδρυμα',
   'description.label': 'Περιγραφή',
   'school.label': 'Σχολή',
@@ -20,6 +21,8 @@ export default {
   'author.label': 'Συντάκτης',
   'username.label': 'Όνομα Χρήστη',
   'role.label': 'Ρόλος',
+  'organization.label': 'Οργανισμός',
+  'regulatory_framework.label': 'Εσωτερικός κανονισμός',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
     create_title: 'Νέος διαχειριστής',

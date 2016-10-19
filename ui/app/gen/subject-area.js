@@ -10,8 +10,9 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
-    tableLayout: true,
-    selectable: true,
+    layout: 'table',
+    sortBy: 'title_current:asc',
+    fields: ['title_current'],
     page: {
       title: 'subject_area.menu_label',
     }
