@@ -104,14 +104,46 @@ class InstitutionManager(models.Model):
         choices=common.MANAGER_ROLES, blank=False, max_length=1)
 
 
-class School(models.Model):
+class SchoolFields(models.Model):
     title = models.CharField(max_length=150, blank=False)
+
+    class Meta:
+        abstract = True
+
+
+class SchoolEl(SchoolFields):
+    pass
+
+
+class SchoolEn(SchoolFields):
+    pass
+
+
+class School(models.Model):
     institution = models.ForeignKey(Institution, blank=False, null=False)
+    el = models.ForeignKey(SchoolEl, blank=True, null=True)
+    en = models.ForeignKey(SchoolEn, blank=True, null=True)
+
+
+class DepartmentFields(models.Model):
+    title = models.CharField(max_length=150, blank=False)
+
+    class Meta:
+        abstract = True
+
+
+class DepartmentEl(DepartmentFields):
+    pass
+
+
+class DepartmentEn(DepartmentFields):
+    pass
 
 
 class Department(models.Model):
-    title = models.CharField(max_length=150, blank=False)
     school = models.ForeignKey(School, blank=False, null=False)
+    el = models.ForeignKey(DepartmentEl, blank=True, null=True)
+    en = models.ForeignKey(DepartmentEn, blank=True, null=True)
 
 
 class SubjectAreaFields(models.Model):

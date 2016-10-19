@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('file_kind', models.CharField(max_length=1, choices=[['CV', 'CV'], ['Diploma', 'Diploma'], ['Publication', 'Publication'], ['Additional file', 'Additional file']])),
                 ('file_path', models.CharField(max_length=500)),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 911907))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 51, 35, 558453))),
             ],
         ),
         migrations.CreateModel(
@@ -84,8 +84,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Cancelled']])),
                 ('others_can_view', models.BooleanField(default=False)),
-                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 924185))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 924214))),
+                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 51, 35, 572978))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 51, 35, 573004))),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -100,8 +100,27 @@ class Migration(migrations.Migration):
             name='Department',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='DepartmentEl',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=150)),
             ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='DepartmentEn',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=150)),
+            ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Institution',
@@ -154,8 +173,8 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Electing'], ['4', 'Successful'], ['5', 'Failed']])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
-                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 919460))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 50, 13, 919485))),
+                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 51, 35, 568190))),
+                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 19, 14, 51, 35, 568215))),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),
@@ -201,9 +220,27 @@ class Migration(migrations.Migration):
             name='School',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=150)),
-                ('institution', models.ForeignKey(to='apella.Institution')),
             ],
+        ),
+        migrations.CreateModel(
+            name='SchoolEl',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=150)),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='SchoolEn',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=150)),
+            ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Subject',
@@ -292,6 +329,21 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(blank=True, to='apella.SubjectEn', null=True),
         ),
         migrations.AddField(
+            model_name='school',
+            name='el',
+            field=models.ForeignKey(blank=True, to='apella.SchoolEl', null=True),
+        ),
+        migrations.AddField(
+            model_name='school',
+            name='en',
+            field=models.ForeignKey(blank=True, to='apella.SchoolEn', null=True),
+        ),
+        migrations.AddField(
+            model_name='school',
+            name='institution',
+            field=models.ForeignKey(to='apella.Institution'),
+        ),
+        migrations.AddField(
             model_name='position',
             name='subject',
             field=models.ForeignKey(to='apella.Subject'),
@@ -310,6 +362,16 @@ class Migration(migrations.Migration):
             model_name='institution',
             name='en',
             field=models.ForeignKey(blank=True, to='apella.InstitutionEn', null=True),
+        ),
+        migrations.AddField(
+            model_name='department',
+            name='el',
+            field=models.ForeignKey(blank=True, to='apella.DepartmentEl', null=True),
+        ),
+        migrations.AddField(
+            model_name='department',
+            name='en',
+            field=models.ForeignKey(blank=True, to='apella.DepartmentEn', null=True),
         ),
         migrations.AddField(
             model_name='department',

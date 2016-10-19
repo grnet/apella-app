@@ -71,19 +71,41 @@ institution_resource = {
 school_resource = {
     'model': 'apella.models.School',
     'field_schema': {
-        'fields': ['id', 'url', 'title', 'institution'],
-        'read_only_fields': ['id', 'url']
+        'fields': ['id', 'url', 'institution', 'el', 'en'],
+        'read_only_fields': ['id', 'url'],
+        'nested_objects': {
+            'el': {
+                'model_field': 'el',
+                'field_schema': {'fields': ['title']}
+            },
+            'en': {
+                'model_field': 'en',
+                'field_schema': {'fields': ['title']}
+            }
+        },
+        'custom_mixins': ['apella.mixins.NestedWritableObjectsMixin']
     },
-    'filter_fields': ['title', 'institution', ]
+    'filter_fields': ['institution', ]
 }
 
 department_resource = {
     'model': 'apella.models.Department',
     'field_schema': {
-        'fields': ['id', 'url', 'title', 'school'],
-        'read_only_fields': ['id', 'url']
+        'fields': ['id', 'url', 'school', 'el', 'en'],
+        'read_only_fields': ['id', 'url'],
+        'nested_objects': {
+            'el': {
+                'model_field': 'el',
+                'field_schema': {'fields': ['title']}
+            },
+            'en': {
+                'model_field': 'en',
+                'field_schema': {'fields': ['title']}
+            }
+        },
+        'custom_mixins': ['apella.mixins.NestedWritableObjectsMixin']
     },
-    'filter_fields': ['title', 'school', ]
+    'filter_fields': ['school', ]
 }
 
 subject_area_resource = {

@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 from apella.models import ApellaUser, Institution, School, Department,\
         SubjectArea, Subject, Position, ApellaUserEl, ApellaUserEn,\
         InstitutionEl, InstitutionEn, SubjectEn, SubjectEl, SubjectAreaEl,\
-        SubjectAreaEn, InstitutionManager, Candidacy
+        SubjectAreaEn, InstitutionManager, Candidacy, SchoolEl, SchoolEn,\
+        DepartmentEl, DepartmentEn
 
 
 class CandidacyTest(TestCase):
@@ -39,10 +40,16 @@ class CandidacyTest(TestCase):
                 authority='1',
                 authority_full_name='Κώστας Βουτσάς',
                 manager_role='1')
+        school_el = SchoolEl.objects.create(title='Σχολή Θετικών Επιστημών')
+        school_en = SchoolEn.objects.create(title='School of Sciences')
         school = School.objects.create(
-            title='School of Mathematics', institution=institution)
+            el=school_el, en=school_en, institution=institution)
+        department_el = DepartmentEl.objects.create(
+            title='Εφαρμοσμένα Μαθηματικά')
+        department_en = DepartmentEn.objects.create(
+            title='Applied Mathematics')
         self.department = Department.objects.create(
-            title='Applied Mathematics', school=school)
+            el=department_el, en=department_en, school=school)
         subject_area_el = SubjectAreaEl.objects.create(title='Μαθηματικά')
         subject_area_en = SubjectAreaEn.objects.create(title='Mathematics')
         subject_area = SubjectArea(el=subject_area_el, en=subject_area_en)
