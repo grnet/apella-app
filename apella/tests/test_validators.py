@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from django.test import TestCase
-from apella.validators import before_today_validator, after_today_validator
-from apella.mixins import validate_dates_interval
+from apella.validators import before_today_validator, after_today_validator,\
+        validate_dates_interval
 from django.conf import settings
 
 
