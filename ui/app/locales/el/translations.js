@@ -116,8 +116,12 @@ export default {
     create_label: 'Δημιουργία',
     type_label: 'Είδος',
     id_label: 'Κωδικός',
-    edit_label: 'Τροποποίηση'
-
+    edit_label: 'Τροποποίηση',
+    button: {
+      create_label: 'Δημιουργία',
+      edit_label: 'Τροποποίηση',
+      details_label: 'Προβολή'
+    }
   },
   item: {
     actions: {

@@ -115,7 +115,12 @@ export default {
     create_label: 'New',
     type_label: 'Type',
     id_label: 'ID',
-    edit_label: 'Edit'
+    edit_label: 'Edit',
+    button: {
+      create_label: 'Create',
+      edit_label: 'Edit',
+      details_label: 'View'
+    }
   },
   item: {
     actions: {

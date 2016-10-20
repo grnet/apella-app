@@ -8,6 +8,13 @@ let {
 } = Ember;
 
 let members = Users.extend({
+  create: {
+    page: {
+      toolbar: {
+        display: false
+      }
+    }
+  },
   list: {
     /*
      * ToDo
@@ -35,7 +42,7 @@ let members = Users.extend({
       field('role_verbose', {label: 'role.label', type: 'text'}),
     ],
     row: {
-      actions: ['details']
+      actions: ['gen:details']
     }
   }
 });
@@ -73,13 +80,23 @@ export default gen.CRUDGen.extend({
       field('type_verbose', {label: 'common.type_label', type: 'text'})
     ],
     row: {
-      actions: ['details', 'edit', 'remove']
+      actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
   create: {
     page: {
       title: 'common.create_label'
     },
+    menu: {
+      label: 'common.button.create_label',
+      icon: 'library add'
+    }
+  },
+  details: {
+    menu: {
+      label: 'common.button.details_label',
+      icon: 'remove red eye'
+    }
   },
   record: {
     menu: {
@@ -91,6 +108,10 @@ export default gen.CRUDGen.extend({
   edit: {
     page: {
       title: 'common.edit_label'
+    },
+    menu: {
+      label: 'common.button.edit_label',
+      icon: 'border color'
     }
   },
   nested: {
