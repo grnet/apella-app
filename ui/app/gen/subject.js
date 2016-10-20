@@ -2,6 +2,11 @@ import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 
+let FS = {
+  list : ['title_current', 'area.title_current']
+}
+
+
 export default gen.CRUDGen.extend({
   modelName: 'subject',
   path: 'subjects',
@@ -16,8 +21,11 @@ export default gen.CRUDGen.extend({
   },
   list: {
     layout: 'table',
-    sortBy: 'area.title_current:asc',
-    fields: ['title_current', 'area.title_current'],
+    sortBy: 'title_current:asc',
+    fields: FS.list,
+    search: {
+      fields: FS.list
+    },
     page: {
       title: 'subject.menu_label',
     }
