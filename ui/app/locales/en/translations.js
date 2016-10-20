@@ -14,6 +14,7 @@ export default {
   'assistants.label': 'Assistants',
   'elected.label': 'Elected',
   'state.label': 'State',
+  'state_verbose.label': 'State',
   'discipline.label': 'Discipline',
   'starts_at.label': 'Submission Opening Date',
   'ends_at.label': 'Submission End Date',
@@ -24,6 +25,10 @@ export default {
   'role.label': 'Role',
   'organization.label': 'Organization',
   'regulatory_framework.label': 'Internal Regulation',
+  'position.code.label': 'Position code',
+  'position.department.school.institution.title_current.label': 'Institution',
+  'position.department.title.label': 'Department',
+  'position.state_verbose.label': 'State',
   manager: {
     menu_label: 'Institution Managers',
     create_title: 'New manager',

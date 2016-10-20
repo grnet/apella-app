@@ -6,6 +6,11 @@ const presence = validate.presence(true),
       mandatory = [validate.presence(true)],
       mandatory_with_max_chars = [presence, max_chars];
 
+let FS = {
+  list:  ['position.code', 'position.department.school.institution.title_current',
+          'position.department.title',
+          'position.state_verbose'],
+}
 
 export default gen.CRUDGen.extend({
   modelName: 'candidacy',
@@ -25,7 +30,12 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
-    fields: ['candidate.username', 'position.title', 'submittedAt'],
+    layout: 'table',
+    sortBy: 'position.code:asc',
+    fields: FS.list,
+    search: {
+      fields: FS.list,
+    },
     page: {
       title: 'candidacy.menu_label',
     }

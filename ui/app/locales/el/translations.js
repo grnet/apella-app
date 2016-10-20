@@ -14,6 +14,7 @@ export default {
   'assistants.label': 'Βοηθοί',
   'elected.label': 'Εκλεγμένος',
   'state.label': 'Κατάσταση',
+  'state_verbose.label': 'Κατάσταση',
   'discipline.label': 'Γνωστικό αντικείμενο',
   'starts_at.label': 'Ημερομηνία Έναρξης Υποβολών',
   'ends_at.label': 'Ημερομηνία Λήξης Υποβολών',
@@ -23,6 +24,10 @@ export default {
   'role.label': 'Ρόλος',
   'organization.label': 'Οργανισμός',
   'regulatory_framework.label': 'Εσωτερικός κανονισμός',
+  'position.code.label': 'Κωδικός θέσης',
+  'position.department.school.institution.title_current.label': 'Ιδρυμα',
+  'position.department.title.label': 'Τμημα',
+  'position.state_verbose.label': 'Κατάσταση',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
     create_title: 'Νέος διαχειριστής',
@@ -39,14 +44,16 @@ export default {
     position_section: {
       title: 'Στοιχεία Θέσης',
       subtitle: 'Όποια στοιχεία θέσης χρειάζονται θα τοποθετηθούν εδώ.'
-  },
-  candidate_section: {
-    title: 'Στοιχεία Υποψηφίου',
-    subtitle: 'Τα παρακάτω στοιχεία μπορείτε να τα τροποποποίησετε στο προφίλ σας.'
-  },
-  candidacy_section: {
-    title: 'Στοιχεία Υποψηφιότητας'
-  },
+    },
+
+    'state_verbose.label': 'aaaa',
+    candidate_section: {
+      title: 'Στοιχεία Υποψηφίου',
+      subtitle: 'Τα παρακάτω στοιχεία μπορείτε να τα τροποποποίησετε στο προφίλ σας.'
+    },
+    candidacy_section: {
+      title: 'Στοιχεία Υποψηφιότητας'
+    },
     label: {
       position: 'Θέση',
       state: 'Κατάσταση',
@@ -64,7 +71,7 @@ export default {
     create_title: 'Νέα θέση',
     fek_section: {
       title: 'ΦΕΚ',
-    }
+    },
   },
   fieldsets:{
     labels: {
