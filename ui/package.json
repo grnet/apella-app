@@ -44,7 +44,7 @@
     "ember-i18n": "4.3.2",
     "ember-load-initializers": "^0.5.1",
     "ember-moment": "7.0.0-beta.3",
-    "ember-paper": "git+https://github.com/vinilios/ember-paper.git#feature-gen",
+    "ember-paper": "git+https://github.com/vinilios/ember-paper.git#ember-gen",
     "ember-resolver": "^2.0.3",
     "loader.js": "^4.0.1"
   }
