@@ -41,7 +41,6 @@ export default {
   },
   candidacy: {
     menu_label: 'Candidacies',
-    create_title: 'New Candidacy',
     position_section: {
       title: 'Position Information',
       subtitle: 'All related info will be placed here.'

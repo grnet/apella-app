@@ -75,8 +75,8 @@ export default gen.CRUDGen.extend({
      title: 'registry.menu_label'
     },
     fields: [
-      field('institution.title', {label: 'institution.label', type: 'text'}),
-      field('department.title', {label: 'department.label', type: 'text'}),
+      field('institution.title_current', {label: 'institution.label', type: 'text'}),
+      field('department.title_current', {label: 'department.label', type: 'text'}),
       field('type_verbose', {label: 'common.type_label', type: 'text'})
     ],
     row: {

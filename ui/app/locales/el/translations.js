@@ -40,7 +40,6 @@ export default {
   },
   candidacy: {
     menu_label: 'Υποψηφιότητες',
-    create_title: 'Υποβολή Νέας Υποψηφιότητας',
     position_section: {
       title: 'Στοιχεία Θέσης',
       subtitle: 'Όποια στοιχεία θέσης χρειάζονται θα τοποθετηθούν εδώ.'

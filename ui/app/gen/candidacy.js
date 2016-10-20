@@ -4,7 +4,10 @@ import validate from 'ember-gen/validate';
 const presence = validate.presence(true),
       max_chars = validate.length({max: 200}),
       mandatory = [validate.presence(true)],
-      mandatory_with_max_chars = [presence, max_chars];
+      mandatory_with_max_chars = [presence, max_chars],
+      {
+        get, computed
+      } =Ember;
 
 let FS = {
   list:  ['position.code', 'position.department.school.institution.title_current',
@@ -16,10 +19,6 @@ export default gen.CRUDGen.extend({
   modelName: 'candidacy',
   path: 'candidacies',
   common: {
-    menu: {
-      icon: 'assignment',
-      label: 'candidacy.menu_label'
-    },
     validators: {
       candidate: mandatory,
       position: mandatory,
@@ -38,11 +37,22 @@ export default gen.CRUDGen.extend({
     },
     page: {
       title: 'candidacy.menu_label',
+    },
+    menu: {
+      label: 'candidacy.menu_label',
+      icon: 'assignment'
+    },
+    row: {
+      actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
   create: {
     page: {
-      title: 'candidacy.create_title'
+      title: 'common.create_label'
+    },
+    menu: {
+      label: 'common.button.create_label',
+      icon: 'library add'
     },
     fieldsets: [
     {
@@ -69,5 +79,27 @@ export default gen.CRUDGen.extend({
         }
       }
     ],
+  },
+  details: {
+    menu: {
+      label: 'common.button.details_label',
+      icon: 'remove red eye'
+    }
+  },
+  record: {
+    menu: {
+      label: computed('model.id', function() {
+        return get(this, 'model.id');
+      })
+    },
+  },
+  edit: {
+    page: {
+      title: 'common.edit_label'
+    },
+    menu: {
+      label: 'common.button.edit_label',
+      icon: 'border color'
+    }
   },
 });
