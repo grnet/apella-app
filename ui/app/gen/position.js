@@ -38,15 +38,27 @@ export default gen.CRUDGen.extend({
     }],
   },
   list: {
+    layout: 'table',
+    fields: ['code', 'title'],
     page: {
       title: 'position.menu_label',
+    },
+  row: {
+    actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove' ],
+    actionsMap: {
+      applyCandidacy: {
+        label: 'position.button.apply',
+        action(item){
+          // TBA...
+        }
+      }
     }
+  }
   },
   create: {
     page: {
       title: 'position.create_title'
     },
   },
-
 
 });
