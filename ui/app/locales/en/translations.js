@@ -28,7 +28,7 @@ export default {
   'position.code.label': 'Position code',
   'position.department.school.institution.title_current.label': 'Institution',
   'position.department.title.label': 'Department',
-  'position.state_verbose.label': 'State',
+  'position.state_verbose.label': 'Position State',
   'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy',
   manager: {
     menu_label: 'Institution Managers',

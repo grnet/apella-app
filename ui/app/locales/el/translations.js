@@ -27,7 +27,7 @@ export default {
   'position.code.label': 'Κωδικός θέσης',
   'position.department.school.institution.title_current.label': 'Ιδρυμα',
   'position.department.title.label': 'Τμημα',
-  'position.state_verbose.label': 'Κατάσταση',
+  'position.state_verbose.label': 'Κατάσταση θέσης',
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε την θέση για την οποία έχετε υποβάλει υποψηφιότητα',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',

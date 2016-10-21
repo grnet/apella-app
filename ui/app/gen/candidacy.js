@@ -8,7 +8,8 @@ const presence = validate.presence(true),
       mandatory_with_max_chars = [presence, max_chars],
       {
         get, computed
-      } =Ember;
+      } =Ember,
+      CANDIDACY_POSTED_ID = '2';
 
 let FS = {
   list:  ['position.code', 'position.department.school.institution.title_current',
@@ -85,6 +86,20 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    getModel: function(params) {
+      // TODO replace with session's user group
+      let userGroup = 'admin';
+      if (userGroup == 'admin') {
+        return this.store.findAll('candidacy');
+      } else {
+      // TODO replace with session's user
+        let userId = '2';
+        return this.store.query('candidacy', {
+          'state': CANDIDACY_POSTED_ID,
+          'candidate': userId,
+        });
+      }
+    },
     layout: 'table',
     sortBy: 'position.code:asc',
     fields: FS.list,
