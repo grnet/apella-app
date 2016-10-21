@@ -10,14 +10,14 @@ export default DS.Model.extend({
   title: DS.attr(),
   description: DS.attr({type:'text'}),
   discipline: DS.attr(),
-  author: DS.belongsTo('user', {
+  author: DS.belongsTo('institution-manager', {
     attrs: {
-      optionLabelAttr: 'username',
+      optionLabelAttr: 'user.username',
     },
   }),
   department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title'}}),
-  subject_area: DS.belongsTo('subject_area', {attrs: {optionLabelAttr: 'title'}}),
-  subject: DS.belongsTo('subject', {attrs: {optionLabelAttr: 'title'}}),
+  subject_area: DS.belongsTo('subject_area', {attrs: {optionLabelAttr: 'title_current'}}),
+  subject: DS.belongsTo('subject', {attrs: {optionLabelAttr: 'title_current'}}),
   fek: DS.attr(),
   fek_posted_at: DS.attr('date', {attrs: {time: true}}),
   assistants: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
