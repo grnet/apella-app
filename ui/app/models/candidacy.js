@@ -8,7 +8,7 @@ const { computed, get } = Ember,
 
 export default DS.Model.extend({
   candidate: DS.belongsTo('user', {label: 'candidacy.label.candidate', attrs: {type: 'select', optionLabelAttr: 'username'}}),
-  position: DS.belongsTo('position', {label: 'candidacy.label.position', attrs: {type: 'select', optionLabelAttr: 'id_and_title'}}),
+  position: DS.belongsTo('position', {label: 'candidacy.label.position', attrs: {type: 'select', optionLabelAttr: 'code_and_title'}}),
   state: DS.attr({label: 'candidacy.label.state'}),
   othersCanView: DS.attr({type: 'boolean', label: 'candidacy.label.others_can_view'}),
   submittedAt: DS.attr('date'),

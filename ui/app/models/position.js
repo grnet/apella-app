@@ -30,8 +30,8 @@ export default DS.Model.extend({
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
   // Use in candidacy select list
-  id_and_title: computed('id', 'title', function() {
-    return `${this.get('id')} -  ${this.get('title')}`;
+  code_and_title: computed('code', 'title', function() {
+    return `${this.get('code')} -  ${this.get('title')}`;
   }),
 
   code: computed('id', function(){

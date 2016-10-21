@@ -29,6 +29,7 @@ export default {
   'position.department.school.institution.title_current.label': 'Institution',
   'position.department.title.label': 'Department',
   'position.state_verbose.label': 'State',
+  'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy',
   manager: {
     menu_label: 'Institution Managers',
     create_title: 'New manager',

@@ -1,3 +1,4 @@
+import {field} from 'ember-gen';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 
@@ -13,6 +14,61 @@ let FS = {
   list:  ['position.code', 'position.department.school.institution.title_current',
           'position.department.title',
           'position.state_verbose'],
+  create: [{
+    label: 'candidacy.position_section.title',
+    text: 'candidacy.position_section.subtitle',
+    fields: ['position'],
+    layout: {
+      flex: [50]
+    },
+  },
+  {
+    label: 'candidacy.candidate_section.title',
+    text: 'candidacy.candidate_section.subtitle',
+    fields: ['candidate', 'cv', 'diploma', 'publication'],
+    layout: {
+      flex: [50, 50, 50, 50]
+    },
+  },
+    {
+      label: 'candidacy.candidacy_section.title',
+      fields: ['selfEvaluation', 'additionalFiles', 'othersCanView'],
+      layout: {
+        flex: [50, 50, 50, 50]
+      }
+    }
+  ],
+  edit: [{
+    label: 'candidacy.position_section.title',
+    text: 'candidacy.position_section.subtitle',
+    fields: [field('position', {
+        hint: 'candidacy.edit.position.hint',
+        attrs: {
+          optionLabelAttr: 'code_and_title',
+          readonly: true,
+        }
+    })],
+    layout: {
+      flex: [50]
+    },
+  },
+  {
+    label: 'candidacy.candidate_section.title',
+    text: 'candidacy.candidate_section.subtitle',
+    fields: ['candidate', 'cv', 'diploma', 'publication'],
+    layout: {
+      flex: [50, 50, 50, 50]
+    },
+  },
+    {
+      label: 'candidacy.candidacy_section.title',
+      fields: ['selfEvaluation', 'additionalFiles', 'othersCanView'],
+      layout: {
+        flex: [50, 50, 50, 50]
+      }
+    }
+  ],
+
 }
 
 export default gen.CRUDGen.extend({
@@ -54,32 +110,8 @@ export default gen.CRUDGen.extend({
       label: 'common.button.create_label',
       icon: 'library add'
     },
-    fieldsets: [
-    {
-      label: 'candidacy.position_section.title',
-      text: 'candidacy.position_section.subtitle',
-      fields: ['position'],
-      layout: {
-        flex: [50]
-      },
-    },
-    {
-      label: 'candidacy.candidate_section.title',
-      text: 'candidacy.candidate_section.subtitle',
-      fields: ['candidate', 'cv', 'diploma', 'publication'],
-      layout: {
-        flex: [50, 50, 50, 50]
-      },
-    },
-      {
-        label: 'candidacy.candidacy_section.title',
-        fields: ['selfEvaluation', 'additionalFiles', 'othersCanView'],
-        layout: {
-          flex: [50, 50, 50, 50]
-        }
-      }
-    ],
-  },
+    fieldsets: FS.create,
+   },
   details: {
     menu: {
       label: 'common.button.details_label',
@@ -100,6 +132,7 @@ export default gen.CRUDGen.extend({
     menu: {
       label: 'common.button.edit_label',
       icon: 'border color'
-    }
+    },
+    fieldsets: FS.edit,
   },
 });
