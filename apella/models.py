@@ -1,7 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
-from apella.validators import before_today_validator, after_today_validator
+from django.conf import settings
+
+from apella.validators import before_today_validator, after_today_validator,\
+    validate_dates_interval, validate_position_dates
 from apella import common
 
 
@@ -218,6 +221,13 @@ class Position(models.Model):
     created_at = models.DateTimeField(blank=False, default=timezone.now())
     updated_at = models.DateTimeField(blank=False, default=timezone.now())
 
+    def clean(self, *args, **kwargs):
+        validate_dates_interval(
+            self.starts_at,
+            self.ends_at,
+            settings.START_DATE_END_DATE_INTERVAL)
+        super(Position, self).clean(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         super(Position, self).save(*args, **kwargs)
@@ -238,6 +248,12 @@ class Candidacy(models.Model):
     others_can_view = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(blank=False, default=timezone.now())
     updated_at = models.DateTimeField(blank=False, default=timezone.now())
+
+    def clean(self, *args, **kwargs):
+        validate_position_dates(
+            self.position.starts_at,
+            self.position.ends_at)
+        super(Candidacy, self).clean(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()

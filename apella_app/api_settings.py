@@ -7,7 +7,7 @@ position_resource = {
                    'state', 'starts_at', 'ends_at', 'created_at',
                    'updated_at'],
         'read_only_fields': ['id', 'url', 'created_at', 'updated_at'],
-        'custom_mixins': ['apella.mixins.PositionMixin']
+        'custom_mixins': ['apella.mixins.PositionValidatorMixin']
     },
     'filter_fields': ['title', ],
     'allowable_operations': ['list', 'retrieve', 'create', 'update', 'delete']
@@ -16,7 +16,7 @@ position_resource = {
 apellauser_resource = {
     'model': 'apella.models.ApellaUser',
     'field_schema': {
-        'fields': ['id', 'url', 'username', 'password', 'role',
+        'fields': ['id', 'url', 'username', 'password', 'email', 'role',
                    'el', 'en'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
@@ -43,7 +43,7 @@ candidacy_resource = {
                    'submitted_at', 'state', 'others_can_view',
                    'updated_at'],
         'read_only_fields': ['id', 'url', 'submitted_at', 'updated_at'],
-        'custom_mixins': ['apella.mixins.CandidacyMixin']
+        'custom_mixins': ['apella.mixins.ValidatorMixin']
     },
     'filter_fields': ['candidate', 'position', 'state', ]
 }

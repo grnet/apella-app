@@ -1,10 +1,11 @@
 from datetime import datetime, timedelta
+
+from django.conf import settings
 from django.core.exceptions import ValidationError
-from rest_framework import serializers
 from django.test import TestCase
+
 from apella.validators import before_today_validator, after_today_validator,\
         validate_dates_interval
-from django.conf import settings
 
 
 class ValidatorTest(TestCase):
@@ -31,7 +32,7 @@ class ValidatorTest(TestCase):
         start = datetime.now()
         end = start + timedelta(days=29)
         self.assertRaises(
-            serializers.ValidationError,
+            ValidationError,
             validate_dates_interval,
             start,
             end,

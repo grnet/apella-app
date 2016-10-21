@@ -1,28 +1,35 @@
+from collections import defaultdict
+
 from django.conf import settings
 from django.apps import apps
-from collections import defaultdict
-from apella.models import ApellaUser
-from apella.validators import validate_dates_interval, validate_position_dates
+from django.http.request import QueryDict
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-
-class PositionMixin(object):
-
-    def validate(self, data):
-        validate_dates_interval(
-            data['starts_at'],
-            data['ends_at'],
-            settings.START_DATE_END_DATE_INTERVAL)
-        return super(PositionMixin, self).validate(data)
+from apella.models import ApellaUser, Position
 
 
-class CandidacyMixin(object):
+class ValidatorMixin(object):
 
     def validate(self, data):
-        validate_position_dates(
-            data['position'].starts_at, data['position'].ends_at)
-        return super(CandidacyMixin, self).validate(data)
+        model = self.Meta.model
+        instance = model(**data)
+        instance.clean()
+        return super(ValidatorMixin, self).validate(data)
+
+
+class PositionValidatorMixin(ValidatorMixin):
+
+    def validate(self, data):
+        committee = data.pop('committee', [])
+        electors = data.pop('electors', [])
+        assistants = data.pop('assistants', [])
+        data = super(PositionValidatorMixin, self).validate(data)
+        data['committee'] = committee
+        data['electors'] = electors
+        data['assistants'] = assistants
+
+        return data
 
 
 def create_lang_objects(model_name, lang_data):
@@ -53,36 +60,43 @@ def update_lang_object(model_name, instance, lang, lang_data):
     return lang_object
 
 
-def lang_to_fields(data):
-    v = defaultdict(dict)
-    for field, value in data.items():
-        pop = False
-        for lang in settings.LANGUAGES:
-            try:
-                locale_value = value.get(lang)
-                if locale_value:
-                    v[lang][field] = locale_value
-                    pop = True
-            except AttributeError:
-                pass
-        if pop:
-            data.pop(field)
-    data.update(v)
-    return data
-
-
 def fields_to_lang(data):
+    """
+    if data == {'title': {'el': 'title_el', 'en': 'title_en'}}
+    return {'el': {'title': 'title_el'}, 'en': {'title': 'title_en'}}
+    """
     v = defaultdict(dict)
-    for lang in settings.LANGUAGES:
-        locale = data.pop(lang, None)
-        if locale:
-            for key, value in locale.iteritems():
-                v[key][lang] = value
-                data.update(v)
-    return data
+    for key, value in data.iteritems():
+        for lang in settings.LANGUAGES:
+            if type(value) == dict:
+                v[lang][key] = value.get(lang, None)
+            else:
+                v[key] = value
+    return v
+
+
+def lang_to_fields(data):
+    """
+    if data == {'el': {'title': 'title_el'}, 'en': {'title': 'title_en'}}
+    return {'title': {'el': 'title_el', 'en': 'title_en'}}
+    """
+    v = defaultdict(dict)
+    for key, value in data.iteritems():
+        if key in settings.LANGUAGES and value:
+            for field, field_value in value.iteritems():
+                v[field][key] = field_value
+        else:
+            v[key] = value
+    return v
 
 
 class NestedWritableObjectsMixin(object):
+
+    def __init__(self, *args, **kwargs):
+        super(NestedWritableObjectsMixin, self).__init__(*args, **kwargs)
+        if self.context.get('request').method == 'PUT' and\
+                'user' in self.fields:
+            self.fields['user'].fields['username'].read_only = True
 
     def create(self, validated_data):
         """
@@ -113,15 +127,14 @@ class NestedWritableObjectsMixin(object):
         for lang in settings.LANGUAGES:
             locales[lang] = validated_data.pop(lang, None)
 
+        lang_objects = create_lang_objects(model_name, locales)
+        for lang, lang_object in lang_objects.iteritems():
+            validated_data[lang] = lang_object
+
         if has_user:
             obj = model.objects.create(user=apella_user, **validated_data)
         else:
             obj = model.objects.create(**validated_data)
-
-        lang_objects = create_lang_objects(model_name, locales)
-        for lang, lang_object in lang_objects.iteritems():
-            setattr(obj, lang, lang_object)
-        obj.save()
 
         return obj
 
@@ -139,8 +152,7 @@ class NestedWritableObjectsMixin(object):
 
         if 'user' in validated_data:
             user_data = validated_data.pop('user')
-            apella_user = ApellaUser.objects.get(
-                username=user_data.get('username'))
+            apella_user = instance.user
             for lang in settings.LANGUAGES:
                 lang_object = update_lang_object(
                     'ApellaUser', apella_user, lang, user_data.pop(lang, None))
@@ -158,34 +170,18 @@ class NestedWritableObjectsMixin(object):
         return instance
 
     def to_internal_value(self, data):
-        """
-        Remove UniqueValidator from username if updating
-        parent object
-        """
-        data = lang_to_fields(data)
-        if self.context.get('request').method == 'PUT' and \
-                'user.username' in data:
-            try:
-                obj_id = self.fields['user']['username'].\
-                    to_internal_value(data['user.username'])
-            except serializers.ValidationError as exc:
-                raise serializers.ValidationError(
-                    {'user': {'username': exc.detail}})
-            field = self.fields['user']['username']
-            for validator in field.validators:
-                if type(validator) == UniqueValidator:
-                    validator.queryset = validator.queryset.exclude(
-                        username=obj_id)
+        data = fields_to_lang(data)
+        if 'user' in data:
+            user_data = fields_to_lang(data.pop('user'))
+            data['user'] = user_data
         return super(NestedWritableObjectsMixin, self).to_internal_value(data)
 
     def to_representation(self, instance):
         data = super(NestedWritableObjectsMixin, self).to_representation(
             instance)
-        data = fields_to_lang(data)
-        try:
+        data = lang_to_fields(data)
+        if 'user' in data:
             user_data = data.pop('user')
-            user_data = fields_to_lang(user_data)
+            user_data = lang_to_fields(user_data)
             data['user'] = user_data
-        except KeyError:
-            pass
         return data

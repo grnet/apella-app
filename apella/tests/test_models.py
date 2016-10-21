@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.test import TestCase
 from datetime import datetime, timedelta
+
+from django.test import TestCase
+
 from apella.models import ApellaUser, Institution, School, Department,\
         SubjectArea, Subject, Position, ApellaUserEl, ApellaUserEn,\
         InstitutionEl, InstitutionEn, SubjectEn, SubjectEl, SubjectAreaEl,\
