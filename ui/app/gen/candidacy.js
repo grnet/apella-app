@@ -41,6 +41,12 @@ let FS = {
       }
     }
   ],
+  edit: {
+    position_fields: ['position.code_and_title', 'position.title', 'position.department.school.institution.title_current', 'position.department.title', 'position.discipline','position.fek', 'position.fek_posted_at_format', 'position.starts_at_format', 'position.ends_at_format' ],
+    position_layout: {
+      flex: [30, 30, 30, 30, 30, 30, 30, 30, 30 ]
+    }
+  }
 
 }
 
@@ -122,30 +128,23 @@ export default gen.CRUDGen.extend({
     },
     fieldsets: computed('model.position.state', function() {
       let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView'];
-      let readonly_field = function(el){
+      let disable_field = function(el){
         return field(el, {
           attrs: {
-            readonly: true
+            readonly: true,
+            disabled: true,
           }
         })
       }
       if (this.get('model.position.state') != POSITION_POSTED_ID) {
-        candidacy_fields = _.map(candidacy_fields, readonly_field);
+        candidacy_fields = _.map(candidacy_fields, disable_field);
       };
 
       return [{
         label: 'candidacy.position_section.title',
         text: 'candidacy.position_section.subtitle',
-        fields: [field('position', {
-            hint: 'candidacy.edit.position.hint',
-            attrs: {
-              optionLabelAttr: 'code_and_title',
-              readonly: true,
-            }
-        })],
-        layout: {
-          flex: [50]
-        },
+        fields: _.map(FS.edit.position_fields, disable_field),
+        layout: FS.edit.position_layout
       },
       {
         label: 'candidacy.candidate_section.title',

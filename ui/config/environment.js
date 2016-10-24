@@ -7,7 +7,6 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/ui/',
     locationType: 'auto',
-    moment: {},
     i18n : {
       defaultLocale: 'el',
       locales: ['el', 'en']
@@ -22,9 +21,10 @@ module.exports = function(environment) {
     APP: {
       backend_host: 'http://127.0.0.1:8000/api',
       resource_choices: choices,
+      date_format: 'DD , MMMM YYYY',
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
   };
 
   if (environment === 'development') {
