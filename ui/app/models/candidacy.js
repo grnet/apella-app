@@ -18,9 +18,9 @@ export default DS.Model.extend({
   selfEvaluation: DS.attr({label: 'candidacy.label.self_evaluation'}),
   additionalFiles: DS.attr({label: 'candidacy.label.additional_files'}),
 
-  state_verbose: computed('state',function() {
+  state_verbose: computed('state','i18n.locale', function() {
     let list = CHOICES.CANDIDACY_STATES;
-    return get_label(list, get(this, 'state'));
+    return this.get('i18n').t(get_label(list, get(this, 'state')))
   }),
 
 });

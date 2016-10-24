@@ -1,4 +1,10 @@
 export default {
+  'Draft':'Πρόχειρο',
+  'Posted': 'Αναρτημένη',
+  'Cancelled': 'Ακυρωθείσα',
+  'Electing': 'Επιλογή',
+  'Successful': 'Στελεχωμένη',
+  'Failed': 'Κλειστή',
   'title.label': 'Τίτλος',
   'title_current.label': 'Τίτλος',
   'institution.label': 'Ίδρυμα',

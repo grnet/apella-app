@@ -1,4 +1,10 @@
 export default {
+  'Draft':'Draft',
+  'Posted': 'Posted',
+  'Cancelled': 'Cancelled',
+  'Electing': 'Electing',
+  'Successful': 'Successful',
+  'Failed': 'Failed',
   'title.label': 'Title',
   'title_current.label': 'Title',
   'institution.label': 'Institution',

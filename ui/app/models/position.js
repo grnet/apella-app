@@ -38,9 +38,9 @@ export default DS.Model.extend({
     return `APP${this.get('id')}`;
   }),
 
-  state_verbose: computed('state',function() {
+  state_verbose: computed('state','i18n.locale', function() {
     let list = CHOICES.POSITION_STATES;
-    return get_label(list, get(this, 'state'));
+    return this.get('i18n').t(get_label(list, get(this, 'state')))
   }),
 
 });

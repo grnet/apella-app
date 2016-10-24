@@ -10,11 +10,10 @@ export default DS.Model.extend({
   department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title'}}),
   members: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
 
-  type_verbose: computed('type',function() {
+  type_verbose: computed('type', 'i18n.locale', function() {
     let id = get(this, 'id') + '';
     let list = CHOICES.REGISTRY_TYPES;
-
-    return get_label(list, id);
+    return this.get('i18n').t(get_label(list, id))
   }),
 
   institution: computed('department.school.institution', function() {
