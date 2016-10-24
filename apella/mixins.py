@@ -118,7 +118,7 @@ class NestedWritableObjectsMixin(object):
 
             user_lang_objects = create_lang_objects(
                 'ApellaUser', user_locales)
-            apella_user = ApellaUser.objects.create(
+            apella_user = ApellaUser.objects.create_user(
                 el=user_lang_objects.get('el'),
                 en=user_lang_objects.get('en'),
                 **user_data)
@@ -133,6 +133,8 @@ class NestedWritableObjectsMixin(object):
 
         if has_user:
             obj = model.objects.create(user=apella_user, **validated_data)
+        elif model_name == 'ApellaUser':
+            obj = model.objects.create_user(**validated_data)
         else:
             obj = model.objects.create(**validated_data)
 
@@ -159,12 +161,18 @@ class NestedWritableObjectsMixin(object):
                 setattr(apella_user, lang, lang_object)
 
             for k, v in user_data.iteritems():
-                setattr(apella_user, k, v)
+                if k == 'password':
+                    apella_user.set_password(v)
+                else:
+                    setattr(apella_user, k, v)
 
             apella_user.save()
 
         for key, value in validated_data.iteritems():
-            setattr(instance, key, value)
+            if model_name == 'ApellaUser' and key == 'password':
+                instance.set_password(value)
+            else:
+                setattr(instance, key, value)
 
         instance.save()
         return instance

@@ -26,11 +26,12 @@ class Command(ApellaCommand):
             el = ApellaUserEl.objects.create()
             en = ApellaUserEn.objects.create()
 
-            a = ApellaUser.objects.create(username=username,
-                                          password=password,
-                                          role=options['role'],
-                                          el=el,
-                                          en=en)
+            a = ApellaUser.objects.create_user(
+                    username=username,
+                    password=password,
+                    role=options['role'],
+                    el=el,
+                    en=en)
 
             self.stdout.write("User with id: %s created" % a.pk)
         except:

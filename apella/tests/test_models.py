@@ -24,7 +24,7 @@ class CandidacyTest(TestCase):
                 first_name='Lakis',
                 last_name='Lalakis',
                 father_name='Loulis')
-        author = ApellaUser.objects.create(
+        author = ApellaUser.objects.create_user(
                 el=user_el,
                 en=user_en,
                 username='manager',
@@ -76,7 +76,7 @@ class CandidacyTest(TestCase):
                 first_name='Candidate',
                 last_name='Papadopoulow',
                 father_name='George')
-        candidate = ApellaUser.objects.create(
+        candidate = ApellaUser.objects.create_user(
                 el=user_el,
                 en=user_en,
                 username='candidate',

@@ -193,6 +193,11 @@ candidate_resource = {
 }
 
 API_SCHEMA = {
+    'global': {
+        'authentication_classes':
+            ['rest_framework.authentication.BasicAuthentication'],
+        'permission_classes': ['rest_framework.permissions.IsAuthenticated']
+    },
     'resources': {
         'positions': position_resource,
         'candidacies': candidacy_resource,
