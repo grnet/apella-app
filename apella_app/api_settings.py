@@ -167,7 +167,7 @@ institutionmanager_resource = {
                 'field_schema': apellauser_resource['field_schema']
             },
         },
-        'custom_mixins': ['apella.mixins.NestedWritableObjectsMixin'],
+        'custom_mixins': ['apella.mixins.NestedWritableUserMixin'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': ['institution', 'manager_role', ]

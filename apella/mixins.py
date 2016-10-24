@@ -92,48 +92,22 @@ def lang_to_fields(data):
 
 class NestedWritableObjectsMixin(object):
 
-    def __init__(self, *args, **kwargs):
-        super(NestedWritableObjectsMixin, self).__init__(*args, **kwargs)
-        if self.context.get('request').method == 'PUT' and\
-                'user' in self.fields:
-            self.fields['user'].fields['username'].read_only = True
-
     def create(self, validated_data):
         """
         Overrides serializer's create method to create nested
         objects in advance.
-        If nested object is a user object it should be created before
-        its parent, along with its language nested objects.
         """
         model_name = self.Meta.model.__name__
-        model = apps.get_model(app_label='apella', model_name=model_name)
-
-        has_user = False
-        if 'user' in validated_data:
-            has_user = True
-            user_data = validated_data.pop('user')
-            user_locales = defaultdict(dict)
-            for lang in settings.LANGUAGES:
-                user_locales[lang] = user_data.pop(lang, None)
-
-            user_lang_objects = create_lang_objects(
-                'ApellaUser', user_locales)
-            apella_user = ApellaUser.objects.create_user(
-                el=user_lang_objects.get('el'),
-                en=user_lang_objects.get('en'),
-                **user_data)
+        model = self.Meta.model
 
         locales = defaultdict(dict)
         for lang in settings.LANGUAGES:
             locales[lang] = validated_data.pop(lang, None)
-
         lang_objects = create_lang_objects(model_name, locales)
         for lang, lang_object in lang_objects.iteritems():
             validated_data[lang] = lang_object
 
-        if has_user:
-            obj = model.objects.create(user=apella_user, **validated_data)
-        elif model_name == 'ApellaUser':
+        if model_name == 'ApellaUser':
             obj = model.objects.create_user(**validated_data)
         else:
             obj = model.objects.create(**validated_data)
@@ -152,22 +126,6 @@ class NestedWritableObjectsMixin(object):
                 model_name, instance, lang, validated_data.pop(lang, None))
             setattr(instance, lang, lang_object)
 
-        if 'user' in validated_data:
-            user_data = validated_data.pop('user')
-            apella_user = instance.user
-            for lang in settings.LANGUAGES:
-                lang_object = update_lang_object(
-                    'ApellaUser', apella_user, lang, user_data.pop(lang, None))
-                setattr(apella_user, lang, lang_object)
-
-            for k, v in user_data.iteritems():
-                if k == 'password':
-                    apella_user.set_password(v)
-                else:
-                    setattr(apella_user, k, v)
-
-            apella_user.save()
-
         for key, value in validated_data.iteritems():
             if model_name == 'ApellaUser' and key == 'password':
                 instance.set_password(value)
@@ -179,17 +137,79 @@ class NestedWritableObjectsMixin(object):
 
     def to_internal_value(self, data):
         data = fields_to_lang(data)
-        if 'user' in data:
-            user_data = fields_to_lang(data.pop('user'))
-            data['user'] = user_data
+
         return super(NestedWritableObjectsMixin, self).to_internal_value(data)
 
     def to_representation(self, instance):
         data = super(NestedWritableObjectsMixin, self).to_representation(
             instance)
         data = lang_to_fields(data)
-        if 'user' in data:
-            user_data = data.pop('user')
-            user_data = lang_to_fields(user_data)
-            data['user'] = user_data
+
+        return data
+
+
+class NestedWritableUserMixin(NestedWritableObjectsMixin):
+
+    NESTED_USER_KEY = 'user'
+
+    def __init__(self, *args, **kwargs):
+        super(NestedWritableUserMixin, self).__init__(*args, **kwargs)
+        if self.context.get('request').method == 'PUT' and\
+                self.NESTED_USER_KEY in self.fields:
+            self.fields['user'].fields['username'].read_only = True
+
+    def create(self, validated_data):
+        model_name = self.Meta.model.__name__
+        model = apps.get_model(app_label='apella', model_name=model_name)
+
+        user_data = validated_data.pop(self.NESTED_USER_KEY)
+        user_locales = defaultdict(dict)
+        for lang in settings.LANGUAGES:
+            user_locales[lang] = user_data.pop(lang, None)
+
+        user_lang_objects = create_lang_objects(
+            'ApellaUser', user_locales)
+        apella_user = ApellaUser.objects.create_user(
+            el=user_lang_objects.get('el'),
+            en=user_lang_objects.get('en'),
+            **user_data)
+        validated_data[self.NESTED_USER_KEY] = apella_user
+
+        return super(NestedWritableUserMixin, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+
+        model_name = self.Meta.model.__name__
+
+        user_data = validated_data.pop(self.NESTED_USER_KEY)
+        apella_user = instance.user
+        for lang in settings.LANGUAGES:
+            lang_object = update_lang_object(
+                'ApellaUser', apella_user, lang, user_data.pop(lang, None))
+            setattr(apella_user, lang, lang_object)
+
+        for k, v in user_data.iteritems():
+            if k == 'password':
+                apella_user.set_password(v)
+            else:
+                setattr(apella_user, k, v)
+
+        apella_user.save()
+
+        return super(NestedWritableUserMixin, self).update(
+            instance, validated_data)
+
+    def to_internal_value(self, data):
+        user_data = fields_to_lang(data.pop(self.NESTED_USER_KEY))
+        data[self.NESTED_USER_KEY] = user_data
+
+        return super(NestedWritableUserMixin, self).to_internal_value(data)
+
+    def to_representation(self, instance):
+        data = super(NestedWritableUserMixin, self).to_representation(
+            instance)
+        user_data = data.pop(self.NESTED_USER_KEY)
+        user_data = lang_to_fields(user_data)
+        data[self.NESTED_USER_KEY] = user_data
+
         return data
