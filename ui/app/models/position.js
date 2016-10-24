@@ -17,7 +17,7 @@ export default DS.Model.extend({
       optionLabelAttr: 'user.username',
     },
   }),
-  department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title'}}),
+  department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title_current'}}),
   subject_area: DS.belongsTo('subject_area', {attrs: {optionLabelAttr: 'title_current'}}),
   subject: DS.belongsTo('subject', {attrs: {optionLabelAttr: 'title_current'}}),
   fek: DS.attr(),

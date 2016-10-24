@@ -1,5 +1,7 @@
 import gen from 'ember-gen/lib/gen';
+import {field} from 'ember-gen';
 import validate from 'ember-gen/validate';
+import {i18nValidate} from 'ui/validators/i18n';
 
 export default gen.CRUDGen.extend({
   modelName: 'department',
@@ -10,13 +12,13 @@ export default gen.CRUDGen.extend({
       label: 'department.menu_label'
     },
     validators: {
-      title: [validate.presence(true), validate.length({min:4, max:50})],
+      title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
     }
   },
   list: {
     layout: 'table',
-    sortBy: 'title:asc',
-    fields: ['title', 'school.title'],
+    sortBy: 'title_current:asc',
+    fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'})],
     page: {
       title: 'department.menu_label',
     }

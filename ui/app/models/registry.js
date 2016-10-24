@@ -7,7 +7,7 @@ const { computed, get } = Ember,
 
 export default DS.Model.extend({
   type: DS.attr({type: 'select', choices: CHOICES.REGISTRY_TYPES, defaultValue: 2}),
-  department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title'}}),
+  department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title_current'}}),
   members: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
 
   type_verbose: computed('type', 'i18n.locale', function() {
