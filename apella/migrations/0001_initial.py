@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import datetime
 import apella.validators
 import django.contrib.auth.models
 import django.utils.timezone
@@ -51,7 +50,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('file_kind', models.CharField(max_length=1, choices=[['CV', 'CV'], ['Diploma', 'Diploma'], ['Publication', 'Publication'], ['Additional file', 'Additional file']])),
                 ('file_path', models.CharField(max_length=500)),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 24, 9, 15, 6, 774211))),
+                ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
             ],
         ),
         migrations.CreateModel(
@@ -84,8 +83,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Cancelled']])),
                 ('others_can_view', models.BooleanField(default=False)),
-                ('submitted_at', models.DateTimeField(default=datetime.datetime(2016, 10, 24, 9, 15, 6, 787340))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 24, 9, 15, 6, 787366))),
+                ('submitted_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -173,8 +172,8 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Electing'], ['4', 'Successful'], ['5', 'Failed']])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
-                ('created_at', models.DateTimeField(default=datetime.datetime(2016, 10, 24, 9, 15, 6, 783832))),
-                ('updated_at', models.DateTimeField(default=datetime.datetime(2016, 10, 24, 9, 15, 6, 783856))),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),

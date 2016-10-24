@@ -68,7 +68,7 @@ class Institution(models.Model):
 class ApellaFile(models.Model):
     file_kind = models.CharField(choices=common.FILE_KINDS, max_length=1)
     file_path = models.CharField(max_length=500)
-    updated_at = models.DateTimeField(blank=False, default=timezone.now())
+    updated_at = models.DateTimeField(blank=False, default=timezone.now)
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
@@ -218,8 +218,8 @@ class Position(models.Model):
     starts_at = models.DateTimeField(
         blank=False, null=False, validators=[after_today_validator])
     ends_at = models.DateTimeField(blank=False, null=False)
-    created_at = models.DateTimeField(blank=False, default=timezone.now())
-    updated_at = models.DateTimeField(blank=False, default=timezone.now())
+    created_at = models.DateTimeField(blank=False, default=timezone.now)
+    updated_at = models.DateTimeField(blank=False, default=timezone.now)
 
     def clean(self, *args, **kwargs):
         validate_dates_interval(
@@ -246,8 +246,8 @@ class Candidacy(models.Model):
     state = models.CharField(
         choices=common.CANDIDACY_STATES, max_length=1, default='2')
     others_can_view = models.BooleanField(default=False)
-    submitted_at = models.DateTimeField(blank=False, default=timezone.now())
-    updated_at = models.DateTimeField(blank=False, default=timezone.now())
+    submitted_at = models.DateTimeField(blank=False, default=timezone.now)
+    updated_at = models.DateTimeField(blank=False, default=timezone.now)
 
     def clean(self, *args, **kwargs):
         validate_position_dates(
