@@ -178,6 +178,13 @@ professor_resource = {
     'field_schema': {
         'fields': ['id', 'url', 'user', 'institution', 'rank',
                    'is_foreign', 'speaks_greek'],
+        'nested_objects': {
+            'user': {
+                'model_field': 'user',
+                'field_schema': apellauser_resource['field_schema']
+            },
+        },
+        'custom_mixins': ['apella.mixins.NestedWritableUserMixin'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': ['institution', ]
@@ -187,6 +194,13 @@ candidate_resource = {
     'model': 'apella.models.Candidate',
     'field_schema': {
         'fields': ['id', 'url', 'user'],
+        'nested_objects': {
+            'user': {
+                'model_field': 'user',
+                'field_schema': apellauser_resource['field_schema']
+            },
+        },
+        'custom_mixins': ['apella.mixins.NestedWritableUserMixin'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': []
