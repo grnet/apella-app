@@ -73,6 +73,11 @@ export default {
     menu_label: 'Καθηγητές',
     create_title: 'Νέος καθηγητής',
   },
+  candidate: {
+    menu_label: 'Υποψήφιοι',
+    create_title: 'Νέος υποψήφιος',
+  },
+
   candidacy: {
     menu_label: 'Υποψηφιότητες',
     position_section: {

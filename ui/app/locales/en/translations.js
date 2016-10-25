@@ -73,7 +73,10 @@ export default {
     menu_label: 'Professors',
     create_title: 'New professor',
   },
-
+  candidate: {
+    menu_label: 'Candidates',
+    create_title: 'New candidate',
+  },
   candidacy: {
     menu_label: 'Candidacies',
     position_section: {
