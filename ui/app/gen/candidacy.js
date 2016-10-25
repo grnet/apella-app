@@ -57,10 +57,10 @@ export default gen.CRUDGen.extend({
     validators: {
       candidate: mandatory,
       position: mandatory,
-      cv: mandatory_with_max_chars,
-      diploma: mandatory_with_max_chars,
-      publication: mandatory_with_max_chars,
-      additionalFiles: mandatory_with_max_chars,
+//      cv: mandatory_with_max_chars,
+//      diploma: mandatory_with_max_chars,
+//      publication: mandatory_with_max_chars,
+//      additionalFiles: mandatory_with_max_chars,
     }
   },
   list: {
@@ -82,7 +82,6 @@ export default gen.CRUDGen.extend({
     sortBy: 'position.code:asc',
     fields: FS.list,
     search: {
-      serverSide: true,
       fields: FS.list,
     },
     page: {
