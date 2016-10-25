@@ -46,6 +46,12 @@ export default {
   'role_verbose.label': 'Ρόλος',
   'organization.label': 'Οργανισμός',
   'regulatory_framework.label': 'Εσωτερικός κανονισμός',
+  'rank.label': 'Βαθμίδα',
+  'cv_url.label': 'Βιογραφικό',
+  'is_foreign.label': 'Αλλοδαπός',
+  'speaks_greek.label': 'Μιλω ελληνικά',
+  'fek_discipline.label': 'Γνωστικό αντικείμενο Φ.Ε.Κ.',
+  'discipline_free_text.label': 'Γνωστικό αντικείμενο',
   'position.code.label': 'Κωδικός θέσης',
   'position.code_and_title.label': 'Κωδικός - Τίτλος θέσης',
   'position.title.label': 'Τίτλος θέσης',
@@ -62,6 +68,10 @@ export default {
       authority_full_name: 'Ονοματεπώνυμο Αρχής Πιστοποίησης',
       role: 'Ρόλος'
     }
+  },
+  professor: {
+    menu_label: 'Καθηγητές',
+    create_title: 'Νέος καθηγητής',
   },
   candidacy: {
     menu_label: 'Υποψηφιότητες',

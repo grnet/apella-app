@@ -30,14 +30,15 @@ export default gen.CRUDGen.extend({
   },
   list: {
     layout: 'table',
+    sortBy: 'username:asc',
     search: {
-      fields: ['username', 'email', 'full_name_current', 'institution']
+      fields: ['username', 'email']
     },
     page: {
       title: 'manager.menu_label',
     },
     label: 'manager.menu_label',
-    fields: ['username', 'full_name_current', 'institution.title_current', ],
+    fields: ['username', 'email', 'full_name_current', 'institution.title_current', ],
     menu: {
       label: 'manager.menu_label',
     },

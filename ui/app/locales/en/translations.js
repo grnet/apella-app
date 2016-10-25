@@ -46,6 +46,12 @@ export default {
   'role_verbose.label': 'Role',
   'organization.label': 'Organization',
   'regulatory_framework.label': 'Internal Regulation',
+  'rank.label': 'Rank',
+  'cv_url.label': 'CV',
+  'is_foreign.label': 'Foreign professor',
+  'speaks_greek.label': 'Speaks greek',
+  'fek_discipline.label': 'FEK discipline.',
+  'discipline_free_text.label': 'Discipline',
   'position.code.label': 'Position code',
   'position.code_and_title.label': 'Position code - Title',
   'position.title.label': 'Position Title',
@@ -63,6 +69,11 @@ export default {
       role: 'Role'
     }
   },
+  professor: {
+    menu_label: 'Professors',
+    create_title: 'New professor',
+  },
+
   candidacy: {
     menu_label: 'Candidacies',
     position_section: {
