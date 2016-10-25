@@ -5,6 +5,14 @@ export default {
   'Electing': 'Επιλογή',
   'Successful': 'Στελεχωμένη',
   'Failed': 'Κλειστή',
+  'password.label': 'Password',
+  'email.label': 'Email',
+  'first_name.label': 'Όνομα',
+  'last_name.label': 'Επώνυμο',
+  'father_name.label': 'Πατρώνυμο',
+  'id_passport.label': 'Αριθμός δελτίου ταυτότητας ή διαβατηρίου',
+  'mobile_phone_number.label': 'Κινητό τηλέφωνο',
+  'home_phone_number.label': 'Σταθερό τηλέφωνο',
   'title.label': 'Τίτλος',
   'title_current.label': 'Τίτλος',
   'institution.label': 'Ίδρυμα',
@@ -33,7 +41,9 @@ export default {
   'area.title_current.label': 'Θεματική περιοχή',
   'author.label': 'Συντάκτης',
   'username.label': 'Όνομα Χρήστη',
+  'full_name_current.label': 'Ονοματεπώνυμο',
   'role.label': 'Ρόλος',
+  'role_verbose.label': 'Ρόλος',
   'organization.label': 'Οργανισμός',
   'regulatory_framework.label': 'Εσωτερικός κανονισμός',
   'position.code.label': 'Κωδικός θέσης',
@@ -43,13 +53,13 @@ export default {
   'position.department.title_current.label': 'Τμήμα',
   'position.state_verbose.label': 'Κατάσταση θέσης',
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε την θέση για την οποία έχετε υποβάλει υποψηφιότητα',
+  'institution.title_current.label': 'Ίδρυμα',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
     create_title: 'Νέος διαχειριστής',
     label: {
-      user: 'Όνομα Χρήστη',
       authority_type: 'Αρχή Πιστοποίησης',
-      authority_full_name: 'Ονοματεπώνυμο',
+      authority_full_name: 'Ονοματεπώνυμο Αρχής Πιστοποίησης',
       role: 'Ρόλος'
     }
   },
@@ -91,6 +101,8 @@ export default {
     labels: {
         basic_info: 'Βασικά στοιχεία',
         details: 'Λεπτομέρειες',
+        user_info: 'Στοιχεία λογαριασμού',
+        more_info: 'Περισσότερα στοιχεία',
       }
   },
   institution: {

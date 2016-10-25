@@ -5,6 +5,14 @@ export default {
   'Electing': 'Electing',
   'Successful': 'Successful',
   'Failed': 'Failed',
+  'password.label': 'Password',
+  'email.label': 'Email',
+  'first_name.label': 'First name',
+  'last_name.label': 'Last name',
+  'father_name.label': 'Father name',
+  'id_passport.label': 'ID or password number',
+  'mobile_phone_number.label': 'Mobile',
+  'home_phone_number.label': 'Home phone',
   'title.label': 'Title',
   'title_current.label': 'Title',
   'institution.label': 'Institution',
@@ -33,7 +41,9 @@ export default {
   'area.title_current.label': 'Thematic area',
   'author.label': 'Author',
   'username.label': 'Username',
+  'full_name_current.label': 'Ονοματεπώνυμο',
   'role.label': 'Role',
+  'role_verbose.label': 'Role',
   'organization.label': 'Organization',
   'regulatory_framework.label': 'Internal Regulation',
   'position.code.label': 'Position code',
@@ -43,13 +53,13 @@ export default {
   'position.department.title_current.label': 'Department',
   'position.state_verbose.label': 'Position State',
   'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy',
+  'institution.title_current.label': 'Institution',
   manager: {
     menu_label: 'Institution Managers',
     create_title: 'New manager',
     label: {
-      user: 'Username',
       authority_type: 'Verification Authority',
-      authority_full_name: 'Full name',
+      authority_full_name: 'Authority Full name',
       role: 'Role'
     }
   },
@@ -89,6 +99,8 @@ export default {
     labels: {
         basic_info: 'Basic info',
         details: 'Details',
+        user_info: 'Profile',
+        more_info: 'More info',
       }
   },
   institution: {

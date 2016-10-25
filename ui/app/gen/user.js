@@ -1,5 +1,6 @@
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
+import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
 
 export default gen.CRUDGen.extend({
   modelName: 'user',
@@ -9,14 +10,16 @@ export default gen.CRUDGen.extend({
       icon: 'face',
       label: 'user.menu_label'
     },
-    validators: {
-      mobile_phone_number: [validate.format({ type: 'phone' })],
-      home_phone_number: [validate.format({ type: 'phone' })],
-      email: [validate.format({ type: 'email' })],
-    }
+    validators: USER_VALIDATORS,
+    fieldsets: [
+      USER_FIELDSET
+    ]
   },
   list: {
     layout: 'table',
+    search: {
+      fields: ['username', 'email', 'full_name_current','role_verbose']
+    },
     sortBy: 'username:asc',
     fields: ['username', 'email', 'full_name_current', 'role_verbose'],
     page: {

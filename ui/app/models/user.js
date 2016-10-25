@@ -7,7 +7,7 @@ const { computed, get } = Ember,
 
 export default DS.Model.extend({
   username: DS.attr(),
-  password: DS.attr(),
+  password: DS.attr({attrs: {type: 'password'}}),
   email: DS.attr(),
   first_name: DS.attr({component: 'i18n-input-field'}),
   last_name: DS.attr({component: 'i18n-input-field'}),
