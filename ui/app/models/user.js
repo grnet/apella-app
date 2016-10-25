@@ -6,6 +6,7 @@ const { computed, get } = Ember,
       CHOICES = ENV.APP.resource_choices;
 
 export default DS.Model.extend({
+  user_id: DS.attr(),
   username: DS.attr(),
   password: DS.attr({attrs: {type: 'password'}}),
   email: DS.attr(),

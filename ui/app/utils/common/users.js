@@ -3,6 +3,7 @@ import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 
 const USER_FIELDS_ALL = [
+  'user_id',
   'username',
   'password',
   'email',
@@ -52,7 +53,11 @@ const USER_VALIDATORS = {
 const normalizeUser = function(hash, serializer) {
   let user_info = hash['user'];
   Object.keys(user_info).forEach(function(key){
-    hash[key] = user_info[key];
+    if (key!= 'id') {
+      hash[key] = user_info[key];
+    } else {
+      hash['user_id'] = user_info['id'];
+    }
   });
   delete hash['user'];
   return hash;
@@ -63,7 +68,11 @@ const serializeUser = function(json) {
   let user_info = {};
   for (let field of USER_FIELDS_ALL) {
     if (field in json) {
-      user_info[field] = json[field];
+      if (field=='user_id') {
+        user_info['id'] = json['user_id']
+      } else {
+        user_info[field] = json[field];
+      }
       delete json[field];
     }
   }
