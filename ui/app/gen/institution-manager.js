@@ -10,11 +10,12 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    layout: 'table',
     page: {
       title: 'manager.menu_label',
     },
     label: 'manager.menu_label',
-    fields: ['id', 'username', 'last_name'],
+    fields: ['id', 'institution.title_current', 'username'],
     menu: {
       label: 'manager.menu_label',
     },
