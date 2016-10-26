@@ -28,7 +28,7 @@
     "user": "1",
     "action": "institution-add",
     "input": {
-        "arg1": "Ιονιο Πανεπιστημιο",
+        "arg1": "Ιόνιο Πανεπιστήμιο",
         "en": "Ionian University"
     },
     "db_state_change" : {
@@ -40,7 +40,7 @@
     "user": "1",
     "action": "institution-add",
     "input": {
-        "arg1": "Χαροκοπειο Πανεπιστημιο",
+        "arg1": "Χαροκόπειο Πανεπιστήμιο",
         "en": "Harokopio University"
     },
     "db_state_change" : {
@@ -52,7 +52,7 @@
     "user": "1",
     "action": "institution-add",
     "input": {
-        "arg1": "Παντειο Πανεπιστημιο κοινωνικων & πολιτικων επιστημων",
+        "arg1": "Πάντειο Πανεπιστήμιο κοινωνικών & πολιτικών επιστημών",
         "en": "Panteio University of social and political sciences"
     },
     "db_state_change" : {
@@ -145,7 +145,8 @@
     "action": "school-add",
     "input": {
         "arg1": "2",
-        "arg2": "Another school"
+        "arg2": "Νομική Σχολή",
+        "en": "Law School"
     },
     "db_state_change" : {
         "object" : {"School" : "2"},
@@ -156,8 +157,9 @@
     "user": "1",
     "action": "school-add",
     "input": {
-        "arg1": "1",
-        "arg2": "School of languages"
+        "arg1": "4",
+        "arg2": "Σχολή Επιστημών Υγείας",
+        "en": "School of Health Sciences"
     },
     "db_state_change" : {
         "object" : {"School" : "3"},
@@ -170,7 +172,8 @@
     "action": "department-add",
     "input": {
         "arg1": "3",
-        "arg2": "English"
+        "arg2": "Τμήμα Οδοντιατρικής",
+        "en": "Department of Dentistry"
     },
     "db_state_change" : {
         "object" : {"Department" : "3"},
@@ -181,8 +184,9 @@
     "user": "1",
     "action": "department-add",
     "input": {
-        "arg1": "1",
-        "arg2": "Physics"
+        "arg1": "2",
+        "arg2": "Τμήμα Φυσικής",
+        "en": "Department of Physics"
     },
     "db_state_change" : {
         "object" : {"Department" : "2"},
@@ -194,9 +198,9 @@
     "user": "1",
     "action": "department-add",
     "input": {
-        "arg1": "1",
+        "arg1": "3",
         "arg2": "Εφαρμοσμένα Μαθηματικά",
-        "en": "Mathematics"
+        "en": "Applied Mathematics"
     },
     "db_state_change" : {
         "object" : {"Department" : "2"},
@@ -297,10 +301,10 @@
     "user": "1",
     "action": "position-add",
     "input": {
-        "arg1": "Professor",
+        "arg1": "Αναπληρωτής Καθηγητής",
         "arg2": "1",
         "arg3" : "1",
-        "arg4" : "Description",
+        "arg4" : "Γενική Εκκλησιαστική Ιστορία, από την άλωση μέχρι σήμερα",
         "arg5" : "1",
         "arg6" : "1",
         "arg7" : "http://www.google.com",
@@ -317,10 +321,10 @@
     "user": "1",
     "action": "position-add",
     "input": {
-        "arg1": "English professor",
+        "arg1": "Επίκουρος Καθηγητής",
         "arg2": "1",
-        "arg3" : "1",
-        "arg4" : "Description",
+        "arg3" : "2",
+        "arg4" : "Κοινωνική Ψυχολογία στην Εκπαίδευση",
         "arg5" : "1",
         "arg6" : "1",
         "arg7" : "http://www.etsy.com",
@@ -337,12 +341,12 @@
     "user": "1",
     "action": "position-add",
     "input": {
-        "arg1": "Physics professor",
+        "arg1": "Καθηγητής Πρώτης Βαθμίδας",
         "arg2": "1",
-        "arg3" : "2",
-        "arg4" : "Description for physics professor",
-        "arg5" : "1",
-        "arg6" : "1",
+        "arg3" : "3",
+        "arg4" : "Πειραματική Αστροσωματιδιακή Φυσική – Φυσική Ποζιτρονίου",
+        "arg5" : "2",
+        "arg6" : "2",
         "arg7" : "http://www.yarn.com",
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
@@ -357,12 +361,12 @@
     "user": "1",
     "action": "position-add",
     "input": {
-        "arg1": "Economy professor",
+        "arg1": "Αναπληρωτής Καθηγητής",
         "arg2": "1",
-        "arg3" : "1",
-        "arg4" : "Super professor needed",
+        "arg3" : "3",
+        "arg4" : "Νεογνολογία",
         "arg5" : "1",
-        "arg6" : "1",
+        "arg6" : "3",
         "arg7" : "http://www.yahoo.com",
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
@@ -377,10 +381,10 @@
     "user": "1",
     "action": "position-add",
     "input": {
-        "arg1": "Gardener",
+        "arg1": "Καθηγητής Πρώτης Βαθμίδας",
         "arg2": "1",
         "arg3" : "1",
-        "arg4" : "Description",
+        "arg4" : "Κοινωνική Ψυχολογία στην Εκπαίδευση",
         "arg5" : "2",
         "arg6" : "1",
         "arg7" : "http://www.yarn.com",
@@ -418,7 +422,7 @@
     "user": "2",
     "action": "candidacy-add",
     "input": {
-        "arg1" : "3",
+        "arg1" : "4",
         "arg2" : "1"
     },
     "db_state_change" : {
