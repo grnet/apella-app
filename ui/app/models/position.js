@@ -14,7 +14,7 @@ export default DS.Model.extend({
   discipline: DS.attr(),
   author: DS.belongsTo('institution-manager', {
     attrs: {
-      optionLabelAttr: 'user.username',
+      optionLabelAttr: 'full_name_current',
     },
   }),
   department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title_current'}}),
