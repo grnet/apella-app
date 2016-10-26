@@ -272,7 +272,7 @@ class Registry(models.Model):
     department = models.ForeignKey(Department, blank=False)
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=1, default='1')
-    members = models.ManyToManyField(ApellaUser, blank=False, null=False)
+    members = models.ManyToManyField(Professor, blank=False, null=False)
 
     class Meta:
         # Each department can have only one internal and one external registry
