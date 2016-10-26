@@ -131,7 +131,7 @@ export default gen.CRUDGen.extend({
       {
         label: 'candidacy.candidate_section.title',
         text: 'candidacy.candidate_section.subtitle',
-        fields: ['candidate', 'cv', 'diploma', 'publication'],
+        fields: [disable_field('candidate.full_name_current'), 'cv', 'diploma', 'publication'],
         layout: {
           flex: [50, 50, 50, 50]
         },
