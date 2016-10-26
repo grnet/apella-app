@@ -25,6 +25,7 @@ export default gen.CRUDGen.extend({
         label: 'fieldsets.labels.more_info',
         fields: [
           'institution',
+          'department',
           'rank',
           'cv_url',
           'fek',

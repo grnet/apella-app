@@ -17,7 +17,8 @@ apellauser_resource = {
     'model': 'apella.models.ApellaUser',
     'field_schema': {
         'fields': ['id', 'url', 'username', 'password', 'email', 'role',
-                   'el', 'en'],
+                   'el', 'en', 'id_passport', 'mobile_phone_number',
+                   'home_phone_number'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'el': {
@@ -176,8 +177,9 @@ institutionmanager_resource = {
 professor_resource = {
     'model': 'apella.models.Professor',
     'field_schema': {
-        'fields': ['id', 'url', 'user', 'institution', 'rank',
-                   'is_foreign', 'speaks_greek'],
+        'fields': ['id', 'url', 'user', 'institution', 'department',
+                   'rank', 'is_foreign', 'speaks_greek', 'cv_url',
+                   'fek', 'discipline_text', 'discipline_in_fek'],
         'nested_objects': {
             'user': {
                 'model_field': 'user',

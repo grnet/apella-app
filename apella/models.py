@@ -65,48 +65,6 @@ class Institution(models.Model):
     en = models.ForeignKey(InstitutionEn, blank=True, null=True)
 
 
-class ApellaFile(models.Model):
-    file_kind = models.CharField(choices=common.FILE_KINDS, max_length=1)
-    file_path = models.CharField(max_length=500)
-    updated_at = models.DateTimeField(blank=False, default=timezone.now)
-
-    def save(self, *args, **kwargs):
-        self.updated_at = timezone.now()
-        super(ApellaFile, self).save(*args, **kwargs)
-
-
-class Professor(models.Model):
-    user = models.ForeignKey(ApellaUser, blank=False, null=False)
-    institution = models.ForeignKey(Institution, blank=False, null=False)
-    rank = models.CharField(
-        choices=common.RANKS, blank=False, null=False, max_length=1)
-    is_foreign = models.BooleanField(default=False)
-    speaks_greek = models.BooleanField(default=True)
-    cv_url = models.URLField(blank=True)
-    fek = models.URLField(blank=False)
-    fek_discipline = models.CharField(max_length=300)
-    discipline_free_text = models.CharField(max_length=300)
-
-
-class Candidate(models.Model):
-    user = models.ForeignKey(ApellaUser, blank=False, null=False)
-
-
-class UserFiles(models.Model):
-    apella_file = models.ForeignKey(ApellaFile, related_name='user_files')
-    apella_user = models.ForeignKey(ApellaUser, related_name='user_files')
-    deleted = models.BooleanField(default=False, db_index=True)
-
-
-class InstitutionManager(models.Model):
-    user = models.ForeignKey(ApellaUser, blank=False, null=False)
-    institution = models.ForeignKey(Institution, blank=False, null=False)
-    authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
-    authority_full_name = models.CharField(max_length=150)
-    manager_role = models.CharField(
-        choices=common.MANAGER_ROLES, blank=False, max_length=1)
-
-
 class SchoolFields(models.Model):
     title = models.CharField(max_length=150, blank=False)
 
@@ -188,6 +146,49 @@ class Subject(models.Model):
     area = models.ForeignKey(SubjectArea, blank=False, null=False)
     el = models.ForeignKey(SubjectEl, blank=True, null=True)
     en = models.ForeignKey(SubjectEn, blank=True, null=True)
+
+
+class ApellaFile(models.Model):
+    file_kind = models.CharField(choices=common.FILE_KINDS, max_length=1)
+    file_path = models.CharField(max_length=500)
+    updated_at = models.DateTimeField(blank=False, default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super(ApellaFile, self).save(*args, **kwargs)
+
+
+class Professor(models.Model):
+    user = models.ForeignKey(ApellaUser, blank=False, null=False)
+    institution = models.ForeignKey(Institution, blank=False, null=False)
+    department = models.ForeignKey(Department, blank=True, null=True)
+    rank = models.CharField(
+        choices=common.RANKS, blank=False, null=False, max_length=1)
+    is_foreign = models.BooleanField(default=False)
+    speaks_greek = models.BooleanField(default=True)
+    cv_url = models.URLField(blank=True)
+    fek = models.URLField(blank=False)
+    discipline_text = models.CharField(max_length=300)
+    discipline_in_fek = models.BooleanField(default=True)
+
+
+class Candidate(models.Model):
+    user = models.ForeignKey(ApellaUser, blank=False, null=False)
+
+
+class UserFiles(models.Model):
+    apella_file = models.ForeignKey(ApellaFile, related_name='user_files')
+    apella_user = models.ForeignKey(ApellaUser, related_name='user_files')
+    deleted = models.BooleanField(default=False, db_index=True)
+
+
+class InstitutionManager(models.Model):
+    user = models.ForeignKey(ApellaUser, blank=False, null=False)
+    institution = models.ForeignKey(Institution, blank=False, null=False)
+    authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
+    authority_full_name = models.CharField(max_length=150)
+    manager_role = models.CharField(
+        choices=common.MANAGER_ROLES, blank=False, max_length=1)
 
 
 class Position(models.Model):
