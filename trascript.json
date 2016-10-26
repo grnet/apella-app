@@ -5,7 +5,14 @@
     "input": {
         "arg1": "manager",
         "role": "1",
-        "arg2": "12345"
+        "arg2": "12345",
+        "arg3": "Γεώργιος",
+        "arg4": "Κορφιάτης",
+        "arg5": "Ιωάννης",
+        "first_name_en": "George",
+        "last_name_en": "Korfiatis",
+        "father_name_en": "John",
+        "email": "george@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "1"},
@@ -81,7 +88,14 @@
     "input": {
         "arg1": "candidate",
         "role": "2",
-        "arg2": "12345"
+        "arg2": "12345",
+        "arg3": "Μαρία",
+        "arg4": "Παπαδοπούλου",
+        "arg5": "Πέτρος",
+        "first_name_en": "Maria",
+        "last_name_en": "Papadopoulou",
+        "father_name_en": "Peter",
+        "email": "maria@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "2"},
@@ -90,11 +104,29 @@
 },
 {
     "user": "admin",
+    "action": "candidate-add",
+    "input": {
+        "arg1": "candidate"
+    },
+    "db_state_change" : {
+        "object" : {"Candidate" : "1"},
+        "change" : "new candidate"
+    }
+},
+{
+    "user": "admin",
     "action": "user-add",
     "input": {
-        "arg1": "elector",
+        "arg1": "professor",
         "role": "3",
-        "arg2": "12345"
+        "arg2": "12345",
+        "arg3": "Παναγιώτης",
+        "arg4": "Μαρκάτος",
+        "arg5": "Κωνσταντίνος",
+        "first_name_en": "Panos",
+        "last_name_en": "Markatos",
+        "father_name_en": "Konstantinos",
+        "email": "panos@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "3"},
@@ -107,7 +139,14 @@
     "input": {
         "arg1": "committee",
         "role": "4",
-        "arg2": "12345"
+        "arg2": "12345",
+        "arg3": "Όλγα",
+        "arg4": "Κατεχάκη",
+        "arg5": "Σταύρος",
+        "first_name_en": "Olga",
+        "last_name_en": "Katechaki",
+        "father_name_en": "Stavros",
+        "email": "olga@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "4"},
@@ -120,7 +159,14 @@
     "input": {
         "arg1": "assistant",
         "role": "5",
-        "arg2": "12345"
+        "arg2": "12345",
+        "arg3": "Παρασκευή",
+        "arg4": "Παρασκευά",
+        "arg5": "Σωκράτης",
+        "first_name_en": "Friday",
+        "last_name_en": "Paraskeya",
+        "father_name_en": "Socrates",
+        "email": "friday@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "5"},
@@ -207,7 +253,19 @@
         "change" : "new department"
     }
 },
-
+{
+    "user": "admin",
+    "action": "professor-add",
+    "input": {
+        "arg1": "professor",
+        "arg2": "1",
+        "arg3": "1"
+    },
+    "db_state_change" : {
+        "object" : {"Professor" : "1"},
+        "change" : "new professor"
+    }
+},
 {
     "user": "1",
     "action": "subjectarea-add",
@@ -397,14 +455,36 @@
         "change" : "new position"
     }
 },
-
-
-
-
 {
     "user": "2",
     "action": "position-list",
     "output": {"Position" : "1"}
+},
+{
+    "user": "1",
+    "action": "registry-add",
+    "input": {
+        "arg1" : "1",
+        "arg2" : "1",
+        "members": "1"
+    },
+    "db_state_change" : {
+        "object" : {"Registry" : "1"},
+        "change" : "new registry"
+    }
+},
+{
+    "user": "1",
+    "action": "registry-add",
+    "input": {
+        "arg1" : "1",
+        "arg2" : "2",
+        "members": "1"
+    },
+    "db_state_change" : {
+        "object" : {"Registry" : "2"},
+        "change" : "new registry"
+    }
 },
 {
     "user": "2",

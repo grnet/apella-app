@@ -1,14 +1,17 @@
 from optparse import make_option
+
 from django.core.management.base import BaseCommand, CommandError
-from django.db import transaction
 from django.db.utils import IntegrityError
-from apella.models import Department, Registry, ApellaUser
+
+from apella.models import Department, Registry, Professor
 from apella.management.utils import get_user, ApellaCommand
+from apella import common
 
 
 class Command(ApellaCommand):
     help = 'Create or update a registry of the given type ' + \
-        str([str(x[0]) + ':' + str(x[1]) for x in Registry.TYPES]).strip('[]')
+        str([str(x[0]) + ':' + str(x[1]) for x in common.REGISTRY_TYPES]).\
+        strip('[]')
     args = '<department_id> <type>'
 
     option_list = BaseCommand.option_list + (
@@ -23,7 +26,7 @@ class Command(ApellaCommand):
         department_id, type = args[:2]
         members = options['members']
 
-        types = [x[0] for x in Registry.TYPES]
+        types = [x[0] for x in common.REGISTRY_TYPES]
         if str(type) not in types:
             raise CommandError(
                     "Invalid <type> argument. Type must be in %s" %
@@ -38,19 +41,19 @@ class Command(ApellaCommand):
             try:
                 user_ids = members.split(',')
                 for user_id in user_ids:
-                    users.append(get_user(user_id))
-            except ApellaUser.DoesNotExist:
-                raise CommandError("User with id %s does not exist" % user_id)
+                    users.append(Professor.objects.get(id=user_id))
+            except Professor.DoesNotExist:
+                raise CommandError(
+                    "Professor with id %s does not exist" % user_id)
 
         try:
-            with transaction.atomic():
-                registry = Registry.objects.create(
-                        department=department, type=type)
-                registry.members = users
-                registry.save()
+            registry = Registry.objects.create(
+                    department=department, type=type)
+            registry.members = users
+            registry.save()
             self.stdout.write(
                 "Created registry %s for department %s, type %s" %
-                (registry.pk, registry.department.title, registry.type))
+                (registry.pk, registry.department.pk, registry.type))
         except IntegrityError:
             if users:
                 registry = Registry.objects.get(
