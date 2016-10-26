@@ -4,7 +4,7 @@ import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
 const PROFESSOR_VALIDATORS = {
-  cv_url: [validate.presence(false), validate.format({type:'url'})],
+  cv_url: [validate.format({allowBlank: true, type:'url'})],
   institution: [validate.presence(true)],
 }
 
