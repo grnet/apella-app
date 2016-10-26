@@ -1,4 +1,9 @@
 export default {
+  'create.menu.label': 'Δημιουργία',
+  'create.page.title': 'Δημιουργία',
+  'edit.menu.label': 'Τροποποίηση',
+  'edit.page.title': 'Τροποποίηση',
+  'details.menu.label': 'Λεπτομέρειες',
   'Draft':'Πρόχειρο',
   'Posted': 'Αναρτημένη',
   'Cancelled': 'Ακυρωθείσα',
@@ -170,5 +175,5 @@ export default {
     actions: {
       label: 'Ενέργειες'
     }
-  }
+  },
 };

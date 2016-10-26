@@ -1,3 +1,2 @@
-export default function(locale, key, context) {
-  return key;
-}
+import {missingMessage} from 'ember-gen/lib/i18n';
+export default missingMessage;

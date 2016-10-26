@@ -1,4 +1,9 @@
 export default {
+  'create.menu.label': 'Create',
+  'create.page.title': 'Create',
+  'edit.menu.label': 'Edit',
+  'edit.page.title': 'Edit',
+  'details.menu.label': 'Details',
   'Draft':'Draft',
   'Posted': 'Posted',
   'Cancelled': 'Cancelled',
