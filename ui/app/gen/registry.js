@@ -17,7 +17,7 @@ let members = Users.extend({
   },
   list: {
     /*
-     * ToDo
+     * TODO
      * This in the future should be moved to getModel (registry.get('members'))
      */
     processModel(users) {
@@ -83,36 +83,12 @@ export default gen.CRUDGen.extend({
       actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
-  create: {
-    page: {
-      title: 'common.create_label'
-    },
-    menu: {
-      label: 'common.button.create_label',
-      icon: 'library add'
-    }
-  },
-  details: {
-    menu: {
-      label: 'common.button.details_label',
-      icon: 'remove red eye'
-    }
-  },
   record: {
     menu: {
       label: computed('model.id', function() {
         return get(this, 'model.id');
       })
     },
-  },
-  edit: {
-    page: {
-      title: 'common.edit_label'
-    },
-    menu: {
-      label: 'common.button.edit_label',
-      icon: 'border color'
-    }
   },
   nested: {
     members: members

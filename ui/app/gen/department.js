@@ -3,29 +3,39 @@ import {field} from 'ember-gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 
+const {
+  get,
+  computed
+} = Ember;
+
 export default gen.CRUDGen.extend({
   modelName: 'department',
   path: 'departments',
   common: {
-    menu: {
-      icon: 'domain',
-      label: 'department.menu_label'
-    },
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
     }
   },
   list: {
+    menu: {
+      icon: 'domain',
+      label: 'department.menu_label'
+    },
+    page: {
+      title: 'department.menu_label',
+    },
     layout: 'table',
     sortBy: 'title_current:asc',
     fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'})],
-    page: {
-      title: 'department.menu_label',
+    row: {
+      actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
-  create: {
-    page: {
-      title: 'department.create_title'
-    },
+  record: {
+    menu: {
+      label: computed('model.id', function() {
+        return get(this, 'model.id');
+      })
+    }
   }
 });

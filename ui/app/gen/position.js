@@ -2,14 +2,15 @@ import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday} from 'ui/validators/dates';
 
+const {
+  computed,
+  get
+} = Ember;
+
 export default gen.CRUDGen.extend({
   modelName: 'position',
   path: 'positions',
   common: {
-    menu: {
-      icon: 'business_center',
-      label: 'position.menu_label'
-    },
     validators: {
       title: [validate.presence(true), validate.length({min:4, max:50})],
       description: [validate.presence(true), validate.length({max:300})],
@@ -38,11 +39,15 @@ export default gen.CRUDGen.extend({
     }],
   },
   list: {
-    layout: 'table',
-    fields: ['code', 'title'],
     page: {
       title: 'position.menu_label',
     },
+    menu: {
+      icon: 'business_center',
+      label: 'position.menu_label'
+    },
+    layout: 'table',
+    fields: ['code', 'title'],
   row: {
     actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove' ],
     actionsMap: {
@@ -55,10 +60,11 @@ export default gen.CRUDGen.extend({
     }
   }
   },
-  create: {
-    page: {
-      title: 'position.create_title'
-    },
-  },
-
+  record: {
+    menu: {
+      label: computed('model.id', function() {
+        return get(this, 'model.id');
+      })
+    }
+  }
 });

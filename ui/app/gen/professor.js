@@ -3,6 +3,11 @@ import validate from 'ember-gen/validate';
 import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
+const {
+  computed,
+  get
+} = Ember;
+
 const PROFESSOR_VALIDATORS = {
   cv_url: [validate.format({allowBlank: true, type:'url'})],
   institution: [validate.presence(true)],
@@ -14,10 +19,6 @@ export default gen.CRUDGen.extend({
   modelName: 'professor',
   path: 'professors',
   common: {
-    menu: {
-      label: 'professor.menu_label',
-      icon: 'sentiment_very_dissatisfied'
-    },
     validators: all_validators,
     fieldsets: [
       USER_FIELDSET,
@@ -46,30 +47,31 @@ export default gen.CRUDGen.extend({
     ]
   },
   list: {
+    page: {
+      title: 'professor.menu_label',
+    },
+    menu: {
+      label: 'professor.menu_label',
+      icon: 'sentiment_very_dissatisfied'
+    },
     layout: 'table',
     sortBy: 'username:asc',
     search: {
       fields: ['username', 'email']
     },
-    page: {
-      title: 'professor.menu_label',
-    },
-    label: 'professor.menu_label',
     fields: ['username', 'email', 'full_name_current', 'rank', ],
-    menu: {
-      label: 'professor.menu_label',
-    },
     row: {
-      label: 'professor.menu_label',
-      icon: 'person',
-    },
-  },
-  create: {
-    page: {
-      title: 'professor.create_title'
+      actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
   details: {
     fields: ['id', 'username', 'first_name_current'],
+  },
+  record: {
+    menu: {
+      label: computed('model.id', function() {
+        return get(this, 'model.id');
+      })
+    }
   }
 });

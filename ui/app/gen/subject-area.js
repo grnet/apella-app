@@ -2,29 +2,39 @@ import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 
+const {
+  computed,
+  get
+} = Ember;
+
 export default gen.CRUDGen.extend({
   modelName: 'subject_area',
   path: 'subject_areas',
   common: {
-    menu: {
-      icon: 'school',
-      label: 'subject_area.menu_label'
-    },
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
     }
   },
   list: {
-    layout: 'table',
-    sortBy: 'title_current:asc',
-    fields: ['title_current'],
     page: {
       title: 'subject_area.menu_label',
-    }
+    },
+    menu: {
+      icon: 'school',
+      label: 'subject_area.menu_label'
+    },
+    layout: 'table',
+    sortBy: 'title_current:asc',
+     row: {
+      actions: ['gen:details', 'gen:edit', 'remove']
+    },
+    fields: ['title_current']
   },
-  create: {
-    page: {
-      title: 'subject_area.create_title',
+  record: {
+    menu: {
+      label: computed('model.id', function() {
+        return get(this, 'model.id');
+      })
     }
   }
 });

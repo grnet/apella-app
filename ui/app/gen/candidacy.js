@@ -96,20 +96,9 @@ export default gen.CRUDGen.extend({
     }
   },
   create: {
-    page: {
-      title: 'common.create_label'
-    },
-    menu: {
-      label: 'common.button.create_label',
-      icon: 'library add'
-    },
     fieldsets: FS.create,
    },
   details: {
-    menu: {
-      label: 'common.button.details_label',
-      icon: 'remove red eye'
-    }
   },
   record: {
     menu: {
@@ -119,13 +108,6 @@ export default gen.CRUDGen.extend({
     },
   },
   edit: {
-    page: {
-      title: 'common.edit_label'
-    },
-    menu: {
-      label: 'common.button.edit_label',
-      icon: 'border color'
-    },
     fieldsets: computed('model.position.state', function() {
       let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView'];
       let disable_field = function(el){
