@@ -4,7 +4,7 @@ import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
 const PROFESSOR_VALIDATORS = {
-  cv_url: [validate.presence(true), validate.format({type:'url'})],
+  cv_url: [validate.presence(false), validate.format({type:'url'})],
   institution: [validate.presence(true)],
 }
 
@@ -27,15 +27,20 @@ export default gen.CRUDGen.extend({
           'institution',
           'department',
           'rank',
-          'cv_url',
+          field('cv_url', {
+            hint: 'cv_url.hint',
+          }),
+          'cv',
           'fek',
-          'fek_discipline',
-          'discipline_free_text',
+          'discipline_text',
+          field('discipline_in_fek',{
+            hint: 'discipline_in_fek.hint',
+          }),
           'is_foreign',
           'speaks_greek',
        ],
        layout: {
-        flex: [50, 50, 100, 50, 50, 100, 50, 50]
+        flex: [50, 50, 100, 50, 50, 100, 100, 100, 50, 50]
        }
       }
     ]

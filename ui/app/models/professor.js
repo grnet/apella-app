@@ -16,8 +16,8 @@ export default User.extend({
   is_foreign: DS.attr({type: 'boolean', defaultValue: false }),
   speaks_greek: DS.attr({type: 'boolean', defaultValue: true }),
   cv_url: DS.attr(),
+  cv: DS.attr(),
   fek: DS.attr(),
-  fek_discipline: DS.attr(),
-  discipline_free_text: DS.attr()
-
+  discipline_text: DS.attr(),
+  discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true})
 });
