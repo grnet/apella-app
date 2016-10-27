@@ -18,10 +18,10 @@ export default DS.Model.extend({
   mobile_phone_number: DS.attr(),
   home_phone_number: DS.attr(),
 
-  role_verbose: computed('role', function(){
+  role_verbose: computed('role', 'i18n.locale', function(){
     let role_id = this.get('role');
     let role_list = CHOICES.USER_ROLES;
-    return  get_label(role_list, role_id);
+    return  this.get('i18n').t(get_label(role_list, role_id));
   }),
 
   first_name_current: computed('first_name', 'i18n.locale',  function() {
