@@ -368,7 +368,8 @@
         "arg7" : "http://www.google.com",
         "arg8" : "2016-08-15",
         "arg9" : "2016-09-30",
-        "arg10" : "2016-10-30"
+        "arg10" : "2016-10-30",
+        "arg11" : "Θεολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "1"},
@@ -388,7 +389,8 @@
         "arg7" : "http://www.etsy.com",
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
-        "arg10" : "2016-12-30"
+        "arg10" : "2016-12-30",
+        "arg11" : "Ψυχολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
@@ -408,7 +410,8 @@
         "arg7" : "http://www.yarn.com",
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
-        "arg10" : "2016-12-30"
+        "arg10" : "2016-12-30",
+        "arg11" : "Φυσική"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
@@ -428,7 +431,8 @@
         "arg7" : "http://www.yahoo.com",
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
-        "arg10" : "2016-12-30"
+        "arg10" : "2016-12-30",
+        "arg11" : "Νεογνολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "3"},
@@ -448,7 +452,8 @@
         "arg7" : "http://www.yarn.com",
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
-        "arg10" : "2016-12-30"
+        "arg10" : "2016-12-30",
+        "arg11" : "Ψυχολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
