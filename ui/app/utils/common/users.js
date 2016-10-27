@@ -46,6 +46,7 @@ const USER_VALIDATORS = {
       mobile_phone_number: [validate.format({ type: 'phone' })],
       home_phone_number: [validate.format({ type: 'phone' })],
       email: [validate.format({ type: 'email' })],
+      id_passport: [validate.presence(true)],
 }
 
 
