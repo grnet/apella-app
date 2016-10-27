@@ -163,7 +163,7 @@ class Professor(models.Model):
     institution = models.ForeignKey(Institution, blank=False, null=False)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
-        choices=common.RANKS, blank=False, null=False, max_length=1)
+        choices=common.RANKS, blank=False, null=False, max_length=30)
     is_foreign = models.BooleanField(default=False)
     speaks_greek = models.BooleanField(default=True)
     cv_url = models.URLField(blank=True)
