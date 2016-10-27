@@ -195,7 +195,7 @@ class Migration(migrations.Migration):
             name='Professor',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('rank', models.CharField(max_length=1, choices=[['Professor', 'Professor'], ['Associate Professor', 'Associate Professor'], ['Assistant Professor', 'Assistant Professor']])),
+                ('rank', models.CharField(max_length=30, choices=[['Professor', 'Professor'], ['Associate Professor', 'Associate Professor'], ['Assistant Professor', 'Assistant Professor'], ['Research Director', 'Research Director'], ['Principal Researcher', 'Principal Researcher'], ['Affiliated Researcher', 'Affiliated Researcher']])),
                 ('is_foreign', models.BooleanField(default=False)),
                 ('speaks_greek', models.BooleanField(default=True)),
                 ('cv_url', models.URLField(blank=True)),
