@@ -46,6 +46,7 @@
     "ember-moment": "6.1.0",
     "ember-paper": "git+https://github.com/vinilios/ember-paper.git#ember-gen",
     "ember-resolver": "^2.0.3",
+    "ember-simple-auth-token": "1.1.1",
     "loader.js": "^4.0.1"
   }
 }

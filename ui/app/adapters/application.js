@@ -2,14 +2,16 @@ import DS from 'ember-data';
 import DRFAdapter from 'ember-django-adapter/adapters/drf';
 import ENV from 'ui/config/environment';
 import {apiFor, urlJoin} from 'ui/adapters/util';
+import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 
 
-export default DRFAdapter.extend({
+export default DRFAdapter.extend(DataAdapterMixin,{
+
 
 	host: ENV.APP.backend_host,
 	contentType: 'application/json',
 	dataType: 'json',
-	authorizer: 'authorizer:token',
+  authorizer: 'authorizer:token',
 
   pathForType: function(type) {
     return apiFor(type, this).pathForType(this, type);

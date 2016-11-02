@@ -29,6 +29,21 @@ module.exports = function(environment) {
     },
   };
 
+  ENV['ember-simple-auth'] = {
+    authenticationRoute: 'auth.login',
+    authorizer: 'authorizer:token',
+  };
+
+  ENV['ember-simple-auth-token'] = {
+    serverTokenEndpoint: ENV.APP.backend_host + '/auth/login/',
+    identificationField: 'username',
+    passwordField: 'password',
+    tokenPropertyName: 'auth_token',
+    authorizationPrefix: 'Token ',
+    authorizationHeaderName: 'Authorization',
+    headers: {},
+  };
+
   if (environment === 'development') {
     ENV['ember-cli-mirage'] = {
         enabled: false
