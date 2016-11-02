@@ -19,7 +19,12 @@ export default DS.Model.extend({
   }),
   department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title_current'}}),
   subject_area: DS.belongsTo('subject_area', {attrs: {optionLabelAttr: 'title_current'}}),
-  subject: DS.belongsTo('subject', {attrs: {optionLabelAttr: 'title_current'}}),
+  subject: DS.belongsTo('subject', {
+    component: 'select-subject',
+    attrs: {
+      optionLabelAttr: 'title_current',
+    }
+  }),
   fek: DS.attr(),
   fek_posted_at: DS.attr('date', {attrs: {time: true}}),
   assistants: DS.hasMany('user', {attrs: {optionLabelAttr: 'username'}}),
