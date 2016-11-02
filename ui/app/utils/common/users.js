@@ -83,6 +83,13 @@ const serializeUser = function(json) {
   return json;
 }
 
+const normalizeUserErrors = function(errors) {
+  return errors.map((e) => {
+    // remove '/user/' nesting
+    e.source.pointer = e.source.pointer.replace('/user/', '/');
+    return e;
+  });
+}
 
-export {normalizeUser, serializeUser,
+export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_VALIDATORS};

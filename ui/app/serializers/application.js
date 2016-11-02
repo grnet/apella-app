@@ -14,6 +14,15 @@ export default DRFSerializer.extend({
     return resp;
   },
 
+
+  extractErrors(store, typeClass, payload, id) {
+    let api = apiFor(typeClass, this);
+    if (api.normalizeErrors && payload && payload.errors) {
+      payload.errors = api.normalizeErrors(payload.errors, this);
+    }
+    return this._super(store, typeClass, payload, id);
+  },
+
   serializeHasMany(snapshot, json, rel) {
     let resp = this._super(snapshot, json, rel);
     let key = this.keyForRelationship(rel.key);
