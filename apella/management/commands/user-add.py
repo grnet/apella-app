@@ -1,5 +1,7 @@
-from django.core.management.base import CommandError
 from django.contrib.auth.models import Group
+from django.core.management.base import BaseCommand, CommandError
+from django.db.utils import IntegrityError
+from rest_framework.authtoken.models import Token
 from apella.management.utils import ApellaCommand
 from apella.models import ApellaUser, ApellaUserEl, ApellaUserEn
 from apella import common
@@ -79,8 +81,10 @@ class Command(ApellaCommand):
                     email=options['email'],
                     el=el,
                     en=en)
+            token = Token.objects.create(user=a)
 
-            self.stdout.write("User with id: %s created" % a.pk)
+            self.stdout.write(
+                "User with id: %s, token:%s created" % (a.pk, token))
 
             if group_name and group:
                 a.groups.add(group)

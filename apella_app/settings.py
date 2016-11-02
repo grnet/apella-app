@@ -42,7 +42,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'apella',
     'rest_framework',
+    'rest_framework.authtoken',
+    'djoser'
 )
+
+REST_FRAMEWORK = {
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+   ),
+}
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -57,7 +65,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'apella_app.urls'
 
 WSGI_APPLICATION = 'apella_app.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -128,7 +135,6 @@ LANGUAGES = {'el', 'en'}
 
 try:
     from local_settings import *
-    from api_settings import *
 except ImportError, exp:
     pass
 from api_settings import *
