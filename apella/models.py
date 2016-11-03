@@ -36,15 +36,15 @@ class ApellaUser(AbstractUser):
     """
     role = models.CharField(
         choices=common.USER_ROLES, max_length=1, default='2')
-    el = models.ForeignKey(ApellaUserEl, blank=True)
-    en = models.ForeignKey(ApellaUserEn, blank=True)
-    id_passport = models.CharField(max_length=20, blank=False, null=False)
+    el = models.ForeignKey(ApellaUserEl)
+    en = models.ForeignKey(ApellaUserEn)
+    id_passport = models.CharField(max_length=20)
     mobile_phone_number = models.CharField(max_length=30)
     home_phone_number = models.CharField(max_length=30)
 
 
 class InstitutionFields(models.Model):
-    title = models.CharField(max_length=150, blank=True)
+    title = models.CharField(max_length=150)
 
     class Meta:
         abstract = True
@@ -60,16 +60,16 @@ class InstitutionEn(InstitutionFields):
 
 class Institution(models.Model):
     category = models.CharField(
-        choices=common.INSTITUTION_CATEGORIES, blank=False, null=False,
-        max_length=15, default='1')
+        choices=common.INSTITUTION_CATEGORIES,
+        max_length=30, default='Institution')
     organization = models.URLField(blank=True)
     regulatory_framework = models.URLField(blank=True)
-    el = models.ForeignKey(InstitutionEl, blank=True, null=True)
+    el = models.ForeignKey(InstitutionEl)
     en = models.ForeignKey(InstitutionEn, blank=True, null=True)
 
 
 class SchoolFields(models.Model):
-    title = models.CharField(max_length=150, blank=False)
+    title = models.CharField(max_length=150)
 
     class Meta:
         abstract = True
@@ -84,13 +84,13 @@ class SchoolEn(SchoolFields):
 
 
 class School(models.Model):
-    institution = models.ForeignKey(Institution, blank=False, null=False)
-    el = models.ForeignKey(SchoolEl, blank=True, null=True)
+    institution = models.ForeignKey(Institution)
+    el = models.ForeignKey(SchoolEl)
     en = models.ForeignKey(SchoolEn, blank=True, null=True)
 
 
 class DepartmentFields(models.Model):
-    title = models.CharField(max_length=150, blank=False)
+    title = models.CharField(max_length=150)
 
     class Meta:
         abstract = True
@@ -106,13 +106,13 @@ class DepartmentEn(DepartmentFields):
 
 class Department(models.Model):
     school = models.ForeignKey(School, blank=True, null=True)
-    institution = models.ForeignKey(Institution, blank=False, null=False)
-    el = models.ForeignKey(DepartmentEl, blank=True, null=True)
+    institution = models.ForeignKey(Institution)
+    el = models.ForeignKey(DepartmentEl)
     en = models.ForeignKey(DepartmentEn, blank=True, null=True)
 
 
 class SubjectAreaFields(models.Model):
-    title = models.CharField(max_length=200, blank=True)
+    title = models.CharField(max_length=200)
 
     class Meta:
         abstract = True
@@ -127,12 +127,12 @@ class SubjectAreaEn(SubjectAreaFields):
 
 
 class SubjectArea(models.Model):
-    el = models.ForeignKey(SubjectAreaEl, blank=True, null=True)
+    el = models.ForeignKey(SubjectAreaEl)
     en = models.ForeignKey(SubjectAreaEn, blank=True, null=True)
 
 
 class SubjectFields(models.Model):
-    title = models.CharField(max_length=200, blank=True)
+    title = models.CharField(max_length=200)
 
     class Meta:
         abstract = True
@@ -147,15 +147,15 @@ class SubjectEn(SubjectFields):
 
 
 class Subject(models.Model):
-    area = models.ForeignKey(SubjectArea, blank=False, null=False)
-    el = models.ForeignKey(SubjectEl, blank=True, null=True)
+    area = models.ForeignKey(SubjectArea)
+    el = models.ForeignKey(SubjectEl)
     en = models.ForeignKey(SubjectEn, blank=True, null=True)
 
 
 class ApellaFile(models.Model):
     file_kind = models.CharField(choices=common.FILE_KINDS, max_length=1)
     file_path = models.CharField(max_length=500)
-    updated_at = models.DateTimeField(blank=False, default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
@@ -163,21 +163,21 @@ class ApellaFile(models.Model):
 
 
 class Professor(models.Model):
-    user = models.ForeignKey(ApellaUser, blank=False, null=False)
-    institution = models.ForeignKey(Institution, blank=False, null=False)
+    user = models.ForeignKey(ApellaUser)
+    institution = models.ForeignKey(Institution)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
-        choices=common.RANKS, blank=False, null=False, max_length=30)
+        choices=common.RANKS, max_length=30)
     is_foreign = models.BooleanField(default=False)
     speaks_greek = models.BooleanField(default=True)
     cv_url = models.URLField(blank=True)
-    fek = models.URLField(blank=False)
+    fek = models.URLField()
     discipline_text = models.CharField(max_length=300)
     discipline_in_fek = models.BooleanField(default=True)
 
 
 class Candidate(models.Model):
-    user = models.ForeignKey(ApellaUser, blank=False, null=False)
+    user = models.ForeignKey(ApellaUser)
 
 
 class UserFiles(models.Model):
@@ -187,26 +187,25 @@ class UserFiles(models.Model):
 
 
 class InstitutionManager(models.Model):
-    user = models.ForeignKey(ApellaUser, blank=False, null=False)
-    institution = models.ForeignKey(Institution, blank=False, null=False)
+    user = models.ForeignKey(ApellaUser)
+    institution = models.ForeignKey(Institution)
     authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
     authority_full_name = models.CharField(max_length=150)
     manager_role = models.CharField(
-        choices=common.MANAGER_ROLES, blank=False, max_length=1)
+        choices=common.MANAGER_ROLES, max_length=1)
 
 
 class Position(models.Model):
-    title = models.CharField(max_length=50, blank=False, null=False)
-    description = models.CharField(max_length=300, blank=False, null=False)
-    discipline = models.CharField(max_length=300, blank=False, null=False)
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=300)
+    discipline = models.CharField(max_length=300)
     author = models.ForeignKey(
-            InstitutionManager, blank=False, related_name='authored_positions')
-    department = models.ForeignKey(Department, blank=False, null=False)
-    subject_area = models.ForeignKey(SubjectArea, blank=False, null=False)
-    subject = models.ForeignKey(Subject, blank=False, null=False)
-    fek = models.URLField(blank=False, null=False)
-    fek_posted_at = models.DateTimeField(
-        blank=False, null=False, validators=[before_today_validator])
+            InstitutionManager, related_name='authored_positions')
+    department = models.ForeignKey(Department, on_delete=models.PROTECT)
+    subject_area = models.ForeignKey(SubjectArea, on_delete=models.PROTECT)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    fek = models.URLField()
+    fek_posted_at = models.DateTimeField(validators=[before_today_validator])
 
     assistants = models.ManyToManyField(
             InstitutionManager, blank=True, related_name='assistant_duty')
@@ -220,11 +219,10 @@ class Position(models.Model):
 
     state = models.CharField(
         choices=common.POSITION_STATES, max_length=1, default='2')
-    starts_at = models.DateTimeField(
-        blank=False, null=False, validators=[after_today_validator])
-    ends_at = models.DateTimeField(blank=False, null=False)
-    created_at = models.DateTimeField(blank=False, default=timezone.now)
-    updated_at = models.DateTimeField(blank=False, default=timezone.now)
+    starts_at = models.DateTimeField(validators=[after_today_validator])
+    ends_at = models.DateTimeField()
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
 
     def clean(self, *args, **kwargs):
         validate_dates_interval(
@@ -246,13 +244,13 @@ class PositionFiles(models.Model):
 
 
 class Candidacy(models.Model):
-    candidate = models.ForeignKey(ApellaUser, blank=False)
-    position = models.ForeignKey(Position, blank=False)
+    candidate = models.ForeignKey(ApellaUser)
+    position = models.ForeignKey(Position)
     state = models.CharField(
         choices=common.CANDIDACY_STATES, max_length=1, default='2')
     others_can_view = models.BooleanField(default=False)
-    submitted_at = models.DateTimeField(blank=False, default=timezone.now)
-    updated_at = models.DateTimeField(blank=False, default=timezone.now)
+    submitted_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
 
     def clean(self, *args, **kwargs):
         validate_position_dates(
@@ -273,10 +271,10 @@ class CandidacyFiles(object):
 
 
 class Registry(models.Model):
-    department = models.ForeignKey(Department, blank=False)
+    department = models.ForeignKey(Department)
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=1, default='1')
-    members = models.ManyToManyField(Professor, blank=False, null=False)
+    members = models.ManyToManyField(Professor)
 
     class Meta:
         # Each department can have only one internal and one external registry

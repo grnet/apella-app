@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import django.db.models.deletion
 import apella.validators
 import django.contrib.auth.models
 import django.utils.timezone
@@ -125,7 +126,7 @@ class Migration(migrations.Migration):
             name='Institution',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('category', models.CharField(default=b'1', max_length=15, choices=[['Institution', 'Institution'], ['Research', 'Research Center']])),
+                ('category', models.CharField(default=b'Institution', max_length=30, choices=[['Institution', 'Institution'], ['Research', 'Research Center']])),
                 ('organization', models.URLField(blank=True)),
                 ('regulatory_framework', models.URLField(blank=True)),
             ],
@@ -134,7 +135,7 @@ class Migration(migrations.Migration):
             name='InstitutionEl',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=150, blank=True)),
+                ('title', models.CharField(max_length=150)),
             ],
             options={
                 'abstract': False,
@@ -144,7 +145,7 @@ class Migration(migrations.Migration):
             name='InstitutionEn',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=150, blank=True)),
+                ('title', models.CharField(max_length=150)),
             ],
             options={
                 'abstract': False,
@@ -178,7 +179,7 @@ class Migration(migrations.Migration):
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
                 ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),
-                ('department', models.ForeignKey(to='apella.Department')),
+                ('department', models.ForeignKey(to='apella.Department', on_delete=django.db.models.deletion.PROTECT)),
                 ('elected', models.ForeignKey(related_name='elected_positions', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
                 ('electors', models.ManyToManyField(related_name='elector_duty', to=settings.AUTH_USER_MODEL, blank=True)),
             ],
@@ -259,7 +260,7 @@ class Migration(migrations.Migration):
             name='SubjectAreaEl',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=200, blank=True)),
+                ('title', models.CharField(max_length=200)),
             ],
             options={
                 'abstract': False,
@@ -269,7 +270,7 @@ class Migration(migrations.Migration):
             name='SubjectAreaEn',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=200, blank=True)),
+                ('title', models.CharField(max_length=200)),
             ],
             options={
                 'abstract': False,
@@ -279,7 +280,7 @@ class Migration(migrations.Migration):
             name='SubjectEl',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=200, blank=True)),
+                ('title', models.CharField(max_length=200)),
             ],
             options={
                 'abstract': False,
@@ -289,7 +290,7 @@ class Migration(migrations.Migration):
             name='SubjectEn',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=200, blank=True)),
+                ('title', models.CharField(max_length=200)),
             ],
             options={
                 'abstract': False,
@@ -307,7 +308,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='subjectarea',
             name='el',
-            field=models.ForeignKey(blank=True, to='apella.SubjectAreaEl', null=True),
+            field=models.ForeignKey(to='apella.SubjectAreaEl'),
         ),
         migrations.AddField(
             model_name='subjectarea',
@@ -322,7 +323,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='subject',
             name='el',
-            field=models.ForeignKey(blank=True, to='apella.SubjectEl', null=True),
+            field=models.ForeignKey(to='apella.SubjectEl'),
         ),
         migrations.AddField(
             model_name='subject',
@@ -332,7 +333,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='school',
             name='el',
-            field=models.ForeignKey(blank=True, to='apella.SchoolEl', null=True),
+            field=models.ForeignKey(to='apella.SchoolEl'),
         ),
         migrations.AddField(
             model_name='school',
@@ -347,17 +348,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='position',
             name='subject',
-            field=models.ForeignKey(to='apella.Subject'),
+            field=models.ForeignKey(to='apella.Subject', on_delete=django.db.models.deletion.PROTECT),
         ),
         migrations.AddField(
             model_name='position',
             name='subject_area',
-            field=models.ForeignKey(to='apella.SubjectArea'),
+            field=models.ForeignKey(to='apella.SubjectArea', on_delete=django.db.models.deletion.PROTECT),
         ),
         migrations.AddField(
             model_name='institution',
             name='el',
-            field=models.ForeignKey(blank=True, to='apella.InstitutionEl', null=True),
+            field=models.ForeignKey(to='apella.InstitutionEl'),
         ),
         migrations.AddField(
             model_name='institution',
@@ -367,7 +368,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='department',
             name='el',
-            field=models.ForeignKey(blank=True, to='apella.DepartmentEl', null=True),
+            field=models.ForeignKey(to='apella.DepartmentEl'),
         ),
         migrations.AddField(
             model_name='department',
@@ -392,12 +393,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='apellauser',
             name='el',
-            field=models.ForeignKey(to='apella.ApellaUserEl', blank=True),
+            field=models.ForeignKey(to='apella.ApellaUserEl'),
         ),
         migrations.AddField(
             model_name='apellauser',
             name='en',
-            field=models.ForeignKey(to='apella.ApellaUserEn', blank=True),
+            field=models.ForeignKey(to='apella.ApellaUserEn'),
         ),
         migrations.AddField(
             model_name='apellauser',
