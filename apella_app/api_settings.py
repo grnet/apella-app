@@ -29,12 +29,12 @@ apellauser_resource = {
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'el': {
-                'model_field': 'el',
+                'source': 'el',
                 'field_schema': {'fields': ['first_name', 'last_name',
                                             'father_name']}
             },
             'en': {
-                'model_field': 'en',
+                'source': 'en',
                 'field_schema': {'fields': ['first_name', 'last_name',
                                             'father_name']}
             }
@@ -58,17 +58,18 @@ candidacy_resource = {
 
 institution_resource = {
     'model': 'apella.models.Institution',
+    'custom_mixins': ['apella.views.mixins.DestroyProtectedObject'],
     'field_schema': {
         'fields': ['id', 'url', 'organization', 'category',
                    'regulatory_framework', 'el', 'en'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'el': {
-                'model_field': 'el',
+                'source': 'el',
                 'field_schema': {'fields': ['title']}
             },
             'en': {
-                'model_field': 'en',
+                'source': 'en',
                 'field_schema': {'fields': ['title']}
             }
         },
@@ -78,16 +79,17 @@ institution_resource = {
 
 school_resource = {
     'model': 'apella.models.School',
+    'custom_mixins': ['apella.views.mixins.DestroyProtectedObject'],
     'field_schema': {
         'fields': ['id', 'url', 'institution', 'el', 'en'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'el': {
-                'model_field': 'el',
+                'source': 'el',
                 'field_schema': {'fields': ['title']}
             },
             'en': {
-                'model_field': 'en',
+                'source': 'en',
                 'field_schema': {'fields': ['title']}
             }
         },
@@ -98,16 +100,17 @@ school_resource = {
 
 department_resource = {
     'model': 'apella.models.Department',
+    'custom_mixins': ['apella.views.mixins.DestroyProtectedObject'],
     'field_schema': {
         'fields': ['id', 'url', 'institution', 'school', 'el', 'en'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'el': {
-                'model_field': 'el',
+                'source': 'el',
                 'field_schema': {'fields': ['title']}
             },
             'en': {
-                'model_field': 'en',
+                'source': 'en',
                 'field_schema': {'fields': ['title']}
             }
         },
@@ -123,11 +126,11 @@ subject_area_resource = {
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'el': {
-                'model_field': 'el',
+                'source': 'el',
                 'field_schema': {'fields': ['title']}
             },
             'en': {
-                'model_field': 'en',
+                'source': 'en',
                 'field_schema': {'fields': ['title']}
             }
         },
@@ -142,11 +145,11 @@ subject_resource = {
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'el': {
-                'model_field': 'el',
+                'source': 'el',
                 'field_schema': {'fields': ['title']}
             },
             'en': {
-                'model_field': 'en',
+                'source': 'en',
                 'field_schema': {'fields': ['title']}
             }
         },
@@ -171,7 +174,7 @@ institutionmanager_resource = {
                    'authority_full_name', 'manager_role'],
         'nested_objects': {
             'user': {
-                'model_field': 'user',
+                'source': 'user',
                 'field_schema': apellauser_resource['field_schema']
             },
         },
@@ -189,7 +192,7 @@ professor_resource = {
                    'fek', 'discipline_text', 'discipline_in_fek'],
         'nested_objects': {
             'user': {
-                'model_field': 'user',
+                'source': 'user',
                 'field_schema': apellauser_resource['field_schema']
             },
         },
@@ -205,7 +208,7 @@ candidate_resource = {
         'fields': ['id', 'url', 'user'],
         'nested_objects': {
             'user': {
-                'model_field': 'user',
+                'source': 'user',
                 'field_schema': apellauser_resource['field_schema']
             },
         },

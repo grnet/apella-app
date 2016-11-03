@@ -137,4 +137,7 @@ try:
     from local_settings import *
 except ImportError, exp:
     pass
-from api_settings import *
+from api_settings import API_SCHEMA
+from copy import deepcopy
+
+API_SCHEMA_TMP = deepcopy(API_SCHEMA)

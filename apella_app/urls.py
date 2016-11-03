@@ -2,9 +2,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
-from apimas.modeling.container import Container
+from apimas.modeling.adapters.drf.container import Container
 
-from apella import views
+from apella.views import auth_views
 
 admin.autodiscover()
 controller = Container('api')
@@ -12,10 +12,11 @@ controller = Container('api')
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     controller.create_api_views(settings.API_SCHEMA),
-    url(r'^api/auth/login/$', views.CustomLoginView.as_view(), name='login'),
+    url(r'^api/auth/login/$',
+        auth_views.CustomLoginView.as_view(), name='login'),
     url(r'^api/auth/logout/$',
-        views.CustomLogoutView.as_view(), name='logout'),
-    url(r'^api/auth/me/$', views.CustomUserView.as_view(), name='user')
+        auth_views.CustomLogoutView.as_view(), name='logout'),
+    url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user')
 ]
 
 ui_prefix = getattr(settings, 'UI_PREFIX', 'ui/')
