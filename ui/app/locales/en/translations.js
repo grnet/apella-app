@@ -74,7 +74,6 @@ export default {
   'institution.title_current.label': 'Institution',
   manager: {
     menu_label: 'Institution Managers',
-    create_title: 'New manager',
     label: {
       authority_type: 'Verification Authority',
       authority_full_name: 'Authority Full name',
@@ -83,11 +82,9 @@ export default {
   },
   professor: {
     menu_label: 'Professors',
-    create_title: 'New professor',
   },
   candidate: {
     menu_label: 'Candidates',
-    create_title: 'New candidate',
   },
   candidacy: {
     menu_label: 'Candidacies',
@@ -116,7 +113,6 @@ export default {
   },
   position: {
     menu_label: 'Positions',
-    create_title: 'New position',
     fek_section: {
       title: 'FEK',
     }
@@ -131,27 +127,21 @@ export default {
   },
   institution: {
     menu_label: 'Institutions',
-    create_title: 'New institution',
   },
   user: {
     menu_label: 'Users',
-    create_title: 'New user',
   },
   school: {
     menu_label: 'Schools',
-    create_title: 'New school',
   },
   department: {
     menu_label: 'Departments',
-    create_title: 'New department',
   },
   subject_area : {
     menu_label: 'Thematic Areas',
-    create_title: 'New thematic area',
   },
   subject: {
     menu_label: 'Themes',
-    create_title: 'New theme',
   },
   registry: {
     menu_label: 'Registries',

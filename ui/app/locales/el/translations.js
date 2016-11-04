@@ -74,7 +74,6 @@ export default {
   'institution.title_current.label': 'Ίδρυμα',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
-    create_title: 'Νέος διαχειριστής',
     label: {
       authority_type: 'Αρχή Πιστοποίησης',
       authority_full_name: 'Ονοματεπώνυμο Αρχής Πιστοποίησης',
@@ -83,11 +82,9 @@ export default {
   },
   professor: {
     menu_label: 'Καθηγητές',
-    create_title: 'Νέος καθηγητής',
   },
   candidate: {
     menu_label: 'Υποψήφιοι',
-    create_title: 'Νέος υποψήφιος',
   },
 
   candidacy: {
@@ -119,7 +116,6 @@ export default {
   },
   position: {
     menu_label: 'Θέσεις',
-    create_title: 'Νέα θέση',
     fek_section: {
       title: 'ΦΕΚ',
     },
@@ -134,27 +130,21 @@ export default {
   },
   institution: {
     menu_label: 'Ιδρύματα',
-    create_title: 'Νέο ίδρυμα',
   },
   user: {
     menu_label: 'Χρήστες',
-    create_title: 'Νέος χρήστης',
   },
   school: {
     menu_label: 'Σχολές',
-    create_title: 'Νέα σχολή',
   },
   department: {
     menu_label: 'Τμήματα',
-    create_title: 'Νέο τμήμα',
   },
   subject_area : {
     menu_label: 'Θεματικές περιοχές',
-    create_title: 'Νέα θεματική περιοχή',
   },
   subject: {
     menu_label: 'Θέμα',
-    create_title: 'Νέο θέμα',
   },
   registry: {
     menu_label: 'Μητρώα',
