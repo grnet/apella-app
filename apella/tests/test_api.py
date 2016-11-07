@@ -59,7 +59,7 @@ class APIMultiLangTest(APITestCase):
         self.user = ApellaUser.objects.create_user(
                 username='test',
                 password='test',
-                role='1',
+                role='helpdeskadmin',
                 el=user_el,
                 en=user_en
         )
@@ -129,13 +129,12 @@ class APIMultiLangTest(APITestCase):
                     model.objects.get().institution,
                     Institution.objects.get())
 
-        i = 0
-        for model, url in NESTED_USER_APIS:
+        for i, (model, url) in enumerate(NESTED_USER_APIS):
+
             EXTRA_DATA[InstitutionManager]['institution'] = \
                     self.object_urls['Institution']
             self.nested_user_data.update(EXTRA_DATA[model])
             username = 'test' + str(i)
-            i += 1
             self.nested_user_data['user']['username'] = username
 
             response = self.client.post(

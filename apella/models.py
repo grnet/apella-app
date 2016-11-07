@@ -35,7 +35,7 @@ class ApellaUser(AbstractUser):
     last name, email, etc
     """
     role = models.CharField(
-        choices=common.USER_ROLES, max_length=1, default='2')
+        choices=common.USER_ROLES, max_length=20, default='candidate')
     el = models.ForeignKey(ApellaUserEl)
     en = models.ForeignKey(ApellaUserEn)
     id_passport = models.CharField(max_length=20)
@@ -66,6 +66,11 @@ class Institution(models.Model):
     regulatory_framework = models.URLField(blank=True)
     el = models.ForeignKey(InstitutionEl)
     en = models.ForeignKey(InstitutionEn, blank=True, null=True)
+
+    def check_object_state_owned(self, row, request, view):
+        return InstitutionManager.objects.filter(
+                user_id=request.user.id,
+                institution_id=self.id).exists()
 
 
 class SchoolFields(models.Model):
@@ -153,7 +158,7 @@ class Subject(models.Model):
 
 
 class ApellaFile(models.Model):
-    file_kind = models.CharField(choices=common.FILE_KINDS, max_length=1)
+    file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
     file_path = models.CharField(max_length=500)
     updated_at = models.DateTimeField(default=timezone.now)
 
@@ -163,7 +168,7 @@ class ApellaFile(models.Model):
 
 
 class Professor(models.Model):
-    user = models.ForeignKey(ApellaUser)
+    user = models.OneToOneField(ApellaUser)
     institution = models.ForeignKey(Institution)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
@@ -177,7 +182,7 @@ class Professor(models.Model):
 
 
 class Candidate(models.Model):
-    user = models.ForeignKey(ApellaUser)
+    user = models.OneToOneField(ApellaUser)
 
 
 class UserFiles(models.Model):
@@ -187,7 +192,7 @@ class UserFiles(models.Model):
 
 
 class InstitutionManager(models.Model):
-    user = models.ForeignKey(ApellaUser)
+    user = models.OneToOneField(ApellaUser)
     institution = models.ForeignKey(Institution)
     authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
     authority_full_name = models.CharField(max_length=150)
@@ -210,15 +215,15 @@ class Position(models.Model):
     assistants = models.ManyToManyField(
             InstitutionManager, blank=True, related_name='assistant_duty')
     electors = models.ManyToManyField(
-            ApellaUser, blank=True, related_name='elector_duty')
+            Professor, blank=True, related_name='elector_duty')
     committee = models.ManyToManyField(
-            ApellaUser, blank=True, related_name='committee_duty')
+            Professor, blank=True, related_name='committee_duty')
     elected = models.ForeignKey(
             ApellaUser, blank=True, null=True,
             related_name='elected_positions')
 
     state = models.CharField(
-        choices=common.POSITION_STATES, max_length=1, default='2')
+        choices=common.POSITION_STATES, max_length=30, default='posted')
     starts_at = models.DateTimeField(validators=[after_today_validator])
     ends_at = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now)
@@ -234,6 +239,27 @@ class Position(models.Model):
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         super(Position, self).save(*args, **kwargs)
+
+    def check_object_state_owned(self, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            institution_id=self.department.institution.id).exists()
+
+    def check_object_state_open(self, row, request, view):
+        return self.state == 'posted' and self.starts_at > timezone.now()
+
+    def check_object_state_participates(self, row, request, view):
+        try:
+            professor = Professor.objects.get(user_id=request.user.id)
+        except Professor.DoesNotExist:
+            return False
+        has_elector_duty = professor.elector_duty.filter(id=self.id)
+        if has_elector_duty:
+            return True
+        has_committee_duty = professor.committee_duty.filter(id=self.id)
+        if has_committee_duty:
+            return True
+        return False
 
 
 class PositionFiles(models.Model):

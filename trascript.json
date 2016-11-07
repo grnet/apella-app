@@ -60,7 +60,7 @@
     "action": "user-add",
     "input": {
         "arg1": "manager",
-        "role": "1",
+        "role": "institutionmanager",
         "arg2": "12345",
         "arg3": "Γεώργιος",
         "arg4": "Κορφιάτης",
@@ -144,7 +144,7 @@
     "action": "user-add",
     "input": {
         "arg1": "candidate",
-        "role": "2",
+        "role": "candidate",
         "arg2": "12345",
         "arg3": "Μαρία",
         "arg4": "Παπαδοπούλου",
@@ -176,7 +176,7 @@
     "action": "user-add",
     "input": {
         "arg1": "professor",
-        "role": "3",
+        "role": "professor",
         "arg2": "12345",
         "arg3": "Παναγιώτης",
         "arg4": "Μαρκάτος",
@@ -197,7 +197,7 @@
     "action": "user-add",
     "input": {
         "arg1": "committee",
-        "role": "4",
+        "role": "professor",
         "arg2": "12345",
         "arg3": "Όλγα",
         "arg4": "Κατεχάκη",
@@ -218,7 +218,7 @@
     "action": "user-add",
     "input": {
         "arg1": "assistant",
-        "role": "5",
+        "role": "assistant",
         "arg2": "12345",
         "arg3": "Παρασκευή",
         "arg4": "Παρασκευά",
@@ -278,7 +278,7 @@
     "user": "1",
     "action": "department-add",
     "input": {
-        "arg1": "3",
+        "arg1": "1",
         "arg2": "1",
         "arg3": "Τμήμα Οδοντιατρικής",
         "en": "Department of Dentistry"
@@ -585,8 +585,8 @@
     "action": "position-modify",
     "input": {
         "arg1" : "1",
-        "electors" : "3",
-        "committee" : "4"
+        "electors" : "1",
+        "committee" : "1"
     },
     "db_state_change" : {
         "object" : {"Position" : "1"},
@@ -608,6 +608,27 @@
         "object" : {"Position" : "1"},
         "change" : { "position.elected" : "2", "position.status" : "successful" }
     }
-}]
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "helpdeskadmin",
+        "role": "helpdeskadmin",
+        "arg2": "12345",
+        "arg3": "Μαρία",
+        "arg4": "Παπαδοπούλου",
+        "arg5": "Πέτρος",
+        "first_name_en": "Maria",
+        "last_name_en": "Papadopoulou",
+        "father_name_en": "Peter",
+        "email": "admin@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "6"},
+        "change" : "new user"
+    }
+}
+]
 }
 

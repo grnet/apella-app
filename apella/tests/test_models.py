@@ -29,7 +29,7 @@ class CandidacyTest(TestCase):
                 en=user_en,
                 username='manager',
                 password='1234',
-                role='1')
+                role='institutionmanager')
         institution_el = InstitutionEl.objects.create(
             title='Πανεπιστήμιο Κρήτης')
         institution_en = InstitutionEn.objects.create(
@@ -83,7 +83,7 @@ class CandidacyTest(TestCase):
                 en=user_en,
                 username='candidate',
                 password='1234',
-                role='2')
+                role='candidate')
         self.candidate = candidate
 
     def test_create_candidacy(self):
@@ -99,7 +99,7 @@ class CandidacyTest(TestCase):
                 fek_posted_at=self.fek_posted_at,
                 starts_at=self.start_date,
                 ends_at=self.end_date)
-        self.assertEqual(self.position.state, '2')
+        self.assertEqual(self.position.state, 'posted')
 
         self.candidacy = Candidacy.objects.create(
                 candidate=self.candidate,

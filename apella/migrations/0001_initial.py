@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
                 ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
-                ('role', models.CharField(default=b'2', max_length=1, choices=[['1', 'Institution Manager'], ['2', 'Candidate'], ['3', 'Elector'], ['4', 'Committee'], ['5', 'Assistant']])),
+                ('role', models.CharField(default=b'candidate', max_length=20, choices=[['institutionmanager', 'Institution Manager'], ['candidate', 'Candidate'], ['professor', 'Professor'], ['helpdeskadmin', 'Helpdesk Admin'], ['helpdeskuser', 'Helpdesk User'], ['assistant', 'Assistant']])),
                 ('id_passport', models.CharField(max_length=20)),
                 ('mobile_phone_number', models.CharField(max_length=30)),
                 ('home_phone_number', models.CharField(max_length=30)),
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
             name='ApellaFile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('file_kind', models.CharField(max_length=1, choices=[['CV', 'CV'], ['Diploma', 'Diploma'], ['Publication', 'Publication'], ['Additional file', 'Additional file']])),
+                ('file_kind', models.CharField(max_length=40, choices=[['CV', 'CV'], ['Diploma', 'Diploma'], ['Publication', 'Publication'], ['Additional file', 'Additional file']])),
                 ('file_path', models.CharField(max_length=500)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
             ],
@@ -93,7 +93,7 @@ class Migration(migrations.Migration):
             name='Candidate',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -159,7 +159,7 @@ class Migration(migrations.Migration):
                 ('authority_full_name', models.CharField(max_length=150)),
                 ('manager_role', models.CharField(max_length=1, choices=[['1', 'Manager'], ['2', 'Assistant'], ['3', 'Substitute']])),
                 ('institution', models.ForeignKey(to='apella.Institution')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -171,17 +171,13 @@ class Migration(migrations.Migration):
                 ('discipline', models.CharField(max_length=300)),
                 ('fek', models.URLField()),
                 ('fek_posted_at', models.DateTimeField(validators=[apella.validators.before_today_validator])),
-                ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Electing'], ['4', 'Successful'], ['5', 'Failed']])),
+                ('state', models.CharField(default=b'posted', max_length=30, choices=[['draft', 'Draft'], ['posted', 'Posted'], ['electing', 'Electing'], ['successful', 'Successful'], ['failed', 'Failed'], ['cancelled', 'Cancelled']])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
-                ('committee', models.ManyToManyField(related_name='committee_duty', to=settings.AUTH_USER_MODEL, blank=True)),
-                ('department', models.ForeignKey(to='apella.Department', on_delete=django.db.models.deletion.PROTECT)),
-                ('elected', models.ForeignKey(related_name='elected_positions', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
-                ('electors', models.ManyToManyField(related_name='elector_duty', to=settings.AUTH_USER_MODEL, blank=True)),
             ],
         ),
         migrations.CreateModel(
@@ -206,7 +202,7 @@ class Migration(migrations.Migration):
                 ('discipline_in_fek', models.BooleanField(default=True)),
                 ('department', models.ForeignKey(blank=True, to='apella.Department', null=True)),
                 ('institution', models.ForeignKey(to='apella.Institution')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -344,6 +340,26 @@ class Migration(migrations.Migration):
             model_name='school',
             name='institution',
             field=models.ForeignKey(to='apella.Institution'),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='committee',
+            field=models.ManyToManyField(related_name='committee_duty', to='apella.Professor', blank=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='department',
+            field=models.ForeignKey(to='apella.Department', on_delete=django.db.models.deletion.PROTECT),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='elected',
+            field=models.ForeignKey(related_name='elected_positions', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='electors',
+            field=models.ManyToManyField(related_name='elector_duty', to='apella.Professor', blank=True),
         ),
         migrations.AddField(
             model_name='position',

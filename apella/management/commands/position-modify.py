@@ -1,6 +1,6 @@
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
-from apella.models import ApellaUser, Position
+from apella.models import ApellaUser, Position, Professor
 from apella.management.utils import get_user, ApellaCommand
 
 
@@ -37,7 +37,7 @@ class Command(ApellaCommand):
             try:
                 elected = get_user(elected)
                 position.elected = elected
-                position.state = '4'
+                position.state = 'successful'
                 position.save()
                 self.stdout.write(
                     "%s has been elected for position %s" %
@@ -53,16 +53,16 @@ class Command(ApellaCommand):
                 electors_ids = electors.split(',')
                 for e in electors_ids:
                     try:
-                        u = get_user(e)
+                        u = Professor.objects.get(id=e)
                         position.electors.add(u)
-                        position.state = '3'
+                        position.state = 'electing'
                         position.save()
                         self.stdout.write(
                                 "%s is an elector for position %s" %
-                                (u.username, position.id))
+                                (u.user.username, position.id))
 
-                    except ApellaUser.DoesNotExist:
-                        raise CommandError("Invalid elector ID %s" % e)
+                    except Professor.DoesNotExist:
+                        raise CommandError("Invalid professor ID %s" % e)
                     except:
                         raise CommandError("Operation failed")
 
@@ -74,16 +74,16 @@ class Command(ApellaCommand):
                 committee_ids = committee.split(',')
                 for c in committee_ids:
                     try:
-                        u = get_user(c)
+                        u = Professor.objects.get(id=c)
                         position.committee.add(u)
-                        position.state = '3'
+                        position.state = 'electing'
                         position.save()
                         self.stdout.write(
                                 "%s is in committee for position %s" %
-                                (u.username, position.id))
+                                (u.user.username, position.id))
 
-                    except ApellaUser.DoesNotExist:
-                        raise CommandError("Invalid elector ID %s" % c)
+                    except Professor.DoesNotExist:
+                        raise CommandError("Invalid professor ID %s" % c)
                     except:
                         raise CommandError("Operation failed")
 

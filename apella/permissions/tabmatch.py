@@ -26,7 +26,7 @@ class Tabmatch(object):
             for name in self.column_names:
                 tab_val = getattr(tab_row, name)
                 row_val = getattr(row, name)
-            
+
                 if (row_val.endswith('*') and tab_val.startswith(row_val[:-1])):
                     item[name] = tab_val if name in expand else row_val
                 elif (tab_val.endswith('*') and row_val.startswith(tab_val[:-1])):

@@ -1,18 +1,20 @@
 {
     "USER_ROLES": [
-        ["1", "Institution Manager"],
-        ["2", "Candidate"],
-        ["3", "Elector"],
-        ["4", "Committee"],
-        ["5", "Assistant"]
+        ["institutionmanager", "Institution Manager"],
+        ["candidate", "Candidate"],
+        ["professor", "Professor"],
+        ["helpdeskadmin", "Helpdesk Admin"],
+        ["helpdeskuser", "Helpdesk User"],
+        ["assistant", "Assistant"]
     ],
 
     "POSITION_STATES": [
-        ["1", "Draft"],
-        ["2", "Posted"],
-        ["3", "Electing"],
-        ["4", "Successful"],
-        ["5", "Failed"]
+        ["draft", "Draft"],
+        ["posted", "Posted"],
+        ["electing", "Electing"],
+        ["successful", "Successful"],
+        ["failed", "Failed"],
+        ["cancelled", "Cancelled"]
     ],
 
     "CANDIDACY_STATES": [
