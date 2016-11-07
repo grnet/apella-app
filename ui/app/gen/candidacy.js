@@ -1,7 +1,8 @@
 import {field} from 'ember-gen';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
-import _ from 'lodash/lodash'
+import _ from 'lodash/lodash';
+import {disable_field} from 'ui/utils/common/fields';
 
 const presence = validate.presence(true),
       max_chars = validate.length({max: 200}),
@@ -110,14 +111,6 @@ export default gen.CRUDGen.extend({
   edit: {
     fieldsets: computed('model.position.state', function() {
       let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView'];
-      let disable_field = function(el){
-        return field(el, {
-          attrs: {
-            readonly: true,
-            disabled: true,
-          }
-        })
-      }
       if (this.get('model.position.state') != POSITION_POSTED_ID) {
         candidacy_fields = _.map(candidacy_fields, disable_field);
       };
