@@ -26,7 +26,7 @@ export default gen.CRUDGen.extend({
     },
     layout: 'table',
     sortBy: 'title_current:asc',
-    fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'})],
+    fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'}), 'institution.title_current'],
     row: {
       actions: ['gen:details', 'gen:edit', 'remove']
     }

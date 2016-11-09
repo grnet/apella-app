@@ -15,7 +15,7 @@ const presence = validate.presence(true),
       POSITION_POSTED_ID = '2';
 
 let FS = {
-  list:  ['position.code', 'position.department.school.institution.title_current',
+  list:  ['position.code', 'position.department.institution.title_current',
           'position.department.title_current',
           'position.state_verbose'],
   create: [{
@@ -43,7 +43,7 @@ let FS = {
     }
   ],
   edit: {
-    position_fields: ['position.code_and_title', 'position.title', 'position.department.school.institution.title_current', 'position.department.title_current', 'position.discipline','position.fek', 'position.fek_posted_at_format', 'position.starts_at_format', 'position.ends_at_format' ],
+    position_fields: ['position.code_and_title', 'position.title', 'position.department.institution.title_current', 'position.department.title_current', 'position.discipline','position.fek', 'position.fek_posted_at_format', 'position.starts_at_format', 'position.ends_at_format' ],
     position_layout: {
       flex: [30, 30, 30, 30, 30, 30, 30, 30, 30 ]
     }

@@ -9,6 +9,11 @@ const {
 } = Ember;
 
 
+let FS = {
+  list: ['title_current', 'category_verbose', 'organization', 'regulatory_framework'],
+};
+
+
 export default gen.CRUDGen.extend({
   modelName: 'institution',
   path: 'institutions',
@@ -29,16 +34,10 @@ export default gen.CRUDGen.extend({
     },
     sortBy: 'organization:asc',
     layout: 'table',
-    fields: ['title_current', 'organization', 'regulatory_framework'],
+    fields: FS.list,
     row: {
       actions: ['gen:details', 'gen:edit', 'remove']
     },
-  },
-  create: {
-    fields: ['title', 'organization', 'regulatory_framework'],
-  },
-  edit: {
-    fields: ['title', 'organization', 'regulatory_framework'],
   },
   record: {
     menu: {

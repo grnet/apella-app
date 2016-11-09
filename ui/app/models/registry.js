@@ -16,7 +16,7 @@ export default DS.Model.extend({
     return this.get('i18n').t(get_label(list, id))
   }),
 
-  institution: computed('department.school.institution', function() {
-    return get(this, 'department.school.institution');
+  institution: computed('department.institution', function() {
+    return get(this, 'department.institution');
   })
 });
