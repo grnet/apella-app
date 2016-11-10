@@ -76,6 +76,7 @@ export default {
   'position.state_verbose.label': 'Position State',
   'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy',
   'institution.title_current.label': 'Institution',
+  'profile.label': 'Profile',
   manager: {
     menu_label: 'Institution Managers',
     label: {

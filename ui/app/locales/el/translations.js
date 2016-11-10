@@ -76,6 +76,7 @@ export default {
   'position.state_verbose.label': 'Κατάσταση θέσης',
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε την θέση για την οποία έχετε υποβάλει υποψηφιότητα',
   'institution.title_current.label': 'Ίδρυμα',
+  'profile.label': 'Προφίλ',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
     label: {
