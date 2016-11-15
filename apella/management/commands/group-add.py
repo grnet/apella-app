@@ -19,9 +19,5 @@ class Command(ApellaCommand):
             self.stdout.write(
                 "Created group %s : %s" %
                 (group.pk, group.name))
-        except IntegrityError as ie:
-            raise CommandError(ie)
-        except BaseException, e:
+        except BaseException as e:
             raise CommandError(e)
-        except:
-            self.stdout.write("Operation failed")

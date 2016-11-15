@@ -64,10 +64,8 @@ class Command(ApellaCommand):
                 if created:
                     self.stdout.write("New group with name: %s created"
                                       % group.name)
-            except IntegrityError as ie:
-                raise CommandError(ie)
-            except:
-                raise
+            except BaseException as e:
+                raise CommandError(e)
 
         try:
             el = ApellaUserEl.objects.create(
@@ -94,10 +92,8 @@ class Command(ApellaCommand):
                     a.groups.add(group)
                     self.stdout.write("Group %s added to user %s"
                                       % (group.name, a.pk))
-                except IntegrityError as ie:
-                    raise CommandError(ie)
+                except BaseException as e:
+                    raise CommandError(e)
 
-        except IntegrityError as ie:
-            raise CommandError(ie)
-        except:
-            raise
+        except BaseException as e:
+                raise CommandError(e)
