@@ -1,6 +1,6 @@
-from optparse import make_option
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 from django.db.utils import IntegrityError
+from django.contrib.auth.models import Group
 from apella.management.utils import ApellaCommand
 from apella.models import ApellaUser, ApellaUserEl, ApellaUserEn
 from apella import common
@@ -33,7 +33,10 @@ class Command(ApellaCommand):
             '--email',
             dest='email',
             help='Email')
-
+        parser.add_argument(
+            '--group_name',
+            dest='group_name',
+            help='Group name')
         parser.add_argument(
             '--role',
             dest='role',
@@ -51,6 +54,20 @@ class Command(ApellaCommand):
         first_name_en = options['first_name_en']
         last_name_en = options['last_name_en']
         father_name_en = options['father_name_en']
+        group_name = options['group_name']
+
+        if group_name:
+            try:
+                group, created = Group.objects.get_or_create(
+                                    name=group_name
+                                )
+                if created:
+                    self.stdout.write("New group with name: %s created"
+                                      % group.name)
+            except IntegrityError as ie:
+                raise CommandError(ie)
+            except:
+                raise
 
         try:
             el = ApellaUserEl.objects.create(
@@ -71,6 +88,15 @@ class Command(ApellaCommand):
                     en=en)
 
             self.stdout.write("User with id: %s created" % a.pk)
+
+            if group_name and group:
+                try:
+                    a.groups.add(group)
+                    self.stdout.write("Group %s added to user %s"
+                                      % (group.name, a.pk))
+                except IntegrityError as ie:
+                    raise CommandError(ie)
+
         except IntegrityError as ie:
             raise CommandError(ie)
         except:
