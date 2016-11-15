@@ -1,5 +1,4 @@
 from django.core.management.base import CommandError
-from django.db.utils import IntegrityError
 from django.contrib.auth.models import Group
 from apella.management.utils import ApellaCommand
 from apella.models import ApellaUser, ApellaUserEl, ApellaUserEn
@@ -56,18 +55,14 @@ class Command(ApellaCommand):
         father_name_en = options['father_name_en']
         group_name = options['group_name']
 
-        if group_name:
-            try:
+        try:
+            if group_name:
                 group, created = Group.objects.get_or_create(
-                                    name=group_name
-                                )
+                                    name=group_name)
                 if created:
                     self.stdout.write("New group with name: %s created"
                                       % group.name)
-            except BaseException as e:
-                raise CommandError(e)
 
-        try:
             el = ApellaUserEl.objects.create(
                 first_name=first_name_el,
                 last_name=last_name_el,
@@ -88,12 +83,9 @@ class Command(ApellaCommand):
             self.stdout.write("User with id: %s created" % a.pk)
 
             if group_name and group:
-                try:
-                    a.groups.add(group)
-                    self.stdout.write("Group %s added to user %s"
-                                      % (group.name, a.pk))
-                except BaseException as e:
-                    raise CommandError(e)
+                a.groups.add(group)
+                self.stdout.write("Group %s added to user %s"
+                                   % (group.name, a.pk))
 
         except BaseException as e:
                 raise CommandError(e)
