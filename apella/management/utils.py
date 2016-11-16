@@ -20,7 +20,7 @@ def get_user(identifier, **kwargs):
 
 def smart_locale_unicode(s, **kwargs):
     """Wrapper around 'smart_unicode' using user's preferred encoding."""
-    encoding = locale.getpreferredencoding()
+    encoding = locale.getpreferredencoding() or 'utf8'
     return smart_unicode(s, encoding=encoding, **kwargs)
 
 
