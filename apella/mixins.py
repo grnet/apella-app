@@ -68,7 +68,7 @@ def fields_to_lang(data):
     v = defaultdict(dict)
     for key, value in data.iteritems():
         for lang in settings.LANGUAGES:
-            if type(value) == dict:
+            if type(value) == dict and key not in settings.LANGUAGES:
                 v[lang][key] = value.get(lang, None)
             else:
                 v[key] = value
@@ -161,48 +161,43 @@ class NestedWritableUserMixin(NestedWritableObjectsMixin):
     def create(self, validated_data):
         model_name = self.Meta.model.__name__
         model = apps.get_model(app_label='apella', model_name=model_name)
-
         user_data = validated_data.pop(self.NESTED_USER_KEY)
         user_locales = defaultdict(dict)
         for lang in settings.LANGUAGES:
             user_locales[lang] = user_data.pop(lang, None)
-
         user_lang_objects = create_lang_objects(
             'ApellaUser', user_locales)
+        user_groups = user_data.pop('groups', [])
         apella_user = ApellaUser.objects.create_user(
             el=user_lang_objects.get('el'),
             en=user_lang_objects.get('en'),
             **user_data)
+        for group in user_groups:
+            apella_user.groups.add(group)
+        apella_user.save()
         validated_data[self.NESTED_USER_KEY] = apella_user
-
         return super(NestedWritableUserMixin, self).create(validated_data)
 
     def update(self, instance, validated_data):
-
         model_name = self.Meta.model.__name__
-
         user_data = validated_data.pop(self.NESTED_USER_KEY)
         apella_user = instance.user
         for lang in settings.LANGUAGES:
             lang_object = update_lang_object(
                 'ApellaUser', apella_user, lang, user_data.pop(lang, None))
             setattr(apella_user, lang, lang_object)
-
         for k, v in user_data.iteritems():
             if k == 'password':
                 apella_user.set_password(v)
             else:
                 setattr(apella_user, k, v)
-
         apella_user.save()
-
         return super(NestedWritableUserMixin, self).update(
             instance, validated_data)
 
     def to_internal_value(self, data):
         user_data = fields_to_lang(data.pop(self.NESTED_USER_KEY))
         data[self.NESTED_USER_KEY] = user_data
-
         return super(NestedWritableUserMixin, self).to_internal_value(data)
 
     def to_representation(self, instance):
@@ -211,5 +206,4 @@ class NestedWritableUserMixin(NestedWritableObjectsMixin):
         user_data = data.pop(self.NESTED_USER_KEY)
         user_data = lang_to_fields(user_data)
         data[self.NESTED_USER_KEY] = user_data
-
         return data
