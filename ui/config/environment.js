@@ -1,5 +1,6 @@
 /* jshint node: true */
 var choices = require('../../resources/common');
+var holidays = require('../../resources/holidays');
 
 module.exports = function(environment) {
   var ENV = {
@@ -21,6 +22,7 @@ module.exports = function(environment) {
     APP: {
       backend_host: 'http://127.0.0.1:8000/api',
       resource_choices: choices,
+      resource_holidays: holidays,
       date_format: 'DD , MMMM YYYY',
       // Here you can pass flags/options to your application instance
       // when it is created
