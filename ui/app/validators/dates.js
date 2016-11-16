@@ -4,16 +4,17 @@ import moment from 'moment';
 import ENV from 'ui/config/environment';
 import _ from 'lodash/lodash';
 
-const { computed, get } = Ember,
+const {
+        get
+      } = Ember,
+      TODAY = new Date(),
       HOLIDAYS = ENV.APP.resource_holidays,
       DATE_FORMAT = ENV.APP.date_format;
 
 
 export function afterToday(options) {
   return (key, value) => {
-    var today = new Date();
-    var inputDate = new Date(value);
-    if (inputDate.getTime() >=today.getTime()) {
+    if (moment(value).isAfter(TODAY)) {
       return true;
     } else {
       return `${moment(value).format(DATE_FORMAT)} should be after today`;
@@ -23,19 +24,16 @@ export function afterToday(options) {
 
 export function beforeToday(options) {
   return (key, value) => {
-    var today = new Date();
-    var inputDate = new Date(value);
-    if (inputDate.getTime() <today.getTime()) {
+    if (moment(value).isBefore(TODAY)) {
       return true;
     } else {
-      return moment(value).format(DATE_FORMAT) + ' should be before today';
+      return `${moment(value).format(DATE_FORMAT)}  should be before today`;
     }
   };
 }
 
 export function notHoliday() {
   return (key, value) => {
-    var today = new Date();
     var inputDate = new Date(value);
     let day = moment(value).day();
     let formattedDate = moment(value).format('ddd, D/M/YYYY');
