@@ -12,6 +12,7 @@ export default gen.CRUDGen.extend({
   modelName: 'department',
   path: 'departments',
   common: {
+    proloadModels: ['institution', 'department'],
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
     }

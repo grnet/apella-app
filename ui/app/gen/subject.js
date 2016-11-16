@@ -16,6 +16,7 @@ export default gen.CRUDGen.extend({
   modelName: 'subject',
   path: 'subjects',
   common: {
+    preloadModels: ['subject-area'],
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
     }
