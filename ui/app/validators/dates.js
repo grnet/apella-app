@@ -47,3 +47,18 @@ export function notHoliday() {
     return true;
   };
 }
+
+export function afterDays(options) {
+  let { on, days } = options;
+
+  return (key, value, _o, changes) => {
+    let baseDate = get(changes, 'starts_at');
+    let nextDate = moment(baseDate).add(days, 'days');
+    if (moment(value).isAfter(nextDate)) {
+      return true;
+    } else {
+      return `End date should be ${days} days after start date`;
+    }
+  };
+}
+

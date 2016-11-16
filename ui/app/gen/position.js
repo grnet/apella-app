@@ -1,6 +1,6 @@
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
-import {afterToday, beforeToday, notHoliday} from 'ui/validators/dates';
+import {afterToday, beforeToday, notHoliday, afterDays} from 'ui/validators/dates';
 
 const {
   computed,
@@ -16,7 +16,7 @@ export default gen.CRUDGen.extend({
       description: [validate.presence(true), validate.length({max:300})],
       starts_at: [afterToday()],
       fek_posted_at: [beforeToday()],
-      ends_at: [notHoliday()],
+      ends_at: [notHoliday(), afterDays({on:'starts_at', days:30})],
       fek: [validate.format({type: 'url'})]
     },
     fieldsets: [{
