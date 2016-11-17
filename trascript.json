@@ -124,13 +124,11 @@
         "change" : "new institution"
     }
 },
-
-
 {
     "user": "admin",
     "action": "institutionmanager-add",
     "input": {
-        "arg1": "1",
+        "arg1": "manager",
         "role": "1",
         "arg2": "1"
     },
@@ -139,6 +137,7 @@
         "change" : "new user"
     }
 },
+
 {
     "user": "admin",
     "action": "user-add",
@@ -235,6 +234,20 @@
     }
 },
 {
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "assistant",
+        "role": "1",
+        "arg2": "1"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "2"},
+        "change" : "new user"
+    }
+},
+
+{
     "user": "1",
     "action": "school-add",
     "input": {
@@ -330,6 +343,20 @@
         "change" : "new professor"
     }
 },
+{
+    "user": "admin",
+    "action": "professor-add",
+    "input": {
+        "arg1": "committee",
+        "arg2": "1",
+        "arg3": "1"
+    },
+    "db_state_change" : {
+        "object" : {"Professor" : "2"},
+        "change" : "new professor"
+    }
+},
+
 {
     "user": "1",
     "action": "subjectarea-add",
@@ -622,7 +649,8 @@
         "first_name_en": "Maria",
         "last_name_en": "Papadopoulou",
         "father_name_en": "Peter",
-        "email": "admin@gmail.com"
+        "email": "admin@gmail.com",
+        "group_name": "helpdeskadmin"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "6"},
