@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
+import {field} from 'ember-gen';
 
 const USER_FIELDS_ALL = [
   'user_id',
@@ -28,7 +29,29 @@ const USER_FIELDS = [
   'home_phone_number'
 ]
 
+const PROFESSOR_FIELDS = [
+  'institution',
+  'department',
+  'rank',
+  field('cv_url', {
+    hint: 'cv_url.hint',
+  }),
+  'cv',
+  'fek',
+  'discipline_text',
+  field('discipline_in_fek',{
+    hint: 'discipline_in_fek.hint',
+  }),
+  'is_foreign',
+  'speaks_greek',
+]
 
+const INSTITUTION_MANGER_FIELDS = [
+  'institution',
+  'authority',
+  'authority_full_name',
+  'manager_role',
+]
 
 const USER_FIELDSET = {
   label: 'fieldsets.labels.user_info',
@@ -38,17 +61,41 @@ const USER_FIELDSET = {
   }
 }
 
-const USER_VALIDATORS = {
-      username: [validate.presence(true), validate.length({min:4, max:50})],
-      first_name: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
-      last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-      father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-      mobile_phone_number: [validate.format({ type: 'phone' })],
-      home_phone_number: [validate.format({ type: 'phone' })],
-      email: [validate.format({ type: 'email' })],
-      id_passport: [validate.presence(true)],
+const PROFESSOR_FIELDSET = {
+  label: 'fieldsets.labels.more_info',
+  fields: PROFESSOR_FIELDS,
+  layout: {
+    flex: [50, 50, 100, 50, 50, 100, 100, 100, 50, 50]
+   }
 }
 
+const INSTITUTION_MANAGER_FIELDSET = {
+  label: 'fieldsets.labels.more_info',
+  fields: INSTITUTION_MANGER_FIELDS,
+  layout: {
+    flex: [50, 50, 50, 50]
+   }
+}
+
+
+const USER_VALIDATORS = {
+  username: [validate.presence(true), validate.length({min:4, max:50})],
+  first_name: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
+  last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  mobile_phone_number: [validate.format({ type: 'phone' })],
+  home_phone_number: [validate.format({ type: 'phone' })],
+  email: [validate.format({ type: 'email' })],
+  id_passport: [validate.presence(true)],
+}
+
+const PROFESSOR_VALIDATORS = {
+  cv_url: [validate.format({allowBlank: true, type:'url'})],
+  institution: [validate.presence(true)],
+}
+
+const INSTITUTION_MANAGER_VALIDATORS = {
+}
 
 
 const normalizeUser = function(hash, serializer) {
@@ -92,4 +139,6 @@ const normalizeUserErrors = function(errors) {
 }
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
-        USER_FIELDS, USER_FIELDSET, USER_VALIDATORS};
+        USER_FIELDS, USER_FIELDSET, USER_VALIDATORS,
+        PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
+        INSTITUTION_MANAGER_FIELDSET, INSTITUTION_MANAGER_VALIDATORS};

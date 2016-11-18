@@ -1,17 +1,14 @@
 import gen from 'ember-gen/lib/gen';
-import validate from 'ember-gen/validate';
-import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
+import {USER_FIELDSET,
+        USER_VALIDATORS,
+        PROFESSOR_FIELDSET,
+        PROFESSOR_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
 const {
   computed,
   get
 } = Ember;
-
-const PROFESSOR_VALIDATORS = {
-  cv_url: [validate.format({allowBlank: true, type:'url'})],
-  institution: [validate.presence(true)],
-}
 
 let all_validators = Object.assign(PROFESSOR_VALIDATORS, USER_VALIDATORS);
 
@@ -22,28 +19,7 @@ export default gen.CRUDGen.extend({
     validators: all_validators,
     fieldsets: [
       USER_FIELDSET,
-      {
-        label: 'fieldsets.labels.more_info',
-        fields: [
-          'institution',
-          'department',
-          'rank',
-          field('cv_url', {
-            hint: 'cv_url.hint',
-          }),
-          'cv',
-          'fek',
-          'discipline_text',
-          field('discipline_in_fek',{
-            hint: 'discipline_in_fek.hint',
-          }),
-          'is_foreign',
-          'speaks_greek',
-       ],
-       layout: {
-        flex: [50, 50, 100, 50, 50, 100, 100, 100, 50, 50]
-       }
-      }
+      PROFESSOR_FIELDSET,
     ]
   },
   list: {

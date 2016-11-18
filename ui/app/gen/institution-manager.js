@@ -1,5 +1,8 @@
 import gen from 'ember-gen/lib/gen';
-import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
+import {USER_FIELDSET,
+        USER_VALIDATORS,
+        INSTITUTION_MANAGER_FIELDSET,
+        INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
 const {
@@ -14,18 +17,7 @@ export default gen.CRUDGen.extend({
     validators: USER_VALIDATORS,
     fieldsets: [
       USER_FIELDSET,
-      {
-        label: 'fieldsets.labels.more_info',
-        fields: [
-          'institution',
-          'authority',
-          'authority_full_name',
-          'manager_role',
-       ],
-       layout: {
-        flex: [50, 50, 50, 50]
-       }
-      }
+      INSTITUTION_MANAGER_FIELDSET,
     ]
   },
   list: {
