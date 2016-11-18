@@ -1,3 +1,10 @@
+multilangfields_resource = {
+    'model': 'apella.models.MultiLangFields',
+    'field_schema': {
+        'fields': ['id', 'el', 'en']
+    }
+}
+
 position_resource = {
     'model': 'apella.models.Position',
     'field_schema': {
@@ -7,7 +14,7 @@ position_resource = {
                    'state', 'starts_at', 'ends_at', 'created_at',
                    'updated_at'],
         'read_only_fields': ['id', 'url', 'created_at', 'updated_at'],
-        'serializers': ['apella.mixins.PositionValidatorMixin']
+        'serializers': ['apella.serializers.mixins.PositionValidatorMixin']
     },
     'filter_fields': ['title', ],
     'allowable_operations': ['list', 'retrieve', 'create', 'update', 'delete']
@@ -24,22 +31,25 @@ apellauser_resource = {
     'model': 'apella.models.ApellaUser',
     'field_schema': {
         'fields': ['id', 'url', 'username', 'password', 'email', 'role',
-                   'el', 'en', 'id_passport', 'mobile_phone_number',
+                   'first_name', 'last_name', 'father_name',
+                   'id_passport', 'mobile_phone_number',
                    'home_phone_number', 'groups'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
-            'el': {
-                'source': 'el',
-                'field_schema': {'fields': ['first_name', 'last_name',
-                                            'father_name']}
+            'first_name': {
+                'source': 'first_name',
+                'field_schema': {'fields': ['el', 'en']}
             },
-            'en': {
-                'source': 'en',
-                'field_schema': {'fields': ['first_name', 'last_name',
-                                            'father_name']}
+            'last_name': {
+                'source': 'last_name',
+                'field_schema': {'fields': ['el', 'en']}
+            },
+            'father_name': {
+                'source': 'father_name',
+                'field_schema': {'fields': ['el', 'en']}
             }
         },
-        'serializers': ['apella.mixins.NestedWritableObjectsMixin']
+        'serializers': ['apella.serializers.mixins.NestedWritableObjectsMixin']
     },
     'filter_fields': ['username', ]
 }
@@ -51,7 +61,7 @@ candidacy_resource = {
                    'submitted_at', 'state', 'others_can_view',
                    'updated_at'],
         'read_only_fields': ['id', 'url', 'submitted_at', 'updated_at'],
-        'serializers': ['apella.mixins.ValidatorMixin']
+        'serializers': ['apella.serializers.mixins.ValidatorMixin']
     },
     'filter_fields': ['candidate', 'position', 'state', ]
 }
@@ -61,19 +71,15 @@ institution_resource = {
     'mixins': ['apella.views.mixins.DestroyProtectedObject'],
     'field_schema': {
         'fields': ['id', 'url', 'organization', 'category',
-                   'regulatory_framework', 'el', 'en'],
+                   'regulatory_framework', 'title'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
-            'el': {
-                'source': 'el',
-                'field_schema': {'fields': ['title']}
-            },
-            'en': {
-                'source': 'en',
-                'field_schema': {'fields': ['title']}
+            'title': {
+                'source': 'title',
+                'field_schema': {'fields': ['el', 'en']}
             }
         },
-        'serializers': ['apella.mixins.NestedWritableObjectsMixin']
+        'serializers': ['apella.serializers.mixins.NestedWritableObjectsMixin']
     }
 }
 
@@ -81,19 +87,15 @@ school_resource = {
     'model': 'apella.models.School',
     'mixins': ['apella.views.mixins.DestroyProtectedObject'],
     'field_schema': {
-        'fields': ['id', 'url', 'institution', 'el', 'en'],
+        'fields': ['id', 'url', 'institution', 'title'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
-            'el': {
-                'source': 'el',
-                'field_schema': {'fields': ['title']}
-            },
-            'en': {
-                'source': 'en',
-                'field_schema': {'fields': ['title']}
+            'title': {
+                'source': 'title',
+                'field_schema': {'fields': ['el', 'en']}
             }
         },
-        'serializers': ['apella.mixins.NestedWritableObjectsMixin']
+        'serializers': ['apella.serializers.mixins.NestedWritableObjectsMixin']
     },
     'filter_fields': ['institution', ]
 }
@@ -102,19 +104,15 @@ department_resource = {
     'model': 'apella.models.Department',
     'mixins': ['apella.views.mixins.DestroyProtectedObject'],
     'field_schema': {
-        'fields': ['id', 'url', 'institution', 'school', 'el', 'en'],
+        'fields': ['id', 'url', 'institution', 'school', 'title'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
-            'el': {
-                'source': 'el',
-                'field_schema': {'fields': ['title']}
-            },
-            'en': {
-                'source': 'en',
-                'field_schema': {'fields': ['title']}
+            'title': {
+                'source': 'title',
+                'field_schema': {'fields': ['el', 'en']}
             }
         },
-        'serializers': ['apella.mixins.NestedWritableObjectsMixin']
+        'serializers': ['apella.serializers.mixins.NestedWritableObjectsMixin']
     },
     'filter_fields': ['school', ]
 }
@@ -122,38 +120,30 @@ department_resource = {
 subject_area_resource = {
     'model': 'apella.models.SubjectArea',
     'field_schema': {
-        'fields': ['id', 'url', 'el', 'en'],
+        'fields': ['id', 'url', 'title'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
-            'el': {
-                'source': 'el',
-                'field_schema': {'fields': ['title']}
-            },
-            'en': {
-                'source': 'en',
-                'field_schema': {'fields': ['title']}
+            'title': {
+                'source': 'title',
+                'field_schema': {'fields': ['el', 'en']}
             }
         },
-        'serializers': ['apella.mixins.NestedWritableObjectsMixin']
+        'serializers': ['apella.serializers.mixins.NestedWritableObjectsMixin']
     }
 }
 
 subject_resource = {
     'model': 'apella.models.Subject',
     'field_schema': {
-        'fields': ['id', 'url', 'area', 'el', 'en'],
+        'fields': ['id', 'url', 'area', 'title'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
-            'el': {
-                'source': 'el',
-                'field_schema': {'fields': ['title']}
-            },
-            'en': {
-                'source': 'en',
-                'field_schema': {'fields': ['title']}
+            'title': {
+                'source': 'title',
+                'field_schema': {'fields': ['el', 'en']}
             }
         },
-        'serializers': ['apella.mixins.NestedWritableObjectsMixin']
+        'serializers': ['apella.serializers.mixins.NestedWritableObjectsMixin']
     },
     'filter_fields': ['area', ]
 }
@@ -178,7 +168,8 @@ institutionmanager_resource = {
                 'field_schema': apellauser_resource['field_schema']
             },
         },
-        'serializers': ['apella.mixins.NestedWritableUserMixin'],
+        'serializers': [
+            'apella.serializers.mixins.NestedWritableObjectsMixin'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': ['institution', 'manager_role', ]
@@ -196,7 +187,8 @@ professor_resource = {
                 'field_schema': apellauser_resource['field_schema']
             },
         },
-        'serializers': ['apella.mixins.NestedWritableUserMixin'],
+        'serializers': [
+            'apella.serializers.mixins.NestedWritableObjectsMixin'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': ['institution', ]
@@ -212,7 +204,8 @@ candidate_resource = {
                 'field_schema': apellauser_resource['field_schema']
             },
         },
-        'serializers': ['apella.mixins.NestedWritableUserMixin'],
+        'serializers': [
+            'apella.serializers.mixins.NestedWritableObjectsMixin'],
         'read_only_fields': ['id', 'url']
     },
     'filter_fields': []
@@ -230,6 +223,7 @@ API_SCHEMA = {
         'positions': position_resource,
         'candidacies': candidacy_resource,
         'groups': group_resource,
+        'multilang': multilangfields_resource,
         'users': apellauser_resource,
         'institutions': institution_resource,
         'schools': school_resource,

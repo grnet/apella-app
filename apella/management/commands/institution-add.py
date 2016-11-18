@@ -1,7 +1,7 @@
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from apella.management.utils import ApellaCommand
-from apella.models import Institution, InstitutionEl, InstitutionEn
+from apella.models import Institution, MultiLangFields
 
 
 class Command(ApellaCommand):
@@ -21,17 +21,13 @@ class Command(ApellaCommand):
         title_en = options['en']
 
         try:
-            institution_el = InstitutionEl.objects.create(title=title_el)
-            institution = Institution.objects.create(el=institution_el)
-
-            if title_en:
-                institution_en = InstitutionEn.objects.create(title=title_en)
-                institution.en = institution_en
-                institution.save()
+            title = MultiLangFields.objects.create(
+                    el=title_el, en=title_en)
+            institution = Institution.objects.create(title=title)
 
             self.stdout.write(
                 "Created institution %s : %s" %
-                (institution.pk, institution_el.title))
+                (institution.pk, institution.title.el))
         except BaseException, e:
             raise CommandError(e)
         except:

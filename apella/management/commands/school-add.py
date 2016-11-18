@@ -1,7 +1,7 @@
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from apella.management.utils import ApellaCommand
-from apella.models import Institution, School, SchoolEl, SchoolEn
+from apella.models import Institution, School, MultiLangFields
 
 
 class Command(ApellaCommand):
@@ -22,18 +22,14 @@ class Command(ApellaCommand):
 
         try:
             institution = Institution.objects.get(id=institution_id)
-            school_el = SchoolEl.objects.create(title=title_el)
+            title = MultiLangFields.objects.create(
+                    el=title_el, en=title_en)
             school = School.objects.create(
-                institution=institution, el=school_el)
-
-            if title_en:
-                school_en = SchoolEn.objects.create(title=title_en)
-                school.en = school_en
-                school.save()
+                institution=institution, title=title)
 
             self.stdout.write(
                 "Created school %s : %s for institution: %s" %
-                (school.pk, school_el.title, school.institution.id))
+                (school.pk, school.title.el, school.institution.id))
         except Institution.DoesNotExist:
             raise CommandError(
                 "Institution %s does not exist" % institution_id)

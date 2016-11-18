@@ -3,11 +3,9 @@ from datetime import datetime, timedelta
 
 from django.test import TestCase
 
-from apella.models import ApellaUser, Institution, School, Department,\
-        SubjectArea, Subject, Position, ApellaUserEl, ApellaUserEn,\
-        InstitutionEl, InstitutionEn, SubjectEn, SubjectEl, SubjectAreaEl,\
-        SubjectAreaEn, InstitutionManager, Candidacy, SchoolEl, SchoolEn,\
-        DepartmentEl, DepartmentEn
+from apella.models import ApellaUser, Institution, School, Department, \
+        SubjectArea, Subject, Position, InstitutionManager, Candidacy, \
+        MultiLangFields
 
 
 class CandidacyTest(TestCase):
@@ -16,71 +14,58 @@ class CandidacyTest(TestCase):
     end_date = start_date + timedelta(days=40)
 
     def setUp(self):
-        user_el = ApellaUserEl.objects.create(
-                first_name='Λάκης',
-                last_name='Λαλάκης',
-                father_name='Λούλης')
-        user_en = ApellaUserEn.objects.create(
-                first_name='Lakis',
-                last_name='Lalakis',
-                father_name='Loulis')
+        first_name = MultiLangFields.objects.create(
+                el='Λάκης', en='Lakis')
+        last_name = MultiLangFields.objects.create(
+                el='Λάλακης', en='Lalakis')
+        father_name = MultiLangFields.objects.create(
+                el='Λούλης', en='Loulis')
         author = ApellaUser.objects.create_user(
-                el=user_el,
-                en=user_en,
+                first_name=first_name,
+                last_name=last_name,
+                father_name=father_name,
                 username='manager',
                 password='1234',
                 role='institutionmanager')
-        institution_el = InstitutionEl.objects.create(
-            title='Πανεπιστήμιο Κρήτης')
-        institution_en = InstitutionEn.objects.create(
-            title='University of Crete')
+        institution_title = MultiLangFields.objects.create(
+            el='Πανεπιστήμιο Κρήτης', en='University of Crete')
         institution = Institution.objects.create(
-            category='Institution',
-            el=institution_el, en=institution_en)
+            category='Institution', title=institution_title)
         self.author = InstitutionManager.objects.create(
                 user=author,
                 institution=institution,
                 authority='1',
                 authority_full_name='Κώστας Βουτσάς',
                 manager_role='1')
-        school_el = SchoolEl.objects.create(title='Σχολή Θετικών Επιστημών')
-        school_en = SchoolEn.objects.create(title='School of Sciences')
+        school_title = MultiLangFields.objects.create(
+            el='Σχολή Θετικών Επιστημών', en='School of Sciences')
         school = School.objects.create(
-            el=school_el, en=school_en, institution=institution)
-        department_el = DepartmentEl.objects.create(
-            title='Εφαρμοσμένα Μαθηματικά')
-        department_en = DepartmentEn.objects.create(
-            title='Applied Mathematics')
+            title=school_title, institution=institution)
+        department_title = MultiLangFields.objects.create(
+            el='Εφαρμοσμένα Μαθηματικά', en='Applied Mathematics')
         self.department = Department.objects.create(
-            el=department_el, en=department_en, school=school,
-            institution=institution)
-        subject_area_el = SubjectAreaEl.objects.create(title='Μαθηματικά')
-        subject_area_en = SubjectAreaEn.objects.create(title='Mathematics')
-        subject_area = SubjectArea(el=subject_area_el, en=subject_area_en)
-        subject_area.save()
-        self.subject_area = subject_area
-        subject_el = SubjectEl.objects.create(title='Άλγεβρα')
-        subject_en = SubjectEn.objects.create(title='Algebra')
-        subject = Subject.objects.create(
-                el=subject_el,
-                en=subject_en,
-                area=self.subject_area)
-        subject.save()
-        self.subject = subject
+            title=school_title, school=school, institution=institution)
+        subject_area_title = MultiLangFields.objects.create(
+            el='Μαθηματικά', en='Mathematics')
+        self.subject_area = SubjectArea.objects.create(
+            title=subject_area_title)
+        subject_title = MultiLangFields.objects.create(
+            el='Άλγεβρα', en='Algebra')
+        self.subject = Subject.objects.create(
+            title=subject_title, area=self.subject_area)
 
         self.fek_posted_at = datetime.now() - timedelta(days=1)
 
-        user_el = ApellaUserEl.objects.create(
-                first_name='Υποψήφιος',
-                last_name='Παπαδόπουλος',
-                father_name='Γεώργιος')
-        user_en = ApellaUserEn.objects.create(
-                first_name='Candidate',
-                last_name='Papadopoulow',
-                father_name='George')
+        cand_first_name = MultiLangFields.objects.create(
+                el='Υποψήφιος', en='Candidate')
+        cand_last_name = MultiLangFields.objects.create(
+                el='Παπαδόπουλος', en='Papadopoulos')
+        cand_father_name = MultiLangFields.objects.create(
+                el='Νικόλαος', en='Nick')
         candidate = ApellaUser.objects.create_user(
-                el=user_el,
-                en=user_en,
+                first_name=cand_first_name,
+                last_name=cand_last_name,
+                father_name=cand_father_name,
                 username='candidate',
                 password='1234',
                 role='candidate')

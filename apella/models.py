@@ -1,61 +1,59 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
+    UserManager
 from django.conf import settings
+from django.core import validators
 
 from apella.validators import before_today_validator, after_today_validator,\
     validate_dates_interval, validate_position_dates
 from apella import common
 
 
-class ApellaUserFields(models.Model):
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=300)
-    father_name = models.CharField(max_length=200)
-
-    class Meta:
-        abstract = True
+class MultiLangFields(models.Model):
+    el = models.CharField(max_length=500)
+    en = models.CharField(max_length=500)
 
 
-class ApellaUserEl(ApellaUserFields):
-    pass
-
-
-class ApellaUserEn(ApellaUserFields):
-    pass
-
-
-class ApellaUser(AbstractUser):
-
-    """
-    Model for users of `Apella`.
-
-    It actually inherits from `AbstractUser` class of
-    `django.contib.auth.models` which define common fields such as first name,
-    last name, email, etc
-    """
-    role = models.CharField(
-        choices=common.USER_ROLES, max_length=20, default='candidate')
-    el = models.ForeignKey(ApellaUserEl)
-    en = models.ForeignKey(ApellaUserEn)
+class ApellaUser(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(
+        max_length=30, unique=True,
+        help_text='Required. 30 characters or fewer. Letters, digits and '
+                  '@/./+/-/_ only.',
+        validators=[
+            validators.RegexValidator(r'^[\w.@+-]+$',
+                                      'Enter a valid username. '
+                                      'This value may contain only letters,'
+                                      ' numbers '
+                                      'and @/./+/-/_ characters.',
+                                      'invalid'),
+        ],
+        error_messages={
+            'unique': "A user with that username already exists.",
+        }
+    )
+    first_name = models.ForeignKey(MultiLangFields, related_name='first_name')
+    last_name = models.ForeignKey(MultiLangFields, related_name='last_name')
+    father_name = models.ForeignKey(
+        MultiLangFields, related_name='father_name')
+    email = models.EmailField()
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(default=timezone.now)
     id_passport = models.CharField(max_length=20)
     mobile_phone_number = models.CharField(max_length=30)
     home_phone_number = models.CharField(max_length=30)
+    role = models.CharField(
+        choices=common.USER_ROLES, max_length=20, default='candidate')
 
+    objects = UserManager()
 
-class InstitutionFields(models.Model):
-    title = models.CharField(max_length=150)
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     class Meta:
-        abstract = True
-
-
-class InstitutionEl(InstitutionFields):
-    pass
-
-
-class InstitutionEn(InstitutionFields):
-    pass
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
 
 
 class Institution(models.Model):
@@ -64,8 +62,7 @@ class Institution(models.Model):
         max_length=30, default='Institution')
     organization = models.URLField(blank=True)
     regulatory_framework = models.URLField(blank=True)
-    el = models.ForeignKey(InstitutionEl)
-    en = models.ForeignKey(InstitutionEn, blank=True, null=True)
+    title = models.ForeignKey(MultiLangFields)
 
     def check_object_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
@@ -73,88 +70,24 @@ class Institution(models.Model):
                 institution_id=self.id).exists()
 
 
-class SchoolFields(models.Model):
-    title = models.CharField(max_length=150)
-
-    class Meta:
-        abstract = True
-
-
-class SchoolEl(SchoolFields):
-    pass
-
-
-class SchoolEn(SchoolFields):
-    pass
-
-
 class School(models.Model):
     institution = models.ForeignKey(Institution)
-    el = models.ForeignKey(SchoolEl)
-    en = models.ForeignKey(SchoolEn, blank=True, null=True)
-
-
-class DepartmentFields(models.Model):
-    title = models.CharField(max_length=150)
-
-    class Meta:
-        abstract = True
-
-
-class DepartmentEl(DepartmentFields):
-    pass
-
-
-class DepartmentEn(DepartmentFields):
-    pass
+    title = models.ForeignKey(MultiLangFields)
 
 
 class Department(models.Model):
     school = models.ForeignKey(School, blank=True, null=True)
     institution = models.ForeignKey(Institution)
-    el = models.ForeignKey(DepartmentEl)
-    en = models.ForeignKey(DepartmentEn, blank=True, null=True)
-
-
-class SubjectAreaFields(models.Model):
-    title = models.CharField(max_length=200)
-
-    class Meta:
-        abstract = True
-
-
-class SubjectAreaEl(SubjectAreaFields):
-    pass
-
-
-class SubjectAreaEn(SubjectAreaFields):
-    pass
+    title = models.ForeignKey(MultiLangFields)
 
 
 class SubjectArea(models.Model):
-    el = models.ForeignKey(SubjectAreaEl)
-    en = models.ForeignKey(SubjectAreaEn, blank=True, null=True)
-
-
-class SubjectFields(models.Model):
-    title = models.CharField(max_length=200)
-
-    class Meta:
-        abstract = True
-
-
-class SubjectEl(SubjectFields):
-    pass
-
-
-class SubjectEn(SubjectFields):
-    pass
+    title = models.ForeignKey(MultiLangFields)
 
 
 class Subject(models.Model):
     area = models.ForeignKey(SubjectArea)
-    el = models.ForeignKey(SubjectEl)
-    en = models.ForeignKey(SubjectEn, blank=True, null=True)
+    title = models.ForeignKey(MultiLangFields)
 
 
 class ApellaFile(models.Model):

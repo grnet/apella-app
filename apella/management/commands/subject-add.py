@@ -1,7 +1,7 @@
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from apella.management.utils import ApellaCommand
-from apella.models import SubjectArea, Subject, SubjectEl, SubjectEn
+from apella.models import SubjectArea, Subject, MultiLangFields
 
 
 class Command(ApellaCommand):
@@ -23,17 +23,13 @@ class Command(ApellaCommand):
 
         try:
             subject_area = SubjectArea.objects.get(id=subject_area_id)
-            subject_el = SubjectEl.objects.create(title=title_el)
-            subject = Subject.objects.create(area=subject_area, el=subject_el)
-
-            if title_en:
-                subject_en = SubjectEn.objects.create(title=title_en)
-                subject.en = subject_en
-                subject.save()
+            title = MultiLangFields.objects.create(
+                    el=title_el, en=title_en)
+            subject = Subject.objects.create(area=subject_area, title=title)
 
             self.stdout.write(
                     "Created subject %s : %s, area : %s" %
-                    (subject.pk, subject_el.title, subject.area.el.title))
+                    (subject.pk, subject.title.el, subject.area.title.el))
         except SubjectArea.DoesNotExist:
             raise CommandError(
                 "Subject area %s does not exist" % subject_area_id)

@@ -2,7 +2,7 @@ from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from apella.management.utils import ApellaCommand
 from apella.models import Department, School, Institution,\
-    DepartmentEl, DepartmentEn
+    MultiLangFields
 
 
 class Command(ApellaCommand):
@@ -22,21 +22,17 @@ class Command(ApellaCommand):
         title_en = options['en']
 
         try:
-            department_el = DepartmentEl.objects.create(title=title_el)
+            title = MultiLangFields.objects.create(
+                    el=title_el, en=title_en)
             institution = Institution.objects.get(id=institution_id)
             school = School.objects.get(id=school_id)
             department = Department.objects.create(
                                             institution=institution,
                                             school=school,
-                                            el=department_el)
-            if title_en:
-                department_en = DepartmentEn.objects.create(title=title_en)
-                department.en = department_en
-                department.save()
-
+                                            title=title)
             self.stdout.write(
                 "Created department %s : %s" %
-                (department.pk, department_el.title))
+                (department.pk, department.title.el))
         except School.DoesNotExist:
             raise CommandError("School %s does not exist" % school_id)
         except Institution.DoesNotExist:

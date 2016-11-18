@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from rest_framework.authtoken.models import Token
 from apella.management.utils import ApellaCommand
-from apella.models import ApellaUser, ApellaUserEl, ApellaUserEn
+from apella.models import ApellaUser, MultiLangFields
 from apella import common
 
 
@@ -65,22 +65,21 @@ class Command(ApellaCommand):
                     self.stdout.write("New group with name: %s created"
                                       % group.name)
 
-            el = ApellaUserEl.objects.create(
-                first_name=first_name_el,
-                last_name=last_name_el,
-                father_name=father_name_el)
-            en = ApellaUserEn.objects.create(
-                first_name=first_name_en,
-                last_name=last_name_en,
-                father_name=father_name_en)
+            first_name = MultiLangFields.objects.create(
+                    el=first_name_el, en=first_name_en)
+            last_name = MultiLangFields.objects.create(
+                    el=last_name_el, en=last_name_en)
+            father_name = MultiLangFields.objects.create(
+                    el=father_name_el, en=father_name_en)
 
             a = ApellaUser.objects.create_user(
                     username=username,
                     password=password,
                     role=options['role'],
                     email=options['email'],
-                    el=el,
-                    en=en)
+                    first_name=first_name,
+                    last_name=last_name,
+                    father_name=father_name)
             token = Token.objects.create(user=a)
 
             self.stdout.write(
@@ -88,8 +87,8 @@ class Command(ApellaCommand):
 
             if group_name and group:
                 a.groups.add(group)
-                self.stdout.write("Group %s added to user %s"
-                                   % (group.name, a.pk))
+                self.stdout.write(
+                    "Group %s added to user %s" % (group.name, a.pk))
 
         except BaseException as e:
                 raise CommandError(e)
