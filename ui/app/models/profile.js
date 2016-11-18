@@ -1,8 +1,12 @@
 import DS from 'ember-data';
+import User from 'ui/models/user';
+import professorFields from 'ui/mixins/professor';
+import {normalizeUser, serializeUser, normalizeUserErrors} from 'ui/utils/common/users';
+import institutionManagerFields from 'ui/mixins/institution-manager';
 
 const { get } = Ember;
 
-export default DS.Model.extend({
+export default User.extend(professorFields, institutionManagerFields, {
   __api__: {
     namespace: 'auth',
     path: 'me',
@@ -13,8 +17,9 @@ export default DS.Model.extend({
           path = get(this, 'path');
 
       return this.urlJoin(host, namespace, path) + '/';
-    }
+    },
+    normalizeErrors: normalizeUserErrors,
+    normalize: normalizeUser,
+    serialize: serializeUser
   },
-  username: DS.attr(),
-  email: DS.attr()
 });

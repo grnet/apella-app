@@ -13,6 +13,7 @@ export default DS.Model.extend({
   first_name: DS.attr({formComponent: 'i18n-input-field'}),
   last_name: DS.attr({formComponent: 'i18n-input-field'}),
   father_name: DS.attr({formComponent: 'i18n-input-field'}),
+  // role is used to check user group
   role: DS.attr({type: 'select', choices: CHOICES.USER_ROLES}),
   id_passport: DS.attr(),
   mobile_phone_number: DS.attr(),
