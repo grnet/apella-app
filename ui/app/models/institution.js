@@ -8,7 +8,7 @@ const { computed, get } = Ember,
 
 
 export default DS.Model.extend(titleI18NMixin, {
-  title: DS.attr({component: 'i18n-input-field'}),
+  title: DS.attr({formComponent: 'i18n-input-field'}),
   category: DS.attr({
     type: 'select',
     choices: INSTITUTION_CATEGORIES,

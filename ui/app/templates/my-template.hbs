@@ -1,0 +1,34 @@
+{{#gen-page classNames=(if gen.nested 'nested' '') as |p|}}
+  {{p.toolbar
+    pageTitle=(t gen.page.title model)
+    breadcrumbs=gen.breadcrumbs
+    toolbarActions=gen.toolbarActions
+    model=model
+    tabs=gen.tabs
+  }}
+
+  {{#p.content}}
+    {{component
+        (if (eq gen.layout 'table') gen.components.table gen.components.list)
+
+        model=model
+        modelMeta=(readonly gen.resource)
+        rowGen=(readonly gen.rowGen)
+        rowResourceMeta=(readonly gen.row)
+
+        sortBy=(readonly gen.sortBy)
+        selectable=(readonly gen.selectable)
+        searchText=search
+
+        searchParams=(readonly gen.meta.search)
+        filterParams=(readonly gen.meta.filter)
+        paginateParams=(readonly gen.meta.paginate)
+
+        page=page
+        limit=limit
+
+        searchComponent=(readonly gen.components.search)
+        filtersComponent=(readonly gen.components.filter)
+    }}
+  {{/p.content}}
+{{/gen-page}}

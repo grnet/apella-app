@@ -34,8 +34,11 @@ export default gen.CRUDGen.extend({
     },
     sortBy: 'organization:asc',
     layout: 'table',
-    fields: FS.list,
+    paginate: {
+      limit: [2, 10, 15]
+    },
     row: {
+      fields: FS.list,
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },

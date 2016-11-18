@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import gen from 'ember-gen/lib/gen';
+import {ApellaGen} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import _ from 'lodash/lodash';
 import {disable_field} from 'ui/utils/common/fields';
@@ -22,21 +22,22 @@ let FS = {
     label: 'candidacy.position_section.title',
     text: 'candidacy.position_section.subtitle',
     fields: ['position'],
-    layout: {
-      flex: [50]
-    },
+    flex: 100
   },
   {
     label: 'candidacy.candidate_section.title',
     text: 'candidacy.candidate_section.subtitle',
     fields: ['candidate', 'cv', 'diploma', 'publication'],
+    flex: 50,
     layout: {
       flex: [50, 50, 50, 50]
     },
   },
     {
       label: 'candidacy.candidacy_section.title',
+      text: 'candidacy.candidacy_section.subtitle',
       fields: ['selfEvaluation', 'additionalFiles', 'othersCanView'],
+      flex: 50,
       layout: {
         flex: [50, 50, 50, 50]
       }
@@ -51,10 +52,12 @@ let FS = {
 
 }
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
+  appIndex: true,
   modelName: 'candidacy',
   path: 'candidacies',
   common: {
+    preloadModels: ['position', 'institution', 'department'],
     validators: {
       candidate: mandatory,
       position: mandatory,
@@ -65,6 +68,8 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    layout: 'table',
+
     getModel: function(params) {
       // TODO replace with session's user group
       let userGroup = 'admin';
@@ -79,9 +84,7 @@ export default gen.CRUDGen.extend({
         });
       }
     },
-    layout: 'table',
     sortBy: 'position.code:asc',
-    fields: FS.list,
     search: {
       fields: FS.list,
     },
@@ -93,20 +96,17 @@ export default gen.CRUDGen.extend({
       icon: 'assignment'
     },
     row: {
+      fields: FS.list,
       actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
   create: {
     fieldsets: FS.create,
-   },
-  details: {
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
-    },
+  details: {
+    page: {
+      title: computed.reads('model.position.code')
+    }
   },
   edit: {
     fieldsets: computed('model.position.state', function() {

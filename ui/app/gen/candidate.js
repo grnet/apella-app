@@ -1,4 +1,4 @@
-import gen from 'ember-gen/lib/gen';
+import {ApellaGen} from 'ui/lib/common';
 import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
@@ -7,14 +7,11 @@ const {
   get
 } = Ember;
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'candidate',
   path: 'candidates',
   common: {
     validators: USER_VALIDATORS,
-    fieldsets: [
-      USER_FIELDSET,
-    ]
   },
   list: {
     page: {
@@ -30,19 +27,25 @@ export default gen.CRUDGen.extend({
       fields: ['username', 'email']
     },
     label: 'candidate.menu_label',
-    fields: ['username', 'email', 'full_name_current' ],
     row: {
+      fields: ['username', 'email', 'full_name_current'],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
   details: {
     fields: ['id', 'username', 'full_name_current'],
-  },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+    page: {
+      title: computed.reads('model.full_name_current')
     }
+  },
+  edit: {
+    fieldsets: [
+      USER_FIELDSET,
+    ]
+  },
+  create: {
+    fieldsets: [
+      USER_FIELDSET,
+    ]
   }
 });
