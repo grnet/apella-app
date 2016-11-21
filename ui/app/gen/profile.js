@@ -23,6 +23,7 @@ const redirect = {
 
 export default gen.CRUDGen.extend({
   modelName: 'profile',
+  auth: true,
   common: {
     fieldsets: computed('model.role', function(){
       let role = this.get('model').get('role');
