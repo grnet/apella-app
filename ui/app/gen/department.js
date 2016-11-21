@@ -27,16 +27,15 @@ export default gen.CRUDGen.extend({
     },
     layout: 'table',
     sortBy: 'title_current:asc',
-    fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'}), 'institution.title_current'],
     row: {
+      fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'}), 'institution.title_current'],
       actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
-    }
+  details: {
+    page: {
+      title: computed.readOnly('model.id')
+    },
+    create: [field('title_current', {component: 'i18n-input-field'})]
   }
 });
