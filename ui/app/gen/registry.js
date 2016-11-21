@@ -36,12 +36,12 @@ let members = Users.extend({
     },
     layout: 'table',
     sortBy: 'id:asc',
-    fields: [
-      field('id', {label: 'common.id_label', type: 'text'}),
-      field('username', {label: 'username.label', type: 'text'}),
-      field('role_verbose', {label: 'role.label', type: 'text'}),
-    ],
     row: {
+      fields: [
+        field('id', {label: 'common.id_label', type: 'text'}),
+        field('username', {label: 'username.label', type: 'text'}),
+        field('role_verbose', {label: 'role.label', type: 'text'}),
+      ],
       actions: ['gen:details']
     }
   }
@@ -74,12 +74,12 @@ export default gen.CRUDGen.extend({
     page: {
      title: 'registry.menu_label'
     },
-    fields: [
-      field('institution.title_current', {label: 'institution.label', type: 'text'}),
-      field('department.title_current', {label: 'department.label', type: 'text'}),
-      field('type_verbose', {label: 'common.type_label', type: 'text'})
-    ],
     row: {
+      fields: [
+        field('institution.title_current', {label: 'institution.label', type: 'text'}),
+        field('department.title_current', {label: 'department.label', type: 'text'}),
+        field('type_verbose', {label: 'common.type_label', type: 'text'})
+      ],
       actions: ['gen:details', 'gen:edit', 'remove']
     }
   },

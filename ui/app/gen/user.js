@@ -29,8 +29,8 @@ export default gen.CRUDGen.extend({
       fields: ['username', 'email', 'full_name_current','role_verbose']
     },
     sortBy: 'username:asc',
-    fields: ['username', 'email', 'full_name_current', 'role_verbose'],
     row: {
+      fields: ['username', 'email', 'full_name_current', 'role_verbose'],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },

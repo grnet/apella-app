@@ -26,9 +26,9 @@ export default gen.CRUDGen.extend({
     layout: 'table',
     sortBy: 'title_current:asc',
      row: {
+      fields: ['title_current'],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
-    fields: ['title_current']
   },
   record: {
     menu: {

@@ -25,8 +25,8 @@ export default gen.CRUDGen.extend({
       label: 'school.menu_label'
     },
     layout: 'table',
-    fields: ['title_current', field('institution.title_current', {label: 'institution.label', type: 'text'})],
     row: {
+      fields: ['title_current', field('institution.title_current', {label: 'institution.label', type: 'text'})],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },

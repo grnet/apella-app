@@ -33,8 +33,8 @@ export default gen.CRUDGen.extend({
     search: {
       fields: ['username', 'email']
     },
-    fields: ['username', 'email', 'full_name_current', 'institution.title_current', ],
     row: {
+      fields: ['username', 'email', 'full_name_current', 'institution.title_current', ],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },

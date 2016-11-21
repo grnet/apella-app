@@ -31,11 +31,11 @@ export default gen.CRUDGen.extend({
     },
     layout: 'table',
     sortBy: 'title_current:asc',
-    fields: FS.list,
     search: {
       fields: FS.list
     },
     row: {
+      fields: FS.list,
       actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
