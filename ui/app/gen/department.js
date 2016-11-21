@@ -26,6 +26,9 @@ export default gen.CRUDGen.extend({
       title: 'department.menu_label',
     },
     layout: 'table',
+    paginate: {
+      limit: [10, 15]
+    },
     sortBy: 'title_current:asc',
     row: {
       fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'}), 'institution.title_current'],

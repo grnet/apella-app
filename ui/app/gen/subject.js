@@ -30,6 +30,9 @@ export default gen.CRUDGen.extend({
       label: 'subject.menu_label'
     },
     layout: 'table',
+    paginate: {
+      limit: [10, 15]
+    },
     sortBy: 'title_current:asc',
     search: {
       fields: FS.list
