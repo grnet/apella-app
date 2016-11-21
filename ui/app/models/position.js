@@ -12,16 +12,25 @@ export default DS.Model.extend({
   title: DS.attr(),
   description: DS.attr({type:'text'}),
   discipline: DS.attr(),
+
   author: DS.belongsTo('institution-manager', {
-    attrs: {
-      optionLabelAttr: 'full_name_current',
-    },
+    formAttrs: {
+      optionLabelAttr: 'full_name_current'
+    }
   }),
-  department: DS.belongsTo('department', {attrs: {optionLabelAttr: 'title_current'}}),
-  subject_area: DS.belongsTo('subject_area', {attrs: {optionLabelAttr: 'title_current'}}),
+  department: DS.belongsTo('department', {
+    formAttrs: {
+      optionLabelAttr: 'title_current'
+    }
+  }),
+  subject_area: DS.belongsTo('subject-area', {
+    formAttrs: {
+      optionLabelAttr: 'title_current'
+    }
+  }),
   subject: DS.belongsTo('subject', {
-    component: 'select-subject',
-    attrs: {
+    formComponent: 'select-subject',
+    formAttrs: {
       optionLabelAttr: 'title_current',
     }
   }),

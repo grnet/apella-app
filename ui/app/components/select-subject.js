@@ -11,10 +11,10 @@ const {
 
 export default Select.extend({
 
-  relatedQuery: computed('field.relModel', 'object.subject_area', function() {
+  relatedQuery: computed('field.modelName', 'object.subject_area', function() {
 
     let srcField = get(this, 'object.subject_area');
-    let model = get(this, 'field.relModel');
+    let model = get(this, 'field.modelName');
 
     if (!srcField || !srcField.get('id')) {
       return DS.PromiseArray.create({promise: Ember.RSVP.resolve([])});
