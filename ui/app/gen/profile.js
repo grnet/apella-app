@@ -9,11 +9,11 @@ let {
 
 
 const redirect = {
-        routeMixin: {
+        routeMixins: [{
           beforeModel() {
            this.transitionTo('profile.record.edit', 'me');
           }
-        },
+        }],
       },
       noBreadcrumb = {
         page: {breadcrumb: false}
