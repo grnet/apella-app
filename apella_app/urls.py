@@ -2,21 +2,26 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
-from apimas.modeling.adapters.drf.container import Container
 
+from apimas.modeling.adapters.drf import django_rest
+from apimas.modeling.cli.cli import load_config
 from apella.views import auth_views
 
+
 admin.autodiscover()
-controller = Container('api')
+config = load_config()
+adapter = django_rest.DjangoRestAdapter()
+adapter.construct(config.get('spec'))
+adapter.apply()
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    controller.create_api_views(settings.API_SCHEMA),
     url(r'^api/auth/login/$',
         auth_views.CustomLoginView.as_view(), name='login'),
     url(r'^api/auth/logout/$',
         auth_views.CustomLogoutView.as_view(), name='logout'),
-    url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user')
+    url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user'),
+    adapter.urls
 ]
 
 ui_prefix = getattr(settings, 'UI_PREFIX', 'ui/')
