@@ -48,18 +48,18 @@ export default gen.CRUDGen.extend({
       label: 'position.menu_label'
     },
     layout: 'table',
-    fields: ['code', 'title', 'state_verbose'],
-  row: {
-    actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove' ],
-    actionsMap: {
-      applyCandidacy: {
-        label: 'position.button.apply',
-        action(item){
-          // TBA...
+    row: {
+      fields: ['code', 'title', 'state_verbose'],
+      actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove' ],
+      actionsMap: {
+        applyCandidacy: {
+          label: 'position.button.apply',
+          action(item){
+            // TBA...
+          }
         }
       }
     }
-  }
   },
   record: {
     menu: {
