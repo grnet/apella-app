@@ -9,6 +9,7 @@ const {
 
 export default gen.CRUDGen.extend({
   modelName: 'subject_area',
+  auth: true,
   path: 'subject_areas',
   common: {
     validators: {

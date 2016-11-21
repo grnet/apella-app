@@ -49,6 +49,7 @@ let members = Users.extend({
 
 export default gen.CRUDGen.extend({
   modelName: 'registry',
+  auth: true,
   path: 'registries',
 
   common: {

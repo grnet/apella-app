@@ -14,6 +14,7 @@ let all_validators = Object.assign(PROFESSOR_VALIDATORS, USER_VALIDATORS);
 
 export default gen.CRUDGen.extend({
   modelName: 'professor',
+  auth: true,
   path: 'professors',
   common: {
     validators: all_validators,

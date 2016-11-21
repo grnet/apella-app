@@ -12,6 +12,7 @@ const {
 
 export default gen.CRUDGen.extend({
   modelName: 'institution-manager',
+  auth: true,
   path: 'managers',
   common: {
     validators: USER_VALIDATORS,

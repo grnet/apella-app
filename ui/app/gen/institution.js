@@ -16,6 +16,7 @@ let FS = {
 
 export default gen.CRUDGen.extend({
   modelName: 'institution',
+  auth: true,
   path: 'institutions',
   common: {
     validators: {
@@ -35,7 +36,7 @@ export default gen.CRUDGen.extend({
     sortBy: 'organization:asc',
     layout: 'table',
     paginate: {
-      limit: [2, 10, 15]
+      limit: [10, 15, 30]
     },
     row: {
       fields: FS.list,

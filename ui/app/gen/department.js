@@ -10,6 +10,7 @@ const {
 
 export default gen.CRUDGen.extend({
   modelName: 'department',
+  auth: true,
   path: 'departments',
   common: {
     proloadModels: ['institution', 'department'],

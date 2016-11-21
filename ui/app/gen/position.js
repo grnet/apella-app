@@ -9,6 +9,7 @@ const {
 
 export default gen.CRUDGen.extend({
   modelName: 'position',
+  auth: true,
   path: 'positions',
   common: {
     validators: {

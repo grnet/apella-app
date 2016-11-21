@@ -14,6 +14,7 @@ let FS = {
 
 export default gen.CRUDGen.extend({
   modelName: 'subject',
+  auth: true,
   path: 'subjects',
   common: {
     preloadModels: ['subject-area'],
