@@ -10,6 +10,21 @@ from apella.validators import before_today_validator, after_today_validator,\
 from apella import common
 
 
+def professor_participates(user_id, position_id):
+    try:
+        professor = Professor.objects.get(user_id=user_id)
+    except Professor.DoesNotExist:
+        return False
+    has_elector_duty = professor.elector_duty.filter(id=position_id)
+    if has_elector_duty:
+        return True
+    has_committee_duty = \
+        professor.committee_duty.filter(id=position_id)
+    if has_committee_duty:
+        return True
+    return False
+
+
 class MultiLangFields(models.Model):
     el = models.CharField(max_length=500)
     en = models.CharField(max_length=500)
@@ -181,18 +196,17 @@ class Position(models.Model):
     def check_object_state_open(self, row, request, view):
         return self.state == 'posted' and self.starts_at > timezone.now()
 
+    def check_object_state_before_open(self, row, request, view):
+        return self.starts_at > timezone.now()
+
+    def check_object_state_closed(self, row, request, view):
+        return self.starts_at < timezone.now()
+
+    def check_object_state_electing(self, row, request, view):
+        return self.state == 'posted' and self.starts_at < timezone.now()
+
     def check_object_state_participates(self, row, request, view):
-        try:
-            professor = Professor.objects.get(user_id=request.user.id)
-        except Professor.DoesNotExist:
-            return False
-        has_elector_duty = professor.elector_duty.filter(id=self.id)
-        if has_elector_duty:
-            return True
-        has_committee_duty = professor.committee_duty.filter(id=self.id)
-        if has_committee_duty:
-            return True
-        return False
+        return professor_participates(request.user.id, self.id)
 
 
 class PositionFiles(models.Model):
@@ -221,6 +235,19 @@ class Candidacy(models.Model):
         self.updated_at = timezone.now()
         super(Candidacy, self).save(*args, **kwargs)
 
+    def check_object_state_owned(self, row, request, view):
+        return InstitutionManager.objects.filter(
+                user_id=request.user.id,
+                institution_id=self.position.department.institution.id). \
+                exists() or \
+                self.candidate.id == request.user.id
+
+    def check_object_state_others_can_view(self, row, request, view):
+        return self.others_can_view
+
+    def check_object_state_participates(self, row, request, view):
+        return professor_participates(request.user.id, self.position.id)
+
 
 class CandidacyFiles(object):
     candidacy_file = models.ForeignKey(
@@ -238,3 +265,8 @@ class Registry(models.Model):
     class Meta:
         # Each department can have only one internal and one external registry
         unique_together = (("department", "type"),)
+
+    def check_object_state_owned(self, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            institution_id=self.department.institution.id).exists()
