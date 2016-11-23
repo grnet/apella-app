@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.apps import apps
+from django.contrib.auth.models import Group
 
 from apella.models import Institution, School, Department, ApellaUser, \
         InstitutionManager, Professor, Candidate, MultiLangFields
@@ -58,6 +59,9 @@ class APIMultiLangTest(APITestCase):
                 last_name=last_name,
                 father_name=father_name
         )
+        helpdeskadmin_group = Group.objects.create(name='helpdeskadmin')
+        self.user.groups.add(helpdeskadmin_group)
+        self.user.save()
         token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         self.client.force_authenticate(user=self.user, token=token)

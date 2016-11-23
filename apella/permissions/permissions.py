@@ -67,6 +67,8 @@ class PermissionRulesCheck(BasePermission):
         if action == 'partial_update':
             matches = tb.match(pattern_row, expand={'field'})
             allowed_keys = {x.field for x in matches}
+            if '*' in allowed_keys:
+                return True
             fields_to_update = set(request.data.keys())
             if fields_to_update - allowed_keys:
                 return False
