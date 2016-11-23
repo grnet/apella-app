@@ -1,0 +1,9 @@
+A translation in English follows
+
+Προς χρήστη {{ user.first_name.el }} {{ user.last_name.el }},
+{% block content_el %}{% endblock content_el %}
+
+To user {{ user.first_name.en }} {{ user.last_name.en }},
+{% block content_en %}{% endblock content_en %}}
+
+{% block note %}{% endblock note %}
