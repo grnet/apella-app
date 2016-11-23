@@ -1,0 +1,13 @@
+djangorestframework==3.3.3
+decorator==4.0.10
+ipython-genutils==0.1.0
+pexpect==4.2.1
+pickleshare==0.7.4
+prompt-toolkit==1.0.7
+ptyprocess==0.5.1
+six==1.10.0
+traitlets==4.2.2
+wcwidth==0.1.7
+wsgiref==0.1.2
+djoser==0.4.3
+django-filter>=0.12
