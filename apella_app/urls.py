@@ -5,12 +5,30 @@ from django.views.generic.base import RedirectView
 
 from apimas.modeling.adapters.drf import django_rest
 from apimas.modeling.cli.cli import load_config
-from apella.views import auth_views
+from apimas.modeling.core import documents as doc
 
+from apella.views import auth_views
+from apella.permissions.permission_rules import PERMISSION_RULES
+
+permission_classes = []
+authentication_classes = ['rest_framework.authentication.TokenAuthentication']
 
 admin.autodiscover()
 config = load_config()
 adapter = django_rest.DjangoRestAdapter()
+spec = config.get('spec')
+spec['.endpoint']['permissions'] = PERMISSION_RULES
+
+for resource in spec['api'].values():
+    doc.doc_set(
+        resource,
+        ['.drf_collection', 'permission_classes'],
+        permission_classes)
+    doc.doc_set(
+        resource,
+        ['.drf_collection', 'authentication_classes'],
+        authentication_classes)
+
 adapter.construct(config.get('spec'))
 adapter.apply()
 
