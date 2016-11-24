@@ -187,6 +187,17 @@ class Migration(migrations.Migration):
                 ('apella_user', models.ForeignKey(related_name='user_files', to=settings.AUTH_USER_MODEL)),
             ],
         ),
+        migrations.CreateModel(
+            name='UserInterest',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('area', models.ManyToManyField(to='apella.SubjectArea', blank=True)),
+                ('department', models.ManyToManyField(to='apella.Department', blank=True)),
+                ('institution', models.ManyToManyField(to='apella.Institution', blank=True)),
+                ('subject', models.ManyToManyField(to='apella.Subject', blank=True)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
         migrations.AddField(
             model_name='subject',
             name='area',

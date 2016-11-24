@@ -288,3 +288,11 @@ class Registry(models.Model):
         return InstitutionManager.objects.filter(
             user_id=request.user.id,
             institution_id=self.department.institution.id).exists()
+
+
+class UserInterest(models.Model):
+    user = models.ForeignKey(ApellaUser)
+    area = models.ManyToManyField(SubjectArea, blank=True)
+    subject = models.ManyToManyField(Subject, blank=True)
+    institution = models.ManyToManyField(Institution, blank=True)
+    department = models.ManyToManyField(Department, blank=True)

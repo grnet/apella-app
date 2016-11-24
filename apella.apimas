@@ -994,3 +994,52 @@ spec:
                 .update: {}
                 .delete: {}
                 .retrieve: {}
+        user-interests:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.UserInterest
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: users
+                area:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: subject-areas
+                subject:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: subjects
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: institutions
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: departments
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}

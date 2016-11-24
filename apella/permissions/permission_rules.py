@@ -171,4 +171,8 @@ PERMISSION_RULES = [
     ('subjects', 'list', 'institutionmanager', '*', '*', '4.3.10'),
     ('subjects', 'retrieve', 'institutionmanager', '*', '*', '4.3.10'),
     ('subjects', 'list', 'professor', '*', '*', '3.3.1'),
-    ('subjects', 'retrieve', 'professor', '*', '*', '1.3.3')]
+    ('subjects', 'retrieve', 'professor', '*', '*', '1.3.3'),
+    ('user-interests', 'list', 'helpdeskadmin', '*', '*', ''),
+    ('user-interests', 'create', 'helpdeskadmin', '*', '*', ''),
+    ('user-interests', 'update', 'helpdeskadmin', '*', '*', ''),
+    ('user-interests', 'partial_update', 'helpdeskadmin', '*', '*', '')]
