@@ -19,13 +19,11 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
-                    .required: {}
                 en:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .string: {}
-                    .required: {}
 
         users:
             .collection: {}
@@ -509,6 +507,86 @@ spec:
                     .drf_field: {}
                     .string: {}
                     .required: {}
+                sub_mobile_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                sub_home_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                sub_email:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                    .nullable: {}
+                sub_first_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {source: sub_first_name}
+                    .blankable: {}
+                    .nullable: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                sub_last_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {source: sub_last_name}
+                    .blankable: {}
+                    .nullable: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                sub_father_name:
+                    .cli_option: {}
+                    .field: {}
+                    .blankable: {}
+                    .nullable: {}
+                    .drf_field: {source: sub_father_name}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
                 user:
                     .cli_option: {}
                     .field: {}

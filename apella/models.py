@@ -26,8 +26,8 @@ def professor_participates(user_id, position_id):
 
 
 class MultiLangFields(models.Model):
-    el = models.CharField(max_length=500)
-    en = models.CharField(max_length=500)
+    el = models.CharField(max_length=500, blank=True, null=True)
+    en = models.CharField(max_length=500, blank=True, null=True)
 
 
 class ApellaUser(AbstractBaseUser, PermissionsMixin):
@@ -150,6 +150,20 @@ class InstitutionManager(models.Model):
     authority_full_name = models.CharField(max_length=150)
     manager_role = models.CharField(
         choices=common.MANAGER_ROLES, max_length=1)
+    sub_first_name = models.ForeignKey(
+        MultiLangFields, related_name='sub_first_name',
+        blank=True, null=True)
+    sub_last_name = models.ForeignKey(
+        MultiLangFields, related_name='sub_last_name',
+        blank=True, null=True)
+    sub_father_name = models.ForeignKey(
+        MultiLangFields, related_name='sub_father_name',
+        blank=True, null=True)
+    sub_email = models.EmailField(blank=True, null=True)
+    sub_mobile_phone_number = models.CharField(
+        max_length=30, blank=True, null=True)
+    sub_home_phone_number = models.CharField(
+        max_length=30, blank=True, null=True)
 
 
 class Position(models.Model):

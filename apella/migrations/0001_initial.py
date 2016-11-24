@@ -91,16 +91,18 @@ class Migration(migrations.Migration):
                 ('authority', models.CharField(max_length=1, choices=[['1', 'Dean'], ['2', 'President']])),
                 ('authority_full_name', models.CharField(max_length=150)),
                 ('manager_role', models.CharField(max_length=1, choices=[['1', 'Manager'], ['2', 'Assistant'], ['3', 'Substitute']])),
+                ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
+                ('sub_mobile_phone_number', models.CharField(max_length=30, null=True, blank=True)),
+                ('sub_home_phone_number', models.CharField(max_length=30, null=True, blank=True)),
                 ('institution', models.ForeignKey(to='apella.Institution')),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='MultiLangFields',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('el', models.CharField(max_length=500)),
-                ('en', models.CharField(max_length=500)),
+                ('el', models.CharField(max_length=500, null=True, blank=True)),
+                ('en', models.CharField(max_length=500, null=True, blank=True)),
             ],
         ),
         migrations.CreateModel(
@@ -224,6 +226,26 @@ class Migration(migrations.Migration):
             model_name='position',
             name='subject_area',
             field=models.ForeignKey(to='apella.SubjectArea', on_delete=django.db.models.deletion.PROTECT),
+        ),
+        migrations.AddField(
+            model_name='institutionmanager',
+            name='sub_father_name',
+            field=models.ForeignKey(related_name='sub_father_name', blank=True, to='apella.MultiLangFields', null=True),
+        ),
+        migrations.AddField(
+            model_name='institutionmanager',
+            name='sub_first_name',
+            field=models.ForeignKey(related_name='sub_first_name', blank=True, to='apella.MultiLangFields', null=True),
+        ),
+        migrations.AddField(
+            model_name='institutionmanager',
+            name='sub_last_name',
+            field=models.ForeignKey(related_name='sub_last_name', blank=True, to='apella.MultiLangFields', null=True),
+        ),
+        migrations.AddField(
+            model_name='institutionmanager',
+            name='user',
+            field=models.OneToOneField(to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='institution',
