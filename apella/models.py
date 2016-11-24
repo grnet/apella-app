@@ -79,7 +79,7 @@ class Institution(models.Model):
     regulatory_framework = models.URLField(blank=True)
     title = models.ForeignKey(MultiLangFields)
 
-    def check_object_state_owned(self, row, request, view):
+    def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
                 user_id=request.user.id,
                 institution_id=self.id).exists()
@@ -188,24 +188,24 @@ class Position(models.Model):
         self.updated_at = timezone.now()
         super(Position, self).save(*args, **kwargs)
 
-    def check_object_state_owned(self, row, request, view):
+    def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
             user_id=request.user.id,
             institution_id=self.department.institution.id).exists()
 
-    def check_object_state_open(self, row, request, view):
+    def check_resource_state_open(self, row, request, view):
         return self.state == 'posted' and self.starts_at > timezone.now()
 
-    def check_object_state_before_open(self, row, request, view):
+    def check_resource_state_before_open(self, row, request, view):
         return self.starts_at > timezone.now()
 
-    def check_object_state_closed(self, row, request, view):
+    def check_resource_state_closed(self, row, request, view):
         return self.starts_at < timezone.now()
 
-    def check_object_state_electing(self, row, request, view):
+    def check_resource_state_electing(self, row, request, view):
         return self.state == 'posted' and self.starts_at < timezone.now()
 
-    def check_object_state_participates(self, row, request, view):
+    def check_resource_state_participates(self, row, request, view):
         return professor_participates(request.user.id, self.id)
 
 
@@ -235,17 +235,17 @@ class Candidacy(models.Model):
         self.updated_at = timezone.now()
         super(Candidacy, self).save(*args, **kwargs)
 
-    def check_object_state_owned(self, row, request, view):
+    def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
                 user_id=request.user.id,
                 institution_id=self.position.department.institution.id). \
                 exists() or \
                 self.candidate.id == request.user.id
 
-    def check_object_state_others_can_view(self, row, request, view):
+    def check_resource_state_others_can_view(self, row, request, view):
         return self.others_can_view
 
-    def check_object_state_participates(self, row, request, view):
+    def check_resource_state_participates(self, row, request, view):
         return professor_participates(request.user.id, self.position.id)
 
 
@@ -266,7 +266,7 @@ class Registry(models.Model):
         # Each department can have only one internal and one external registry
         unique_together = (("department", "type"),)
 
-    def check_object_state_owned(self, row, request, view):
+    def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
             user_id=request.user.id,
             institution_id=self.department.institution.id).exists()
