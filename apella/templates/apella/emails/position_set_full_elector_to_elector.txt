@@ -1,0 +1,23 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι οριστήκατε τακτικό μέλος της Επιτροπής επιλογής για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+
+Mπορείτε να δείτε περισσότερα πραγματοποιώντας <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στην Καρτέλα <a href="{{ url }}">Επιτροπές.</a>
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that you have been appointed full member of the election Committee for the position:
+
+{% include "apella/emails/position_details_en.txt %}
+
+You can <a href="{{ login_url }}">sign in</a> your account and learn more, selecting the tab
+<a href="{{ url }}">Committees.</a>
+
+{% endblock content_en %}

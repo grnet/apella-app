@@ -1,0 +1,24 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας υπενθυμίζουμε ότι η προθεσμία υποβολής υποψηφιότητας για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+έχει παρέλθει. Δεν είστε πλέον σε θέση να τροποποιείτε τα στοιχεία της υποψηφιότητάς σας.
+
+Μπορείτε να παρακολουθείτε την εξέλιξη της διαδικασίας επιλογής, πραγματοποιώνταs <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στην Καρτέλα <a href="{{ url }}">Υποψηφιότητες.</a>
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the deadline for submission of candidacy for the position:
+
+{% include "apella/emails/position_details_en.txt %}
+has passed. You are no longer allowed to modify the details of your candidacy
+
+You can keep track of the progress of the election procedure by <a href="{{ login_url }}">signing in</a> your account and selectinging the tab <a href="{{ url }}">Candidacies.</a>
+
+{% endblock content_en %}

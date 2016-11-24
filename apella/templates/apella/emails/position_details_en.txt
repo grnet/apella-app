@@ -2,3 +2,5 @@ Title: {{ position.title }}
 Instituion: {{ position.department.institution.title.en }}
 School: {{ position.departments.school.title.en }}
 Department: {{ position.department.title.en }}
+Submission Opening Date: {{ position.starts_at }}
+Submission End Date: {{ position.ends_at }}

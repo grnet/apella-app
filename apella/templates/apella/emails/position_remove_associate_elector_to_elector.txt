@@ -1,0 +1,19 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι έχετε αφαιρεθεί από αναπληρωματικό μέλος της Επιτροπής επιλογής για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that you have been removed from the election Committee for the position:
+
+{% include "apella/emails/position_details_en.txt %}
+ in which you had been appointed substitute member.
+
+{% endblock content_en %}

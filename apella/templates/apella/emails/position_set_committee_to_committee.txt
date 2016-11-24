@@ -1,0 +1,26 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι η Επιτροπή επιλογής σας όρισε Αξιολογητή για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+
+Η ανάρτηση της εισήγησης της επιτροπής πραγματοποιείται στο σύστημα με ευθύνη του Διαχειριστή του Ιδρύματος: {{ institution_manager.full_name.el }}
+
+Mπορείτε να δείτε περισσότερα πραγματοποιώντας <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στην Καρτέλα <a href="{{ url }}">Υποψηφιότητες.</a>
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the election Committee has appointed you Evaluator for the position:
+
+{% include "apella/emails/position_details_en.txt %}
+The upload of the committee's evaluation is a duty of the Institution's Administrator: {{ institution_manager.full_name.en }}
+
+You can <a href="{{ login_url }}">sign in</a> your account and learn more, selecting the tab
+<a href="{{ url }}">Browse Candidacies.</a>
+
+{% endblock content_en %}
