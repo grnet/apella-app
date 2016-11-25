@@ -98,8 +98,8 @@ class NestedWritableObjectsMixin(object):
     def __init__(self, *args, **kwargs):
         super(NestedWritableObjectsMixin, self).__init__(*args, **kwargs)
         request = self.context.get('request')
-        method = request.method
-        if request and (method == 'PUT' or method == 'PATCH') and\
+        if request and \
+                (request.method == 'PUT' or request.method == 'PATCH') and \
                 self.NESTED_USER_KEY in self.fields:
             self.fields[self.NESTED_USER_KEY].fields['username'].read_only = \
                     True
