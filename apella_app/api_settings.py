@@ -14,7 +14,7 @@ position_resource = {
                    'state', 'starts_at', 'ends_at', 'created_at',
                    'updated_at'],
         'read_only_fields': ['id', 'url', 'created_at', 'updated_at'],
-        'serializers': ['apella.serializers.mixins.PositionValidatorMixin']
+        'serializers': ['apella.serializers.mixins.Position']
     },
     'filter_fields': ['title', ],
     'allowable_operations': ['list', 'retrieve', 'create', 'update', 'delete']

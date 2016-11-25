@@ -46,7 +46,8 @@ class Command(ApellaCommand):
                     department=department, description=description,
                     fek=fek, fek_posted_at=fek_posted_at,
                     subject_area=subject_area, discipline=discipline,
-                    subject=subject, starts_at=starts_at, ends_at=ends_at)
+                    subject=subject, starts_at=starts_at, ends_at=ends_at,
+                    department_dep_number=department.dep_number)
 
             self.stdout.write(
                 "Created position %s : title = %s author = %s" %

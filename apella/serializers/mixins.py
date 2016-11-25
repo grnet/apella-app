@@ -19,18 +19,33 @@ class ValidatorMixin(object):
         return super(ValidatorMixin, self).validate(data)
 
 
-class PositionValidatorMixin(ValidatorMixin):
+def get_dep_number(data):
+    dep_number = data['department'].dep_number
+    if not dep_number:
+        raise serializers.ValidationError(
+            {"dep_number":
+                "You should first set DEP number for Department: %s"
+                % data['department'].title.en})
+    return dep_number
+
+
+class Position(ValidatorMixin):
 
     def validate(self, data):
         committee = data.pop('committee', [])
         electors = data.pop('electors', [])
         assistants = data.pop('assistants', [])
-        data = super(PositionValidatorMixin, self).validate(data)
+        data = super(Position, self).validate(data)
         data['committee'] = committee
         data['electors'] = electors
         data['assistants'] = assistants
 
         return data
+
+    def create(self, validated_data):
+        validated_data['department_dep_number'] = \
+            get_dep_number(validated_data)
+        return super(Position, self).create(validated_data)
 
 
 def create_objects(model, fields, validated_data):

@@ -73,6 +73,7 @@ class Migration(migrations.Migration):
             name='Department',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('dep_number', models.IntegerField(null=True, blank=True)),
             ],
         ),
         migrations.CreateModel(
@@ -119,6 +120,7 @@ class Migration(migrations.Migration):
                 ('ends_at', models.DateTimeField()),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('department_dep_number', models.IntegerField()),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
             ],

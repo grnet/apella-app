@@ -98,6 +98,7 @@ class Department(models.Model):
     school = models.ForeignKey(School, blank=True, null=True)
     institution = models.ForeignKey(Institution)
     title = models.ForeignKey(MultiLangFields)
+    dep_number = models.IntegerField(blank=True, null=True)
 
 
 class SubjectArea(models.Model):
@@ -194,6 +195,7 @@ class Position(models.Model):
     ends_at = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
+    department_dep_number = models.IntegerField()
 
     def clean(self, *args, **kwargs):
         validate_dates_interval(
