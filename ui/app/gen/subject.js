@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
@@ -12,7 +13,7 @@ let FS = {
 }
 
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'subject',
   auth: true,
   path: 'subjects',

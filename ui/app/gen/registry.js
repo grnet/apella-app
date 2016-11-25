@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
@@ -47,7 +48,7 @@ let members = Users.extend({
   }
 });
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'registry',
   auth: true,
   path: 'registries',

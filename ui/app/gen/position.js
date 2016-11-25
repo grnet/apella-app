@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday, notHoliday, afterDays} from 'ui/validators/dates';
@@ -7,7 +8,7 @@ const {
   get
 } = Ember;
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'position',
   auth: true,
   path: 'positions',

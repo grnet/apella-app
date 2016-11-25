@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
@@ -7,7 +8,7 @@ const {
   get
 } = Ember;
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'user',
   auth: true,
   path: 'users',

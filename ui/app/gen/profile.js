@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
@@ -21,9 +22,17 @@ const redirect = {
       { merge } = Ember;
 
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'profile',
   auth: true,
+
+  // override default ability resolvers
+  abilities: {
+    list: true,
+    edit: true,
+    view: true
+  },
+
   common: {
     fieldsets: computed('model.role', function(){
       let role = this.get('model').get('role');

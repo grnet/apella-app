@@ -1,6 +1,17 @@
 /* jshint node: true */
 var choices = require('../../resources/common');
 var holidays = require('../../resources/holidays');
+//var permissions = require('../../resources/permissions');
+
+// debug
+permissions = {
+  "institutions": [
+    ["institutionmanager", "title,category", "list,create,retrieve", "*", "*"]
+  ],
+  "*": [
+    ["*", "*", "*", "*", "*"]
+  ]
+};
 
 module.exports = function(environment) {
   var ENV = {
@@ -32,6 +43,10 @@ module.exports = function(environment) {
       // when it is created
     },
   };
+
+  ENV['ember-gen'] = {
+    permissions: permissions 
+  },
 
   ENV['ember-simple-auth'] = {
     authenticationRoute: 'auth.index',

@@ -2,6 +2,7 @@ import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
+import {ApellaGen} from 'ui/lib/common';
 
 const {
   computed,
@@ -10,14 +11,20 @@ const {
 
 
 let FS = {
-  list: ['title_current', 'category_verbose', 'organization', 'regulatory_framework'],
+  list: [
+    field('title_current', {dataKey: 'title'}), 
+    field('category_verbose', {dataKey: 'category'}), 
+    'organization',
+    'regulatory_framework'
+  ]
 };
 
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'institution',
   auth: true,
   path: 'institutions',
+
   common: {
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
