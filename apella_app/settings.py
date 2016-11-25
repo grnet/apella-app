@@ -141,3 +141,4 @@ from api_settings import API_SCHEMA
 from copy import deepcopy
 
 API_SCHEMA_TMP = deepcopy(API_SCHEMA)
+CONFIG_FILE = 'apella.apimas'

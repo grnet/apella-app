@@ -1,5 +1,30 @@
+from os.path import join
 import json
+import yaml
+from cerberus import Validator
 from django.conf import settings
+
+from apimas.modeling.core.exceptions import ApimasException
+
+VALIDATION_SCHEMA = {
+    'root': {
+        'type': 'string'
+    },
+    'spec': {
+         'type': 'dict'
+    }
+}
+
+
+def load_config():
+    config = join(settings.BASE_DIR, settings.CONFIG_FILE)
+    with open(config) as data_file:
+        data = yaml.load(data_file)
+        validator = Validator(VALIDATION_SCHEMA)
+        is_valid = validator.validate(data)
+        if not is_valid:
+            raise ApimasException(validator.errors)
+    return data
 
 
 def load_resources():

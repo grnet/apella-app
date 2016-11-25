@@ -4,11 +4,11 @@ from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
 
 from apimas.modeling.adapters.drf import django_rest
-from apimas.modeling.cli.cli import load_config
 from apimas.modeling.core import documents as doc
 
 from apella.views import auth_views
 from apella.permissions.permission_rules import PERMISSION_RULES
+from apella.common import load_config
 
 permission_classes = []
 authentication_classes = ['rest_framework.authentication.TokenAuthentication']
