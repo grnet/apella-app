@@ -1,61 +1,6 @@
 {
 "actions" : [
 {
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "institutionmanager"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "1"},
-    "change": "new group"
-  }
-},
-{
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "professor"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "2"},
-    "change": "new group"
-  }
-},
-{
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "candidate"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "3"},
-    "change": "new group"
-  }
-},
-{
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "helpdeskadmin"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "4"},
-    "change": "new group"
-  }
-},
-{
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "helpdeskuser"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "5"},
-    "change": "new group"
-  }
-},
-{
     "user": "admin",
     "action": "user-add",
     "input": {
@@ -68,8 +13,7 @@
         "first_name_en": "George",
         "last_name_en": "Korfiatis",
         "father_name_en": "John",
-        "email": "george@gmail.com",
-        "group_name": "institutionmanager"
+        "email": "george@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "1"},
@@ -151,8 +95,7 @@
         "first_name_en": "Maria",
         "last_name_en": "Papadopoulou",
         "father_name_en": "Peter",
-        "email": "maria@gmail.com",
-        "group_name": "candidate"
+        "email": "maria@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "2"},
@@ -183,8 +126,7 @@
         "first_name_en": "Panos",
         "last_name_en": "Markatos",
         "father_name_en": "Konstantinos",
-        "email": "panos@gmail.com",
-        "group_name": "professor"
+        "email": "panos@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "3"},
@@ -204,8 +146,7 @@
         "first_name_en": "Olga",
         "last_name_en": "Katechaki",
         "father_name_en": "Stavros",
-        "email": "olga@gmail.com",
-        "group_name": "professor"
+        "email": "olga@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "4"},
@@ -225,8 +166,7 @@
         "first_name_en": "Friday",
         "last_name_en": "Paraskeya",
         "father_name_en": "Socrates",
-        "email": "friday@gmail.com",
-        "group_name": "assistant"
+        "email": "friday@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "5"},
@@ -649,8 +589,7 @@
         "first_name_en": "Maria",
         "last_name_en": "Papadopoulou",
         "father_name_en": "Peter",
-        "email": "admin@gmail.com",
-        "group_name": "helpdeskadmin"
+        "email": "admin@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "6"},

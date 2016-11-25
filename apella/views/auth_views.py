@@ -1,7 +1,6 @@
 from django.apps import apps
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import Group
 from djoser import views as djoser_views
 
 from apimas.modeling.adapters.drf import serializers
@@ -24,7 +23,7 @@ def get_model_from_name(model_name):
     return model
 
 
-USER_GROUP_MODEL_RESOURCES = {
+USER_ROLE_MODEL_RESOURCES = {
     'institutionmanager': {
         "model": InstitutionManager,
         "resource": "institution-managers"
@@ -56,13 +55,12 @@ class CustomUserView(djoser_views.UserView):
 
     def get_queryset(self):
         user = self.request.user
-        user_group_name = user.groups.get().name
-        model = USER_GROUP_MODEL_RESOURCES[user_group_name]['model']
+        model = USER_ROLE_MODEL_RESOURCES[user.role]['model']
+        if model is ApellaUser:
+            return ApellaUser.objects.filter(id=user.id)
         if model.objects.filter(user_id=user.id).exists():
-            queryset = model.objects.filter(user_id=user.id)
-        else:
-            queryset = ApellaUser.objects.filter(id=user.id)
-        return queryset
+            return model.objects.filter(user_id=user.id)
+        return []
 
     def get_object(self):
         queryset = self.get_queryset()
@@ -71,9 +69,8 @@ class CustomUserView(djoser_views.UserView):
 
     def get_serializer_class(self):
         user = self.request.user
-        user_group_name = user.groups.get().name
-        resource = USER_GROUP_MODEL_RESOURCES[user_group_name]['resource']
-        model = USER_GROUP_MODEL_RESOURCES[user_group_name]['model']
+        resource = USER_ROLE_MODEL_RESOURCES[user.role]['resource']
+        model = USER_ROLE_MODEL_RESOURCES[user.role]['model']
         cls = serializers.generate(
                 model,
                 settings.API_SCHEMA_TMP['resources'][resource]['field_schema'])

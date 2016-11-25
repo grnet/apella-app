@@ -1,4 +1,3 @@
-from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from rest_framework.authtoken.models import Token
@@ -35,10 +34,6 @@ class Command(ApellaCommand):
             dest='email',
             help='Email')
         parser.add_argument(
-            '--group_name',
-            dest='group_name',
-            help='Group name')
-        parser.add_argument(
             '--role',
             dest='role',
             default='2',
@@ -55,16 +50,8 @@ class Command(ApellaCommand):
         first_name_en = options['first_name_en']
         last_name_en = options['last_name_en']
         father_name_en = options['father_name_en']
-        group_name = options['group_name']
 
         try:
-            if group_name:
-                group, created = Group.objects.get_or_create(
-                                    name=group_name)
-                if created:
-                    self.stdout.write("New group with name: %s created"
-                                      % group.name)
-
             first_name = MultiLangFields.objects.create(
                     el=first_name_el, en=first_name_en)
             last_name = MultiLangFields.objects.create(
@@ -84,11 +71,6 @@ class Command(ApellaCommand):
 
             self.stdout.write(
                 "User with id: %s, token:%s created" % (a.pk, token))
-
-            if group_name and group:
-                a.groups.add(group)
-                self.stdout.write(
-                    "Group %s added to user %s" % (group.name, a.pk))
 
         except BaseException as e:
                 raise CommandError(e)

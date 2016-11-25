@@ -20,20 +20,13 @@ position_resource = {
     'allowable_operations': ['list', 'retrieve', 'create', 'update', 'delete']
 }
 
-group_resource = {
-    'model': 'django.contrib.auth.models.Group',
-    'field_schema': {
-        'fields': ['id', 'name']
-    }
-}
-
 apellauser_resource = {
     'model': 'apella.models.ApellaUser',
     'field_schema': {
         'fields': ['id', 'url', 'username', 'password', 'email', 'role',
                    'first_name', 'last_name', 'father_name',
                    'id_passport', 'mobile_phone_number',
-                   'home_phone_number', 'groups'],
+                   'home_phone_number'],
         'read_only_fields': ['id', 'url'],
         'nested_objects': {
             'first_name': {
@@ -222,7 +215,6 @@ API_SCHEMA = {
     'resources': {
         'positions': position_resource,
         'candidacies': candidacy_resource,
-        'groups': group_resource,
         'multilang': multilangfields_resource,
         'users': apellauser_resource,
         'institutions': institution_resource,

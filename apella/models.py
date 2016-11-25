@@ -70,6 +70,10 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'user'
         verbose_name_plural = 'users'
 
+    @property
+    def apimas_roles(self):
+        return [self.role]
+
 
 class Institution(models.Model):
     category = models.CharField(

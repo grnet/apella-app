@@ -133,37 +133,6 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
-                groups:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .ref:
-                        to: groups
-                        many: True
-            actions:
-                .list: {}
-                .create: {}
-                .update: {}
-                .delete: {}
-                .retrieve: {}
-        groups:
-            .collection: {}
-            .drf_collection:
-                model: django.contrib.auth.models.Group
-            .cli_commands: {}
-            '*':
-                id:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .serial: {}
-                    .readonly: {}
-                name:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .string: {}
-                    .required: {}
             actions:
                 .list: {}
                 .create: {}
