@@ -1,0 +1,21 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι η Επιτροπή επιλογής σας επέλεξε ως τον καταλληλότερο εκ των υποψηφίων για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+
+Θα πρέπει να είστε σε θέση να προσκομίσετε τα πρωτότυπα δικαιολογητικά για το σχετικό έλεγχο νομιμότητας από τα αρμόδια Όργανα του Ιδρύματος, όταν αυτά σας ζητηθούν
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the election Committee has selected you as the most appropriate candidate for the position:
+{% include "apella/emails/position_details_en.txt %}
+
+You must be in a position to provide the original supporting documents for the relevant examination of legality by the organs of the Institution in charge, upon request.
+
+{% endblock content_en %}
