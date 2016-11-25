@@ -482,7 +482,6 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
-                    .required: {}
                 department:
                     .cli_option: {}
                     .field: {}
