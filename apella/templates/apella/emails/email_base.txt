@@ -2,8 +2,19 @@ A translation in English follows
 
 Προς χρήστη {{ user.first_name.el }} {{ user.last_name.el }},
 {% block content_el %}{% endblock content_el %}
+{% block more_el %}
+    {% if url %}
+        Mπορείτε να δείτε περισσότερα πραγματοποιώντας <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στον <a href="{{ url }}">σύνδεσμο.</a>
+    {% endif %}
+{% endblock more_el %}
+
 
 To user {{ user.first_name.en }} {{ user.last_name.en }},
 {% block content_en %}{% endblock content_en %}}
+{% block more_en %}
+    {% if url %}
+        You can <a href="{{ login_url }}">sign in</a> your account and learn more, by visiting the <a href="{{ url }}">link.</a>
+    {% endif %}
+{% endblock more_en %}
 
 {% block note %}{% endblock note %}

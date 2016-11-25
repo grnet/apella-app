@@ -6,8 +6,6 @@
 
 {% include "apella/emails/position_details_el.txt %}
 
-Mπορείτε να δείτε περισσότερα πραγματοποιώντας <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στην Καρτέλα <a href="{{ url }}">Επιτροπές</a>
-
 {% endblock content_el %}
 
 
@@ -17,8 +15,5 @@ We inform you that the election Committee meeting date, regarding the appointmen
 
 {% include "apella/emails/position_details_en.txt %}
 has been modified.
-
-You can <a href="{{ login_url }}">sign in</a> your account and learn more, selecting the tab
-<a href="{{ url }}">Committees.</a>
 
 {% endblock content_en %}

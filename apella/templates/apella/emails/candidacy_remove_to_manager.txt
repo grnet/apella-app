@@ -7,7 +7,6 @@
 
 {% include "apella/emails/position_details_el.txt %}
 που έχετε καταχωρίσει στο Πληροφοριακό Σύστημα Απέλλα.
-Μπορείτε να δείτε περισσότερα πραγματοποιώντας <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στην Καρτέλα <a href="{{ url }}">Θέσεις</a>
 
 {% endblock content_el %}
 
@@ -18,6 +17,5 @@ We inform you that the candidate {{ candidate.first_name.en }} {{ candidate.last
 
 {% include "apella/emails/position_details_en.txt %}
 which you have inserted in the Apella Information System.
-You can <a href="{{ login_url }}">sign in</a> your account and learn more by selecting the tab <a href="{{ url }}">Positions</a>.
 
 {% endblock content_en %}
