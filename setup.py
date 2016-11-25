@@ -11,12 +11,8 @@ PACKAGES = find_packages(PACKAGES_ROOT)
 # Package meta
 CLASSIFIERS = []
 
-# Package requirements
-with open('requirements.txt') as reqs:
-    install_requires = [
-        line for line in reqs.read().split('\n') if (line and not
-                                                     line.startswith('--'))
-    ]
+# Dependencies declared at requirements.txt
+install_requires = []
 
 EXTRAS_REQUIRES = {
 }
