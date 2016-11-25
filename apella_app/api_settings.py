@@ -154,11 +154,26 @@ institutionmanager_resource = {
     'model': 'apella.models.InstitutionManager',
     'field_schema': {
         'fields': ['id', 'url', 'user', 'institution', 'authority',
-                   'authority_full_name', 'manager_role'],
+                   'authority_full_name', 'manager_role',
+                   'sub_first_name', 'sub_last_name', 'sub_father_name',
+                   'sub_email', 'sub_mobile_phone_number',
+                   'sub_home_phone_number'],
         'nested_objects': {
             'user': {
                 'source': 'user',
                 'field_schema': apellauser_resource['field_schema']
+            },
+            'sub_first_name': {
+                'source': 'sub_first_name',
+                'field_schema': multilangfields_resource['field_schema']
+            },
+            'sub_last_name': {
+                'source': 'sub_last_name',
+                'field_schema': multilangfields_resource['field_schema']
+            },
+            'sub_father_name': {
+                'source': 'sub_father_name',
+                'field_schema': multilangfields_resource['field_schema']
             },
         },
         'serializers': [
