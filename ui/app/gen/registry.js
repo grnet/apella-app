@@ -8,46 +8,6 @@ let {
   computed, get
 } = Ember;
 
-let members = Users.extend({
-  create: {
-    page: {
-      toolbar: {
-        display: false
-      }
-    }
-  },
-  list: {
-    /*
-     * TODO
-     * This in the future should be moved to getModel (registry.get('members'))
-     */
-    processModel(users) {
-      return users.then( () => {
-        // URL format: domain/resource_plural/id/
-        let members_urls =  this.getParentModel().get('members').getEach('id');
-        let members_ids = members_urls.map((i) => {
-          // split url by '/' and get the last element of the array
-          return _.last( _.words(i));
-        })
-          return users.filter((user) => {
-            let id = user.get('id');
-            return members_ids.indexOf(id) > -1;
-          });
-      });
-    },
-    layout: 'table',
-    sortBy: 'id:asc',
-    row: {
-      fields: [
-        field('id', {label: 'common.id_label', type: 'text'}),
-        field('username', {label: 'username.label', type: 'text'}),
-        field('role_verbose', {label: 'role.label', type: 'text'}),
-      ],
-      actions: ['gen:details']
-    }
-  }
-});
-
 export default ApellaGen.extend({
   modelName: 'registry',
   auth: true,
@@ -56,13 +16,14 @@ export default ApellaGen.extend({
   common: {
     fieldsets: [{
       label: 'registry.main_section.title',
-      fields: [field('type', {label: 'common.type_label'}), 'department'],
+      fields: [field('type', {label: 'common.type_label'}), field('department', {displayAttr: 'title_current'})],
       layout: {
         flex: [30, 70]
       }
     },{
       label: 'registry.members_section.title',
-      fields: ['members']
+      fields: [field('members', { label: null, 
+        modelMeta: { search: { fields: ['username'] }, sortBy: ['username'], row: { fields: ['id', 'username', 'email'] } } })]
     }]
   },
 
@@ -91,8 +52,5 @@ export default ApellaGen.extend({
         return get(this, 'model.id');
       })
     },
-  },
-  nested: {
-    members: members
   }
 });
