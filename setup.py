@@ -11,12 +11,9 @@ PACKAGES = find_packages(PACKAGES_ROOT)
 # Package meta
 CLASSIFIERS = []
 
-# Package requirements
-with open('requirements.txt') as reqs:
-    install_requires = [
-        line for line in reqs.read().split('\n') if (line and not
-                                                     line.startswith('--'))
-    ]
+# Dependencies declared at requirements.txt
+INSTALL_REQUIRES = [
+]
 
 EXTRAS_REQUIRES = {
 }
@@ -37,13 +34,14 @@ setup(
     license='GNU GPLv3',
     description=SHORT_DESCRIPTION,
     classifiers=CLASSIFIERS,
-
     packages=PACKAGES,
     package_dir={'': PACKAGES_ROOT},
-    include_package_data=True,
+    data_files=[
+        ('resources/www', ['resources/www/common.json',
+                           'resources/www/holidays.json']),
+    ],
     zip_safe=False,
-
-    install_requires=install_requires,
+    install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRES,
     tests_require=TESTS_REQUIRES,
 
