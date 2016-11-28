@@ -609,11 +609,15 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .blankable: {}
+                    .nullable: {}
                     .string: {}
                 sub_home_phone_number:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .blankable: {}
+                    .nullable: {}
                     .string: {}
                 sub_email:
                     .cli_option: {}
