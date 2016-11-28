@@ -1,0 +1,13 @@
+<h3>{{ t 'subject_area.menu_label' }}</h3>
+<ul>
+  {{#each subjectAreas as |item|}}
+      {{tree-item item=item canExpand=true model='subject' lookupField='area'}}
+  {{/each}}
+</ul>
+<hr>
+<h3>{{ t 'institution.menu_label' }}</h3>
+<ul>
+  {{#each institutions as |item|}}
+      {{tree-item item=item canExpand=true model='department' lookupField='institution'}}
+  {{/each}}
+</ul>

@@ -1,0 +1,10 @@
+.interest {
+  height: 50vh;
+  ul {
+    list-style: none outside none;
+    padding-left: 0;
+  }
+  ul ul {
+    margin-left: 6rem;
+  }
+}

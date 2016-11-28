@@ -137,7 +137,11 @@ export default {
         details: 'Details',
         user_info: 'Profile',
         more_info: 'More info',
-      }
+        user_interest: 'User interest'
+    },
+    text: {
+        user_interest: 'Choose your interests'
+    }
   },
   institution: {
     menu_label: 'Regulatory Frameworks',

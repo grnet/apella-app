@@ -5,6 +5,7 @@ import {USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
+import {field} from 'ember-gen';
 
 const {
   get, computed
@@ -53,8 +54,22 @@ export default AuthGen.extend({
       return f;
     }),
     fieldsets: computed('model.role', function(){
+      let f = [];
       let role = this.get('model').get('role');
-      let f = [USER_FIELDSET];
+
+      let INTEREST_FIELDSET = {
+        label: 'fieldsets.labels.user_interest',
+        text: 'fieldsets.text.user_interest',
+        fields: [
+          field('interest', {
+            formComponent: 'user-interest',
+         })
+        ]
+      }
+      f.push(INTEREST_FIELDSET);
+
+      f.push(USER_FIELDSET);
+
       if (role === 'professor') {
         f.push(PROFESSOR_FIELDSET);
       }

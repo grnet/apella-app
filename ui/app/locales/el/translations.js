@@ -139,7 +139,11 @@ export default {
         details: 'Λεπτομέρειες',
         user_info: 'Στοιχεία λογαριασμού',
         more_info: 'Περισσότερα στοιχεία',
-      }
+        user_interest: 'Εκδλήλωση ενδιαφέροντος'
+    },
+    text: {
+        user_interest: 'Εκδηλώστε το ενδιαφέρον σας'
+    }
   },
   institution: {
     menu_label: 'Κανονιστικά Πλαίσια',
