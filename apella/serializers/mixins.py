@@ -77,10 +77,12 @@ def create_objects(model, fields, validated_data):
     return obj
 
 
-def update_objects(instance, fields, validated_data):
+def update_objects(fields, validated_data, instance=None, model=None):
     """
     Recursively updated nested objects.
     """
+    if not instance:
+        return create_objects(model, fields, validated_data)
     info = model_meta.get_field_info(type(instance))
     many_to_many = {}
     for field_name, relation_info in info.relations.items():
@@ -92,8 +94,9 @@ def update_objects(instance, fields, validated_data):
                 and field_name in validated_data:
             nested_data = validated_data.pop(field_name, None)
             nested_object = update_objects(
-                getattr(instance, field_name), field.get_fields(), nested_data)
-            validated_data[field_name] = nested_object
+                field.get_fields(), nested_data,
+                instance=getattr(instance, field_name), model=field.Meta.model)
+            setattr(instance, field_name, nested_object)
         elif field_name in validated_data:
             if field_name == 'password':
                 instance.set_password(validated_data.get(field_name))
@@ -125,5 +128,6 @@ class NestedWritableObjectsMixin(object):
         return obj
 
     def update(self, instance, validated_data):
-        instance = update_objects(instance, self.get_fields(), validated_data)
+        instance = update_objects(
+            self.get_fields(), validated_data, instance=instance)
         return instance
