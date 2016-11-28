@@ -39,6 +39,7 @@ setup(
     data_files=[
         ('resources/www', ['resources/www/common.json',
                            'resources/www/holidays.json']),
+        ('resources', ['resources/apella.apimas']),
     ],
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,
