@@ -431,6 +431,99 @@ spec:
                     .drf_field: {}
                     .boolean: {}
                     .required: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {source: user}
+                    .required: {}
+                    .struct:
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {source: first_name}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {source: last_name}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {source: father_name}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
             actions:
                 .list: {}
                 .create: {}
