@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(DATA_DIR, ...)
 import os
 DATA_DIR = os.path.abspath(os.getcwd())
-RESOURCES_DIR = DATA_DIR
+RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -136,9 +136,8 @@ CONFIG_FILE = 'apella.apimas'
 
 SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
 
-if not os.path.isfile(SETTINGS_FILE):
-    m = "Cannot find settings file {0!r}"
-    m = m.format(SETTINGS_FILE)
-    raise RuntimeError(m)
+if os.path.isfile(SETTINGS_FILE):
+    execfile(SETTINGS_FILE)
+else:
+    pass
 
-execfile(SETTINGS_FILE)

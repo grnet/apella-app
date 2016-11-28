@@ -37,8 +37,8 @@ setup(
     packages=PACKAGES,
     package_dir={'': PACKAGES_ROOT},
     data_files=[
-        ('resources/www', ['resources/common.json',
-                           'resources/holidays.json']),
+        ('resources/www', ['resources/www/common.json',
+                           'resources/www/holidays.json']),
     ],
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,
