@@ -25,13 +25,11 @@ export default ApellaGen.extend({
     },
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: ['title', 'author',
-        ['state', {
-          attrs: {
-            readonly: true,
-          }
-        }],
-        'description', 'discipline', 'department', 'subject_area', 'subject', 'department_dep_number'],
+      fields: [
+        'title', 'author', ['state', {disabled: true}], 'description',
+        'discipline', 'department', 'subject_area', 'subject',
+        ['department_dep_number', {disabled: true}]
+      ],
       layout: {
         flex: [100, 50, 50, 100, 50, 50, 50, 50, 50]
       }
