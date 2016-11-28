@@ -32,7 +32,8 @@ for resource in spec['api'].values():
 adapter.construct(config.get('spec'))
 adapter.apply()
 
-urlpatterns = [
+api_prefix = settings.API_PREFIX
+apipatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/auth/login/$',
         auth_views.CustomLoginView.as_view(), name='login'),
@@ -42,7 +43,11 @@ urlpatterns = [
     adapter.urls
 ]
 
-ui_prefix = getattr(settings, 'UI_PREFIX', 'ui/')
+urlpatterns = [
+    url(api_prefix, include(apipatterns))
+]
+
+ui_prefix = getattr(settings, 'UI_PREFIX', 'apella/ui/')
 if ui_prefix and ui_prefix != '/':
     urlpatterns += [
         url('^$', RedirectView.as_view(url=ui_prefix))

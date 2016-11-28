@@ -17,7 +17,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ui',
     environment: environment,
-    rootURL: '/ui/',
+    rootURL: '/apella/ui/',
     locationType: 'auto',
     i18n : {
       defaultLocale: 'el',
@@ -35,7 +35,7 @@ module.exports = function(environment) {
     },
 
     APP: {
-      backend_host: 'http://127.0.0.1:8000/api',
+      backend_host: 'http://127.0.0.1:8000/apella/api',
       resource_choices: choices,
       resource_holidays: holidays,
       date_format: 'DD , MMMM YYYY',
@@ -45,7 +45,7 @@ module.exports = function(environment) {
   };
 
   ENV['ember-gen'] = {
-    permissions: permissions 
+    permissions: permissions
   },
 
   ENV['ember-simple-auth'] = {
