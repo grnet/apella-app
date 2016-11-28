@@ -17,6 +17,7 @@ export default ApellaGen.extend({
     proloadModels: ['institution', 'department'],
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
+      dep_number: [validate.presence(true), validate.number({integer: true})]
     }
   },
   list: {
@@ -41,6 +42,5 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.id')
     },
-    create: [field('title_current', {component: 'i18n-input-field'})]
   }
 });

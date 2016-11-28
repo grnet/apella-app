@@ -68,6 +68,7 @@ export default {
   'category.label': 'Category',
   'discipline_in_fek.label': 'Discipline from FEK ',
   'discipline_in_fek.hint': 'Discipline is reported in FEK (Government Gazette)',
+  'dep_number.label': 'Number of teaching staff',
   'position.code.label': 'Position code',
   'position.code_and_title.label': 'Position code - Title',
   'position.title.label': 'Position Title',

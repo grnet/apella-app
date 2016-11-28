@@ -68,6 +68,7 @@ export default {
   'category.label': 'Κατηγορία',
   'discipline_in_fek.label': 'Γνωστικό αντικείμενο στο Φ.Ε.Κ. ',
   'discipline_in_fek.hint': 'Το γνωστικό αντικείμενο αναγράφεται στο ΦΕΚ διορισμού μου',
+  'dep_number.label': 'Αριθμός μελών Δ.Ε.Π.',
   'position.code.label': 'Κωδικός θέσης',
   'position.code_and_title.label': 'Κωδικός - Τίτλος θέσης',
   'position.title.label': 'Τίτλος θέσης',
