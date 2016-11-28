@@ -18,7 +18,7 @@ VALIDATION_SCHEMA = {
 
 
 def load_config():
-    config = join(settings.DATA_DIR, settings.CONFIG_FILE)
+    config = join(settings.RESOURCES_DIR, settings.CONFIG_FILE)
     with open(config) as data_file:
         data = yaml.load(data_file)
         validator = Validator(VALIDATION_SCHEMA)
