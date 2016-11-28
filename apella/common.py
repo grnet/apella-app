@@ -2,6 +2,7 @@ from os.path import join
 import json
 import yaml
 from cerberus import Validator
+import os
 from django.conf import settings
 
 from apimas.modeling.core.exceptions import ApimasException
@@ -28,7 +29,7 @@ def load_config():
 
 
 def load_resources():
-    with open(settings.RESOURCES_FILE) as json_file:
+    with open(os.path.join(settings.RESOURCES_DIR, 'www/common.json')) as json_file:
         return json.load(json_file)
 
 

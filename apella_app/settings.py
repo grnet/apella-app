@@ -8,14 +8,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: os.path.join(DATA_DIR, ...)
 import os
-BASE_DIR = os.path.abspath(os.getcwd())
-APELLA_DIR = os.path.join("/", "tmp", "apella")
-
-if not os.path.exists(APELLA_DIR):
-    os.makedirs(APELLA_DIR)
-
+DATA_DIR = os.path.abspath(os.getcwd())
+RESOURCES_DIR = DATA_DIR
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -24,9 +20,9 @@ if not os.path.exists(APELLA_DIR):
 SECRET_KEY = '4#yxh34pn@&8(8)pa6#70h6e#jl2vo-uf@9w1ex!)7r4n%da#6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -72,7 +68,7 @@ WSGI_APPLICATION = 'apella_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(APELLA_DIR, 'db.sqlite3'),
+        'NAME': '/tmp/apela.sqlite3',
     }
 }
 
@@ -106,7 +102,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'apella.log'),
+            'filename': os.path.join(DATA_DIR, 'apella.log'),
             'formatter': 'verbose'
         },
         'console': {
@@ -130,15 +126,19 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'apella.ApellaUser'
 
 START_DATE_END_DATE_INTERVAL = 30
-RESOURCES_FILE = os.path.join(BASE_DIR, 'resources/common.json')
 LANGUAGES = {'el', 'en'}
 
-try:
-    from local_settings import *
-except ImportError, exp:
-    pass
 from api_settings import API_SCHEMA
 from copy import deepcopy
 
 API_SCHEMA_TMP = deepcopy(API_SCHEMA)
 CONFIG_FILE = 'apella.apimas'
+
+SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
+
+if not os.path.isfile(SETTINGS_FILE):
+    m = "Cannot find settings file {0!r}"
+    m = m.format(SETTINGS_FILE)
+    raise RuntimeError(m)
+
+execfile(SETTINGS_FILE)

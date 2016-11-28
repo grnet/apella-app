@@ -12,7 +12,8 @@ PACKAGES = find_packages(PACKAGES_ROOT)
 CLASSIFIERS = []
 
 # Dependencies declared at requirements.txt
-install_requires = []
+INSTALL_REQUIRES = [
+]
 
 EXTRAS_REQUIRES = {
 }
@@ -33,13 +34,14 @@ setup(
     license='GNU GPLv3',
     description=SHORT_DESCRIPTION,
     classifiers=CLASSIFIERS,
-
     packages=PACKAGES,
     package_dir={'': PACKAGES_ROOT},
-    include_package_data=True,
+    data_files=[
+        ('resources/www', ['resources/common.json',
+                           'resources/holidays.json']),
+    ],
     zip_safe=False,
-
-    install_requires=install_requires,
+    install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRES,
     tests_require=TESTS_REQUIRES,
 
