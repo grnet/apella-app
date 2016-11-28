@@ -1,9 +1,10 @@
 import json
+import os
 from django.conf import settings
 
 
 def load_resources():
-    with open(settings.RESOURCES_FILE) as json_file:
+    with open(os.path.join(settings.RESOURCES_DIR, 'common.json')) as json_file:
         return json.load(json_file)
 
 
