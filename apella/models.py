@@ -120,8 +120,20 @@ class ApellaFile(models.Model):
         super(ApellaFile, self).save(*args, **kwargs)
 
 
-class Professor(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(ApellaUser)
+    is_active = models.BooleanField(default=False)
+    activated_at = models.DateTimeField(null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
+    verified_at = models.DateTimeField(null=True, blank=True)
+    is_rejected = models.BooleanField(default=False)
+    rejected_reason = models.TextField(null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class Professor(UserProfile):
     institution = models.ForeignKey(Institution)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
@@ -134,8 +146,8 @@ class Professor(models.Model):
     discipline_in_fek = models.BooleanField(default=True)
 
 
-class Candidate(models.Model):
-    user = models.OneToOneField(ApellaUser)
+class Candidate(UserProfile):
+    pass
 
 
 class UserFiles(models.Model):
@@ -144,8 +156,7 @@ class UserFiles(models.Model):
     deleted = models.BooleanField(default=False, db_index=True)
 
 
-class InstitutionManager(models.Model):
-    user = models.OneToOneField(ApellaUser)
+class InstitutionManager(UserProfile):
     institution = models.ForeignKey(Institution)
     authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
     authority_full_name = models.CharField(max_length=150)

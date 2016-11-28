@@ -66,8 +66,17 @@ class Migration(migrations.Migration):
             name='Candidate',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('is_active', models.BooleanField(default=False)),
+                ('activated_at', models.DateTimeField(null=True, blank=True)),
+                ('is_verified', models.BooleanField(default=False)),
+                ('verified_at', models.DateTimeField(null=True, blank=True)),
+                ('is_rejected', models.BooleanField(default=False)),
+                ('rejected_reason', models.TextField(null=True, blank=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Department',
@@ -89,6 +98,12 @@ class Migration(migrations.Migration):
             name='InstitutionManager',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('is_active', models.BooleanField(default=False)),
+                ('activated_at', models.DateTimeField(null=True, blank=True)),
+                ('is_verified', models.BooleanField(default=False)),
+                ('verified_at', models.DateTimeField(null=True, blank=True)),
+                ('is_rejected', models.BooleanField(default=False)),
+                ('rejected_reason', models.TextField(null=True, blank=True)),
                 ('authority', models.CharField(max_length=1, choices=[['1', 'Dean'], ['2', 'President']])),
                 ('authority_full_name', models.CharField(max_length=150)),
                 ('manager_role', models.CharField(max_length=1, choices=[['1', 'Manager'], ['2', 'Assistant'], ['3', 'Substitute']])),
@@ -97,6 +112,9 @@ class Migration(migrations.Migration):
                 ('sub_home_phone_number', models.CharField(max_length=30, null=True, blank=True)),
                 ('institution', models.ForeignKey(to='apella.Institution')),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='MultiLangFields',
@@ -138,6 +156,12 @@ class Migration(migrations.Migration):
             name='Professor',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('is_active', models.BooleanField(default=False)),
+                ('activated_at', models.DateTimeField(null=True, blank=True)),
+                ('is_verified', models.BooleanField(default=False)),
+                ('verified_at', models.DateTimeField(null=True, blank=True)),
+                ('is_rejected', models.BooleanField(default=False)),
+                ('rejected_reason', models.TextField(null=True, blank=True)),
                 ('rank', models.CharField(max_length=30, choices=[['Professor', 'Professor'], ['Associate Professor', 'Associate Professor'], ['Assistant Professor', 'Assistant Professor'], ['Research Director', 'Research Director'], ['Principal Researcher', 'Principal Researcher'], ['Affiliated Researcher', 'Affiliated Researcher']])),
                 ('is_foreign', models.BooleanField(default=False)),
                 ('speaks_greek', models.BooleanField(default=True)),
@@ -149,6 +173,9 @@ class Migration(migrations.Migration):
                 ('institution', models.ForeignKey(to='apella.Institution')),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Registry',
