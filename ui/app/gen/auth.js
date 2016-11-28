@@ -1,7 +1,8 @@
 import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
-        INSTITUTION_MANAGER_FIELDSET, INSTITUTION_MANGER_VALIDATORS} from 'ui/utils/common/users';
+        INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
+        INSTITUTION_MANGER_VALIDATORS} from 'ui/utils/common/users';
 
 const {
   get, computed
@@ -24,9 +25,8 @@ export default AuthGen.extend({
         f.push(PROFESSOR_FIELDSET);
       }
       if (role === 'institutionmanager') {
-        f.push(INSTITUTION_MANAGER_FIELDSET);
+        f.push(INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB);
       }
-      console.log("F", f);
       return f;
     }),
 

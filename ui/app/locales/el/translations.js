@@ -83,7 +83,8 @@ export default {
     label: {
       authority_type: 'Αρχή Πιστοποίησης',
       authority_full_name: 'Ονοματεπώνυμο Αρχής Πιστοποίησης',
-      role: 'Ρόλος'
+      role: 'Ρόλος',
+      sub_fieldset: 'Αναπληρωτής Διαχειριστής Ιδρύματος'
     }
   },
   professor: {

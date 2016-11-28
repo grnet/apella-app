@@ -83,7 +83,8 @@ export default {
     label: {
       authority_type: 'Verification Authority',
       authority_full_name: 'Authority Full name',
-      role: 'Role'
+      role: 'Role',
+      sub_fieldset: 'Substitute Institution Administrator'
     }
   },
   professor: {
