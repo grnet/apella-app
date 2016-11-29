@@ -1,8 +1,6 @@
-from django.core.management.base import CommandError
 from django.db import IntegrityError
 
-from apella import common
-from apella.models import Institution, School, SchoolEl, SchoolEn
+from apella.models import Institution, School, MultiLangFields
 from apella.management.utils import LoadDataCommand, smart_locale_unicode
 
 
@@ -30,13 +28,13 @@ class Command(LoadDataCommand):
                     failed += 1
                     continue
 
-                school_title_el = smart_locale_unicode(school_title_el)
-                school_title_en = smart_locale_unicode(school_title_en)
+                title_el = smart_locale_unicode(school_title_el)
+                title_en = smart_locale_unicode(school_title_en)
                 if school_title_el == '-':
                     continue
 
-                school_el = SchoolEl.objects.create(title=school_title_el)
-                school_en = SchoolEn.objects.create(title=school_title_en)
+                title = MultiLangFields.objects.create(
+                        el=title_el, en=title_en)
 
                 try:
                     institution = Institution.objects.get(id=ircid)
@@ -48,15 +46,14 @@ class Command(LoadDataCommand):
 
                 school_data = {
                         'institution': institution,
-                        'el': school_el,
-                        'en': school_en,
+                        'title': title,
                         'id': school_id
                 }
                 try:
-                    school_obj = School.objects.create(**school_data)
+                    School.objects.create(**school_data)
                     success += 1
                     self.stdout.write(
-                        "%s %s is created." % (school_id, school_title_el))
+                        "%s %s is created." % (school_id, title_el))
                 except IntegrityError:
                     self.stdout.write("School %s already exists" % school_id)
                     failed += 1

@@ -1,9 +1,7 @@
-from django.core.management.base import CommandError
 from django.db import IntegrityError
 
 from apella import common
-from apella.models import Institution, InstitutionEl, InstitutionEn,\
-    Department, DepartmentEn, DepartmentEl, School, SchoolEn, SchoolEl
+from apella.models import Institution, Department, School, MultiLangFields
 from apella.management.utils import LoadDataCommand, smart_locale_unicode
 
 
@@ -23,14 +21,8 @@ class Command(LoadDataCommand):
 
         if options['delete']:
             Institution.objects.all().delete()
-            InstitutionEl.objects.all().delete()
-            InstitutionEn.objects.all().delete()
             School.objects.all().delete()
-            SchoolEl.objects.all().delete()
-            SchoolEn.objects.all().delete()
             Department.objects.all().delete()
-            DepartmentEl.objects.all().delete()
-            DepartmentEn.objects.all().delete()
 
         file_path = options['csv_file']
         with open(file_path) as csv_file:
@@ -64,18 +56,16 @@ class Command(LoadDataCommand):
                     failed += 1
                     continue
 
-                institution_el = InstitutionEl.objects.create(title=title_el)
-                institution_en = InstitutionEn.objects.create(title=title_en)
+                title = MultiLangFields.objects.create(
+                        el=title_el, en=title_en)
 
                 institution_data = {
                         'id': ircid,
-                        'el': institution_el,
-                        'en': institution_en,
+                        'title': title,
                         'category': category[0]
                 }
                 try:
-                    institution = Institution.objects.create(
-                        **institution_data)
+                    Institution.objects.create(**institution_data)
                     success += 1
                     self.stdout.write(
                         "%s %s is created." % (ircid, title_el))

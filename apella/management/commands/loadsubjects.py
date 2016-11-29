@@ -1,7 +1,6 @@
 from django.db import IntegrityError
 
-from apella.models import SubjectArea, SubjectAreaEl, SubjectAreaEn,\
-    Subject, SubjectEl, SubjectEn
+from apella.models import SubjectArea, Subject, MultiLangFields
 from apella.management.utils import LoadDataCommand, smart_locale_unicode
 
 
@@ -21,11 +20,7 @@ class Command(LoadDataCommand):
 
         if options['delete']:
             SubjectArea.objects.all().delete()
-            SubjectAreaEl.objects.all().delete()
-            SubjectAreaEn.objects.all().delete()
             Subject.objects.all().delete()
-            SubjectEl.objects.all().delete()
-            SubjectEn.objects.all().delete()
 
         file_path = options['csv_file']
         with open(file_path) as csv_file:
@@ -45,15 +40,12 @@ class Command(LoadDataCommand):
                 if rid.isdigit():
                     sa_id = int(rid)
 
-                    subjectarea_el = SubjectAreaEl.objects.create(
-                            title=title_el)
-                    subjectarea_en = SubjectAreaEn.objects.create(
-                            title=title_en)
+                    title = MultiLangFields.objects.create(
+                            el=title_el, en=title_en)
 
                     subjectarea_data = {
                             'id': sa_id,
-                            'el': subjectarea_el,
-                            'en': subjectarea_en,
+                            'title': title,
                     }
                     try:
                         SubjectArea.objects.create(**subjectarea_data)
@@ -77,14 +69,14 @@ class Command(LoadDataCommand):
                             failed_subjects += 1
                             continue
 
-                        subject_el = SubjectEl.objects.create(title=title_el)
-                        subject_en = SubjectEn.objects.create(title=title_en)
+                        title = MultiLangFields.objects.create(
+                            el=title_el, en=title_en)
 
                         subject_data = {
                                 'area': area,
-                                'el': subject_el,
-                                'en': subject_en,
+                                'title': title
                         }
+
                         try:
                             Subject.objects.create(**subject_data)
                             success_subjects += 1
