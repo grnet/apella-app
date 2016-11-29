@@ -41,14 +41,12 @@ export default ApellaGen.extend({
     },
     row: {
       fields: FS.list,
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:edit', 'remove']
     }
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+  details: {
+    page: {
+      title: computed.readOnly('model.title_current')
     }
   }
 });

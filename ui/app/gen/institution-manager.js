@@ -41,7 +41,9 @@ export default ApellaGen.extend({
     },
   },
   details: {
-    fields: ['id', 'username', 'last_name'],
+    page: {
+      title: computed.readOnly('model.full_name_current')
+    }
   },
   record: {
     menu: {

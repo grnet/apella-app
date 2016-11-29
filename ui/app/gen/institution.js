@@ -50,11 +50,10 @@ export default ApellaGen.extend({
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+
+  details: {
+    page: {
+      title: computed.readOnly('model.title_current')
     }
   }
 });
