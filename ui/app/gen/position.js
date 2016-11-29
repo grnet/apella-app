@@ -12,6 +12,11 @@ export default ApellaGen.extend({
   modelName: 'position',
   auth: true,
   path: 'positions',
+
+  abilityStates: {
+    owned: computed('model', 'role', function() { return true; })
+  },
+
   common: {
     validators: {
       title: [validate.presence(true), validate.length({min:4, max:50})],
