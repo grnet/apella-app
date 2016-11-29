@@ -1,7 +1,7 @@
 /* jshint node: true */
-var choices = require('../../resources/common');
-var holidays = require('../../resources/holidays');
-//var permissions = require('../../resources/permissions');
+var choices = require('../../resources/www/common');
+var holidays = require('../../resources/www/holidays');
+//var permissions = require('../../resources/www/permissions');
 
 // debug
 permissions = {
