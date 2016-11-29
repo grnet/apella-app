@@ -32,8 +32,4 @@ export default Select.extend({
 
   }),
 
-  observeSrcField: observer('object.subject_area.[]', function(){
-      this.onChange(null);
-  }),
-
 });
