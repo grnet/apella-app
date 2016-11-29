@@ -68,7 +68,7 @@ WSGI_APPLICATION = 'apella_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/apela.sqlite3',
+        'NAME': '/tmp/apella.sqlite3',
     }
 }
 
