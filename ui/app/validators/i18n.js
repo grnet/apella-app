@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import _ from 'lodash/lodash';
 import ENV from 'ui/config/environment';
 
 export function i18nValidate(validators) {
@@ -10,7 +9,7 @@ export function i18nValidate(validators) {
     var result = true;
     var locales = ENV.i18n.locales;
 
-    if (_.isUndefined(newValue)) {
+    if (newValue === undefined || newValue == null) {
       newValue = {};
     }
 
