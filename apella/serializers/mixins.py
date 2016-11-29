@@ -119,8 +119,10 @@ class NestedWritableObjectsMixin(object):
         if request and \
                 (request.method == 'PUT' or request.method == 'PATCH') and \
                 self.NESTED_USER_KEY in self.fields:
+            self.fields[self.NESTED_USER_KEY].fields['email'].read_only = \
+                True
             self.fields[self.NESTED_USER_KEY].fields['username'].read_only = \
-                    True
+                True
 
     def create(self, validated_data):
         model = self.Meta.model

@@ -50,21 +50,26 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.ForeignKey(MultiLangFields, related_name='first_name')
     last_name = models.ForeignKey(MultiLangFields, related_name='last_name')
     father_name = models.ForeignKey(
-        MultiLangFields, related_name='father_name')
-    email = models.EmailField()
+        MultiLangFields, related_name='father_name', blank=True, null=True)
+    email = models.EmailField(
+        unique=True,
+        error_messages={
+            'unique': "A user with that email already exists.",
+        }
+    )
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    id_passport = models.CharField(max_length=20)
-    mobile_phone_number = models.CharField(max_length=30)
-    home_phone_number = models.CharField(max_length=30)
+    id_passport = models.CharField(max_length=20, blank=True)
+    mobile_phone_number = models.CharField(max_length=30, blank=True)
+    home_phone_number = models.CharField(max_length=30, blank=True)
     role = models.CharField(
         choices=common.USER_ROLES, max_length=20, default='candidate')
 
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
     class Meta:
         verbose_name = 'user'

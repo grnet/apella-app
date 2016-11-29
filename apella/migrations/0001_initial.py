@@ -25,13 +25,13 @@ class Migration(migrations.Migration):
                 ('last_login', models.DateTimeField(null=True, verbose_name='last login', blank=True)),
                 ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
                 ('username', models.CharField(help_text=b'Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=30, unique=True, error_messages={b'unique': b'A user with that username already exists.'}, validators=[django.core.validators.RegexValidator(b'^[\\w.@+-]+$', b'Enter a valid username. This value may contain only letters, numbers and @/./+/-/_ characters.', b'invalid')])),
-                ('email', models.EmailField(max_length=254)),
+                ('email', models.EmailField(unique=True, max_length=254, error_messages={b'unique': b'A user with that email already exists.'})),
                 ('is_staff', models.BooleanField(default=False)),
-                ('is_active', models.BooleanField(default=True)),
+                ('is_active', models.BooleanField(default=False)),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now)),
-                ('id_passport', models.CharField(max_length=20)),
-                ('mobile_phone_number', models.CharField(max_length=30)),
-                ('home_phone_number', models.CharField(max_length=30)),
+                ('id_passport', models.CharField(max_length=20, blank=True)),
+                ('mobile_phone_number', models.CharField(max_length=30, blank=True)),
+                ('home_phone_number', models.CharField(max_length=30, blank=True)),
                 ('role', models.CharField(default=b'candidate', max_length=20, choices=[['institutionmanager', 'Institution Manager'], ['candidate', 'Candidate'], ['professor', 'Professor'], ['helpdeskadmin', 'Helpdesk Admin'], ['helpdeskuser', 'Helpdesk User'], ['assistant', 'Assistant']])),
             ],
             options={
@@ -315,7 +315,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='apellauser',
             name='father_name',
-            field=models.ForeignKey(related_name='father_name', to='apella.MultiLangFields'),
+            field=models.ForeignKey(related_name='father_name', blank=True, to='apella.MultiLangFields', null=True),
         ),
         migrations.AddField(
             model_name='apellauser',
