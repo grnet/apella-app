@@ -15,6 +15,7 @@ export default AuthGen.extend({
   },
 
   profile: {
+    modelName: 'profile',
     menu: { display: true },
     fieldsets: computed('model.role', function(){
       let role = this.get('model').get('role');
