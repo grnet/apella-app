@@ -46,30 +46,30 @@ export default ApellaGen.extend({
       },
     }],
   },
+  create: {
+    fieldsets: [{
+      label: 'fieldsets.labels.basic_info',
+      fields: ['title', 'author',
+        ['state', {
+          attrs: {
+            readonly: true,
+          }
+        }],
+        'description', 'discipline', 'department', 'subject_area', 'subject', 'department_dep_number'],
+      layout: {
+        flex: [100, 50, 50, 100, 50, 50, 50, 50]
+      }
+    }, {
+      label: 'fieldsets.labels.details',
+      fields: ['fek', 'fek_posted_at', 'starts_at', 'ends_at'],
+      layout: {
+        flex: [50, 50, 50, 50]
+      },
+    }],
+  },
   list: {
     page: {
       title: 'position.menu_label',
-    },
-    create: {
-      fieldsets: [{
-        label: 'fieldsets.labels.basic_info',
-        fields: ['title', 'author',
-          ['state', {
-            attrs: {
-              readonly: true,
-            }
-          }],
-          'description', 'discipline', 'department', 'subject_area', 'subject', 'department_dep_number'],
-        layout: {
-          flex: [100, 50, 50, 100, 50, 50, 50, 50]
-        }
-      }, {
-        label: 'fieldsets.labels.details',
-        fields: ['fek', 'fek_posted_at', 'starts_at', 'ends_at'],
-        layout: {
-          flex: [50, 50, 50, 50]
-        },
-      }],
     },
     menu: {
       icon: 'business_center',
