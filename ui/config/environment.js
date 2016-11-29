@@ -1,17 +1,9 @@
 /* jshint node: true */
 var choices = require('../../resources/www/common');
 var holidays = require('../../resources/www/holidays');
-//var permissions = require('../../resources/www/permissions');
+const PERMISSIONS = require('../../resources/permissions');
 
-// debug
-permissions = {
-  "institutions": [
-    ["institutionmanager", "title,category", "list,create,retrieve", "*", "*"]
-  ],
-  "*": [
-    ["*", "*", "*", "*", "*"]
-  ]
-};
+PERMISSIONS['positions']['destroy'] = {'institutionmanager': { '*': { 'superuser': '4.5.6' } } };
 
 module.exports = function(environment) {
   var ENV = {
@@ -45,7 +37,7 @@ module.exports = function(environment) {
   };
 
   ENV['ember-gen'] = {
-    permissions: permissions
+    permissions: PERMISSIONS
   },
 
   ENV['ember-simple-auth'] = {
