@@ -7,3 +7,10 @@
 @import 'ember-gen';
 @import 'settings';
 @import 'menus';
+
+.site-header {
+  text-align: center;
+  img.logo {
+  }
+  margin-bottom: -50px;
+}
