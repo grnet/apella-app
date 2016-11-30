@@ -230,7 +230,7 @@ class Position(models.Model):
             institution_id=self.department.institution.id).exists()
 
     def check_resource_state_open(self, row, request, view):
-        return self.state == 'posted' and self.starts_at > timezone.now()
+        return self.state == 'posted' and self.ends_at > timezone.now()
 
     def check_resource_state_before_open(self, row, request, view):
         return self.starts_at > timezone.now()
