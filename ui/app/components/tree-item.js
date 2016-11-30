@@ -24,28 +24,22 @@ export default Ember.Component.extend({
     return this.get('expanded')? 'expand-more': 'chevron-right'
   }),
 
-  nodes: computed('expanded', function(){
+  nodes: computed('', function(){
     let self = this;
-
     set(self, 'loading', true);
-    if (get(this, 'expanded')) {
-      let item_id = get(get(this, 'item'), 'id');
-      let model = get(this, 'model');
-      let lookupField = get(this, 'lookupField');
-      let field_id = `${lookupField}.id`
-      let promise = this.get('store').findAll(model).then(function(items) {
-        return Promise.all(items.getEach(lookupField)).then(() => {
-          return items.filterBy(field_id, item_id);
-        });
+    let item_id = get(get(this, 'item'), 'id');
+    let model = get(this, 'model');
+    let lookupField = get(this, 'lookupField');
+    let field_id = `${lookupField}.id`
+    let promise = this.get('store').findAll(model).then(function(items) {
+      return Promise.all(items.getEach(lookupField)).then(() => {
+        return items.filterBy(field_id, item_id);
       });
-      promise.then(function(){
-          set(self, 'loading', false);
-      });
-
-      return DS.PromiseArray.create({promise});
-
-    }
-
+    });
+    promise.then(function(){
+        set(self, 'loading', false);
+    });
+    return DS.PromiseArray.create({promise});
   }),
 
   actions: {
