@@ -27,6 +27,12 @@ export default ApellaGen.extend({
     }]
   },
 
+  create: {
+    onSubmit(model) {
+      this.transitionTo('registry.record.index', model);
+    }
+  },
+
   list: {
     menu: {
       icon: 'view list',
