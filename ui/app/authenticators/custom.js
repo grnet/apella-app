@@ -1,6 +1,10 @@
+import Ember from 'ember';
 import Token from 'ember-simple-auth-token/authenticators/token';
 import ENV from 'ui/config/environment';
 
+const {
+  merge
+} = Ember;
 
 export default Token.extend({
   getResponseData(response) {
@@ -14,7 +18,7 @@ export default Token.extend({
         'Authorization': `Token ${token}`
       },
     }).then(function(res){
-      response['role'] = res.user.role || '';
+      merge(response, res.user);
       return response;
     });
   },
