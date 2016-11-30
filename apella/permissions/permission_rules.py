@@ -107,6 +107,8 @@ PERMISSION_RULES = [
     ('professors', 'retrieve', 'helpdeskadmin', '*', '*', '5.1.3'),
     ('professors', 'list', 'helpdeskuser', '*', '*', '5.1.2'),
     ('professors', 'retrieve', 'helpdeskuser', '*', '*', '5.1.3'),
+    ('professors', 'list', 'institutionmanager', '*', '*', ''),
+    ('professors', 'retrieve', 'institutionmanager', '*', '*', ''),
     ('registries', 'list', 'candidate', '*', '*', '3.3.9'),
     ('registries', 'retrieve', 'candidate', '*', '*', '3.3.9'),
     ('registries', 'list', 'helpdeskadmin', '*', '*', '5.1.9'),
