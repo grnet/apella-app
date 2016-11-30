@@ -56,6 +56,12 @@ spec:
                     .drf_field: {}
                     .string: {}
                     .required: {}
+                is_active:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
                 id_passport:
                     .cli_option: {}
                     .field: {}
@@ -142,6 +148,7 @@ spec:
             .drf_collection:
                 model: apella.models.Institution
                 serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
             .cli_commands: {}
             '*':
                 id:
@@ -289,6 +296,7 @@ spec:
             .drf_collection:
                 model: apella.models.SubjectArea
                 serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
             .cli_commands: {}
             '*':
                 id:
@@ -325,6 +333,7 @@ spec:
             .drf_collection:
                 model: apella.models.Subject
                 serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
             .cli_commands: {}
             '*':
                 id:

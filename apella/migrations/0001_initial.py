@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
                 ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
                 ('sub_mobile_phone_number', models.CharField(max_length=30, null=True, blank=True)),
                 ('sub_home_phone_number', models.CharField(max_length=30, null=True, blank=True)),
-                ('institution', models.ForeignKey(to='apella.Institution')),
+                ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -170,7 +170,7 @@ class Migration(migrations.Migration):
                 ('discipline_text', models.CharField(max_length=300)),
                 ('discipline_in_fek', models.BooleanField(default=True)),
                 ('department', models.ForeignKey(blank=True, to='apella.Department', null=True)),
-                ('institution', models.ForeignKey(to='apella.Institution')),
+                ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -190,7 +190,7 @@ class Migration(migrations.Migration):
             name='School',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('institution', models.ForeignKey(to='apella.Institution')),
+                ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
                 ('title', models.ForeignKey(to='apella.MultiLangFields')),
             ],
         ),
@@ -295,7 +295,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='department',
             name='institution',
-            field=models.ForeignKey(to='apella.Institution'),
+            field=models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT),
         ),
         migrations.AddField(
             model_name='department',

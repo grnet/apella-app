@@ -95,13 +95,13 @@ class Institution(models.Model):
 
 
 class School(models.Model):
-    institution = models.ForeignKey(Institution)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     title = models.ForeignKey(MultiLangFields)
 
 
 class Department(models.Model):
     school = models.ForeignKey(School, blank=True, null=True)
-    institution = models.ForeignKey(Institution)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     title = models.ForeignKey(MultiLangFields)
     dep_number = models.IntegerField(blank=True, null=True)
 
@@ -139,7 +139,7 @@ class UserProfile(models.Model):
 
 
 class Professor(UserProfile):
-    institution = models.ForeignKey(Institution)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
         choices=common.RANKS, max_length=30)
@@ -162,7 +162,7 @@ class UserFiles(models.Model):
 
 
 class InstitutionManager(UserProfile):
-    institution = models.ForeignKey(Institution)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
     authority_full_name = models.CharField(max_length=150)
     manager_role = models.CharField(
