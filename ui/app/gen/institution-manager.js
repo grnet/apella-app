@@ -13,6 +13,7 @@ const {
 
 export default ApellaGen.extend({
   modelName: 'institution-manager',
+  resourceName: 'institution-managers',
   auth: true,
   path: 'managers',
   common: {
