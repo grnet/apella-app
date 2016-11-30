@@ -44,12 +44,5 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.full_name_current')
     }
-  },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
-    }
   }
 });
