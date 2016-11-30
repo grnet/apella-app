@@ -18,9 +18,8 @@
     ],
 
     "CANDIDACY_STATES": [
-        ["1", "Draft"],
-        ["2", "Posted"],
-        ["3", "Cancelled"]
+        ["posted", "Posted"],
+        ["cancelled", "Cancelled"]
     ],
 
     "REGISTRY_TYPES": [

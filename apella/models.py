@@ -256,7 +256,7 @@ class Candidacy(models.Model):
     candidate = models.ForeignKey(ApellaUser)
     position = models.ForeignKey(Position)
     state = models.CharField(
-        choices=common.CANDIDACY_STATES, max_length=1, default='2')
+        choices=common.CANDIDACY_STATES, max_length=30, default='posted')
     others_can_view = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
@@ -283,6 +283,12 @@ class Candidacy(models.Model):
 
     def check_resource_state_participates(self, row, request, view):
         return professor_participates(request.user.id, self.position.id)
+
+    def check_resource_state_owned_open(self, row, request, view):
+        return self.check_resource_state_owned(row, request, view) \
+                and self.position.check_resource_state_open(
+                        row, request, view) \
+                and self.state == 'cancelled'
 
 
 class CandidacyFiles(object):

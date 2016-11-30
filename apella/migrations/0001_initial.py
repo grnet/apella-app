@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             name='Candidacy',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Cancelled']])),
+                ('state', models.CharField(default=b'posted', max_length=30, choices=[['posted', 'Posted'], ['cancelled', 'Cancelled']])),
                 ('others_can_view', models.BooleanField(default=False)),
                 ('submitted_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
