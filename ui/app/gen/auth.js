@@ -1,3 +1,5 @@
+import gen from 'ember-gen/lib/gen';
+import routes from 'ember-gen/lib/routes';
 import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
@@ -16,6 +18,27 @@ export default AuthGen.extend({
   },
 
   profile: {
+    gens: {
+      position_interest: gen.GenRoutedObject.extend({
+        modelName: 'profile',
+        path: 'my-interests',
+        getModel(profile) {
+          return this.store.findRecord('profile', 'me');
+        },
+        templateName: 'user-interests',
+        routeBaseClass: routes.EditRoute,
+        menu: { 
+          display: true,
+          icon: 'access_alarm',
+          label: 'user.positions.interests'
+        },
+        page: {
+          title: 'my.interests',
+          breadcrumb: { display: true }
+        }
+      })
+    },
+    actions: ['gen:position_interest'],
     modelName: 'profile',
     menu: { display: true },
     fieldsets: computed('model.role', function(){
