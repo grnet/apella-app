@@ -1,11 +1,14 @@
 <div class="item">
   <h3>{{ t 'subject_area.menu_label' }}</h3>
+
   <ul>
     {{#each subjectAreas as |item|}}
       {{tree-item item=item
                   model='subject-area'
                   subModel='subject'
                   lookupField='area'
+                  selected=userInterests.area
+                  subSelected=userInterests.subject
                   onChange=(action 'setInterest')}}
     {{/each}}
   </ul>
@@ -18,6 +21,8 @@
                   model='institution'
                   subModel='department'
                   lookupField='institution'
+                  selected=userInterests.institution
+                  subSelected=userInterests.department
                   onChange=(action 'setInterest')}}
     {{/each}}
   </ul>

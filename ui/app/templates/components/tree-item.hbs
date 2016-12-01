@@ -2,7 +2,8 @@
   {{paper-icon toggleIcon}}
 {{/paper-button}}
 
-{{#paper-checkbox value=value onChange=(action "handleChange" item model) }}
+{{#paper-checkbox value=(array-contains selected item)
+                  onChange=(action "handleChange" item model) }}
   {{item.title_current}}
 {{/paper-checkbox}}
 
@@ -14,7 +15,8 @@
     <ul>
       {{#each nodes as |item|}}
         <li>
-        {{#paper-checkbox value=item onChange=(action "handleChange" item subModel) }}
+        {{#paper-checkbox value=(array-contains subSelected item)
+                          onChange=(action "handleChange" item subModel) }}
             {{item.title_current}}
           {{/paper-checkbox}}
         </li>

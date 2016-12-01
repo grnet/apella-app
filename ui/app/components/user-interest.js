@@ -26,7 +26,7 @@ export default Ember.Component.extend({
 
   userInterests: computed('', function(){
     let user_id = get(this, 'session.session.authenticated.id');
-    return get(this, 'store').query('user-interest', {user:user_id });
+    return get(this, 'store').queryRecord('user-interest', {user:user_id });
   }),
 
   actions: {

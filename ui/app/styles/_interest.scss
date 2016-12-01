@@ -1,11 +1,15 @@
 .interest {
   display: flex;
-  height: 50vh;
   ul {
     list-style: none outside none;
     padding-left: 0;
   }
   ul ul {
     margin-left: 6rem;
+  }
+  .item:first-child {
+    min-width: 30%;
+    max-width: 40%;
+    padding-right: 3rem;
   }
 }
