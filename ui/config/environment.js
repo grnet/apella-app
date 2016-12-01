@@ -3,8 +3,6 @@ var choices = require('../../resources/www/common');
 var holidays = require('../../resources/www/holidays');
 const PERMISSIONS = require('../../resources/permissions');
 
-PERMISSIONS['positions']['destroy'] = {'institutionmanager': { '*': { 'superuser': '4.5.6' } } };
-
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ui',
