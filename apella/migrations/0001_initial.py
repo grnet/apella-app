@@ -106,7 +106,7 @@ class Migration(migrations.Migration):
                 ('rejected_reason', models.TextField(null=True, blank=True)),
                 ('authority', models.CharField(max_length=1, choices=[['1', 'Dean'], ['2', 'President']])),
                 ('authority_full_name', models.CharField(max_length=150)),
-                ('manager_role', models.CharField(max_length=1, choices=[['1', 'Manager'], ['2', 'Assistant'], ['3', 'Substitute']])),
+                ('manager_role', models.CharField(max_length=20, choices=[['manager', 'Manager'], ['assistant', 'Assistant']])),
                 ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
                 ('sub_mobile_phone_number', models.CharField(max_length=30, null=True, blank=True)),
                 ('sub_home_phone_number', models.CharField(max_length=30, null=True, blank=True)),
@@ -182,7 +182,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('type', models.CharField(default=b'1', max_length=1, choices=[['1', 'Internal'], ['2', 'External']])),
-                ('department', models.ForeignKey(to='apella.Department')),
+                ('department', models.ForeignKey(to='apella.Department', on_delete=django.db.models.deletion.PROTECT)),
                 ('members', models.ManyToManyField(to='apella.Professor')),
             ],
         ),

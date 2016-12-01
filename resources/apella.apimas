@@ -1160,3 +1160,129 @@ spec:
                 .update: {}
                 .delete: {}
                 .retrieve: {}
+        assistants:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.InstitutionManager
+                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.AssistantList]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: institutions
+                manager_role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {source: user}
+                    .required: {}
+                    .struct:
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {source: first_name}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {source: last_name}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {source: father_name}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}

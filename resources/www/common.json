@@ -33,9 +33,8 @@
     ],
 
     "MANAGER_ROLES": [
-        ["1", "Manager"],
-        ["2", "Assistant"],
-        ["3", "Substitute"]
+        ["manager", "Manager"],
+        ["assistant", "Assistant"]
     ],
 
     "RANKS": [

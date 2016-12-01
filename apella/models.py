@@ -166,7 +166,7 @@ class InstitutionManager(UserProfile):
     authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
     authority_full_name = models.CharField(max_length=150)
     manager_role = models.CharField(
-        choices=common.MANAGER_ROLES, max_length=1)
+        choices=common.MANAGER_ROLES, max_length=20)
     sub_first_name = models.ForeignKey(
         MultiLangFields, related_name='sub_first_name',
         blank=True, null=True)
@@ -181,6 +181,12 @@ class InstitutionManager(UserProfile):
         max_length=30, blank=True, null=True)
     sub_home_phone_number = models.CharField(
         max_length=30, blank=True, null=True)
+
+    def check_resource_state_owned(self, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            institution_id=self.institution.id,
+            manager_role='manager').exists()
 
 
 class Position(models.Model):
