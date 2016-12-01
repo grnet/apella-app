@@ -1,22 +1,23 @@
-{{#if canExpand}}
-  {{#paper-button iconButton=true onClick=(action "toggle" item)}}
-    {{paper-icon toggleIcon}}
-  {{/paper-button}}
-{{/if}}
+{{#paper-button iconButton=true onClick=(action "toggle" item)}}
+  {{paper-icon toggleIcon}}
+{{/paper-button}}
 
-{{#paper-checkbox value=value onChange=(action "handleChange" item) }}
+{{#paper-checkbox value=value onChange=(action "handleChange" item model) }}
   {{item.title_current}}
 {{/paper-checkbox}}
 
 {{#if expanded}}
-
   <div style="display:none">{{loading}}</div>
   {{#if loading }}
     {{paper-icon "rotate-right" spin=true}}
   {{else}}
     <ul>
       {{#each nodes as |item|}}
-        {{tree-item item=item canExpand=false}}
+        <li>
+        {{#paper-checkbox value=item onChange=(action "handleChange" item subModel) }}
+            {{item.title_current}}
+          {{/paper-checkbox}}
+        </li>
       {{/each}}
     </ul>
   {{/if}}

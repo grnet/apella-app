@@ -2,15 +2,23 @@
   <h3>{{ t 'subject_area.menu_label' }}</h3>
   <ul>
     {{#each subjectAreas as |item|}}
-        {{tree-item item=item canExpand=true model='subject' lookupField='area'}}
+      {{tree-item item=item
+                  model='subject-area'
+                  subModel='subject'
+                  lookupField='area'
+                  onChange=(action 'setInterest')}}
     {{/each}}
   </ul>
 </div>
-<div clas="item">
+<div class="item">
   <h3>{{ t 'institution.menu_label' }}</h3>
   <ul>
     {{#each institutions as |item|}}
-        {{tree-item item=item canExpand=true model='department' lookupField='institution'}}
+      {{tree-item item=item
+                  model='institution'
+                  subModel='department'
+                  lookupField='institution'
+                  onChange=(action 'setInterest')}}
     {{/each}}
   </ul>
 </div>

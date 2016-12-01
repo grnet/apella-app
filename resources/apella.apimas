@@ -316,6 +316,7 @@ spec:
                 model: apella.models.SubjectArea
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [subject]
             .cli_commands: {}
             '*':
                 id:
@@ -1176,6 +1177,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.UserInterest
+                filter_fields: [user]
             .cli_commands: {}
             '*':
                 id:

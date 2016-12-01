@@ -14,19 +14,24 @@ const {
 export default Ember.Component.extend({
   classNames: 'interest',
   store: Ember.inject.service(),
+  session: Ember.inject.service(),
 
   subjectAreas: computed('', function() {
-    return this.get('store').findAll('subject-area');
+    return get(this, 'store').findAll('subject-area');
   }),
 
   institutions: computed('', function() {
-    return this.get('store').findAll('institution');
+    return get(this, 'store').findAll('institution');
+  }),
+
+  userInterests: computed('', function(){
+    let user_id = get(this, 'session.session.authenticated.id');
+    return get(this, 'store').query('user-interest', {user:user_id });
   }),
 
   actions: {
-    foo(value){
-      debugger;
-      alert(value);
+    setInterest(value, type){
+      alert(type);
     }
   }
 

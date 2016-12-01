@@ -28,10 +28,10 @@ export default Ember.Component.extend({
     let self = this;
     set(self, 'loading', true);
     let item_id = get(get(this, 'item'), 'id');
-    let model = get(this, 'model');
+    let subModel = get(this, 'subModel');
     let lookupField = get(this, 'lookupField');
     let field_id = `${lookupField}.id`
-    let promise = this.get('store').findAll(model).then(function(items) {
+    let promise = this.get('store').findAll(subModel).then(function(items) {
       return Promise.all(items.getEach(lookupField)).then(() => {
         return items.filterBy(field_id, item_id);
       });
@@ -46,8 +46,8 @@ export default Ember.Component.extend({
     toggle(item) {
       this.toggleProperty('expanded');
     },
-    handleChange(value) {
-      this.sendAction('foo', value);
+    handleChange(item, el) {
+      this.sendAction('onChange', item, el);
     }
   }
 
