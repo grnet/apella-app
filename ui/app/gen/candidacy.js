@@ -132,9 +132,16 @@ export default ApellaGen.extend({
   },
   edit: {
     fieldsets: computed('model.position.state', function() {
-      let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView'];
-      if (this.get('model.position.state') != POSITION_POSTED_ID) {
-        candidacy_fields = _.map(candidacy_fields, disable_field);
+      let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView', 'state'];
+      if (get(this, 'model.position.state') != POSITION_POSTED_ID) {
+        candidacy_fields = _.map(candidacy_fields, (field) =>{
+          // TODO: Check if position is open to enable this field for
+          // candidates
+          if(field === 'state') {
+            return field;
+          }
+          return disable_field(field);
+        });
       };
 
       return [{
