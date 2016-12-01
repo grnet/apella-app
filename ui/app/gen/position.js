@@ -2,6 +2,8 @@ import {ApellaGen} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday, notHoliday, afterDays} from 'ui/validators/dates';
+import moment from 'moment';
+
 
 const {
   computed,
@@ -14,7 +16,24 @@ export default ApellaGen.extend({
   path: 'positions',
 
   abilityStates: {
-    owned: computed('model', 'role', function() { return true; })
+    owned: computed('role', function() { 
+      return get(this, 'role') === 'institutionmanager';
+    }), // we expect server to reply with owned resources
+    'open': computed('model.state', 'model.ends_at', function() {
+      return get(this, 'model.state') === 'open' && moment(get(this, 'model.ends_at')).isBefore(new Date());
+    }),
+    closed: computed('model.starts_at', function() {
+      return moment(get(this, 'model.starts_at')).isBefore(moment(new Date()));
+    }),
+    electing: computed('model.state', 'closed', function() {
+      return get(this, 'model.state') === 'posted' && get(this, 'closed');
+    }),
+    participates: computed('role', 'user.id', 'model.electors.[]', function() {
+      let role = get(this, 'role');
+      let userId = get(this, 'user.id');
+      let electors = get(this, 'model.electors').getEach('id');
+      return role === 'professor' && electors.includes(userId);
+    })
   },
 
   common: {

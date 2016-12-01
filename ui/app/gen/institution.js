@@ -32,6 +32,13 @@ export default ApellaGen.extend({
       regulatory_framework: [validate.format({allowBlank: true, type: 'url'})],
     }
   },
+
+  abilityStates: {
+    owned: computed('role', function() { 
+      return get(this, 'role') === 'institutionmanager';
+    }) // we expect server to reply with owned resources
+  },
+
   list: {
     page: {
       title: 'institution.menu_label',

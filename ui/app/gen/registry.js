@@ -13,6 +13,13 @@ export default ApellaGen.extend({
   auth: true,
   path: 'registries',
 
+  abilityStates: {
+    // resolve ability for position model
+    owned: computed('role', function() {
+      return get(this, 'role') === 'institutionmanager';
+    }) // we expect server to reply with owned resources
+  },
+
   common: {
     fieldsets: [{
       label: 'registry.main_section.title',
