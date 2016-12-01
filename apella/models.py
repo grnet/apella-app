@@ -299,7 +299,7 @@ class CandidacyFiles(object):
 
 
 class Registry(models.Model):
-    department = models.ForeignKey(Department)
+    department = models.ForeignKey(Department, on_delete=models.PROTECT)
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=1, default='1')
     members = models.ManyToManyField(Professor)
