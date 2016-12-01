@@ -56,18 +56,6 @@ export default AuthGen.extend({
     fieldsets: computed('model.role', function(){
       let f = [];
       let role = this.get('model').get('role');
-
-      let INTEREST_FIELDSET = {
-        label: 'fieldsets.labels.user_interest',
-        text: 'fieldsets.text.user_interest',
-        fields: [
-          field('interest', {
-            formComponent: 'user-interest',
-         })
-        ]
-      }
-      f.push(INTEREST_FIELDSET);
-
       f.push(USER_FIELDSET);
 
       if (role === 'professor') {
