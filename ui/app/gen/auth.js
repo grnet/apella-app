@@ -21,10 +21,11 @@ export default AuthGen.extend({
   profile: {
     gens: {
       position_interest: gen.GenRoutedObject.extend({
-        modelName: 'profile',
+        modelName: 'user-interest',
         path: 'my-interests',
-        getModel(profile) {
-          return this.store.findRecord('profile', 'me');
+        getModel() {
+          let user_id = get(this, 'session.session.authenticated.id');
+          return this.store.queryRecord('user-interest', {user:user_id });
         },
         templateName: 'user-interests',
         routeBaseClass: routes.EditRoute,

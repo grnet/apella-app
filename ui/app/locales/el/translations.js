@@ -180,7 +180,8 @@ export default {
     button: {
       create_label: 'Δημιουργία',
       edit_label: 'Τροποποίηση',
-      details_label: 'Προβολή'
+      details_label: 'Προβολή',
+      save_label: 'Αποθήκευση',
     }
   },
   item: {

@@ -46,8 +46,10 @@ export default Ember.Component.extend({
     toggle(item) {
       this.toggleProperty('expanded');
     },
-    handleChange(item, el) {
-      this.sendAction('onChange', item, el);
+    handleChange(value, item, model) {
+      let type = model;
+      if (model=='subject-area') { type = 'area' }
+      this.sendAction('onChange', value, item, type);
     }
   }
 

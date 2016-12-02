@@ -24,14 +24,26 @@ export default Ember.Component.extend({
     return get(this, 'store').findAll('institution');
   }),
 
-  userInterests: computed('', function(){
-    let user_id = get(this, 'session.session.authenticated.id');
-    return get(this, 'store').queryRecord('user-interest', {user:user_id });
+  userInterests: computed('model', function(){
+    return this.get('model');
   }),
 
+
   actions: {
-    setInterest(value, type){
-      alert(type);
+    setInterest(value, item, type){
+      if (value) {
+        this.get('userInterests').get(type).removeObject(item);
+      } else {
+        this.get('userInterests').get(type).pushObject(item);
+      }
+    },
+    saveInterest() {
+      let user  = get(this, 'store').findRecord('profile', 'me');
+      let model = get(this, 'model');
+      user.then((u) => {
+        model.set('user', u);
+        model.save();
+      })
     }
   }
 

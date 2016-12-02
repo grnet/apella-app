@@ -1,29 +1,32 @@
-<div class="item">
-  <h3>{{ t 'subject_area.menu_label' }}</h3>
+<div class="container">
+  <div class="item">
+    <h3>{{ t 'subject_area.menu_label' }}</h3>
+    <ul>
+      {{#each subjectAreas as |item|}}
+        {{tree-item item=item
+                    model='subject-area'
+                    subModel='subject'
+                    lookupField='area'
+                    selected=userInterests.area
+                    subSelected=userInterests.subject
+                    onChange=(action 'setInterest')}}
+      {{/each}}
+    </ul>
+  </div>
+  <div class="item">
+    <h3>{{ t 'institution.menu_label' }}</h3>
+    <ul>
+      {{#each institutions as |item|}}
+        {{tree-item item=item
+                    model='institution'
+                    subModel='department'
+                    lookupField='institution'
+                    selected=userInterests.institution
+                    subSelected=userInterests.department
+                    onChange=(action 'setInterest')}}
+      {{/each}}
+    </ul>
+  </div>
+</div>
 
-  <ul>
-    {{#each subjectAreas as |item|}}
-      {{tree-item item=item
-                  model='subject-area'
-                  subModel='subject'
-                  lookupField='area'
-                  selected=userInterests.area
-                  subSelected=userInterests.subject
-                  onChange=(action 'setInterest')}}
-    {{/each}}
-  </ul>
-</div>
-<div class="item">
-  <h3>{{ t 'institution.menu_label' }}</h3>
-  <ul>
-    {{#each institutions as |item|}}
-      {{tree-item item=item
-                  model='institution'
-                  subModel='department'
-                  lookupField='institution'
-                  selected=userInterests.institution
-                  subSelected=userInterests.department
-                  onChange=(action 'setInterest')}}
-    {{/each}}
-  </ul>
-</div>
+{{#paper-button onClick=(action 'saveInterest') raised=true primary="true"}}{{t 'common.button.save_label'}}{{/paper-button}}

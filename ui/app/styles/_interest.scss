@@ -1,5 +1,7 @@
 .interest {
-  display: flex;
+  .container {
+    display: flex;
+  }
   ul {
     list-style: none outside none;
     padding-left: 0;

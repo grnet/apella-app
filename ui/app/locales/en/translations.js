@@ -178,7 +178,8 @@ export default {
     button: {
       create_label: 'Create',
       edit_label: 'Edit',
-      details_label: 'View'
+      details_label: 'View',
+      save_label: 'Save',
     }
   },
   item: {
