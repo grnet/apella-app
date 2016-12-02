@@ -1,4 +1,9 @@
 export default {
+  'form.save.label': 'Save',
+  'withdrawal': 'Withdraw',
+  'cancel': 'Cancel',
+  'prompt.withdrawal.title': 'Withdraw candidacy',
+  'prompt.withdrawal.message': 'Are you sure you want to withdraw your candidacy?',
   'create.menu.label': 'Create',
   'create.page.title': 'Create',
   'edit.menu.label': 'Edit',
@@ -76,6 +81,7 @@ export default {
   'position.department.title_current.label': 'Department',
   'position.state_verbose.label': 'Position State',
   'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy',
+  'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
   manager: {

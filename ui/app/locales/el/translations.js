@@ -1,4 +1,9 @@
 export default {
+  'form.save.label': 'Αποθηκευση',
+  'withdrawal': 'Αποσυρση',
+  'cancel': 'Ακυρο',
+  'prompt.withdrawal.title': 'Απόσυρση Υποψηφιότητας',
+  'prompt.withdrawal.message': 'Είστε βέβαιος/η ότι θέλετε να αποσύρετε την υποψηφιότητα σας;',
   'create.menu.label': 'Δημιουργία',
   'create.page.title': 'Δημιουργία',
   'edit.menu.label': 'Τροποποίηση',
@@ -74,8 +79,9 @@ export default {
   'position.title.label': 'Τίτλος θέσης',
   'position.department.school.institution.title_current.label': 'Ιδρυμα',
   'position.department.title_current.label': 'Τμήμα',
-  'position.state_verbose.label': 'Κατάσταση θέσης',
+  'position.state_verbose.label': 'Κατάσταση Θέσης',
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε την θέση για την οποία έχετε υποβάλει υποψηφιότητα',
+  'candidacy.state': 'Κατάσταση Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
   'profile.label': 'Προφίλ',
   manager: {
@@ -101,7 +107,6 @@ export default {
       subtitle: 'Όποια στοιχεία θέσης χρειάζονται θα τοποθετηθούν εδώ.'
     },
 
-    'state_verbose.label': 'aaaa',
     candidate_section: {
       title: 'Στοιχεία Υποψηφίου',
       subtitle: 'Τα παρακάτω στοιχεία μπορείτε να τα τροποποποίησετε στο προφίλ σας.'

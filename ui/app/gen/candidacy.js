@@ -17,7 +17,7 @@ const presence = validate.presence(true),
 let FS = {
   list:  ['position.code', 'position.department.institution.title_current',
           'position.department.title_current',
-          'position.state_verbose'],
+          'position.state_verbose', field('state_verbose', {label: 'candidacy.state'})],
   create: [{
     label: 'candidacy.position_section.title',
     text: 'candidacy.position_section.subtitle',
@@ -50,6 +50,26 @@ let FS = {
     }
   }
 
+}
+
+let actions = {
+  cancelCandidacy: {
+    label: 'withdrawal',
+    icon: 'delete forever',
+    accent: true,
+    permissions: [{action: 'edit'}],
+    action(route, model) {
+      model.set('state', 'cancelled');
+      model.save();
+    },
+    confirm: true,
+    prompt: {
+      ok: 'withdrawal',
+      cancel: 'cancel',
+      message: 'prompt.withdrawal.message',
+      title: 'prompt.withdrawal.title',
+    }
+  }
 }
 
 export default ApellaGen.extend({
@@ -119,7 +139,10 @@ export default ApellaGen.extend({
     },
     row: {
       fields: FS.list,
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:details', 'gen:edit', 'cancelCandidacy'],
+      actionsMap: {
+        cancelCandidacy: actions.cancelCandidacy
+      }
     }
   },
   create: {
@@ -128,20 +151,17 @@ export default ApellaGen.extend({
   details: {
     page: {
       title: computed.reads('model.position.code')
-    }
+    },
+    actions: ['gen:edit', 'cancelCandidacy'],
+      actionsMap: {
+        cancelCandidacy:  actions.cancelCandidacy
+      }
   },
   edit: {
     fieldsets: computed('model.position.state', function() {
       let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView', 'state'];
       if (get(this, 'model.position.state') != POSITION_POSTED_ID) {
-        candidacy_fields = _.map(candidacy_fields, (field) =>{
-          // TODO: Check if position is open to enable this field for
-          // candidates
-          if(field === 'state') {
-            return field;
-          }
-          return disable_field(field);
-        });
+        candidacy_fields = _.map(candidacy_fields, disable_field);
       };
 
       return [{
