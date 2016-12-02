@@ -14,3 +14,4 @@ traitlets==4.2.2
 wcwidth==0.1.7
 wsgiref==0.1.2
 djoser==0.4.3
+apimas>=0.2

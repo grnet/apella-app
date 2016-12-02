@@ -1,8 +1,16 @@
 from setuptools import setup, find_packages
 
-# Package info
-PACKAGE_NAME = "apella"
-VERSION = "0.1"
+with open("version.txt") as f:
+    PACKAGE_NAME, VERSION, COMPATIBLE_VERSION = \
+        (x.strip() for x in f.read().strip().split())
+
+with open('requirements.txt') as f:
+    INSTALL_REQUIRES = [
+        x.strip('\n')
+        for x in f.readlines()
+        if x and x[0] != '#'
+    ]
+
 SHORT_DESCRIPTION = "Election of Faculty members"
 
 PACKAGES_ROOT = '.'
@@ -11,27 +19,17 @@ PACKAGES = find_packages(PACKAGES_ROOT)
 # Package meta
 CLASSIFIERS = []
 
-# Dependencies declared at requirements.txt
-INSTALL_REQUIRES = [
-]
-
 EXTRAS_REQUIRES = {
 }
 
 TESTS_REQUIRES = [
 ]
 
-# Provided as an attribute, so you can append to these instead
-# of replicating them:
-standard_exclude = ["*.py", "*.pyc", "*$py.class", "*~", ".*", "*.bak"]
-standard_exclude_directories = [
-    ".*", "CVS", "_darcs", "./build", "./dist", "EGG-INFO", "*.egg-info",
-]
-
 setup(
     name=PACKAGE_NAME,
+    provides=[PACKAGE_NAME + ' (' + COMPATIBLE_VERSION + ')'],
     version=VERSION,
-    license='GNU GPLv3',
+    license='GPLv3',
     description=SHORT_DESCRIPTION,
     classifiers=CLASSIFIERS,
     packages=PACKAGES,

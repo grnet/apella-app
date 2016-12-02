@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(DATA_DIR, ...)
 import os
 DATA_DIR = os.path.abspath(os.getcwd())
-RESOURCES_DIR = DATA_DIR
+RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
+SETTINGS_FILE = 'settings.conf'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -85,55 +86,13 @@ USE_L10N = True
 
 USE_TZ = False
 
-# Logging configuration
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s\
-            %(process)d %(thread)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(DATA_DIR, 'apella.log'),
-            'formatter': 'verbose'
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'apella': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO'
-        }
-    }
-}
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'apella.ApellaUser'
 
 START_DATE_END_DATE_INTERVAL = 30
 LANGUAGES = {'el', 'en'}
 
-from api_settings import API_SCHEMA
-from copy import deepcopy
-
-API_SCHEMA_TMP = deepcopy(API_SCHEMA)
-
-SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
+LOGGING = None
 
 if not os.path.isfile(SETTINGS_FILE):
     m = "Cannot find settings file {0!r}"
@@ -142,3 +101,45 @@ if not os.path.isfile(SETTINGS_FILE):
 
 execfile(SETTINGS_FILE)
 
+# Logging configuration
+if not LOGGING:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s\
+                %(process)d %(thread)d %(message)s'
+            },
+            'simple': {
+                'format': '%(levelname)s %(message)s'
+            },
+        },
+        'handlers': {
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(DATA_DIR, 'apella.log'),
+                'formatter': 'verbose'
+            },
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose'
+            }
+        },
+        'loggers': {
+            'apella': {
+                'handlers': ['console', 'file'],
+                'level': 'INFO'
+            }
+        }
+    }
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.7/howto/static-files/
+
+from api_settings import API_SCHEMA
+from copy import deepcopy
+
+API_SCHEMA_TMP = deepcopy(API_SCHEMA)

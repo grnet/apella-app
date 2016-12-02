@@ -7,19 +7,19 @@ from apimas.modeling.adapters.drf.container import Container
 from apella.views import auth_views
 
 admin.autodiscover()
-controller = Container('api')
+controller = Container('apella/api')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     controller.create_api_views(settings.API_SCHEMA),
-    url(r'^api/auth/login/$',
+    url(r'^auth/login/$',
         auth_views.CustomLoginView.as_view(), name='login'),
-    url(r'^api/auth/logout/$',
+    url(r'^auth/logout/$',
         auth_views.CustomLogoutView.as_view(), name='logout'),
-    url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user')
+    url(r'^auth/me/$', auth_views.CustomUserView.as_view(), name='user')
 ]
 
-ui_prefix = getattr(settings, 'UI_PREFIX', 'ui/')
+ui_prefix = getattr(settings, 'UI_PREFIX', 'apella/ui/')
 if ui_prefix and ui_prefix != '/':
     urlpatterns += [
         url('^$', RedirectView.as_view(url=ui_prefix))
