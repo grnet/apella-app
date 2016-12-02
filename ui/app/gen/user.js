@@ -27,9 +27,6 @@ export default ApellaGen.extend({
       label: 'user.menu_label'
     },
     layout: 'table',
-    paginate: {
-      limit: [10, 15]
-    },
     search: {
       fields: ['username', 'email', 'full_name_current','role_verbose']
     },

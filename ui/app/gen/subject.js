@@ -32,13 +32,8 @@ export default ApellaGen.extend({
       label: 'subject.menu_label'
     },
     layout: 'table',
-    paginate: {
-      limit: [10, 15]
-    },
-    sortBy: 'title_current:asc',
-    search: {
-      fields: FS.list
-    },
+    sort: { serverSide: true },
+    search: { serverSide: true },
     row: {
       fields: FS.list,
       actions: ['gen:edit', 'remove']

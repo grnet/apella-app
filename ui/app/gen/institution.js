@@ -49,9 +49,6 @@ export default ApellaGen.extend({
     },
     sortBy: 'organization:asc',
     layout: 'table',
-    paginate: {
-      limit: [10, 15, 30]
-    },
     row: {
       fields: FS.list,
       actions: ['gen:details', 'gen:edit', 'remove']

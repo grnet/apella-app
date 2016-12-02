@@ -8,7 +8,14 @@ const {
 
 const ApellaGen = CRUDGen.extend({
   auth: true,
-  resourceName: reads('path')
+  resourceName: reads('path'),
+  list: {
+    paginate: {
+      limits: [10, 40, 100],
+      serverSide: true,
+      active: true
+    }
+  }
 });
 
 export {

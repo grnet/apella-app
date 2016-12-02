@@ -27,9 +27,6 @@ export default ApellaGen.extend({
       label: 'school.menu_label'
     },
     layout: 'table',
-    paginate: {
-      limit: [10, 15]
-    },
     row: {
       fields: ['title_current', field('institution.title_current', {label: 'institution.label', type: 'text'})],
       actions: ['gen:details', 'gen:edit', 'remove']
