@@ -18,28 +18,16 @@ export default Ember.Component.extend({
 
   store: Ember.inject.service(),
   expanded: false,
-  loading: false,
 
   toggleIcon: computed('expanded', function(){
     return this.get('expanded')? 'expand-more': 'chevron-right'
   }),
 
   nodes: computed('', function(){
-    let self = this;
-    set(self, 'loading', true);
-    let item_id = get(get(this, 'item'), 'id');
     let subModel = get(this, 'subModel');
-    let lookupField = get(this, 'lookupField');
-    let field_id = `${lookupField}.id`
-    let promise = this.get('store').findAll(subModel).then(function(items) {
-      return Promise.all(items.getEach(lookupField)).then(() => {
-        return items.filterBy(field_id, item_id);
-      });
-    });
-    promise.then(function(){
-        set(self, 'loading', false);
-    });
-    return DS.PromiseArray.create({promise});
+    let query = {};
+    query[get(this, 'lookupField')] = get(get(this, 'item'), 'id');
+    return this.get('store').query(subModel, query);
   }),
 
   actions: {

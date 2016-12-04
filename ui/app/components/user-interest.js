@@ -38,7 +38,7 @@ export default Ember.Component.extend({
       }
     },
     saveInterest() {
-      let user  = get(this, 'store').findRecord('profile', 'me');
+      let user  = get(this, 'store').peekRecord('profile', 'me');
       let model = get(this, 'model');
       user.then((u) => {
         model.set('user', u);
