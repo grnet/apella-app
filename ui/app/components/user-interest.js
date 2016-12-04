@@ -40,7 +40,6 @@ export default Ember.Component.extend({
     }
   }),
 
-
   actions: {
     setInterest(value, item, type){
       if (value) {
