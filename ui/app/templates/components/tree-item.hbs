@@ -8,10 +8,8 @@
 {{/paper-checkbox}}
 
 {{#if expanded}}
-  <div style="display:none">{{loading}}</div>
-  {{#if loading }}
-    {{paper-icon "rotate-right" spin=true}}
-  {{else}}
+
+  {{#if nodes.isSettled}}
     <ul>
       {{#each nodes as |item|}}
         <li>
@@ -24,5 +22,8 @@
         No data
       {{/each}}
     </ul>
+  {{else}}
+    {{paper-icon "rotate-right" spin=true}}
   {{/if}}
+
 {{/if}}
