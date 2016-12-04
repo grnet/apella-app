@@ -16,6 +16,10 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   session: Ember.inject.service(),
 
+  user: computed('', function(){
+    return get(this, 'store').findRecord('profile', 'me');
+  }),
+
   subjectAreas: computed('', function() {
     return get(this, 'store').findAll('subject-area');
   }),
@@ -24,8 +28,16 @@ export default Ember.Component.extend({
     return get(this, 'store').findAll('institution');
   }),
 
-  userInterests: computed('model', function(){
-    return this.get('model');
+  userInterests: computed('model', 'user',  function(){
+    let user = get(this, 'user')
+    if (this.get('model') ) {
+      return this.get('model');
+    } else {
+      return this.get('store').createRecord('user-interest', {
+        user: user
+      });
+
+    }
   }),
 
 
@@ -38,8 +50,8 @@ export default Ember.Component.extend({
       }
     },
     saveInterest() {
-      let user  = get(this, 'store').peekRecord('profile', 'me');
-      let model = get(this, 'model');
+      let user  = get(this, 'user');
+      let model = get(this, 'userInterests');
       user.then((u) => {
         model.set('user', u);
         model.save();
