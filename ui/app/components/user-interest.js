@@ -40,6 +40,21 @@ export default Ember.Component.extend({
     }
   }),
 
+  successMessage: null,
+  errorMessage: null,
+  setSuccessMessage: function() {
+    set(this, 'successMessage', 'form.saved');
+  },
+  setErrorMessage: function(msg) {
+    set(this, 'errorMessage', msg);
+  },
+
+  resetMessages: function() {
+    set(this, 'successMessage', null);
+    set(this, 'errorMessage', null);
+  },
+
+
   actions: {
     setInterest(value, item, type){
       if (value) {
@@ -49,11 +64,16 @@ export default Ember.Component.extend({
       }
     },
     saveInterest() {
+      this.resetMessages();
       let user  = get(this, 'user');
       let model = get(this, 'userInterests');
       user.then((u) => {
         model.set('user', u);
-        model.save();
+        model.save().then((model) => {
+          this.setSuccessMessage();
+        }).catch((err) => {
+          this.setErrorMessage(err)
+        });
       })
     }
   }
