@@ -85,6 +85,7 @@ export default {
   'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
+  'userInterest.info': 'Blah blah blah<br>blah',
   manager: {
     menu_label: 'Institution Managers',
     label: {

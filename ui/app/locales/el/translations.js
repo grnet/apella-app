@@ -85,6 +85,7 @@ export default {
   'candidacy.state': 'Κατάσταση Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
   'profile.label': 'Προφίλ',
+  'userInterest.info': 'Μπλα μπλα μπλα',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
     label: {
