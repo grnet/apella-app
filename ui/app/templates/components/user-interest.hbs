@@ -8,31 +8,39 @@
 <div class="container">
   <div class="item">
     <h3>{{ t 'subject_area.menu_label' }}</h3>
-    <ul>
-      {{#each subjectAreas as |item|}}
-        {{tree-item item=item
-                    model='subject-area'
-                    subModel='subject'
-                    lookupField='area'
-                    selected=userInterests.area
-                    subSelected=userInterests.subject
-                    onChange=(action 'setInterest')}}
-      {{/each}}
-    </ul>
+    {{#if subjectAreas.isSettled}}
+      <ul>
+        {{#each subjectAreas as |item|}}
+          {{tree-item item=item
+                      model='subject-area'
+                      subModel='subject'
+                      lookupField='area'
+                      selected=userInterests.area
+                      subSelected=userInterests.subject
+                      onChange=(action 'setInterest')}}
+        {{/each}}
+      </ul>
+    {{else}}
+      {{paper-icon "rotate-right" spin=true}}
+    {{/if}}
   </div>
   <div class="item">
     <h3>{{ t 'institution.menu_label' }}</h3>
-    <ul>
-      {{#each institutions as |item|}}
-        {{tree-item item=item
-                    model='institution'
-                    subModel='department'
-                    lookupField='institution'
-                    selected=userInterests.institution
-                    subSelected=userInterests.department
-                    onChange=(action 'setInterest')}}
-      {{/each}}
-    </ul>
+    {{#if institutions.isSettled}}
+      <ul>
+        {{#each institutions as |item|}}
+          {{tree-item item=item
+                      model='institution'
+                      subModel='department'
+                      lookupField='institution'
+                      selected=userInterests.institution
+                      subSelected=userInterests.department
+                      onChange=(action 'setInterest')}}
+        {{/each}}
+      </ul>
+    {{else}}
+      {{paper-icon "rotate-right" spin=true}}
+    {{/if}}
   </div>
 </div>
 <p>{{{t 'userInterest.info'}}}</p>
