@@ -12,8 +12,8 @@
       <ul>
         {{#each subjectAreas as |item|}}
           {{tree-item item=item
-                      model='subject-area'
-                      subModel='subject'
+                      modelType='subject-area'
+                      subModelType='subject'
                       lookupField='area'
                       selected=userInterests.area
                       subSelected=userInterests.subject
@@ -30,8 +30,8 @@
       <ul>
         {{#each institutions as |item|}}
           {{tree-item item=item
-                      model='institution'
-                      subModel='department'
+                      modelType='institution'
+                      subModelType='department'
                       lookupField='institution'
                       selected=userInterests.institution
                       subSelected=userInterests.department

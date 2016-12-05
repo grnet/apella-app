@@ -24,24 +24,25 @@ export default Ember.Component.extend({
   }),
 
   nodes: computed('', function(){
-    let subModel = get(this, 'subModel');
+    let subModelType = get(this, 'subModelType');
     let query = {};
     query[get(this, 'lookupField')] = get(get(this, 'item'), 'id');
-    return this.get('store').query(subModel, query);
+    return this.get('store').query(subModelType, query);
+
   }),
 
   actions: {
     toggle(item) {
       this.toggleProperty('expanded');
     },
-    handleChange(value, item, model, subModel) {
-      let type = model;
+    handleChange(value, item, modelType, subModelType) {
+      let type = modelType;
       let self = this;
-      if (model=='subject-area') { type = 'area' }
-      if (subModel) {
+      if (modelType=='subject-area') { type = 'area' }
+      if (subModelType) {
         let nodes = get(this, 'nodes');
         nodes.forEach(function(el){
-          self.sendAction('onChange', value, el, subModel);
+          self.sendAction('onChange', value, el, subModelType);
         });
       }
       this.sendAction('onChange', value, item, type);
