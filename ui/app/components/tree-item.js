@@ -16,9 +16,11 @@ const {
 
 export default Ember.Component.extend({
   tagName: 'li',
+  classNameBindings: ['partiallySelected:partial'],
 
   store: Ember.inject.service(),
   expanded: false,
+  partiallySelected: false,
 
   rootIsSelected: computed('item', 'selected.[]', function(){
     return get(this, 'selected').includes(get(this, 'item'));
@@ -62,10 +64,14 @@ export default Ember.Component.extend({
             }
           })
           if (cnt == 0) {
+            set(self, 'partiallySelected', false);
             this.sendAction('onChange', true, el, type);
-          }
-          if (cnt == nodesNum) {
+          } else if (cnt == nodesNum) {
+            set(self, 'partiallySelected', false);
             self.sendAction('onChange', false, el, type);
+          } else {
+            set(self, 'partiallySelected', true);
+            this.sendAction('onChange', true, el, type);
           }
         }
       });
