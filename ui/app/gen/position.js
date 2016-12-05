@@ -1,3 +1,5 @@
+import {field} from 'ember-gen';
+import {disable_field} from 'ui/utils/common/fields';
 import {ApellaGen} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
@@ -50,9 +52,9 @@ export default ApellaGen.extend({
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
       fields: [
-        'title', 'author', ['state', {disabled: true}], 'description',
+        'title', 'author', disable_field('state'), 'description',
         'discipline', 'department', 'subject_area', 'subject',
-        ['department_dep_number', {disabled: true}]
+        disable_field('department_dep_number')
       ],
       layout: {
         flex: [100, 50, 50, 100, 50, 50, 50, 50, 50]
@@ -68,15 +70,11 @@ export default ApellaGen.extend({
   create: {
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: ['title', 'author',
-        ['state', {
-          attrs: {
-            readonly: true,
-          }
-        }],
-        'description', 'discipline', 'department', 'subject_area', 'subject', 'department_dep_number'],
+      fields: ['department', disable_field('department_dep_number'), 'title',
+        disable_field('state'), 'description', 'discipline','subject_area',
+        'subject', 'author'],
       layout: {
-        flex: [100, 50, 50, 100, 50, 50, 50, 50]
+        flex: [50, 50, 50, 50, 50, 100, 100, 50, 50]
       }
     }, {
       label: 'fieldsets.labels.details',
@@ -96,7 +94,7 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: ['code', 'title', 'state_verbose'],
+      fields: ['code', 'title', 'state_verbose', field('department.title_current', {label: 'department.label'})],
       actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove' ],
       actionsMap: {
         applyCandidacy: {

@@ -36,7 +36,7 @@ export default DS.Model.extend({
     }
   }),
   fek: DS.attr(),
-  fek_posted_at: DS.attr('date', {formAttrs: {time: true}}),
+  fek_posted_at: DS.attr('date'),
   assistants: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   electors: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   committee: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
