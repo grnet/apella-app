@@ -115,15 +115,15 @@ export default ApellaGen.extend({
     getModel: function(params) {
       // TODO replace with session's user group
       let userGroup = 'admin';
+      let qs = this.getModelQuery(params);
       if (userGroup == 'admin') {
-        return this.store.findAll('candidacy');
+        return this.store.query('candidacy', qs);
       } else {
       // TODO replace with session's user
         let userId = '2';
-        return this.store.query('candidacy', {
-          'state': CANDIDACY_POSTED_ID,
-          'candidate': userId,
-        });
+        qs['state'] = CANDIDACY_POSTED_ID;
+        qs['candidate'] = userId;
+        return this.store.query('candidacy', qs);
       }
     },
     sortBy: 'position.code:asc',
