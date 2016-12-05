@@ -1,5 +1,6 @@
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, i18nField} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
+import {field} from 'ember-gen/lib/util';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 
@@ -9,7 +10,7 @@ const {
 } = Ember;
 
 let FS = {
-  list : ['title_current', 'area.title_current']
+  list : [i18nField('title'), i18nField('area.title')]
 }
 
 
@@ -32,8 +33,6 @@ export default ApellaGen.extend({
       label: 'subject.menu_label'
     },
     layout: 'table',
-    sort: { serverSide: true },
-    search: { serverSide: true },
     row: {
       fields: FS.list,
       actions: ['gen:edit', 'remove']

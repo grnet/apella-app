@@ -2,7 +2,7 @@ import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, i18nField, computedField} from 'ui/lib/common';
 
 const {
   computed,
@@ -12,8 +12,8 @@ const {
 
 let FS = {
   list: [
-    field('title_current', {dataKey: 'title'}), 
-    field('category_verbose', {dataKey: 'category'}), 
+    i18nField('title'), 
+    computedField('category_verbose', 'category'), 
     'organization',
     'regulatory_framework'
   ]
@@ -47,7 +47,11 @@ export default ApellaGen.extend({
       icon: 'location_city',
       label: 'institution.menu_label'
     },
-    sortBy: 'organization:asc',
+    sort: {
+      active: true,
+      serverSide: true,
+      fields: ['title']
+    },
     layout: 'table',
     row: {
       fields: FS.list,
