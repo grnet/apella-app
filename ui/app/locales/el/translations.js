@@ -2,6 +2,7 @@ export default {
   'form.save.label': 'Αποθηκευση',
   'withdrawal': 'Αποσυρση',
   'cancel': 'Ακυρο',
+  'applyCandicacy': 'Υποβολή Υποψηφιοτητας',
   'prompt.withdrawal.title': 'Απόσυρση Υποψηφιότητας',
   'prompt.withdrawal.message': 'Είστε βέβαιος/η ότι θέλετε να αποσύρετε την υποψηφιότητα σας;',
   'create.menu.label': 'Δημιουργία',

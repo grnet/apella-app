@@ -100,9 +100,11 @@ export default ApellaGen.extend({
       actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove' ],
       actionsMap: {
         applyCandidacy: {
-          label: 'position.button.apply',
-          action(item){
-            // TBA...
+          label: 'applyCandidacy',
+          icon: 'playlist add',
+          permissions: [{'resource': 'candidacies', 'action': 'create'}],
+          action(route, model){
+            console.log(get(model, 'code'))
           }
         }
       }
