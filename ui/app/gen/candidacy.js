@@ -115,7 +115,7 @@ export default ApellaGen.extend({
     getModel: function(params) {
       // TODO replace with session's user group
       let userGroup = 'admin';
-      let qs = this.getModelQuery(params);
+      let qs = this.getModelQueryParams(params);
       if (userGroup == 'admin') {
         return this.store.query('candidacy', qs);
       } else {
