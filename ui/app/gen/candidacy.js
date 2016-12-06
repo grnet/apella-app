@@ -60,7 +60,12 @@ let actions = {
     permissions: [{action: 'edit'}],
     action(route, model) {
       model.set('state', 'cancelled');
-      model.save();
+      return model.save().then(function(value) {
+        return value;
+      }, function(reason) {
+        model.rollbackAttributes();
+      return reason;
+      });
     },
     confirm: true,
     prompt: {
