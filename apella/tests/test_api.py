@@ -36,7 +36,7 @@ EXTRA_DATA = {
     Department: {"id": 98, "institution": "", "school": "", "dep_number": 20},
     InstitutionManager: {
         "authority_full_name": "John Doe",
-        "manager_role": "1", "institution": "", "authority": "1",
+        "manager_role": "manager", "institution": "", "authority": "1",
         "sub_home_phone_number": "", "sub_last_name": {"el": "", "en": ""},
         "sub_mobile_phone_number": "", "sub_father_name": {"el": "", "en": ""},
         "sub_first_name": {"el": "", "en": ""}, "sub_email": ""},
@@ -168,12 +168,30 @@ class APIMultiLangTest(APITestCase):
 
             response = self.client.patch(
                 response.data['url'], self.update_user_data, format='json')
-            print response
             self.assertEqual(response.status_code, status.HTTP_200_OK)
             obj = response.data
             self.assertEqual(
                 obj['user']['first_name']['en'],
                 self.update_user_data['user']['first_name']['en'])
+
+        assistants_url = reverse('assistants-list')
+        username = 'test100' + str(i)
+        self.nested_user_data['user']['username'] = username
+        email = str(i) + '100' + self.nested_user_data['user']['email']
+        self.nested_user_data['user']['email'] = email
+        self.nested_user_data['can_create_registries'] = True
+        self.nested_user_data['can_create_positions'] = False
+        self.nested_user_data['manager_role'] = 'assistant'
+
+        manager = InstitutionManager.objects.get()
+        manager.user.role = 'institutionmanager'
+        manager.save()
+        token = Token.objects.create(user=manager.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.client.force_authenticate(user=manager.user, token=token)
+        response = self.client.post(
+            assistants_url, self.nested_user_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
 class APIPositionTest(APITestCase):

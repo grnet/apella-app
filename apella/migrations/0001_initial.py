@@ -110,6 +110,8 @@ class Migration(migrations.Migration):
                 ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
                 ('sub_mobile_phone_number', models.CharField(max_length=30, null=True, blank=True)),
                 ('sub_home_phone_number', models.CharField(max_length=30, null=True, blank=True)),
+                ('can_create_registries', models.BooleanField(default=False)),
+                ('can_create_positions', models.BooleanField(default=False)),
                 ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
             ],
             options={

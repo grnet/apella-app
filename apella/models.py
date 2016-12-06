@@ -181,6 +181,8 @@ class InstitutionManager(UserProfile):
         max_length=30, blank=True, null=True)
     sub_home_phone_number = models.CharField(
         max_length=30, blank=True, null=True)
+    can_create_registries = models.BooleanField(default=False)
+    can_create_positions = models.BooleanField(default=False)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
@@ -231,9 +233,7 @@ class Position(models.Model):
         super(Position, self).save(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
-        return InstitutionManager.objects.filter(
-            user_id=request.user.id,
-            institution_id=self.department.institution.id).exists()
+        return request.user.id == self.author.user.id
 
     def check_resource_state_open(self, row, request, view):
         return self.state == 'posted' and self.ends_at > timezone.now()
@@ -249,6 +249,14 @@ class Position(models.Model):
 
     def check_resource_state_participates(self, row, request, view):
         return professor_participates(request.user.id, self.id)
+
+    @classmethod
+    def check_collection_state_can_create(cls, row, request, view):
+        r = InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            manager_role='assistant',
+            can_create_positions=True).exists()
+        return r
 
 
 class PositionFiles(models.Model):
@@ -318,6 +326,13 @@ class Registry(models.Model):
         return InstitutionManager.objects.filter(
             user_id=request.user.id,
             institution_id=self.department.institution.id).exists()
+
+    @classmethod
+    def check_collection_state_can_create(cls, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            manager_role='assistant',
+            can_create_registries=True).exists()
 
 
 class UserInterest(models.Model):

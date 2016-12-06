@@ -1223,6 +1223,16 @@ spec:
                     .drf_field: {}
                     .string: {}
                     .required: {}
+                can_create_registries:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                can_create_positions:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
                 user:
                     .cli_option: {}
                     .field: {}
