@@ -25,6 +25,20 @@ export default ApellaGen.extend({
     }
   },
   list: {
+    sort: {
+      active: true,
+      fields: ['title'],
+      serverSide: true
+    },
+    filter: {
+      active: true,
+      meta: {
+        fields: [i18nField('title'), 'area']
+      },
+      serverSide: true,
+      search: true,
+      searchFields: ['title']
+    },
     page: {
       title: 'subject.menu_label',
     },

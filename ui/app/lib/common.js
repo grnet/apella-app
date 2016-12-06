@@ -36,6 +36,7 @@ function i18nField(key, attrs) {
       let locale = get(this, 'i18n.locale');
       return `${key}.${locale}`;
     }),
+    filterKey: reads('sortKey'),
     dataKey: key,
     formComponent: 'i18n-input-field'
   }, attrs));
