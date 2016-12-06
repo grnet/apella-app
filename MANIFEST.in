@@ -1,3 +1,4 @@
 include *.txt *.md
 recursive-include resources *
+recursive-include ui/dist *
 prune apella/tests
