@@ -31,6 +31,7 @@ for resource in spec['api'].values():
 
 adapter.construct(config.get('spec'))
 adapter.apply()
+serializers = adapter.get_serializers()
 
 api_prefix = settings.API_PREFIX
 apipatterns = [
