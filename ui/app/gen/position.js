@@ -70,9 +70,8 @@ export default ApellaGen.extend({
   create: {
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: ['department', disable_field('department_dep_number'), 'title',
-        disable_field('state'), 'description', 'discipline','subject_area',
-        'subject', 'author'],
+      fields: ['department', 'title', disable_field('state'), 'description',
+        'discipline','subject_area', 'subject', 'author'],
       layout: {
         flex: [50, 50, 50, 50, 50, 100, 100, 50, 50]
       }
