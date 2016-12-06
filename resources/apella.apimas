@@ -559,6 +559,12 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
             actions:
                 .list: {}
                 .create: {}
@@ -820,6 +826,12 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
             actions:
                 .list: {}
                 .create: {}
@@ -930,6 +942,12 @@ spec:
                             .string: {}
                             .required: {}
                         home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        role:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
