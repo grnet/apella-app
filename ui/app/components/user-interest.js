@@ -2,7 +2,7 @@ import Ember from 'ember';
 import _ from 'lodash/lodash';
 
 const {
-  RSVP: { Promise },
+  RSVP: { Promise, all },
   assert,
   get,
   set,
@@ -16,6 +16,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   session: Ember.inject.service(),
 
+
   user: computed('', function(){
     return get(this, 'store').findRecord('profile', 'me');
   }),
@@ -27,6 +28,22 @@ export default Ember.Component.extend({
   institutions: computed('', function() {
     return get(this, 'store').findAll('institution');
   }),
+
+  partialArea: computed('userInterests.subject.[]', function() {
+    let ui = get(this, 'userInterests').get('subject');
+    let promise = ui.then((items) => {
+      return Ember.RSVP.all(items.getEach('area'));
+    });
+    return DS.PromiseArray.create({promise});
+   }),
+
+  partialInstitution: computed('userInterests.department.[]', function() {
+    let ui = get(this, 'userInterests').get('department');
+    let promise = ui.then((items) => {
+      return Ember.RSVP.all(items.getEach('institution'));
+    });
+    return DS.PromiseArray.create({promise});
+   }),
 
   userInterests: computed('model', 'user',  function(){
     let user = get(this, 'user')

@@ -15,6 +15,7 @@
                       modelType='subject-area'
                       subModelType='subject'
                       lookupField='area'
+                      partiallySelected=(and (not (array-contains userInterests.area item)) (array-contains partialArea item) )
                       selected=userInterests.area
                       subSelected=userInterests.subject
                       onChange=(action 'setInterest')}}
@@ -33,6 +34,7 @@
                       modelType='institution'
                       subModelType='department'
                       lookupField='institution'
+                      partiallySelected=(and (not (array-contains userInterests.institution item)) (array-contains partialInstitution item) )
                       selected=userInterests.institution
                       subSelected=userInterests.department
                       onChange=(action 'setInterest')}}
