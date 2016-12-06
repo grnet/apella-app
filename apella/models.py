@@ -302,7 +302,7 @@ class Candidacy(models.Model):
         return self.check_resource_state_owned(row, request, view) \
                 and self.position.check_resource_state_open(
                         row, request, view) \
-                and self.state == 'cancelled'
+                and self.state == 'posted'
 
 
 class CandidacyFiles(object):
