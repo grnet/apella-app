@@ -964,7 +964,8 @@ spec:
             .drf_collection:
                 model: apella.models.Position
                 model_serializers: [apella.serializers.mixins.Position]
-                mixins: [apella.views.mixins.PositionList]
+                mixins: [apella.views.mixins.PositionList,
+                    apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [title, description, author]
                 ordering_fields: [title, description]
                 search_fields: [title, description]
@@ -1143,7 +1144,6 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .boolean: {}
                 submitted_at:
                     .cli_option: {}

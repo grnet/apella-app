@@ -142,7 +142,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('department_dep_number', models.IntegerField()),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
-                ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
+                ('author', models.ForeignKey(related_name='authored_positions', blank=True, to='apella.InstitutionManager')),
             ],
         ),
         migrations.CreateModel(
@@ -312,7 +312,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='candidacy',
             name='position',
-            field=models.ForeignKey(to='apella.Position'),
+            field=models.ForeignKey(to='apella.Position', on_delete=django.db.models.deletion.PROTECT),
         ),
         migrations.AddField(
             model_name='apellauser',

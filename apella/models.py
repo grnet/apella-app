@@ -280,7 +280,7 @@ class PositionFiles(models.Model):
 
 class Candidacy(models.Model):
     candidate = models.ForeignKey(ApellaUser)
-    position = models.ForeignKey(Position)
+    position = models.ForeignKey(Position, on_delete=models.PROTECT)
     state = models.CharField(
         choices=common.CANDIDACY_STATES, max_length=30, default='posted')
     others_can_view = models.BooleanField(default=False)
