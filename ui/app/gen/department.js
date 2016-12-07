@@ -37,7 +37,12 @@ export default ApellaGen.extend({
   },
   details: {
     page: {
-      title: computed.readOnly('model.id')
+      title: computed.readOnly('model.title_current')
     },
+  },
+  create: {
+    onSubmit(model) {
+      this.transitionTo('department.record.index', model)
+    }
   }
 });
