@@ -1001,6 +1001,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .readonly: {}
                     .ref:
                         to: institution-managers
                 department:
