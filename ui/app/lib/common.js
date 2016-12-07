@@ -52,7 +52,31 @@ function computedField(key, dependency, attrs) {
   }, attrs));
 }
 
+function computeI18N(key, ...args) {
+  let hook, lastArg = args[args.length - 1];
+  if (typeof lastArg === 'function') { hook = args.pop(); }
+  return computed(key, 'i18n.locale', ...args, function() {
+    let activeLang = get(this, 'i18n.locale');
+    let value = get(this, key);
+    if (hook) { return hook.apply(this, [value, activeLang]); }
+    return value && value[activeLang];
+  });
+}
+
+function computeI18NChoice(key, choices, ...args) {
+  let hook, lastArg = args[args.length - 1];
+  if (typeof lastArg === 'function') { hook = args.pop(); }
+  let choicesValues = choices.map((key) => key[0]);
+
+  return computed(key, 'i18n.locale', ...args, function() {
+    let i18n = get(this, 'i18n');
+    let value = get(this, key);
+    let i18nKey = choices[choicesValues.indexOf(value)][1];
+    return value && i18nKey && i18n.t(i18nKey);
+  });
+}
+
 export {
-  ApellaGen, i18nField, computedField
+  ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice
 };
 
