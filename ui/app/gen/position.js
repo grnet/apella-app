@@ -18,7 +18,7 @@ export default ApellaGen.extend({
   path: 'positions',
 
   abilityStates: {
-    owned: computed('role', function() { 
+    owned: computed('role', function() {
       return get(this, 'role') === 'institutionmanager';
     }), // we expect server to reply with owned resources
     'open': computed('model.state', 'model.ends_at', function() {
@@ -45,7 +45,9 @@ export default ApellaGen.extend({
       starts_at: [afterToday()],
       fek_posted_at: [beforeToday()],
       ends_at: [notHoliday(), afterDays({on:'starts_at', days:30})],
-      fek: [validate.format({type: 'url'})],
+      fek: [validate.format({type:'url'}),
+            validate.format({regex: /^(https:\/\/|http:\/\/)/i,
+                             message: 'It should start with http or https'})],
       department_dep_number: [validate.presence(true), validate.number({integer: true})]
 
     },
