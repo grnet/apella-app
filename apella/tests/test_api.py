@@ -30,8 +30,8 @@ NESTED_USER_APIS = [
 
 EXTRA_DATA = {
     Institution: {
-        "category": "Research", "organization": "org",
-        "regulatory_framework": "reg"},
+        "category": "Research", "organization": "http://www.in.gr",
+        "regulatory_framework": "http://www.in.gr"},
     School: {"institution": ""},
     Department: {"id": 98, "institution": "", "school": "", "dep_number": 20},
     InstitutionManager: {
