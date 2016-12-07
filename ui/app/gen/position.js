@@ -70,12 +70,15 @@ export default ApellaGen.extend({
     }],
   },
   create: {
+    onSubmit(model) {
+      this.transitionTo('position.record.index', model);
+    },
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: ['department', 'title', disable_field('state'), 'description',
-        'discipline','subject_area', 'subject', 'author'],
+      fields: [disable_field('state'), 'department', 'title', 'description',
+        'discipline','subject_area', 'subject'],
       layout: {
-        flex: [50, 50, 50, 50, 50, 100, 100, 50, 50]
+        flex: [50, 50, 50, 100, 100, 50, 50]
       }
     }, {
       label: 'fieldsets.labels.details',
