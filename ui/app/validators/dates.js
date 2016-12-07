@@ -8,13 +8,14 @@ const {
         get
       } = Ember,
       TODAY = new Date(),
+      TOMORROW = moment(TODAY).add(1, 'day'),
       HOLIDAYS = ENV.APP.resource_holidays,
       DATE_FORMAT = ENV.APP.date_format;
 
 
 export function afterToday(options) {
   return (key, value) => {
-    if (moment(value).isAfter(TODAY)) {
+    if (moment(value).isAfter(TOMORROW)) {
       return true;
     } else {
       return `${moment(value).format(DATE_FORMAT)} should be after today`;
