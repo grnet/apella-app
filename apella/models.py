@@ -207,7 +207,8 @@ class Position(models.Model):
     description = models.CharField(max_length=300)
     discipline = models.CharField(max_length=300)
     author = models.ForeignKey(
-            InstitutionManager, related_name='authored_positions')
+            InstitutionManager, related_name='authored_positions',
+            blank=True)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     subject_area = models.ForeignKey(SubjectArea, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)

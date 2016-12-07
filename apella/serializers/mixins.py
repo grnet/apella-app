@@ -7,7 +7,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework.utils import model_meta
 
-from apella.models import ApellaUser, Position, MultiLangFields
+from apella.models import ApellaUser, Position, MultiLangFields, \
+    InstitutionManager
 
 
 class ValidatorMixin(object):
@@ -29,6 +30,15 @@ def get_dep_number(data):
     return dep_number
 
 
+def get_author(request):
+    try:
+        manager = InstitutionManager.objects.get(id=request.user.id)
+    except InstitutionManager.DoesNotExist:
+        raise serializers.ValidationError(
+            {"author": "Only Institution Managers can create new positions"})
+    return manager
+
+
 class Position(ValidatorMixin):
 
     def validate(self, data):
@@ -43,8 +53,10 @@ class Position(ValidatorMixin):
         return data
 
     def create(self, validated_data):
+        validated_data['state'] = 'posted'
         validated_data['department_dep_number'] = \
             get_dep_number(validated_data)
+        validated_data['author'] = get_author(self.context.get('request'))
         return super(Position, self).create(validated_data)
 
 

@@ -997,7 +997,6 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .ref:
                         to: institution-managers
                 department:
@@ -1061,8 +1060,8 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .string: {}
+                    .blankable: {}
                 starts_at:
                     .cli_option: {}
                     .field: {}
