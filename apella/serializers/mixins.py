@@ -14,8 +14,13 @@ from apella.models import ApellaUser, Position, MultiLangFields, \
 class ValidatorMixin(object):
 
     def validate(self, data):
-        model = self.Meta.model
-        instance = model(**data)
+        instance = getattr(self, 'instance')
+        if not instance:
+            model = self.Meta.model
+            instance = model(**data)
+        else:
+            for attr, val in data.items():
+                setattr(instance, attr, val)
         instance.clean()
         return super(ValidatorMixin, self).validate(data)
 
