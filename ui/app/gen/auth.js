@@ -13,7 +13,7 @@ const {
 export default AuthGen.extend({
   login: {
     config: {
-      authenticator: 'custom'
+      authenticator: 'apimas'
     }
   },
 
@@ -27,7 +27,7 @@ export default AuthGen.extend({
         },
         templateName: 'user-interests',
         routeBaseClass: routes.EditRoute,
-        menu: { 
+        menu: {
           display: true,
           icon: 'access_alarm',
           label: 'user.positions.interests'
