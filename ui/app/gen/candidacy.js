@@ -59,13 +59,16 @@ let actions = {
     accent: true,
     permissions: [{action: 'edit'}],
     action(route, model) {
-      model.set('state', 'cancelled');
-      return model.save().then(function(value) {
-        return value;
-      }, function(reason) {
-        model.rollbackAttributes();
-      return reason;
-      });
+      return model.get('candidate').then(() => {
+        model.set('state', 'cancelled');
+        return model.save().then((value) => {
+          return value;
+        }, (reason) => {
+          model.rollbackAttributes();
+          window.alert(reason)
+        return reason;
+        });
+      })
     },
     confirm: true,
     prompt: {
