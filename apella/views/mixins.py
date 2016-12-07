@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import generics
 from django.db.models import ProtectedError
 
-from apella.models import InstitutionManager, Position
+from apella.models import InstitutionManager, Position, Department
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -22,8 +22,20 @@ class AssistantList(generics.ListAPIView):
 
 
 class PositionList(generics.ListAPIView):
+    """
+        role institutionmanager: filter positions by institution/department
+        role assistant: filter positions by author
+    """
     def get_queryset(self):
-        if self.request.user.role == 'institutionmanager':
-            return Position.objects.filter(
-                author__user_id=self.request.user.id)
+        if InstitutionManager.objects.filter(
+                user_id=self.request.user.id).exists():
+            im = InstitutionManager.objects.get(user_id=self.request.user.id)
+            if im.user.role == 'institutionmanager':
+                departments = Department.objects.filter(
+                    institution_id=im.institution.id)
+                return Position.objects.filter(
+                    department__in=departments)
+            elif im.user.role == 'assistant':
+                return Position.objects.filter(
+                    author__user_id=im.user.id)
         return super(PositionList, self).get_queryset()
