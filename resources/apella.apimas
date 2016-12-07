@@ -155,9 +155,9 @@ spec:
                 model: apella.models.Institution
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
-                #filter_fields: [title__en, title__el]
-                #ordering_fields: [title__en, title__el]
-                #search_fields: [title__en, title__el]
+                filter_fields: [title__en, title__el]
+                ordering_fields: [title__en, title__el]
+                search_fields: [title__en, title__el]
             .cli_commands: {}
             '*':
                 id:
