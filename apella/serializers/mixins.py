@@ -3,6 +3,7 @@ from rest_framework import serializers
 from rest_framework.utils import model_meta
 
 from apella.models import ApellaUser, Position, InstitutionManager
+from apella.views.auth_views import CustomUserView
 
 
 class ValidatorMixin(object):
@@ -104,3 +105,13 @@ class NestedWritableObjectsMixin(object):
         instance = update_objects(
             self.get_fields(), validated_data, instance=instance)
         return instance
+
+
+class HelpdeskUsers(object):
+
+    def to_representation(self, obj):
+        data = super(HelpdeskUsers, self).to_representation(obj)
+        if (obj.role == 'helpdeskadmin' or obj.role == 'helpdeskuser') \
+                and isinstance(self.context['view'], CustomUserView):
+            data = {'user': data}
+        return data

@@ -32,7 +32,9 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.ApellaUser
-                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [
+                    apella.serializers.mixins.NestedWritableObjectsMixin,
+                    apella.serializers.mixins.HelpdeskUsers]
             .cli_commands: {}
             '*':
                 id:
