@@ -3,7 +3,7 @@ import {disable_field} from 'ui/utils/common/fields';
 import {ApellaGen} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
-import {afterToday, beforeToday, notHoliday, afterDays} from 'ui/validators/dates';
+import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
 import moment from 'moment';
 
 
@@ -44,7 +44,7 @@ export default ApellaGen.extend({
       description: [validate.presence(true), validate.length({max:300})],
       starts_at: [afterToday()],
       fek_posted_at: [beforeToday()],
-      ends_at: [notHoliday(), afterDays({on:'starts_at', days:30})],
+      ends_at: [afterDays({on:'starts_at', days:30})],
       fek: [validate.format({type:'url'}),
             validate.format({regex: /^(https:\/\/|http:\/\/)/i,
                              message: 'It should start with http or https'})],
