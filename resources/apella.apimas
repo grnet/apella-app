@@ -964,6 +964,10 @@ spec:
             .drf_collection:
                 model: apella.models.Position
                 model_serializers: [apella.serializers.mixins.Position]
+                mixins: [apella.views.mixins.PositionList]
+                filter_fields: [title, description, author]
+                ordering_fields: [title, description]
+                search_fields: [title, description]
             .cli_commands: {}
             '*':
                 id:
