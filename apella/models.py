@@ -150,9 +150,16 @@ class Professor(UserProfile):
     discipline_text = models.CharField(max_length=300)
     discipline_in_fek = models.BooleanField(default=True)
 
+    def save(self, *args, **kwargs):
+        self.user.role = 'professor'
+        super(Professor, self).save(*args, **kwargs)
+
 
 class Candidate(UserProfile):
-    pass
+
+    def save(self, *args, **kwargs):
+        self.user.role = 'candidate'
+        super(Candidate, self).save(*args, **kwargs)
 
 
 class UserFiles(models.Model):
@@ -189,6 +196,10 @@ class InstitutionManager(UserProfile):
             user_id=request.user.id,
             institution_id=self.institution.id,
             manager_role='manager').exists()
+
+    def save(self, *args, **kwargs):
+        self.user.role = 'institutionmanager'
+        super(InstitutionManager, self).save(*args, **kwargs)
 
 
 class Position(models.Model):

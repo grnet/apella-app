@@ -564,7 +564,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .required: {}
+                            .readonly: {}
             actions:
                 .list: {}
                 .create: {}
@@ -831,7 +831,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .required: {}
+                            .readonly: {}
             actions:
                 .list: {}
                 .create: {}
@@ -952,7 +952,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .required: {}
+                            .readonly: {}
             actions:
                 .list: {}
                 .create: {}
