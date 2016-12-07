@@ -14,11 +14,6 @@ export default DS.Model.extend({
   discipline: DS.attr(),
   department_dep_number: DS.attr(),
 
-  author: DS.belongsTo('institution-manager', {
-    formAttrs: {
-      optionLabelAttr: 'full_name_current'
-    }
-  }),
   department: DS.belongsTo('department', {
     formAttrs: {
       optionLabelAttr: 'title_current'

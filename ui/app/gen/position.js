@@ -53,13 +53,10 @@ export default ApellaGen.extend({
     },
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: [
-        'title', 'author', disable_field('state'), 'description',
-        'discipline', 'department', 'subject_area', 'subject',
-        disable_field('department_dep_number')
-      ],
+      fields: [disable_field('state'), 'department', 'title', 'description',
+        'discipline', 'subject_area', 'subject'],
       layout: {
-        flex: [100, 50, 50, 100, 50, 50, 50, 50, 50]
+        flex: [50, 50, 50, 100, 100, 50, 50]
       }
     }, {
       label: 'fieldsets.labels.details',
