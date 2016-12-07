@@ -30,7 +30,24 @@ export default ApellaGen.extend({
     },{
       label: 'registry.members_section.title',
       fields: [field('members', { label: null,
-        modelMeta: { search: { fields: ['id', 'last_name_current', 'first_name_current', 'email'] }, sortBy: ['last_name_current'], row: { fields: ['id', 'last_name_current', 'first_name_current', 'email', 'institution.title_current', 'department.title_current', 'rank'] } } })]
+        modelMeta: { 
+          filter: { 
+            active: false,
+            search: true,
+            searchFields: ['last_name_current']
+          },
+          sort: {
+            active: true,
+            sortBy: 'last_name_current'
+          },
+          paginate: {
+            active: true 
+          },
+          row: { 
+            fields: ['id', 'last_name_current', 'first_name_current', 'email', 'institution.title_current', 'department.title_current', 'rank']
+          }
+        }
+      })]
     }]
   },
 
