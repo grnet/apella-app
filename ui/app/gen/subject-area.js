@@ -11,7 +11,7 @@ const {
 export default ApellaGen.extend({
   modelName: 'subject_area',
   auth: true,
-  path: 'subject_areas',
+  path: 'subject-areas',
   common: {
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
