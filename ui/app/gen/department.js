@@ -28,7 +28,7 @@ export default ApellaGen.extend({
       label: 'department.menu_label',
       display: computed(function() {
         let role = get(this, 'session.session.authenticated.role');
-        let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin', 'institutionmanager'];
 
         return (permittedRoles.includes(role) ? true : false);
       })
