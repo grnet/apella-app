@@ -651,7 +651,28 @@
         "object" : {"ApellaUser" : "6"},
         "change" : "new user"
     }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "helpdeskuser",
+        "role": "helpdeskuser",
+        "arg2": "12345",
+        "arg3": "Ναταλία",
+        "arg4": "Τζωρτζίδου",
+        "arg5": "Πέτρος",
+        "first_name_en": "Natalia",
+        "last_name_en": "Tzwrtzidou",
+        "father_name_en": "Peter",
+        "email": "natalia@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "7"},
+        "change" : "new user"
+    }
 }
+
 ]
 }
 
