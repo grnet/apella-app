@@ -22,6 +22,10 @@ class Command(ApellaCommand):
         make_option('--cancel',
                     dest='cancel',
                     help='Cancel position'),
+        make_option('--electing',
+                    dest='electing',
+                    help='Set position state to electing'),
+
         )
 
     def handle(self, *args, **options):
@@ -32,6 +36,7 @@ class Command(ApellaCommand):
         electors = options['electors']
         committee = options['committee']
         cancel = options['cancel']
+        electing = options['electing']
 
         try:
             position = Position.objects.get(id=position_id)
@@ -50,6 +55,21 @@ class Command(ApellaCommand):
                 position.save()
                 self.stdout.write(
                     "Position %s has been cancelled" % position.id)
+
+        if electing:
+            if position.state != "posted":
+                self.stdout.write(
+                    "Only positions in state posted can be set to electing")
+            elif position.ends_at.date() > datetime.today().date():
+                self.stdout.write(
+                    "Position cannot be set to electing as it is still \
+                        accepting candidacies")
+            else:
+                position.state = 'electing'
+                position.save()
+                self.stdout.write(
+                    "Position %s has been set to electing" % position.id)
+
 
         if elected:
             try:
