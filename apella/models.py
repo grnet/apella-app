@@ -79,6 +79,30 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     def apimas_roles(self):
         return [self.role]
 
+    def is_helpdeskadmin(self):
+        return self.role == 'helpdeskadmin'
+
+    def is_helpdeskuser(self):
+        return self.role == 'helpdeskuser'
+
+    def is_helpdesk(self):
+        return self.is_helpdeskadmin() or self.is_helpdeskuser()
+
+    def is_institutionmanager(self):
+        return self.role == 'institutionmanager'
+
+    def is_assistant(self):
+        return self.role == 'assistant'
+
+    def is_manager(self):
+        return self.is_institutionmanager() or self.is_assistant()
+
+    def is_professor(self):
+        return self.role == 'professor'
+
+    def is_candidate(self):
+        return self.role == 'candidate'
+
 
 class Institution(models.Model):
     category = models.CharField(
