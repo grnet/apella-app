@@ -27,6 +27,7 @@ export default DS.Model.extend({
   subject: DS.belongsTo('subject', {
     formComponent: 'select-subject',
     formAttrs: {
+      lookupField: 'area',
       optionLabelAttr: 'title_current',
     }
   }),

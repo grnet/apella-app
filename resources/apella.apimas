@@ -255,6 +255,7 @@ spec:
                 model: apella.models.Department
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [institution]
             .cli_commands: {}
             '*':
                 id:
@@ -353,6 +354,7 @@ spec:
                 model: apella.models.Subject
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [area]
             .cli_commands: {}
             '*':
                 id:
