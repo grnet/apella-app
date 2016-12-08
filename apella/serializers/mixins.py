@@ -111,7 +111,15 @@ class HelpdeskUsers(object):
 
     def to_representation(self, obj):
         data = super(HelpdeskUsers, self).to_representation(obj)
-        if (obj.role == 'helpdeskadmin' or obj.role == 'helpdeskuser') \
-                and isinstance(self.context['view'], CustomUserView):
+        if obj.is_helpdesk() and isinstance(
+                self.context['view'], CustomUserView):
             data = {'user': data}
         return data
+
+    def to_internal_value(self, data):
+        user = self.context.get('request').user
+        request_data = self.context.get('request').data
+        if user.is_helpdesk() and isinstance(
+                self.context['view'], CustomUserView):
+            return self.context.get('request').data.get('user')
+        return super(HelpdeskUsers, self).to_internal_value(data)

@@ -29,13 +29,13 @@ class PositionList(generics.ListAPIView):
     def get_queryset(self):
         queryset = self.queryset
         user = self.request.user
-        if user.role in ['institutionmanager', 'assistant']:
+        if user.is_manager():
             im = InstitutionManager.objects.get(user_id=self.request.user.id)
-            if user.role == 'institutionmanager':
+            if user.is_institutionmanager():
                 departments = Department.objects.filter(
                     institution_id=im.institution.id)
                 queryset = queryset.filter(department__in=departments)
-            elif user.role == 'assistant':
+            elif user.is_assistant():
                 queryset = queryset.filter(
                     author__user_id=self.request.user.id)
         if 'code' not in self.request.query_params:
