@@ -11,7 +11,7 @@ export default {
   'edit.page.title': 'Τροποποίηση',
   'details.menu.label': 'Λεπτομέρειες',
   'Draft':'Πρόχειρο',
-  'Posted': 'Αναρτημένη',
+  'Posted': 'Ενταγμένη',
   'Cancelled': 'Ακυρωθείσα',
   'Electing': 'Επιλογή',
   'Successful': 'Στελεχωμένη',
