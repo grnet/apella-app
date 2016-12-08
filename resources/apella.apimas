@@ -966,9 +966,9 @@ spec:
                 model_serializers: [apella.serializers.mixins.Position]
                 mixins: [apella.views.mixins.PositionList,
                     apella.views.mixins.DestroyProtectedObject]
-                filter_fields: [title, description, author]
-                ordering_fields: [title, description]
-                search_fields: [title, description]
+                filter_fields: [title, id, state, department]
+                ordering_fields: [title, id, state, department]
+                search_fields: [title, id, state, department]
             .cli_commands: {}
             '*':
                 id:
