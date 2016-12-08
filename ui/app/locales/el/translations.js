@@ -142,7 +142,7 @@ export default {
       }
   },
   institution: {
-    menu_label: 'Ιδρύματα',
+    menu_label: 'Κανονιστικά Πλαίσια',
   },
   user: {
     menu_label: 'Χρήστες',

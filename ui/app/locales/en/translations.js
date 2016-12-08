@@ -140,7 +140,7 @@ export default {
       }
   },
   institution: {
-    menu_label: 'Institutions',
+    menu_label: 'Regulatory Frameworks',
   },
   user: {
     menu_label: 'Users',

@@ -13,6 +13,8 @@ export default ApellaGen.extend({
   modelName: 'department',
   auth: true,
   path: 'departments',
+  session: Ember.inject.service(),
+
   common: {
     proloadModels: ['institution', 'department'],
     validators: {
@@ -23,7 +25,13 @@ export default ApellaGen.extend({
   list: {
     menu: {
       icon: 'domain',
-      label: 'department.menu_label'
+      label: 'department.menu_label',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
+
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     page: {
       title: 'department.menu_label',

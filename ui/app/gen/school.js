@@ -13,6 +13,8 @@ export default ApellaGen.extend({
   modelName: 'school',
   auth: true,
   path: 'schools',
+  session: Ember.inject.service(),
+
   common: {
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])]
@@ -24,7 +26,13 @@ export default ApellaGen.extend({
     },
     menu: {
       icon: 'account_balance',
-      label: 'school.menu_label'
+      label: 'school.menu_label',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
+
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     layout: 'table',
     row: {

@@ -12,6 +12,8 @@ export default ApellaGen.extend({
   modelName: 'subject_area',
   auth: true,
   path: 'subject-areas',
+  session: Ember.inject.service(),
+
   common: {
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
@@ -23,7 +25,13 @@ export default ApellaGen.extend({
     },
     menu: {
       icon: 'school',
-      label: 'subject_area.menu_label'
+      label: 'subject_area.menu_label',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
+
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     layout: 'table',
     sortBy: 'title_current:asc',

@@ -44,7 +44,13 @@ export default ApellaGen.extend({
     },
     menu: {
       icon: 'local_library',
-      label: 'subject.menu_label'
+      label: 'subject.menu_label',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
+
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     layout: 'table',
     row: {
