@@ -147,7 +147,6 @@ spec:
                 .list: {}
                 .create: {}
                 .update: {}
-                .delete: {}
                 .retrieve: {}
         institutions:
             .collection: {}
@@ -963,10 +962,10 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Position
-                model_serializers: [apella.serializers.mixins.Position]
+                model_serializers: [apella.serializers.position.PositionMixin]
                 mixins: [apella.views.mixins.PositionList,
                     apella.views.mixins.DestroyProtectedObject]
-                filter_fields: [title, id, state, department]
+                filter_fields: [title, id, state, department, code]
                 ordering_fields: [title, id, state, department]
                 search_fields: [title, id, state, department]
             .cli_commands: {}
@@ -980,6 +979,12 @@ spec:
                 url:
                     .drf_field: {}
                     .identity: {}
+                code:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
                 title:
                     .cli_option: {}
                     .field: {}

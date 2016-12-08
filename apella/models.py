@@ -203,6 +203,7 @@ class InstitutionManager(UserProfile):
 
 
 class Position(models.Model):
+    code = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
     discipline = models.CharField(max_length=300)

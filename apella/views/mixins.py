@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import generics
-from django.db.models import ProtectedError
+from django.db.models import ProtectedError, Min
 
 from apella.models import InstitutionManager, Position, Department
 
@@ -27,15 +27,21 @@ class PositionList(generics.ListAPIView):
         role assistant: filter positions by author
     """
     def get_queryset(self):
-        if InstitutionManager.objects.filter(
-                user_id=self.request.user.id).exists():
+        queryset = self.queryset
+        user = self.request.user
+        if user.role in ['institutionmanager', 'assistant']:
             im = InstitutionManager.objects.get(user_id=self.request.user.id)
-            if im.user.role == 'institutionmanager':
+            if user.role == 'institutionmanager':
                 departments = Department.objects.filter(
                     institution_id=im.institution.id)
-                return Position.objects.filter(
-                    department__in=departments)
-            elif im.user.role == 'assistant':
-                return Position.objects.filter(
-                    author__user_id=im.user.id)
-        return super(PositionList, self).get_queryset()
+                queryset = queryset.filter(department__in=departments)
+            elif user.role == 'assistant':
+                queryset = queryset.filter(
+                    author__user_id=self.request.user.id)
+        if 'code' not in self.request.query_params:
+            ids = queryset.values('code').annotate(Min('id')).values('id__min')
+            return queryset.filter(id__in=ids)
+        else:
+            return queryset. \
+                filter(code=self.request.query_params.get('code')). \
+                order_by('created_at')

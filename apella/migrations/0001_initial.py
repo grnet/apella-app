@@ -130,6 +130,7 @@ class Migration(migrations.Migration):
             name='Position',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('code', models.CharField(max_length=200)),
                 ('title', models.CharField(max_length=50)),
                 ('description', models.CharField(max_length=300)),
                 ('discipline', models.CharField(max_length=300)),

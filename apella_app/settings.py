@@ -130,11 +130,8 @@ AUTH_USER_MODEL = 'apella.ApellaUser'
 
 START_DATE_END_DATE_INTERVAL = 30
 LANGUAGES = {'el', 'en'}
+POSITION_CODE_PREFIX = 'APP'
 
-from api_settings import API_SCHEMA
-from copy import deepcopy
-
-API_SCHEMA_TMP = deepcopy(API_SCHEMA)
 CONFIG_FILE = 'apella.apimas'
 
 SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
