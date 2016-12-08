@@ -22,7 +22,7 @@ def get_dep_number(data):
 
 def get_author(request):
     try:
-        manager = InstitutionManager.objects.get(id=request.user.id)
+        manager = InstitutionManager.objects.get(user_id=request.user.id)
     except InstitutionManager.DoesNotExist:
         raise serializers.ValidationError(
             {"author": "Only Institution Managers can create new positions"})
