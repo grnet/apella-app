@@ -492,6 +492,28 @@
     }
 },
 {
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Τρίτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Οικολογία",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2016-07-15",
+        "arg9" : "2017-09-30",
+        "arg10" : "2017-12-30",
+        "arg11" : "Οικολογία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "6"},
+        "change" : "new position"
+    }
+},
+
+{
     "user": "2",
     "action": "position-list",
     "output": {"Position" : "1"}
@@ -576,6 +598,19 @@
         "change" : { "position.elected" : "2", "position.status" : "successful" }
     }
 },
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "6",
+        "cancel" : "True"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "6"},
+        "change" : {"position.status" : "cancelled" }
+    }
+},
+
 {
     "user": "admin",
     "action": "user-add",

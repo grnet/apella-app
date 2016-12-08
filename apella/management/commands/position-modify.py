@@ -2,6 +2,7 @@ from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import ApellaUser, Position, Professor
 from apella.management.utils import get_user, ApellaCommand
+from datetime import datetime
 
 
 class Command(ApellaCommand):
@@ -18,6 +19,9 @@ class Command(ApellaCommand):
         make_option('--committee',
                     dest='committee',
                     help='Choose committee for the position'),
+        make_option('--cancel',
+                    dest='cancel',
+                    help='Cancel position'),
         )
 
     def handle(self, *args, **options):
@@ -27,11 +31,25 @@ class Command(ApellaCommand):
         elected = options['elected']
         electors = options['electors']
         committee = options['committee']
+        cancel = options['cancel']
 
         try:
             position = Position.objects.get(id=position_id)
         except (Position.DoesNotExist, ValueError):
             raise CommandError("Invalid position ID")
+
+        if cancel:
+            if position.state != "posted":
+                self.stdout.write(
+                    "Only positions in state posted can be cancelled")
+            elif position.starts_at.date() < datetime.today().date():
+                self.stdout.write(
+                    "Open positions cannot be cancelled")
+            else:
+                position.state = 'cancelled'
+                position.save()
+                self.stdout.write(
+                    "Position %s has been cancelled" % position.id)
 
         if elected:
             try:
