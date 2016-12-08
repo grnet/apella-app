@@ -18,6 +18,8 @@ export default ApellaGen.extend({
   modelName: 'subject',
   auth: true,
   path: 'subjects',
+  session: Ember.inject.service(),
+
   common: {
     preloadModels: ['subject-area'],
     validators: {
