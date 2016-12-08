@@ -19,7 +19,9 @@ sys.setdefaultencoding('utf8')
 MULTI_LANG_APIS = [
     (Institution, reverse('institutions-list')),
     (School, reverse('schools-list')),
-    (Department, reverse('departments-list'))
+    (Department, reverse('departments-list')),
+    (SubjectArea, reverse('subject-areas-list')),
+    (Subject, reverse('subjects-list'))
 ]
 
 NESTED_USER_APIS = [
@@ -45,7 +47,9 @@ EXTRA_DATA = {
         "fek": "http://www.google.com", "speaks_greek": True,
         "discipline_in_fek": True, "cv_url": "http://www.in.gr",
         "institution": "", "is_foreign": False},
-    Candidate: {}
+    Candidate: {},
+    SubjectArea: {},
+    Subject: {}
 }
 
 
@@ -88,7 +92,10 @@ class APIMultiLangTest(APITestCase):
         self.object_urls = {
             'Institution': None,
             'School': None,
-            'Department': None
+            'Department': None,
+            'SubjectArea': None,
+            'Subject': None,
+            'InstitutionManager': None
         }
 
         self.nested_user_data = {
@@ -119,6 +126,17 @@ class APIMultiLangTest(APITestCase):
             }
         }
 
+        self.position_data = {
+            'description': 'Description',
+            'discipline': 'Discipline',
+            'title': 'Title',
+            'state': 'posted',
+            'fek': 'http://www.google.com',
+            'fek_posted_at': datetime.now() + timedelta(days=-3),
+            'starts_at': datetime.now() + timedelta(days=3),
+            'ends_at': datetime.now() + timedelta(days=40)
+        }
+
     def test_multi_lang(self):
         for model, url in MULTI_LANG_APIS:
             self.data.update(EXTRA_DATA[model])
@@ -133,6 +151,7 @@ class APIMultiLangTest(APITestCase):
             EXTRA_DATA[Department]['institution'] = self.object_urls[
                 'Institution']
             EXTRA_DATA[Department]['school'] = self.object_urls['School']
+            EXTRA_DATA[Subject]['area'] = self.object_urls['SubjectArea']
 
             if 'institution' in model._meta.get_all_field_names():
                 self.assertEqual(
@@ -150,8 +169,8 @@ class APIMultiLangTest(APITestCase):
             'Institution']
         EXTRA_DATA[InstitutionManager]['institution'] = \
             self.object_urls['Institution']
-        for i, (model, url) in enumerate(NESTED_USER_APIS):
 
+        for i, (model, url) in enumerate(NESTED_USER_APIS):
             self.nested_user_data.update(EXTRA_DATA[model])
             username = 'test' + str(i)
             self.nested_user_data['user']['username'] = username
@@ -161,6 +180,7 @@ class APIMultiLangTest(APITestCase):
             response = self.client.post(
                 url, self.nested_user_data, format='json')
 
+            self.object_urls[model.__name__] = response.data['url']
             self.assertEqual(response.status_code, status.HTTP_201_CREATED)
             self.assertEqual(
                 model.objects.get().user,
@@ -168,12 +188,14 @@ class APIMultiLangTest(APITestCase):
 
             response = self.client.patch(
                 response.data['url'], self.update_user_data, format='json')
+
             self.assertEqual(response.status_code, status.HTTP_200_OK)
             obj = response.data
             self.assertEqual(
                 obj['user']['first_name']['en'],
                 self.update_user_data['user']['first_name']['en'])
 
+        # Test assistants
         assistants_url = reverse('assistants-list')
         username = 'test100' + str(i)
         self.nested_user_data['user']['username'] = username
@@ -193,45 +215,20 @@ class APIMultiLangTest(APITestCase):
             assistants_url, self.nested_user_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-
-class APIPositionTest(APITestCase):
-
-    def setUp(self):
-
-        first_name = MultiLangFields.objects.create(
-                el='Γιάννης', en='John')
-        last_name = MultiLangFields.objects.create(
-                el='Γιαννάκης', en='John')
-        father_name = MultiLangFields.objects.create(
-                el='Πέτρος', en='Peter')
-        self.user = ApellaUser.objects.create_user(
-                username='test',
-                password='test',
-                role='institutionmanager',
-                first_name=first_name,
-                last_name=last_name,
-                father_name=father_name
-        )
-        self.user.save()
-        token = Token.objects.create(user=self.user)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        self.client.force_authenticate(user=self.user, token=token)
-
-        self.position_data = {
-            'description': 'Description',
-            'discipline': 'Discipline',
-            'title': 'Title',
-            'state': 'posted',
-            # 'author': self.user.id,
-            'fek': 'http://www.google.com',
-            'fek_posted_at': datetime.now() + timedelta(days=-3),
-            'starts_at': datetime.now() + timedelta(days=3),
-            'ends_at': datetime.now() + timedelta(days=40),
-            'subject_area': ''
-        }
-
-    def test_position(self):
+        # Test positions
         positions_url = reverse('positions-list')
+        self.position_data['subject_area'] = self.object_urls['SubjectArea']
+        self.position_data['subject'] = self.object_urls['Subject']
+        self.position_data['department'] = self.object_urls['Department']
+
         response = self.client.post(
             positions_url, self.position_data, format='json')
-        # self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        position = response.data
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(position['state'], 'posted')
+        self.assertEqual(
+            position['author'], self.object_urls['InstitutionManager'])
+        self.assertEqual(
+            position['department_dep_number'],
+            Department.objects.get().dep_number)
