@@ -12,11 +12,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 DATA_DIR = os.path.abspath(os.getcwd())
 RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
-<<<<<<< HEAD
 SETTINGS_DIR = '/etc/apella'
 SETTINGS_FILE = 'settings.conf'
-=======
->>>>>>> origin/feature-apimas-refactor
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -75,11 +72,7 @@ WSGI_APPLICATION = 'apella_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-<<<<<<< HEAD
-        'NAME': '/tmp/apela.sqlite3',
-=======
-        'NAME': '/tmp/apella.sqlite3',
->>>>>>> origin/feature-apimas-refactor
+        'NAME': '/tmp/apella.sqlite3'
     }
 }
 

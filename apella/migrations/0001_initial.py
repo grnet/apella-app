@@ -136,7 +136,7 @@ class Migration(migrations.Migration):
                 ('discipline', models.CharField(max_length=300)),
                 ('fek', models.URLField()),
                 ('fek_posted_at', models.DateTimeField(validators=[apella.validators.before_today_validator])),
-                ('state', models.CharField(default=b'posted', max_length=30, choices=[['draft', 'Draft'], ['posted', 'Posted'], ['electing', 'Electing'], ['successful', 'Successful'], ['failed', 'Failed'], ['cancelled', 'Cancelled']])),
+                ('state', models.CharField(default=b'posted', max_length=30, choices=[['draft', 'Draft'], ['posted', 'Posted'], ['electing', 'Electing'], ['successful', 'Successful'], ['failed', 'Failed'], ['cancelled', 'Cancelled'], ['revoked', 'Revoked']])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
@@ -179,6 +179,13 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
+        ),
+        migrations.CreateModel(
+            name='ProfessorRank',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('rank', models.ForeignKey(to='apella.MultiLangFields')),
+            ],
         ),
         migrations.CreateModel(
             name='Registry',
@@ -259,6 +266,11 @@ class Migration(migrations.Migration):
             model_name='position',
             name='electors',
             field=models.ManyToManyField(related_name='elector_duty', to='apella.Professor', blank=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='ranks',
+            field=models.ManyToManyField(to='apella.ProfessorRank'),
         ),
         migrations.AddField(
             model_name='position',

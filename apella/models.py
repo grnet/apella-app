@@ -226,11 +226,16 @@ class InstitutionManager(UserProfile):
         super(InstitutionManager, self).save(*args, **kwargs)
 
 
+class ProfessorRank(models.Model):
+    rank = models.ForeignKey(MultiLangFields)
+
+
 class Position(models.Model):
     code = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
     discipline = models.CharField(max_length=300)
+    ranks = models.ManyToManyField(ProfessorRank)
     author = models.ForeignKey(
             InstitutionManager, related_name='authored_positions',
             blank=True)
