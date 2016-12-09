@@ -7,6 +7,7 @@ from apimas.modeling.adapters.drf import django_rest
 from apimas.modeling.core import documents as doc
 
 from apella.views import auth_views
+from apella import views
 from apella.permissions.permission_rules import PERMISSION_RULES
 from apella.common import load_config
 
@@ -41,6 +42,7 @@ apipatterns = [
     url(r'^api/auth/logout/$',
         auth_views.CustomLogoutView.as_view(), name='logout'),
     url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user'),
+    url(r'^config.json$', views.config, name='config'),
     adapter.urls
 ]
 

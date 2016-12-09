@@ -6,6 +6,8 @@ import os
 from django.conf import settings
 
 from apimas.modeling.core.exceptions import ApimasException
+from collections import defaultdict
+from apella.permissions.permission_rules import PERMISSION_RULES
 
 VALIDATION_SCHEMA = {
     'root': {
@@ -15,6 +17,27 @@ VALIDATION_SCHEMA = {
          'type': 'dict'
     }
 }
+
+
+def rule_to_dict(data, args):
+    if len(args) == 1:
+        return args[0]
+
+    key = args.pop(0)
+    for k in key.split(","):
+        k = k.strip()
+        data[k] = data[k] if k in data else {}
+        partial = {
+            k: rule_to_dict(data[k], args)
+        }
+        data.update(partial)
+    return data
+
+def load_permissions():
+    PERMISSIONS = defaultdict(lambda: dict)
+    for rule in PERMISSION_RULES:
+        rule_to_dict(PERMISSIONS, list(rule))
+    return PERMISSIONS
 
 
 def load_config():
@@ -30,6 +53,11 @@ def load_config():
 
 def load_resources():
     with open(os.path.join(settings.RESOURCES_DIR, 'common.json')) as json_file:
+        return json.load(json_file)
+
+
+def load_holidays():
+    with open(os.path.join(settings.RESOURCES_DIR, 'www/holidays.json')) as json_file:
         return json.load(json_file)
 
 
