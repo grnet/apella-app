@@ -575,7 +575,27 @@
         "change" : "new position"
     }
 },
-
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Care of Magical Creatures",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://harrypotter.wikia.com/wiki/Rubeus_Hagrid",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Μαγεία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : "new position"
+    }
+},
 
 
 {
@@ -711,6 +731,31 @@
         "change" : {"position.status" : "failed" }
     }
 },
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "10",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "10",
+        "state" : "revoked"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : {"position.status" : "revoked" }
+    }
+},
+
 
 {
     "user": "admin",

@@ -41,7 +41,7 @@ class Command(ApellaCommand):
 
         if state:
             try:
-                ["cancelled", "electing", "failed"].index(state)
+                ["cancelled", "electing", "failed", "revoked"].index(state)
                 if state == "cancelled":
                     if position.state != "posted":
                         self.stdout.write(
@@ -69,6 +69,17 @@ class Command(ApellaCommand):
                         self.stdout.write(
                             "Position %s has been set to failed" % position.id)
 
+                if state == "revoked":
+                    if position.state != "electing":
+                        self.stdout.write(
+                            "Position %s cannot be revoked. Only positions in \
+                            state electing can be set to failed" % position.id)
+                    else:
+                        position.state = 'revoked'
+                        position.save()
+                        self.stdout.write(
+                            "Position %s has been set to revoked" % position.id)
+
                 if state == "electing":
                     if position.state != "posted":
                         self.stdout.write(
@@ -85,8 +96,7 @@ class Command(ApellaCommand):
                         position.state = 'electing'
                         position.save()
                         self.stdout.write(
-                            "Position %s has been set to electing\
-                            " % position.id)
+                            "Position %s has been set to electing" % position.id)
             except:
                 raise CommandError("State: %s is an invalid state" % state)
 
