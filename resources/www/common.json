@@ -14,7 +14,8 @@
         ["electing", "Electing"],
         ["successful", "Successful"],
         ["failed", "Failed"],
-        ["cancelled", "Cancelled"]
+        ["cancelled", "Cancelled"],
+        ["revoked", "Revoked"]
     ],
 
     "CANDIDACY_STATES": [
