@@ -2,7 +2,7 @@ from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from apella.models import ApellaUser, Position, Professor
 from apella.management.utils import get_user, ApellaCommand
-from datetime import datetime
+from django.utils import timezone
 
 
 class Command(ApellaCommand):
@@ -47,7 +47,7 @@ class Command(ApellaCommand):
                         self.stdout.write(
                             "Position %s cannot be cancelled. Only positions \
                             in state posted can be cancelled" % position.id)
-                    elif position.starts_at.date() < datetime.today().date():
+                    elif position.starts_at < timezone.now():
                         self.stdout.write(
                             "Position %s cannot be cancelled. Open positions \
                             cannot be cancelled" % position.id)
@@ -87,7 +87,7 @@ class Command(ApellaCommand):
                              posted positions cannot be set to electing \
                              " % position.id)
 
-                    elif position.ends_at.date() > datetime.today().date():
+                    elif position.ends_at > timezone.now():
                         self.stdout.write(
                             "Position %s cannot be set to electing as it is \
                             still accepting candidacies" % position.id)
