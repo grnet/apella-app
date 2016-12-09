@@ -10,9 +10,24 @@ from apella.validators import before_today_validator, after_today_validator,\
 from apella import common
 
 
+def professor_participates(user_id, position_id):
+    try:
+        professor = Professor.objects.get(user_id=user_id)
+    except Professor.DoesNotExist:
+        return False
+    has_elector_duty = professor.elector_duty.filter(id=position_id)
+    if has_elector_duty:
+        return True
+    has_committee_duty = \
+        professor.committee_duty.filter(id=position_id)
+    if has_committee_duty:
+        return True
+    return False
+
+
 class MultiLangFields(models.Model):
-    el = models.CharField(max_length=500)
-    en = models.CharField(max_length=500)
+    el = models.CharField(max_length=500, blank=True, null=True)
+    en = models.CharField(max_length=500, blank=True, null=True)
 
 
 class ApellaUser(AbstractBaseUser, PermissionsMixin):
@@ -35,25 +50,58 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.ForeignKey(MultiLangFields, related_name='first_name')
     last_name = models.ForeignKey(MultiLangFields, related_name='last_name')
     father_name = models.ForeignKey(
-        MultiLangFields, related_name='father_name')
-    email = models.EmailField()
+        MultiLangFields, related_name='father_name', blank=True, null=True)
+    email = models.EmailField(
+        unique=True,
+        error_messages={
+            'unique': "A user with that email already exists.",
+        }
+    )
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    id_passport = models.CharField(max_length=20)
-    mobile_phone_number = models.CharField(max_length=30)
-    home_phone_number = models.CharField(max_length=30)
+    id_passport = models.CharField(max_length=20, blank=True)
+    mobile_phone_number = models.CharField(max_length=30, blank=True)
+    home_phone_number = models.CharField(max_length=30, blank=True)
     role = models.CharField(
         choices=common.USER_ROLES, max_length=20, default='candidate')
 
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+
+    @property
+    def apimas_roles(self):
+        return [self.role]
+
+    def is_helpdeskadmin(self):
+        return self.role == 'helpdeskadmin'
+
+    def is_helpdeskuser(self):
+        return self.role == 'helpdeskuser'
+
+    def is_helpdesk(self):
+        return self.is_helpdeskadmin() or self.is_helpdeskuser()
+
+    def is_institutionmanager(self):
+        return self.role == 'institutionmanager'
+
+    def is_assistant(self):
+        return self.role == 'assistant'
+
+    def is_manager(self):
+        return self.is_institutionmanager() or self.is_assistant()
+
+    def is_professor(self):
+        return self.role == 'professor'
+
+    def is_candidate(self):
+        return self.role == 'candidate'
 
 
 class Institution(models.Model):
@@ -64,21 +112,22 @@ class Institution(models.Model):
     regulatory_framework = models.URLField(blank=True)
     title = models.ForeignKey(MultiLangFields)
 
-    def check_object_state_owned(self, row, request, view):
+    def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
                 user_id=request.user.id,
                 institution_id=self.id).exists()
 
 
 class School(models.Model):
-    institution = models.ForeignKey(Institution)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     title = models.ForeignKey(MultiLangFields)
 
 
 class Department(models.Model):
     school = models.ForeignKey(School, blank=True, null=True)
-    institution = models.ForeignKey(Institution)
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     title = models.ForeignKey(MultiLangFields)
+    dep_number = models.IntegerField(blank=True, null=True)
 
 
 class SubjectArea(models.Model):
@@ -100,9 +149,21 @@ class ApellaFile(models.Model):
         super(ApellaFile, self).save(*args, **kwargs)
 
 
-class Professor(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(ApellaUser)
-    institution = models.ForeignKey(Institution)
+    is_active = models.BooleanField(default=False)
+    activated_at = models.DateTimeField(null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
+    verified_at = models.DateTimeField(null=True, blank=True)
+    is_rejected = models.BooleanField(default=False)
+    rejected_reason = models.TextField(null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class Professor(UserProfile):
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
         choices=common.RANKS, max_length=30)
@@ -113,9 +174,16 @@ class Professor(models.Model):
     discipline_text = models.CharField(max_length=300)
     discipline_in_fek = models.BooleanField(default=True)
 
+    def save(self, *args, **kwargs):
+        self.user.role = 'professor'
+        super(Professor, self).save(*args, **kwargs)
 
-class Candidate(models.Model):
-    user = models.OneToOneField(ApellaUser)
+
+class Candidate(UserProfile):
+
+    def save(self, *args, **kwargs):
+        self.user.role = 'candidate'
+        super(Candidate, self).save(*args, **kwargs)
 
 
 class UserFiles(models.Model):
@@ -124,21 +192,48 @@ class UserFiles(models.Model):
     deleted = models.BooleanField(default=False, db_index=True)
 
 
-class InstitutionManager(models.Model):
-    user = models.OneToOneField(ApellaUser)
-    institution = models.ForeignKey(Institution)
+class InstitutionManager(UserProfile):
+    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
     authority_full_name = models.CharField(max_length=150)
     manager_role = models.CharField(
-        choices=common.MANAGER_ROLES, max_length=1)
+        choices=common.MANAGER_ROLES, max_length=20)
+    sub_first_name = models.ForeignKey(
+        MultiLangFields, related_name='sub_first_name',
+        blank=True, null=True)
+    sub_last_name = models.ForeignKey(
+        MultiLangFields, related_name='sub_last_name',
+        blank=True, null=True)
+    sub_father_name = models.ForeignKey(
+        MultiLangFields, related_name='sub_father_name',
+        blank=True, null=True)
+    sub_email = models.EmailField(blank=True, null=True)
+    sub_mobile_phone_number = models.CharField(
+        max_length=30, blank=True, null=True)
+    sub_home_phone_number = models.CharField(
+        max_length=30, blank=True, null=True)
+    can_create_registries = models.BooleanField(default=False)
+    can_create_positions = models.BooleanField(default=False)
+
+    def check_resource_state_owned(self, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            institution_id=self.institution.id,
+            manager_role='manager').exists()
+
+    def save(self, *args, **kwargs):
+        self.user.role = 'institutionmanager'
+        super(InstitutionManager, self).save(*args, **kwargs)
 
 
 class Position(models.Model):
+    code = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
     discipline = models.CharField(max_length=300)
     author = models.ForeignKey(
-            InstitutionManager, related_name='authored_positions')
+            InstitutionManager, related_name='authored_positions',
+            blank=True)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     subject_area = models.ForeignKey(SubjectArea, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
@@ -161,6 +256,7 @@ class Position(models.Model):
     ends_at = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
+    department_dep_number = models.IntegerField()
 
     def clean(self, *args, **kwargs):
         validate_dates_interval(
@@ -173,26 +269,31 @@ class Position(models.Model):
         self.updated_at = timezone.now()
         super(Position, self).save(*args, **kwargs)
 
-    def check_object_state_owned(self, row, request, view):
-        return InstitutionManager.objects.filter(
+    def check_resource_state_owned(self, row, request, view):
+        return request.user.id == self.author.user.id
+
+    def check_resource_state_open(self, row, request, view):
+        return self.state == 'posted' and self.ends_at > timezone.now()
+
+    def check_resource_state_before_open(self, row, request, view):
+        return self.starts_at > timezone.now()
+
+    def check_resource_state_closed(self, row, request, view):
+        return self.starts_at < timezone.now()
+
+    def check_resource_state_electing(self, row, request, view):
+        return self.state == 'posted' and self.starts_at < timezone.now()
+
+    def check_resource_state_participates(self, row, request, view):
+        return professor_participates(request.user.id, self.id)
+
+    @classmethod
+    def check_collection_state_can_create(cls, row, request, view):
+        r = InstitutionManager.objects.filter(
             user_id=request.user.id,
-            institution_id=self.department.institution.id).exists()
-
-    def check_object_state_open(self, row, request, view):
-        return self.state == 'posted' and self.starts_at > timezone.now()
-
-    def check_object_state_participates(self, row, request, view):
-        try:
-            professor = Professor.objects.get(user_id=request.user.id)
-        except Professor.DoesNotExist:
-            return False
-        has_elector_duty = professor.elector_duty.filter(id=self.id)
-        if has_elector_duty:
-            return True
-        has_committee_duty = professor.committee_duty.filter(id=self.id)
-        if has_committee_duty:
-            return True
-        return False
+            manager_role='assistant',
+            can_create_positions=True).exists()
+        return r
 
 
 class PositionFiles(models.Model):
@@ -204,9 +305,9 @@ class PositionFiles(models.Model):
 
 class Candidacy(models.Model):
     candidate = models.ForeignKey(ApellaUser)
-    position = models.ForeignKey(Position)
+    position = models.ForeignKey(Position, on_delete=models.PROTECT)
     state = models.CharField(
-        choices=common.CANDIDACY_STATES, max_length=1, default='2')
+        choices=common.CANDIDACY_STATES, max_length=30, default='posted')
     others_can_view = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
@@ -221,6 +322,25 @@ class Candidacy(models.Model):
         self.updated_at = timezone.now()
         super(Candidacy, self).save(*args, **kwargs)
 
+    def check_resource_state_owned(self, row, request, view):
+        return InstitutionManager.objects.filter(
+                user_id=request.user.id,
+                institution_id=self.position.department.institution.id). \
+                exists() or \
+                self.candidate.id == request.user.id
+
+    def check_resource_state_others_can_view(self, row, request, view):
+        return self.others_can_view
+
+    def check_resource_state_participates(self, row, request, view):
+        return professor_participates(request.user.id, self.position.id)
+
+    def check_resource_state_owned_open(self, row, request, view):
+        return self.check_resource_state_owned(row, request, view) \
+                and self.position.check_resource_state_open(
+                        row, request, view) \
+                and self.state == 'posted'
+
 
 class CandidacyFiles(object):
     candidacy_file = models.ForeignKey(
@@ -230,7 +350,7 @@ class CandidacyFiles(object):
 
 
 class Registry(models.Model):
-    department = models.ForeignKey(Department)
+    department = models.ForeignKey(Department, on_delete=models.PROTECT)
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=1, default='1')
     members = models.ManyToManyField(Professor)
@@ -238,3 +358,23 @@ class Registry(models.Model):
     class Meta:
         # Each department can have only one internal and one external registry
         unique_together = (("department", "type"),)
+
+    def check_resource_state_owned(self, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            institution_id=self.department.institution.id).exists()
+
+    @classmethod
+    def check_collection_state_can_create(cls, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            manager_role='assistant',
+            can_create_registries=True).exists()
+
+
+class UserInterest(models.Model):
+    user = models.ForeignKey(ApellaUser)
+    area = models.ManyToManyField(SubjectArea, blank=True)
+    subject = models.ManyToManyField(Subject, blank=True)
+    institution = models.ManyToManyField(Institution, blank=True)
+    department = models.ManyToManyField(Department, blank=True)

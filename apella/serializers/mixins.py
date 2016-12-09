@@ -1,36 +1,23 @@
-from collections import defaultdict
-
 from django.conf import settings
-from django.apps import apps
-from django.http.request import QueryDict
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 from rest_framework.utils import model_meta
 
-from apella.models import ApellaUser, Position, MultiLangFields
+from apella.models import ApellaUser, Position, InstitutionManager
+from apella.views.auth_views import CustomUserView
 
 
 class ValidatorMixin(object):
 
     def validate(self, data):
-        model = self.Meta.model
-        instance = model(**data)
+        instance = getattr(self, 'instance')
+        if not instance:
+            model = self.Meta.model
+            instance = model(**data)
+        else:
+            for attr, val in data.items():
+                setattr(instance, attr, val)
         instance.clean()
         return super(ValidatorMixin, self).validate(data)
-
-
-class PositionValidatorMixin(ValidatorMixin):
-
-    def validate(self, data):
-        committee = data.pop('committee', [])
-        electors = data.pop('electors', [])
-        assistants = data.pop('assistants', [])
-        data = super(PositionValidatorMixin, self).validate(data)
-        data['committee'] = committee
-        data['electors'] = electors
-        data['assistants'] = assistants
-
-        return data
 
 
 def create_objects(model, fields, validated_data):
@@ -62,10 +49,12 @@ def create_objects(model, fields, validated_data):
     return obj
 
 
-def update_objects(instance, fields, validated_data):
+def update_objects(fields, validated_data, instance=None, model=None):
     """
     Recursively updated nested objects.
     """
+    if not instance:
+        return create_objects(model, fields, validated_data)
     info = model_meta.get_field_info(type(instance))
     many_to_many = {}
     for field_name, relation_info in info.relations.items():
@@ -77,8 +66,9 @@ def update_objects(instance, fields, validated_data):
                 and field_name in validated_data:
             nested_data = validated_data.pop(field_name, None)
             nested_object = update_objects(
-                getattr(instance, field_name), field.get_fields(), nested_data)
-            validated_data[field_name] = nested_object
+                field.get_fields(), nested_data,
+                instance=getattr(instance, field_name), model=field.Meta.model)
+            setattr(instance, field_name, nested_object)
         elif field_name in validated_data:
             if field_name == 'password':
                 instance.set_password(validated_data.get(field_name))
@@ -98,10 +88,13 @@ class NestedWritableObjectsMixin(object):
     def __init__(self, *args, **kwargs):
         super(NestedWritableObjectsMixin, self).__init__(*args, **kwargs)
         request = self.context.get('request')
-        if request and request.method == 'PUT' and\
+        if request and \
+                (request.method == 'PUT' or request.method == 'PATCH') and \
                 self.NESTED_USER_KEY in self.fields:
+            self.fields[self.NESTED_USER_KEY].fields['email'].read_only = \
+                True
             self.fields[self.NESTED_USER_KEY].fields['username'].read_only = \
-                    True
+                True
 
     def create(self, validated_data):
         model = self.Meta.model
@@ -109,5 +102,24 @@ class NestedWritableObjectsMixin(object):
         return obj
 
     def update(self, instance, validated_data):
-        instance = update_objects(instance, self.get_fields(), validated_data)
+        instance = update_objects(
+            self.get_fields(), validated_data, instance=instance)
         return instance
+
+
+class HelpdeskUsers(object):
+
+    def to_representation(self, obj):
+        data = super(HelpdeskUsers, self).to_representation(obj)
+        if obj.is_helpdesk() and isinstance(
+                self.context['view'], CustomUserView):
+            data = {'user': data}
+        return data
+
+    def to_internal_value(self, data):
+        user = self.context.get('request').user
+        request_data = self.context.get('request').data
+        if user.is_helpdesk() and isinstance(
+                self.context['view'], CustomUserView):
+            return self.context.get('request').data.get('user')
+        return super(HelpdeskUsers, self).to_internal_value(data)

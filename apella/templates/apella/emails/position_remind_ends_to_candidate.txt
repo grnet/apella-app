@@ -1,0 +1,21 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας υπενθυμίζουμε ότι η προθεσμία υποβολής υποψηφιότητας για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+
+λήγει στις <strong>{{ position.ends_at }}</strong>. Μπορείτε να τροποποιείτε τα στοιχεία της υποψηφιότητάς σας μέχρι και την παραπάνω ημερομηνία.
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We remind you that the deadline for submission of candidacy for the position:
+
+{% include "apella/emails/position_details_en.txt %}
+ends in <strong>{{ position.ends_at }}</strong>. You may modify the details of your candidacy until the aforementioned date.
+
+{% endblock content_en %}

@@ -2,21 +2,50 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
-from apimas.modeling.adapters.drf.container import Container
+
+from apimas.modeling.adapters.drf import django_rest
+from apimas.modeling.core import documents as doc
 
 from apella.views import auth_views
+from apella.permissions.permission_rules import PERMISSION_RULES
+from apella.common import load_config
+
+permission_classes = []
+authentication_classes = ['rest_framework.authentication.TokenAuthentication']
 
 admin.autodiscover()
-controller = Container('apella/api')
+config = load_config()
+adapter = django_rest.DjangoRestAdapter()
+spec = config.get('spec')
+spec['.endpoint']['permissions'] = PERMISSION_RULES
+
+for resource in spec['api'].values():
+    doc.doc_set(
+        resource,
+        ['.drf_collection', 'permission_classes'],
+        permission_classes)
+    doc.doc_set(
+        resource,
+        ['.drf_collection', 'authentication_classes'],
+        authentication_classes)
+
+adapter.construct(config.get('spec'))
+adapter.apply()
+serializers = adapter.get_serializers()
+
+api_prefix = settings.API_PREFIX
+apipatterns = [
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/auth/login/$',
+        auth_views.CustomLoginView.as_view(), name='login'),
+    url(r'^api/auth/logout/$',
+        auth_views.CustomLogoutView.as_view(), name='logout'),
+    url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user'),
+    adapter.urls
+]
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    controller.create_api_views(settings.API_SCHEMA),
-    url(r'^auth/login/$',
-        auth_views.CustomLoginView.as_view(), name='login'),
-    url(r'^auth/logout/$',
-        auth_views.CustomLogoutView.as_view(), name='logout'),
-    url(r'^auth/me/$', auth_views.CustomUserView.as_view(), name='user')
+    url(api_prefix, include(apipatterns))
 ]
 
 ui_prefix = getattr(settings, 'UI_PREFIX', 'apella/ui/')

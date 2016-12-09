@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
@@ -7,62 +8,36 @@ let {
   computed, get
 } = Ember;
 
-let members = Users.extend({
-  create: {
-    page: {
-      toolbar: {
-        display: false
-      }
-    }
-  },
-  list: {
-    /*
-     * TODO
-     * This in the future should be moved to getModel (registry.get('members'))
-     */
-    processModel(users) {
-      return users.then( () => {
-        // URL format: domain/resource_plural/id/
-        let members_urls =  this.getParentModel().get('members').getEach('id');
-        let members_ids = members_urls.map((i) => {
-          // split url by '/' and get the last element of the array
-          return _.last( _.words(i));
-        })
-          return users.filter((user) => {
-            let id = user.get('id');
-            return members_ids.indexOf(id) > -1;
-          });
-      });
-    },
-    layout: 'table',
-    sortBy: 'id:asc',
-    row: {
-      fields: [
-        field('id', {label: 'common.id_label', type: 'text'}),
-        field('username', {label: 'username.label', type: 'text'}),
-        field('role_verbose', {label: 'role.label', type: 'text'}),
-      ],
-      actions: ['gen:details']
-    }
-  }
-});
-
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'registry',
   auth: true,
   path: 'registries',
 
+  abilityStates: {
+    // resolve ability for position model
+    owned: computed('role', function() {
+      return get(this, 'role') === 'institutionmanager';
+    }) // we expect server to reply with owned resources
+  },
+
   common: {
     fieldsets: [{
       label: 'registry.main_section.title',
-      fields: [field('type', {label: 'common.type_label'}), 'department'],
+      fields: [field('type', {label: 'common.type_label'}), field('department', {displayAttr: 'title_current'})],
       layout: {
         flex: [30, 70]
       }
     },{
       label: 'registry.members_section.title',
-      fields: ['members']
+      fields: [field('members', { label: null,
+        modelMeta: { search: { fields: ['id', 'last_name_current', 'first_name_current', 'email'] }, sortBy: ['last_name_current'], row: { fields: ['id', 'last_name_current', 'first_name_current', 'email', 'institution.title_current', 'department.title_current', 'rank'] } } })]
     }]
+  },
+
+  create: {
+    onSubmit(model) {
+      this.transitionTo('registry.record.index', model);
+    }
   },
 
   list: {
@@ -84,14 +59,9 @@ export default gen.CRUDGen.extend({
       actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
-    },
-  },
-  nested: {
-    members: members
+  details: {
+    page: {
+      title: computed.readOnly('model.id')
+    }
   }
 });

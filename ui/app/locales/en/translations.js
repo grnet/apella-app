@@ -1,4 +1,10 @@
 export default {
+  'form.save.label': 'Save',
+  'withdrawal': 'Withdraw',
+  'cancel': 'Cancel',
+  'applyCandicacy': 'Apply Candidacy',
+  'prompt.withdrawal.title': 'Withdraw Candidacy',
+  'prompt.withdrawal.message': 'Are you sure you want to withdraw your candidacy?',
   'create.menu.label': 'Create',
   'create.page.title': 'Create',
   'edit.menu.label': 'Edit',
@@ -68,6 +74,7 @@ export default {
   'category.label': 'Category',
   'discipline_in_fek.label': 'Discipline from FEK ',
   'discipline_in_fek.hint': 'Discipline is reported in FEK (Government Gazette)',
+  'dep_number.label': 'Number of teaching staff',
   'position.code.label': 'Position code',
   'position.code_and_title.label': 'Position code - Title',
   'position.title.label': 'Position Title',
@@ -75,14 +82,17 @@ export default {
   'position.department.title_current.label': 'Department',
   'position.state_verbose.label': 'Position State',
   'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy',
+  'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
+  'userInterest.info': 'Blah blah blah<br>blah',
   manager: {
     menu_label: 'Institution Managers',
     label: {
       authority_type: 'Verification Authority',
       authority_full_name: 'Authority Full name',
-      role: 'Role'
+      role: 'Role',
+      sub_fieldset: 'Substitute Institution Administrator'
     }
   },
   professor: {
@@ -128,10 +138,14 @@ export default {
         details: 'Details',
         user_info: 'Profile',
         more_info: 'More info',
-      }
+        user_interest: 'User interest'
+    },
+    text: {
+        user_interest: 'Choose your interests'
+    }
   },
   institution: {
-    menu_label: 'Institutions',
+    menu_label: 'Regulatory Frameworks',
   },
   user: {
     menu_label: 'Users',
@@ -165,7 +179,8 @@ export default {
     button: {
       create_label: 'Create',
       edit_label: 'Edit',
-      details_label: 'View'
+      details_label: 'View',
+      save_label: 'Save',
     }
   },
   item: {

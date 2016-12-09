@@ -54,7 +54,8 @@ setup(
     package_dir={'': PACKAGES_ROOT},
     data_files=[
         ('lib/apella/resources', ['resources/common.json',
-                                  'resources/holidays.json']),
+                                  'resources/holidays.json',
+                                  'resources/apella.apimas']),
     ] + UI_DATA_FILES,
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,

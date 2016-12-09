@@ -1,11 +1,17 @@
 export default {
+  'form.save.label': 'Αποθηκευση',
+  'withdrawal': 'Αποσυρση',
+  'cancel': 'Ακυρο',
+  'applyCandicacy': 'Υποβολή Υποψηφιοτητας',
+  'prompt.withdrawal.title': 'Απόσυρση Υποψηφιότητας',
+  'prompt.withdrawal.message': 'Είστε βέβαιος/η ότι θέλετε να αποσύρετε την υποψηφιότητα σας;',
   'create.menu.label': 'Δημιουργία',
   'create.page.title': 'Δημιουργία',
   'edit.menu.label': 'Τροποποίηση',
   'edit.page.title': 'Τροποποίηση',
   'details.menu.label': 'Λεπτομέρειες',
   'Draft':'Πρόχειρο',
-  'Posted': 'Αναρτημένη',
+  'Posted': 'Ενταγμένη',
   'Cancelled': 'Ακυρωθείσα',
   'Electing': 'Επιλογή',
   'Successful': 'Στελεχωμένη',
@@ -68,21 +74,25 @@ export default {
   'category.label': 'Κατηγορία',
   'discipline_in_fek.label': 'Γνωστικό αντικείμενο στο Φ.Ε.Κ. ',
   'discipline_in_fek.hint': 'Το γνωστικό αντικείμενο αναγράφεται στο ΦΕΚ διορισμού μου',
+  'dep_number.label': 'Αριθμός μελών Δ.Ε.Π.',
   'position.code.label': 'Κωδικός θέσης',
   'position.code_and_title.label': 'Κωδικός - Τίτλος θέσης',
   'position.title.label': 'Τίτλος θέσης',
   'position.department.school.institution.title_current.label': 'Ιδρυμα',
   'position.department.title_current.label': 'Τμήμα',
-  'position.state_verbose.label': 'Κατάσταση θέσης',
+  'position.state_verbose.label': 'Κατάσταση Θέσης',
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε την θέση για την οποία έχετε υποβάλει υποψηφιότητα',
+  'candidacy.state': 'Κατάσταση Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
   'profile.label': 'Προφίλ',
+  'userInterest.info': 'Μπλα μπλα μπλα',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
     label: {
       authority_type: 'Αρχή Πιστοποίησης',
       authority_full_name: 'Ονοματεπώνυμο Αρχής Πιστοποίησης',
-      role: 'Ρόλος'
+      role: 'Ρόλος',
+      sub_fieldset: 'Αναπληρωτής Διαχειριστής Ιδρύματος'
     }
   },
   professor: {
@@ -99,7 +109,6 @@ export default {
       subtitle: 'Όποια στοιχεία θέσης χρειάζονται θα τοποθετηθούν εδώ.'
     },
 
-    'state_verbose.label': 'aaaa',
     candidate_section: {
       title: 'Στοιχεία Υποψηφίου',
       subtitle: 'Τα παρακάτω στοιχεία μπορείτε να τα τροποποποίησετε στο προφίλ σας.'
@@ -131,10 +140,14 @@ export default {
         details: 'Λεπτομέρειες',
         user_info: 'Στοιχεία λογαριασμού',
         more_info: 'Περισσότερα στοιχεία',
-      }
+        user_interest: 'Εκδλήλωση ενδιαφέροντος'
+    },
+    text: {
+        user_interest: 'Εκδηλώστε το ενδιαφέρον σας'
+    }
   },
   institution: {
-    menu_label: 'Ιδρύματα',
+    menu_label: 'Κανονιστικά Πλαίσια',
   },
   user: {
     menu_label: 'Χρήστες',
@@ -168,7 +181,8 @@ export default {
     button: {
       create_label: 'Δημιουργία',
       edit_label: 'Τροποποίηση',
-      details_label: 'Προβολή'
+      details_label: 'Προβολή',
+      save_label: 'Αποθήκευση',
     }
   },
   item: {

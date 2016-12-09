@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import validate from 'ember-gen/validate';
@@ -8,10 +9,12 @@ const {
   get
 } = Ember;
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'school',
   auth: true,
   path: 'schools',
+  session: Ember.inject.service(),
+
   common: {
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])]
@@ -23,22 +26,23 @@ export default gen.CRUDGen.extend({
     },
     menu: {
       icon: 'account_balance',
-      label: 'school.menu_label'
+      label: 'school.menu_label',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
+
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     layout: 'table',
-    paginate: {
-      limit: [10, 15]
-    },
     row: {
       fields: ['title_current', field('institution.title_current', {label: 'institution.label', type: 'text'})],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+  details: {
+    page: {
+      title: computed.readOnly('model.title_current')
     }
   }
 });

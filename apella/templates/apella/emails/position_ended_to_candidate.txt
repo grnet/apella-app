@@ -1,0 +1,20 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας υπενθυμίζουμε ότι η προθεσμία υποβολής υποψηφιότητας για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+έχει παρέλθει. Δεν είστε πλέον σε θέση να τροποποιείτε τα στοιχεία της υποψηφιότητάς σας.
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the deadline for submission of candidacy for the position:
+
+{% include "apella/emails/position_details_en.txt %}
+has passed. You are no longer allowed to modify the details of your candidacy.
+
+{% endblock content_en %}

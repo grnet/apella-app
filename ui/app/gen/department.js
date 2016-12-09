@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import validate from 'ember-gen/validate';
@@ -8,28 +9,34 @@ const {
   computed
 } = Ember;
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'department',
   auth: true,
   path: 'departments',
+  session: Ember.inject.service(),
+
   common: {
     proloadModels: ['institution', 'department'],
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
+      dep_number: [validate.presence(true), validate.number({integer: true})]
     }
   },
   list: {
     menu: {
       icon: 'domain',
-      label: 'department.menu_label'
+      label: 'department.menu_label',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin', 'institutionmanager'];
+
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     page: {
       title: 'department.menu_label',
     },
     layout: 'table',
-    paginate: {
-      limit: [10, 15]
-    },
     sortBy: 'title_current:asc',
     row: {
       fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'}), 'institution.title_current'],
@@ -38,8 +45,12 @@ export default gen.CRUDGen.extend({
   },
   details: {
     page: {
-      title: computed.readOnly('model.id')
+      title: computed.readOnly('model.title_current')
     },
-    create: [field('title_current', {component: 'i18n-input-field'})]
+  },
+  create: {
+    onSubmit(model) {
+      this.transitionTo('department.record.index', model)
+    }
   }
 });

@@ -26,7 +26,8 @@ class CandidacyTest(TestCase):
                 father_name=father_name,
                 username='manager',
                 password='1234',
-                role='institutionmanager')
+                role='institutionmanager',
+                email='author@gmail.com')
         institution_title = MultiLangFields.objects.create(
             el='Πανεπιστήμιο Κρήτης', en='University of Crete')
         institution = Institution.objects.create(
@@ -44,7 +45,8 @@ class CandidacyTest(TestCase):
         department_title = MultiLangFields.objects.create(
             el='Εφαρμοσμένα Μαθηματικά', en='Applied Mathematics')
         self.department = Department.objects.create(
-            title=school_title, school=school, institution=institution)
+            title=school_title, school=school,
+            institution=institution, dep_number=20)
         subject_area_title = MultiLangFields.objects.create(
             el='Μαθηματικά', en='Mathematics')
         self.subject_area = SubjectArea.objects.create(
@@ -83,11 +85,12 @@ class CandidacyTest(TestCase):
                 fek='http://www.google.com',
                 fek_posted_at=self.fek_posted_at,
                 starts_at=self.start_date,
-                ends_at=self.end_date)
+                ends_at=self.end_date,
+                department_dep_number=self.department.dep_number)
         self.assertEqual(self.position.state, 'posted')
 
         self.candidacy = Candidacy.objects.create(
                 candidate=self.candidate,
                 position=self.position,
                 others_can_view=True)
-        self.assertEqual(self.candidacy.state, '2')
+        self.assertEqual(self.candidacy.state, 'posted')

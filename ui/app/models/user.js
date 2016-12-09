@@ -1,9 +1,11 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
+import {computeI18N, computeI18NChoice} from 'ui/lib/common';
 import get_label from '../utils/common/label_list_item';
 
 const { computed, get } = Ember,
       CHOICES = ENV.APP.resource_choices;
+
 
 export default DS.Model.extend({
   user_id: DS.attr(),
@@ -19,28 +21,9 @@ export default DS.Model.extend({
   mobile_phone_number: DS.attr(),
   home_phone_number: DS.attr(),
 
-  role_verbose: computed('role', 'i18n.locale', function(){
-    let role_id = this.get('role');
-    let role_list = CHOICES.USER_ROLES;
-    return  this.get('i18n').t(get_label(role_list, role_id));
-  }),
-
-  first_name_current: computed('first_name', 'i18n.locale',  function() {
-    let lang = this.get('i18n.locale');
-    return this.get('first_name')[lang];
-  }),
-
-  last_name_current: computed('last_name', 'i18n.locale',  function() {
-    let lang = this.get('i18n.locale');
-    return this.get('last_name')[lang];
-  }),
-
-  father_name_current: computed('father_name', 'i18n.locale',  function() {
-    let lang = this.get('i18n.locale');
-    return this.get('father_name')[lang];
-  }),
-
-  full_name_current: computed('first_name_current', 'last_name_current', function(){
-    return `${this.get('first_name_current')} ${this.get('last_name_current')}`
-  })
+  role_verbose: computeI18NChoice('role', CHOICES.USER_ROLES),
+  first_name_current: computeI18N('first_name'),
+  last_name_current: computeI18N('last_name'),
+  father_name_current: computeI18N('father_name'),
+  full_name_current: computeI18N('first_name_current')
 });

@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 DATA_DIR = os.path.abspath(os.getcwd())
 RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
+<<<<<<< HEAD
 SETTINGS_DIR = '/etc/apella'
 SETTINGS_FILE = 'settings.conf'
+=======
+>>>>>>> origin/feature-apimas-refactor
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -45,9 +48,11 @@ INSTALLED_APPS = (
 )
 
 REST_FRAMEWORK = {
-   'DEFAULT_AUTHENTICATION_CLASSES': (
-       'rest_framework.authentication.TokenAuthentication',
-   ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.LimitOffsetPagination',
 }
 
 MIDDLEWARE_CLASSES = (
@@ -70,7 +75,11 @@ WSGI_APPLICATION = 'apella_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+<<<<<<< HEAD
         'NAME': '/tmp/apela.sqlite3',
+=======
+        'NAME': '/tmp/apella.sqlite3',
+>>>>>>> origin/feature-apimas-refactor
     }
 }
 
@@ -145,7 +154,19 @@ if not LOGGING:
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-from api_settings import API_SCHEMA
-from copy import deepcopy
+STATIC_URL = '/static/'
+API_PREFIX = 'apella/'
+AUTH_USER_MODEL = 'apella.ApellaUser'
 
-API_SCHEMA_TMP = deepcopy(API_SCHEMA)
+START_DATE_END_DATE_INTERVAL = 30
+LANGUAGES = {'el', 'en'}
+POSITION_CODE_PREFIX = 'APP'
+
+CONFIG_FILE = 'apella.apimas'
+
+SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
+
+if os.path.isfile(SETTINGS_FILE):
+    execfile(SETTINGS_FILE)
+else:
+    pass

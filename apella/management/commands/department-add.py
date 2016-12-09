@@ -29,7 +29,8 @@ class Command(ApellaCommand):
             department = Department.objects.create(
                                             institution=institution,
                                             school=school,
-                                            title=title)
+                                            title=title,
+                                            dep_number=20)
             self.stdout.write(
                 "Created department %s : %s" %
                 (department.pk, department.title.el))

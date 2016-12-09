@@ -6,7 +6,5 @@
 *.egg
 *.tar.gr
 
-*/local_settings.py
-
 **/apella.log
-pip-deps
+settings.conf

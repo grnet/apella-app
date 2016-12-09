@@ -2,6 +2,7 @@ import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
+import {ApellaGen, i18nField, computedField} from 'ui/lib/common';
 
 const {
   computed,
@@ -10,14 +11,20 @@ const {
 
 
 let FS = {
-  list: ['title_current', 'category_verbose', 'organization', 'regulatory_framework'],
+  list: [
+    i18nField('title'), 
+    computedField('category_verbose', 'category'), 
+    'organization',
+    'regulatory_framework'
+  ]
 };
 
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'institution',
   auth: true,
   path: 'institutions',
+
   common: {
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
@@ -25,6 +32,13 @@ export default gen.CRUDGen.extend({
       regulatory_framework: [validate.format({allowBlank: true, type: 'url'})],
     }
   },
+
+  abilityStates: {
+    owned: computed('role', function() { 
+      return get(this, 'role') === 'institutionmanager';
+    }) // we expect server to reply with owned resources
+  },
+
   list: {
     page: {
       title: 'institution.menu_label',
@@ -33,21 +47,21 @@ export default gen.CRUDGen.extend({
       icon: 'location_city',
       label: 'institution.menu_label'
     },
-    sortBy: 'organization:asc',
-    layout: 'table',
-    paginate: {
-      limit: [10, 15, 30]
+    sort: {
+      active: true,
+      serverSide: true,
+      fields: ['title']
     },
+    layout: 'table',
     row: {
       fields: FS.list,
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+
+  details: {
+    page: {
+      title: computed.readOnly('model.title_current')
     }
   }
 });

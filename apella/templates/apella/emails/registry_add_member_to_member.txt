@@ -1,0 +1,14 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι έχετε συμπεριληφθεί στο Μητρώο {{ registry.type }} μελών του Ιδρύματος: {{ registry.institution.title.el }}
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that you have been included in the {{ registry.type }}  member Registry of the Institution: {{ registry.institution.title.en }}
+
+{% endblock content_en %}

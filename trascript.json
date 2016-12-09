@@ -1,61 +1,6 @@
 {
 "actions" : [
 {
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "institutionmanager"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "1"},
-    "change": "new group"
-  }
-},
-{
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "professor"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "2"},
-    "change": "new group"
-  }
-},
-{
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "candidate"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "3"},
-    "change": "new group"
-  }
-},
-{
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "helpdeskadmin"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "4"},
-    "change": "new group"
-  }
-},
-{
-  "user": "admin",
-  "action": "group-add",
-  "input": {
-    "arg1": "helpdeskuser"
-  },
-  "db_state_change" : {
-    "object" : { "Group": "5"},
-    "change": "new group"
-  }
-},
-{
     "user": "admin",
     "action": "user-add",
     "input": {
@@ -68,8 +13,7 @@
         "first_name_en": "George",
         "last_name_en": "Korfiatis",
         "father_name_en": "John",
-        "email": "george@gmail.com",
-        "group_name": "institutionmanager"
+        "email": "george@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "1"},
@@ -129,7 +73,7 @@
     "action": "institutionmanager-add",
     "input": {
         "arg1": "manager",
-        "role": "1",
+        "role": "manager",
         "arg2": "1"
     },
     "db_state_change" : {
@@ -151,8 +95,7 @@
         "first_name_en": "Maria",
         "last_name_en": "Papadopoulou",
         "father_name_en": "Peter",
-        "email": "maria@gmail.com",
-        "group_name": "candidate"
+        "email": "maria@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "2"},
@@ -183,8 +126,7 @@
         "first_name_en": "Panos",
         "last_name_en": "Markatos",
         "father_name_en": "Konstantinos",
-        "email": "panos@gmail.com",
-        "group_name": "professor"
+        "email": "panos@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "3"},
@@ -204,8 +146,7 @@
         "first_name_en": "Olga",
         "last_name_en": "Katechaki",
         "father_name_en": "Stavros",
-        "email": "olga@gmail.com",
-        "group_name": "professor"
+        "email": "olga@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "4"},
@@ -225,8 +166,7 @@
         "first_name_en": "Friday",
         "last_name_en": "Paraskeya",
         "father_name_en": "Socrates",
-        "email": "friday@gmail.com",
-        "group_name": "assistant"
+        "email": "friday@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "5"},
@@ -238,7 +178,7 @@
     "action": "institutionmanager-add",
     "input": {
         "arg1": "assistant",
-        "role": "1",
+        "role": "assistant",
         "arg2": "1"
     },
     "db_state_change" : {
@@ -552,6 +492,113 @@
     }
 },
 {
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Τρίτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Οικολογία",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2016-07-15",
+        "arg9" : "2017-09-30",
+        "arg10" : "2017-12-30",
+        "arg11" : "Οικολογία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "6"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Τεταρτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Αθλητισμός"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "7"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Πεμπτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Αθλητισμός"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "8"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Defence Against the Dark Arts",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Μαγεία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Care of Magical Creatures",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://harrypotter.wikia.com/wiki/Rubeus_Hagrid",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Μαγεία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : "new position"
+    }
+},
+
+
+{
     "user": "2",
     "action": "position-list",
     "output": {"Position" : "1"}
@@ -637,6 +684,80 @@
     }
 },
 {
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "6",
+        "state" : "cancelled"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "6"},
+        "change" : {"position.status" : "cancelled" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "8",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "8"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "9",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "9",
+        "state" : "failed"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : {"position.status" : "failed" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "10",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "10",
+        "state" : "revoked"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : {"position.status" : "revoked" }
+    }
+},
+
+
+{
     "user": "admin",
     "action": "user-add",
     "input": {
@@ -649,14 +770,34 @@
         "first_name_en": "Maria",
         "last_name_en": "Papadopoulou",
         "father_name_en": "Peter",
-        "email": "admin@gmail.com",
-        "group_name": "helpdeskadmin"
+        "email": "admin@gmail.com"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "6"},
         "change" : "new user"
     }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "helpdeskuser",
+        "role": "helpdeskuser",
+        "arg2": "12345",
+        "arg3": "Ναταλία",
+        "arg4": "Τζωρτζίδου",
+        "arg5": "Πέτρος",
+        "first_name_en": "Natalia",
+        "last_name_en": "Tzwrtzidou",
+        "father_name_en": "Peter",
+        "email": "natalia@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "7"},
+        "change" : "new user"
+    }
 }
+
 ]
 }
 

@@ -9,7 +9,7 @@ const presence = validate.presence(true),
       mandatory = [validate.presence(true)],
       mandatory_with_max_chars = [presence, max_chars],
       {
-        get, computed
+        get, computed, computed: { alias }
       } =Ember,
       CANDIDACY_POSTED_ID = '2',
       POSITION_POSTED_ID = '2';
@@ -17,7 +17,7 @@ const presence = validate.presence(true),
 let FS = {
   list:  ['position.code', 'position.department.institution.title_current',
           'position.department.title_current',
-          'position.state_verbose'],
+          'position.state_verbose', field('state_verbose', {label: 'candidacy.state'})],
   create: [{
     label: 'candidacy.position_section.title',
     text: 'candidacy.position_section.subtitle',
@@ -52,10 +52,61 @@ let FS = {
 
 }
 
+let actions = {
+  cancelCandidacy: {
+    label: 'withdrawal',
+    icon: 'delete forever',
+    accent: true,
+    permissions: [{action: 'edit'}],
+    action(route, model) {
+      return model.get('candidate').then(() => {
+        model.set('state', 'cancelled');
+        return model.save().then((value) => {
+          return value;
+        }, (reason) => {
+          model.rollbackAttributes();
+          window.alert(reason)
+        return reason;
+        });
+      })
+    },
+    confirm: true,
+    prompt: {
+      ok: 'withdrawal',
+      cancel: 'cancel',
+      message: 'prompt.withdrawal.message',
+      title: 'prompt.withdrawal.title',
+    }
+  }
+}
+
 export default ApellaGen.extend({
   appIndex: true,
   modelName: 'candidacy',
   path: 'candidacies',
+  session: Ember.inject.service(),
+
+  abilityStates: {
+    // resolve ability for position model
+    positionAbility: computed('model.position.id', 'role', 'user', 'model', function() {
+      let ability = getOwner(this).lookup('ability:positions')
+      let props = this.getProperties('role', 'user');
+      props.model = get(this, 'model.position');
+      ability.setProperties(props);
+      return ability;
+    }),
+    owned: computed('role', 'user.id', 'model.candidate.id', function() { 
+      return get(this, 'role') === 'institutionmanager' || get(this, 'user.id') === get(this, 'model.candidate.id');
+    }), // we expect server to reply with owned resources if user is an institution manager
+    others_can_view: alias('model.othersCanView'),
+    participates: computed('role', function() {
+      return role === 'professor'; // TODO: resolve user.id participates
+    }),
+    owned_open: computed('owned', 'position.open', 'model.state', function() {
+      return get(this, 'owned') && get(this, 'positionAbility.open') && get(this, 'model.state') === 'cancelled';
+    })
+  },
+
   common: {
     preloadModels: ['position', 'institution', 'department'],
     validators: {
@@ -73,15 +124,15 @@ export default ApellaGen.extend({
     getModel: function(params) {
       // TODO replace with session's user group
       let userGroup = 'admin';
+      let qs = this.getModelQueryParams(params);
       if (userGroup == 'admin') {
-        return this.store.findAll('candidacy');
+        return this.store.query('candidacy', qs);
       } else {
       // TODO replace with session's user
         let userId = '2';
-        return this.store.query('candidacy', {
-          'state': CANDIDACY_POSTED_ID,
-          'candidate': userId,
-        });
+        qs['state'] = CANDIDACY_POSTED_ID;
+        qs['candidate'] = userId;
+        return this.store.query('candidacy', qs);
       }
     },
     sortBy: 'position.code:asc',
@@ -93,11 +144,20 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'candidacy.menu_label',
-      icon: 'assignment'
+      icon: 'assignment',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let forbiddenRoles = ['institutionmanager', 'helpdeskadmin'];
+
+        return (forbiddenRoles.includes(role) ? false : true);
+      })
     },
     row: {
       fields: FS.list,
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:details', 'gen:edit', 'cancelCandidacy'],
+      actionsMap: {
+        cancelCandidacy: actions.cancelCandidacy
+      }
     }
   },
   create: {
@@ -106,12 +166,16 @@ export default ApellaGen.extend({
   details: {
     page: {
       title: computed.reads('model.position.code')
-    }
+    },
+    actions: ['gen:edit', 'cancelCandidacy'],
+      actionsMap: {
+        cancelCandidacy:  actions.cancelCandidacy
+      }
   },
   edit: {
     fieldsets: computed('model.position.state', function() {
-      let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView'];
-      if (this.get('model.position.state') != POSITION_POSTED_ID) {
+      let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView', 'state'];
+      if (get(this, 'model.position.state') != POSITION_POSTED_ID) {
         candidacy_fields = _.map(candidacy_fields, disable_field);
       };
 

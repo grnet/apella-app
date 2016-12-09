@@ -1,0 +1,14 @@
+{% extends "emails/base_email.txt %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι το προφίλ σας στο πληροφοριακό σύστημα Απέλλα έχει ενεργοποιηθεί.
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that your profile for the Apella Information System has been activated.
+
+{% endblock content_en %}

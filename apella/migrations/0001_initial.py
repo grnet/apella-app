@@ -25,13 +25,13 @@ class Migration(migrations.Migration):
                 ('last_login', models.DateTimeField(null=True, verbose_name='last login', blank=True)),
                 ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
                 ('username', models.CharField(help_text=b'Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=30, unique=True, error_messages={b'unique': b'A user with that username already exists.'}, validators=[django.core.validators.RegexValidator(b'^[\\w.@+-]+$', b'Enter a valid username. This value may contain only letters, numbers and @/./+/-/_ characters.', b'invalid')])),
-                ('email', models.EmailField(max_length=254)),
+                ('email', models.EmailField(unique=True, max_length=254, error_messages={b'unique': b'A user with that email already exists.'})),
                 ('is_staff', models.BooleanField(default=False)),
-                ('is_active', models.BooleanField(default=True)),
+                ('is_active', models.BooleanField(default=False)),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now)),
-                ('id_passport', models.CharField(max_length=20)),
-                ('mobile_phone_number', models.CharField(max_length=30)),
-                ('home_phone_number', models.CharField(max_length=30)),
+                ('id_passport', models.CharField(max_length=20, blank=True)),
+                ('mobile_phone_number', models.CharField(max_length=30, blank=True)),
+                ('home_phone_number', models.CharField(max_length=30, blank=True)),
                 ('role', models.CharField(default=b'candidate', max_length=20, choices=[['institutionmanager', 'Institution Manager'], ['candidate', 'Candidate'], ['professor', 'Professor'], ['helpdeskadmin', 'Helpdesk Admin'], ['helpdeskuser', 'Helpdesk User'], ['assistant', 'Assistant']])),
             ],
             options={
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             name='Candidacy',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('state', models.CharField(default=b'2', max_length=1, choices=[['1', 'Draft'], ['2', 'Posted'], ['3', 'Cancelled']])),
+                ('state', models.CharField(default=b'posted', max_length=30, choices=[['posted', 'Posted'], ['cancelled', 'Cancelled']])),
                 ('others_can_view', models.BooleanField(default=False)),
                 ('submitted_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
@@ -66,13 +66,23 @@ class Migration(migrations.Migration):
             name='Candidate',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('is_active', models.BooleanField(default=False)),
+                ('activated_at', models.DateTimeField(null=True, blank=True)),
+                ('is_verified', models.BooleanField(default=False)),
+                ('verified_at', models.DateTimeField(null=True, blank=True)),
+                ('is_rejected', models.BooleanField(default=False)),
+                ('rejected_reason', models.TextField(null=True, blank=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Department',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('dep_number', models.IntegerField(null=True, blank=True)),
             ],
         ),
         migrations.CreateModel(
@@ -88,25 +98,39 @@ class Migration(migrations.Migration):
             name='InstitutionManager',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('is_active', models.BooleanField(default=False)),
+                ('activated_at', models.DateTimeField(null=True, blank=True)),
+                ('is_verified', models.BooleanField(default=False)),
+                ('verified_at', models.DateTimeField(null=True, blank=True)),
+                ('is_rejected', models.BooleanField(default=False)),
+                ('rejected_reason', models.TextField(null=True, blank=True)),
                 ('authority', models.CharField(max_length=1, choices=[['1', 'Dean'], ['2', 'President']])),
                 ('authority_full_name', models.CharField(max_length=150)),
-                ('manager_role', models.CharField(max_length=1, choices=[['1', 'Manager'], ['2', 'Assistant'], ['3', 'Substitute']])),
-                ('institution', models.ForeignKey(to='apella.Institution')),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('manager_role', models.CharField(max_length=20, choices=[['manager', 'Manager'], ['assistant', 'Assistant']])),
+                ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
+                ('sub_mobile_phone_number', models.CharField(max_length=30, null=True, blank=True)),
+                ('sub_home_phone_number', models.CharField(max_length=30, null=True, blank=True)),
+                ('can_create_registries', models.BooleanField(default=False)),
+                ('can_create_positions', models.BooleanField(default=False)),
+                ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='MultiLangFields',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('el', models.CharField(max_length=500)),
-                ('en', models.CharField(max_length=500)),
+                ('el', models.CharField(max_length=500, null=True, blank=True)),
+                ('en', models.CharField(max_length=500, null=True, blank=True)),
             ],
         ),
         migrations.CreateModel(
             name='Position',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('code', models.CharField(max_length=200)),
                 ('title', models.CharField(max_length=50)),
                 ('description', models.CharField(max_length=300)),
                 ('discipline', models.CharField(max_length=300)),
@@ -117,8 +141,9 @@ class Migration(migrations.Migration):
                 ('ends_at', models.DateTimeField()),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('department_dep_number', models.IntegerField()),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
-                ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
+                ('author', models.ForeignKey(related_name='authored_positions', blank=True, to='apella.InstitutionManager')),
             ],
         ),
         migrations.CreateModel(
@@ -134,6 +159,12 @@ class Migration(migrations.Migration):
             name='Professor',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('is_active', models.BooleanField(default=False)),
+                ('activated_at', models.DateTimeField(null=True, blank=True)),
+                ('is_verified', models.BooleanField(default=False)),
+                ('verified_at', models.DateTimeField(null=True, blank=True)),
+                ('is_rejected', models.BooleanField(default=False)),
+                ('rejected_reason', models.TextField(null=True, blank=True)),
                 ('rank', models.CharField(max_length=30, choices=[['Professor', 'Professor'], ['Associate Professor', 'Associate Professor'], ['Assistant Professor', 'Assistant Professor'], ['Research Director', 'Research Director'], ['Principal Researcher', 'Principal Researcher'], ['Affiliated Researcher', 'Affiliated Researcher']])),
                 ('is_foreign', models.BooleanField(default=False)),
                 ('speaks_greek', models.BooleanField(default=True)),
@@ -142,16 +173,19 @@ class Migration(migrations.Migration):
                 ('discipline_text', models.CharField(max_length=300)),
                 ('discipline_in_fek', models.BooleanField(default=True)),
                 ('department', models.ForeignKey(blank=True, to='apella.Department', null=True)),
-                ('institution', models.ForeignKey(to='apella.Institution')),
+                ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Registry',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('type', models.CharField(default=b'1', max_length=1, choices=[['1', 'Internal'], ['2', 'External']])),
-                ('department', models.ForeignKey(to='apella.Department')),
+                ('department', models.ForeignKey(to='apella.Department', on_delete=django.db.models.deletion.PROTECT)),
                 ('members', models.ManyToManyField(to='apella.Professor')),
             ],
         ),
@@ -159,7 +193,7 @@ class Migration(migrations.Migration):
             name='School',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('institution', models.ForeignKey(to='apella.Institution')),
+                ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
                 ('title', models.ForeignKey(to='apella.MultiLangFields')),
             ],
         ),
@@ -183,6 +217,17 @@ class Migration(migrations.Migration):
                 ('deleted', models.BooleanField(default=False, db_index=True)),
                 ('apella_file', models.ForeignKey(related_name='user_files', to='apella.ApellaFile')),
                 ('apella_user', models.ForeignKey(related_name='user_files', to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='UserInterest',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('area', models.ManyToManyField(to='apella.SubjectArea', blank=True)),
+                ('department', models.ManyToManyField(to='apella.Department', blank=True)),
+                ('institution', models.ManyToManyField(to='apella.Institution', blank=True)),
+                ('subject', models.ManyToManyField(to='apella.Subject', blank=True)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
@@ -226,6 +271,26 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(to='apella.SubjectArea', on_delete=django.db.models.deletion.PROTECT),
         ),
         migrations.AddField(
+            model_name='institutionmanager',
+            name='sub_father_name',
+            field=models.ForeignKey(related_name='sub_father_name', blank=True, to='apella.MultiLangFields', null=True),
+        ),
+        migrations.AddField(
+            model_name='institutionmanager',
+            name='sub_first_name',
+            field=models.ForeignKey(related_name='sub_first_name', blank=True, to='apella.MultiLangFields', null=True),
+        ),
+        migrations.AddField(
+            model_name='institutionmanager',
+            name='sub_last_name',
+            field=models.ForeignKey(related_name='sub_last_name', blank=True, to='apella.MultiLangFields', null=True),
+        ),
+        migrations.AddField(
+            model_name='institutionmanager',
+            name='user',
+            field=models.OneToOneField(to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AddField(
             model_name='institution',
             name='title',
             field=models.ForeignKey(to='apella.MultiLangFields'),
@@ -233,7 +298,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='department',
             name='institution',
-            field=models.ForeignKey(to='apella.Institution'),
+            field=models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT),
         ),
         migrations.AddField(
             model_name='department',
@@ -248,12 +313,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='candidacy',
             name='position',
-            field=models.ForeignKey(to='apella.Position'),
+            field=models.ForeignKey(to='apella.Position', on_delete=django.db.models.deletion.PROTECT),
         ),
         migrations.AddField(
             model_name='apellauser',
             name='father_name',
-            field=models.ForeignKey(related_name='father_name', to='apella.MultiLangFields'),
+            field=models.ForeignKey(related_name='father_name', blank=True, to='apella.MultiLangFields', null=True),
         ),
         migrations.AddField(
             model_name='apellauser',

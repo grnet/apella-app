@@ -1,0 +1,6 @@
+Τίτλος: {{ position.title }}
+Ίδρυμα: {{ position.department.institution.title.el }}
+Σχολή: {{ position.departments.school.title.el }}
+Τμήμα: {{ position.department.title.el }}
+Ημερομηνία Έναρξης Υποβολών: {{ position.starts_at }}
+Ημερομηνία Λήξης Υποβολών: {{ position.ends_at }}

@@ -1,7 +1,9 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
         USER_VALIDATORS,
-        INSTITUTION_MANAGER_FIELDSET,
+        INST_MANAGER_FIELDSET_MAIN,
+        INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
@@ -10,15 +12,19 @@ const {
   get
 } = Ember;
 
-export default gen.CRUDGen.extend({
+let all_validators = Object.assign({}, USER_VALIDATORS, INSTITUTION_MANAGER_VALIDATORS);
+
+export default ApellaGen.extend({
   modelName: 'institution-manager',
+  resourceName: 'institution-managers',
   auth: true,
   path: 'managers',
   common: {
-    validators: USER_VALIDATORS,
+    validators: all_validators,
     fieldsets: [
       USER_FIELDSET,
-      INSTITUTION_MANAGER_FIELDSET,
+      INST_MANAGER_FIELDSET_MAIN,
+      INST_MANAGER_FIELDSET_SUB
     ]
   },
   list: {
@@ -40,13 +46,8 @@ export default gen.CRUDGen.extend({
     },
   },
   details: {
-    fields: ['id', 'username', 'last_name'],
-  },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+    page: {
+      title: computed.readOnly('model.full_name_current')
     }
   }
 });

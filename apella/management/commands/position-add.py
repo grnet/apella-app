@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ValidationError
+from django.conf import settings
 
 from apella.models import Position, Department, Subject, SubjectArea,\
     InstitutionManager
@@ -46,8 +47,11 @@ class Command(ApellaCommand):
                     department=department, description=description,
                     fek=fek, fek_posted_at=fek_posted_at,
                     subject_area=subject_area, discipline=discipline,
-                    subject=subject, starts_at=starts_at, ends_at=ends_at)
-
+                    subject=subject, starts_at=starts_at, ends_at=ends_at,
+                    department_dep_number=department.dep_number)
+            code = settings.POSITION_CODE_PREFIX + str(p.id)
+            p.code = code
+            p.save()
             self.stdout.write(
                 "Created position %s : title = %s author = %s" %
                 (p.pk, p.title, p.author.user.username))

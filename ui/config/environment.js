@@ -1,6 +1,7 @@
 /* jshint node: true */
-var choices = require('../../resources/common');
-var holidays = require('../../resources/holidays');
+var choices = require('../../resources/www/common');
+var holidays = require('../../resources/www/holidays');
+const PERMISSIONS = require('../../resources/permissions');
 
 module.exports = function(environment) {
   var ENV = {
@@ -24,7 +25,7 @@ module.exports = function(environment) {
     },
 
     APP: {
-      backend_host: 'http://127.0.0.1:8000/api',
+      backend_host: 'http://127.0.0.1:8000/apella/api',
       resource_choices: choices,
       resource_holidays: holidays,
       date_format: 'DD , MMMM YYYY',
@@ -32,6 +33,10 @@ module.exports = function(environment) {
       // when it is created
     },
   };
+
+  ENV['ember-gen'] = {
+    permissions: PERMISSIONS
+  },
 
   ENV['ember-simple-auth'] = {
     authenticationRoute: 'auth.index',

@@ -1,9 +1,6 @@
-from django.core.management.base import CommandError
 from django.db import IntegrityError
 
-from apella import common
-from apella.models import Institution, School, Department, DepartmentEl,\
-    DepartmentEn
+from apella.models import Institution, School, Department, MultiLangFields
 from apella.management.utils import LoadDataCommand, smart_locale_unicode
 
 
@@ -37,10 +34,8 @@ class Command(LoadDataCommand):
                 if department_title_el == '-':
                     continue
 
-                department_el = DepartmentEl.objects.create(
-                    title=department_title_el)
-                department_en = DepartmentEn.objects.create(
-                    title=department_title_en)
+                title = MultiLangFields.objects.create(
+                    el=department_title_el, en=department_title_en)
 
                 institution = Institution.objects.get(id=ircid)
                 try:
@@ -56,13 +51,12 @@ class Command(LoadDataCommand):
 
                 department_data = {
                         'institution': institution,
-                        'el': department_el,
-                        'en': department_en,
+                        'title': title,
                         'id': diid,
                         'school': school}
 
                 try:
-                    department = Department.objects.create(**department_data)
+                    Department.objects.create(**department_data)
                     success += 1
                     self.stdout.write(
                         "%s %s is created." % (diid, department_title_el))

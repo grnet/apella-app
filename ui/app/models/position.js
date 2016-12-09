@@ -12,12 +12,8 @@ export default DS.Model.extend({
   title: DS.attr(),
   description: DS.attr({type:'text'}),
   discipline: DS.attr(),
+  department_dep_number: DS.attr(),
 
-  author: DS.belongsTo('institution-manager', {
-    formAttrs: {
-      optionLabelAttr: 'full_name_current'
-    }
-  }),
   department: DS.belongsTo('department', {
     formAttrs: {
       optionLabelAttr: 'title_current'
@@ -31,16 +27,17 @@ export default DS.Model.extend({
   subject: DS.belongsTo('subject', {
     formComponent: 'select-subject',
     formAttrs: {
+      lookupField: 'area',
       optionLabelAttr: 'title_current',
     }
   }),
   fek: DS.attr(),
-  fek_posted_at: DS.attr('date', {formAttrs: {time: true}}),
+  fek_posted_at: DS.attr('date'),
   assistants: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   electors: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   committee: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   elected: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'username'}}),
-  state: DS.attr({type: 'select', choices: CHOICES.POSITION_STATES, defaultValue: 2}),
+  state: DS.attr({type: 'select', choices: CHOICES.POSITION_STATES, defaultValue: 'posted'}),
   starts_at: DS.attr('date'),
   ends_at: DS.attr('date'),
   created_at: DS.attr('date'),

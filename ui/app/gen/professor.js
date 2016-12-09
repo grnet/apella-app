@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
         USER_VALIDATORS,
@@ -12,7 +13,7 @@ const {
 
 let all_validators = Object.assign(PROFESSOR_VALIDATORS, USER_VALIDATORS);
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'professor',
   auth: true,
   path: 'professors',
@@ -42,13 +43,8 @@ export default gen.CRUDGen.extend({
     },
   },
   details: {
-    fields: ['id', 'username', 'first_name_current'],
-  },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+    page: {
+      title: computed.readOnly('model.full_name_current')
     }
-  }
+  },
 });

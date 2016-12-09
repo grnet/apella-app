@@ -1,0 +1,1369 @@
+root: http://localhost:8000
+spec:
+    .endpoint: {}
+    api:
+        multilang:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.MultiLangFields
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                el:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                en:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+
+        users:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.ApellaUser
+                model_serializers: [
+                    apella.serializers.mixins.NestedWritableObjectsMixin,
+                    apella.serializers.mixins.HelpdeskUsers]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                username:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                password:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                email:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                is_active:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                id_passport:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                mobile_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                home_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                first_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                last_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                father_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .retrieve: {}
+        institutions:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Institution
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [title__en, title__el]
+                ordering_fields: [id]
+                search_fields: [title__en, title__el]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                organization:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                regulatory_framework:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        schools:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.School
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: institutions
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        departments:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Department
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [institution]
+                ordering_fields: [id]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: institutions
+                school:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: schools
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                dep_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .integer: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        subject-areas:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.SubjectArea
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                ordering_fields: [id]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        subjects:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Subject
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [area]
+                ordering_fields: [id]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                area:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: subject-areas
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        professors:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Professor
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: institutions
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: departments
+                rank:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                is_foreign:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .required: {}
+                speaks_greek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .required: {}
+                cv_url:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                fek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                discipline_text:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                discipline_in_fek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .required: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        registries:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Registry
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                type:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: departments
+                members:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: professors
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        institution-managers:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.InstitutionManager
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: institutions
+                authority:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                authority_full_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                manager_role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                sub_mobile_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .blankable: {}
+                    .nullable: {}
+                    .string: {}
+                sub_home_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .blankable: {}
+                    .nullable: {}
+                    .string: {}
+                sub_email:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                    .nullable: {}
+                sub_first_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                sub_last_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                sub_father_name:
+                    .cli_option: {}
+                    .field: {}
+                    .nullable: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                            .nullable: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        candidates:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Candidate
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        positions:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Position
+                model_serializers: [apella.serializers.position.PositionMixin]
+                mixins: [apella.views.mixins.PositionList,
+                    apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [title, id, state, department, code]
+                ordering_fields: [title, id, state, department]
+                search_fields: [title, id, state, department]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                code:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                discipline:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                author:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .ref:
+                        to: institution-managers
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: departments
+                subject_area:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: subject-areas
+                subject:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: subjects
+                fek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .string: {}
+                fek_posted_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .datetime: {}
+                assistants:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: institution-managers
+                electors:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: professors
+                committee:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: professors
+                elected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: users
+                state:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                starts_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .datetime: {}
+                ends_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .datetime: {}
+                created_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .datetime: {}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .datetime: {}
+                department_dep_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .integer: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        candidacies:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Candidacy
+                model_serializers: [apella.serializers.mixins.ValidatorMixin]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                candidate:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: users
+                position:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: positions
+                state:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .string: {}
+                others_can_view:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                submitted_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .datetime: {}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .datetime: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        user-interests:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.UserInterest
+                filter_fields: [user]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: users
+                area:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: subject-areas
+                subject:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: subjects
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: institutions
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: departments
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        assistants:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.InstitutionManager
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.AssistantList]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: institutions
+                manager_role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                can_create_registries:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                can_create_positions:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}

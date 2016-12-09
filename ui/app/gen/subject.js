@@ -1,4 +1,6 @@
+import {ApellaGen, i18nField} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
+import {field} from 'ember-gen/lib/util';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 
@@ -8,14 +10,16 @@ const {
 } = Ember;
 
 let FS = {
-  list : ['title_current', 'area.title_current']
+  list : [i18nField('title'), i18nField('area.title')]
 }
 
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'subject',
   auth: true,
   path: 'subjects',
+  session: Ember.inject.service(),
+
   common: {
     preloadModels: ['subject-area'],
     validators: {
@@ -23,31 +27,42 @@ export default gen.CRUDGen.extend({
     }
   },
   list: {
+    sort: {
+      active: true,
+      fields: ['title'],
+      serverSide: true
+    },
+    filter: {
+      active: true,
+      meta: {
+        fields: [i18nField('title'), 'area']
+      },
+      serverSide: true,
+      search: true,
+      searchFields: ['title']
+    },
     page: {
       title: 'subject.menu_label',
     },
     menu: {
       icon: 'local_library',
-      label: 'subject.menu_label'
+      label: 'subject.menu_label',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
+
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     layout: 'table',
-    paginate: {
-      limit: [10, 15]
-    },
-    sortBy: 'title_current:asc',
-    search: {
-      fields: FS.list
-    },
     row: {
       fields: FS.list,
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:edit', 'remove']
     }
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+  details: {
+    page: {
+      title: computed.readOnly('model.title_current')
     }
   }
 });

@@ -1,3 +1,4 @@
+import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
@@ -7,10 +8,12 @@ const {
   get
 } = Ember;
 
-export default gen.CRUDGen.extend({
+export default ApellaGen.extend({
   modelName: 'subject_area',
   auth: true,
-  path: 'subject_areas',
+  path: 'subject-areas',
+  session: Ember.inject.service(),
+
   common: {
     validators: {
       title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
@@ -22,20 +25,24 @@ export default gen.CRUDGen.extend({
     },
     menu: {
       icon: 'school',
-      label: 'subject_area.menu_label'
+      label: 'subject_area.menu_label',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
+
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     layout: 'table',
     sortBy: 'title_current:asc',
      row: {
       fields: ['title_current'],
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:edit', 'remove']
     },
   },
-  record: {
-    menu: {
-      label: computed('model.id', function() {
-        return get(this, 'model.id');
-      })
+  details: {
+    page: {
+      title: computed.readOnly('model.title_current')
     }
   }
 });

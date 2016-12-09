@@ -1,0 +1,20 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι υπήρξε μία τροποποίηση στη σύνθεση της Επιτροπής επιλογής για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+για την οποία έχετε υποβάλλει υποψηφιότητα.
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that there has been a modification in the composition of the election Committee for the position:
+
+{% include "apella/emails/position_details_en.txt %}
+for which you have submitted a candidacy.
+
+{% endblock content_en %}
