@@ -22,11 +22,11 @@ export default Ember.Component.extend({
   }),
 
   subjectAreas: computed('', function() {
-    return get(this, 'store').findAll('subject-area');
+    return get(this, 'store').query('subject-area', {ordering:'id'});
   }),
 
   institutions: computed('', function() {
-    return get(this, 'store').findAll('institution');
+    return get(this, 'store').query('institution', {ordering:'id'});
   }),
 
   partialArea: computed('userInterests.subject.[]', function() {

@@ -82,6 +82,7 @@ export default Ember.Component.extend({
   nodes: computed('', function(){
     let subModelType = get(this, 'subModelType');
     let query = {};
+    query['ordering'] = 'id';
     query[get(this, 'lookupField')] = get(get(this, 'item'), 'id');
     return this.get('store').query(subModelType, query);
 
