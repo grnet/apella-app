@@ -25,7 +25,7 @@ module.exports = function(environment) {
     },
 
     APP: {
-      backend_host: 'http://127.0.0.1:8000/apella/api',
+      backend_host: 'https://snf-36.vm.dev.okeanos.grnet.gr/apella/api',
       resource_choices: choices,
       resource_holidays: holidays,
       date_format: 'DD , MMMM YYYY',
