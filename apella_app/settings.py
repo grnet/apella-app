@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 DATA_DIR = os.path.abspath(os.getcwd())
 RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
+SETTINGS_DIR = '/etc/apella'
 SETTINGS_FILE = 'settings.conf'
 
 # Quick-start development settings - unsuitable for production
@@ -94,7 +95,12 @@ LANGUAGES = {'el', 'en'}
 
 LOGGING = None
 
-if not os.path.isfile(SETTINGS_FILE):
+SETTINGS_PATH = SETTINGS_FILE
+
+if not os.path.isfile(SETTINGS_PATH):
+    SETTINGS_PATH = os.path.join(SETTINGS_DIR, SETTINGS_FILE)
+
+if not os.path.isfile(SETTINGS_PATH):
     m = "Cannot find settings file {0!r}"
     m = m.format(SETTINGS_FILE)
     raise RuntimeError(m)
