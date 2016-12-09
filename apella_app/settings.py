@@ -102,10 +102,10 @@ if not os.path.isfile(SETTINGS_PATH):
 
 if not os.path.isfile(SETTINGS_PATH):
     m = "Cannot find settings file {0!r}"
-    m = m.format(SETTINGS_FILE)
+    m = m.format(SETTINGS_PATH)
     raise RuntimeError(m)
 
-execfile(SETTINGS_FILE)
+execfile(SETTINGS_PATH)
 
 # Logging configuration
 if not LOGGING:
