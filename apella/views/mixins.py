@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework.decorators import detail_route
 from django.db.models import ProtectedError, Min
 
 from apella.models import InstitutionManager, Position, Department
@@ -22,10 +23,15 @@ class AssistantList(generics.ListAPIView):
 
 
 class PositionList(generics.ListAPIView):
-    """
-        role institutionmanager: filter positions by institution/department
-        role assistant: filter positions by author
-    """
+
+    @detail_route()
+    def history(self, request, pk=None):
+        position = self.get_object()
+        user = self.request.user
+        position_states = Position.objects.filter(code=position.code)
+        serializer = self.get_serializer(position_states, many=True)
+        return Response(serializer.data)
+
     def get_queryset(self):
         queryset = self.queryset
         user = self.request.user
@@ -38,10 +44,5 @@ class PositionList(generics.ListAPIView):
             elif user.is_assistant():
                 queryset = queryset.filter(
                     author__user_id=self.request.user.id)
-        if 'code' not in self.request.query_params:
-            ids = queryset.values('code').annotate(Min('id')).values('id__min')
-            return queryset.filter(id__in=ids)
-        else:
-            return queryset. \
-                filter(code=self.request.query_params.get('code')). \
-                order_by('created_at')
+        ids = queryset.values('code').annotate(Min('id')).values('id__min')
+        return queryset.filter(id__in=ids)
