@@ -1,0 +1,49 @@
+{{gen-form-messages
+    isInvalid=isInvalid
+    errorMessage=errorMessage
+    successMessage=successMessage
+}}
+
+
+<div class="container">
+  <div class="item">
+    <h3>{{ t 'subject_area.menu_label' }}</h3>
+    {{#if subjectAreas.isSettled}}
+      <ul>
+        {{#each subjectAreas as |item|}}
+          {{tree-item item=item
+                      modelType='subject-area'
+                      subModelType='subject'
+                      lookupField='area'
+                      partiallySelected=(and (not (array-contains userInterests.area item)) (array-contains partialArea item) )
+                      selected=userInterests.area
+                      subSelected=userInterests.subject
+                      onChange=(action 'setInterest')}}
+        {{/each}}
+      </ul>
+    {{else}}
+      {{paper-icon "rotate-right" spin=true}}
+    {{/if}}
+  </div>
+  <div class="item">
+    <h3>{{ t 'institution.menu_label' }}</h3>
+    {{#if institutions.isSettled}}
+      <ul>
+        {{#each institutions as |item|}}
+          {{tree-item item=item
+                      modelType='institution'
+                      subModelType='department'
+                      lookupField='institution'
+                      partiallySelected=(and (not (array-contains userInterests.institution item)) (array-contains partialInstitution item) )
+                      selected=userInterests.institution
+                      subSelected=userInterests.department
+                      onChange=(action 'setInterest')}}
+        {{/each}}
+      </ul>
+    {{else}}
+      {{paper-icon "rotate-right" spin=true}}
+    {{/if}}
+  </div>
+</div>
+<p>{{{t 'userInterest.info'}}}</p>
+{{#paper-button onClick=(action 'saveInterest') raised=true primary="true"}}{{t 'common.button.save_label'}}{{/paper-button}}

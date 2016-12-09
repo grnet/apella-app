@@ -85,6 +85,7 @@ export default {
   'candidacy.state': 'Κατάσταση Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
   'profile.label': 'Προφίλ',
+  'userInterest.info': 'Μπλα μπλα μπλα',
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
     label: {
@@ -139,7 +140,11 @@ export default {
         details: 'Λεπτομέρειες',
         user_info: 'Στοιχεία λογαριασμού',
         more_info: 'Περισσότερα στοιχεία',
-      }
+        user_interest: 'Εκδλήλωση ενδιαφέροντος'
+    },
+    text: {
+        user_interest: 'Εκδηλώστε το ενδιαφέρον σας'
+    }
   },
   institution: {
     menu_label: 'Κανονιστικά Πλαίσια',
@@ -176,7 +181,8 @@ export default {
     button: {
       create_label: 'Δημιουργία',
       edit_label: 'Τροποποίηση',
-      details_label: 'Προβολή'
+      details_label: 'Προβολή',
+      save_label: 'Αποθήκευση',
     }
   },
   item: {
