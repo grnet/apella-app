@@ -4,7 +4,7 @@ import get_label from '../utils/common/label_list_item';
 import moment from 'moment';
 
 const { computed, get } = Ember,
-      CHOICES = ENV.APP.resource_choices,
+      CHOICES = ENV.APP.resources,
       DATE_FORMAT = ENV.APP.date_format;
 
 

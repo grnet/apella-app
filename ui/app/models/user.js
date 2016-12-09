@@ -4,7 +4,7 @@ import {computeI18N, computeI18NChoice} from 'ui/lib/common';
 import get_label from '../utils/common/label_list_item';
 
 const { computed, get } = Ember,
-      CHOICES = ENV.APP.resource_choices;
+      CHOICES = ENV.APP.resources;
 
 
 export default DS.Model.extend({

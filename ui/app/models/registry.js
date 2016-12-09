@@ -3,7 +3,7 @@ import ENV from 'ui/config/environment';
 import get_label from '../utils/common/label_list_item';
 
 const { computed, get } = Ember,
-      CHOICES = ENV.APP.resource_choices;
+      CHOICES = ENV.APP.resources;
 
 export default DS.Model.extend({
   type: DS.attr({type: 'select', choices: CHOICES.REGISTRY_TYPES, defaultValue: 2}),

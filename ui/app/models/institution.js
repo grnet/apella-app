@@ -4,7 +4,7 @@ import titleI18NMixin from 'ui/mixins/title-current';
 import get_label from '../utils/common/label_list_item';
 
 const { computed, get } = Ember,
-      INSTITUTION_CATEGORIES = ENV.APP.resource_choices.INSTITUTION_CATEGORIES;
+      INSTITUTION_CATEGORIES = ENV.APP.resources.INSTITUTION_CATEGORIES;
 
 
 export default DS.Model.extend(titleI18NMixin, {

@@ -1,13 +1,11 @@
 /* jshint node: true */
-var choices = require('../../resources/www/common');
-var holidays = require('../../resources/www/holidays');
-const PERMISSIONS = require('../../resources/permissions');
 
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ui',
     environment: environment,
     rootURL: '/apella/ui/',
+    appURL: '/apella/',
     locationType: 'auto',
     i18n : {
       defaultLocale: 'el',
@@ -35,7 +33,6 @@ module.exports = function(environment) {
   };
 
   ENV['ember-gen'] = {
-    permissions: PERMISSIONS
   },
 
   ENV['ember-simple-auth'] = {
