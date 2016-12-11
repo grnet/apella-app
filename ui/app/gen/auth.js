@@ -4,7 +4,8 @@ import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
-        INSTITUTION_MANGER_VALIDATORS} from 'ui/utils/common/users';
+        INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
+import {field} from 'ember-gen';
 
 const {
   get, computed
@@ -20,10 +21,11 @@ export default AuthGen.extend({
   profile: {
     gens: {
       position_interest: gen.GenRoutedObject.extend({
-        modelName: 'profile',
+        modelName: 'user-interest',
         path: 'my-interests',
-        getModel(profile) {
-          return this.store.findRecord('profile', 'me');
+        getModel() {
+          let user_id = get(this, 'session.session.authenticated.id');
+          return this.store.queryRecord('user-interest', {user:user_id });
         },
         templateName: 'user-interests',
         routeBaseClass: routes.EditRoute,
@@ -41,9 +43,22 @@ export default AuthGen.extend({
     actions: ['gen:position_interest'],
     modelName: 'profile',
     menu: { display: true },
-    fieldsets: computed('model.role', function(){
+    validators: computed('model.role', function(){
       let role = this.get('model').get('role');
-      let f = [USER_FIELDSET];
+      let f = Object.assign({}, USER_VALIDATORS);
+      if (role === 'professor') {
+        f = Object.assign(f, PROFESSOR_VALIDATORS);
+      }
+      if (role === 'institutionmanager') {
+        f = Object.assign(f, INSTITUTION_MANAGER_VALIDATORS);
+      }
+      return f;
+    }),
+    fieldsets: computed('model.role', function(){
+      let f = [];
+      let role = this.get('model').get('role');
+      f.push(USER_FIELDSET);
+
       if (role === 'professor') {
         f.push(PROFESSOR_FIELDSET);
       }

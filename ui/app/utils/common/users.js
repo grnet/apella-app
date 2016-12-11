@@ -123,7 +123,7 @@ const INSTITUTION_MANAGER_VALIDATORS = {
 const normalizeUser = function(hash, serializer) {
   let user_info = hash['user'];
   Object.keys(user_info).forEach(function(key){
-    if (key!= 'id') {
+    if (key!= 'id' || !hash['id']) {
       hash[key] = user_info[key];
     } else {
       hash['user_id'] = user_info['id'];

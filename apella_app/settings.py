@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 DATA_DIR = os.path.abspath(os.getcwd())
 RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
+SETTINGS_DIR = '/etc/apella'
+SETTINGS_FILE = 'settings.conf'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -70,7 +72,7 @@ WSGI_APPLICATION = 'apella_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/apella.sqlite3',
+        'NAME': '/tmp/apella.sqlite3'
     }
 }
 
@@ -87,39 +89,60 @@ USE_L10N = True
 
 USE_TZ = False
 
+STATIC_URL = '/static/'
+AUTH_USER_MODEL = 'apella.ApellaUser'
+
+START_DATE_END_DATE_INTERVAL = 30
+LANGUAGES = {'el', 'en'}
+
+LOGGING = None
+
+SETTINGS_PATH = SETTINGS_FILE
+
+if not os.path.isfile(SETTINGS_PATH):
+    SETTINGS_PATH = os.path.join(SETTINGS_DIR, SETTINGS_FILE)
+
+if not os.path.isfile(SETTINGS_PATH):
+    m = "Cannot find settings file {0!r}"
+    m = m.format(SETTINGS_PATH)
+    raise RuntimeError(m)
+
+execfile(SETTINGS_PATH)
+
 # Logging configuration
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s\
-            %(process)d %(thread)d %(message)s'
+if not LOGGING:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s\
+                %(process)d %(thread)d %(message)s'
+            },
+            'simple': {
+                'format': '%(levelname)s %(message)s'
+            },
         },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
+        'handlers': {
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(DATA_DIR, 'apella.log'),
+                'formatter': 'verbose'
+            },
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose'
+            }
         },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(DATA_DIR, 'apella.log'),
-            'formatter': 'verbose'
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'apella': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO'
+        'loggers': {
+            'apella': {
+                'handlers': ['console', 'file'],
+                'level': 'INFO'
+            }
         }
     }
-}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -130,11 +153,8 @@ AUTH_USER_MODEL = 'apella.ApellaUser'
 
 START_DATE_END_DATE_INTERVAL = 30
 LANGUAGES = {'el', 'en'}
+POSITION_CODE_PREFIX = 'APP'
 
-from api_settings import API_SCHEMA
-from copy import deepcopy
-
-API_SCHEMA_TMP = deepcopy(API_SCHEMA)
 CONFIG_FILE = 'apella.apimas'
 
 SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')

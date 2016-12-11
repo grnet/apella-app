@@ -14,6 +14,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 el:
                     .cli_option: {}
                     .field: {}
@@ -29,7 +32,9 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.ApellaUser
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [
+                    apella.serializers.mixins.NestedWritableObjectsMixin,
+                    apella.serializers.mixins.HelpdeskUsers]
             .cli_commands: {}
             '*':
                 id:
@@ -38,6 +43,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 username:
                     .cli_option: {}
                     .field: {}
@@ -89,7 +97,7 @@ spec:
                 first_name:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: first_name}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -106,7 +114,7 @@ spec:
                 last_name:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: last_name}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -123,7 +131,7 @@ spec:
                 father_name:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: father_name}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -141,16 +149,15 @@ spec:
                 .list: {}
                 .create: {}
                 .update: {}
-                .delete: {}
                 .retrieve: {}
         institutions:
             .collection: {}
             .drf_collection:
                 model: apella.models.Institution
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [title__en, title__el]
-                ordering_fields: [title__en, title__el]
+                ordering_fields: [id]
                 search_fields: [title__en, title__el]
             .cli_commands: {}
             '*':
@@ -160,6 +167,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 organization:
                     .cli_option: {}
                     .field: {}
@@ -175,7 +185,7 @@ spec:
                 title:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: title}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -188,7 +198,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
+                            .required: {}
             actions:
                 .list: {}
                 .create: {}
@@ -199,7 +209,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.School
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
             .cli_commands: {}
             '*':
@@ -209,6 +219,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -218,7 +231,7 @@ spec:
                 title:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: title}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -231,7 +244,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
+                            .required: {}
             actions:
                 .list: {}
                 .create: {}
@@ -242,8 +255,10 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Department
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [institution]
+                ordering_fields: [id]
             .cli_commands: {}
             '*':
                 id:
@@ -252,6 +267,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -262,14 +280,13 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .blankable: {}
                     .nullable: {}
                     .ref:
                         to: schools
                 title:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: title}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -282,7 +299,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
+                            .required: {}
                 dep_number:
                     .cli_option: {}
                     .field: {}
@@ -298,8 +315,9 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.SubjectArea
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
+                ordering_fields: [id]
             .cli_commands: {}
             '*':
                 id:
@@ -308,10 +326,13 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 title:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: title}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -324,7 +345,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
+                            .required: {}
             actions:
                 .list: {}
                 .create: {}
@@ -335,8 +356,10 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Subject
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [area]
+                ordering_fields: [id]
             .cli_commands: {}
             '*':
                 id:
@@ -345,6 +368,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 area:
                     .cli_option: {}
                     .field: {}
@@ -355,7 +381,7 @@ spec:
                 title:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: title}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -368,7 +394,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
+                            .required: {}
             actions:
                 .list: {}
                 .create: {}
@@ -379,7 +405,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Professor
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
             .cli_commands: {}
             '*':
                 id:
@@ -388,6 +414,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -446,7 +475,7 @@ spec:
                 user:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: user}
+                    .drf_field: {}
                     .required: {}
                     .struct:
                         username:
@@ -470,7 +499,7 @@ spec:
                         first_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: first_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -487,7 +516,7 @@ spec:
                         last_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: last_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -504,7 +533,7 @@ spec:
                         father_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: father_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -536,6 +565,12 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
             actions:
                 .list: {}
                 .create: {}
@@ -554,6 +589,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 type:
                     .cli_option: {}
                     .field: {}
@@ -583,7 +621,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.InstitutionManager
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
             .cli_commands: {}
             '*':
                 id:
@@ -592,6 +630,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -641,8 +682,7 @@ spec:
                 sub_first_name:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: sub_first_name}
-                    .blankable: {}
+                    .drf_field: {}
                     .nullable: {}
                     .struct:
                         el:
@@ -662,8 +702,7 @@ spec:
                 sub_last_name:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: sub_last_name}
-                    .blankable: {}
+                    .drf_field: {}
                     .nullable: {}
                     .struct:
                         el:
@@ -683,9 +722,8 @@ spec:
                 sub_father_name:
                     .cli_option: {}
                     .field: {}
-                    .blankable: {}
                     .nullable: {}
-                    .drf_field: {source: sub_father_name}
+                    .drf_field: {}
                     .struct:
                         el:
                             .cli_option: {}
@@ -704,7 +742,7 @@ spec:
                 user:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: user}
+                    .drf_field: {}
                     .required: {}
                     .struct:
                         username:
@@ -728,7 +766,7 @@ spec:
                         first_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: first_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -745,7 +783,7 @@ spec:
                         last_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: last_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -762,7 +800,7 @@ spec:
                         father_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: father_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -794,6 +832,12 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
             actions:
                 .list: {}
                 .create: {}
@@ -804,7 +848,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Candidate
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
             .cli_commands: {}
             '*':
                 id:
@@ -813,10 +857,13 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 user:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: user}
+                    .drf_field: {}
                     .required: {}
                     .struct:
                         username:
@@ -840,7 +887,7 @@ spec:
                         first_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: first_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -857,7 +904,7 @@ spec:
                         last_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: last_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -874,7 +921,7 @@ spec:
                         father_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: father_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -906,6 +953,39 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        professor-ranks:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.ProfessorRank
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                rank:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: multilang
             actions:
                 .list: {}
                 .create: {}
@@ -916,7 +996,12 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Position
-                serializers: [apella.serializers.mixins.Position]
+                model_serializers: [apella.serializers.position.PositionMixin]
+                mixins: [apella.views.mixins.PositionList,
+                    apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [title, id, state, department, code]
+                ordering_fields: [title, id, state, department]
+                search_fields: [title, id, state, department]
             .cli_commands: {}
             '*':
                 id:
@@ -924,6 +1009,15 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                code:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
                     .readonly: {}
                 title:
                     .cli_option: {}
@@ -947,7 +1041,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
+                    .readonly: {}
                     .ref:
                         to: institution-managers
                 department:
@@ -987,40 +1081,32 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .blankable: {}
-                    .nullable: {}
                     .ref:
                         to: institution-managers
                 electors:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .blankable: {}
-                    .nullable: {}
                     .ref:
                         to: professors
                 committee:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .blankable: {}
-                    .nullable: {}
                     .ref:
                         to: professors
                 elected:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .blankable: {}
-                    .nullable: {}
                     .ref:
                         to: users
                 state:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .string: {}
+                    .blankable: {}
                 starts_at:
                     .cli_option: {}
                     .field: {}
@@ -1051,6 +1137,14 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .integer: {}
+                ranks:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: professor-ranks
+                        many: True
             actions:
                 .list: {}
                 .create: {}
@@ -1061,7 +1155,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Candidacy
-                serializers: [apella.serializers.mixins.ValidatorMixin]
+                model_serializers: [apella.serializers.mixins.ValidatorMixin]
             .cli_commands: {}
             '*':
                 id:
@@ -1070,6 +1164,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 candidate:
                     .cli_option: {}
                     .field: {}
@@ -1094,7 +1191,6 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .boolean: {}
                 submitted_at:
                     .cli_option: {}
@@ -1118,6 +1214,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.UserInterest
+                filter_fields: [user]
             .cli_commands: {}
             '*':
                 id:
@@ -1126,6 +1223,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 user:
                     .cli_option: {}
                     .field: {}
@@ -1167,7 +1267,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.InstitutionManager
-                serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.AssistantList]
             .cli_commands: {}
             '*':
@@ -1177,6 +1277,9 @@ spec:
                     .drf_field: {}
                     .serial: {}
                     .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -1190,10 +1293,20 @@ spec:
                     .drf_field: {}
                     .string: {}
                     .required: {}
+                can_create_registries:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                can_create_positions:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
                 user:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {source: user}
+                    .drf_field: {}
                     .required: {}
                     .struct:
                         username:
@@ -1217,7 +1330,7 @@ spec:
                         first_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: first_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -1234,7 +1347,7 @@ spec:
                         last_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: last_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}
@@ -1251,7 +1364,7 @@ spec:
                         father_name:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {source: father_name}
+                            .drf_field: {}
                             .struct:
                                 el:
                                     .cli_option: {}

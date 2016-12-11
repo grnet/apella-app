@@ -110,6 +110,8 @@ class Migration(migrations.Migration):
                 ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
                 ('sub_mobile_phone_number', models.CharField(max_length=30, null=True, blank=True)),
                 ('sub_home_phone_number', models.CharField(max_length=30, null=True, blank=True)),
+                ('can_create_registries', models.BooleanField(default=False)),
+                ('can_create_positions', models.BooleanField(default=False)),
                 ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
             ],
             options={
@@ -128,19 +130,20 @@ class Migration(migrations.Migration):
             name='Position',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('code', models.CharField(max_length=200)),
                 ('title', models.CharField(max_length=50)),
                 ('description', models.CharField(max_length=300)),
                 ('discipline', models.CharField(max_length=300)),
                 ('fek', models.URLField()),
                 ('fek_posted_at', models.DateTimeField(validators=[apella.validators.before_today_validator])),
-                ('state', models.CharField(default=b'posted', max_length=30, choices=[['draft', 'Draft'], ['posted', 'Posted'], ['electing', 'Electing'], ['successful', 'Successful'], ['failed', 'Failed'], ['cancelled', 'Cancelled']])),
+                ('state', models.CharField(default=b'posted', max_length=30, choices=[['draft', 'Draft'], ['posted', 'Posted'], ['electing', 'Electing'], ['successful', 'Successful'], ['failed', 'Failed'], ['cancelled', 'Cancelled'], ['revoked', 'Revoked']])),
                 ('starts_at', models.DateTimeField(validators=[apella.validators.after_today_validator])),
                 ('ends_at', models.DateTimeField()),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('department_dep_number', models.IntegerField()),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
-                ('author', models.ForeignKey(related_name='authored_positions', to='apella.InstitutionManager')),
+                ('author', models.ForeignKey(related_name='authored_positions', blank=True, to='apella.InstitutionManager')),
             ],
         ),
         migrations.CreateModel(
@@ -176,6 +179,13 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
+        ),
+        migrations.CreateModel(
+            name='ProfessorRank',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('rank', models.ForeignKey(to='apella.MultiLangFields')),
+            ],
         ),
         migrations.CreateModel(
             name='Registry',
@@ -259,6 +269,11 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='position',
+            name='ranks',
+            field=models.ManyToManyField(to='apella.ProfessorRank'),
+        ),
+        migrations.AddField(
+            model_name='position',
             name='subject',
             field=models.ForeignKey(to='apella.Subject', on_delete=django.db.models.deletion.PROTECT),
         ),
@@ -310,7 +325,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='candidacy',
             name='position',
-            field=models.ForeignKey(to='apella.Position'),
+            field=models.ForeignKey(to='apella.Position', on_delete=django.db.models.deletion.PROTECT),
         ),
         migrations.AddField(
             model_name='apellauser',

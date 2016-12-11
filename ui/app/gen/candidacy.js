@@ -84,6 +84,7 @@ export default ApellaGen.extend({
   appIndex: true,
   modelName: 'candidacy',
   path: 'candidacies',
+  session: Ember.inject.service(),
 
   abilityStates: {
     // resolve ability for position model
@@ -143,7 +144,13 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'candidacy.menu_label',
-      icon: 'assignment'
+      icon: 'assignment',
+      display: computed(function() {
+        let role = get(this, 'session.session.authenticated.role');
+        let forbiddenRoles = ['institutionmanager', 'helpdeskadmin'];
+
+        return (forbiddenRoles.includes(role) ? false : true);
+      })
     },
     row: {
       fields: FS.list,

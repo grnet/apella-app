@@ -1,27 +1,10 @@
-from django.apps import apps
+from django.utils.importlib import import_module
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from djoser import views as djoser_views
 
-from apimas.modeling.adapters.drf import serializers
 from apella.models import ApellaUser, InstitutionManager, Professor, \
-        Candidate
-
-
-class CustomLoginView(djoser_views.LoginView):
-    pass
-
-
-class CustomLogoutView(djoser_views.LogoutView):
-    pass
-
-
-def get_model_from_name(model_name):
-    parts = model_name.split('.')
-    model_name = parts[-1]
-    model = apps.get_model(app_label='apella', model_name=model_name)
-    return model
-
+    Candidate
 
 USER_ROLE_MODEL_RESOURCES = {
     'institutionmanager': {
@@ -70,8 +53,14 @@ class CustomUserView(djoser_views.UserView):
     def get_serializer_class(self):
         user = self.request.user
         resource = USER_ROLE_MODEL_RESOURCES[user.role]['resource']
-        model = USER_ROLE_MODEL_RESOURCES[user.role]['model']
-        cls = serializers.generate(
-                model,
-                settings.API_SCHEMA_TMP['resources'][resource]['field_schema'])
-        return cls
+        urls = import_module(settings.ROOT_URLCONF)
+        ser = urls.serializers.get(resource)
+        return ser
+
+
+class CustomLoginView(djoser_views.LoginView):
+    pass
+
+
+class CustomLogoutView(djoser_views.LogoutView):
+    pass

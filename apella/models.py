@@ -79,6 +79,30 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     def apimas_roles(self):
         return [self.role]
 
+    def is_helpdeskadmin(self):
+        return self.role == 'helpdeskadmin'
+
+    def is_helpdeskuser(self):
+        return self.role == 'helpdeskuser'
+
+    def is_helpdesk(self):
+        return self.is_helpdeskadmin() or self.is_helpdeskuser()
+
+    def is_institutionmanager(self):
+        return self.role == 'institutionmanager'
+
+    def is_assistant(self):
+        return self.role == 'assistant'
+
+    def is_manager(self):
+        return self.is_institutionmanager() or self.is_assistant()
+
+    def is_professor(self):
+        return self.role == 'professor'
+
+    def is_candidate(self):
+        return self.role == 'candidate'
+
 
 class Institution(models.Model):
     category = models.CharField(
@@ -150,9 +174,16 @@ class Professor(UserProfile):
     discipline_text = models.CharField(max_length=300)
     discipline_in_fek = models.BooleanField(default=True)
 
+    def save(self, *args, **kwargs):
+        self.user.role = 'professor'
+        super(Professor, self).save(*args, **kwargs)
+
 
 class Candidate(UserProfile):
-    pass
+
+    def save(self, *args, **kwargs):
+        self.user.role = 'candidate'
+        super(Candidate, self).save(*args, **kwargs)
 
 
 class UserFiles(models.Model):
@@ -181,6 +212,8 @@ class InstitutionManager(UserProfile):
         max_length=30, blank=True, null=True)
     sub_home_phone_number = models.CharField(
         max_length=30, blank=True, null=True)
+    can_create_registries = models.BooleanField(default=False)
+    can_create_positions = models.BooleanField(default=False)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
@@ -188,13 +221,24 @@ class InstitutionManager(UserProfile):
             institution_id=self.institution.id,
             manager_role='manager').exists()
 
+    def save(self, *args, **kwargs):
+        self.user.role = 'institutionmanager'
+        super(InstitutionManager, self).save(*args, **kwargs)
+
+
+class ProfessorRank(models.Model):
+    rank = models.ForeignKey(MultiLangFields)
+
 
 class Position(models.Model):
+    code = models.CharField(max_length=200)
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
     discipline = models.CharField(max_length=300)
+    ranks = models.ManyToManyField(ProfessorRank)
     author = models.ForeignKey(
-            InstitutionManager, related_name='authored_positions')
+            InstitutionManager, related_name='authored_positions',
+            blank=True)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     subject_area = models.ForeignKey(SubjectArea, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
@@ -231,9 +275,7 @@ class Position(models.Model):
         super(Position, self).save(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
-        return InstitutionManager.objects.filter(
-            user_id=request.user.id,
-            institution_id=self.department.institution.id).exists()
+        return request.user.id == self.author.user.id
 
     def check_resource_state_open(self, row, request, view):
         return self.state == 'posted' and self.ends_at > timezone.now()
@@ -250,6 +292,14 @@ class Position(models.Model):
     def check_resource_state_participates(self, row, request, view):
         return professor_participates(request.user.id, self.id)
 
+    @classmethod
+    def check_collection_state_can_create(cls, row, request, view):
+        r = InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            manager_role='assistant',
+            can_create_positions=True).exists()
+        return r
+
 
 class PositionFiles(models.Model):
     position_file = models.ForeignKey(
@@ -260,7 +310,7 @@ class PositionFiles(models.Model):
 
 class Candidacy(models.Model):
     candidate = models.ForeignKey(ApellaUser)
-    position = models.ForeignKey(Position)
+    position = models.ForeignKey(Position, on_delete=models.PROTECT)
     state = models.CharField(
         choices=common.CANDIDACY_STATES, max_length=30, default='posted')
     others_can_view = models.BooleanField(default=False)
@@ -294,7 +344,7 @@ class Candidacy(models.Model):
         return self.check_resource_state_owned(row, request, view) \
                 and self.position.check_resource_state_open(
                         row, request, view) \
-                and self.state == 'cancelled'
+                and self.state == 'posted'
 
 
 class CandidacyFiles(object):
@@ -318,6 +368,13 @@ class Registry(models.Model):
         return InstitutionManager.objects.filter(
             user_id=request.user.id,
             institution_id=self.department.institution.id).exists()
+
+    @classmethod
+    def check_collection_state_can_create(cls, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            manager_role='assistant',
+            can_create_registries=True).exists()
 
 
 class UserInterest(models.Model):

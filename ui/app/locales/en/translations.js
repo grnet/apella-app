@@ -85,6 +85,7 @@ export default {
   'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
+  'userInterest.info': 'Blah blah blah<br>blah',
   manager: {
     menu_label: 'Institution Managers',
     label: {
@@ -137,10 +138,14 @@ export default {
         details: 'Details',
         user_info: 'Profile',
         more_info: 'More info',
-      }
+        user_interest: 'User interest'
+    },
+    text: {
+        user_interest: 'Choose your interests'
+    }
   },
   institution: {
-    menu_label: 'Institutions',
+    menu_label: 'Regulatory Frameworks',
   },
   user: {
     menu_label: 'Users',
@@ -174,7 +179,8 @@ export default {
     button: {
       create_label: 'Create',
       edit_label: 'Edit',
-      details_label: 'View'
+      details_label: 'View',
+      save_label: 'Save',
     }
   },
   item: {

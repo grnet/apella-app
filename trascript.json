@@ -388,6 +388,42 @@
 },
 {
     "user": "1",
+    "action": "professor-rank-add",
+    "input": {
+        "arg1": "Καθηγητής",
+        "arg2": "Professor"
+    },
+    "db_state_change" : {
+        "object" : {"Professor rank" : "1"},
+        "change" : "new professor rank"
+    }
+},
+{
+    "user": "1",
+    "action": "professor-rank-add",
+    "input": {
+        "arg1": "Αναπληρωτής Καθηγητής",
+        "arg2": "Associate Professor"
+    },
+    "db_state_change" : {
+        "object" : {"Professor rank" : "1"},
+        "change" : "new professor rank"
+    }
+},
+{
+    "user": "1",
+    "action": "professor-rank-add",
+    "input": {
+        "arg1": "Επίκουρος Καθηγητής",
+        "arg2": "Assistant Professor"
+    },
+    "db_state_change" : {
+        "object" : {"Professor rank" : "1"},
+        "change" : "new professor rank"
+    }
+},
+{
+    "user": "1",
     "action": "position-add",
     "input": {
         "arg1": "Αναπληρωτής Καθηγητής",
@@ -400,7 +436,8 @@
         "arg8" : "2016-08-15",
         "arg9" : "2016-09-30",
         "arg10" : "2016-10-30",
-        "arg11" : "Θεολογία"
+        "arg11" : "Θεολογία",
+        "arg12" : "[1,2]"
     },
     "db_state_change" : {
         "object" : {"Position" : "1"},
@@ -421,7 +458,8 @@
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
         "arg10" : "2016-12-30",
-        "arg11" : "Ψυχολογία"
+        "arg11" : "Ψυχολογία",
+        "arg12" : "[2]"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
@@ -442,7 +480,8 @@
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
         "arg10" : "2016-12-30",
-        "arg11" : "Φυσική"
+        "arg11" : "Φυσική",
+        "arg12" : "[2,3]"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
@@ -463,7 +502,8 @@
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
         "arg10" : "2016-12-30",
-        "arg11" : "Νεογνολογία"
+        "arg11" : "Νεογνολογία",
+        "arg12" : "[1,2]"
     },
     "db_state_change" : {
         "object" : {"Position" : "3"},
@@ -484,13 +524,126 @@
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
         "arg10" : "2016-12-30",
-        "arg11" : "Ψυχολογία"
+        "arg11" : "Ψυχολογία",
+        "arg12" : "[2]"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
         "change" : "new position"
     }
 },
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Τρίτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Οικολογία",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2016-07-15",
+        "arg9" : "2017-09-30",
+        "arg10" : "2017-12-30",
+        "arg11" : "Οικολογία",
+        "arg12" : "[2,3]"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "6"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Τεταρτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Αθλητισμός",
+        "arg12" : "[1,2]"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "7"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Πεμπτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Αθλητισμός",
+        "arg12" : "[1,2]"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "8"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Defence Against the Dark Arts",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Μαγεία",
+        "arg12" : "[1,2]"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Care of Magical Creatures",
+        "arg2": "1",
+        "arg3" : "1",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://harrypotter.wikia.com/wiki/Rubeus_Hagrid",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Μαγεία",
+        "arg12" : "[1,2]"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : "new position"
+    }
+},
+
+
 {
     "user": "2",
     "action": "position-list",
@@ -577,6 +730,80 @@
     }
 },
 {
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "6",
+        "state" : "cancelled"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "6"},
+        "change" : {"position.status" : "cancelled" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "8",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "8"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "9",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "9",
+        "state" : "failed"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : {"position.status" : "failed" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "10",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "10",
+        "state" : "revoked"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : {"position.status" : "revoked" }
+    }
+},
+
+
+{
     "user": "admin",
     "action": "user-add",
     "input": {
@@ -595,7 +822,28 @@
         "object" : {"ApellaUser" : "6"},
         "change" : "new user"
     }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "helpdeskuser",
+        "role": "helpdeskuser",
+        "arg2": "12345",
+        "arg3": "Ναταλία",
+        "arg4": "Τζωρτζίδου",
+        "arg5": "Πέτρος",
+        "first_name_en": "Natalia",
+        "last_name_en": "Tzwrtzidou",
+        "father_name_en": "Peter",
+        "email": "natalia@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "7"},
+        "change" : "new user"
+    }
 }
+
 ]
 }
 

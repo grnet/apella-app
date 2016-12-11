@@ -7,5 +7,4 @@
 *.tar.gr
 
 **/apella.log
-pip-deps
 settings.conf

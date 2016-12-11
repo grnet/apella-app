@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ValidationError
+from django.conf import settings
 
 from apella.models import Position, Department, Subject, SubjectArea,\
-    InstitutionManager
+    InstitutionManager, ProfessorRank
 from apella.management.utils import ApellaCommand
 
 
@@ -21,6 +22,7 @@ class Command(ApellaCommand):
         parser.add_argument('starts_at')
         parser.add_argument('ends_at')
         parser.add_argument('discipline')
+        parser.add_argument('rank')
 
     def handle(self, *args, **options):
         title = options['title']
@@ -34,6 +36,7 @@ class Command(ApellaCommand):
         fek_posted_at = options['fek_posted_at']
         starts_at = options['starts_at']
         ends_at = options['ends_at']
+        ranks = options['rank']
 
         try:
             position_author = InstitutionManager.objects.get(id=author)
@@ -48,7 +51,21 @@ class Command(ApellaCommand):
                     subject_area=subject_area, discipline=discipline,
                     subject=subject, starts_at=starts_at, ends_at=ends_at,
                     department_dep_number=department.dep_number)
+            code = settings.POSITION_CODE_PREFIX + str(p.id)
+            p.code = code
 
+            if ranks.startswith('['):
+                ranks = ranks[1:]
+            if ranks.endswith(']'):
+                ranks = ranks[:-1]
+            rank_ids = ranks.split(',')
+            for r in rank_ids:
+                try:
+                    rank = ProfessorRank.objects.get(id=int(r))
+                    p.ranks.add(rank)
+                except ProfessorRank.DoesNotExist:
+                    raise CommandError("Rank does not exist %s" % r)
+            p.save()
             self.stdout.write(
                 "Created position %s : title = %s author = %s" %
                 (p.pk, p.title, p.author.user.username))

@@ -1,0 +1,1 @@
+python-apimas-0.2, python-djoser (>= 0.4.3), python-djoser (<< 0.5)

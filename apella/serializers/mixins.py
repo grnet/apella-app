@@ -1,51 +1,23 @@
-from collections import defaultdict
-
 from django.conf import settings
-from django.apps import apps
-from django.http.request import QueryDict
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 from rest_framework.utils import model_meta
 
-from apella.models import ApellaUser, Position, MultiLangFields
+from apella.models import ApellaUser, Position, InstitutionManager
+from apella.views.auth_views import CustomUserView
 
 
 class ValidatorMixin(object):
 
     def validate(self, data):
-        model = self.Meta.model
-        instance = model(**data)
+        instance = getattr(self, 'instance')
+        if not instance:
+            model = self.Meta.model
+            instance = model(**data)
+        else:
+            for attr, val in data.items():
+                setattr(instance, attr, val)
         instance.clean()
         return super(ValidatorMixin, self).validate(data)
-
-
-def get_dep_number(data):
-    dep_number = data['department'].dep_number
-    if not dep_number:
-        raise serializers.ValidationError(
-            {"dep_number":
-                "You should first set DEP number for Department: %s"
-                % data['department'].title.en})
-    return dep_number
-
-
-class Position(ValidatorMixin):
-
-    def validate(self, data):
-        committee = data.pop('committee', [])
-        electors = data.pop('electors', [])
-        assistants = data.pop('assistants', [])
-        data = super(Position, self).validate(data)
-        data['committee'] = committee
-        data['electors'] = electors
-        data['assistants'] = assistants
-
-        return data
-
-    def create(self, validated_data):
-        validated_data['department_dep_number'] = \
-            get_dep_number(validated_data)
-        return super(Position, self).create(validated_data)
 
 
 def create_objects(model, fields, validated_data):
@@ -133,3 +105,21 @@ class NestedWritableObjectsMixin(object):
         instance = update_objects(
             self.get_fields(), validated_data, instance=instance)
         return instance
+
+
+class HelpdeskUsers(object):
+
+    def to_representation(self, obj):
+        data = super(HelpdeskUsers, self).to_representation(obj)
+        if obj.is_helpdesk() and isinstance(
+                self.context['view'], CustomUserView):
+            data = {'user': data}
+        return data
+
+    def to_internal_value(self, data):
+        user = self.context.get('request').user
+        request_data = self.context.get('request').data
+        if user.is_helpdesk() and isinstance(
+                self.context['view'], CustomUserView):
+            return self.context.get('request').data.get('user')
+        return super(HelpdeskUsers, self).to_internal_value(data)
