@@ -9,7 +9,7 @@ from django.apps import apps
 
 from apella.models import Institution, School, Department, ApellaUser, \
         InstitutionManager, Professor, Candidate, MultiLangFields, \
-        SubjectArea, Subject
+        SubjectArea, Subject, ProfessorRank
 
 import sys
 reload(sys)
@@ -220,6 +220,12 @@ class APIMultiLangTest(APITestCase):
         self.position_data['subject_area'] = self.object_urls['SubjectArea']
         self.position_data['subject'] = self.object_urls['Subject']
         self.position_data['department'] = self.object_urls['Department']
+
+        professor_rank = MultiLangFields.objects.create(
+            el='Καθηγητής', en='Professor')
+        rank = ProfessorRank.objects.create(rank=professor_rank)
+        rank_detail_url = reverse('professor-ranks-detail', args=[rank.id])
+        self.position_data['ranks'] = [rank_detail_url]
 
         response = self.client.post(
             positions_url, self.position_data, format='json')
