@@ -19,6 +19,9 @@ export default Token.extend({
       },
     }).then(function(res){
       merge(response, res.user);
+      if (response.manager_role = 'assistant') {
+        response['role'] = 'assistant'
+      }
       return response;
     });
   },
