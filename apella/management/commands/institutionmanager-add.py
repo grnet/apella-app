@@ -12,7 +12,7 @@ class Command(ApellaCommand):
     option_list = BaseCommand.option_list + (
         make_option('--role',
                     dest='role',
-                    default=2,
+                    default='manager',
                     choices=[x[0] for x in common.MANAGER_ROLES],
                     help='Choose a role for the user'),
         )
