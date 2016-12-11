@@ -4,6 +4,7 @@ import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
+        ASSISTANT_FIELDSET, ASSISTANT_VALIDATORS,
         INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
@@ -52,6 +53,9 @@ export default AuthGen.extend({
       if (role === 'institutionmanager') {
         f = Object.assign(f, INSTITUTION_MANAGER_VALIDATORS);
       }
+      if (role === 'assistant') {
+        f = Object.assign(f, ASSISTANT_VALIDATORS);
+      }
       return f;
     }),
     fieldsets: computed('model.role', function(){
@@ -64,6 +68,9 @@ export default AuthGen.extend({
       }
       if (role === 'institutionmanager') {
         f.push(INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB);
+      }
+      if (role === 'assistant') {
+        f.push(ASSISTANT_FIELDSET);
       }
       return f;
     }),
