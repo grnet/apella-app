@@ -35,10 +35,12 @@ class PositionMixin(ValidatorMixin):
         committee = data.pop('committee', [])
         electors = data.pop('electors', [])
         assistants = data.pop('assistants', [])
+        ranks = data.pop('ranks', [])
         data = super(PositionMixin, self).validate(data)
         data['committee'] = committee
         data['electors'] = electors
         data['assistants'] = assistants
+        data['ranks'] = ranks
 
         return data
 
