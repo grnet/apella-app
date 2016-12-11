@@ -62,6 +62,13 @@ const INSTITUTION_SUB_MANAGER_FIELDS = [
   'sub_home_phone_number'
 ]
 
+const ASSISTANT_FIELDS = [
+  'institution',
+  'can_create_registries',
+  'can_create_positions'
+]
+
+
 const USER_FIELDSET = {
   label: 'fieldsets.labels.user_info',
   fields: USER_FIELDS,
@@ -94,6 +101,15 @@ const INST_MANAGER_FIELDSET_SUB = {
    }
 }
 
+const ASSISTANT_FIELDSET = {
+  label: 'fieldsets.labels.more_info',
+  fields: ASSISTANT_FIELDS,
+  layout: {
+    flex: [50, 50, 50]
+   }
+}
+
+
 const USER_VALIDATORS = {
   username: [validate.presence(true), validate.length({min:4, max:50})],
   first_name: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
@@ -117,6 +133,9 @@ const INSTITUTION_MANAGER_VALIDATORS = {
   sub_mobile_phone_number: [validate.format({ type: 'phone' })],
   sub_home_phone_number: [validate.format({ type: 'phone' })],
   sub_email: [validate.format({ type: 'email' })],
+}
+
+const ASSISTANT_VALIDATORS = {
 }
 
 
@@ -164,4 +183,5 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
+        ASSISTANT_FIELDSET, ASSISTANT_VALIDATORS,
         INSTITUTION_MANAGER_VALIDATORS};
