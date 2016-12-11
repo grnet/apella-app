@@ -57,7 +57,7 @@ def load_resources():
 
 
 def load_holidays():
-    with open(os.path.join(settings.RESOURCES_DIR, 'www/holidays.json')) as json_file:
+    with open(os.path.join(settings.RESOURCES_DIR, 'holidays.json')) as json_file:
         return json.load(json_file)
 
 

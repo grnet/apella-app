@@ -24,8 +24,6 @@ module.exports = function(environment) {
 
     APP: {
       backend_host: 'https://snf-36.vm.dev.okeanos.grnet.gr/apella/api',
-      resource_choices: choices,
-      resource_holidays: holidays,
       date_format: 'DD , MMMM YYYY',
       // Here you can pass flags/options to your application instance
       // when it is created
