@@ -70,7 +70,8 @@ class Command(ApellaCommand):
             token = Token.objects.create(user=a)
 
             self.stdout.write(
-                "User with id: %s, token:%s created" % (a.pk, token))
+                "User with id: %s, role: %s, token:%s created" %
+                (a.pk, options['role'], token))
 
         except BaseException as e:
                 raise CommandError(e)
