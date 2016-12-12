@@ -189,5 +189,7 @@ PERMISSION_RULES = [
     ('user-interests', 'list', 'candidate', '*', '*', ''),
     ('user-interests', 'retrieve', 'candidate', '*', 'owned', ''),
     ('user-interests', 'update', 'candidate', '*', 'owned', ''),
-    ('user-interests', 'list', 'helpdeskadmin', '*', '*', '')
+    ('user-interests', 'list', 'helpdeskadmin', '*', '*', ''),
+    ('users', 'retrieve', 'professor', '*', '*', ''),
+    ('users', 'retrieve', 'candidate', '*', '*', ''),
 ]

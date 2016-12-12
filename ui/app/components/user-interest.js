@@ -8,17 +8,20 @@ const {
   set,
   isArray,
   computed,
+  inject,
   computed: { alias, equal, gt, map }
 } = Ember;
 
 export default Ember.Component.extend({
   classNames: 'interest',
-  store: Ember.inject.service(),
-  session: Ember.inject.service(),
+  store: inject.service(),
+  session: inject.service(),
+  messageService: inject.service('messages'),
 
 
   user: computed('', function(){
-    return get(this, 'store').findRecord('profile', 'me');
+    let user_id = get(this, 'session.session.authenticated.user_id');
+    return get(this, 'store').findRecord('user', user_id);
   }),
 
   subjectAreas: computed('', function() {
@@ -53,17 +56,19 @@ export default Ember.Component.extend({
       return this.get('store').createRecord('user-interest', {
         user: user
       });
-
     }
   }),
 
   successMessage: null,
   errorMessage: null,
   setSuccessMessage: function() {
-    set(this, 'successMessage', 'form.saved');
+    let msg = this.getMessage('success', 'form.saved');
+    get(this, 'messageService').setSuccess(msg);
   },
+
   setErrorMessage: function(msg) {
-    set(this, 'errorMessage', msg);
+    msg = msg ||  this.getMessage('error', 'form.error');
+    get(this, 'messageService').setError(msg);
   },
 
   resetMessages: function() {
