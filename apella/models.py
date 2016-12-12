@@ -221,6 +221,10 @@ class InstitutionManager(UserProfile):
             institution_id=self.institution.id,
             manager_role='manager').exists()
 
+    def check_resource_state_owned_by_assistant(
+            self, row, request, view):
+        return self.user.id == request.user.id
+
     def save(self, *args, **kwargs):
         self.user.role = 'institutionmanager'
         super(InstitutionManager, self).save(*args, **kwargs)

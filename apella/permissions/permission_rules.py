@@ -17,6 +17,7 @@ PERMISSION_RULES = [
     ('assistants', 'retrieve', 'helpdeskadmin', '*', '*', '5.1.2'),
     ('assistants', 'retrieve', 'helpdeskuser', '*', '*', '5.1.2'),
     ('assistants', 'retrieve', 'institutionmanager', '*', 'owned', '4.3.7'),
+    ('assistants', 'retrieve', 'assistant', '*', 'owned_by_assistant', ''),
     ('candidacies', 'create', 'candidate', '*', '*', '3.3.3'),
     ('candidacies', 'create', 'professor', '*', '*', '1.3.9'),
     ('candidacies', 'list', 'assistant', '*', '*', '4.3.16'),
