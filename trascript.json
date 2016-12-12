@@ -842,6 +842,105 @@
         "object" : {"ApellaUser" : "7"},
         "change" : "new user"
     }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "assistant2",
+        "role": "assistant",
+        "arg2": "12345",
+        "arg3": "Μαρία",
+        "arg4": "Βοηθητική",
+        "arg5": "Κωνσταντίνος",
+        "first_name_en": "Mary",
+        "last_name_en": "Assistant",
+        "father_name_en": "Constantine",
+        "email": "mary_ass@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "8"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "assistant2",
+        "role": "assistant",
+        "arg2": "1"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "3"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "manager2",
+        "role": "institutionmanager",
+        "arg2": "12345",
+        "arg3": "Νίκος",
+        "arg4": "Νικολάου",
+        "arg5": "Νικήτα",
+        "first_name_en": "Nick",
+        "last_name_en": "Nikolaou",
+        "father_name_en": "Nikitas",
+        "email": "nicknick@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "9"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "manager2",
+        "role": "manager",
+        "arg2": "2"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "4"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "assistant3",
+        "role": "assistant",
+        "arg2": "12345",
+        "arg3": "Ζωή",
+        "arg4": "Ζωηρή",
+        "arg5": "Ζώης",
+        "first_name_en": "Zoe",
+        "last_name_en": "Zoere",
+        "father_name_en": "Zoes",
+        "email": "zoe@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "10"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "assistant3",
+        "role": "assistant",
+        "arg2": "2"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "4"},
+        "change" : "new user"
+    }
 }
 
 ]
