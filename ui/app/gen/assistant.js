@@ -23,11 +23,12 @@ export default ApellaGen.extend({
     fieldsets: [
       USER_FIELDSET,
       ASSISTANT_FIELDSET
-    ]
+    ],
+
   },
   abilityStates: {
+    // resolve ability for position model
     owned: computed('role', function() {
-      return true;
       return get(this, 'role') === 'institutionmanager';
     }) // we expect server to reply with owned resources
   },
@@ -39,7 +40,8 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'assistant.menu_label',
-      icon: 'directions_run'
+      icon: 'directions_run',
+
     },
     layout: 'table',
     sortBy: 'username:asc',

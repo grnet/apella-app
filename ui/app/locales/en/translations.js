@@ -132,6 +132,9 @@ export default {
       title: 'FEK',
     }
   },
+  assistant: {
+    menu_label: 'Assistants',
+  },
   fieldsets:{
     labels: {
         basic_info: 'Basic info',

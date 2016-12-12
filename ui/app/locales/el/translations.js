@@ -134,6 +134,9 @@ export default {
       title: 'ΦΕΚ',
     },
   },
+  assistant: {
+    menu_label: 'Βοηθοί',
+  },
   fieldsets:{
     labels: {
         basic_info: 'Βασικά στοιχεία',
