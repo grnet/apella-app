@@ -383,3 +383,6 @@ class UserInterest(models.Model):
     subject = models.ManyToManyField(Subject, blank=True)
     institution = models.ManyToManyField(Institution, blank=True)
     department = models.ManyToManyField(Department, blank=True)
+
+    def check_resource_state_owned(self, row, request, view):
+        return request.user.id == self.user.id
