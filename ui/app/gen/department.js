@@ -101,8 +101,8 @@ export default ApellaGen.extend({
     menu: {
       icon: 'domain',
       label: 'department.menu_label',
-      display: computed(function() {
-        let role = get(this, 'session.session.authenticated.role');
+      display: computed('role', function() { // role can be used here because it is defined in ApellaGen._metaMixin
+        let role = get(this, 'role');
         let permittedRoles = ['helpdeskuser', 'helpdeskadmin', 'institutionmanager'];
         return (permittedRoles.includes(role) ? true : false);
       })

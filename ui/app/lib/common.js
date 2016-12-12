@@ -12,6 +12,10 @@ const {
 
 const ApellaGen = CRUDGen.extend({
   auth: true,
+  _metaMixin: {
+    session: Ember.inject.service(),
+    role: reads('session.session.authenticated.role')
+  },
   resourceName: reads('path'),
   list: {
     sort: {
