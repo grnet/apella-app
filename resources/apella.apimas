@@ -1159,7 +1159,6 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .ref:
                         to: professor-ranks
                         many: True

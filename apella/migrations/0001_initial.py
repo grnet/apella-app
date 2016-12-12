@@ -270,7 +270,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='position',
             name='ranks',
-            field=models.ManyToManyField(to='apella.ProfessorRank'),
+            field=models.ManyToManyField(to='apella.ProfessorRank', blank=True),
         ),
         migrations.AddField(
             model_name='position',

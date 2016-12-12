@@ -235,7 +235,7 @@ class Position(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=300)
     discipline = models.CharField(max_length=300)
-    ranks = models.ManyToManyField(ProfessorRank)
+    ranks = models.ManyToManyField(ProfessorRank, blank=True)
     author = models.ForeignKey(
             InstitutionManager, related_name='authored_positions',
             blank=True)
