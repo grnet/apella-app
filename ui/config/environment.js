@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'ui',
     environment: environment,
     rootURL: '/apella/ui/',
-    appURL: '/apella/',
+    appURL: '/apella/api/',
     locationType: 'auto',
     i18n : {
       defaultLocale: 'el',
