@@ -13,6 +13,8 @@ const {
 } = Ember;
 
 export default AuthGen.extend({
+  order: 1,
+
   login: {
     config: {
       authenticator: 'apimas'
