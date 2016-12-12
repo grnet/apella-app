@@ -42,7 +42,7 @@ apipatterns = [
     url(r'^api/auth/logout/$',
         auth_views.CustomLogoutView.as_view(), name='logout'),
     url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user'),
-    url(r'^config.json$', views.config, name='config'),
+    url(r'^api/config.json$', views.config, name='config'),
     adapter.urls
 ]
 
