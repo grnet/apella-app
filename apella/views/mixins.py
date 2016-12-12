@@ -53,5 +53,4 @@ class PositionList(generics.ListAPIView):
             elif user.is_assistant():
                 queryset = queryset.filter(author__user_id=user.id)
         ids = queryset.values('code').annotate(Min('id')).values('id__min')
-        print queryset.query
         return queryset.filter(id__in=ids)
