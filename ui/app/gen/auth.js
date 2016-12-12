@@ -31,7 +31,11 @@ export default AuthGen.extend({
         templateName: 'user-interests',
         routeBaseClass: routes.EditRoute,
         menu: {
-          display: true,
+          display: computed('', function(){
+            let role = get(this, 'session.session.authenticated.role');
+            let allowedRoles = ['professor', 'candidate'];
+            return (allowedRoles.includes(role) ? true : false);
+          }),
           icon: 'access_alarm',
           label: 'user.positions.interests'
         },
@@ -41,7 +45,11 @@ export default AuthGen.extend({
         }
       })
     },
-    actions: ['gen:position_interest'],
+    actions: computed('', function(){
+      let role = get(this, 'session.session.authenticated.role');
+      let allowedRoles = ['professor', 'candidate'];
+      return (allowedRoles.includes(role) ?  ['gen:position_interest'] : []);
+    }),
     modelName: 'profile',
     menu: { display: true },
     validators: computed('model.role', function(){
