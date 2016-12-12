@@ -100,6 +100,7 @@ export default ApellaGen.extend({
     }), // we expect server to reply with owned resources if user is an institution manager
     others_can_view: alias('model.othersCanView'),
     participates: computed('role', function() {
+      let role = get(this, 'role');
       return role === 'professor'; // TODO: resolve user.id participates
     }),
     owned_open: computed('owned', 'position.open', 'model.state', function() {
