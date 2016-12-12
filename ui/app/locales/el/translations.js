@@ -85,7 +85,13 @@ export default {
   'candidacy.state': 'Κατάσταση Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
   'profile.label': 'Προφίλ',
-  'userInterest.info': 'Μπλα μπλα μπλα',
+  userInterest: {
+    info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρησης σχετικής θέσης στο μέλλον.',
+    headers: {
+      subject_area: 'Θεματικές περιοχές/ Θέματα',
+      institution: 'Ιδρύματα/ Τμήματα'
+    }
+  },
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
     label: {

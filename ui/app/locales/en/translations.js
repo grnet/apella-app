@@ -85,7 +85,15 @@ export default {
   'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
-  'userInterest.info': 'Blah blah blah<br>blah',
+  'userInterest.info': 'By pressing "Save" the search criteria will be saved, so that if a new position matches them you will be notified by the system.',
+  userInterest: {
+    info: 'By pressing "Save" the search criteria will be saved, so that if a new position matche    s them you will be notified by the system.',
+    headers: {
+      subject_area: 'Subject areas/ Subjects',
+      institution: 'Institutions/ Departments'
+    }
+  },
+
   manager: {
     menu_label: 'Institution Managers',
     label: {
