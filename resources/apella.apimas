@@ -478,6 +478,12 @@ spec:
                     .drf_field: {}
                     .required: {}
                     .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
                         username:
                             .cli_option: {}
                             .field: {}
@@ -745,6 +751,12 @@ spec:
                     .drf_field: {}
                     .required: {}
                     .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
                         username:
                             .cli_option: {}
                             .field: {}
@@ -866,6 +878,12 @@ spec:
                     .drf_field: {}
                     .required: {}
                     .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
                         username:
                             .cli_option: {}
                             .field: {}

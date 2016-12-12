@@ -25,7 +25,7 @@ export default AuthGen.extend({
         modelName: 'user-interest',
         path: 'my-interests',
         getModel() {
-          let user_id = get(this, 'session.session.authenticated.id');
+          let user_id = get(this, 'session.session.authenticated.user_id');
           return this.store.queryRecord('user-interest', {user:user_id });
         },
         templateName: 'user-interests',

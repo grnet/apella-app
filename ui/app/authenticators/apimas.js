@@ -18,7 +18,12 @@ export default Token.extend({
         'Authorization': `Token ${token}`
       },
     }).then(function(res){
-      merge(response, res.user);
+      let user = res.user;
+      user.user_id = user.id;
+      delete user.id;
+      delete res.user;
+      merge(response, user);
+      merge(response, res);
       return response;
     });
   },
