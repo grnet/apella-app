@@ -692,7 +692,7 @@
     "action": "candidacy-add",
     "input": {
         "arg1" : "4",
-        "arg2" : "1"
+        "arg2" : "2"
     },
     "db_state_change" : {
         "object" : {"Candidacy" : "3"},
