@@ -104,7 +104,6 @@ export default ApellaGen.extend({
       display: computed(function() {
         let role = get(this, 'session.session.authenticated.role');
         let permittedRoles = ['helpdeskuser', 'helpdeskadmin', 'institutionmanager'];
-
         return (permittedRoles.includes(role) ? true : false);
       })
     },
@@ -119,7 +118,9 @@ export default ApellaGen.extend({
     }
   },
   details: {
-    fields: ['title_current', subjectsField],
+//    fields: ['title_current', subjectsField],
+      fields: ['title_current', 'school.title_current', 'institution.title_current',
+        'dep_number'],
     page: {
       title: computed.readOnly('model.title_current')
     },
