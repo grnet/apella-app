@@ -54,3 +54,21 @@ class PositionList(generics.ListAPIView):
                 queryset = queryset.filter(author__user_id=user.id)
         ids = queryset.values('code').annotate(Min('id')).values('id__min')
         return queryset.filter(id__in=ids)
+
+
+class CandidacyList(generics.ListAPIView):
+
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        if user.is_institutionmanager():
+            institution_ids = InstitutionManager.objects.filter(user=user). \
+                values_list('institution', flat=True)
+            departments = Department.objects.filter(
+                institution_id__in=institution_ids)
+            positions = Position.objects.filter(department__in=departments)
+            queryset = queryset.filter(position__in=positions)
+        elif user.is_assistant():
+            positions = Position.objects.filter(author_id=user.id)
+            queryset = queryset.filter(position__in=positions)
+        return queryset
