@@ -62,13 +62,11 @@ export default Ember.Component.extend({
   successMessage: null,
   errorMessage: null,
   setSuccessMessage: function() {
-    let msg = this.getMessage('success', 'form.saved');
-    get(this, 'messageService').setSuccess(msg);
+    get(this, 'messageService').setSuccess('user.interests.saved');
   },
 
   setErrorMessage: function(msg) {
-    msg = msg ||  this.getMessage('error', 'form.error');
-    get(this, 'messageService').setError(msg);
+    get(this, 'messageService').setError('form.error');
   },
 
   resetMessages: function() {
