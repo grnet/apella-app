@@ -12,6 +12,8 @@ PERMISSION_RULES = [
     ('assistants', 'partial_update', 'institutionmanager', 'user/last_name/el', 'owned', '4.3.7'),
     ('assistants', 'partial_update', 'institutionmanager', 'user/last_name/en', 'owned', '4.3.7'),
     ('assistants', 'partial_update', 'institutionmanager', 'user/mobile_phone_number', 'owned', '4.3.7'),
+    ('assistants', 'partial_update', 'institutionmanager', 'user/can_create_registries', 'owned', '4.3.7'),
+    ('assistants', 'partial_update', 'institutionmanager', 'user/can_create_positions', 'owned', '4.3.7'),
     ('assistants', 'retrieve', 'helpdeskadmin', '*', '*', '5.1.2'),
     ('assistants', 'retrieve', 'helpdeskuser', '*', '*', '5.1.2'),
     ('assistants', 'retrieve', 'institutionmanager', '*', 'owned', '4.3.7'),
