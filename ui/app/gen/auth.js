@@ -9,6 +9,7 @@ import {USER_FIELDSET, USER_VALIDATORS,
 import {field} from 'ember-gen';
 
 const {
+  computed: { reads },
   get, computed
 } = Ember;
 
@@ -32,9 +33,12 @@ export default AuthGen.extend({
         },
         templateName: 'user-interests',
         routeBaseClass: routes.EditRoute,
+        session: Ember.inject.service(),
+        role: reads('session.session.authenticated.role'),
+
         menu: {
-          display: computed('', function(){
-            let role = get(this, 'session.session.authenticated.role');
+          display: computed('role', function(){
+            let role = get(this, 'role');
             let allowedRoles = ['professor', 'candidate'];
             return (allowedRoles.includes(role) ? true : false);
           }),
@@ -47,11 +51,6 @@ export default AuthGen.extend({
         }
       })
     },
-    actions: computed('', function(){
-      let role = get(this, 'session.session.authenticated.role');
-      let allowedRoles = ['professor', 'candidate'];
-      return (allowedRoles.includes(role) ?  ['gen:position_interest'] : []);
-    }),
     modelName: 'profile',
     menu: { display: true },
     validators: computed('model.role', function(){
