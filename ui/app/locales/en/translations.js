@@ -85,7 +85,8 @@ export default {
   'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
-  'userInterest.info': 'By pressing "Save" the search criteria will be saved, so that if a new position matches them you will be notified by the system.',
+  'can_create_registries_verbose.label': 'Can create regitstries',
+  'can_create_positions_verbose.label': 'Can create positions',
   userInterest: {
     info: 'By pressing "Save" the search criteria will be saved, so that if a new position matche    s them you will be notified by the system.',
     headers: {

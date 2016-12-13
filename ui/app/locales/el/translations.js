@@ -84,6 +84,8 @@ export default {
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε την θέση για την οποία έχετε υποβάλει υποψηφιότητα',
   'candidacy.state': 'Κατάσταση Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
+  'can_create_registries_verbose.label': 'Δημιουργία μητρώων',
+  'can_create_positions_verbose.label': 'Δημιουργία θέσεων',
   userInterest: {
     info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρησης σχετικής θέσης στο μέλλον.',
     headers: {

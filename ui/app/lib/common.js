@@ -34,11 +34,11 @@ const ApellaGen = CRUDGen.extend({
 
 const DATE_FORMAT = ENV.APP.date_format;
 
-// a `field` wrapper which automatically sets sortKey/dataKey and formComponent for 
+// a `field` wrapper which automatically sets sortKey/dataKey and formComponent for
 // i18n fields.
 function i18nField(key, attrs) {
   attrs = attrs || {};
-  return field(`${key}_current`, merge({ 
+  return field(`${key}_current`, merge({
     _services: ['i18n'],
     sortKey: computed('i18n.locale', function() {
       let locale = get(this, 'i18n.locale');
@@ -91,8 +91,15 @@ function computeDateFormat(key) {
   });
 };
 
+function booleanFormat(key) {
+  return computed(key, function(){
+    let value = get(this, key);
+    return value? '✓':'-';
+  })
+}
+
 export {
   ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
-  computeDateFormat
+  booleanFormat, computeDateFormat
 };
 

@@ -49,7 +49,14 @@ export default ApellaGen.extend({
       fields: ['username', 'email']
     },
     row: {
-      fields: ['username', 'email', 'full_name_current', 'institution.title_current', ],
+      fields: computed('role', function(){
+        if (get(this, 'role') === 'institutionmanager') {
+          return ['username', 'email', 'full_name_current',
+                  'can_create_positions_verbose',
+                  'can_create_registries_verbose'];
+        }
+        return ['username', 'email', 'full_name_current', 'institution.title_current', ]
+      }),
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
