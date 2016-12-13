@@ -38,7 +38,7 @@ def create_objects(model, fields, validated_data):
         if relation_info.to_many and (field_name in validated_data):
             many_to_many[field_name] = validated_data.pop(field_name)
 
-    if isinstance(model, ApellaUser):
+    if model == ApellaUser:
         obj = model.objects.create_user(**validated_data)
     else:
         obj = model.objects.create(**validated_data)
