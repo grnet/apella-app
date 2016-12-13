@@ -2,6 +2,8 @@ import Ember from 'ember';
 import {CRUDGen} from 'ember-gen/lib/gen';
 import ENV from 'ui/config/environment';
 import {field} from 'ember-gen/lib/util';
+import moment from 'moment';
+
 
 const {
   get,
@@ -29,6 +31,8 @@ const ApellaGen = CRUDGen.extend({
     }
   }
 });
+
+const DATE_FORMAT = ENV.APP.date_format;
 
 // a `field` wrapper which automatically sets sortKey/dataKey and formComponent for 
 // i18n fields.
@@ -80,7 +84,15 @@ function computeI18NChoice(key, choices, ...args) {
   });
 }
 
+function computeDateFormat(key) {
+  return computed(key, function() {
+    let date = get(this, key)
+    return moment(date).format(DATE_FORMAT);
+  });
+};
+
 export {
-  ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice
+  ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
+  computeDateFormat
 };
 
