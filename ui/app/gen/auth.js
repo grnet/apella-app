@@ -43,7 +43,7 @@ export default AuthGen.extend({
             return (allowedRoles.includes(role) ? true : false);
           }),
           icon: 'access_alarm',
-          label: 'user.positions.interests'
+          label: 'userInterest.menu_label'
         },
         page: {
           title: 'my.interests',
@@ -52,7 +52,10 @@ export default AuthGen.extend({
       })
     },
     modelName: 'profile',
-    menu: { display: true },
+    menu: {
+      display: true,
+      label: 'profile.menu_label',
+    },
     validators: computed('model.role', function(){
       let role = this.get('model').get('role');
       let f = Object.assign({}, USER_VALIDATORS);

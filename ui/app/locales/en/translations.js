@@ -91,7 +91,8 @@ export default {
     headers: {
       subject_area: 'Subject areas/ Subjects',
       institution: 'Institutions/ Departments'
-    }
+    },
+    menu_label: 'User interests',
   },
 
   manager: {
@@ -181,6 +182,9 @@ export default {
     members_section: {
       title: 'Registry Members'
     }
+  },
+  profile: {
+    menu_label: 'Profile',
   },
   common: {
     create_label: 'New',

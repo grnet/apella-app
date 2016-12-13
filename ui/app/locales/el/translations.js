@@ -84,13 +84,13 @@ export default {
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε την θέση για την οποία έχετε υποβάλει υποψηφιότητα',
   'candidacy.state': 'Κατάσταση Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
-  'profile.label': 'Προφίλ',
   userInterest: {
     info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρησης σχετικής θέσης στο μέλλον.',
     headers: {
       subject_area: 'Θεματικές περιοχές/ Θέματα',
       institution: 'Ιδρύματα/ Τμήματα'
-    }
+    },
+    menu_label: 'Εκδήλωση ενδιφέροντος',
   },
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
@@ -181,6 +181,9 @@ export default {
     members_section: {
       title: 'Μέλη Μητρώου'
     }
+  },
+  profile: {
+    menu_label: 'Προφίλ',
   },
   common: {
     create_label: 'Δημιουργία',
