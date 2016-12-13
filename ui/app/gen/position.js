@@ -50,21 +50,7 @@ export default ApellaGen.extend({
                              message: 'It should start with http or https'})],
       department_dep_number: [validate.presence(true), validate.number({integer: true})]
 
-    },
-    fieldsets: [{
-      label: 'fieldsets.labels.basic_info',
-      fields: [disable_field('state'), 'department', 'title', 'description',
-        'discipline', 'subject_area', 'subject'],
-      layout: {
-        flex: [50, 50, 50, 100, 100, 50, 50]
-      }
-    }, {
-      label: 'fieldsets.labels.details',
-      fields: ['fek', 'fek_posted_at', 'starts_at', 'ends_at'],
-      layout: {
-        flex: [50, 50, 50, 50]
-      },
-    }],
+    }
   },
   create: {
     onSubmit(model) {
@@ -72,10 +58,10 @@ export default ApellaGen.extend({
     },
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: [disable_field('state'), 'department', 'title', 'description',
+      fields: ['title', 'department', 'description',
         'discipline','subject_area', 'subject'],
       layout: {
-        flex: [50, 50, 50, 100, 100, 50, 50]
+        flex: [50, 50, 100, 100, 50, 50]
       }
     }, {
       label: 'fieldsets.labels.details',
@@ -109,9 +95,43 @@ export default ApellaGen.extend({
       }
     }
   },
+  edit: {
+    fieldsets: [{
+      label: 'fieldsets.labels.basic_info',
+      fields: [disable_field('code'), disable_field('state'), 'title',
+        'department', 'description', 'discipline','subject_area', 'subject'],
+      layout: {
+        flex: [50, 50, 50, 50, 100, 100, 50, 50]
+      }
+    }, {
+      label: 'fieldsets.labels.details',
+      fields: ['fek', 'fek_posted_at', 'starts_at', 'ends_at'],
+      layout: {
+        flex: [50, 50, 50, 50]
+      },
+    }],
+  },
   details: {
     page: {
       title: computed.readOnly('model.code')
-    }
+    },
+    fieldsets: [{
+      label: 'fieldsets.labels.basic_info',
+      fields: [disable_field('code'), disable_field('state_verbose'), 'title',
+        field('department.title_current', {label: 'department.label'}),
+        'description', 'discipline', field('subject_area.title_current',{label: 'subject_area.label'}),
+        field('subject.title_current', {label: 'subject.label'})],
+      layout: {
+        flex: [50, 50, 50, 50, 100, 100, 50, 50]
+      }
+    }, {
+      label: 'fieldsets.labels.details',
+      fields: ['fek', field('fek_posted_at_format', {label: 'fek_posted_at.label'}),
+        field('starts_at_format', {label: 'starts_at.label'}),
+        field('ends_at_format', {label: 'ends_at.label'})],
+      layout: {
+        flex: [50, 50, 50, 50]
+      }
+    }],
   }
 });
