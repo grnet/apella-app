@@ -10,13 +10,16 @@
         font-weight: bold;
       }
     }
+    .md-label span {
+      font-size: 14px;
+    }
   }
   ul ul {
     margin-left: 6rem;
   }
   .item:first-child {
-    min-width: 30%;
-    max-width: 40%;
+    min-width: 40%;
+    max-width: 45%;
     padding-right: 3rem;
   }
 }
