@@ -72,3 +72,15 @@ class CandidacyList(generics.ListAPIView):
             positions = Position.objects.filter(author_id=user.id)
             queryset = queryset.filter(position__in=positions)
         return queryset
+
+
+class DepartmentList(generics.ListAPIView):
+
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        if user.is_manager():
+            institution_ids = InstitutionManager.objects.filter(user=user). \
+                values_list('institution', flat=True)
+            queryset = queryset.filter(institution_id__in=institution_ids)
+        return queryset

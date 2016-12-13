@@ -256,7 +256,8 @@ spec:
             .drf_collection:
                 model: apella.models.Department
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
-                mixins: [apella.views.mixins.DestroyProtectedObject]
+                mixins: [apella.views.mixins.DestroyProtectedObject,
+                         apella.views.mixins.DepartmentList]
                 filter_fields: [institution]
                 ordering_fields: [id]
             .cli_commands: {}
