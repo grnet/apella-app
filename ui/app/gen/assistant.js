@@ -3,11 +3,13 @@ import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
         USER_VALIDATORS,
         ASSISTANT_FIELDSET,
+        ASSISTANT_FIELDSET_MANAGER,
         ASSISTANT_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
 const {
   computed,
+  computed: { reads },
   get
 } = Ember;
 
@@ -64,5 +66,30 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.full_name_current')
     }
+  },
+  create: {
+    processModel: function(model) {
+      let role = reads('session.session.authenticated.role');
+      if (role === 'institutionmanager') {
+        let institution = reads('session.session.authenticated.institution');
+        get(this, 'store').findRecord('inst', institution).then((inst) => {
+          model.set('institution', inst)
+        })
+      }
+      return model;
+    },
+    fieldsets: computed('role', function() {
+      if (get(this, 'role') === 'institutionmanager') {
+        return  [
+          USER_FIELDSET,
+          ASSISTANT_FIELDSET_MANAGER
+        ]
+      } else {
+        return [
+          USER_FIELDSET,
+          ASSISTANT_FIELDSET
+        ]
+      }
+    })
   }
 });

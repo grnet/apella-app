@@ -105,10 +105,17 @@ const ASSISTANT_FIELDSET = {
   label: 'fieldsets.labels.more_info',
   fields: ASSISTANT_FIELDS,
   layout: {
-    flex: [50, 50, 50]
+    flex: [100, 50, 50]
    }
 }
 
+const ASSISTANT_FIELDSET_MANAGER = {
+  label: 'fieldsets.labels.more_info',
+  fields: ['can_create_registries', 'can_create_positions'],
+  layout: {
+    flex: [50, 50]
+  }
+}
 
 const USER_VALIDATORS = {
   username: [validate.presence(true), validate.length({min:4, max:50})],
@@ -183,5 +190,5 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
-        ASSISTANT_FIELDSET, ASSISTANT_VALIDATORS,
+        ASSISTANT_FIELDSET, ASSISTANT_FIELDSET_MANAGER, ASSISTANT_VALIDATORS,
         INSTITUTION_MANAGER_VALIDATORS};
