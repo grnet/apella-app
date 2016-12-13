@@ -1,11 +1,11 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
+import {computeI18N, computeI18NChoice, computeDateFormat} from 'ui/lib/common';
 import get_label from '../utils/common/label_list_item';
-import moment from 'moment';
+
 
 const { computed, get } = Ember,
-      CHOICES = ENV.APP.resources,
-      DATE_FORMAT = ENV.APP.date_format;
+      CHOICES = ENV.APP.resources;
 
 
 export default DS.Model.extend({
@@ -33,13 +33,17 @@ export default DS.Model.extend({
   }),
   fek: DS.attr(),
   fek_posted_at: DS.attr('date'),
+  fek_posted_at_format: computeDateFormat('fek_posted_at'),
   assistants: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   electors: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   committee: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   elected: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'username'}}),
   state: DS.attr({type: 'select', choices: CHOICES.POSITION_STATES, defaultValue: 'posted'}),
+  state_verbose: computeI18NChoice('state', CHOICES.POSITION_STATES),
   starts_at: DS.attr('date'),
+  starts_at_format: computeDateFormat('starts_at'),
   ends_at: DS.attr('date'),
+  ends_at_format: computeDateFormat('ends_at'),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
   // Use in candidacy select list
@@ -50,25 +54,5 @@ export default DS.Model.extend({
   code: computed('id', function(){
     return `APP${this.get('id')}`;
   }),
-
-  state_verbose: computed('state','i18n.locale', function() {
-    let list = CHOICES.POSITION_STATES;
-    return this.get('i18n').t(get_label(list, get(this, 'state')))
-  }),
-
-  fek_posted_at_format: computed('fek_posted_at', function(){
-    return moment(this.get('fek_posted_at')).format(DATE_FORMAT);
-  }),
-
-  starts_at_format: computed('starts_at', function(){
-    return moment(this.get('starts_at')).format(DATE_FORMAT);
-  }),
-
-  ends_at_format: computed('ends_at', function(){
-    return moment(this.get('ends_at')).format(DATE_FORMAT);
-  }),
-
-
-
 
 });
