@@ -131,4 +131,5 @@ class Assistants(NestedWritableObjectsMixin):
         user = self.context.get('request').user
         if user.is_institutionmanager():
             validated_data['institution'] = user.institutionmanager.institution
+        validated_data['user']['role'] = 'assistant'
         return super(Assistants, self).create(validated_data)
