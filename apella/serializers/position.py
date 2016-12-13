@@ -2,7 +2,7 @@ from django.conf import settings
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
-from apella.models import Position, InstitutionManager
+from apella.models import Position, InstitutionManager, Candidacy
 
 
 def get_dep_number(data):
@@ -61,4 +61,26 @@ class PositionMixin(ValidatorMixin):
         if instance.state is not curr_position.state:
             curr_position.pk = None
             curr_position.save()
+        return instance
+
+
+class CandidacyMixin(ValidatorMixin):
+
+    def create(self, validated_data):
+        user = self.request.user
+        if not user.is_helpdesk():
+            validated_data['user'] = user
+        validated_data['state'] = 'posted'
+        obj = super(CandidacyMixin, self).create(validated_data)
+        code = obj.id
+        obj.code = code
+        obj.save()
+        return obj
+
+    def update(self, instance, validated_data):
+        curr_candidacy = Candidacy.objects.get(id=instance.id)
+        instance = super(CandidacyMixin, self).update(instance, validated_data)
+        if instance.state is not curr_candidacy.state:
+            curr_candidacy.pk = None
+            curr_candidacy.save()
         return instance

@@ -4,7 +4,7 @@ from rest_framework import generics
 from rest_framework.decorators import detail_route
 from django.db.models import ProtectedError, Min
 
-from apella.models import InstitutionManager, Position, Department
+from apella.models import InstitutionManager, Position, Department, Candidacy
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -58,6 +58,14 @@ class PositionList(generics.ListAPIView):
 
 class CandidacyList(generics.ListAPIView):
 
+    @detail_route()
+    def history(self, request, pk=None):
+        candidacy = self.get_object()
+        user = self.request.user
+        candidacy_states = Candidacy.objects.filter(code=candidacy.code)
+        serializer = self.get_serializer(candidacy_states, many=True)
+        return Response(serializer.data)
+
     def get_queryset(self):
         queryset = self.queryset
         user = self.request.user
@@ -71,7 +79,8 @@ class CandidacyList(generics.ListAPIView):
         elif user.is_assistant():
             positions = Position.objects.filter(author_id=user.id)
             queryset = queryset.filter(position__in=positions)
-        return queryset
+        ids = queryset.values('code').annotate(Min('id')).values('id__min')
+        return queryset.filter(id__in=ids)
 
 
 class DepartmentList(generics.ListAPIView):

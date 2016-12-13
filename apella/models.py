@@ -320,6 +320,7 @@ class Candidacy(models.Model):
     others_can_view = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
+    code = models.CharField(max_length=200)
 
     def clean(self, *args, **kwargs):
         validate_position_dates(

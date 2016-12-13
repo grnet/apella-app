@@ -17,6 +17,9 @@ class Command(ApellaCommand):
             candidate = get_user(candidate_id)
             c = Candidacy.objects.create(
                 position=position, candidate=candidate)
+            code = c.pk
+            c.code = code
+            c.save()
             self.stdout.write(
                 "Created candidacy %s : candidate = %s position = %s" %
                 (c.pk, c.candidate.username, c.position.id))

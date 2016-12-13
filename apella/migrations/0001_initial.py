@@ -59,6 +59,7 @@ class Migration(migrations.Migration):
                 ('others_can_view', models.BooleanField(default=False)),
                 ('submitted_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('code', models.CharField(max_length=200)),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),

@@ -1173,7 +1173,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Candidacy
-                model_serializers: [apella.serializers.mixins.ValidatorMixin]
+                model_serializers: [apella.serializers.position.CandidacyMixin]
                 mixins: [apella.views.mixins.CandidacyList]
             .cli_commands: {}
             '*':
@@ -1186,6 +1186,12 @@ spec:
                 url:
                     .drf_field: {}
                     .identity: {}
+                code:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
                 candidate:
                     .cli_option: {}
                     .field: {}
