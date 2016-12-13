@@ -219,7 +219,7 @@ class InstitutionManager(UserProfile):
         return InstitutionManager.objects.filter(
             user_id=request.user.id,
             institution_id=self.institution.id,
-            manager_role='manager').exists()
+            manager_role='institutionmanager').exists()
 
     def check_resource_state_owned_by_assistant(
             self, row, request, view):
