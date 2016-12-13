@@ -123,3 +123,12 @@ class HelpdeskUsers(object):
                 self.context['view'], CustomUserView):
             return self.context.get('request').data.get('user')
         return super(HelpdeskUsers, self).to_internal_value(data)
+
+
+class Assistants(NestedWritableObjectsMixin):
+
+    def create(self, validated_data):
+        user = self.context.get('request').user
+        if user.is_institutionmanager():
+            validated_data['institution'] = user.institutionmanager.institution
+        return super(Assistants, self).create(validated_data)

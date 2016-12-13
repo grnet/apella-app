@@ -1292,7 +1292,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.InstitutionManager
-                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.Assistants]
                 mixins: [apella.views.mixins.AssistantList]
             .cli_commands: {}
             '*':
@@ -1309,7 +1309,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
+                    .readonly: {}
                     .ref:
                         to: institutions
                 manager_role:
