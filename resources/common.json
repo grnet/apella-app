@@ -34,7 +34,7 @@
     ],
 
     "MANAGER_ROLES": [
-        ["manager", "Manager"],
+        ["institutionmanager", "Manager"],
         ["assistant", "Assistant"]
     ],
 

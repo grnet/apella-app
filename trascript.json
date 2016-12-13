@@ -69,7 +69,7 @@
     "action": "institutionmanager-add",
     "input": {
         "arg1": "manager",
-        "role": "manager",
+        "role": "institutionmanager",
         "arg2": "11"
     },
     "db_state_change" : {
@@ -759,7 +759,7 @@
     "action": "institutionmanager-add",
     "input": {
         "arg1": "manager2",
-        "role": "manager",
+        "role": "institutionmanager",
         "arg2": "12"
     },
     "db_state_change" : {

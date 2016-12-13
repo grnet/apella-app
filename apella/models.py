@@ -226,7 +226,7 @@ class InstitutionManager(UserProfile):
         return self.user.id == request.user.id
 
     def save(self, *args, **kwargs):
-        self.user.role = 'institutionmanager'
+        self.user.role = self.manager_role
         super(InstitutionManager, self).save(*args, **kwargs)
 
 
