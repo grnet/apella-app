@@ -38,9 +38,10 @@ EXTRA_DATA = {
     Department: {"id": 98, "institution": "", "school": "", "dep_number": 20},
     InstitutionManager: {
         "authority_full_name": "John Doe",
-        "manager_role": "manager", "institution": "", "authority": "1",
-        "sub_home_phone_number": "", "sub_last_name": {"el": "", "en": ""},
-        "sub_mobile_phone_number": "", "sub_father_name": {"el": "", "en": ""},
+        "manager_role": "institutionmanager", "institution": "",
+        "authority": "1", "sub_home_phone_number": "", "sub_last_name":
+        {"el": "", "en": ""}, "sub_mobile_phone_number": "",
+        "sub_father_name": {"el": "", "en": ""},
         "sub_first_name": {"el": "", "en": ""}, "sub_email": ""},
     Professor: {
         "discipline_text": "Mathematics", "rank": "Professor",
