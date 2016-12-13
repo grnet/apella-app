@@ -55,6 +55,17 @@
 },
 {
     "user": "admin",
+    "action": "loadsubjects",
+    "input": {
+        "arg1": "resources/subject_areas_subjects.csv"
+    },
+    "db_state_change" : {
+        "object" : {},
+        "change" : "load subject areas and subjects"
+    }
+},
+{
+    "user": "admin",
     "action": "institutionmanager-add",
     "input": {
         "arg1": "manager",
@@ -195,96 +206,6 @@
     "db_state_change" : {
         "object" : {"Professor" : "2"},
         "change" : "new professor"
-    }
-},
-
-{
-    "user": "1",
-    "action": "subjectarea-add",
-    "input": {
-        "arg1": "Μαθηματικά",
-        "en": "Mathematics"
-    },
-    "db_state_change" : {
-        "object" : {"SubjectArea" : "1"},
-        "change" : "new subject area"
-    }
-},
-{
-    "user": "1",
-    "action": "subjectarea-add",
-    "input": {
-        "arg1": "Φυσική",
-        "en": "Physics"
-    },
-    "db_state_change" : {
-        "object" : {"SubjectArea" : "2"},
-        "change" : "new subject area"
-    }
-},
-{
-    "user": "1",
-    "action": "subject-add",
-    "input": {
-        "arg1": "Άλγεβρα",
-        "arg2": "1",
-        "en": "Algebra"
-    },
-    "db_state_change" : {
-        "object" : {"Subject" : "1"},
-        "change" : "new subject"
-    }
-},
-{
-    "user": "1",
-    "action": "subject-add",
-    "input": {
-        "arg1": "Διακριτά μαθηματικά",
-        "arg2": "1",
-        "en": "Discrete mathematics"
-    },
-    "db_state_change" : {
-        "object" : {"Subject" : "2"},
-        "change" : "new subject"
-    }
-},
-{
-    "user": "1",
-    "action": "subject-add",
-    "input": {
-        "arg1": "Διαφορικές εξισώσεις",
-        "arg2": "1",
-        "en": "Differential equations"
-    },
-    "db_state_change" : {
-        "object" : {"Subject" : "3"},
-        "change" : "new subject"
-    }
-},
-{
-    "user": "1",
-    "action": "subject-add",
-    "input": {
-        "arg1": "Φυσική στερεάς καταστασης",
-        "arg2": "2",
-        "en": "Solid state physic"
-    },
-    "db_state_change" : {
-        "object" : {"Subject" : "4"},
-        "change" : "new subject"
-    }
-},
-{
-    "user": "1",
-    "action": "subject-add",
-    "input": {
-        "arg1": "Κβαντομηχανική",
-        "arg2": "2",
-        "en": "Quantum mechanics"
-    },
-    "db_state_change" : {
-        "object" : {"Subject" : "4"},
-        "change" : "new subject"
     }
 },
 {
