@@ -3,10 +3,11 @@ import User from 'ui/models/user';
 import professorFields from 'ui/mixins/professor';
 import {normalizeUser, serializeUser, normalizeUserErrors} from 'ui/utils/common/users';
 import institutionManagerFields from 'ui/mixins/institution-manager';
+import assistantFields from 'ui/mixins/assistant';
 
 const { get } = Ember;
 
-export default User.extend(professorFields, institutionManagerFields, {
+export default User.extend(professorFields, institutionManagerFields, assistantFields, {
   __api__: {
     namespace: 'auth',
     path: 'me',

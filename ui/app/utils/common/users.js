@@ -70,9 +70,9 @@ const ASSISTANT_FIELDS = [
 ]
 
 const PROFILE_ASSISTANT_FIELDSET = {
-  label: 'fieldsets.labels.user_info',
+  label: 'fieldsets.labels.more_info',
   fields: [
-     disable_field('username'),
+    field('username', { readonly: true }),
     'password',
     'email',
     'mobile_phone_number',
@@ -81,11 +81,12 @@ const PROFILE_ASSISTANT_FIELDSET = {
     disable_field('last_name'),
     disable_field('father_name'),
     disable_field('id_passport'),
-    disable_field('can_create_registries', {type: 'boolean'}),
     disable_field('can_create_positions'),
+    disable_field('can_create_registries'),
+    disable_field('institution.title_current'),
   ],
   layout: {
-        flex: [100, 50, 50, 50, 50, 100, 50, 50, 50, 50]
+        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 
 
@@ -95,7 +96,7 @@ const USER_FIELDSET = {
   label: 'fieldsets.labels.user_info',
   fields: USER_FIELDS,
   layout: {
-        flex: [100, 50, 50, 50, 50, 100, 50, 50, 50, 50]
+        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 }
 
