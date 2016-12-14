@@ -2,6 +2,7 @@ import Ember from 'ember';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
+import {disable_field} from 'ui/utils/common/fields';
 
 const USER_FIELDS_ALL = [
   'user_id',
@@ -68,6 +69,27 @@ const ASSISTANT_FIELDS = [
   'can_create_positions'
 ]
 
+const PROFILE_ASSISTANT_FIELDSET = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+     disable_field('username'),
+    'password',
+    'email',
+    'mobile_phone_number',
+    'home_phone_number',
+    disable_field('first_name'),
+    disable_field('last_name'),
+    disable_field('father_name'),
+    disable_field('id_passport'),
+    disable_field('can_create_registries', {type: 'boolean'}),
+    disable_field('can_create_positions'),
+  ],
+  layout: {
+        flex: [100, 50, 50, 50, 50, 100, 50, 50, 50, 50]
+  }
+
+
+}
 
 const USER_FIELDSET = {
   label: 'fieldsets.labels.user_info',
@@ -117,6 +139,38 @@ const ASSISTANT_FIELDSET_MANAGER = {
   }
 }
 
+const ASSISTANT_FIELDSET_EDIT_MANAGER = {
+  label: 'fieldsets.labels.user_info',
+  text: 'fieldsets.text.manager_can_edit',
+  fields: [
+    disable_field('username'),
+    'can_create_positions',
+    'can_create_registries',
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport'
+  ],
+  layout: {
+    flex: [50,25,25, 50, 50, 50, 50]
+  }
+}
+
+const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
+  label: 'fieldsets.labels.user_info',
+  text: 'fieldsets.text.assistant_can_edit',
+  fields: [
+    field('password', { readonly: true }),
+    field('email', { readonly: true }),
+    field('mobile_phone_number', { readonly: true }),
+    field('home_phone_number', { readonly: true })
+  ],
+  layout: {
+    flex: [50, 50, 50, 50]
+  }
+}
+
+
 const USER_VALIDATORS = {
   username: [validate.presence(true), validate.length({min:4, max:50})],
   first_name: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
@@ -143,6 +197,13 @@ const INSTITUTION_MANAGER_VALIDATORS = {
 }
 
 const ASSISTANT_VALIDATORS = {
+}
+
+const ASSISTANT_VALIDATORS_EDIT_MANAGER = {
+  first_name: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
+  last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  id_passport: [validate.presence(true)],
 }
 
 
@@ -190,5 +251,9 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
+        PROFILE_ASSISTANT_FIELDSET,
         ASSISTANT_FIELDSET, ASSISTANT_FIELDSET_MANAGER, ASSISTANT_VALIDATORS,
+        ASSISTANT_FIELDSET_EDIT_MANAGER,
+        ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY,
+        ASSISTANT_VALIDATORS_EDIT_MANAGER,
         INSTITUTION_MANAGER_VALIDATORS};

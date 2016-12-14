@@ -4,6 +4,10 @@ import {USER_FIELDSET,
         USER_VALIDATORS,
         ASSISTANT_FIELDSET,
         ASSISTANT_FIELDSET_MANAGER,
+        ASSISTANT_FIELDSET_EDIT_MANAGER,
+        ASSISTANT_FIELDSET_EDIT_ASSISTANT,
+        ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY,
+        ASSISTANT_VALIDATORS_EDIT_MANAGER,
         ASSISTANT_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
@@ -88,6 +92,28 @@ export default ApellaGen.extend({
         return [
           USER_FIELDSET,
           ASSISTANT_FIELDSET
+        ]
+      }
+    })
+  },
+  edit: {
+    validators: computed('role', function(){
+      let role = get(this, 'role')
+      if (role === 'institutionmanager') {
+        return ASSISTANT_VALIDATORS_EDIT_MANAGER
+      }
+    }),
+    fieldsets: computed('role', function() {
+      let role = get(this, 'role')
+      if (role === 'institutionmanager') {
+        return  [
+          ASSISTANT_FIELDSET_EDIT_MANAGER,
+          ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY
+        ]
+      }
+      if (role === 'assistant') {
+        return [
+          ASSISTANT_FIELDSET_EDIT_ASSISTANT
         ]
       }
     })

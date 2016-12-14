@@ -154,7 +154,9 @@ export default {
         user_interest: 'User interest'
     },
     text: {
-        user_interest: 'Choose your interests'
+      user_interest: 'Choose your interests',
+      manager_can_edit: 'The following fields can only be edited by the institution manager',
+      assistant_can_edit: 'The following fields can only be edited by the assistant',
     }
   },
   institution: {
