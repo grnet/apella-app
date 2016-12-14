@@ -3,10 +3,14 @@ import Token from 'ember-simple-auth-token/authenticators/token';
 import ENV from 'ui/config/environment';
 
 const {
-  merge
+  merge, computed
 } = Ember;
 
 export default Token.extend({
+  init() {
+    this._super();
+    this.serverTokenEndpoint = ENV.APP.backend_host + '/auth/login/';
+  },
   getResponseData(response) {
     let token = response.auth_token;
 

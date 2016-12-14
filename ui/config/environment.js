@@ -23,7 +23,6 @@ module.exports = function(environment) {
     },
 
     APP: {
-      backend_host: 'https://snf-36.vm.dev.okeanos.grnet.gr/apella/api',
       date_format: 'DD , MMMM YYYY',
       // Here you can pass flags/options to your application instance
       // when it is created
@@ -39,7 +38,6 @@ module.exports = function(environment) {
   };
 
   ENV['ember-simple-auth-token'] = {
-    serverTokenEndpoint: ENV.APP.backend_host + '/auth/login/',
     identificationField: 'username',
     passwordField: 'password',
     tokenPropertyName: 'auth_token',
