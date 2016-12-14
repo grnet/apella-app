@@ -27,7 +27,8 @@ let actions = {
 const candidaciesField = field('candidacies', {
     valueQuery: function(store, params, model, value) {
       let position_id = model.get('id');
-      let query = merge({position: position_id}, params);
+      // no use of params for now
+      let query = {position: position_id};
       return store.query('candidacy', query);
     },
     label: null,
