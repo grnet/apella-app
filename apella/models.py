@@ -174,12 +174,18 @@ class Professor(UserProfile):
     discipline_text = models.CharField(max_length=300)
     discipline_in_fek = models.BooleanField(default=True)
 
+    def check_resource_state_owned(self, row, request, view):
+        return request.user.id == self.user.id
+
     def save(self, *args, **kwargs):
         self.user.role = 'professor'
         super(Professor, self).save(*args, **kwargs)
 
 
 class Candidate(UserProfile):
+
+    def check_resource_state_owned(self, row, request, view):
+        return request.user.id == self.user.id
 
     def save(self, *args, **kwargs):
         self.user.role = 'candidate'
