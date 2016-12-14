@@ -148,6 +148,7 @@ if not LOGGING:
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+API_HOST = None # The host the app is served from
 API_PREFIX = 'apella/'
 AUTH_USER_MODEL = 'apella.ApellaUser'
 
@@ -163,3 +164,6 @@ if os.path.isfile(SETTINGS_FILE):
     execfile(SETTINGS_FILE)
 else:
     pass
+
+if not DEBUG and not API_HOST:
+    raise Exception("API_HOST setting is required when DEBUG is set to False.")
