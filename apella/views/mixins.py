@@ -46,12 +46,9 @@ class PositionList(generics.ListAPIView):
         if user.is_manager():
             institution_ids = InstitutionManager.objects.filter(user=user). \
                 values_list('institution', flat=True)
-            if user.is_institutionmanager():
-                departments = Department.objects.filter(
-                    institution_id__in=institution_ids)
-                queryset = queryset.filter(department__in=departments)
-            elif user.is_assistant():
-                queryset = queryset.filter(author__user_id=user.id)
+            departments = Department.objects.filter(
+                institution_id__in=institution_ids)
+            queryset = queryset.filter(department__in=departments)
         ids = queryset.values('code').annotate(Min('id')).values('id__min')
         return queryset.filter(id__in=ids)
 
