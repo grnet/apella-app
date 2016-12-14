@@ -17,7 +17,7 @@ const subjectsField = field('subjects', {
    * params is the table-requested params (if any) such as ordering/offset/limit/filters etc.
    * value is the value of the field on the bound model (in this case it is not used)
    */
-  valueQuery: function(store, params, value) {
+  valueQuery: function(store, params, model, value) {
     return store.query('subject', params);
   },
 
