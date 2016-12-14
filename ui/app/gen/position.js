@@ -9,8 +9,46 @@ import moment from 'moment';
 
 const {
   computed,
-  get
+  get,
+  merge
 } = Ember;
+
+
+let actions = {
+  goToDetails: {
+    label: 'details.label',
+    icon: 'remove red eye',
+    action(route, model) {
+      route.transitionTo('candidacy.record.index', model);
+    }
+  }
+};
+
+const candidaciesField = field('candidacies', {
+    valueQuery: function(store, params, model, value) {
+      let position_id = model.get('id');
+      let query = merge({position: position_id}, params);
+      return store.query('candidacy', query);
+    },
+    label: null,
+    modelMeta: {
+      row: {
+        fields: ['id',
+          field('candidate.last_name_current', {label: 'last_name.label'}),
+          field('candidate.first_name_current', {label: 'first_name.label'}),
+          field('candidate.father_name_current', {label: 'father_name.label'}),
+          field('submitted_at_format', {label: 'submitted_at.label'}),
+          field('updated_at_format', {label: 'updated_at.label'})
+        ],
+        actions: ['goToDetails'],
+        actionsMap: {
+          goToDetails: actions.goToDetails
+        }
+      },
+      sortBy: ['id'],
+      }
+    }
+  );
 
 export default ApellaGen.extend({
   modelName: 'position',
@@ -132,6 +170,9 @@ export default ApellaGen.extend({
       layout: {
         flex: [50, 50, 50, 50]
       }
+    }, {
+      label: 'candidacy.menu_label',
+      fields: [candidaciesField]
     }],
   }
 });

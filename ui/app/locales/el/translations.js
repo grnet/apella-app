@@ -10,6 +10,8 @@ export default {
   'edit.menu.label': 'Τροποποίηση',
   'edit.page.title': 'Τροποποίηση',
   'details.menu.label': 'Λεπτομέρειες',
+  'details.label': 'Λεπτομέρειες',
+  'details': 'Λεπτομέρειες', //For top bar
   'Draft':'Πρόχειρο',
   'Posted': 'Ενταγμένη',
   'Cancelled': 'Ακυρωθείσα',
@@ -86,6 +88,8 @@ export default {
   'institution.title_current.label': 'Ίδρυμα',
   'can_create_registries_verbose.label': 'Δημιουργία μητρώων',
   'can_create_positions_verbose.label': 'Δημιουργία θέσεων',
+  'submitted_at.label': 'Ημερομηνία Υποβολής',
+  'updated_at.label': 'Ημερομηνία Τελευταίας Ενημέρωσης',
   userInterest: {
     info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρησης σχετικής θέσης στο μέλλον.',
     headers: {

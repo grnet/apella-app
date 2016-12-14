@@ -10,6 +10,8 @@ export default {
   'edit.menu.label': 'Edit',
   'edit.page.title': 'Edit',
   'details.menu.label': 'Details',
+  'details.label': 'Details',
+  'details': 'Details', //For top bar
   'Draft':'Draft',
   'Posted': 'Posted',
   'Cancelled': 'Cancelled',
@@ -87,6 +89,8 @@ export default {
   'profile.label': 'Profile',
   'can_create_registries_verbose.label': 'Can create regitstries',
   'can_create_positions_verbose.label': 'Can create positions',
+  'submitted_at.label': 'Submission Date',
+  'updated_at.label': 'Last Update Date',
   userInterest: {
     info: 'By pressing "Save" the search criteria will be saved, so that if a new position matche    s them you will be notified by the system.',
     headers: {

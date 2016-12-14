@@ -55,4 +55,6 @@ export default DS.Model.extend({
     return `APP${this.get('id')}`;
   }),
 
+  candidacies: DS.hasMany('candidacy')
+
 });
