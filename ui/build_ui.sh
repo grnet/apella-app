@@ -16,9 +16,17 @@ cmd () {
 
 target_env="$1"
 
+if ! [ -d "${HOME}/node_modules" ]; then
+    cmd rm -rf "${HOME}/node_modules" || true
+    cmd mkdir -p "${HOME}/node_modules"
+fi
+
+cmd rm -rf ./node_modules || true
+cmd ln -s "${HOME}/node_modules" .
 cmd npm install npm
 cmd ./node_modules/.bin/npm install bower
 cmd ./node_modules/.bin/npm install
 cmd ./node_modules/.bin/bower install --allow-root
 cmd ./node_modules/.bin/ember build --environment "${target_env}" --output-path dist
 
+echo Done.
