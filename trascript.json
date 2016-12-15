@@ -592,7 +592,6 @@
         "object" : {"Position" : "1"},
         "change" : {
             "position.electors" : "3",
-            "position.committee" : "4",
             "position.state" : "electing"
         }
     }
@@ -614,6 +613,7 @@
     "action": "position-modify",
     "input": {
         "arg1" : "6",
+        "electors" : "1",
         "state" : "cancelled"
     },
     "db_state_change" : {
@@ -626,6 +626,8 @@
     "action": "position-modify",
     "input": {
         "arg1" : "8",
+        "electors": "1",
+        "committee": "2",
         "state" : "electing"
     },
     "db_state_change" : {
