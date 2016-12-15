@@ -4,7 +4,8 @@ from rest_framework import generics
 from rest_framework.decorators import detail_route
 from django.db.models import ProtectedError, Min
 
-from apella.models import InstitutionManager, Position, Department, Candidacy
+from apella.models import InstitutionManager, Position, Department, \
+        Candidacy, ApellaUser
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -85,8 +86,9 @@ class DepartmentList(generics.ListAPIView):
     def get_queryset(self):
         queryset = self.queryset
         user = self.request.user
-        if user.is_manager():
-            institution_ids = InstitutionManager.objects.filter(user=user). \
-                values_list('institution', flat=True)
-            queryset = queryset.filter(institution_id__in=institution_ids)
+        if isinstance(user, ApellaUser):
+            if user.is_manager():
+                institution_ids = InstitutionManager.objects. \
+                    filter(user=user).values_list('institution', flat=True)
+                queryset = queryset.filter(institution_id__in=institution_ids)
         return queryset
