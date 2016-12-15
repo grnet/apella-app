@@ -133,6 +133,19 @@ export default ApellaGen.extend({
     }],
   },
   list: {
+    sort: {
+      active: true,
+      sortBy: ['code', 'state', 'title'],
+      serverSide: true
+    },
+    filter: {
+      active: true,
+      meta: {
+        fields: ['state', 'department']
+      },
+      serverSide: true,
+      search: true,
+    },
     page: {
       title: 'position.menu_label',
     },
