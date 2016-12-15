@@ -1101,7 +1101,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .ref:
-                        to: institution-managers
+                        to: assistants
                 electors:
                     .cli_option: {}
                     .field: {}
