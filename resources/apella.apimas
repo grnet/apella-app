@@ -1020,7 +1020,7 @@ spec:
                     apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [title, id, state, department, code]
                 ordering_fields: [title, id, state, department]
-                search_fields: [title, id, state, department]
+                search_fields: [title, id, state]
             .cli_commands: {}
             '*':
                 id:
