@@ -132,6 +132,7 @@ PERMISSION_RULES = [
     ('positions', 'update', 'institutionmanager', 'starts_at', 'before_open', '4.3.11.c'),
     ('positions', 'update', 'institutionmanager', 'state', 'before_open', '4.3.11.b'),
     ('positions', 'update', 'institutionmanager', 'state', 'electing', '4.3.11.g, 4.3.11.h'),
+    ('positions', 'update', 'institutionmanager', 'assistants', '*', ''),
     ('positions', 'partial_update', 'helpdeskadmin', 'ends_at', '*', '5.2.4'),
     ('positions', 'partial_update', 'helpdeskadmin', 'starts_at', '*', '5.2.4'),
     ('positions', 'partial_update', 'institutionmanager', 'committee', 'electing', '4.3.15'),
