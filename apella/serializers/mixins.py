@@ -46,6 +46,7 @@ def create_objects(model, fields, validated_data):
     if many_to_many:
         for field_name, value in many_to_many.items():
             setattr(obj, field_name, value)
+    obj.save()
     return obj
 
 
