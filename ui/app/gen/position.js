@@ -87,11 +87,13 @@ export default ApellaGen.extend({
     electing: computed('model.state', 'closed', function() {
       return get(this, 'model.state') === 'posted' && get(this, 'closed');
     }),
-    participates: computed('role', 'user.id', 'model.electors.[]', function() {
+    participates: computed('role', 'session.session.authenticated.id', 'model.electors.[]', 'model.committee.[]', function() {
       let role = get(this, 'role');
-      let userId = get(this, 'user.id');
+      let professorId = this.get('session.session.authenticated.id').toString();
       let electors = get(this, 'model.electors').getEach('id');
-      return role === 'professor' && electors.includes(userId);
+      let committee = get(this, 'model.committee').getEach('id');
+      let participations = electors.concat(committee)
+      return role === 'professor' && participations.includes(professorId)
     })
   },
 
