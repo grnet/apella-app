@@ -12,8 +12,8 @@ const {
 
 let FS = {
   list: [
-    i18nField('title'), 
-    computedField('category_verbose', 'category'), 
+    i18nField('title'),
+    computedField('category_verbose', 'category'),
     'organization',
     'regulatory_framework'
   ]
@@ -27,14 +27,14 @@ export default ApellaGen.extend({
 
   common: {
     validators: {
-      title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
+      title: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
       organization: [validate.format({allowBlank: true, type: 'url'})],
       regulatory_framework: [validate.format({allowBlank: true, type: 'url'})],
     }
   },
 
   abilityStates: {
-    owned: computed('role', function() { 
+    owned: computed('role', function() {
       return get(this, 'role') === 'institutionmanager';
     }) // we expect server to reply with owned resources
   },

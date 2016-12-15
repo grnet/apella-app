@@ -76,7 +76,7 @@ const subjectsField = field('subjects', {
     sort: {
       serverSide: true,
       active: true,
-      fields: ['title'] 
+      fields: ['title']
     }
   },
   modelName: 'subject',
@@ -93,7 +93,7 @@ export default ApellaGen.extend({
   common: {
     proloadModels: ['institution', 'department'],
     validators: {
-      title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
+      title: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
       dep_number: [validate.presence(true), validate.number({integer: true})]
     }
   },

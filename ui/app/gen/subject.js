@@ -23,7 +23,7 @@ export default ApellaGen.extend({
   common: {
     preloadModels: ['subject-area'],
     validators: {
-      title: [i18nValidate([validate.presence(true), validate.length({min:4, max:50})])],
+      title: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
     }
   },
   list: {

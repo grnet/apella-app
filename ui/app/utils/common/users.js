@@ -174,7 +174,7 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
 
 const USER_VALIDATORS = {
   username: [validate.presence(true), validate.length({min:4, max:50})],
-  first_name: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
+  first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   mobile_phone_number: [validate.format({ type: 'phone' })],
@@ -189,7 +189,7 @@ const PROFESSOR_VALIDATORS = {
 }
 
 const INSTITUTION_MANAGER_VALIDATORS = {
-  sub_first_name: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
+  sub_first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   sub_last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   sub_father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   sub_mobile_phone_number: [validate.format({ type: 'phone' })],
@@ -201,7 +201,7 @@ const ASSISTANT_VALIDATORS = {
 }
 
 const ASSISTANT_VALIDATORS_EDIT_MANAGER = {
-  first_name: [i18nValidate([validate.presence(true), validate.length({min:4, max:200})])],
+  first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   id_passport: [validate.presence(true)],

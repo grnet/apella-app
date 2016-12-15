@@ -99,7 +99,7 @@ export default ApellaGen.extend({
 
   common: {
     validators: {
-      title: [validate.presence(true), validate.length({min:4, max:50})],
+      title: [validate.presence(true), validate.length({min:4, max:200})],
       description: [validate.presence(true), validate.length({max:300})],
       starts_at: [afterToday()],
       fek_posted_at: [beforeToday()],
