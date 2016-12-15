@@ -34,7 +34,7 @@ export default DS.Model.extend({
   fek: DS.attr(),
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
-  assistants: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
+  assistants: DS.hasMany('assistant'),
   electors: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   committee: DS.hasMany('user', {formAttrs: {optionLabelAttr: 'username'}}),
   elected: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'username'}}),

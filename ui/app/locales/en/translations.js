@@ -209,5 +209,8 @@ export default {
     actions: {
       label: 'Actions'
     }
-  }
+  },
+  'assistants_on_position_explain': 'Add assistants that will be able to handle\
+  the current position.<br>Assistants with permissions to create and handle all\
+  positions will be able to handle this position, too.'
 };

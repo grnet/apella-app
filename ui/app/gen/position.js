@@ -18,8 +18,11 @@ let actions = {
   goToDetails: {
     label: 'details.label',
     icon: 'remove red eye',
-    action(route, model) {
-      route.transitionTo('candidacy.record.index', model);
+    action(route, model, aaa) {
+      // TMP
+      let resource = model.get('_internalModel.modelName'),
+        dest_route = `${resource}.record.index`;
+      route.transitionTo(dest_route, model);
     }
   }
 };
@@ -46,10 +49,25 @@ const candidaciesField = field('candidacies', {
           goToDetails: actions.goToDetails
         }
       },
-      sortBy: ['id'],
-      }
     }
-  );
+  });
+
+const assistantsField = field('assistants', {
+  label: null,
+  modelMeta: {
+    row: {
+      fields: ['id',
+        field('last_name_current', {label: 'last_name.label'}),
+        field('first_name_current', {label: 'first_name.label'}),
+      ],
+      actions: ['goToDetails'],
+      actionsMap: {
+        goToDetails: actions.goToDetails
+      }
+    },
+  }
+});
+
 
 export default ApellaGen.extend({
   modelName: 'position',
@@ -108,6 +126,10 @@ export default ApellaGen.extend({
       layout: {
         flex: [50, 50, 50, 50]
       },
+    }, {
+      label: 'assistants.label',
+      text: 'assistants_on_position_explain',
+      fields: [assistantsField]
     }],
   },
   list: {
