@@ -46,14 +46,12 @@ export default DS.Model.extend({
   ends_at_format: computeDateFormat('ends_at'),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
+  code: DS.attr(),
   // Use in candidacy select list
   code_and_title: computed('code', 'title', function() {
     return `${this.get('code')} -  ${this.get('title')}`;
   }),
 
-  code: computed('id', function(){
-    return `APP${this.get('id')}`;
-  }),
 
   candidacies: DS.hasMany('candidacy')
 
