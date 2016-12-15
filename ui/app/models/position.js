@@ -52,7 +52,12 @@ export default DS.Model.extend({
     return `${this.get('code')} -  ${this.get('title')}`;
   }),
 
+  candidacies: DS.hasMany('candidacy'),
 
-  candidacies: DS.hasMany('candidacy')
+  participation: DS.attr(),
+  participation_current: computed('participation', 'i18n.locale', function(){
+    return this.get('i18n').t(this.get('participation'));
+  }),
+
 
 });

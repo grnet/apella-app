@@ -1018,7 +1018,7 @@ spec:
                 model_serializers: [apella.serializers.position.PositionMixin]
                 mixins: [apella.views.mixins.PositionList,
                     apella.views.mixins.DestroyProtectedObject]
-                filter_fields: [title, id, state, department, code]
+                filter_fields: [title, id, state, department, code, electors, committee]
                 ordering_fields: [title, id, state, department]
                 search_fields: [title, id, state]
             .cli_commands: {}

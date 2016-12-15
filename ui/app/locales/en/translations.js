@@ -23,8 +23,10 @@ export default {
   'Committee': 'Commitee',
   'Institution Manager': 'Institution Manager',
   'Elector': 'Elector',
+  'Elector, Committee': 'Elector, Committee',
   'Research Center': 'Research Center',
   'Institution': 'Institution',
+  'participation_current.label': 'Participation',
   'password.label': 'Password',
   'email.label': 'Email',
   'first_name.label': 'First name',
@@ -192,6 +194,9 @@ export default {
   },
   profile: {
     menu_label: 'Profile',
+  },
+  elections: {
+    menu_label: 'Elections',
   },
   common: {
     create_label: 'New',

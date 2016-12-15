@@ -23,8 +23,10 @@ export default {
   'Committee': 'Μέλος επιτροπής',
   'Institution Manager': 'Υπεύθυνος ιδρύματος',
   'Elector': 'Εκλέκτορας',
+  'Elector, Committee': 'Eκλέκτορας, Μέλος επιτροπής',
   'Research Center': 'Ερευνητικό κέντρο',
   'Institution': 'Ίδρυμα',
+  'participation_current.label': 'Συμμετοχή',
   'password.label': 'Password',
   'email.label': 'Email',
   'first_name.label': 'Όνομα',
@@ -192,6 +194,9 @@ export default {
   },
   profile: {
     menu_label: 'Προφίλ',
+  },
+  elections: {
+    menu_label: 'Εκλογές',
   },
   common: {
     create_label: 'Δημιουργία',
