@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils import timezone
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
@@ -57,9 +58,25 @@ class PositionMixin(ValidatorMixin):
 
     def update(self, instance, validated_data):
         curr_position = Position.objects.get(id=instance.id)
+        assistants = curr_position.assistants.all()
+        electors = curr_position.electors.all()
+        committee = curr_position.committee.all()
+        ranks = curr_position.ranks.all()
+
         instance = super(PositionMixin, self).update(instance, validated_data)
-        if instance.state is not curr_position.state:
+        if instance.state != curr_position.state:
             curr_position.pk = None
+            curr_position.save()
+            for a in assistants:
+                curr_position.assistants.add(a)
+            for e in electors:
+                curr_position.electors.add(e)
+            for c in committee:
+                curr_position.committee.add(c)
+            for r in ranks:
+                curr_position.ranks.add(r)
+
+            curr_position.created_at = timezone.now()
             curr_position.save()
         return instance
 
@@ -72,7 +89,7 @@ class CandidacyMixin(ValidatorMixin):
             validated_data['user'] = user
         validated_data['state'] = 'posted'
         obj = super(CandidacyMixin, self).create(validated_data)
-        code = obj.id
+        code = str(obj.id)
         obj.code = code
         obj.save()
         return obj
@@ -82,5 +99,6 @@ class CandidacyMixin(ValidatorMixin):
         instance = super(CandidacyMixin, self).update(instance, validated_data)
         if instance.state is not curr_candidacy.state:
             curr_candidacy.pk = None
+            curr_candidacy.submitted_at = timezone.now()
             curr_candidacy.save()
         return instance
