@@ -49,7 +49,7 @@ export default ApellaGen.extend({
       });
     },
     menu: {
-      icon: 'local_atm',
+      icon: 'drafts',
       label: 'elections.menu_label'
     },
     layout: 'table',

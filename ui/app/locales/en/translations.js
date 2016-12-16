@@ -26,7 +26,7 @@ export default {
   'Elector, Committee': 'Elector, Committee',
   'Research Center': 'Research Center',
   'Institution': 'Institution',
-  'participation_current.label': 'Participation',
+  'participation_current.label': 'Role',
   'password.label': 'Password',
   'email.label': 'Email',
   'first_name.label': 'First name',

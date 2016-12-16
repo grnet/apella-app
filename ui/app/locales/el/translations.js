@@ -26,7 +26,7 @@ export default {
   'Elector, Committee': 'Eκλέκτορας, Μέλος επιτροπής',
   'Research Center': 'Ερευνητικό κέντρο',
   'Institution': 'Ίδρυμα',
-  'participation_current.label': 'Συμμετοχή',
+  'participation_current.label': 'Ρόλος',
   'password.label': 'Password',
   'email.label': 'Email',
   'first_name.label': 'Όνομα',
