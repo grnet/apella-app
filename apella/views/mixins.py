@@ -92,3 +92,15 @@ class DepartmentList(generics.ListAPIView):
                     filter(user=user).values_list('institution', flat=True)
                 queryset = queryset.filter(institution_id__in=institution_ids)
         return queryset
+
+
+class RegistriesList(generics.ListAPIView):
+
+    @detail_route()
+    def members(self, request, pk=None):
+        registry = self.get_object()
+        members = registry.members
+        from apella.loader import api_serializers
+        ser = api_serializers.get('professors')
+        return Response(
+            ser(members, many=True, context={'request': request}).data)

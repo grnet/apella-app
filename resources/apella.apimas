@@ -588,6 +588,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Registry
+                mixins: [apella.views.mixins.RegistriesList]
             .cli_commands: {}
             '*':
                 id:
