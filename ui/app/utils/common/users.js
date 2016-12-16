@@ -32,7 +32,6 @@ const USER_FIELDS = [
 
 const USER_FIELDS_EDIT = [
   field('username', { readonly: true }),
-  'password',
   'email',
   'first_name',
   'last_name',
@@ -118,7 +117,7 @@ const USER_FIELDSET_EDIT = {
   label: 'fieldsets.labels.user_info',
   fields: USER_FIELDS_EDIT,
   layout: {
-        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+        flex: [100, 50, 50, 50, 50, 50, 50]
   }
 }
 
@@ -184,13 +183,12 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
   label: 'fieldsets.labels.user_info',
   text: 'fieldsets.text.assistant_can_edit',
   fields: [
-    field('password', { readonly: true }),
     field('email', { readonly: true }),
     field('mobile_phone_number', { readonly: true }),
     field('home_phone_number', { readonly: true })
   ],
   layout: {
-    flex: [50, 50, 50, 50]
+    flex: [100, 50, 50]
   }
 }
 
