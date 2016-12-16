@@ -28,7 +28,7 @@ export default {
   'Institution': 'Institution',
   'participation_current.label': 'Role',
   'password.label': 'Password',
-  'email.label': 'Email',
+  'email.label': 'E-mail',
   'first_name.label': 'First name',
   'last_name.label': 'Last name',
   'father_name.label': 'Father name',
@@ -215,7 +215,7 @@ export default {
       label: 'Actions'
     }
   },
-  'assistants_on_position_explain': 'Add assistants that will be able to handle\
-  the current position.<br>Assistants with permissions to create and handle all\
+  'assistants_on_position_explain': 'Assistants that are able to handle the\
+  current position.<br>Assistants with permission to create and handle all\
   positions will be able to handle this position, too.'
 };

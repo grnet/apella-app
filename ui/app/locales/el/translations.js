@@ -28,7 +28,7 @@ export default {
   'Institution': 'Ίδρυμα',
   'participation_current.label': 'Ρόλος',
   'password.label': 'Password',
-  'email.label': 'Email',
+  'email.label': 'E-mail',
   'first_name.label': 'Όνομα',
   'last_name.label': 'Επώνυμο',
   'father_name.label': 'Πατρώνυμο',
@@ -49,7 +49,7 @@ export default {
   'position.fek_posted_at_format.label': 'Ημερομηνία Φ.Ε.Κ.',
   'electors.label': 'Εκλογικό σώμα',
   'committee.label': 'Επιτροπή',
-  'assistants.label': 'Βοηθοί',
+  'assistants.label': 'Βοηθοί Υπεύθυνου Ιδρύματος',
   'elected.label': 'Εκλεγμένος',
   'state.label': 'Κατάσταση',
   'state_verbose.label': 'Κατάσταση',
@@ -215,7 +215,7 @@ export default {
       label: 'Ενέργειες'
     }
   },
-  'assistants_on_position_explain': 'Επιλογή βοηθών που θα μπορούν να τροποποιήσουν\
-  τα στοιχεία της θέσης.<br>Τροποποίηση είναι εφικτή και από τους βοηθούς που τους έχει\
+  'assistants_on_position_explain': 'Βοηθοί που μπορούν να τροποποιήσουν τα\
+  στοιχεία της θέσης.<br>Η τροποποίηση είναι εφικτή και από τους βοηθούς που τους έχει\
   δοθεί δικαίωμα διαχείρισης όλων των θέσεων.'
 };

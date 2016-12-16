@@ -59,6 +59,7 @@ const assistantsField = field('assistants', {
       fields: ['id',
         field('last_name_current', {label: 'last_name.label'}),
         field('first_name_current', {label: 'first_name.label'}),
+        field('email', {label: 'email.label'}),
       ],
       actions: ['goToDetails'],
       actionsMap: {
@@ -193,7 +194,7 @@ export default ApellaGen.extend({
     },
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: [disable_field('code'), disable_field('state_verbose'), 'title',
+      fields: ['code', 'state_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
         'description', 'discipline', field('subject_area.title_current',{label: 'subject_area.label'}),
         field('subject.title_current', {label: 'subject.label'})],
@@ -211,6 +212,11 @@ export default ApellaGen.extend({
     }, {
       label: 'candidacy.menu_label',
       fields: [candidaciesField]
-    }],
+    },
+    {
+      label: 'assistants.label',
+      text: 'assistants_on_position_explain',
+      fields: [assistantsField]
+    }]
   }
 });
