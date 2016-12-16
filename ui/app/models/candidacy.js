@@ -23,4 +23,8 @@ export default DS.Model.extend({
   selfEvaluation: DS.attr({label: 'candidacy.label.self_evaluation'}),
   additionalFiles: DS.attr({label: 'candidacy.label.additional_files'}),
 
+  title: computed('position.code', 'candidate.username', function(){
+    return `${get(this, 'position.code')} (${get(this, 'candidate.username')})`
+  })
+
 });
