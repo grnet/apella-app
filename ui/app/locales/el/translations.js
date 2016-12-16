@@ -57,7 +57,7 @@ export default {
   'fek_posted_at.label': 'Ημερομηνία Φ.Ε.Κ.',
   'position.fek_posted_at_format.label': 'Ημερομηνία Φ.Ε.Κ.',
   'electors.label': 'Εκλογικό σώμα',
-  'committee.label': 'Επιτροπή',
+  'committee.label': 'Εισηγητική Επιτροπή',
   'assistants.label': 'Βοηθοί Υπεύθυνου Ιδρύματος',
   'elected.label': 'Εκλεγμένος',
   'state.label': 'Κατάσταση',

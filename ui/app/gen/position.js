@@ -70,6 +70,25 @@ const assistantsField = field('assistants', {
 });
 
 
+const committeeField = field('committee', {
+  label: null,
+
+  modelMeta: {
+    row: {
+      fields: ['id',
+        field('last_name_current', {label: 'last_name.label'}),
+        field('first_name_current', {label: 'first_name.label'}),
+        field('email', {label: 'email.label'}),
+      ],
+      actions: ['goToDetails'],
+      actionsMap: {
+        goToDetails: actions.goToDetails
+      }
+    },
+  }
+});
+
+
 export default ApellaGen.extend({
   modelName: 'position',
   auth: true,
@@ -193,6 +212,9 @@ export default ApellaGen.extend({
       title: computed.readOnly('model.code')
     },
     fieldsets: [{
+      label: 'committee.label',
+      fields: [committeeField]
+    },{
       label: 'fieldsets.labels.basic_info',
       fields: ['code', 'state_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
