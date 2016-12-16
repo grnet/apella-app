@@ -93,6 +93,9 @@ export default {
   'can_create_positions_verbose.label': 'Can create positions',
   'submitted_at.label': 'Submission Date',
   'updated_at.label': 'Last Update Date',
+  'submitted_at_format.label': 'Submission Date',
+  'updated_at_format.label': 'Last Update Date',
+
   userInterest: {
     info: 'By pressing "Save" the search criteria will be saved, so that if a new position matche    s them you will be notified by the system.',
     headers: {
@@ -153,11 +156,14 @@ export default {
   },
   fieldsets:{
     labels: {
-        basic_info: 'Basic info',
-        details: 'Details',
-        user_info: 'Profile',
-        more_info: 'More info',
-        user_interest: 'User interest'
+      basic_info: 'Basic info',
+      details: 'Details',
+      user_info: 'Profile',
+      more_info: 'More info',
+      user_interest: 'User interest',
+      position_details: 'Position details',
+      candidate_details: 'Candidate info',
+      candidacy_details: 'Candidacy info',
     },
     text: {
       user_interest: 'Choose your interests',

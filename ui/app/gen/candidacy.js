@@ -95,7 +95,7 @@ export default ApellaGen.extend({
       ability.setProperties(props);
       return ability;
     }),
-    owned: computed('role', 'user.id', 'model.candidate.id', function() { 
+    owned: computed('role', 'user.id', 'model.candidate.id', function() {
       return get(this, 'role') === 'institutionmanager' || get(this, 'user.id') === get(this, 'model.candidate.id');
     }), // we expect server to reply with owned resources if user is an institution manager
     others_can_view: alias('model.othersCanView'),
@@ -166,12 +166,54 @@ export default ApellaGen.extend({
   },
   details: {
     page: {
-      title: computed.reads('model.position.code')
+      title: computed.readOnly('model.position.code')
     },
-    actions: ['gen:edit', 'cancelCandidacy'],
-      actionsMap: {
-        cancelCandidacy:  actions.cancelCandidacy
+    fieldsets:[
+      {
+        label: 'fieldsets.labels.candidate_details',
+        fields: [
+          field('candidate.full_name_current', {label: 'full_name_current.label'}),
+          field('candidate.email', {label: 'email.label'}),
+        ],
+        layout: {
+          flex: [50, 50]
+        }
+      },{
+        label: 'fieldsets.labels.candidacy_details',
+        fields: [
+          'state_verbose',
+          'submitted_at_format',
+          'updated_at_format',
+          'cv',
+          'diploma',
+          'publication',
+          'selfEvaluation',
+          'additionalFiles',
+        ],
+        layout: {
+          flex: [100, 50, 50, 50, 50, 50, 50, 50]
+        }
+      }, {
+        label: 'fieldsets.labels.position_details',
+        fields: [
+          'position.code',
+          'position.state_verbose',
+          'position.title',
+          'position.description',
+          'position.discipline',
+          field('position.department.title_current', {label: 'department.label'}),
+          field('position.subject_area.title_current',{label: 'subject_area.label'}),
+          field('position.subject.title_current', {label: 'subject.label'}),
+          'position.fek',
+          'position.fek_posted_at_format',
+          'position.starts_at_format',
+          'position.ends_at_format',
+        ],
+        layout: {
+          flex: [50, 50, 100, 100, 50, 50, 50, 50, 50, 50, 50, 50]
+        }
       }
+    ],
   },
   edit: {
     fieldsets: computed('model.position.state', function() {

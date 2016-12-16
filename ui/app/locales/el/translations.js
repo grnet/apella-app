@@ -92,6 +92,8 @@ export default {
   'can_create_positions_verbose.label': 'Δημιουργία θέσεων',
   'submitted_at.label': 'Ημερομηνία Υποβολής',
   'updated_at.label': 'Ημερομηνία Τελευταίας Ενημέρωσης',
+  'submitted_at_format.label': 'Ημερομηνία Υποβολής',
+  'updated_at_format.label': 'Ημερομηνία Τελευταίας Ενημέρωσης',
   userInterest: {
     info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρησης σχετικής θέσης στο μέλλον.',
     headers: {
@@ -153,11 +155,14 @@ export default {
   },
   fieldsets:{
     labels: {
-        basic_info: 'Βασικά στοιχεία',
-        details: 'Λεπτομέρειες',
-        user_info: 'Στοιχεία λογαριασμού',
-        more_info: 'Περισσότερα στοιχεία',
-        user_interest: 'Εκδλήλωση ενδιαφέροντος'
+      basic_info: 'Βασικά στοιχεία',
+      details: 'Λεπτομέρειες',
+      user_info: 'Στοιχεία λογαριασμού',
+      more_info: 'Περισσότερα στοιχεία',
+      user_interest: 'Εκδλήλωση ενδιαφέροντος',
+      position_details: 'Στοιχεία θέσης',
+      candidate_details: 'Στοιχεία υποψηφίου',
+      candidacy_details: 'Στοιχεία υποψηφιότητας',
     },
     text: {
       user_interest: 'Εκδηλώστε το ενδιαφέρον σας',
