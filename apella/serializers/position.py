@@ -67,15 +67,10 @@ class PositionMixin(ValidatorMixin):
         if instance.state != curr_position.state:
             curr_position.pk = None
             curr_position.save()
-            for a in assistants:
-                curr_position.assistants.add(a)
-            for e in electors:
-                curr_position.electors.add(e)
-            for c in committee:
-                curr_position.committee.add(c)
-            for r in ranks:
-                curr_position.ranks.add(r)
-
+            curr_position.assistants = assistants
+            curr_position.electors = electors
+            curr_position.committee = committee
+            curr_position.ranks = ranks
             curr_position.created_at = timezone.now()
             curr_position.save()
         return instance
