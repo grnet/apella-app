@@ -3,36 +3,12 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
 
-from apimas.modeling.adapters.drf import django_rest
-from apimas.modeling.core import documents as doc
-
 from apella.views import auth_views
 from apella import views
-from apella.permissions.permission_rules import PERMISSION_RULES
-from apella.common import load_config
-
-permission_classes = []
-authentication_classes = ['rest_framework.authentication.TokenAuthentication']
+from apella.loader import api_urls
 
 admin.autodiscover()
-config = load_config()
-adapter = django_rest.DjangoRestAdapter()
-spec = config.get('spec')
-spec['.endpoint']['permissions'] = PERMISSION_RULES
 
-for resource in spec['api'].values():
-    doc.doc_set(
-        resource,
-        ['.drf_collection', 'permission_classes'],
-        permission_classes)
-    doc.doc_set(
-        resource,
-        ['.drf_collection', 'authentication_classes'],
-        authentication_classes)
-
-adapter.construct(config.get('spec'))
-adapter.apply()
-serializers = adapter.get_serializers()
 
 api_prefix = settings.API_PREFIX
 apipatterns = [
@@ -43,7 +19,7 @@ apipatterns = [
         auth_views.CustomLogoutView.as_view(), name='logout'),
     url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user'),
     url(r'^api/config.json$', views.config, name='config'),
-    adapter.urls
+    api_urls,
 ]
 
 urlpatterns = [
