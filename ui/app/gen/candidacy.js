@@ -166,7 +166,7 @@ export default ApellaGen.extend({
   },
   details: {
     page: {
-      title: computed.readOnly('model.position.code')
+      title: computed.readOnly('model.title')
     },
     fieldsets:[
       {
