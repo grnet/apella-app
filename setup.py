@@ -55,7 +55,11 @@ setup(
     data_files=[
         ('lib/apella/resources', ['resources/common.json',
                                   'resources/holidays.json',
-                                  'resources/apella.apimas']),
+                                  'resources/apella.apimas',
+                                  'resources/schools.csv',
+                                  'resources/subject_areas_subjects.csv',
+                                  'resources/institutions.csv',
+                                  'resources/departments.csv']),
     ] + UI_DATA_FILES,
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,
