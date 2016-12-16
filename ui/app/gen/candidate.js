@@ -1,5 +1,5 @@
 import {ApellaGen} from 'ui/lib/common';
-import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
+import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 
 const {
@@ -40,7 +40,7 @@ export default ApellaGen.extend({
   },
   edit: {
     fieldsets: [
-      USER_FIELDSET,
+      USER_FIELDSET_EDIT,
     ]
   },
   create: {

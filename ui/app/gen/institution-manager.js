@@ -1,6 +1,7 @@
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
+        USER_FIELDSET_EDIT,
         USER_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN,
         INST_MANAGER_FIELDSET_SUB,
@@ -21,11 +22,6 @@ export default ApellaGen.extend({
   path: 'managers',
   common: {
     validators: all_validators,
-    fieldsets: [
-      USER_FIELDSET,
-      INST_MANAGER_FIELDSET_MAIN,
-      INST_MANAGER_FIELDSET_SUB
-    ]
   },
   list: {
     page: {
@@ -49,5 +45,20 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.full_name_current')
     }
+  },
+  edit: {
+    fieldsets: [
+      USER_FIELDSET_EDIT,
+      INST_MANAGER_FIELDSET_MAIN,
+      INST_MANAGER_FIELDSET_SUB
+    ]
+  },
+  create: {
+    fieldsets: [
+      USER_FIELDSET,
+      INST_MANAGER_FIELDSET_MAIN,
+      INST_MANAGER_FIELDSET_SUB
+    ]
   }
+
 });

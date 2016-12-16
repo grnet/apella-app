@@ -30,6 +30,20 @@ const USER_FIELDS = [
   'home_phone_number'
 ]
 
+const USER_FIELDS_EDIT = [
+  field('username', { readonly: true }),
+  'password',
+  'email',
+  'first_name',
+  'last_name',
+  'father_name',
+  'id_passport',
+  'mobile_phone_number',
+  'home_phone_number'
+]
+
+
+
 const PROFESSOR_FIELDS = [
   'institution',
   'department',
@@ -100,6 +114,15 @@ const USER_FIELDSET = {
   }
 }
 
+const USER_FIELDSET_EDIT = {
+  label: 'fieldsets.labels.user_info',
+  fields: USER_FIELDS_EDIT,
+  layout: {
+        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+  }
+}
+
+
 const PROFESSOR_FIELDSET = {
   label: 'fieldsets.labels.more_info',
   fields: PROFESSOR_FIELDS,
@@ -144,7 +167,7 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER = {
   label: 'fieldsets.labels.user_info',
   text: 'fieldsets.text.manager_can_edit',
   fields: [
-    disable_field('username'),
+    field('username', { readonly: true }),
     'can_create_positions',
     'can_create_registries',
     'first_name',
@@ -249,7 +272,7 @@ const normalizeUserErrors = function(errors) {
 }
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
-        USER_FIELDS, USER_FIELDSET, USER_VALIDATORS,
+        USER_FIELDS, USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         PROFILE_ASSISTANT_FIELDSET,

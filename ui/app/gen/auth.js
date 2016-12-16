@@ -1,7 +1,7 @@
 import gen from 'ember-gen/lib/gen';
 import routes from 'ember-gen/lib/routes';
 import AuthGen from 'ember-gen/lib/auth';
-import {USER_FIELDSET, USER_VALIDATORS,
+import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         PROFILE_ASSISTANT_FIELDSET,
@@ -78,7 +78,7 @@ export default AuthGen.extend({
         f.push(PROFILE_ASSISTANT_FIELDSET)
         return f;
       }
-      f.push(USER_FIELDSET);
+      f.push(USER_FIELDSET_EDIT);
 
       if (role === 'professor') {
         f.push(PROFESSOR_FIELDSET);

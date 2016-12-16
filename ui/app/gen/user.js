@@ -1,7 +1,7 @@
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
-import {USER_FIELDSET, USER_VALIDATORS} from 'ui/utils/common/users';
+import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS} from 'ui/utils/common/users';
 
 const {
   computed,
@@ -40,5 +40,15 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.full_name_current')
     }
+  },
+  edit: {
+    fieldsets: [
+      USER_FIELDSET_EDIT,
+    ]
+  },
+  create: {
+    fieldsets: [
+      USER_FIELDSET,
+    ]
   }
 });

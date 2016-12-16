@@ -1,6 +1,7 @@
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
+        USER_FIELDSET_EDIT,
         USER_VALIDATORS,
         PROFESSOR_FIELDSET,
         PROFESSOR_VALIDATORS} from 'ui/utils/common/users';
@@ -19,10 +20,6 @@ export default ApellaGen.extend({
   path: 'professors',
   common: {
     validators: all_validators,
-    fieldsets: [
-      USER_FIELDSET,
-      PROFESSOR_FIELDSET,
-    ]
   },
   list: {
     page: {
@@ -47,4 +44,19 @@ export default ApellaGen.extend({
       title: computed.readOnly('model.full_name_current')
     }
   },
+  edit: {
+    fieldsets: [
+      USER_FIELDSET_EDIT,
+      PROFESSOR_FIELDSET,
+    ]
+  },
+  create: {
+    fieldsets: [
+      USER_FIELDSET,
+      PROFESSOR_FIELDSET,
+    ]
+  }
+
+
+
 });
