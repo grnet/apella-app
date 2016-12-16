@@ -3,7 +3,6 @@ from rest_framework import serializers
 from rest_framework.utils import model_meta
 
 from apella.models import ApellaUser, Position, InstitutionManager
-from apella.views.auth_views import CustomUserView
 
 
 class ValidatorMixin(object):
@@ -112,16 +111,16 @@ class HelpdeskUsers(object):
 
     def to_representation(self, obj):
         data = super(HelpdeskUsers, self).to_representation(obj)
-        if obj.is_helpdesk() and isinstance(
-                self.context['view'], CustomUserView):
+        if obj.is_helpdesk() and \
+                self.context['view'].get_view_name() == 'Custom User':
             data = {'user': data}
         return data
 
     def to_internal_value(self, data):
         user = self.context.get('request').user
         request_data = self.context.get('request').data
-        if user.is_helpdesk() and isinstance(
-                self.context['view'], CustomUserView):
+        if user.is_helpdesk() and \
+                self.context['view'].get_view_name() == 'Custom User':
             return self.context.get('request').data.get('user')
         return super(HelpdeskUsers, self).to_internal_value(data)
 
