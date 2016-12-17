@@ -175,7 +175,7 @@ PERMISSION_RULES = [
     ('registries', 'list', 'assistant', '*', '*', 'T1721'),
     ('registries', 'list', 'professor', '*', '*', '1.3.14'),
     ('registries', 'update', 'institutionmanager', 'members', 'owned', '4.3.6'),
-    ('registries', 'members', 'institutionmanager', 'members', 'owned', '4.3.6'),
+    ('registries', 'members', 'institutionmanager', '*', 'owned', '4.3.6'),
     ('registries', 'partial_update', 'institutionmanager', 'members', 'owned', '4.3.6'),
     ('registries', 'retrieve', 'candidate', '*', '*', '3.3.9'),
     ('registries', 'retrieve', 'helpdeskadmin', '*', '*', '5.1.9'),
