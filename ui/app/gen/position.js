@@ -136,6 +136,9 @@ export default ApellaGen.extend({
       let committee = get(this, 'model.committee').getEach('id');
       let participations = electors.concat(committee)
       return role === 'professor' && participations.includes(professorId)
+    }),
+    before_open: computed('role', 'model.starts_at', function(){
+      return moment(new Date()).isBefore(moment(get(this, 'model.starts_at')));
     })
   },
 
@@ -200,7 +203,7 @@ export default ApellaGen.extend({
     layout: 'table',
     row: {
       fields: ['code', 'title', field('state_verbose', {sortKey: 'state'}), field('department.title_current', {label: 'department.label'})],
-      actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove' ],
+      actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition' ],
       actionsMap: {
         applyCandidacy: {
           label: 'applyCandidacy',
@@ -208,6 +211,26 @@ export default ApellaGen.extend({
           permissions: [{'resource': 'candidacies', 'action': 'create'}],
           action(route, model){
             console.log(get(model, 'code'))
+          }
+        },
+        cancelPosition: {
+          label: 'cancelPosition',
+          icon: 'pan_tool',
+          action(route, model) {
+            model.set('state', 'cancelled');
+            model.save().then((value) => {
+              return value;
+            }, (reason) => {
+              model.rollbackAttributes();
+              return reason.errors;
+            });
+          },
+          confirm: true,
+          prompt: {
+            ok: 'cancelPosition',
+            cancel: 'cancel',
+            message: 'prompt.cancelPosition.message',
+            title: 'prompt.cancelPosition.title',
           }
         }
       }
