@@ -1,11 +1,11 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from django.db.models import ProtectedError, Min
 
 from apella.models import InstitutionManager, Position, Department, \
-        Candidacy, ApellaUser
+        Candidacy, ApellaUser, ApellaFile
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -104,3 +104,26 @@ class RegistriesList(generics.ListAPIView):
         ser = api_serializers.get('professors')
         return Response(
             ser(members, many=True, context={'request': request}).data)
+
+
+class UploadFilesViewSet(viewsets.ModelViewSet):
+
+    FILE_SOURCE = {
+        "Professors": "profile",
+        "Candidates": "profile",
+        "Candidacies": "candidacy",
+        "Positions": "position"
+    }
+
+    @detail_route(methods=['put'])
+    def upload(self, request, pk=None):
+        candidate = self.get_object()
+        cv = ApellaFile.objects.create(
+            owner=request.user,
+            file_kind='CV',
+            source=self.FILE_SOURCE[self.get_view_name()],
+            source_id=candidate.id,
+            file_path=request.FILES['cv.file_path'])
+        candidate.cv = cv
+        candidate.save()
+        return Response(status=status.HTTP_200_OK)

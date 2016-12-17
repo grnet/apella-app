@@ -27,7 +27,43 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
-
+        user-files:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.ApellaFile
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                owner:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .ref:
+                        to: users
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                file_path:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .file: {}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {}
         users:
             .collection: {}
             .drf_collection:
@@ -407,6 +443,7 @@ spec:
             .drf_collection:
                 model: apella.models.Professor
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.UploadFilesViewSet]
             .cli_commands: {}
             '*':
                 id:
@@ -418,6 +455,31 @@ spec:
                 url:
                     .drf_field: {}
                     .identity: {}
+                cv:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -863,6 +925,7 @@ spec:
             .drf_collection:
                 model: apella.models.Candidate
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.UploadFilesViewSet]
             .cli_commands: {}
             '*':
                 id:
@@ -874,6 +937,31 @@ spec:
                 url:
                     .drf_field: {}
                     .identity: {}
+                cv:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
                 user:
                     .cli_option: {}
                     .field: {}

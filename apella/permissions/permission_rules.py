@@ -66,6 +66,7 @@ PERMISSION_RULES = [
     ('candidates', 'retrieve', 'helpdeskadmin', '*', '*', '5.1.3'),
     ('candidates', 'retrieve', 'helpdeskuser', '*', '*', '5.1.3'),
     ('candidates', 'retrieve', 'candidate', '*', 'owned', '3'),
+    ('candidates', 'upload', 'candidate', '*', 'owned', '3'),
     ('departments', 'create', 'helpdeskadmin', '*', '*', '5.2.5'),
     ('departments', 'destroy', 'helpdeskadmin', '*', '*', '5.2.5'),
     ('departments', 'list', 'anonymous', '*', '*', ''),
@@ -164,6 +165,7 @@ PERMISSION_RULES = [
     ('professors', 'retrieve', 'helpdeskuser', '*', '*', '5.1.3'),
     ('professors', 'retrieve', 'institutionmanager', '*', '*', ''),
     ('professors', 'retrieve', 'professor', '*', 'owned', ''),
+    ('professors', 'upload', 'professor', '*', 'owned', ''),
     ('registries', 'create', 'institutionmanager', '*', '*', '4.3.3'),
     ('registries', 'create', 'assistant', '*', 'can_create', 'T1721'),
     ('registries', 'list', 'candidate', '*', '*', '3.3.9'),
@@ -242,5 +244,4 @@ PERMISSION_RULES = [
     ('users', 'retrieve', 'professor', '*', '*', ''),
     ('users', 'retrieve', 'candidate', '*', '*', ''),
     ('users', 'list', 'helpdeskadmin', '*', '*', '')
-
 ]
