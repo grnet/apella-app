@@ -104,6 +104,29 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
         return self.role == 'candidate'
 
 
+def generate_filename(self, filename):
+    url = "%s/%s/%d/%s/%s" % (
+            self.owner.username,
+            self.source,
+            self.source_id,
+            self.file_kind,
+            filename)
+    return url
+
+
+class ApellaFile(models.Model):
+    owner = models.ForeignKey(ApellaUser)
+    source = models.CharField(choices=common.FILE_SOURCE, max_length=30)
+    source_id = models.IntegerField()
+    file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
+    file_path = models.FileField(upload_to=generate_filename)
+    updated_at = models.DateTimeField(default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super(ApellaFile, self).save(*args, **kwargs)
+
+
 class Institution(models.Model):
     category = models.CharField(
         choices=common.INSTITUTION_CATEGORIES,
@@ -139,16 +162,6 @@ class Subject(models.Model):
     title = models.ForeignKey(MultiLangFields)
 
 
-class ApellaFile(models.Model):
-    file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
-    file_path = models.CharField(max_length=500)
-    updated_at = models.DateTimeField(default=timezone.now)
-
-    def save(self, *args, **kwargs):
-        self.updated_at = timezone.now()
-        super(ApellaFile, self).save(*args, **kwargs)
-
-
 class UserProfile(models.Model):
     user = models.OneToOneField(ApellaUser)
     is_active = models.BooleanField(default=False)
@@ -162,7 +175,14 @@ class UserProfile(models.Model):
         abstract = True
 
 
-class Professor(UserProfile):
+class CandidateProfile(models.Model):
+    cv = models.ForeignKey(ApellaFile, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class Professor(UserProfile, CandidateProfile):
     institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
@@ -182,7 +202,7 @@ class Professor(UserProfile):
         super(Professor, self).save(*args, **kwargs)
 
 
-class Candidate(UserProfile):
+class Candidate(UserProfile, CandidateProfile):
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
@@ -190,12 +210,6 @@ class Candidate(UserProfile):
     def save(self, *args, **kwargs):
         self.user.role = 'candidate'
         super(Candidate, self).save(*args, **kwargs)
-
-
-class UserFiles(models.Model):
-    apella_file = models.ForeignKey(ApellaFile, related_name='user_files')
-    apella_user = models.ForeignKey(ApellaUser, related_name='user_files')
-    deleted = models.BooleanField(default=False, db_index=True)
 
 
 class InstitutionManager(UserProfile):
@@ -311,13 +325,6 @@ class Position(models.Model):
         return r
 
 
-class PositionFiles(models.Model):
-    position_file = models.ForeignKey(
-        ApellaFile, related_name='position_files')
-    position = models.ForeignKey(Position, related_name='position_files')
-    deleted = models.BooleanField(default=False, db_index=True)
-
-
 class Candidacy(models.Model):
     candidate = models.ForeignKey(ApellaUser)
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
@@ -356,13 +363,6 @@ class Candidacy(models.Model):
                 and self.position.check_resource_state_open(
                         row, request, view) \
                 and self.state == 'posted'
-
-
-class CandidacyFiles(object):
-    candidacy_file = models.ForeignKey(
-        ApellaFile, related_name='candidacy_files')
-    candidacy = models.ForeignKey(Candidacy, related_name='candidacy_files')
-    deleted = models.BooleanField(default=False, db_index=True)
 
 
 class Registry(models.Model):

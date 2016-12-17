@@ -33,6 +33,7 @@ def rule_to_dict(data, args):
         data.update(partial)
     return data
 
+
 def load_permissions():
     PERMISSIONS = defaultdict(lambda: dict)
     for rule in PERMISSION_RULES:
@@ -52,12 +53,14 @@ def load_config():
 
 
 def load_resources():
-    with open(os.path.join(settings.RESOURCES_DIR, 'common.json')) as json_file:
+    with open(os.path.join(settings.RESOURCES_DIR, 'common.json')) \
+            as json_file:
         return json.load(json_file)
 
 
 def load_holidays():
-    with open(os.path.join(settings.RESOURCES_DIR, 'holidays.json')) as json_file:
+    with open(os.path.join(settings.RESOURCES_DIR, 'holidays.json')) \
+            as json_file:
         return json.load(json_file)
 
 
@@ -71,3 +74,4 @@ MANAGER_ROLES = RESOURCES['MANAGER_ROLES']
 RANKS = RESOURCES['RANKS']
 FILE_KINDS = RESOURCES['FILE_KINDS']
 INSTITUTION_CATEGORIES = RESOURCES['INSTITUTION_CATEGORIES']
+FILE_SOURCE = RESOURCES['FILE_SOURCE']

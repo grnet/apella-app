@@ -57,5 +57,12 @@
     "INSTITUTION_CATEGORIES": [
         ["Institution", "Institution"],
         ["Research", "Research Center"]
+    ],
+
+    "FILE_SOURCE": [
+        ["profile", "Profile"],
+        ["candidacy", "Candidacy"],
+        ["position", "Position"],
+        ["other", "Other"]
     ]
 }

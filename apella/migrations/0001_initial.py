@@ -2,9 +2,10 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import django.db.models.deletion
 import apella.validators
+import apella.models
 import django.contrib.auth.models
+import django.db.models.deletion
 import django.utils.timezone
 from django.conf import settings
 import django.core.validators
@@ -46,9 +47,12 @@ class Migration(migrations.Migration):
             name='ApellaFile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('source', models.CharField(max_length=30, choices=[['profile', 'Profile'], ['candidacy', 'Candidacy'], ['position', 'Position'], ['other', 'Other']])),
+                ('source_id', models.IntegerField()),
                 ('file_kind', models.CharField(max_length=40, choices=[['CV', 'CV'], ['Diploma', 'Diploma'], ['Publication', 'Publication'], ['Additional file', 'Additional file']])),
-                ('file_path', models.CharField(max_length=500)),
+                ('file_path', models.FileField(upload_to=apella.models.generate_filename)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -73,6 +77,7 @@ class Migration(migrations.Migration):
                 ('verified_at', models.DateTimeField(null=True, blank=True)),
                 ('is_rejected', models.BooleanField(default=False)),
                 ('rejected_reason', models.TextField(null=True, blank=True)),
+                ('cv', models.ForeignKey(blank=True, to='apella.ApellaFile', null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -148,15 +153,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='PositionFiles',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('deleted', models.BooleanField(default=False, db_index=True)),
-                ('position', models.ForeignKey(related_name='position_files', to='apella.Position')),
-                ('position_file', models.ForeignKey(related_name='position_files', to='apella.ApellaFile')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Professor',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -173,6 +169,7 @@ class Migration(migrations.Migration):
                 ('fek', models.URLField()),
                 ('discipline_text', models.CharField(max_length=300)),
                 ('discipline_in_fek', models.BooleanField(default=True)),
+                ('cv', models.ForeignKey(blank=True, to='apella.ApellaFile', null=True)),
                 ('department', models.ForeignKey(blank=True, to='apella.Department', null=True)),
                 ('institution', models.ForeignKey(to='apella.Institution', on_delete=django.db.models.deletion.PROTECT)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
@@ -216,15 +213,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.ForeignKey(to='apella.MultiLangFields')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='UserFiles',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('deleted', models.BooleanField(default=False, db_index=True)),
-                ('apella_file', models.ForeignKey(related_name='user_files', to='apella.ApellaFile')),
-                ('apella_user', models.ForeignKey(related_name='user_files', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
