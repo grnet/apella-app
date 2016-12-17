@@ -25,9 +25,12 @@ export default DS.Model.extend({
     }
   }),
   subject: DS.belongsTo('subject', {
-    formComponent: 'select-subject',
+    formComponent: 'select-onchange',
     formAttrs: {
-      lookupField: 'area',
+      lookupModel: 'subject_area',
+      changedChoices: function(store, value) {
+        return store.query('subject', {area: get(value, 'id')})
+      },
       optionLabelAttr: 'title_current',
     }
   }),
