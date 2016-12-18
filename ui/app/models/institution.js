@@ -1,26 +1,22 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import titleI18NMixin from 'ui/mixins/title-current';
+import {computeI18N, computeI18NChoice} from 'ui/lib/common';
 import get_label from '../utils/common/label_list_item';
 
 const { computed, get } = Ember,
-      INSTITUTION_CATEGORIES = ENV.APP.resources.INSTITUTION_CATEGORIES;
+      CHOICES = ENV.APP.resources;
 
 
-export default DS.Model.extend(titleI18NMixin, {
+export default DS.Model.extend({
   title: DS.attr({formComponent: 'i18n-input-field'}),
   category: DS.attr({
     type: 'select',
-    choices: INSTITUTION_CATEGORIES,
+    choices: CHOICES.INSTITUTION_CATEGORIES,
     defaultValue: 'Institution'
   }),
   organization: DS.attr(),
   regulatory_framework: DS.attr(),
 
-  category_verbose: computed('category', 'i18n.locale', function(){
-    let el = this.get('category');
-    let list = INSTITUTION_CATEGORIES;
-    return  this.get('i18n').t(get_label(list, el));
-  }),
-
+  title_current: computeI18N('title'),
+  category_verbose: computeI18NChoice('category', CHOICES.INSTITUTION_CATEGORIES),
 });

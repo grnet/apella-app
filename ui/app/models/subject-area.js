@@ -1,6 +1,8 @@
 import DS from 'ember-data';
-import titleI18NMixin from 'ui/mixins/title-current';
+import {computeI18N} from 'ui/lib/common';
 
-export default DS.Model.extend(titleI18NMixin, {
+export default DS.Model.extend({
   title: DS.attr({formComponent: 'i18n-input-field'}),
+
+  title_current: computeI18N('title'),
 });
