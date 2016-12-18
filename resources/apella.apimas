@@ -192,7 +192,7 @@ spec:
                 model: apella.models.Institution
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
-                filter_fields: [title__en, title__el]
+                filter_fields: [title__en, title__el, category]
                 ordering_fields: [id]
                 search_fields: [title__en, title__el]
             .cli_commands: {}
@@ -218,6 +218,12 @@ spec:
                     .drf_field: {}
                     .string: {}
                     .blankable: {}
+                category:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
                 title:
                     .cli_option: {}
                     .field: {}
@@ -247,6 +253,8 @@ spec:
                 model: apella.models.School
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [institution]
+                search_fields: [title__en, title__el]
             .cli_commands: {}
             '*':
                 id:
@@ -294,7 +302,8 @@ spec:
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject,
                          apella.views.mixins.DepartmentList]
-                filter_fields: [institution]
+                filter_fields: [institution, school]
+                search_fields: [title__en, title__el]
                 ordering_fields: [id]
             .cli_commands: {}
             '*':
@@ -354,6 +363,7 @@ spec:
                 model: apella.models.SubjectArea
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
+                search_fields: [title__en, title__el]
                 ordering_fields: [id]
             .cli_commands: {}
             '*':
@@ -395,7 +405,8 @@ spec:
                 model: apella.models.Subject
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
-                filter_fields: [area]
+                filter_fields: [area, title]
+                search_fields: [title__en, title__el]
                 ordering_fields: [id]
             .cli_commands: {}
             '*':

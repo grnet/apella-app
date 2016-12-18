@@ -34,9 +34,10 @@ export default ApellaGen.extend({
       })
     },
     filter: {
-      active: false,
+      active: true,
       serverSide: true,
       search: true,
+      meta: {},
       searchFields: ['title']
     },
 
