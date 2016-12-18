@@ -5,13 +5,22 @@ export default {
   'applyCandicacy': 'Υποβολή Υποψηφιοτητας',
   'prompt.withdrawal.title': 'Απόσυρση Υποψηφιότητας',
   'prompt.withdrawal.message': 'Είστε βέβαιος/η ότι θέλετε να αποσύρετε την υποψηφιότητα σας;',
+  'prompt.removeInstitution.title': 'Διαγραφή κανονιστικού πλαισίου',
+  'prompt.removeInstitution.message': 'Είστε βέβαιος/η ότι θέλετε να διαγρέψετε το κανονιστικό πλαίσιο;',
   'create.menu.label': 'Δημιουργία',
+  'create.label': 'Δημιουργία',
+  'create': 'Δημιουργια',
   'create.page.title': 'Δημιουργία',
   'edit.menu.label': 'Τροποποίηση',
+  'edit.label': 'Επεξεργασία',
+  'edit': 'Επεξεργασια', //For top bar
   'edit.page.title': 'Τροποποίηση',
   'details.menu.label': 'Λεπτομέρειες',
   'details.label': 'Λεπτομέρειες',
-  'details': 'Λεπτομέρειες', //For top bar
+  'details': 'Λεπτομερειες', //For top bar
+  'delete.menu.label': 'Διαγραφή',
+  'delete.label': 'Διαγραφή',
+  'delete': 'Διαγραφη', //For top bar
   'Draft':'Πρόχειρο',
   'Posted': 'Ενταγμένη',
   'Cancelled': 'Ακυρωθείσα',
@@ -186,7 +195,7 @@ export default {
     menu_label: 'Θεματικές περιοχές',
   },
   subject: {
-    menu_label: 'Θέμα',
+    menu_label: 'Θέματα',
   },
   registry: {
     menu_label: 'Μητρώα',
