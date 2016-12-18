@@ -110,6 +110,16 @@ export default ApellaGen.extend({
     page: {
       title: 'department.menu_label',
     },
+    filter: {
+      active: true,
+      meta: {
+        fields: ['school', 'institution']
+      },
+      serverSide: true,
+      search: true,
+      searchFields: ['title']
+    },
+
     layout: 'table',
     sortBy: 'title_current:asc',
     row: {

@@ -39,6 +39,16 @@ export default ApellaGen.extend({
         return (permittedRoles.includes(role) ? true : false);
       })
     },
+    filter: {
+      active: true,
+      meta: {
+        fields: ['institution']
+      },
+      serverSide: true,
+      search: true,
+      searchFields: ['title']
+    },
+
     layout: 'table',
     row: {
       fields: FIELDS,

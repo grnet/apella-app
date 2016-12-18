@@ -52,6 +52,15 @@ export default ApellaGen.extend({
       serverSide: true,
       fields: ['title']
     },
+    filter: {
+      active: true,
+      meta: {
+        fields: ['category']
+      },
+      serverSide: true,
+      search: true,
+      searchFields: ['title']
+    },
     layout: 'table',
     row: {
       fields: FS.list,

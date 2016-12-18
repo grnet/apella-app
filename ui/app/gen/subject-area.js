@@ -1,4 +1,4 @@
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, i18nField} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
@@ -33,6 +33,13 @@ export default ApellaGen.extend({
         return (permittedRoles.includes(role) ? true : false);
       })
     },
+    filter: {
+      active: false,
+      serverSide: true,
+      search: true,
+      searchFields: ['title']
+    },
+
     layout: 'table',
     sortBy: 'title_current:asc',
      row: {
