@@ -43,6 +43,7 @@ export default ApellaGen.extend({
   details: {
     page: {
       title: computed.readOnly('model.title_current')
-    }
+    },
+    fields: ['title_current']
   }
 });

@@ -9,6 +9,11 @@ const {
   get
 } = Ember;
 
+const FIELDS = [
+  'title_current',
+  field('institution.title_current', {label: 'institution.label', type: 'text'})
+]
+
 export default ApellaGen.extend({
   modelName: 'school',
   auth: true,
@@ -36,13 +41,19 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: ['title_current', field('institution.title_current', {label: 'institution.label', type: 'text'})],
+      fields: FIELDS,
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
   details: {
     page: {
       title: computed.readOnly('model.title_current')
-    }
+    },
+    fieldsets: [{
+      fields: FIELDS,
+      layout: {
+        flex: [50, 50]
+      }
+    }]
   }
 });

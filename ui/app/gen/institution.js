@@ -55,10 +55,19 @@ export default ApellaGen.extend({
     layout: 'table',
     row: {
       fields: FS.list,
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:details', 'gen:edit', 'remove'],
+      actionsMap: {
+        remove: {
+          prompt: {
+            ok: 'ok',
+            cancel: 'cancel',
+            title: 'prompt.removeInstitution.title',
+            message: 'prompt.removeInstitution.message'
+          }
+        }
+      },
     },
   },
-
   details: {
     page: {
       title: computed.readOnly('model.title_current'),

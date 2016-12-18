@@ -118,9 +118,12 @@ export default ApellaGen.extend({
     }
   },
   details: {
-//    fields: ['title_current', subjectsField],
-      fields: ['title_current', 'school.title_current', 'institution.title_current',
-        'dep_number'],
+    fieldsets: [{
+                 fields: ['title_current', 'dep_number', field('school.title_current', {label: 'school.label'}), 'institution.title_current'],
+      layout: {
+        flex: [100, 20, 40, 40]
+      }
+    }],
     page: {
       title: computed.readOnly('model.title_current')
     },

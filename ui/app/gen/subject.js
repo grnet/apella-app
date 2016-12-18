@@ -9,9 +9,7 @@ const {
   get
 } = Ember;
 
-let FS = {
-  list : [i18nField('title'), i18nField('area.title')]
-}
+let FIELDS = [i18nField('title'), i18nField('area.title')];
 
 
 export default ApellaGen.extend({
@@ -56,13 +54,14 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: FS.list,
+      fields: FIELDS,
       actions: ['gen:edit', 'remove']
     }
   },
   details: {
     page: {
       title: computed.readOnly('model.title_current')
-    }
+    },
+    fields: FIELDS
   }
 });
