@@ -100,7 +100,7 @@ export default {
       subject_area: 'Θεματικές περιοχές/ Θέματα',
       institution: 'Ιδρύματα/ Τμήματα'
     },
-    menu_label: 'Εκδήλωση ενδιφέροντος',
+    menu_label: 'Εκδήλωση ενδιαφέροντος',
   },
   manager: {
     menu_label: 'Διαχειριστές Ιδρύματος',
