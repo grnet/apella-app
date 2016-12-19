@@ -11,7 +11,6 @@ from collections import OrderedDict
 django.setup()
 
 from django.core import management
-from apella.management.commands import *
 
 reload(sys)
 sys.setdefaultencoding('utf8')

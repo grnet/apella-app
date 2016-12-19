@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 from django.db.utils import IntegrityError
 from rest_framework.authtoken.models import Token
 from apella.management.utils import ApellaCommand
@@ -51,14 +51,14 @@ class Command(ApellaCommand):
         last_name_en = options['last_name_en']
         father_name_en = options['father_name_en']
 
-        try:
-            first_name = MultiLangFields.objects.create(
-                    el=first_name_el, en=first_name_en)
-            last_name = MultiLangFields.objects.create(
-                    el=last_name_el, en=last_name_en)
-            father_name = MultiLangFields.objects.create(
-                    el=father_name_el, en=father_name_en)
+        first_name = MultiLangFields.objects.create(
+                el=first_name_el, en=first_name_en)
+        last_name = MultiLangFields.objects.create(
+                el=last_name_el, en=last_name_en)
+        father_name = MultiLangFields.objects.create(
+                el=father_name_el, en=father_name_en)
 
+        try:
             a = ApellaUser.objects.create_user(
                     username=username,
                     password=password,
@@ -67,11 +67,11 @@ class Command(ApellaCommand):
                     first_name=first_name,
                     last_name=last_name,
                     father_name=father_name)
-            token = Token.objects.create(user=a)
+        except IntegrityError as e:
+            raise CommandError(e.message)
 
-            self.stdout.write(
-                "User with id: %s, role: %s, token:%s created" %
-                (a.pk, options['role'], token))
+        token = Token.objects.create(user=a)
 
-        except BaseException as e:
-                raise CommandError(e)
+        self.stdout.write(
+            "User with id: %s, role: %s, token:%s created" %
+            (a.pk, options['role'], token))

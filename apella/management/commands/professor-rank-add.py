@@ -13,6 +13,10 @@ class Command(ApellaCommand):
             raise CommandError("Invalid number of arguments")
         rank_el, rank_en = args[:2]
 
+        if ProfessorRank.objects.filter(rank__el=rank_el):
+            self.stdout.write("Rank exists %s" % rank_el)
+            return
+
         rank = MultiLangFields.objects.create(el=rank_el, en=rank_en)
         professor_rank = ProfessorRank.objects.create(rank=rank)
 
