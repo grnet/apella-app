@@ -22,6 +22,12 @@ export default ApellaGen.extend({
       icon: 'sentiment_dissatisfied'
     },
     layout: 'table',
+    filter: {
+      active: true,
+      serverSide: true,
+      search: true,
+      searchFields: ['email', 'username', 'first_name', 'last_name']
+    },
     sortBy: 'username:asc',
     search: {
       fields: ['username', 'email']

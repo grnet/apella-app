@@ -20,6 +20,8 @@ export default DS.Model.extend({
   id_passport: DS.attr(),
   mobile_phone_number: DS.attr(),
   home_phone_number: DS.attr(),
+  is_stuff: DS.attr({type: 'boolean', defaultValue: false}),
+  is_active: DS.attr({type: 'boolean', defaultValue: false}),
 
   role_verbose: computeI18NChoice('role', CHOICES.USER_ROLES),
   first_name_current: computeI18N('first_name'),

@@ -71,6 +71,9 @@ spec:
                 model_serializers: [
                     apella.serializers.mixins.NestedWritableObjectsMixin,
                     apella.serializers.mixins.HelpdeskUsers]
+                ordering_fields: [username]
+                filter_fields: [role, is_active]
+                search_fields: [username, email, first_name__el, last_name__el, first_name__en, last_name__en]
             .cli_commands: {}
             '*':
                 id:
@@ -662,6 +665,7 @@ spec:
             .drf_collection:
                 model: apella.models.Registry
                 mixins: [apella.views.mixins.RegistriesList]
+            filter_fields: [type, department]
             .cli_commands: {}
             '*':
                 id:
@@ -937,6 +941,7 @@ spec:
                 model: apella.models.Candidate
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.UploadFilesViewSet]
+                search_fields: [user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
             .cli_commands: {}
             '*':
                 id:

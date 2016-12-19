@@ -27,10 +27,20 @@ export default ApellaGen.extend({
       label: 'user.menu_label'
     },
     layout: 'table',
-    search: {
-      fields: ['username', 'email', 'full_name_current','role_verbose']
+    filter: {
+      active: true,
+      meta: {
+        fields: ['role', 'is_active']
+      },
+      serverSide: true,
+      search: true,
+      searchFields: ['email', 'username', 'first_name', 'last_name']
     },
-    sortBy: 'username:asc',
+    sort: {
+      active: true,
+      sortBy: 'username',
+      serverSide: true
+    },
     row: {
       fields: ['username', 'email', 'full_name_current', 'role_verbose'],
       actions: ['gen:details', 'gen:edit', 'remove']

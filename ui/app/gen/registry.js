@@ -30,8 +30,8 @@ export default ApellaGen.extend({
     },{
       label: 'registry.members_section.title',
       fields: [field('members', { label: null,
-        modelMeta: { 
-          filter: { 
+        modelMeta: {
+          filter: {
             active: false,
             search: true,
             searchFields: ['last_name_current']
@@ -41,9 +41,9 @@ export default ApellaGen.extend({
             sortBy: 'last_name_current'
           },
           paginate: {
-            active: true 
+            active: true
           },
-          row: { 
+          row: {
             fields: ['id', 'last_name_current', 'first_name_current', 'email', 'institution.title_current', 'department.title_current', 'rank']
           }
         }
@@ -67,6 +67,15 @@ export default ApellaGen.extend({
     page: {
      title: 'registry.menu_label'
     },
+    filter: {
+      active: true,
+      meta: {
+        fields: ['type', 'department']
+      },
+      serverSide: true,
+      search: false,
+    },
+
     row: {
       fields: [
         field('institution.title_current', {label: 'institution.label', type: 'text'}),
