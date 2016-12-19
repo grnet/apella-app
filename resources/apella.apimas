@@ -1119,7 +1119,7 @@ spec:
                 mixins: [apella.views.mixins.PositionList,
                     apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [title, id, state, department, code, electors, committee]
-                ordering_fields: [title, id, state, department]
+                ordering_fields: [title, id, state, department, code]
                 search_fields: [title, id, state]
             .cli_commands: {}
             '*':

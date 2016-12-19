@@ -157,7 +157,7 @@ export default ApellaGen.extend({
   list: {
     sort: {
       active: true,
-      fields: ['code', 'state'],
+      fields: ['code', 'title'],
       serverSide: true
     },
     filter: {
@@ -177,7 +177,7 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: [field('code', {sortKey: 'id'}), 'title', field('state_verbose', {sortKey: 'state'}), field('department.title_current', {label: 'department.label'})],
+      fields: ['code', 'title', field('state_verbose', {sortKey: 'state'}), field('department.title_current', {label: 'department.label'})],
       actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove' ],
       actionsMap: {
         applyCandidacy: {
