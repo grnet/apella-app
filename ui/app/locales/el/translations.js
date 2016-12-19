@@ -30,6 +30,7 @@ export default {
   'Electing': 'Επιλογή',
   'Successful': 'Στελεχωμένη',
   'Failed': 'Κλειστή',
+  'Revoked': 'Αναπομπή',
   'Assistant': 'Βοηθός υπεύθυνου ιδρύματος',
   'Candidate': 'Υποψήφιος',
   'Committee': 'Μέλος επιτροπής',

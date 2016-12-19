@@ -30,6 +30,7 @@ export default {
   'Electing': 'Electing',
   'Successful': 'Successful',
   'Failed': 'Failed',
+  'Revoked': 'Revoked',
   'Assistant': 'Assistant',
   'Candidate': 'Candidate',
   'Committee': 'Commitee',
