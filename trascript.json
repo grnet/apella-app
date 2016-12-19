@@ -6,7 +6,7 @@
     "input": {
         "arg1": "manager",
         "role": "institutionmanager",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Γεώργιος",
         "arg4": "Κορφιάτης",
         "arg5": "Ιωάννης",
@@ -84,7 +84,7 @@
     "input": {
         "arg1": "candidate",
         "role": "candidate",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Μαρία",
         "arg4": "Παπαδοπούλου",
         "arg5": "Πέτρος",
@@ -115,7 +115,7 @@
     "input": {
         "arg1": "professor",
         "role": "professor",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Παναγιώτης",
         "arg4": "Μαρκάτος",
         "arg5": "Κωνσταντίνος",
@@ -135,7 +135,7 @@
     "input": {
         "arg1": "committee",
         "role": "professor",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Όλγα",
         "arg4": "Κατεχάκη",
         "arg5": "Σταύρος",
@@ -155,7 +155,7 @@
     "input": {
         "arg1": "assistant",
         "role": "assistant",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Παρασκευή",
         "arg4": "Παρασκευά",
         "arg5": "Σωκράτης",
@@ -691,7 +691,7 @@
     "input": {
         "arg1": "helpdeskadmin",
         "role": "helpdeskadmin",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Μαρία",
         "arg4": "Παπαδοπούλου",
         "arg5": "Πέτρος",
@@ -711,7 +711,7 @@
     "input": {
         "arg1": "helpdeskuser",
         "role": "helpdeskuser",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Ναταλία",
         "arg4": "Τζωρτζίδου",
         "arg5": "Πέτρος",
@@ -731,7 +731,7 @@
     "input": {
         "arg1": "assistant2",
         "role": "assistant",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Μαρία",
         "arg4": "Βοηθητική",
         "arg5": "Κωνσταντίνος",
@@ -764,7 +764,7 @@
     "input": {
         "arg1": "manager2",
         "role": "institutionmanager",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Νίκος",
         "arg4": "Νικολάου",
         "arg5": "Νικήτα",
@@ -797,7 +797,7 @@
     "input": {
         "arg1": "assistant3",
         "role": "assistant",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Ζωή",
         "arg4": "Ζωηρή",
         "arg5": "Ζώης",

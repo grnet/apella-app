@@ -1,3 +1,6 @@
+import os
+import json
+
 from django.core.management.base import CommandError
 from django.db.utils import IntegrityError
 from rest_framework.authtoken.models import Token
@@ -8,11 +11,11 @@ from apella import common
 
 class Command(ApellaCommand):
     help = 'Create a user'
-    args = '<username> <password>'
+    args = '<username> <password env variable>'
 
     def add_arguments(self, parser):
         parser.add_argument('username')
-        parser.add_argument('password')
+        parser.add_argument('password_env_var')
 
         parser.add_argument('first_name_el')
         parser.add_argument('last_name_el')
@@ -42,8 +45,22 @@ class Command(ApellaCommand):
 
     def handle(self, *args, **options):
 
+        password_env_var = options['password_env_var']
+        try:
+            password_file = os.environ[password_env_var]
+        except KeyError:
+            raise CommandError(
+                "Environment variable %s has not been set" %
+                password_env_var)
+
+        try:
+            with open(password_file) as password_file:
+                data = json.load(password_file)
+        except IOError as ioe:
+            raise CommandError(ioe)
+
         username = options['username']
-        password = options['password']
+        password = data[username]
         first_name_el = options['first_name_el']
         last_name_el = options['last_name_el']
         father_name_el = options['father_name_el']

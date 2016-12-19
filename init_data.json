@@ -34,7 +34,7 @@
     "input": {
         "arg1": "helpdeskadmin",
         "role": "helpdeskadmin",
-        "arg2": "12345",
+        "arg2": "APELLA_PASSWORDS_FILE",
         "arg3": "Χαριτίνη",
         "arg4": "Μπλιάτσιου",
         "arg5": "Αθανάσιος",
