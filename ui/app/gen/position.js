@@ -225,6 +225,13 @@ export default ApellaGen.extend({
               return reason.errors;
             });
           },
+          permissions: [{action: 'edit'}],
+          hidden: computed('model.code', 'model.state', function(){
+            let starts_at = get(get(this, 'model'), 'starts_at')
+            let state = get(get(this, 'model'), 'state');
+            let before_open = moment(new Date()).isBefore(moment(starts_at));
+            return !(before_open && (state == 'posted'))
+          }),
           confirm: true,
           prompt: {
             ok: 'cancelPosition',
