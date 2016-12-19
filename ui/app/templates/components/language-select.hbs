@@ -1,7 +1,8 @@
-<select {{action 'setLocale' on='change'}}>
-  {{#each locales as |loc|}}
-    <option value="{{loc.id}}" selected={{is-equal loc.id i18n.locale}}>
-      {{loc.id}}
-    </option>
-  {{/each}}
-</select>
+{{#each locales as |loc|}}
+  {{#paper-button raised=true
+                  primary=(is-equal loc.id i18n.locale)
+                  mini=true
+                  onClick=(action "setLocale" loc.id)}}
+                  <img src='/apella/ui/assets/flag_{{loc.id}}.png' />
+  {{/paper-button}}
+{{/each}}
