@@ -26,7 +26,7 @@ export default ApellaGen.extend({
     menu: {
       icon: 'school',
       label: 'subject_area.menu_label',
-      display: computed(function() {
+      display: computed('role', function() {
         let role = get(this, 'session.session.authenticated.role');
         let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
 
