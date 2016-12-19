@@ -1,6 +1,6 @@
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, urlValidator} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
@@ -149,9 +149,7 @@ export default ApellaGen.extend({
       starts_at: [afterToday()],
       fek_posted_at: [beforeToday()],
       ends_at: [afterDays({on:'starts_at', days:30})],
-      fek: [validate.format({type:'url'}),
-            validate.format({regex: /^(https:\/\/|http:\/\/)/i,
-                             message: 'It should start with http or https'})],
+      fek: urlValidator,
       department_dep_number: [validate.presence(true), validate.number({integer: true})]
 
     }

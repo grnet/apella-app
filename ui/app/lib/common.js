@@ -3,6 +3,7 @@ import {CRUDGen} from 'ember-gen/lib/gen';
 import ENV from 'ui/config/environment';
 import {field} from 'ember-gen/lib/util';
 import moment from 'moment';
+import validate from 'ember-gen/validate';
 
 
 const {
@@ -98,8 +99,15 @@ function booleanFormat(key) {
   })
 }
 
+const urlValidator = [
+  validate.format({type:'url'}),
+  validate.format({
+    regex: /^(https:\/\/|http:\/\/)/i,
+    message: 'It should start with http or https'})
+]
+
 export {
   ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
-  booleanFormat, computeDateFormat
+  booleanFormat, computeDateFormat, urlValidator
 };
 
