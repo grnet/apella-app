@@ -23,7 +23,6 @@ fi
 
 cmd rm -rf ./node_modules || true
 cmd ln -s "${HOME}/node_modules" .
-cmd npm install npm
 cmd ./node_modules/.bin/npm install bower
 cmd ./node_modules/.bin/npm install
 cmd ./node_modules/.bin/bower install --allow-root
