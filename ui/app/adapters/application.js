@@ -28,6 +28,20 @@ export default DRFAdapter.extend(DataAdapterMixin,{
     return this.buildURL(name, id, {}, 'findRecord');
   },
 
+  urlForQuery(query, modelName) {
+    // ugly hack: get resources' history
+    // store.query(modelName, {id:id, history:true} will result in the call
+    // /<modelName>/<id>/history
+    if (query.history) {
+      Ember.assert('Both query history and query id must be set', query.history && query.id)
+      let id = query.id;
+      delete query['id'];
+      delete query['history'];
+      return this.buildURL(modelName, id)+'history';
+    }
+    return this._super(...arguments)
+  },
+
   action: function(model, action, method='POST') {
     let actionURL = this.urlForModel(model) + action + '/';
     return this.ajax(actionURL, method);

@@ -158,6 +158,9 @@ export default {
     menu_label: 'Positions',
     fek_section: {
       title: 'FEK',
+    },
+    history: {
+      title: 'Positions history',
     }
   },
   assistant: {

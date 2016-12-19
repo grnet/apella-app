@@ -158,6 +158,9 @@ export default {
     fek_section: {
       title: 'ΦΕΚ',
     },
+    history: {
+      title: 'Ιστορικό θέσεων',
+    }
   },
   assistant: {
     menu_label: 'Βοηθοί',

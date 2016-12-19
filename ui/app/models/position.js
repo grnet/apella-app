@@ -62,5 +62,7 @@ export default DS.Model.extend({
     return this.get('i18n').t(this.get('participation'));
   }),
 
+  past_positions: DS.hasMany('position'),
+
 
 });

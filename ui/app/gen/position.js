@@ -88,6 +88,28 @@ const committeeField = field('committee', {
   }
 });
 
+const historyField = field('past_positions', {
+    valueQuery: function(store, params, model, value) {
+      let id = model.get('id');
+      let query = {id: id, history: true};
+      return store.query('position', query);
+    },
+    label: null,
+    modelMeta: {
+      row: {
+        fields: ['id', 'code', 'state_verbose',
+          field('starts_at_format', {label: 'starts_at.label'}),
+          field('ends_at_format', {label: 'ends_at.label'})
+        ],
+        actions: ['goToDetails'],
+        actionsMap: {
+          goToDetails: actions.goToDetails
+        }
+      },
+    }
+  });
+
+
 
 export default ApellaGen.extend({
   modelName: 'position',
@@ -231,7 +253,8 @@ export default ApellaGen.extend({
       layout: {
         flex: [50, 50, 50, 50]
       }
-    }, {
+    },
+    {
       label: 'candidacy.menu_label',
       fields: [candidaciesField]
     },
@@ -239,6 +262,10 @@ export default ApellaGen.extend({
       label: 'assistants.label',
       text: 'assistants_on_position_explain',
       fields: [assistantsField]
+    },
+    {
+      label: 'position.history.title',
+      fields: [historyField]
     }]
   }
 });
