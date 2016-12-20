@@ -1457,6 +1457,12 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
                         first_name:
                             .cli_option: {}
                             .field: {}
