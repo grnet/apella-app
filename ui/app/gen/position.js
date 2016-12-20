@@ -9,8 +9,9 @@ import moment from 'moment';
 
 const {
   computed,
+  computed: { reads },
   get,
-  merge
+  merge,
 } = Ember;
 
 
@@ -117,17 +118,20 @@ export default ApellaGen.extend({
   path: 'positions',
 
   abilityStates: {
-    owned: computed('role', function() {
-      return get(this, 'role') === 'institutionmanager';
+    owned: computed('user.user_id', 'model.author', 'role', function() {
+      return (this.get('model.author.user_id') == get(this, 'user.user_id')) ||
+        get(this, 'role') === 'institutionmanager';
     }), // we expect server to reply with owned resources
-    'open': computed('model.state', 'model.ends_at', function() {
-      return get(this, 'model.state') === 'open' && moment(get(this, 'model.ends_at')).isBefore(new Date());
+    'open': computed('model.state', 'model.ends_at', 'owned', function() {
+      return get(this, 'model.state') === 'open' &&
+        moment(get(this, 'model.ends_at')).isBefore(new Date()) &&
+        get(this, 'owned');
     }),
-    closed: computed('model.starts_at', function() {
-      return moment(get(this, 'model.starts_at')).isBefore(moment(new Date()));
+    closed: computed('model.starts_at', 'owned', function() {
+      return moment(get(this, 'model.starts_at')).isBefore(moment(new Date())) && get(this, 'owned');
     }),
-    electing: computed('model.state', 'closed', function() {
-      return get(this, 'model.state') === 'posted' && get(this, 'closed');
+    electing: computed('model.state', 'closed', 'owned', function() {
+      return get(this, 'model.state') === 'posted' && get(this, 'closed') && get(this, 'owned');
     }),
     participates: computed('role', 'session.session.authenticated.id', 'model.electors.[]', 'model.committee.[]', function() {
       let role = get(this, 'role');
@@ -137,8 +141,11 @@ export default ApellaGen.extend({
       let participations = electors.concat(committee)
       return role === 'professor' && participations.includes(professorId)
     }),
-    before_open: computed('role', 'model.starts_at', function(){
-      return moment(new Date()).isBefore(moment(get(this, 'model.starts_at')));
+    before_open: computed('owned', 'model.starts_at', function(){
+      return moment(new Date()).isBefore(moment(get(this, 'model.starts_at'))) && get(this, 'owned');
+    }),
+    can_create: computed('user.can_create_positions', function() {
+      return get(this, 'user.can_create_positions');
     })
   },
 
@@ -213,7 +220,7 @@ export default ApellaGen.extend({
         },
         cancelPosition: {
           label: 'cancelPosition',
-          icon: 'pan_tool',
+          icon: 'highlight_off',
           action(route, model) {
             model.set('state', 'cancelled');
             model.save().then((value) => {

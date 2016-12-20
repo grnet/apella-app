@@ -13,6 +13,7 @@ export default DS.Model.extend({
   description: DS.attr({type:'text'}),
   discipline: DS.attr(),
   department_dep_number: DS.attr(),
+  author: DS.belongsTo('institution-manager'),
 
   department: DS.belongsTo('department', {
     formAttrs: {
