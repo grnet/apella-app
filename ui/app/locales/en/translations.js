@@ -253,5 +253,7 @@ export default {
   current position.<br>Assistants with permission to create and handle all\
   positions will be able to handle this position, too.',
   'open': 'Open',
-  'closed': 'Closed'
+  'closed': 'Closed',
+  'registry.type.internal': 'Internal Registry',
+  'registry.type.external': 'External Registry'
 };
