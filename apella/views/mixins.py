@@ -6,6 +6,7 @@ from django.db.models import ProtectedError, Min
 
 from apella.models import InstitutionManager, Position, Department, \
         Candidacy, ApellaUser, ApellaFile
+import apella.loader
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -31,7 +32,7 @@ class AssistantList(generics.ListAPIView):
                 manager_role='assistant')
 
 
-class PositionList(generics.ListAPIView):
+class PositionList(object):
 
     @detail_route()
     def history(self, request, pk=None):
@@ -100,8 +101,7 @@ class RegistriesList(generics.ListAPIView):
     def members(self, request, pk=None):
         registry = self.get_object()
         members = registry.members
-        from apella.loader import api_serializers
-        ser = api_serializers.get('professors')
+        ser = apella.loader.api_serializers.get('professors')
         return Response(
             ser(members, many=True, context={'request': request}).data)
 
