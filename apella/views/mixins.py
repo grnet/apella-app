@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.decorators import detail_route, list_route
 from django.db.models import ProtectedError, Min
+from django.conf import settings
 
 from apella.models import InstitutionManager, Position, Department, \
         Candidacy, ApellaUser, ApellaFile
@@ -51,11 +52,22 @@ class PositionList(object):
             departments = Department.objects.filter(
                 institution_id__in=institution_ids)
             queryset = queryset.filter(department__in=departments)
-        ids = queryset.values('code').annotate(Min('id')).values('id__min')
-        return queryset.filter(id__in=ids)
+        if 'pk' in self.kwargs:
+            return queryset.filter(id=self.kwargs['pk'])
+        else:
+            ids = queryset.values('code').annotate(Min('id')).values('id__min')
+            return queryset.filter(id__in=ids)
+
+    def update(self, request, pk=None):
+        position = self.get_object()
+        code = position.code
+        if code.split(settings.POSITION_CODE_PREFIX)[1] != \
+                str(position.id):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        return super(PositionList, self).update(request, pk=None)
 
 
-class CandidacyList(generics.ListAPIView):
+class CandidacyList(object):
 
     @detail_route()
     def history(self, request, pk=None):
@@ -78,8 +90,18 @@ class CandidacyList(generics.ListAPIView):
         elif user.is_assistant():
             positions = Position.objects.filter(author_id=user.id)
             queryset = queryset.filter(position__in=positions)
-        ids = queryset.values('code').annotate(Min('id')).values('id__min')
-        return queryset.filter(id__in=ids)
+        if 'pk' in self.kwargs:
+            return queryset.filter(id=self.kwargs['pk'])
+        else:
+            ids = queryset.values('code').annotate(Min('id')).values('id__min')
+            return queryset.filter(id__in=ids)
+
+    def update(self, request, pk=None):
+        candidacy = self.get_object()
+        code = candidacy.code
+        if code != str(candidacy.id):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        return super(CandidacyList, self).update(request, pk=None)
 
 
 class DepartmentList(generics.ListAPIView):
