@@ -12,7 +12,7 @@ USER_ROLE_MODEL_RESOURCES = {
     },
     'assistant': {
         "model": InstitutionManager,
-        "resource": "institution-managers"
+        "resource": "assistants"
     },
     'candidate': {
         "model": Candidate,
