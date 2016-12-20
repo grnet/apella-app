@@ -1,15 +1,11 @@
 import {ApellaGen} from 'ui/lib/common';
+import {i18nValidate} from 'ui/validators/i18n';
+import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
-        USER_VALIDATORS,
-        ASSISTANT_FIELDSET,
-        ASSISTANT_FIELDSET_MANAGER,
-        ASSISTANT_FIELDSET_EDIT_MANAGER,
-        ASSISTANT_FIELDSET_EDIT_ASSISTANT,
-        ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY,
-        ASSISTANT_VALIDATORS_EDIT_MANAGER,
-        ASSISTANT_VALIDATORS} from 'ui/utils/common/users';
+        USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
+import {disable_field} from 'ui/utils/common/fields';
 
 const {
   computed,
@@ -17,7 +13,60 @@ const {
   get
 } = Ember;
 
-let all_validators = Object.assign({}, USER_VALIDATORS, ASSISTANT_VALIDATORS);
+const ASSISTANT_FIELDSET_MANAGER = {
+  label: 'fieldsets.labels.more_info',
+  fields: ['can_create_registries', 'can_create_positions'],
+  layout: {
+    flex: [50, 50]
+  }
+}
+
+const ASSISTANT_FIELDSET = {
+  label: 'fieldsets.labels.more_info',
+  fields: ['institution', 'can_create_registries', 'can_create_positions'],
+  layout: {
+    flex: [100, 50, 50]
+   }
+}
+
+const ASSISTANT_FIELDSET_EDIT_MANAGER = {
+  label: 'fieldsets.labels.user_info',
+  text: 'fieldsets.text.manager_can_edit',
+  fields: [
+    field('username', { readonly: true }),
+    'can_create_positions',
+    'can_create_registries',
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport'
+  ],
+  layout: {
+    flex: [50,25,25, 50, 50, 50, 50]
+  }
+}
+
+const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
+  label: 'fieldsets.labels.user_info',
+  text: 'fieldsets.text.assistant_can_edit',
+  fields: [
+    field('email', { readonly: true }),
+    field('mobile_phone_number', { readonly: true }),
+    field('home_phone_number', { readonly: true })
+  ],
+  layout: {
+    flex: [100, 50, 50]
+  }
+}
+
+const ASSISTANT_VALIDATORS_EDIT_MANAGER = {
+  first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  id_passport: [validate.presence(true)],
+}
+
+let all_validators = Object.assign({}, USER_VALIDATORS);
 
 export default ApellaGen.extend({
   modelName: 'assistant',
@@ -69,7 +118,7 @@ export default ApellaGen.extend({
   details: {
     page: {
       title: computed.readOnly('model.full_name_current')
-    }
+    },
   },
   create: {
     processModel: function(model) {
@@ -109,11 +158,6 @@ export default ApellaGen.extend({
         return  [
           ASSISTANT_FIELDSET_EDIT_MANAGER,
           ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY
-        ]
-      }
-      if (role === 'assistant') {
-        return [
-          ASSISTANT_FIELDSET_EDIT_ASSISTANT
         ]
       }
     })

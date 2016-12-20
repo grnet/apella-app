@@ -4,15 +4,35 @@ import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
-        PROFILE_ASSISTANT_FIELDSET,
-        ASSISTANT_FIELDSET, ASSISTANT_VALIDATORS,
         INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
+import {disable_field} from 'ui/utils/common/fields';
 
 const {
   computed: { reads },
   get, computed
 } = Ember;
+
+const PROFILE_ASSISTANT_FIELDSET = {
+  label: 'fieldsets.labels.more_info',
+  fields: [
+    field('username', { readonly: true }),
+    'password',
+    'email',
+    'mobile_phone_number',
+    'home_phone_number',
+    disable_field('first_name'),
+    disable_field('last_name'),
+    disable_field('father_name'),
+    disable_field('id_passport'),
+    disable_field('can_create_positions'),
+    disable_field('can_create_registries'),
+    disable_field('institution.title_current'),
+  ],
+  layout: {
+        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+  }
+}
 
 export default AuthGen.extend({
   order: 1,
@@ -65,9 +85,6 @@ export default AuthGen.extend({
       }
       if (role === 'institutionmanager') {
         f = Object.assign(f, INSTITUTION_MANAGER_VALIDATORS);
-      }
-      if (role === 'assistant') {
-        f = Object.assign(f, ASSISTANT_VALIDATORS);
       }
       return f;
     }),
