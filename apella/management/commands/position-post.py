@@ -34,7 +34,5 @@ class Command(BaseCommand):
             self.stdout.write("Posted position %s" % position_id)
         except ValueError:
             raise CommandError("Position id must be an integer")
-        except ValidationError as ve:
-            raise CommandError(ve)
         except Position.DoesNotExist:
             raise CommandError("Position %s does not exist" % position_id)
