@@ -305,13 +305,32 @@ class Position(models.Model):
         return self.state == 'posted' and self.ends_at > timezone.now()
 
     def check_resource_state_before_open(self, row, request, view):
-        return self.starts_at > timezone.now()
+        user = request.user
+        if user.is_institutionmanager():
+            return self.starts_at > timezone.now()
+        elif user.is_assistant():
+            return self.starts_at > timezone.now() \
+                and self.author == user
+        return False
 
     def check_resource_state_closed(self, row, request, view):
-        return self.starts_at < timezone.now()
+        user = request.user
+        if user.is_institutionmanager():
+            return self.starts_at < timezone.now()
+        elif user.is_assistant():
+            return self.starts_at < timezone.now() \
+                and self.author == user
+        return False
 
     def check_resource_state_electing(self, row, request, view):
-        return self.state == 'posted' and self.starts_at < timezone.now()
+        user = request.user
+        if user.is_institutionmanager():
+            return self.state == 'posted' and self.starts_at < timezone.now()
+        elif user.is_assistant():
+            return self.state == 'posted' \
+                and self.starts_at < timezone.now() \
+                and self.author == user
+        return False
 
     def check_resource_state_participates(self, row, request, view):
         return professor_participates(request.user.id, self.id)
