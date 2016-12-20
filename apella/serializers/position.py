@@ -79,9 +79,9 @@ class PositionMixin(ValidatorMixin):
 class CandidacyMixin(ValidatorMixin):
 
     def create(self, validated_data):
-        user = self.request.user
+        user = self.context.get('request').user
         if not user.is_helpdesk():
-            validated_data['user'] = user
+            validated_data['candidate'] = user
         validated_data['state'] = 'posted'
         obj = super(CandidacyMixin, self).create(validated_data)
         code = str(obj.id)
