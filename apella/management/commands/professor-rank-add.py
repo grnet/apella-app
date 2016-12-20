@@ -6,12 +6,25 @@ from apella.models import ProfessorRank, MultiLangFields
 
 class Command(ApellaCommand):
     help = 'Create a professor rank'
-    args = '<rank el> <rank en>'
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--rank-el',
+            dest='rank_el',
+            help='Professor rank name in Greek',
+            required=True,
+        )
+
+        parser.add_argument(
+            '--rank-en',
+            dest='rank_en',
+            help='Professor rank name in English',
+            required=True,
+        )
 
     def handle(self, *args, **options):
-        if len(args) != 2:
-            raise CommandError("Invalid number of arguments")
-        rank_el, rank_en = args[:2]
+        rank_el = options['rank_el']
+        rank_en = options['rank_en']
 
         if ProfessorRank.objects.filter(rank__el=rank_el):
             self.stdout.write("Rank exists %s" % rank_el)

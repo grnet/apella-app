@@ -60,6 +60,7 @@ setup(
                                   'resources/subject_areas_subjects.csv',
                                   'resources/institutions.csv',
                                   'resources/departments.csv']),
+        ('lib/apella/scripts', ['scripts/apella_init.sh']),
     ] + UI_DATA_FILES,
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,
