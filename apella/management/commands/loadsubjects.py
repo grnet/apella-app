@@ -22,7 +22,6 @@ class Command(LoadDataCommand):
             success_subjects = 0
             failed_subjects = 0
             renamed_subjects = 0
-            deleted_subjects = 0
 
             for record in csv_file:
                 rid, title_el, title_en = \
@@ -141,11 +140,6 @@ class Command(LoadDataCommand):
                     "\n%d subject areas deleted, [%s]" %
                     (deleted_subjectareas, ','.join(
                         str(x) for x in deleted_saids)))
-            if deleted_subjects > 0:
-                self.stdout.write(
-                    "\n%d subjects deleted, [%s]" %
-                    (deleted_subjects, ','.join(
-                        str(x) for x in deleted_sids)))
             if failed_subjects > 0:
                 self.stdout.write("%d subjects failed"
                                   % failed_subjects)
