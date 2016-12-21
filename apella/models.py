@@ -310,7 +310,7 @@ class Position(models.Model):
             return self.starts_at > timezone.now()
         elif user.is_assistant():
             return self.starts_at > timezone.now() \
-                and self.author == user
+                and self.author.user == user
         return False
 
     def check_resource_state_closed(self, row, request, view):
@@ -319,7 +319,7 @@ class Position(models.Model):
             return self.starts_at < timezone.now()
         elif user.is_assistant():
             return self.starts_at < timezone.now() \
-                and self.author == user
+                and self.author.user == user
         return False
 
     def check_resource_state_electing(self, row, request, view):
@@ -329,7 +329,7 @@ class Position(models.Model):
         elif user.is_assistant():
             return self.state == 'posted' \
                 and self.starts_at < timezone.now() \
-                and self.author == user
+                and self.author.user == user
         return False
 
     def check_resource_state_participates(self, row, request, view):
