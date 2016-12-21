@@ -60,7 +60,7 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(
         choices=common.USER_ROLES, max_length=20, default='candidate')
 
-    models = UserManager()
+    objects = UserManager()
 
     shibboleth_id = models.CharField(
         max_length=255, unique=True, null=True, default=None)
