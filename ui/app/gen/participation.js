@@ -3,6 +3,7 @@ import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 
 const {
+  computed,
   get,
 } = Ember;
 
@@ -50,7 +51,11 @@ export default ApellaGen.extend({
     },
     menu: {
       icon: 'drafts',
-      label: 'elections.menu_label'
+      label: 'elections.menu_label',
+      display: computed('role', function(){
+        let role = get(this, 'role')
+        return (role=== 'professor');
+      }),
     },
     layout: 'table',
     row: {
