@@ -118,9 +118,23 @@ export default ApellaGen.extend({
   path: 'positions',
 
   abilityStates: {
-    owned: computed('user.user_id', 'model.author', 'role', function() {
-      return (this.get('model.author.user_id') == get(this, 'user.user_id')) ||
-        get(this, 'role') === 'institutionmanager';
+    owned: computed('user.user_id', 'model.author', 'role', 'model.assistants.[]', function() {
+      let id = get(this, 'user.id').toString();
+
+      let is_attached_assistant = false;
+      let is_institutionmanager = get(this, 'role') === 'institutionmanager';
+      let is_author = this.get('model.author.user_id') == get(this, 'user.user_id');
+
+      if (this.get('model.assistants')) {
+        if (this.get('model.assistants').getEach('id')) {
+          let res = this.get('model.assistants').getEach('id');
+          if (res.includes(id)) {
+            is_attached_assistant = true;
+          }
+        }
+      }
+
+      return is_author || is_attached_assistant || is_institutionmanager;
     }), // we expect server to reply with owned resources
     'open': computed('model.state', 'model.ends_at', 'owned', function() {
       return get(this, 'model.state') === 'open' &&
