@@ -1,4 +1,10 @@
 export default {
+  'logout': 'logout',
+  'login': 'login',
+  'Login': 'Login',
+  'login.label': 'Login',
+  'login.success': 'Successful login',
+  'Auth': 'Auth',
   'form.save.label': 'Save',
   'withdrawal': 'Withdraw',
   'cancel': 'Cancel',
@@ -76,6 +82,7 @@ export default {
   'area.label': 'Thematic area',
   'area.title_current.label': 'Thematic area',
   'author.label': 'Author',
+  'username': 'Username',
   'username.label': 'Username',
   'full_name_current.label': 'Ονοματεπώνυμο',
   'role.label': 'Role',
@@ -93,6 +100,7 @@ export default {
   'discipline_in_fek.label': 'Discipline from FEK ',
   'discipline_in_fek.hint': 'Discipline is reported in FEK (Government Gazette)',
   'dep_number.label': 'Number of teaching staff',
+  'code.label': 'Code',
   'position.code.label': 'Position code',
   'position.code_and_title.label': 'Position code - Title',
   'position.title.label': 'Position Title',
@@ -103,7 +111,9 @@ export default {
   'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
+  'can_create_registries.label': 'Can create regitstries',
   'can_create_registries_verbose.label': 'Can create regitstries',
+  'can_create_positions.label': 'Can create positions',
   'can_create_positions_verbose.label': 'Can create positions',
   'submitted_at.label': 'Submission Date',
   'updated_at.label': 'Last Update Date',
@@ -165,7 +175,7 @@ export default {
       title: 'FEK',
     },
     history: {
-      title: 'Positions history',
+      title: 'Position history',
     }
   },
   assistant: {

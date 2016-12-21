@@ -51,7 +51,7 @@ export default DS.Model.extend({
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
-  code: DS.attr(),
+  code: DS.attr({label: 'code.label'}),
   // Use in candidacy select list
   code_and_title: computed('code', 'title', function() {
     return `${this.get('code')} -  ${this.get('title')}`;
