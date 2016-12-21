@@ -152,6 +152,8 @@ if not LOGGING:
 STATIC_URL = '/static/'
 API_HOST = None  # The host the app is served from
 API_PREFIX = 'apella/'
+TOKEN_LOGIN_URL = '/apella/ui/auth/login'
+TOKEN_REGISTER_URL = '/apella/ui/auth/register/professor'
 AUTH_USER_MODEL = 'apella.ApellaUser'
 
 START_DATE_END_DATE_INTERVAL = 30
@@ -161,6 +163,11 @@ POSITION_CODE_PREFIX = 'APP'
 CONFIG_FILE = 'apella.apimas'
 
 SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
+
+DJOSER = {
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': '#activate={uid}|{token}'
+}
 
 if os.path.isfile(SETTINGS_FILE):
     execfile(SETTINGS_FILE)
