@@ -34,6 +34,10 @@ class Migration(migrations.Migration):
                 ('mobile_phone_number', models.CharField(max_length=30, blank=True)),
                 ('home_phone_number', models.CharField(max_length=30, blank=True)),
                 ('role', models.CharField(default=b'candidate', max_length=20, choices=[['institutionmanager', 'Institution Manager'], ['candidate', 'Candidate'], ['professor', 'Professor'], ['helpdeskadmin', 'Helpdesk Admin'], ['helpdeskuser', 'Helpdesk User'], ['assistant', 'Assistant']])),
+                ('shibboleth_id', models.CharField(default=None, max_length=255, unique=True, null=True)),
+                ('shibboleth_id_legacy', models.CharField(default=None, max_length=255, null=True)),
+                ('shibboleth_registration_key', models.CharField(default=None, max_length=255, null=True)),
+                ('shibboleth_migration_key', models.CharField(default=None, max_length=255, null=True)),
             ],
             options={
                 'verbose_name': 'user',
@@ -174,7 +178,7 @@ class Migration(migrations.Migration):
                 ('speaks_greek', models.BooleanField(default=True)),
                 ('cv_url', models.URLField(blank=True)),
                 ('fek', models.URLField()),
-                ('discipline_text', models.CharField(max_length=300)),
+                ('discipline_text', models.CharField(max_length=300, blank=True)),
                 ('discipline_in_fek', models.BooleanField(default=True)),
                 ('cv', models.ForeignKey(blank=True, to='apella.ApellaFile', null=True)),
                 ('department', models.ForeignKey(blank=True, to='apella.Department', null=True)),
@@ -190,6 +194,16 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('rank', models.ForeignKey(to='apella.MultiLangFields')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='RegistrationToken',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('token', models.CharField(unique=True, max_length=255, blank=True)),
+                ('identifier', models.CharField(max_length=255, blank=True)),
+                ('data', models.TextField(blank=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(
