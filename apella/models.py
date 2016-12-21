@@ -8,21 +8,7 @@ from django.core import validators
 from apella.validators import before_today_validator, after_today_validator,\
     validate_dates_interval, validate_position_dates
 from apella import common
-
-
-def professor_participates(user_id, position_id):
-    try:
-        professor = Professor.objects.get(user_id=user_id)
-    except Professor.DoesNotExist:
-        return False
-    has_elector_duty = professor.elector_duty.filter(id=position_id)
-    if has_elector_duty:
-        return True
-    has_committee_duty = \
-        professor.committee_duty.filter(id=position_id)
-    if has_committee_duty:
-        return True
-    return False
+from apella.helpers import assistant_can_edit, professor_participates
 
 
 class MultiLangFields(models.Model):
@@ -306,51 +292,46 @@ class Position(models.Model):
             manager_role='institutionmanager',
             institution_id=self.department.institution.id).exists()
 
-
     def check_resource_state_open(self, row, request, view):
         return self.state == 'posted' and self.ends_at > timezone.now()
 
     def check_resource_state_before_open(self, row, request, view):
         user = request.user
+        before_open = self.starts_at > timezone.now()
         if user.is_institutionmanager():
-            return self.starts_at > timezone.now()
+            return before_open
         elif user.is_assistant():
-            return self.starts_at > timezone.now() \
-                and (self.author.user == user or \
-                self in user.institutionmanager.assistant_duty.all())
+            return before_open and assistant_can_edit(self, user)
         return False
 
     def check_resource_state_closed(self, row, request, view):
         user = request.user
+        is_closed = self.starts_at < timezone.now()
         if user.is_institutionmanager():
-            return self.starts_at < timezone.now()
+            return is_closed
         elif user.is_assistant():
-            return self.starts_at < timezone.now() \
-                and (self.author.user == user or \
-                self in user.institutionmanager.assistant_duty.all())
+            return is_closed and assistant_can_edit(self, user)
         return False
 
     def check_resource_state_electing(self, row, request, view):
         user = request.user
+        is_electing = self.state == 'posted' and \
+            self.starts_at < timezone.now()
         if user.is_institutionmanager():
-            return self.state == 'posted' and self.starts_at < timezone.now()
+            return is_electing
         elif user.is_assistant():
-            return self.state == 'posted' \
-                and self.starts_at < timezone.now() \
-                and (self.author.user == user or \
-                self in user.institutionmanager.assistant_duty.all())
+            return is_electing and assistant_can_edit(self, user)
         return False
 
     def check_resource_state_participates(self, row, request, view):
-        return professor_participates(request.user.id, self.id)
+        return professor_participates(request.user, self.id)
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
-        r = InstitutionManager.objects.filter(
+        return InstitutionManager.objects.filter(
             user_id=request.user.id,
             manager_role='assistant',
             can_create_positions=True).exists()
-        return r
 
 
 class Candidacy(models.Model):
@@ -384,7 +365,7 @@ class Candidacy(models.Model):
         return self.others_can_view
 
     def check_resource_state_participates(self, row, request, view):
-        return professor_participates(request.user.id, self.position.id)
+        return professor_participates(request.user, self.position.id)
 
     def check_resource_state_owned_open(self, row, request, view):
         return self.check_resource_state_owned(row, request, view) \
