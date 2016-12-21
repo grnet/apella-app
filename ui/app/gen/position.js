@@ -227,6 +227,7 @@ export default ApellaGen.extend({
               return value;
             }, (reason) => {
               model.rollbackAttributes();
+              window.alert(reason)
               return reason.errors;
             });
           },
