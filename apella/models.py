@@ -299,7 +299,13 @@ class Position(models.Model):
         super(Position, self).save(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
-        return request.user.id == self.author.user.id
+        if request.user.id == self.author.user.id:
+            return True
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            manager_role='institutionmanager',
+            institution_id=self.department.institution.id).exists()
+
 
     def check_resource_state_open(self, row, request, view):
         return self.state == 'posted' and self.ends_at > timezone.now()
@@ -310,7 +316,8 @@ class Position(models.Model):
             return self.starts_at > timezone.now()
         elif user.is_assistant():
             return self.starts_at > timezone.now() \
-                and self.author.user == user
+                and (self.author.user == user or \
+                self in user.institutionmanager.assistant_duty.all())
         return False
 
     def check_resource_state_closed(self, row, request, view):
@@ -319,7 +326,8 @@ class Position(models.Model):
             return self.starts_at < timezone.now()
         elif user.is_assistant():
             return self.starts_at < timezone.now() \
-                and self.author.user == user
+                and (self.author.user == user or \
+                self in user.institutionmanager.assistant_duty.all())
         return False
 
     def check_resource_state_electing(self, row, request, view):
@@ -329,7 +337,8 @@ class Position(models.Model):
         elif user.is_assistant():
             return self.state == 'posted' \
                 and self.starts_at < timezone.now() \
-                and self.author.user == user
+                and (self.author.user == user or \
+                self in user.institutionmanager.assistant_duty.all())
         return False
 
     def check_resource_state_participates(self, row, request, view):
