@@ -96,6 +96,7 @@ PERMISSION_RULES = [
     ('institution-managers', 'update', 'helpdeskadmin', '*', '*', ''),
     ('institution-managers', 'partial_update', 'helpdeskadmin', '*', '*', ''),
     ('institution-managers', 'retrieve', 'assistant', '*', 'owned_by_assistant', ''),
+    ('institution-managers', 'retrieve', 'institutionmanager', '*', 'owned', ''),
     ('institutions', 'create', 'helpdeskadmin', '*', '*', '5.2.5'),
     ('institutions', 'destroy', 'helpdeskadmin', '*', '*', '5.2.5'),
     ('institutions', 'list', 'anonymous', '*', '*', ''),
