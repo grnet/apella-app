@@ -517,13 +517,11 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .required: {}
                 speaks_greek:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .required: {}
                 cv_url:
                     .cli_option: {}
                     .field: {}
