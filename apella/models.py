@@ -17,6 +17,13 @@ class MultiLangFields(models.Model):
     en = models.CharField(max_length=500, blank=True, null=True)
 
 
+class RegistrationToken(models.Model):
+    token = models.CharField(max_length=255, unique=True, blank=True)
+    identifier = models.CharField(max_length=255, blank=True)
+    data = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class ApellaUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=30, unique=True,
@@ -53,7 +60,16 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(
         choices=common.USER_ROLES, max_length=20, default='candidate')
 
-    objects = UserManager()
+    models = UserManager()
+
+    shibboleth_id = models.CharField(
+        max_length=255, unique=True, null=True, default=None)
+    shibboleth_id_legacy = models.CharField(
+        max_length=255, null=True, default=None)
+    shibboleth_registration_key = models.CharField(
+        max_length=255, null=True, default=None)
+    shibboleth_migration_key = models.CharField(
+        max_length=255, null=True, default=None)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
@@ -185,7 +201,7 @@ class Professor(UserProfile, CandidateProfile):
     speaks_greek = models.BooleanField(default=True)
     cv_url = models.URLField(blank=True)
     fek = models.URLField()
-    discipline_text = models.CharField(max_length=300)
+    discipline_text = models.CharField(max_length=300, blank=True)
     discipline_in_fek = models.BooleanField(default=True)
 
     def check_resource_state_owned(self, row, request, view):
