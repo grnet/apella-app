@@ -1,0 +1,21 @@
+{{#gen-page classNames=(if gen.nested 'nested' '') as |page|}}
+  {{page.toolbar
+    pageTitle=(t gen.page.title model)
+    breadcrumbs=gen.breadcrumbs
+    toolbarActions=gen.toolbarActions
+    model=model
+    tabs=gen.tabs
+  }}
+
+  {{#paper-content class="md-padding"}}
+    {{#if model.helpdeskActivationPending }}
+      {{t 'registration.success.helpdesk.activation.pending' user=model}}
+    {{else}}
+      {{#if model.emailVerificationPending }}
+        {{t 'registration.success.email.pending' user=model}}
+      {{else}}
+        {{t 'registration.success' user=model}}
+      {{/if}}
+    {{/if}}
+  {{/paper-content}}
+{{/gen-page}}

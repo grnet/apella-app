@@ -1,0 +1,127 @@
+{{#gen-page classNames=(if gen.nested 'nested' '') as |page|}}
+  {{page.toolbar
+    pageTitle=(t gen.page.title model)
+    breadcrumbs=gen.breadcrumbs
+    toolbarActions=gen.toolbarActions
+    model=model
+    tabs=gen.tabs
+  }}
+  {{#if userNotFound }}
+  <md-toolbar class="md-warn">
+    <div class="md-toolbar-tools">
+      <span class="flex-grow">{{t 'user.not.found.error' }}</span>
+      <span class="flex-grow"></span>
+      {{#paper-button
+        class="no-left-margin flex-grow"
+        onClick=(route-action 'shibbolethRegister')
+        raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'register.academic.login'}}{{/paper-button}}
+    </div>
+  </md-toolbar>
+  {{/if}}
+  {{#if userExists }}
+  <md-toolbar class="md-warn">
+    <div class="md-toolbar-tools">
+      <span class="flex-grow">{{t 'user.exists.error' }}</span>
+      <span class="flex-grow"></span>
+      {{#paper-button
+        class="no-margin flex-grow"
+        onClick=(route-action 'shibbolethLogin')
+        raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'academic.login.button.label' }}{{/paper-button}}
+    </div>
+  </md-toolbar>
+  {{/if}}
+  {{#if userNotVerified }}
+  <md-toolbar class="md-warn">
+    <div class="md-toolbar-tools">
+      <span class="flex-grow">{{t 'user.not.verified.error' }}</span>
+      <span class="flex-grow"></span>
+      {{#paper-button
+        class="no-margin flex-grow"
+        onClick=(route-action 'shibbolethLogin')
+        raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'resend.verification.button.label' }}{{/paper-button}}
+    </div>
+  </md-toolbar>
+  {{/if}}
+
+
+  {{#page.content}}
+    {{#if gen.partials.top}}
+      {{ partial gen.partials.top }}
+    {{/if}}
+
+    <md-content class="flex layout-row md-padding">
+      <md-card class="flex-50">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-title">{{t 'username.login.title'}}</span>
+            <p class="md-subhead">{{t 'username.login.description' }}</p>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          {{ component gen.component
+            model
+
+            fieldsetFieldsComponent='paper-content'
+            flat=true
+
+            modelMeta=(readonly gen.resource)
+            validators=(readonly gen.resource.validators)
+            messages=(readonly gen.messages)
+            labels=(readonly gen.labels)
+            beforeFormComponent=(readonly gen.components.beforeForm)
+            _controller=this
+
+            onInvalid=(route-action 'onFormInvalid')
+            onSubmit=(route-action 'onFormSubmit')
+          }}
+        </md-card-content>
+      </md-card>
+      <md-card class="flex-50">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-title">{{t 'academic.login.title'}}</span>
+            <p class="md-subhead">{{t 'academic.login.description' }}</p>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          {{#paper-button
+            class="no-margin"
+            onClick=(route-action 'shibbolethLogin')
+            raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'academic.login.button.label' }}{{/paper-button}}
+        </md-card-content>
+      </md-card>
+    </md-content>
+    <md-content class="flex layout-row md-padding">
+      <md-card class="flex-100">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-title">{{t 'register.title'}}</span>
+            <p class="md-subhead">{{t 'register.description' }}</p>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          {{#paper-button
+            class="no-left-margin"
+            onClick=(route-action 'shibbolethRegister')
+            raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'register.academic.login'}}{{/paper-button}}
+          {{#paper-button 
+            class="no-left-margin" 
+            onClick=(transition-to 'auth.register.index' 'professor')
+            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.professor'}}{{/paper-button}}
+          {{#paper-button 
+            class="no-left-margin"
+            onClick=(transition-to 'auth.register.index' 'candidate')
+            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.candidate'}}{{/paper-button}}
+          {{#paper-button 
+            class="no-left-margin"
+            onClick=(transition-to 'auth.register.index' 'manager')
+            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.institution-manager'}}{{/paper-button}}
+        </md-card-content>
+      </md-card>
+    </md-content>
+    {{#if gen.partials.bottom}}
+      {{ partial gen.partials.bottom }}
+    {{/if}}
+  {{/page.content}}
+
+{{/gen-page}}
