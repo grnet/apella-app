@@ -435,7 +435,7 @@
     "input": {
         "arg1": "Καθηγητής Τεταρτης Βαθμίδας",
         "arg2": "1",
-        "arg3" : "109",
+        "arg3" : "97",
         "arg4" : "Αθλητισμος",
         "arg5" : "2",
         "arg6" : "1",
@@ -548,7 +548,7 @@
     "user": "1",
     "action": "registry-add",
     "input": {
-        "arg1" : "109",
+        "arg1" : "97",
         "arg2" : "1",
         "members": "1"
     },
@@ -561,9 +561,9 @@
     "user": "1",
     "action": "registry-add",
     "input": {
-        "arg1" : "109",
+        "arg1" : "97",
         "arg2" : "2",
-        "members": "1"
+        "members": "2"
     },
     "db_state_change" : {
         "object" : {"Registry" : "2"},
