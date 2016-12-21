@@ -1468,7 +1468,7 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .required: {}
+                            .readonly: {}
                         first_name:
                             .cli_option: {}
                             .field: {}
