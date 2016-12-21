@@ -45,6 +45,7 @@ export default {
   'first_name.label': 'Όνομα',
   'last_name.label': 'Επώνυμο',
   'father_name.label': 'Πατρώνυμο',
+  'father_name_current.label': 'Πατρώνυμο',
   'id_passport.label': 'Αριθμός δελτίου ταυτότητας ή διαβατηρίου',
   'mobile_phone_number.label': 'Κινητό τηλέφωνο',
   'home_phone_number.label': 'Σταθερό τηλέφωνο',

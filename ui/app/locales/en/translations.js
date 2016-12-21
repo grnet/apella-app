@@ -45,6 +45,7 @@ export default {
   'first_name.label': 'First name',
   'last_name.label': 'Last name',
   'father_name.label': 'Father name',
+  'father_name_current.label': 'Father name',
   'id_passport.label': 'ID or password number',
   'mobile_phone_number.label': 'Mobile',
   'home_phone_number.label': 'Home phone',
