@@ -90,6 +90,22 @@ const USER_FIELDSET_EDIT = {
   }
 }
 
+const USER_FIELDSET_DETAILS = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    'username',
+    'email',
+    'full_name_current',
+    'father_name_current',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number',
+  ],
+  layout: {
+    flex: [50, 50, 50, 50, 50, 25, 25]
+  }
+}
+
 const PROFESSOR_FIELDSET = {
   label: 'fieldsets.labels.more_info',
   fields: PROFESSOR_FIELDS,
@@ -182,6 +198,7 @@ const normalizeUserErrors = function(errors) {
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
+        USER_FIELDSET_DETAILS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS};

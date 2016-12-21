@@ -2,7 +2,7 @@ import {ApellaGen} from 'ui/lib/common';
 import {i18nValidate} from 'ui/validators/i18n';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
-import {USER_FIELDSET,
+import {USER_FIELDSET, USER_FIELDSET_DETAILS,
         USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
@@ -28,6 +28,15 @@ const ASSISTANT_FIELDSET = {
     flex: [100, 50, 50]
    }
 }
+
+const ASSISTANT_FIELDSET_DETAILS = {
+  label: 'fieldsets.labels.more_info',
+  fields: ['institution.title_current', 'can_create_registries_verbose', 'can_create_positions_verbose'],
+  layout: {
+    flex: [100, 50, 50]
+   }
+}
+
 
 const ASSISTANT_FIELDSET_EDIT_MANAGER = {
   label: 'fieldsets.labels.user_info',
@@ -119,6 +128,10 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.full_name_current')
     },
+    fieldsets: [
+      USER_FIELDSET_DETAILS,
+      ASSISTANT_FIELDSET_DETAILS
+    ]
   },
   create: {
     processModel: function(model) {

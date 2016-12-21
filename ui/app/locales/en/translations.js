@@ -185,6 +185,7 @@ export default {
       user_interest: 'Choose your interests',
       manager_can_edit: 'The following fields can only be edited by the institution manager',
       assistant_can_edit: 'The following fields can only be edited by the assistant',
+      assistant_profile: 'The disabled fields can only be edited by the institition manager',
     }
   },
   institution: {

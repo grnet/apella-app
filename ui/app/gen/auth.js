@@ -14,7 +14,8 @@ const {
 } = Ember;
 
 const PROFILE_ASSISTANT_FIELDSET = {
-  label: 'fieldsets.labels.more_info',
+  label: 'fieldsets.labels.user_info',
+  text: 'fieldsets.text.assistant_profile',
   fields: [
     field('username', { readonly: true }),
     'password',
@@ -25,12 +26,12 @@ const PROFILE_ASSISTANT_FIELDSET = {
     disable_field('last_name'),
     disable_field('father_name'),
     disable_field('id_passport'),
-    disable_field('can_create_positions'),
-    disable_field('can_create_registries'),
     disable_field('institution.title_current'),
+    disable_field('can_create_positions_verbose'),
+    disable_field('can_create_registries_verbose'),
   ],
   layout: {
-        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 25]
   }
 }
 
