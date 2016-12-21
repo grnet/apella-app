@@ -67,8 +67,11 @@ export default {
   'position.fek.label': 'FEK (Government Gazette)',
   'fek_posted_at.label': 'FEK (Government Gazette) date',
   'position.fek_posted_at_format.label': 'FEK (Government Gazette) date',
-  'electors.label': 'Electors',
+  'electors_regular.label': 'Electors',
+  'electors_regular_members.label': 'Electors',
+  'electors_substitute_members.label': 'Substitute Electors',
   'committee.label': 'Committee',
+  'committee_members.label': 'Committee Members',
   'assistants.label': 'Assistants',
   'elected.label': 'Elected',
   'state.label': 'State',
@@ -250,10 +253,10 @@ export default {
     }
   },
   'assistants_on_position_explain': 'Assistants that are able to handle the\
-  current position.<br>Assistants with permission to create and handle all\
   positions will be able to handle this position, too.',
   'open': 'Open',
   'closed': 'Closed',
-  'registry.type.internal': 'Internal Registry',
-  'registry.type.external': 'External Registry'
+  // 1,2 is the type of registry
+  'registry.type.1': 'Internal Registry',
+  'registry.type.2': 'External Registry'
 };

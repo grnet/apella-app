@@ -70,22 +70,21 @@ const assistantsField = field('assistants', {
   }
 });
 
-
 function get_registry_members(registry, store, params) {
     let registry_id = registry.get('id'),
       query = assign({}, params, { registry: registry_id });
 
     return store.query('professor', query)
 };
-
 /*
- * Committee members that come from the external registry of position's
- * department
- * TODO: DRY committeeFields
+ * These fields can get a value from the members of a registry.
+ * The table with the members data have the same form
  */
+function fieldCommitteeElectors(field_name, registry_type) {
+  let label = `registry.type.${registry_type}`;
 
-const committeeExternalField = field('committee_external', {
-  label: 'registry.type.external',
+  return field(field_name, {
+  label: label,
   query: computed('position', function() {
     return function(table, store, field, params) {
       let departmentID = table.get("form.changeset.department.id");
@@ -94,7 +93,7 @@ const committeeExternalField = field('committee_external', {
          * There are max 2 registries per department
          * Here we take the external (type 2) registry
          */
-        let registry = registries.findBy('type', '2');
+        let registry = registries.findBy('type', registry_type);
         return get_registry_members(registry, store, params);
       });
     };
@@ -113,42 +112,7 @@ const committeeExternalField = field('committee_external', {
     },
   }
 });
-
-/*
- * Committee members that come from the internal registry of position's
- * department
- */
-
-const committeeInternalField = field('committee_internal', {
-  label: 'registry.type.internal',
-  query: computed('professor', function() {
-    return function(table, store, field, params) {
-      let departmentID = table.get("form.changeset.department.id");
-      return store.query('registry', {department: departmentID}).then(function (registries) {
-        /*
-         * There are max 2 registries per department
-         * Here we take the internal (type 1) registry
-         */
-        let registry = registries.findBy('type', '1');
-
-        return get_registry_members(registry, store, params);
-      });
-    };
-  }),
-  modelMeta: {
-    row: {
-      fields: ['id',
-        field('last_name_current', {label: 'last_name.label'}),
-        field('first_name_current', {label: 'first_name.label'}),
-        field('email', {label: 'email.label'}),
-      ],
-      actions: ['goToDetails'],
-      actionsMap: {
-        goToDetails: actions.goToDetails
-      }
-    },
-  }
-});
+}
 
 const historyField = field('past_positions', {
     valueQuery: function(store, params, model, value) {
@@ -348,12 +312,33 @@ export default ApellaGen.extend({
         flex: [50, 50, 50, 50]
       },
     }, {
-      label: 'committee.label',
-      fields: [committeeInternalField, committeeExternalField],
+      label: 'committee_members.label',
+      fields: [
+        fieldCommitteeElectors('committee_internal', '1'),
+        fieldCommitteeElectors('committee_external', '2')
+      ],
       layout: {
         flex: [100, 100]
       }
-    },],
+    }, {
+      label: 'electors_regular_members.label',
+      fields: [
+        fieldCommitteeElectors('electors_regular_internal', '1'),
+        fieldCommitteeElectors('electors_regular_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }, {
+      label: 'electors_substitute_members.label',
+      fields: [
+        fieldCommitteeElectors('electors_substitute_internal', '1'),
+        fieldCommitteeElectors('electors_substitute_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }],
   },
   details: {
     page: {
@@ -380,9 +365,30 @@ export default ApellaGen.extend({
     {
       label: 'candidacy.menu_label',
       fields: [candidaciesField]
-    },{
-      label: 'committee.label',
-      fields: [committeeInternalField, committeeExternalField],
+    }, {
+      label: 'committee_members.label',
+      fields: [
+        fieldCommitteeElectors('committee_internal', '1'),
+        fieldCommitteeElectors('committee_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }, {
+      label: 'electors_regular_members.label',
+      fields: [
+        fieldCommitteeElectors('electors_regular_internal', '1'),
+        fieldCommitteeElectors('electors_regular_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }, {
+      label: 'electors_substitute_members.label',
+      fields: [
+        fieldCommitteeElectors('electors_substitute_internal', '1'),
+        fieldCommitteeElectors('electors_substitute_external', '2')
+      ],
       layout: {
         flex: [100, 100]
       }
