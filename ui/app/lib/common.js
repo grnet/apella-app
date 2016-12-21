@@ -33,7 +33,8 @@ const ApellaGen = CRUDGen.extend({
   }
 });
 
-const DATE_FORMAT = ENV.APP.date_format;
+const DATE_FORMAT = ENV.APP.date_format,
+      DATE_TIME_FORMAT = ENV.APP.date_time_format;
 
 // a `field` wrapper which automatically sets sortKey/dataKey and formComponent for
 // i18n fields.
@@ -92,6 +93,14 @@ function computeDateFormat(key) {
   });
 };
 
+function computeDateTimeFormat(key) {
+  return computed(key, function() {
+    let date = get(this, key)
+    return moment(date).format(DATE_TIME_FORMAT);
+  });
+};
+
+
 function booleanFormat(key) {
   return computed(key, function(){
     let value = get(this, key);
@@ -108,6 +117,6 @@ const urlValidator = [
 
 export {
   ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
-  booleanFormat, computeDateFormat, urlValidator
+  booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator
 };
 

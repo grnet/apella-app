@@ -24,6 +24,7 @@ module.exports = function(environment) {
 
     APP: {
       date_format: 'DD , MMMM YYYY',
+      date_time_format: 'DD, MMMM YYYY, HH:mm',
       // Here you can pass flags/options to your application instance
       // when it is created
     },

@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import {computeI18N, computeI18NChoice, computeDateFormat} from 'ui/lib/common';
+import {computeI18N, computeI18NChoice, computeDateFormat, computeDateTimeFormat} from 'ui/lib/common';
 import get_label from '../utils/common/label_list_item';
 
 
@@ -50,6 +50,7 @@ export default DS.Model.extend({
   ends_at_format: computeDateFormat('ends_at'),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
+  updated_at_format: computeDateTimeFormat('updated_at'),
   code: DS.attr(),
   // Use in candidacy select list
   code_and_title: computed('code', 'title', function() {

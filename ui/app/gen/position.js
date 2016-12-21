@@ -99,8 +99,7 @@ const historyField = field('past_positions', {
     modelMeta: {
       row: {
         fields: ['id', 'code', 'state_verbose',
-          field('starts_at_format', {label: 'starts_at.label'}),
-          field('ends_at_format', {label: 'ends_at.label'})
+          field('updated_at_format', {label: 'updated_at.label'})
         ],
         actions: ['goToDetails'],
         actionsMap: {
