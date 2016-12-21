@@ -4,6 +4,7 @@ from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
 
 from apella.views import auth_views
+from apella.views import shibboleth_views
 from apella import views
 from apella.loader import api_urls
 
@@ -13,13 +14,16 @@ admin.autodiscover()
 api_prefix = settings.API_PREFIX
 apipatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/auth/register/$',
+        auth_views.CustomRegistrationView.as_view(), name='register'),
     url(r'^api/auth/login/$',
         auth_views.CustomLoginView.as_view(), name='login'),
     url(r'^api/auth/logout/$',
         auth_views.CustomLogoutView.as_view(), name='logout'),
     url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user'),
     url(r'^api/config.json$', views.config, name='config'),
-    api_urls,
+    url(r'^api/shibboleth$', shibboleth_views.login, name='shibboleth_login'),
+    api_urls
 ]
 
 urlpatterns = [
