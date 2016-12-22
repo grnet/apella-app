@@ -90,11 +90,11 @@ function extractToken(loc) {
   return loc.hash && loc.hash.split("token=")[1];
 }
 
-function resetHash(win) {
+function resetHash(win, replace='') {
   if (win.history.replaceState) {
-    win.history.replaceState(null, null, '#');
+    win.history.replaceState(null, null, '#' + replace);
   } else {
-    win.location.hash = '';
+    win.location.hash = replace;
   }
 }
 
@@ -182,7 +182,7 @@ const Register = gen.GenRoutedObject.extend({
     this.transitionTo('auth.register.success.index');
     return false;
   },
-  
+
   messages: {
     success: 'user.created'
   },

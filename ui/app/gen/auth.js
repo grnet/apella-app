@@ -9,6 +9,7 @@ import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
 import {disable_field} from 'ui/utils/common/fields';
 import ENV from 'ui/config/environment';
 import {Register, resetHash} from 'ui/lib/register';
+import fetch from "ember-network/fetch";
 
 const {
   computed: { reads, not },
@@ -18,6 +19,16 @@ const {
 
 function extractError(loc) {
   return loc.hash && loc.hash.split("error=")[1];
+}
+
+function extractActivate(loc) {
+  return loc.hash && loc.hash.split("activate=")[1];
+}
+
+function extractToken(loc) {
+  let token = loc.hash && loc.hash.split("token=")[1];
+  resetHash(window);
+  return token;
 }
 
 const PROFILE_ASSISTANT_FIELDSET = {
@@ -93,6 +104,68 @@ export default AuthGen.extend({
     },
     templateName: 'apella-login',
     routeMixins: [{
+      handleActivate(activate) {
+        let [uid, token] = activate.split("|");
+        if (uid && token) {
+          let url = ENV.APP.backend_host + '/auth/activate/';
+          let data = {uid, token};
+          return fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+          }).then((resp) => {
+            let err, msg;
+            if (resp.status === 204) {
+              msg = 'user.verification.success';
+            } else {
+              err = 'user.verification.error';
+              resp.json().then((json) => {
+                if (!json.detail) { return; }
+                this.get('messageService').setError(json.detail);
+              });
+              resetHash(window, "error=user.verification.error");
+            }
+            if (msg) { this.get('messageService').setSuccess(msg); }
+            if (err) { this.get('messageService').setError(err); }
+          });
+        }
+      },
+
+      handleTokenLogin(token) {
+        if (get(this, 'session.isAutneticated')) {
+          resetHash();
+          return;
+        }
+        let url = ENV.APP.backend_host + '/auth/me/';
+        return fetch(url, {
+          headers: { 'Authorization': `Token ${token}` }
+        }).then((resp) => {
+          if (resp.status !== 200) {
+            return resp.json().then((json) => {
+              this.get('messageService').setError('login.failed');
+            });
+          }
+          return resp.json().then((user) => {
+            let session = get(this, 'session');
+            user.auth_token = token;
+            resetHash(window);
+            return session.authenticate('authenticator:apimas', user);
+          });
+        })
+      },
+
+      beforeModel() {
+        let activate = extractActivate(window.location);
+        if (activate) {
+          return this.handleActivate(activate);
+        }
+        let token = extractToken(window.location);
+        if (token) {
+          return this.handleTokenLogin(token);
+        }
+        return this._super();
+      },
+
       setupController(controller, model) {
         this._super(controller, model);
         let error = extractError(window.location);
@@ -105,12 +178,19 @@ export default AuthGen.extend({
         if (error === "user.not.verified") {
           controller.set('userNotVerified', true);
         }
+        if (error === "user.not.moderated") {
+          controller.set('userNotModerated', true);
+        }
+        if (error === "user.verification.error") {
+          controller.set('userVerificationFailed', true);
+        }
         resetHash(window);
       },
       resetController(controller) {
         controller.set('userNotFound', false);
         controller.set('userExists', false);
         controller.set('userNotVerified', false);
+        controller.set('userVerificationFailed', false);
       }
     }]
   },

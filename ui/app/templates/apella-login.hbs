@@ -35,10 +35,23 @@
     <div class="md-toolbar-tools">
       <span class="flex-grow">{{t 'user.not.verified.error' }}</span>
       <span class="flex-grow"></span>
-      {{#paper-button
-        class="no-margin flex-grow"
-        onClick=(route-action 'shibbolethLogin')
-        raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'resend.verification.button.label' }}{{/paper-button}}
+      {{resend-verification-action}}
+    </div>
+  </md-toolbar>
+  {{/if}}
+  {{#if userNotModerated }}
+  <md-toolbar class="md-warn">
+    <div class="md-toolbar-tools">
+      <span class="flex-grow">{{t 'user.not.moderated.error' }}</span>
+      <span class="flex-grow"></span>
+    </div>
+  </md-toolbar>
+  {{/if}}
+  {{#if userVerificationFailed }}
+  <md-toolbar class="md-warn">
+    <div class="md-toolbar-tools">
+      <span class="flex-grow">{{t 'user.verification.error.message' }}</span>
+      <span class="flex-grow"></span>
     </div>
   </md-toolbar>
   {{/if}}
@@ -116,6 +129,7 @@
             class="no-left-margin"
             onClick=(transition-to 'auth.register.index' 'manager')
             raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.institution-manager'}}{{/paper-button}}
+          {{resend-verification-action}}
         </md-card-content>
       </md-card>
     </md-content>

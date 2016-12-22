@@ -11,6 +11,22 @@ export default Token.extend({
     this._super();
     this.serverTokenEndpoint = ENV.APP.backend_host + '/auth/login/';
   },
+
+  authenticate(credentials, headers) {
+    // handle direct token authentication
+    if (credentials && credentials.auth_token && credentials.user) {
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        let data = {
+          auth_token: credentials.auth_token,
+          user_id: credentials.user.id
+        };
+        merge(data, credentials.user);
+        resolve(data);
+      });
+    }
+    return this._super(credentials, headers);
+  },
+
   getResponseData(response) {
     let token = response.auth_token;
 
