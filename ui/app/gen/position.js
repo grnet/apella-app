@@ -146,14 +146,6 @@ export default ApellaGen.extend({
     electing: computed('model.state', 'closed', 'owned', function() {
       return get(this, 'model.state') === 'posted' && get(this, 'closed') && get(this, 'owned');
     }),
-    participates: computed('role', 'session.session.authenticated.id', 'model.electors.[]', 'model.committee.[]', function() {
-      let role = get(this, 'role');
-      let professorId = this.get('session.session.authenticated.id').toString();
-      let electors = get(this, 'model.electors').getEach('id');
-      let committee = get(this, 'model.committee').getEach('id');
-      let participations = electors.concat(committee)
-      return role === 'professor' && participations.includes(professorId)
-    }),
     before_open: computed('owned', 'model.starts_at', function(){
       return moment(new Date()).isBefore(moment(get(this, 'model.starts_at'))) && get(this, 'owned');
     }),
