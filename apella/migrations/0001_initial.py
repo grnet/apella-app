@@ -29,6 +29,8 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(unique=True, max_length=254, error_messages={b'unique': b'A user with that email already exists.'})),
                 ('is_staff', models.BooleanField(default=False)),
                 ('is_active', models.BooleanField(default=False)),
+                ('email_verified', models.BooleanField(default=False)),
+                ('email_verified_at', models.DateTimeField(default=None, null=True)),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now)),
                 ('id_passport', models.CharField(max_length=20, blank=True)),
                 ('mobile_phone_number', models.CharField(max_length=30, blank=True)),
