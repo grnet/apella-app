@@ -131,7 +131,7 @@ const INST_MANAGER_FIELDSET_SUB = {
 }
 
 const USER_VALIDATORS = {
-  username: [validate.presence(true), validate.length({min:4, max:50})],
+  username: [validate.presence(true), validate.length({min:3, max:50})],
   first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
