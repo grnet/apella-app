@@ -169,6 +169,8 @@ DJOSER = {
     'ACTIVATION_URL': 'apella/ui/auth/login#activate={uid}|{token}'
 }
 
+APELLA_LEGACY_ACADEMIC_LOGIN_URL = None
+
 if os.path.isfile(SETTINGS_FILE):
     execfile(SETTINGS_FILE)
 else:

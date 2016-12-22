@@ -25,6 +25,7 @@ apipatterns = [
     url(r'^api/auth/me/$', auth_views.CustomUserView.as_view(), name='user'),
     url(r'^api/config.json$', views.config, name='config'),
     url(r'^api/shibboleth$', shibboleth_views.login, name='shibboleth_login'),
+    url(r'^api/shibboleth-legacy$', shibboleth_views.legacy_login, name='shibboleth_legacy'),
     api_urls
 ]
 

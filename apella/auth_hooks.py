@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.authtoken.models import Token
 from rest_framework.serializers import ValidationError
 from django.contrib.auth import user_logged_in, user_logged_out
-from apella.models import RegistrationToken
+from apella.models import RegistrationToken, ApellaUser
 
 
 def validate_new_user(validate, attrs):
@@ -66,3 +66,25 @@ def logout_user(user, request=None):
     user_logged_out.send(
         sender=request.user.__class__, request=request, user=request.user)
     return user
+
+
+def init_legacy_migration(legacy_id, migration_key):
+    try:
+        user = ApellaUser.objects.get(shibboleth_id_legacy=legacy_id)
+        user.shibboleth_migration_key = migration_key
+        user.save()
+    except ApellaUser.DoesNotExist:
+        return None
+    return user.id
+
+
+def migrate_legacy(migration_key, migrate_id, shibboleth_id):
+    user = get_object_or_404(
+        ApellaUser, id=migrate_id, shibboleth_migration_key=migration_key)
+    user.shibboleth_id = shibboleth_id
+    user.shibboleth_migration_key = None
+    legacy = user.shibboleth_id_legacy
+    user.shibboleth_id_legacy = None
+    user.save()
+    return legacy
+
