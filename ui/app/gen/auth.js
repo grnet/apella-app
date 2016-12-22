@@ -27,7 +27,7 @@ function extractActivate(loc) {
 
 function extractToken(loc) {
   let token = loc.hash && loc.hash.split("token=")[1];
-  resetHash(window);
+  if (token) { resetHash(window) };
   return token;
 }
 
