@@ -118,6 +118,7 @@ class Command(ApellaCommand):
                     email=options['email'],
                     first_name=first_name,
                     last_name=last_name,
+                    email_verified=True,
                     father_name=father_name)
         except IntegrityError as e:
             raise CommandError(e.message)
