@@ -7,6 +7,7 @@ const {
   get,
 } = Ember;
 
+
 export default ApellaGen.extend({
   name: 'participations',
   resourceName: 'positions',
@@ -26,23 +27,16 @@ export default ApellaGen.extend({
       ]
       var promise = Ember.RSVP.all(promises).then(function(arrays) {
         var mergedArray = Ember.A();
+        arrays[0].forEach(function(el) {
+          el.set('participation', 'Elector');
+        })
+        arrays[1].forEach(function(el) {
+          el.set('participation', 'Committee');
+        })
         arrays.forEach(function (records) {
           mergedArray.pushObjects(records.toArray());
         });
-        mergedArray = mergedArray.uniqBy('id')
-        mergedArray.forEach(function(el) {
-          let up = [];
-          let electors = el.get('electors').getEach('id');
-          let committee = el.get('committee').getEach('id');
-          if (electors.includes(id.toString())) {
-            up.push('Elector')
-          }
-          if (committee.includes(id.toString())) {
-            up.push('Committee')
-          }
-          el.set('participation', up.join(', '));
-        })
-        return mergedArray;
+        return mergedArray.uniqBy('id')
       });
 
       return DS.PromiseArray.create({
