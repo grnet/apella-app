@@ -53,6 +53,9 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    email_verified = models.BooleanField(default=False)
+    email_verified_at = models.DateTimeField(null=True, default=None)
+
     date_joined = models.DateTimeField(default=timezone.now)
     id_passport = models.CharField(max_length=20, blank=True)
     mobile_phone_number = models.CharField(max_length=30, blank=True)
@@ -180,6 +183,10 @@ class UserProfile(models.Model):
     verified_at = models.DateTimeField(null=True, blank=True)
     is_rejected = models.BooleanField(default=False)
     rejected_reason = models.TextField(null=True, blank=True)
+
+    @property
+    def email(self):
+        return self.user.email
 
     class Meta:
         abstract = True

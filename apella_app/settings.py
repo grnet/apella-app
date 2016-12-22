@@ -166,7 +166,7 @@ SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
 
 DJOSER = {
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': '#activate={uid}|{token}'
+    'ACTIVATION_URL': 'apella/ui/auth/login#activate={uid}|{token}'
 }
 
 if os.path.isfile(SETTINGS_FILE):

@@ -1,11 +1,19 @@
+from django.db import transaction
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 from djoser import views as djoser_views
+from djoser import serializers as djoser_serializers
+from djoser import signals as djoser_signals
+from djoser import settings as djoser_settings
 from rest_framework import mixins
+from rest_framework.response import Response
 
 from apella.loader import adapter
+from apella import auth_hooks
 from apella.models import ApellaUser, InstitutionManager, Professor, \
     Candidate, RegistrationToken
-from django.core.exceptions import ValidationError, PermissionDenied
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.serializers import ValidationError
 from django.utils.crypto import get_random_string
 
 
@@ -59,12 +67,67 @@ class CustomUserView(djoser_views.UserView):
         return adapter.get_serializer(resource)
 
 
+class CustomLoginSerializer(djoser_serializers.LoginSerializer):
+
+    def validate(self, attrs):
+        username = attrs.get('username')
+        password = attrs.get('password')
+        self.user = auth_hooks.authenticate_user(username=username,
+            password=password)
+        if self.user:
+            auth_hooks.validate_user_login(self.user, self.error_messages)
+        else:
+            raise ValidationError(self.error_messages['invalid_credentials'])
+        return attrs
+
+
 class CustomLoginView(djoser_views.LoginView):
-    pass
+    serializer_class = CustomLoginSerializer
+
+
+class CustomActivationSerializer(djoser_serializers.ActivationSerializer):
+
+    def validate(self, attrs):
+        attrs = super(
+            djoser_serializers.ActivationSerializer, self).validate(attrs)
+        if self.user.email_verified:
+            raise PermissionDenied(self.error_messages['stale_token'])
+        return attrs
+
+
+class CustomActivationView(djoser_views.ActivationView):
+
+    serializer_class = CustomActivationSerializer
+
+    @transaction.atomic
+    def action(self, serializer):
+        auth_hooks.activate_user(serializer.user)
+        serializer.user.save()
+        djoser_signals.user_activated.send(
+            sender=self.__class__, user=serializer.user, request=self.request)
+        return Response(status=204)
 
 
 class CustomLogoutView(djoser_views.LogoutView):
     pass
+
+
+def make_registration_serializer(serializer):
+    """
+    Polymorphic registration serializer based on provided `serializer`
+    """
+    class RegistrationSerializer(serializer):
+
+        def save(self, *args, **kwargs):
+            save = super(RegistrationSerializer, self).save
+            data = self.context['request'].data
+            return auth_hooks.register_user(save, data, *args, **kwargs)
+
+        def validate(self, attrs):
+            validate = super(RegistrationSerializer, self).validate
+            return auth_hooks.validate_new_user(validate, attrs)
+
+    return RegistrationSerializer
 
 
 class CustomRegistrationView(djoser_views.RegistrationView,
@@ -76,30 +139,48 @@ class CustomRegistrationView(djoser_views.RegistrationView,
             raise ValidationError({"role": "invalid role"})
 
         resource = USER_ROLE_MODEL_RESOURCES[role]['resource']
-        return api_serializers.get(resource)
+        return make_registration_serializer(adapter.get_serializer(resource))
 
+    def get_email_context(self, user):
+        if not isinstance(user, ApellaUser):
+            user = user.user
+        return super(CustomRegistrationView, self).get_email_context(user)
+
+    def resend_verification(self, request, email):
+        try:
+            user = ApellaUser.objects.get(email=email, email_verified=False)
+        except ApellaUser.DoesNotExist:
+            raise PermissionDenied("user.invalid.or.activated")
+
+        if djoser_settings.get('SEND_ACTIVATION_EMAIL'):
+            self.send_email(**self.get_send_email_kwargs(user))
+        return HttpResponse(status=202)
+
+
+    @transaction.atomic
     def create(self, request, *args, **kwargs):
-        key = self.request.data.get('registration_token', None)
-        token = None
+        resend_email = request.data.get('resend_verification', None)
+        if resend_email:
+            return self.resend_verification(request, resend_email)
+
         user = request.data['user'];
         if not user:
             request.data['user'] = user = {}
 
-        if key:
-            token = get_object_or_404(RegistrationToken, token=key)
+        role = self.request.data.get('user_role', None)
+        if not role or role not in USER_ROLE_MODEL_RESOURCES:
+            raise ValidationError({"role": "invalid role"})
+
+        request.data['user']['role'] = role
+
+        token = request.data.get('registration_token', None)
+        if token:
+            token = get_object_or_404(RegistrationToken, token=token)
             user['username'] = token.identifier
             user['password'] = get_random_string(100)
-            user['shibboleth_id'] = token.identifier
             # TODO: extract token data to non-set request values
 
-        resp = super(CustomRegistrationView, self).create(
+        return super(CustomRegistrationView, self).create(
             request, *args, **kwargs)
-
-        if token:
-            user = ApellaUser.objects.get(username=token.identifier)
-            user.shibboleth_id = token.identifier
-            user.set_unusable_password()
-            user.save()
-            token.delete()
 
         return resp

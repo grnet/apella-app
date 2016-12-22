@@ -13,6 +13,7 @@ from django.db import transaction
 
 from apella.models import ApellaUser, Professor, MultiLangFields, \
     RegistrationToken
+from apella import auth_hooks
 
 
 logger = logging.getLogger('shibboleth')
@@ -105,20 +106,27 @@ def login(request):
     created = False
     try:
         user = UserModel.objects.get(user__shibboleth_id=identifier)
-        # user not active
-        if not user.user.is_active:
-            msg = 'user.not.active'
-            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
-
-        if not user.is_verified:
-            msg = 'user.not.verified'
-            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
 
         if force_register:
             msg = "user.exists"
             return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
 
-        token = '123'
+        # user not active
+        if not user.user.is_active:
+            msg = 'user.not.active'
+            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+
+        if not user.user.email_verified:
+            msg = 'user.not.verified'
+            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+
+        if not user.is_verified:
+            msg = 'user.not.moderated'
+            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+
+        token = auth_hooks.login_user(user.user, request)
+        token = token.key
+
     except UserModel.DoesNotExist:
         if force_login:
             msg = "user.not.found"

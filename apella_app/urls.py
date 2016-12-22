@@ -16,6 +16,8 @@ apipatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/auth/register/$',
         auth_views.CustomRegistrationView.as_view(), name='register'),
+    url(r'^api/auth/activate/$',
+        auth_views.CustomActivationView.as_view(), name='activate'),
     url(r'^api/auth/login/$',
         auth_views.CustomLoginView.as_view(), name='login'),
     url(r'^api/auth/logout/$',
