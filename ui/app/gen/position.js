@@ -117,6 +117,9 @@ export default ApellaGen.extend({
   path: 'positions',
 
   abilityStates: {
+    is_latest: computed('model.is_latest', function(){
+      return get(this, 'model.is_latest');
+    }),
     owned: computed('user.user_id', 'model.author', 'role', 'model.assistants.[]', function() {
       let id = get(this, 'user.id').toString();
 
@@ -135,19 +138,30 @@ export default ApellaGen.extend({
 
       return is_author || is_attached_assistant || is_institutionmanager;
     }), // we expect server to reply with owned resources
-    'open': computed('model.state', 'model.ends_at', 'owned', function() {
+    'open': computed('model.state', 'model.ends_at', 'owned', 'is_latest',  function() {
       return get(this, 'model.state') === 'open' &&
         moment(get(this, 'model.ends_at')).isBefore(new Date()) &&
+        get(this, 'is_latest') &&
         get(this, 'owned');
     }),
-    closed: computed('model.starts_at', 'owned', function() {
-      return moment(get(this, 'model.starts_at')).isBefore(moment(new Date())) && get(this, 'owned');
+    closed: computed('model.starts_at', 'owned', 'is_latest',  function() {
+      return moment(get(this, 'model.starts_at')).isBefore(moment(new Date())) &&
+        get(this, 'is_latest') &&
+        get(this, 'owned');
     }),
-    electing: computed('model.state', 'closed', 'owned', function() {
-      return get(this, 'model.state') === 'posted' && get(this, 'closed') && get(this, 'owned');
+    electing: computed('model.state', 'closed', 'owned', 'is_latest', function() {
+      return get(this, 'model.state') === 'posted' &&
+        get(this, 'closed') &&
+        get(this, 'is_latest') &&
+        get(this, 'owned');
     }),
-    before_open: computed('owned', 'model.starts_at', function(){
-      return moment(new Date()).isBefore(moment(get(this, 'model.starts_at'))) && get(this, 'owned');
+    before_open: computed('owned', 'model.starts_at', 'is_latest',  function(){
+      return moment(new Date()).isBefore(moment(get(this, 'model.starts_at'))) &&
+        get(this, 'is_latest') &&
+        get(this, 'owned');
+    }),
+    is_latest: computed('model.is_latest', function(){
+      return get(this, 'model.is_latest')
     }),
     can_create: computed('user.can_create_positions', function() {
       return get(this, 'user.can_create_positions');
@@ -214,6 +228,7 @@ export default ApellaGen.extend({
     row: {
       fields: ['code', 'title', field('state_verbose', {sortKey: 'state'}), field('department.title_current', {label: 'department.label'})],
       actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition' ],
+
       actionsMap: {
         applyCandidacy: {
           label: 'applyCandidacy',

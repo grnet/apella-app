@@ -8,7 +8,8 @@ from django.core import validators
 from apella.validators import before_today_validator, after_today_validator,\
     validate_dates_interval, validate_position_dates
 from apella import common
-from apella.helpers import assistant_can_edit, professor_participates
+from apella.helpers import assistant_can_edit, professor_participates,\
+    position_is_latest
 
 
 class MultiLangFields(models.Model):
@@ -325,6 +326,9 @@ class Position(models.Model):
 
     def check_resource_state_participates(self, row, request, view):
         return professor_participates(request.user, self.id)
+
+    def check_resource_state_is_latest(self, row, request, view):
+        return position_is_latest(self)
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):

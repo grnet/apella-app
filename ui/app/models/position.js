@@ -66,5 +66,8 @@ export default DS.Model.extend({
 
   past_positions: DS.hasMany('position'),
 
+  is_latest: computed('code', 'id', function() {
+    return get(this, 'code').replace('APP','') === get(this, 'id');
+  }),
 
 });
