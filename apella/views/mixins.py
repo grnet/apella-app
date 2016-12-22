@@ -1,9 +1,10 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.decorators import detail_route, list_route
-from django.db.models import ProtectedError, Min
+from rest_framework.decorators import detail_route
+from django.db.models import ProtectedError, Min, Q
 from django.conf import settings
+from django.utils import timezone
 
 from apella.models import InstitutionManager, Position, Department, \
         Candidacy, ApellaUser, ApellaFile
@@ -38,7 +39,6 @@ class PositionList(object):
     @detail_route()
     def history(self, request, pk=None):
         position = self.get_object()
-        user = self.request.user
         position_states = Position.objects.filter(code=position.code)
         serializer = self.get_serializer(position_states, many=True)
         return Response(serializer.data)
@@ -52,6 +52,11 @@ class PositionList(object):
             departments = Department.objects.filter(
                 institution_id__in=institution_ids)
             queryset = queryset.filter(department__in=departments)
+        elif user.is_professor():
+            queryset = queryset.filter(
+                Q(state='posted', starts_at__lt=timezone.now()) |
+                Q(committee=user.professor.id) |
+                Q(electors=user.professor.id))
         if 'pk' in self.kwargs:
             return queryset.filter(id=self.kwargs['pk'])
         else:
@@ -72,7 +77,6 @@ class CandidacyList(object):
     @detail_route()
     def history(self, request, pk=None):
         candidacy = self.get_object()
-        user = self.request.user
         candidacy_states = Candidacy.objects.filter(code=candidacy.code)
         serializer = self.get_serializer(candidacy_states, many=True)
         return Response(serializer.data)
