@@ -70,4 +70,42 @@ export default DS.Model.extend({
     return get(this, 'code').replace('APP','') === get(this, 'id');
   }),
 
+  is_open: computed('starts_at', 'ends_at', function() {
+    let now = moment(),
+      start = get(this, 'starts_at'),
+      end = get(this, 'ends_at');
+
+    return (now.isBetween(start, end) || now.isSame(start) || now.isSame(end));
+  }),
+
+  is_closed: computed('ends_at', function() {
+    let now = moment(),
+      end = get(this, 'ends_at');
+    return now.isAfter(end);
+  }),
+
+  /*
+   * If a position is in state "posted" we display a state depending on the
+   * ability to accept candidacies at the current time. These states are:
+   * posted: before the posted position starts to accept candidacies
+   * open: when the posted position accepts candidacies
+   * closed: after the last day that a posted position can accept candidacies
+   */
+
+  state_calc_verbose: computed('is_open', 'is_closed', 'state', 'i18n.locale', function() {
+    if(get(this, 'state') === 'posted') {
+      if(get(this, 'is_closed')) {
+        return get(this, 'i18n').t('closed');
+      }
+      else if(get(this, 'is_open')) {
+        return get(this, 'i18n').t('open');
+      }
+      else {
+        return get(this, 'state_verbose');
+      }
+    }
+    else {
+      return get(this, 'state_verbose');
+    }
+  })
 });

@@ -98,7 +98,7 @@ const historyField = field('past_positions', {
     label: null,
     modelMeta: {
       row: {
-        fields: ['id', 'code', 'state_verbose',
+        fields: ['id', 'code', 'state_calc_verbose',
           field('updated_at_format', {label: 'updated_at.label'})
         ],
         actions: ['goToDetails'],
@@ -212,7 +212,7 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: ['state', 'department']
+        fields: ['department']
       },
       serverSide: true,
       search: true,
@@ -226,7 +226,7 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: ['code', 'title', field('state_verbose', {sortKey: 'state'}), field('department.title_current', {label: 'department.label'})],
+      fields: ['code', 'title', 'state_calc_verbose', field('department.title_current', {label: 'department.label'})],
       actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition' ],
 
       actionsMap: {
@@ -275,7 +275,7 @@ export default ApellaGen.extend({
   edit: {
     fieldsets: [{
       label: 'fieldsets.labels.basic_info',
-      fields: [disable_field('code'), disable_field('state'), 'title',
+      fields: [disable_field('code'), disable_field('state_calc_verbose'), 'title',
         'department', 'description', 'discipline','subject_area', 'subject'],
       layout: {
         flex: [50, 50, 50, 50, 100, 100, 50, 50]
@@ -297,7 +297,7 @@ export default ApellaGen.extend({
       fields: [committeeField]
     },{
       label: 'fieldsets.labels.basic_info',
-      fields: ['code', 'state_verbose', 'title',
+      fields: ['code', 'state_calc_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
         'description', 'discipline', field('subject_area.title_current',{label: 'subject_area.label'}),
         field('subject.title_current', {label: 'subject.label'})],

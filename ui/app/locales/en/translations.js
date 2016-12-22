@@ -72,7 +72,7 @@ export default {
   'assistants.label': 'Assistants',
   'elected.label': 'Elected',
   'state.label': 'State',
-  'state_verbose.label': 'State',
+  'state_calc_verbose.label': 'State',
   'discipline.label': 'Discipline',
   'position.discipline.label': 'Discipline',
   'starts_at.label': 'Submission Opening Date',
@@ -106,7 +106,7 @@ export default {
   'position.title.label': 'Position Title',
   'position.department.school.institution.title_current.label': 'Institution',
   'position.department.title_current.label': 'Department',
-  'position.state_verbose.label': 'Position State',
+  'position.state_calc_verbose.label': 'Position State',
   'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy',
   'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
@@ -251,5 +251,7 @@ export default {
   },
   'assistants_on_position_explain': 'Assistants that are able to handle the\
   current position.<br>Assistants with permission to create and handle all\
-  positions will be able to handle this position, too.'
+  positions will be able to handle this position, too.',
+  'open': 'Open',
+  'closed': 'Closed'
 };

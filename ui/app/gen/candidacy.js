@@ -17,7 +17,7 @@ const presence = validate.presence(true),
 let FS = {
   list:  ['position.code', 'position.department.institution.title_current',
           'position.department.title_current',
-          'position.state_verbose', field('state_verbose', {label: 'candidacy.state'})],
+          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
   create: [{
     label: 'candidacy.position_section.title',
     text: 'candidacy.position_section.subtitle',
@@ -199,7 +199,7 @@ export default ApellaGen.extend({
         label: 'fieldsets.labels.position_details',
         fields: [
           'position.code',
-          'position.state_verbose',
+          'position.state_calc_verbose',
           'position.title',
           'position.description',
           'position.discipline',

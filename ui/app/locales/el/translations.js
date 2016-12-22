@@ -34,7 +34,7 @@ export default {
   'Cancelled': 'Ακυρωθείσα',
   'Electing': 'Επιλογή',
   'Successful': 'Στελεχωμένη',
-  'Failed': 'Κλειστή',
+  'Failed': 'Άγονη',
   'Revoked': 'Αναπομπή',
   'Assistant': 'Βοηθός υπεύθυνου ιδρύματος',
   'Candidate': 'Υποψήφιος',
@@ -71,7 +71,7 @@ export default {
   'assistants.label': 'Βοηθοί Υπεύθυνου Ιδρύματος',
   'elected.label': 'Εκλεγμένος',
   'state.label': 'Κατάσταση',
-  'state_verbose.label': 'Κατάσταση',
+  'state_calc_verbose.label': 'Κατάσταση',
   'discipline.label': 'Γνωστικό αντικείμενο',
   'position.discipline.label': 'Γνωστικό αντικείμενο',
   'starts_at.label': 'Ημερομηνία Έναρξης Υποβολών',
@@ -105,7 +105,7 @@ export default {
   'position.title.label': 'Τίτλος θέσης',
   'position.department.school.institution.title_current.label': 'Ιδρυμα',
   'position.department.title_current.label': 'Τμήμα',
-  'position.state_verbose.label': 'Κατάσταση Θέσης',
+  'position.state_calc_verbose.label': 'Κατάσταση Θέσης',
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε την θέση για την οποία έχετε υποβάλει υποψηφιότητα',
   'candidacy.state': 'Κατάσταση Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
@@ -249,5 +249,7 @@ export default {
   },
   'assistants_on_position_explain': 'Βοηθοί που μπορούν να τροποποιήσουν τα\
   στοιχεία της θέσης.<br>Η τροποποίηση είναι εφικτή και από τους βοηθούς που τους έχει\
-  δοθεί δικαίωμα διαχείρισης όλων των θέσεων.'
+  δοθεί δικαίωμα διαχείρισης όλων των θέσεων.',
+  'open': 'Ανοιχτή',
+  'closed': 'Κλειστή'
 };
