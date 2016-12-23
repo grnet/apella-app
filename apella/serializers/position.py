@@ -63,6 +63,7 @@ class PositionMixin(ValidatorMixin):
         committee = curr_position.committee.all()
         ranks = curr_position.ranks.all()
 
+        validated_data['updated_at'] = timezone.now()
         instance = super(PositionMixin, self).update(instance, validated_data)
         if instance.state != curr_position.state:
             curr_position.pk = None
@@ -71,7 +72,6 @@ class PositionMixin(ValidatorMixin):
             curr_position.electors = electors
             curr_position.committee = committee
             curr_position.ranks = ranks
-            curr_position.created_at = timezone.now()
             curr_position.save()
         return instance
 
@@ -91,9 +91,9 @@ class CandidacyMixin(ValidatorMixin):
 
     def update(self, instance, validated_data):
         curr_candidacy = Candidacy.objects.get(id=instance.id)
+        validated_data['updated_at'] = timezone.now()
         instance = super(CandidacyMixin, self).update(instance, validated_data)
         if instance.state is not curr_candidacy.state:
             curr_candidacy.pk = None
-            curr_candidacy.submitted_at = timezone.now()
             curr_candidacy.save()
         return instance

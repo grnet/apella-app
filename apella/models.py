@@ -281,10 +281,6 @@ class Position(models.Model):
             settings.START_DATE_END_DATE_INTERVAL)
         super(Position, self).clean(*args, **kwargs)
 
-    def save(self, *args, **kwargs):
-        self.updated_at = timezone.now()
-        super(Position, self).save(*args, **kwargs)
-
     def check_resource_state_owned(self, row, request, view):
         user = request.user
         if user.id == self.author.user.id:
@@ -356,10 +352,6 @@ class Candidacy(models.Model):
             self.position.starts_at,
             self.position.ends_at)
         super(Candidacy, self).clean(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        self.updated_at = timezone.now()
-        super(Candidacy, self).save(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
