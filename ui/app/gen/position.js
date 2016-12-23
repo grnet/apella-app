@@ -241,13 +241,16 @@ export default ApellaGen.extend({
         cancelPosition: {
           label: 'cancelPosition',
           icon: 'highlight_off',
+          accent: true,
           action(route, model) {
             model.set('state', 'cancelled');
+            let m = route.get('messageService')
             model.save().then((value) => {
+              m.setSuccess('form.saved');
               return value;
             }, (reason) => {
               model.rollbackAttributes();
-              window.alert(reason)
+              m.setError('reason.errors');
               return reason.errors;
             });
           },

@@ -61,12 +61,14 @@ let actions = {
     action(route, model) {
       return model.get('candidate').then(() => {
         model.set('state', 'cancelled');
+        let m = route.get('messageService')
         return model.save().then((value) => {
+          m.setSuccess('form.saved');
           return value;
         }, (reason) => {
           model.rollbackAttributes();
-          window.alert(reason)
-        return reason;
+          m.setError('reason.errors');
+          return reason;
         });
       })
     },
