@@ -9,7 +9,8 @@ const presence = validate.presence(true),
       mandatory = [validate.presence(true)],
       mandatory_with_max_chars = [presence, max_chars],
       {
-        get, computed, computed: { alias }
+        get, computed, computed: { alias },
+        getOwner
       } =Ember,
       CANDIDACY_POSTED_ID = '2',
       POSITION_POSTED_ID = '2';
@@ -97,16 +98,20 @@ export default ApellaGen.extend({
       ability.setProperties(props);
       return ability;
     }),
-    owned: computed('role', 'user.id', 'model.candidate.id', function() {
-      return get(this, 'role') === 'institutionmanager' || get(this, 'user.id') === get(this, 'model.candidate.id');
+
+    owned: computed('role', 'user.user_id', 'model.candidate.id', function() {
+      let is_institutionmanager = get(this, 'role') === 'institutionmanager';
+      let is_candidate_owning = get(this, 'user.user_id') == get(this, 'model.candidate.id')
+      return is_institutionmanager || is_candidate_owning;
     }), // we expect server to reply with owned resources if user is an institution manager
     others_can_view: alias('model.othersCanView'),
     participates: computed('role', function() {
       let role = get(this, 'role');
       return role === 'professor'; // TODO: resolve user.id participates
     }),
-    owned_open: computed('owned', 'position.open', 'model.state', function() {
-      return get(this, 'owned') && get(this, 'positionAbility.open') && get(this, 'model.state') === 'cancelled';
+    owned_open: computed('owned', 'model.position.state', 'model.state', function() {
+      let position_is_open = get(this, 'model.position.state') === 'posted';
+      return get(this, 'owned') && position_is_open;
     })
   },
 
