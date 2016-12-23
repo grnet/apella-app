@@ -522,8 +522,28 @@
         "change" : "new position"
     }
 },
-
-
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Κλειστή θέση",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Γενική Εκκλησιαστική Ιστορία, από την άλωση μέχρι σήμερα",
+        "arg5" : "1",
+        "arg6" : "1",
+        "arg7" : "http://www.google.com",
+        "arg8" : "2016-08-15",
+        "arg9" : "2016-09-30",
+        "arg10" : "2016-10-30",
+        "arg11" : "Θεολογία",
+        "arg12" : "[1,2]"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "11"},
+        "change" : "new position"
+    }
+},
 {
     "user": "2",
     "action": "position-list",
