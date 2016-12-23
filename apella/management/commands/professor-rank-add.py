@@ -12,14 +12,12 @@ class Command(ApellaCommand):
             '--rank-el',
             dest='rank_el',
             help='Professor rank name in Greek',
-            required=True,
         )
 
         parser.add_argument(
             '--rank-en',
             dest='rank_en',
             help='Professor rank name in English',
-            required=True,
         )
 
     def handle(self, *args, **options):
