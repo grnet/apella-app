@@ -286,10 +286,13 @@ class Position(models.Model):
         super(Position, self).save(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
-        if request.user.id == self.author.user.id:
+        user = request.user
+        if user.id == self.author.user.id:
             return True
+        if user.is_assistant():
+            return self in user.institutionmanager.assistant_duty.all()
         return InstitutionManager.objects.filter(
-            user_id=request.user.id,
+            user_id=user.id,
             manager_role='institutionmanager',
             institution_id=self.department.institution.id).exists()
 
