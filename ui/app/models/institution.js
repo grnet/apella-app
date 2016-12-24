@@ -14,8 +14,8 @@ export default DS.Model.extend({
     choices: CHOICES.INSTITUTION_CATEGORIES,
     defaultValue: 'Institution'
   }),
-  organization: DS.attr(),
-  regulatory_framework: DS.attr(),
+  organization: DS.attr({displayComponent: 'url-display'}),
+  regulatory_framework: DS.attr({displayComponent: 'url-display'}),
 
   title_current: computeI18N('title'),
   category_verbose: computeI18NChoice('category', CHOICES.INSTITUTION_CATEGORIES),
