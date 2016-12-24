@@ -1121,7 +1121,7 @@ spec:
             .drf_collection:
                 model: apella.models.Position
                 model_serializers: [apella.serializers.position.PositionMixin]
-                mixins: [apella.views.mixins.PositionList,
+                mixins: [apella.views.mixins.PositionMixin,
                     apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [title, id, state, department, code, electors, committee]
                 ordering_fields: [title, id, state, department, code]

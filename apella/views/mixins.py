@@ -34,7 +34,7 @@ class AssistantList(generics.ListAPIView):
                 manager_role='assistant')
 
 
-class PositionList(object):
+class PositionMixin(object):
 
     @detail_route()
     def history(self, request, pk=None):
@@ -63,13 +63,13 @@ class PositionList(object):
             ids = queryset.values('code').annotate(Min('id')).values('id__min')
             return queryset.filter(id__in=ids)
 
-    def update(self, request, pk=None):
+    def update(self, request, *args, **kwargs):
         position = self.get_object()
         code = position.code
         if code.split(settings.POSITION_CODE_PREFIX)[1] != \
                 str(position.id):
             return Response(status=status.HTTP_403_FORBIDDEN)
-        return super(PositionList, self).update(request, pk=None)
+        return super(PositionMixin, self).update(request, *args, **kwargs)
 
 
 class CandidacyList(object):
