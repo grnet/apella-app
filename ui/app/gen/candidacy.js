@@ -73,6 +73,9 @@ let actions = {
         });
       })
     },
+    hidden: computed('model.state', function(){
+      return get(this, 'model.state') === 'cancelled';
+    }),
     confirm: true,
     prompt: {
       ok: 'withdrawal',
