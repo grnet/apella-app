@@ -34,8 +34,11 @@ export default ApellaGen.extend({
   },
 
   abilityStates: {
-    owned: computed('role', function() {
-      return get(this, 'role') === 'institutionmanager';
+    owned: computed('role', 'user.institution.id', 'model.id', function() {
+      let user_institution = get(this, 'user.institution');
+      let user_institution_id = user_institution.split('/').slice(-2)[0];
+      return get(this, 'role') === 'institutionmanager' &&
+        user_institution_id === get(this, 'model.id');
     }) // we expect server to reply with owned resources
   },
 
