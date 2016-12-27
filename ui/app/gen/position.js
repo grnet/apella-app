@@ -338,6 +338,10 @@ export default ApellaGen.extend({
       layout: {
         flex: [100, 100]
       }
+    }, {
+      label: 'assistants.label',
+      text: 'assistants_on_position_explain',
+      fields: [assistantsField]
     }],
   },
   details: {
