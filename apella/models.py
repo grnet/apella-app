@@ -144,6 +144,7 @@ class ApellaFile(models.Model):
     source_id = models.IntegerField()
     file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
     file_path = models.FileField(upload_to=generate_filename)
+    description = models.CharField(max_length=255, blank=True, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
@@ -207,6 +208,12 @@ class UserProfile(models.Model):
 
 class CandidateProfile(models.Model):
     cv = models.ForeignKey(ApellaFile, blank=True, null=True)
+    diplomas = models.ManyToManyField(
+        ApellaFile, blank=True,
+        related_name='%(app_label)s_%(class)s_diploma_files')
+    publications = models.ManyToManyField(
+        ApellaFile, blank=True,
+        related_name='%(app_label)s_%(class)s_publication_files')
 
     class Meta:
         abstract = True

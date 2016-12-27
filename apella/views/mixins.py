@@ -160,21 +160,37 @@ class RegistriesList(generics.ListAPIView):
 class UploadFilesViewSet(viewsets.ModelViewSet):
 
     FILE_SOURCE = {
-        "Professors": "profile",
-        "Candidates": "profile",
-        "Candidacies": "candidacy",
-        "Positions": "position"
+        "Professor": "profile",
+        "Candidate": "profile",
+        "Candidacy": "candidacy",
+        "Position": "position"
+    }
+
+    FILE_KIND_TO_FIELD = {
+        "cv": {"field": "cv", "many": False},
+        "diploma": {"field": "diplomas", "many": True},
+        "publication": {"field": "publications", "many": True},
+        "id_passport": {"field": "id_passport", "many": False},
+        "application_form": {"field": "application_form", "many": False},
     }
 
     @detail_route(methods=['put'])
     def upload(self, request, pk=None):
         candidate = self.get_object()
-        cv = ApellaFile.objects.create(
-            owner=request.user,
-            file_kind='CV',
-            source=self.FILE_SOURCE[self.get_view_name()],
-            source_id=candidate.id,
-            file_path=request.FILES['cv.file_path'])
-        candidate.cv = cv
+        file_kind = request.data['file_kind']
+        uploaded_file = ApellaFile.objects.create(
+                owner=request.user,
+                file_kind=file_kind,
+                source=self.FILE_SOURCE[candidate.__class__.__name__],
+                source_id=candidate.id,
+                file_path=request.FILES['file_path'],
+                description=request.data['file_description'])
+
+        field_name, many = self.FILE_KIND_TO_FIELD[file_kind].values()
+        if not many:
+            setattr(candidate, field_name, uploaded_file)
+        else:
+            many_attr = getattr(candidate, field_name)
+            many_attr.add(uploaded_file)
         candidate.save()
         return Response(status=status.HTTP_200_OK)

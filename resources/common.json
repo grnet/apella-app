@@ -48,10 +48,11 @@
     ],
 
     "FILE_KINDS": [
-        ["CV", "CV"],
-        ["Diploma", "Diploma"],
-        ["Publication", "Publication"],
-        ["Additional file", "Additional file"]
+        ["cv", "CV"],
+        ["diploma", "Diploma"],
+        ["publication", "Publication"],
+        ["id_passport", "ID Passport"],
+        ["application_form", "Application Form"]
     ],
 
     "INSTITUTION_CATEGORIES": [

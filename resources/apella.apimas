@@ -27,43 +27,6 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
-        user-files:
-            .collection: {}
-            .drf_collection:
-                model: apella.models.ApellaFile
-            .cli_commands: {}
-            '*':
-                id:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .serial: {}
-                    .readonly: {}
-                url:
-                    .drf_field: {}
-                    .identity: {}
-                owner:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .readonly: {}
-                    .ref:
-                        to: users
-                file_kind:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .string: {}
-                file_path:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .file: {}
-                updated_at:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .datetime: {}
         users:
             .collection: {}
             .drf_collection:
@@ -195,6 +158,57 @@ spec:
                 .create: {}
                 .update: {}
                 .retrieve: {}
+        apella-files:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.ApellaFile
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                file_path:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .file: {}
+                description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                owner:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: users
+                source:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                source_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .integer: {}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {}
         institutions:
             .collection: {}
             .drf_collection:
@@ -478,8 +492,49 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .read_only: {}
+                    .readonly: {}
                     .integer: {}
+                file_path:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                cv:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .ref:
+                        to: apella-files
+                diplomas:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .ref:
+                        to: apella-files
+                        many: True
+                publications:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .ref:
+                        to: apella-files
+                        many: True
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -986,6 +1041,61 @@ spec:
                     .drf_field: {}
                     .boolean: {}
                     .readonly: {}
+                file_path:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                cv:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .ref:
+                        to: apella-files
+                diplomas:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .ref:
+                        to: apella-files
+                        many: True
+                publications:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .ref:
+                        to: apella-files
+                        many: True
+                id_passport_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .ref:
+                        to: apella-files
+                application_form:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .ref:
+                        to: apella-files
                 user:
                     .cli_option: {}
                     .field: {}
