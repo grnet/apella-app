@@ -6,54 +6,21 @@
     model=model
     tabs=gen.tabs
   }}
+
   {{#if userNotFound }}
-  <md-toolbar class="md-warn">
-    <div class="md-toolbar-tools">
-      <span class="flex-grow">{{t 'user.not.found.error' }}</span>
-      <span class="flex-grow"></span>
-      {{#paper-button
-        class="no-left-margin flex-grow"
-        onClick=(route-action 'shibbolethRegister')
-        raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'register.academic.login'}}{{/paper-button}}
-    </div>
-  </md-toolbar>
+  {{toolbar-message warn=true message='user.not.found.error' button=(hash action='shibbolethRegister' message='register.domestic.label' icon='pregnant_woman')}}
   {{/if}}
   {{#if userExists }}
-  <md-toolbar class="md-warn">
-    <div class="md-toolbar-tools">
-      <span class="flex-grow">{{t 'user.exists.error' }}</span>
-      <span class="flex-grow"></span>
-      {{#paper-button
-        class="no-margin flex-grow"
-        onClick=(route-action 'shibbolethLogin')
-        raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'academic.login.button.label' }}{{/paper-button}}
-    </div>
-  </md-toolbar>
+  {{toolbar-message warn=true message='user.exists.error' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='pregnant_woman')}}
   {{/if}}
   {{#if userNotVerified }}
-  <md-toolbar class="md-warn">
-    <div class="md-toolbar-tools">
-      <span class="flex-grow">{{t 'user.not.verified.error' }}</span>
-      <span class="flex-grow"></span>
-      {{resend-verification-action}}
-    </div>
-  </md-toolbar>
+  {{toolbar-message warn=true message='user.not.verified.error' buttonComponent=(component 'resend-verification-action')}}
   {{/if}}
   {{#if userNotModerated }}
-  <md-toolbar class="md-warn">
-    <div class="md-toolbar-tools">
-      <span class="flex-grow">{{t 'user.not.moderated.error' }}</span>
-      <span class="flex-grow"></span>
-    </div>
-  </md-toolbar>
+  {{toolbar-message warn=true message='user.not.moderated.error'}}
   {{/if}}
   {{#if userVerificationFailed }}
-  <md-toolbar class="md-warn">
-    <div class="md-toolbar-tools">
-      <span class="flex-grow">{{t 'user.verification.error.message' }}</span>
-      <span class="flex-grow"></span>
-    </div>
-  </md-toolbar>
+  {{toolbar-message warn=true message='user.verification.error.message'}}
   {{/if}}
 
 
@@ -66,8 +33,8 @@
       <md-card class="flex-50">
         <md-card-title>
           <md-card-title-text>
-            <span class="md-title">{{t 'username.login.title'}}</span>
-            <p class="md-subhead">{{t 'username.login.description' }}</p>
+            <span class="md-title">{{t 'login.username.title'}}</span>
+            <p class="md-subhead">{{t 'login.login.description' }}</p>
           </md-card-title-text>
         </md-card-title>
         <md-card-content>
@@ -92,15 +59,15 @@
       <md-card class="flex-50">
         <md-card-title>
           <md-card-title-text>
-            <span class="md-title">{{t 'academic.login.title'}}</span>
-            <p class="md-subhead">{{t 'academic.login.description' }}</p>
+            <span class="md-title">{{t 'login.domestic.title'}}</span>
+            <p class="md-subhead">{{t 'login.domestic.description' }}</p>
           </md-card-title-text>
         </md-card-title>
         <md-card-content>
           {{#paper-button
             class="no-margin"
             onClick=(route-action 'shibbolethLogin')
-            raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'academic.login.button.label' }}{{/paper-button}}
+            raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'login.domestic.label' }}{{/paper-button}}
         </md-card-content>
       </md-card>
     </md-content>
@@ -116,19 +83,22 @@
           {{#paper-button
             class="no-left-margin"
             onClick=(route-action 'shibbolethRegister')
-            raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'register.academic.login'}}{{/paper-button}}
+            raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'register.domestic.label'}}{{/paper-button}}
           {{#paper-button 
             class="no-left-margin" 
             onClick=(transition-to 'auth.register.index' 'professor')
-            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.professor'}}{{/paper-button}}
+            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.foreign.label'}}{{/paper-button}}
           {{#paper-button 
             class="no-left-margin"
             onClick=(transition-to 'auth.register.index' 'candidate')
-            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.candidate'}}{{/paper-button}}
+            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.candidate.label'}}{{/paper-button}}
           {{#paper-button 
             class="no-left-margin"
             onClick=(transition-to 'auth.register.index' 'manager')
-            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.institution-manager'}}{{/paper-button}}
+            raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.manager.label'}}{{/paper-button}}
+        </md-card-content>
+        <md-card-content>
+          <h4>{{t 'resend.email.verification'}}</h4>
           {{resend-verification-action}}
         </md-card-content>
       </md-card>

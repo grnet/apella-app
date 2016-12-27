@@ -1,0 +1,15 @@
+<md-content class="md-padding">
+{{#if (eq object.userRole 'professor') }}
+  {{#if object.registration_token }}
+  {{t 'register.domestic.intro' }}
+  {{else}}
+  {{t 'register.foreign.intro' }}
+  {{/if}}
+{{/if}}
+{{#if (eq object.userRole 'candidate')}}
+  {{t 'register.candidate.intro' }}
+{{/if}}
+{{#if (eq object.userRole 'manager')}}
+  {{t 'register.manager.intro' }}
+{{/if}}
+</md-content>

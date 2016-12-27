@@ -147,7 +147,7 @@ const Register = gen.GenRoutedObject.extend({
     }
   }),
   component: 'gen-form',
-  components: { beforeForm: 'my-intro-component' },
+  components: { beforeForm: 'register-intro' },
   getModel(params) {
     let userRole = this.paramsFor('auth.register').userRole;
     if (!['professor', 'manager', 'candidate'].includes(userRole)) {
@@ -223,8 +223,25 @@ const Register = gen.GenRoutedObject.extend({
     let FS_PROFESSOR = {
       fields: [
         f('rank'),
-        f('institution', {type: 'model', modelName: 'institution', formAttrs: {}}),
-        f('department', {type: 'model', modelName: 'department', formComponent: 'gen-form-field-select', formAttrs: {}}),
+        f('institution', {
+          type: 'select-autocomplete',
+          modelName: 'institution',
+          formAttrs: {
+            optionLabelAttr: 'title_current'
+          }
+        }),
+        f('department', {
+          type: 'model',
+          modelName: 'department',
+          formComponent: 'select-onchange',
+          formAttrs: {
+            lookupModel: 'institution',
+            changedChoices: function(store, value) {
+              return store.query('department', {institution: get(value, 'id')})
+            },
+            optionLabelAttr: 'title_current',
+          }
+        }),
         f('cv_url', {
           required: not('model.changeset.cv_url_check'),
           disabled: computed('model.changeset.cv_url_check', function() {
@@ -239,7 +256,7 @@ const Register = gen.GenRoutedObject.extend({
           required: reads('model.changeset.cv_url_check'),
           disabled: computed('model.changeset.cv_url_check', function() {
             let check = get(this, 'model.changeset.cv_url_check');
-            set(this, 'model.changeset.cv_file', null);
+            set(this, 'model.changeset.cv', null);
             return !check;
           })
         }),
@@ -264,10 +281,20 @@ const Register = gen.GenRoutedObject.extend({
     };
     let FS_MANAGER = {}
 
-    let FS_PROFILE = FS_PROFESSOR;
-    let FIELDSETS = [FS_ACCOUNT, FS_PROFILE]
-    if (!model.get('registration_token')) {
-      FIELDSETS.splice(0, 0, FS_LOGIN);
+    // resolve fieldsets
+    let FIELDSETS = [];
+    if (type === 'professor') {
+      if (!model.get('registration_token')) { // manager/foreign/candidate
+        FIELDSETS.push(FS_LOGIN);
+      }
+      FIELDSETS.push(FS_ACCOUNT);
+      FIELDSETS.push(FS_PROFESSOR);
+    }
+    if (type === 'candidate') {
+        FIELDSETS.push(FS_LOGIN, FS_ACCOUNT);
+    }
+    if (type === 'manager') {
+        FIELDSETS.push(FS_LOGIN, FS_ACCOUNT, FS_MANAGER);
     }
     return FIELDSETS;
   }),
@@ -279,10 +306,10 @@ const Register = gen.GenRoutedObject.extend({
     title: computed('model.registration_token', 'model.userRole', function() {
       let token = get(this, 'model.registration_token');
       let type = get(this, 'model.userRole');
-      if (token) { return 'register.academic.title'; }
+      if (token) { return 'register.domestic.title'; }
       if (type === 'manager') { return 'register.manager.title'; }
       if (type === 'candidate') { return 'register.candidate.title'; }
-      if (type === 'professor') { return 'register.professor.title'; }
+      if (type === 'professor') { return 'register.foreign.title'; }
       return 'register.title';
     })
   }

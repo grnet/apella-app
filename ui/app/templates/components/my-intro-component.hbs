@@ -1,9 +1,0 @@
-<md-content class="md-padding">
-{{#if object.registration_token }}
-You are creating an academic-login enabled account.
-{{else}}
-You are creating an username,password enabled account. If you want to create an academic login 
-click on the link below.
-{{#paper-button class="no-margin" onClick=(route-action 'shibbolethRegister') raised=true primary=true}}{{paper-icon 'pregnant_woman'}}ACADEMIC LOGIN{{/paper-button}}
-{{/if}}
-</md-content>
