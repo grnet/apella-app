@@ -80,7 +80,7 @@ function get_registry_members(registry, store, params) {
  * These fields can get a value from the members of a registry.
  * The table with the members data have the same form
  */
-function fieldCommitteeElectors(field_name, registry_type) {
+function committeeElectorsField(field_name, registry_type) {
   let label = `registry.type.${registry_type}`;
 
   return field(field_name, {
@@ -314,8 +314,8 @@ export default ApellaGen.extend({
     }, {
       label: 'committee_members.label',
       fields: [
-        fieldCommitteeElectors('committee_internal', '1'),
-        fieldCommitteeElectors('committee_external', '2')
+        committeeElectorsField('committee_internal', '1'),
+        committeeElectorsField('committee_external', '2')
       ],
       layout: {
         flex: [100, 100]
@@ -323,8 +323,8 @@ export default ApellaGen.extend({
     }, {
       label: 'electors_regular_members.label',
       fields: [
-        fieldCommitteeElectors('electors_regular_internal', '1'),
-        fieldCommitteeElectors('electors_regular_external', '2')
+        committeeElectorsField('electors_regular_internal', '1'),
+        committeeElectorsField('electors_regular_external', '2')
       ],
       layout: {
         flex: [100, 100]
@@ -332,8 +332,8 @@ export default ApellaGen.extend({
     }, {
       label: 'electors_substitute_members.label',
       fields: [
-        fieldCommitteeElectors('electors_substitute_internal', '1'),
-        fieldCommitteeElectors('electors_substitute_external', '2')
+        committeeElectorsField('electors_substitute_internal', '1'),
+        committeeElectorsField('electors_substitute_external', '2')
       ],
       layout: {
         flex: [100, 100]
@@ -372,8 +372,8 @@ export default ApellaGen.extend({
     }, {
       label: 'committee_members.label',
       fields: [
-        fieldCommitteeElectors('committee_internal', '1'),
-        fieldCommitteeElectors('committee_external', '2')
+        committeeElectorsField('committee_internal', '1'),
+        committeeElectorsField('committee_external', '2')
       ],
       layout: {
         flex: [100, 100]
@@ -381,8 +381,8 @@ export default ApellaGen.extend({
     }, {
       label: 'electors_regular_members.label',
       fields: [
-        fieldCommitteeElectors('electors_regular_internal', '1'),
-        fieldCommitteeElectors('electors_regular_external', '2')
+        committeeElectorsField('electors_regular_internal', '1'),
+        committeeElectorsField('electors_regular_external', '2')
       ],
       layout: {
         flex: [100, 100]
@@ -390,8 +390,8 @@ export default ApellaGen.extend({
     }, {
       label: 'electors_substitute_members.label',
       fields: [
-        fieldCommitteeElectors('electors_substitute_internal', '1'),
-        fieldCommitteeElectors('electors_substitute_external', '2')
+        committeeElectorsField('electors_substitute_internal', '1'),
+        committeeElectorsField('electors_substitute_external', '2')
       ],
       layout: {
         flex: [100, 100]
