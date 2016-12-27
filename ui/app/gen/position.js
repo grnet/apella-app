@@ -72,7 +72,7 @@ const assistantsField = field('assistants', {
 
 function get_registry_members(registry, store, params) {
     let registry_id = registry.get('id'),
-      query = assign({}, params, { registry: registry_id });
+      query = assign({}, params, { id: registry_id, registry_members: true});
 
     return store.query('professor', query)
 };
