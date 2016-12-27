@@ -15,6 +15,7 @@ def register_user(save, data, *args, **kwargs):
     if token:
         token = get_object_or_404(RegistrationToken, token=token)
 
+    # TODO: validate role / fields
     user = save(*args, **kwargs)
     user.user.is_active = False
     user.user.email_verified = False
@@ -43,14 +44,11 @@ def authenticate_user(**kwargs):
 
 
 def validate_user_login(user, errors):
-    if not user.is_active:
-        key = 'inactive_account'
-        raise ValidationError(errors.get(key, key))
     if not user.email_verified:
         key = 'email.not.verified'
         raise ValidationError(errors.get(key, key))
-    if user.role == 'professor' and not user.professor.is_verified:
-        key = 'user.not.moderated'
+    if not user.is_active:
+        key = 'inactive_account'
         raise ValidationError(errors.get(key, key))
     return user
 
