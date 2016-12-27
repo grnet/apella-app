@@ -1,6 +1,7 @@
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
-from apella.models import ApellaUser, Position, Professor
+from apella.models import ApellaUser, Position, Professor, \
+    ElectorParticipation
 from apella.management.utils import get_user, ApellaCommand
 from django.utils import timezone
 
@@ -78,7 +79,8 @@ class Command(ApellaCommand):
                         position.state = 'revoked'
                         position.save()
                         self.stdout.write(
-                            "Position %s has been set to revoked" % position.id)
+                            "Position %s has been set to revoked" %
+                            position.id)
 
                 if state == "electing":
                     if position.state != "posted":
@@ -96,7 +98,8 @@ class Command(ApellaCommand):
                         position.state = 'electing'
                         position.save()
                         self.stdout.write(
-                            "Position %s has been set to electing" % position.id)
+                            "Position %s has been set to electing" %
+                            position.id)
             except:
                 raise CommandError("State: %s is an invalid state" % state)
 
@@ -121,7 +124,10 @@ class Command(ApellaCommand):
                 for e in electors_ids:
                     try:
                         u = Professor.objects.get(id=e)
-                        position.electors.add(u)
+                        ElectorParticipation.objects.create(
+                                position=position,
+                                professor=u,
+                                is_regular=True)
                         position.state = 'electing'
                         position.save()
                         self.stdout.write(

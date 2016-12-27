@@ -23,6 +23,4 @@ for resource in spec['api'].values():
 
 adapter.construct(config.get('spec'))
 adapter.apply()
-
-api_serializers = adapter.get_serializers()
 api_urls = adapter.urls

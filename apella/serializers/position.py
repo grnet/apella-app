@@ -3,7 +3,52 @@ from django.utils import timezone
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
-from apella.models import Position, InstitutionManager, Candidacy
+from apella.models import Position, InstitutionManager, Candidacy, \
+    Professor, ElectorParticipation
+
+
+def get_electors_regular_internal(instance):
+    return Professor.objects.filter(
+        electorparticipation__is_regular=True,
+        electorparticipation__position_id=instance.id,
+        registry__type=1,
+        registry__department_id=instance.department.id).distinct()
+
+
+def get_electors_regular_external(instance):
+    return Professor.objects.filter(
+        electorparticipation__is_regular=True,
+        electorparticipation__position_id=instance.id,
+        registry__type=2,
+        registry__department_id=instance.department.id).distinct()
+
+
+def get_electors_sub_internal(instance):
+    return Professor.objects.filter(
+        electorparticipation__is_regular=False,
+        electorparticipation__position_id=instance.id,
+        registry__type=1,
+        registry__department_id=instance.department.id).distinct()
+
+
+def get_electors_sub_external(instance):
+    return Professor.objects.filter(
+        electorparticipation__is_regular=False,
+        electorparticipation__position_id=instance.id,
+        registry__type=2,
+        registry__department_id=instance.department.id).distinct()
+
+
+def get_committee_internal(instance):
+    return instance.committee.filter(
+        registry__type=1,
+        registry__department_id=instance.department.id).distinct()
+
+
+def get_committee_external(instance):
+    return instance.committee.filter(
+        registry__type=2,
+        registry__department_id=instance.department.id).distinct()
 
 
 def get_dep_number(data):
@@ -34,12 +79,10 @@ class PositionMixin(ValidatorMixin):
 
     def validate(self, data):
         committee = data.pop('committee', [])
-        electors = data.pop('electors', [])
         assistants = data.pop('assistants', [])
         ranks = data.pop('ranks', [])
         data = super(PositionMixin, self).validate(data)
         data['committee'] = committee
-        data['electors'] = electors
         data['assistants'] = assistants
         data['ranks'] = ranks
 
@@ -59,20 +102,25 @@ class PositionMixin(ValidatorMixin):
     def update(self, instance, validated_data):
         curr_position = Position.objects.get(id=instance.id)
         assistants = curr_position.assistants.all()
-        electors = curr_position.electors.all()
         committee = curr_position.committee.all()
         ranks = curr_position.ranks.all()
 
         validated_data['updated_at'] = timezone.now()
+        eps = curr_position.electorparticipation_set.all()
+
         instance = super(PositionMixin, self).update(instance, validated_data)
         if instance.state != curr_position.state:
             curr_position.pk = None
             curr_position.save()
             curr_position.assistants = assistants
-            curr_position.electors = electors
             curr_position.committee = committee
             curr_position.ranks = ranks
             curr_position.save()
+            for ep in eps:
+                ElectorParticipation.objects.create(
+                    position=curr_position,
+                    professor=ep.professor,
+                    is_regular=ep.is_regular)
         return instance
 
 

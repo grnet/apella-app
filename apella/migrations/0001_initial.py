@@ -92,6 +92,13 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='ElectorParticipation',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('is_regular', models.BooleanField(default=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Institution',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -254,7 +261,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='position',
             name='electors',
-            field=models.ManyToManyField(related_name='elector_duty', to='apella.Professor', blank=True),
+            field=models.ManyToManyField(to='apella.Professor', through='apella.ElectorParticipation', blank=True),
         ),
         migrations.AddField(
             model_name='position',
@@ -295,6 +302,16 @@ class Migration(migrations.Migration):
             model_name='institution',
             name='title',
             field=models.ForeignKey(to='apella.MultiLangFields'),
+        ),
+        migrations.AddField(
+            model_name='electorparticipation',
+            name='position',
+            field=models.ForeignKey(to='apella.Position'),
+        ),
+        migrations.AddField(
+            model_name='electorparticipation',
+            name='professor',
+            field=models.ForeignKey(to='apella.Professor'),
         ),
         migrations.AddField(
             model_name='department',

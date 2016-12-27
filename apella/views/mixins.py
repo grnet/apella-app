@@ -6,9 +6,11 @@ from django.db.models import ProtectedError, Min, Q
 from django.conf import settings
 from django.utils import timezone
 
+from apimas.modeling.adapters.drf.mixins import HookMixin
+
 from apella.models import InstitutionManager, Position, Department, \
-        Candidacy, ApellaUser, ApellaFile
-import apella.loader
+        Candidacy, ApellaUser, ApellaFile, ElectorParticipation
+from apella.loader import adapter
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -32,6 +34,42 @@ class AssistantList(generics.ListAPIView):
         else:
             return InstitutionManager.objects.filter(
                 manager_role='assistant')
+
+elector_sets = {
+    'electors_regular_internal': True,
+    'electors_regular_external': True,
+    'electors_sub_internal': False,
+    'electors_sub_external': False
+}
+
+committee_sets = ['committee_internal', 'committee_external']
+
+
+class PositionHookMixin(HookMixin):
+    def preprocess_update(self):
+        obj = self.unstash()
+        position = obj.instance
+        ElectorParticipation.objects.filter(position=position).delete()
+        for elector_set_key, is_regular in elector_sets.items():
+            if elector_set_key in obj.validated_data:
+                for elector in obj.validated_data[elector_set_key]:
+                    if not ElectorParticipation.objects.filter(
+                            professor=elector,
+                            position=position,
+                            is_regular=is_regular).exists():
+                        ElectorParticipation.objects.create(
+                            professor=elector,
+                            position=position,
+                            is_regular=is_regular)
+
+        c = {'committee': []}
+        for com_set in committee_sets:
+            if com_set in obj.validated_data:
+                committee = obj.validated_data[com_set]
+                if committee:
+                    for professor in committee:
+                        c['committee'].append(professor)
+        self.stash(extra=c)
 
 
 class PositionList(object):
@@ -127,7 +165,7 @@ class RegistriesList(generics.ListAPIView):
     def members(self, request, pk=None):
         registry = self.get_object()
         members = registry.members
-        ser = apella.loader.api_serializers.get('professors')
+        ser = adapter.get_serializer('professors')
         return Response(
             ser(members, many=True, context={'request': request}).data)
 
