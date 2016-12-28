@@ -340,7 +340,28 @@ export default ApellaGen.extend({
       }
     }, {
       label: 'fieldsets.labels.details',
-      fields: ['fek', 'fek_posted_at', 'starts_at', 'ends_at'],
+      fields: computed('role', 'model.starts_at', 'state', function() {
+        let role = get(this, 'role');
+        // Admin user can edit all these fields
+        if(role === 'helpdeskadmin') {
+          return ['fek', 'fek_posted_at', 'starts_at', 'ends_at'];
+        }
+        // Other users can edit date fields until the position become open
+        else {
+          let starts_at = this.get('model').get('starts_at'),
+            before_open = moment().isBefore(starts_at),
+            start_field, end_field;
+          if(before_open) {
+            start_field = 'starts_at';
+            end_field = 'ends_at';
+          }
+          else {
+            start_field = disable_field('starts_at');
+            end_field = disable_field('starts_at')
+          }
+          return [disable_field('fek'), disable_field('fek_posted_at'), start_field, end_field];
+        }
+      }),
       layout: {
         flex: [50, 50, 50, 50]
       },
