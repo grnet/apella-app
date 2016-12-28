@@ -242,6 +242,11 @@ class Professor(UserProfile, CandidateProfile):
 
 class Candidate(UserProfile, CandidateProfile):
 
+    id_passport_file = models.ForeignKey(
+        ApellaFile, blank=True, null=True, related_name='id_passport_files')
+    application_form = models.ForeignKey(
+        ApellaFile, blank=True, null=True, related_name='application_forms')
+
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
 
@@ -316,6 +321,9 @@ class Position(models.Model):
     elected = models.ForeignKey(
             ApellaUser, blank=True, null=True,
             related_name='elected_positions')
+    second_best = models.ForeignKey(
+            ApellaUser, blank=True, null=True,
+            related_name='second_best_positions')
 
     state = models.CharField(
         choices=common.POSITION_STATES, max_length=30, default='posted')
@@ -324,6 +332,41 @@ class Position(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     department_dep_number = models.IntegerField()
+    electors_meeting_to_set_committee_date = models.DateField(
+        blank=True, null=True)
+    electors_meeting_date = models.DateField(blank=True, null=True)
+    electors_set_file = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='electors_set_files')
+    committee_set_file = models.ForeignKey(
+        ApellaFile, blank=True, null=True, related_name='committee_set_files')
+    committee_proposal = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='committee_proposal_files')
+    committee_note = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='committee_note_files')
+    electors_meeting_proposal = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='electors_meeting_proposal_files')
+    nomination_proceedings = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='nomination_proceedings_files')
+    proceedings_cover_letter = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='proceedings_cover_letter_files')
+    nomination_act = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='nomination_act_files')
+    nomination_act_fek = models.URLField()
+    revocation_decision = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='revocation_decision_files')
+    failed_election_decision = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='failed_election_decision_files')
+    assistant_files = models.ManyToManyField(
+        ApellaFile, blank=True, related_name='position_assistant_files')
 
     def clean(self, *args, **kwargs):
         validate_dates_interval(
@@ -394,7 +437,7 @@ class ElectorParticipation(models.Model):
     is_regular = models.BooleanField(default=True)
 
 
-class Candidacy(models.Model):
+class Candidacy(CandidateProfile):
     candidate = models.ForeignKey(ApellaUser)
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
     state = models.CharField(
@@ -403,6 +446,11 @@ class Candidacy(models.Model):
     submitted_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     code = models.CharField(max_length=200)
+    self_evaluation_report = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='self_evaluation_report')
+    attachment_files = models.ManyToManyField(
+        ApellaFile, blank=True, related_name='attachment_files')
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(

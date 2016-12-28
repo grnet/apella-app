@@ -71,8 +71,14 @@ class Migration(migrations.Migration):
                 ('submitted_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('code', models.CharField(max_length=200)),
+                ('attachment_files', models.ManyToManyField(related_name='attachment_files', to='apella.ApellaFile', blank=True)),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('cv', models.ForeignKey(blank=True, to='apella.ApellaFile', null=True)),
+                ('diplomas', models.ManyToManyField(related_name='apella_candidacy_diploma_files', to='apella.ApellaFile', blank=True)),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Candidate',
@@ -86,7 +92,11 @@ class Migration(migrations.Migration):
                 ('verification_request', models.DateTimeField(null=True, blank=True)),
                 ('is_rejected', models.BooleanField(default=False)),
                 ('rejected_reason', models.TextField(null=True, blank=True)),
+                ('application_form', models.ForeignKey(related_name='application_forms', blank=True, to='apella.ApellaFile', null=True)),
                 ('cv', models.ForeignKey(blank=True, to='apella.ApellaFile', null=True)),
+                ('diplomas', models.ManyToManyField(related_name='apella_candidate_diploma_files', to='apella.ApellaFile', blank=True)),
+                ('id_passport_file', models.ForeignKey(related_name='id_passport_files', blank=True, to='apella.ApellaFile', null=True)),
+                ('publications', models.ManyToManyField(related_name='apella_candidate_publication_files', to='apella.ApellaFile', blank=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -166,6 +176,10 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('department_dep_number', models.IntegerField()),
+                ('electors_meeting_to_set_committee_date', models.DateField(null=True, blank=True)),
+                ('electors_meeting_date', models.DateField(null=True, blank=True)),
+                ('nomination_act_fek', models.URLField()),
+                ('assistant_files', models.ManyToManyField(related_name='position_assistant_files', to='apella.ApellaFile', blank=True)),
                 ('assistants', models.ManyToManyField(related_name='assistant_duty', to='apella.InstitutionManager', blank=True)),
                 ('author', models.ForeignKey(related_name='authored_positions', blank=True, to='apella.InstitutionManager')),
             ],
@@ -273,6 +287,21 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='position',
+            name='committee_note',
+            field=models.ForeignKey(related_name='committee_note_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='committee_proposal',
+            field=models.ForeignKey(related_name='committee_proposal_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='committee_set_file',
+            field=models.ForeignKey(related_name='committee_set_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
             name='department',
             field=models.ForeignKey(to='apella.Department', on_delete=django.db.models.deletion.PROTECT),
         ),
@@ -288,8 +317,48 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='position',
+            name='electors_meeting_proposal',
+            field=models.ForeignKey(related_name='electors_meeting_proposal_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='electors_set_file',
+            field=models.ForeignKey(related_name='electors_set_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='failed_election_decision',
+            field=models.ForeignKey(related_name='failed_election_decision_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='nomination_act',
+            field=models.ForeignKey(related_name='nomination_act_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='nomination_proceedings',
+            field=models.ForeignKey(related_name='nomination_proceedings_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='proceedings_cover_letter',
+            field=models.ForeignKey(related_name='proceedings_cover_letter_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
             name='ranks',
             field=models.ManyToManyField(to='apella.ProfessorRank', blank=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='revocation_decision',
+            field=models.ForeignKey(related_name='revocation_decision_files', blank=True, to='apella.ApellaFile', null=True),
+        ),
+        migrations.AddField(
+            model_name='position',
+            name='second_best',
+            field=models.ForeignKey(related_name='second_best_positions', blank=True, to=settings.AUTH_USER_MODEL, null=True),
         ),
         migrations.AddField(
             model_name='position',
@@ -355,6 +424,16 @@ class Migration(migrations.Migration):
             model_name='candidacy',
             name='position',
             field=models.ForeignKey(to='apella.Position', on_delete=django.db.models.deletion.PROTECT),
+        ),
+        migrations.AddField(
+            model_name='candidacy',
+            name='publications',
+            field=models.ManyToManyField(related_name='apella_candidacy_publication_files', to='apella.ApellaFile', blank=True),
+        ),
+        migrations.AddField(
+            model_name='candidacy',
+            name='self_evaluation_report',
+            field=models.ForeignKey(related_name='self_evaluation_report', blank=True, to='apella.ApellaFile', null=True),
         ),
         migrations.AddField(
             model_name='apellauser',
