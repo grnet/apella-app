@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from djoser import views as djoser_views
 
-from apella.loader import api_serializers
+from apella.loader import adapter
 from apella.models import ApellaUser, InstitutionManager, Professor, \
     Candidate
 
@@ -52,7 +52,7 @@ class CustomUserView(djoser_views.UserView):
     def get_serializer_class(self):
         user = self.request.user
         resource = USER_ROLE_MODEL_RESOURCES[user.role]['resource']
-        return api_serializers.get(resource)
+        return adapter.get_serializer(resource)
 
 
 class CustomLoginView(djoser_views.LoginView):

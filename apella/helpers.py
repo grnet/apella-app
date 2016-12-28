@@ -14,14 +14,11 @@ def position_is_latest(position):
 
 def professor_participates(user, position_id):
     try:
-        has_elector_duty = \
-            user.professor.elector_duty.filter(id=position_id)
+        has_committee_duty = \
+            user.professor.committee_duty.filter(id=position_id)
     except ObjectDoesNotExist:
         return False
-    if has_elector_duty:
-        return True
-    has_committee_duty = \
-        user.professor.committee_duty.filter(id=position_id)
     if has_committee_duty:
         return True
-    return False
+    return user.professor.electorparticipation_set.filter(
+            position_id=position_id).exists()

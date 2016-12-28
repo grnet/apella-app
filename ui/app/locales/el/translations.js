@@ -66,8 +66,11 @@ export default {
   'position.fek.label': 'Φ.Ε.Κ.',
   'fek_posted_at.label': 'Ημερομηνία Φ.Ε.Κ.',
   'position.fek_posted_at_format.label': 'Ημερομηνία Φ.Ε.Κ.',
-  'electors.label': 'Εκλογικό σώμα',
+  'electors_regular.label': 'Εκλογικό σώμα',
+  'electors_regular_members.label': 'Μέλη Εκλεκτορικού Σώματος',
+  'electors_substitute_members.label': 'Αναπληρωματικά Μέλη Εκλεκτορικού Σώματος',
   'committee.label': 'Εισηγητική Επιτροπή',
+  'committee_members.label': 'Μέλη Εισηγητικής Επιτροπής',
   'assistants.label': 'Βοηθοί Υπεύθυνου Ιδρύματος',
   'elected.label': 'Εκλεγμένος',
   'state.label': 'Κατάσταση',
@@ -251,5 +254,8 @@ export default {
   στοιχεία της θέσης.<br>Η τροποποίηση είναι εφικτή και από τους βοηθούς που τους έχει\
   δοθεί δικαίωμα διαχείρισης όλων των θέσεων.',
   'open': 'Ανοιχτή',
-  'closed': 'Κλειστή'
+  'closed': 'Κλειστή',
+  // 1,2 is the type of registry
+  'registry.type.1': 'Εσωτερικό Μητρώο',
+  'registry.type.2': 'Εξωτερικό Μητρώο'
 };

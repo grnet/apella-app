@@ -1123,6 +1123,7 @@ spec:
                 model_serializers: [apella.serializers.position.PositionMixin]
                 mixins: [apella.views.mixins.PositionMixin,
                     apella.views.mixins.DestroyProtectedObject]
+                hook_class: apella.views.mixins.PositionHookMixin
                 filter_fields: [title, id, state, department, code, electors, committee]
                 ordering_fields: [title, id, state, department, code]
                 search_fields: [title, id, state]
@@ -1207,18 +1208,77 @@ spec:
                     .drf_field: {}
                     .ref:
                         to: assistants
+                        many: True
                 electors:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .read_only: {}
                     .ref:
                         to: professors
+                        many: True
+                electors_regular_internal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_electors_regular_internal
+                    .ref:
+                        to: professors
+                        many: True
+                electors_regular_external:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_electors_regular_external
+                    .ref:
+                        to: professors
+                        many: True
+                electors_sub_internal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_electors_sub_internal
+                    .ref:
+                        to: professors
+                        many: True
+                electors_sub_external:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_electors_sub_external
+                    .ref:
+                        to: professors
+                        many: True
                 committee:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .read_only: {}
                     .ref:
                         to: professors
+                        many: True
+                committee_internal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_committee_internal
+                    .ref:
+                        to: professors
+                        many: True
+                committee_external:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_committee_external
+                    .ref:
+                        to: professors
+                        many: True
                 elected:
                     .cli_option: {}
                     .field: {}

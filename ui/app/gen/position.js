@@ -11,7 +11,7 @@ const {
   computed,
   computed: { reads },
   get,
-  merge,
+  merge, assign
 } = Ember;
 
 
@@ -70,10 +70,34 @@ const assistantsField = field('assistants', {
   }
 });
 
+function get_registry_members(registry, store, params) {
+    let registry_id = registry.get('id'),
+      query = assign({}, params, { id: registry_id, registry_members: true});
 
-const committeeField = field('committee', {
-  label: null,
+    return store.query('professor', query)
+};
+/*
+ * These fields can get a value from the members of a registry.
+ * The table with the members data have the same form
+ */
+function fieldCommitteeElectors(field_name, registry_type) {
+  let label = `registry.type.${registry_type}`;
 
+  return field(field_name, {
+  label: label,
+  query: computed('position', function() {
+    return function(table, store, field, params) {
+      let departmentID = table.get("form.changeset.department.id");
+      return store.query('registry', {department: departmentID}).then(function (registries) {
+        /*
+         * There are max 2 registries per department
+         * Here we take the external (type 2) registry
+         */
+        let registry = registries.findBy('type', registry_type);
+        return get_registry_members(registry, store, params);
+      });
+    };
+  }),
   modelMeta: {
     row: {
       fields: ['id',
@@ -88,6 +112,7 @@ const committeeField = field('committee', {
     },
   }
 });
+}
 
 const historyField = field('past_positions', {
     valueQuery: function(store, params, model, value) {
@@ -286,6 +311,37 @@ export default ApellaGen.extend({
       layout: {
         flex: [50, 50, 50, 50]
       },
+    }, {
+      label: 'committee_members.label',
+      fields: [
+        fieldCommitteeElectors('committee_internal', '1'),
+        fieldCommitteeElectors('committee_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }, {
+      label: 'electors_regular_members.label',
+      fields: [
+        fieldCommitteeElectors('electors_regular_internal', '1'),
+        fieldCommitteeElectors('electors_regular_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }, {
+      label: 'electors_substitute_members.label',
+      fields: [
+        fieldCommitteeElectors('electors_substitute_internal', '1'),
+        fieldCommitteeElectors('electors_substitute_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }, {
+      label: 'assistants.label',
+      text: 'assistants_on_position_explain',
+      fields: [assistantsField]
     }],
   },
   details: {
@@ -293,9 +349,6 @@ export default ApellaGen.extend({
       title: computed.readOnly('model.code')
     },
     fieldsets: [{
-      label: 'committee.label',
-      fields: [committeeField]
-    },{
       label: 'fieldsets.labels.basic_info',
       fields: ['code', 'state_calc_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
@@ -316,6 +369,33 @@ export default ApellaGen.extend({
     {
       label: 'candidacy.menu_label',
       fields: [candidaciesField]
+    }, {
+      label: 'committee_members.label',
+      fields: [
+        fieldCommitteeElectors('committee_internal', '1'),
+        fieldCommitteeElectors('committee_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }, {
+      label: 'electors_regular_members.label',
+      fields: [
+        fieldCommitteeElectors('electors_regular_internal', '1'),
+        fieldCommitteeElectors('electors_regular_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    }, {
+      label: 'electors_substitute_members.label',
+      fields: [
+        fieldCommitteeElectors('electors_substitute_internal', '1'),
+        fieldCommitteeElectors('electors_substitute_external', '2')
+      ],
+      layout: {
+        flex: [100, 100]
+      }
     },
     {
       label: 'assistants.label',

@@ -259,7 +259,7 @@ class Position(models.Model):
     assistants = models.ManyToManyField(
             InstitutionManager, blank=True, related_name='assistant_duty')
     electors = models.ManyToManyField(
-            Professor, blank=True, related_name='elector_duty')
+            Professor, blank=True, through='ElectorParticipation')
     committee = models.ManyToManyField(
             Professor, blank=True, related_name='committee_duty')
     elected = models.ForeignKey(
@@ -315,8 +315,7 @@ class Position(models.Model):
 
     def check_resource_state_electing(self, row, request, view):
         user = request.user
-        is_electing = self.state == 'posted' and \
-            self.starts_at < timezone.now()
+        is_electing = self.state == 'electing'
         if user.is_institutionmanager():
             return is_electing
         elif user.is_assistant():
@@ -335,6 +334,12 @@ class Position(models.Model):
             user_id=request.user.id,
             manager_role='assistant',
             can_create_positions=True).exists()
+
+
+class ElectorParticipation(models.Model):
+    professor = models.ForeignKey(Professor)
+    position = models.ForeignKey(Position)
+    is_regular = models.BooleanField(default=True)
 
 
 class Candidacy(models.Model):
