@@ -5,6 +5,9 @@ import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
 import moment from 'moment';
+import {
+  goToDetails, applyCandidacy, cancelPosition
+} from 'ui/utils/common/actions';
 
 
 const {
@@ -14,19 +17,6 @@ const {
   merge, assign
 } = Ember;
 
-
-let actions = {
-  goToDetails: {
-    label: 'details.label',
-    icon: 'remove red eye',
-    action(route, model, aaa) {
-      // TMP
-      let resource = model.get('_internalModel.modelName'),
-        dest_route = `${resource}.record.index`;
-      route.transitionTo(dest_route, model);
-    }
-  }
-};
 
 const candidaciesField = field('candidacies', {
     valueQuery: function(store, params, model, value) {
@@ -47,7 +37,7 @@ const candidaciesField = field('candidacies', {
         ],
         actions: ['goToDetails'],
         actionsMap: {
-          goToDetails: actions.goToDetails
+          goToDetails: goToDetails
         }
       },
     }
@@ -64,7 +54,7 @@ const assistantsField = field('assistants', {
       ],
       actions: ['goToDetails'],
       actionsMap: {
-        goToDetails: actions.goToDetails
+        goToDetails: goToDetails
       }
     },
   }
@@ -107,7 +97,7 @@ function committeeElectorsField(field_name, registry_type) {
       ],
       actions: ['goToDetails'],
       actionsMap: {
-        goToDetails: actions.goToDetails
+        goToDetails: goToDetails
       }
     },
   }
@@ -128,7 +118,7 @@ const historyField = field('past_positions', {
         ],
         actions: ['goToDetails'],
         actionsMap: {
-          goToDetails: actions.goToDetails
+          goToDetails: goToDetails
         }
       },
     }
@@ -286,47 +276,9 @@ export default ApellaGen.extend({
     row: {
       fields: ['code', 'title', 'state_calc_verbose', field('department.title_current', {label: 'department.label'})],
       actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition' ],
-
       actionsMap: {
-        applyCandidacy: {
-          label: 'applyCandidacy',
-          icon: 'playlist add',
-          permissions: [{'resource': 'candidacies', 'action': 'create'}],
-          action(route, model){
-            console.log(get(model, 'code'))
-          }
-        },
-        cancelPosition: {
-          label: 'cancelPosition',
-          icon: 'highlight_off',
-          accent: true,
-          action(route, model) {
-            model.set('state', 'cancelled');
-            let m = route.get('messageService')
-            model.save().then((value) => {
-              m.setSuccess('form.saved');
-              return value;
-            }, (reason) => {
-              model.rollbackAttributes();
-              m.setError('reason.errors');
-              return reason.errors;
-            });
-          },
-          permissions: [{action: 'edit'}],
-          hidden: computed('model.code', 'model.state', function(){
-            let starts_at = get(get(this, 'model'), 'starts_at')
-            let state = get(get(this, 'model'), 'state');
-            let before_open = moment(new Date()).isBefore(moment(starts_at));
-            return !(before_open && (state == 'posted'))
-          }),
-          confirm: true,
-          prompt: {
-            ok: 'cancelPosition',
-            cancel: 'cancel',
-            message: 'prompt.cancelPosition.message',
-            title: 'prompt.cancelPosition.title',
-          }
-        }
+        applyCandidacy: applyCandidacy,
+        cancelPosition: cancelPosition
       }
     }
   },
@@ -342,11 +294,11 @@ export default ApellaGen.extend({
       label: 'fieldsets.labels.details',
       fields: computed('role', 'model.starts_at', 'state', function() {
         let role = get(this, 'role');
-        // Admin user can edit all these fields
+        // admin user can edit all these fields
         if(role === 'helpdeskadmin') {
           return ['fek', 'fek_posted_at', 'starts_at', 'ends_at'];
         }
-        // Other users can edit date fields until the position become open
+        // other users can edit date fields until the position become open
         else {
           let starts_at = this.get('model').get('starts_at'),
             before_open = moment().isBefore(starts_at),

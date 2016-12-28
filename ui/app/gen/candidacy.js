@@ -3,6 +3,7 @@ import {ApellaGen} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import _ from 'lodash/lodash';
 import {disable_field} from 'ui/utils/common/fields';
+import {cancelCandidacy} from 'ui/utils/common/actions';
 
 const presence = validate.presence(true),
       max_chars = validate.length({max: 200}),
@@ -50,41 +51,8 @@ let FS = {
       flex: [30, 30, 30, 30, 30, 30, 30, 30, 30 ]
     }
   }
+};
 
-}
-
-let actions = {
-  cancelCandidacy: {
-    label: 'withdrawal',
-    icon: 'delete forever',
-    accent: true,
-    permissions: [{action: 'edit'}],
-    action(route, model) {
-      return model.get('candidate').then(() => {
-        model.set('state', 'cancelled');
-        let m = route.get('messageService')
-        return model.save().then((value) => {
-          m.setSuccess('form.saved');
-          return value;
-        }, (reason) => {
-          model.rollbackAttributes();
-          m.setError('reason.errors');
-          return reason;
-        });
-      })
-    },
-    hidden: computed('model.state', function(){
-      return get(this, 'model.state') === 'cancelled';
-    }),
-    confirm: true,
-    prompt: {
-      ok: 'withdrawal',
-      cancel: 'cancel',
-      message: 'prompt.withdrawal.message',
-      title: 'prompt.withdrawal.title',
-    }
-  }
-}
 
 export default ApellaGen.extend({
   appIndex: true,
@@ -167,7 +135,7 @@ export default ApellaGen.extend({
       fields: FS.list,
       actions: ['gen:details', 'gen:edit', 'cancelCandidacy'],
       actionsMap: {
-        cancelCandidacy: actions.cancelCandidacy
+        cancelCandidacy: cancelCandidacy
       }
     }
   },
