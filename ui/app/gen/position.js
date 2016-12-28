@@ -112,7 +112,7 @@ function committeeElectorsField(field_name, registry_type) {
     },
   }
 });
-}
+};
 
 const historyField = field('past_positions', {
     valueQuery: function(store, params, model, value) {
@@ -197,12 +197,45 @@ export default ApellaGen.extend({
     validators: {
       title: [validate.presence(true), validate.length({min:4, max:200})],
       description: [validate.presence(true), validate.length({max:300})],
-      starts_at: [afterToday()],
+
+      /*
+       * Heldesk admin can modify starts_at, ends_at dates without any client
+       * side constrains.
+       * Other users that can create or edit these dates can do it before the
+       * position is open. Only then we use validators.
+       * In all the other cases there will be no client side validation (but
+       * the fields will be disabled).
+       * TODO: When gen doesn't validate disabled fields, remove the
+       * corresponding checks.
+       */
+
+      starts_at: computed('model.starts_at', 'role', function() {
+        let role = get(this, 'role'),
+          starts_at = get(this, 'model').get('starts_at'),
+          // is_disabled: TRUE when now.isAfter(starts_at), field: disabled
+          is_disabled = (starts_at ? moment().isAfter(moment(starts_at)) : false);
+        if(role === 'helpdeskadmin' || is_disabled) {
+          return [];
+        }
+        else  {
+          return [afterToday()];
+        }
+      }),
+      ends_at:  computed('model.starts_at', 'role', function() {
+        let role = get(this, 'role'),
+          starts_at = get(this, 'model').get('starts_at'),
+          // is_disabled: TRUE when now.isAfter(starts_at), field: disabled
+          is_disabled = (starts_at ? moment().isAfter(moment(starts_at)) : false);
+        if(role === 'helpdeskadmin' || is_disabled) {
+          return [];
+        }
+        else  {
+          return [afterDays({on:'starts_at', days:30})];
+        }
+      }),
       fek_posted_at: [beforeToday()],
-      ends_at: [afterDays({on:'starts_at', days:30})],
       fek: urlValidator,
       department_dep_number: [validate.presence(true), validate.number({integer: true})]
-
     }
   },
   create: {
