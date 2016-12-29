@@ -224,7 +224,8 @@ const Register = gen.GenRoutedObject.extend({
       fields: [
         f('rank'),
         f('institution', {
-          type: 'select-autocomplete',
+          type: 'model',
+          autocomplete: true,
           modelName: 'institution',
           formAttrs: {
             optionLabelAttr: 'title_current'
@@ -235,9 +236,10 @@ const Register = gen.GenRoutedObject.extend({
           modelName: 'department',
           formComponent: 'select-onchange',
           formAttrs: {
-            lookupModel: 'institution',
-            changedChoices: function(store, value) {
-              return store.query('department', {institution: get(value, 'id')})
+            lookupModel: 'institution.id',
+            changedChoices: function(store, id) {
+              if (!id) { return Ember.RSVP.Promise.resolve([]); }
+              return store.query('department', {institution: id});
             },
             optionLabelAttr: 'title_current',
           }
@@ -246,7 +248,7 @@ const Register = gen.GenRoutedObject.extend({
           required: not('model.changeset.cv_url_check'),
           disabled: computed('model.changeset.cv_url_check', function() {
             let check = get(this, 'model.changeset.cv_url_check');
-            if (check) { set(this, 'model.changeset.cv_url', ''); };
+            if (check) { Ember.run.once(this, () => set(this, 'model.changeset.cv_url', '')); };
             return check;
           })
         }),
@@ -256,7 +258,7 @@ const Register = gen.GenRoutedObject.extend({
           required: reads('model.changeset.cv_url_check'),
           disabled: computed('model.changeset.cv_url_check', function() {
             let check = get(this, 'model.changeset.cv_url_check');
-            set(this, 'model.changeset.cv', null);
+            if (!check) { Ember.run.once(this, () => set(this, 'model.changeset.cv', null)) };
             return !check;
           })
         }),
@@ -270,7 +272,7 @@ const Register = gen.GenRoutedObject.extend({
           }),
           disabled: computed('model.changeset.discipline_in_fek', function() {
             let check = get(this, 'model.changeset.discipline_in_fek');
-            set(this, 'model.changeset.discipline_text', '');
+            if (check) { Ember.run.once(this, () => set(this, 'model.changeset.discipline_text', '')) };
             return check;
           })
         })
