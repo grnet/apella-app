@@ -284,6 +284,8 @@ PERMISSION_RULES = [
     ('positions', 'history', 'professor', '*', 'participates', '4.3.9'),
     ('positions', 'history', 'helpdeskadmin', '*', '*', '4.3.9'),
     ('positions', 'history', 'helpdeskuser', '*', '*', '4.3.9'),
+    ('positions', 'upload', 'institutionmanager', '*', 'owned', ''),
+    ('positions', 'upload', 'assistant', '*', 'owned', ''),
     ('professors', 'create', 'helpdeskadmin', '*', '*', ''),
     ('professors', 'list', 'assistant', '*', '*', ''),
     ('professors', 'list', 'helpdeskadmin', '*', '*', '5.1.2'),

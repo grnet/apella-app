@@ -11,7 +11,7 @@ from apimas.modeling.adapters.drf.mixins import HookMixin
 from apella.models import InstitutionManager, Position, Department, \
         Candidacy, ApellaUser, ApellaFile, ElectorParticipation
 from apella.loader import adapter
-from apella.common import FILE_KINDS
+from apella.common import FILE_KINDS, FILE_KIND_TO_FIELD
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -167,43 +167,34 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
         "Position": "position"
     }
 
-    FILE_KIND_TO_FIELD = {
-        "cv": {"field": "cv", "many": False},
-        "diploma": {"field": "diplomas", "many": True},
-        "publication": {"field": "publications", "many": True},
-        "id_passport": {"field": "id_passport", "many": False},
-        "application_form": {"field": "application_form", "many": False},
-    }
-
     @detail_route(methods=['put'])
     def upload(self, request, pk=None):
-        candidate = self.get_object()
-        file_path = request.data['file_path']
+        obj = self.get_object()
+        file_path = request.FILES['file_path']
         file_kind = request.data['file_kind']
         file_description = request.data['file_description']
-        kind_exists = False
-        for kind in FILE_KINDS:
-            if file_kind == kind[0]:
-                kind_exists = True
-                break
-        if not kind_exists:
+
+        if file_kind not in FILE_KIND_TO_FIELD:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         if not file_path:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        field_name, many = FILE_KIND_TO_FIELD[file_kind].values()
+        if field_name not in obj._meta.get_all_field_names():
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         uploaded_file = ApellaFile.objects.create(
                 owner=request.user,
                 file_kind=file_kind,
-                source=self.FILE_SOURCE[candidate.__class__.__name__],
-                source_id=candidate.id,
+                source=self.FILE_SOURCE[obj.__class__.__name__],
+                source_id=obj.id,
                 file_path=file_path,
                 description=file_description)
 
-        field_name, many = self.FILE_KIND_TO_FIELD[file_kind].values()
         if not many:
-            setattr(candidate, field_name, uploaded_file)
+            setattr(obj, field_name, uploaded_file)
         else:
-            many_attr = getattr(candidate, field_name)
+            many_attr = getattr(obj, field_name)
             many_attr.add(uploaded_file)
-        candidate.save()
+        obj.save()
         return Response(status=status.HTTP_200_OK)

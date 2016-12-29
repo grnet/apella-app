@@ -52,7 +52,18 @@
         ["diploma", "Diploma"],
         ["publication", "Publication"],
         ["id_passport", "ID Passport"],
-        ["application_form", "Application Form"]
+        ["application_form", "Application Form"],
+        ["electors_set_file", "Electors Set File"],
+        ["committee_set_file", "Committee Set File"],
+        ["committee_proposal", "Committee Proposal"],
+        ["committee_note", "Committee Note"],
+        ["electors_meeting_proposal", "Electors Meeting Proposal"],
+        ["nomination_proceedings", "Nomination Proceedings"],
+        ["proceedings_cover_letter", "Proceedings Cover Letter"],
+        ["nomination_act", "Nomination Act"],
+        ["revocation_decision", "Revocation Decision"],
+        ["failed_election_decision", "Failed Election Decision"],
+        ["assistant_file", "Assistant Files"]
     ],
 
     "INSTITUTION_CATEGORIES": [

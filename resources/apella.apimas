@@ -1246,7 +1246,8 @@ spec:
                 model: apella.models.Position
                 model_serializers: [apella.serializers.position.PositionMixin]
                 mixins: [apella.views.mixins.PositionMixin,
-                    apella.views.mixins.DestroyProtectedObject]
+                    apella.views.mixins.DestroyProtectedObject,
+                    apella.views.mixins.UploadFilesViewSet]
                 hook_class: apella.views.mixins.PositionHookMixin
                 filter_fields: [title, id, state, department, code, electors, committee]
                 ordering_fields: [title, id, state, department, code]
@@ -1452,6 +1453,24 @@ spec:
                     .ref:
                         to: professor-ranks
                         many: True
+                file_path:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
             actions:
                 .list: {}
                 .create: {}

@@ -75,3 +75,70 @@ RANKS = RESOURCES['RANKS']
 FILE_KINDS = RESOURCES['FILE_KINDS']
 INSTITUTION_CATEGORIES = RESOURCES['INSTITUTION_CATEGORIES']
 FILE_SOURCE = RESOURCES['FILE_SOURCE']
+
+FILE_KIND_TO_FIELD = {
+    "cv": {
+        "field": "cv",
+        "many": False,
+    },
+    "diploma": {
+        "field": "diplomas",
+        "many": True,
+    },
+    "publication": {
+        "field": "publications",
+        "many": True,
+    },
+    "id_passport": {
+        "field": "id_passport",
+        "many": False,
+    },
+    "application_form": {
+        "field": "application_form",
+        "many": False,
+    },
+    "electors_set_file": {
+        "field": "electors_set_file",
+        "many": False,
+    },
+    "committee_set_file": {
+        "field": "committee_set_file",
+        "many": False,
+    },
+    "committee_proposal": {
+        "field": "committee_proposal",
+        "many": False,
+    },
+    "committee_note": {
+        "field": "committee_note",
+        "many": False,
+    },
+    "electors_meeting_proposal": {
+        "field": "electors_meeting_proposal",
+        "many": False,
+    },
+    "nomination_proceedings": {
+        "field": "nomination_proceedings",
+        "many": False,
+    },
+    "proceedings_cover_letter": {
+        "field": "proceedings_cover_letter",
+        "many": False,
+    },
+    "nomination_act": {
+        "field": "nomination_act",
+        "many": False,
+    },
+    "revocation_decision": {
+        "field": "revocation_decision",
+        "many": False,
+    },
+    "failed_election_decision": {
+        "field": "failed_election_decision",
+        "many": False,
+    },
+    "assistant_file": {
+        "field": "assistant_files",
+        "many": True,
+    },
+}
