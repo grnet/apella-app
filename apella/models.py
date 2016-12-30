@@ -6,8 +6,14 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
 from django.conf import settings
 from django.core import validators
 
+<<<<<<< fb1d493fabc08264f340664a1d0efc227d8aacd5
 from apella.validators import before_today_validator, after_today_validator,\
     validate_dates_interval
+=======
+from apella.validators import before_today_validator, after_today_validator, \
+    validate_dates_interval, validate_position_dates, \
+    validate_candidate_files, validate_unique_candidacy
+>>>>>>> Validate candidacy submission
 from apella import common
 from apella.helpers import assistant_can_edit, professor_participates,\
     position_is_latest

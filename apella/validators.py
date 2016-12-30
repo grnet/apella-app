@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from django.utils import timezone
+from django.db.models import F
 
 
 def before_today_validator(value):
@@ -28,3 +29,37 @@ def validate_position_dates(start, end):
         raise ValidationError(_('Position opens at %s' % start))
     if timezone.now() > end:
         raise ValidationError(_('Position closed at %s' % end))
+
+
+def validate_candidate_files(candidacy):
+    user = candidacy.candidate.user
+    if user.is_candidate():
+        cv = user.candidate.cv
+        diplomas = user.candidate.diplomas.all()
+        publications = user.candidate.publications.all()
+    elif user.is_professor():
+        cv = user.professor.cv
+        diplomas = user.professor.diplomas.all()
+        publications = user.professor.publications.all()
+
+    if not cv:
+        raise ValidationError(
+            _('You should upload a CV file to your profile '
+                'before submitting a candidacy'))
+    if not diplomas:
+        raise ValidationError(
+            _('You should upload a diploma file to your profile '
+                'before submitting a candidacy'))
+    if not publications:
+        raise ValidationError(
+            _('You should upload a publication file to your profile '
+                'before submitting a candidacy'))
+
+
+def validate_unique_candidacy(position, user):
+    if user.candidacy_set.filter(
+            state='posted', position=position, id=F('code')). \
+            exists():
+        raise ValidationError(
+            _('You have already submitted a candidacy for this '
+                'position'))

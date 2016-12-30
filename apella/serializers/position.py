@@ -5,7 +5,8 @@ from rest_framework import serializers
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     Professor, ElectorParticipation
-from apella.validators import validate_position_dates
+from apella.validators import validate_position_dates, \
+    validate_candidate_files, validate_unique_candidacy
 
 
 def get_electors_regular_internal(instance):
@@ -140,6 +141,8 @@ class CandidacyMixin(object):
             candidate = instance.candidate
             if not user.is_helpdeskadmin():
                 validate_position_dates(position.starts_at, position.ends_at)
+            validate_candidate_files(candidate)
+            validate_unique_candidacy(position, candidate)
         return super(CandidacyMixin, self).validate(data)
 
     def create(self, validated_data):
