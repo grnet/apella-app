@@ -191,32 +191,21 @@ export default ApellaGen.extend({
       /*
        * Heldesk admin can modify starts_at, ends_at dates without any client
        * side constrains.
-       * Other users that can create or edit these dates can do it before the
-       * position is open. Only then we use validators.
-       * In all the other cases there will be no client side validation (but
-       * the fields will be disabled).
-       * TODO: When gen doesn't validate disabled fields, remove the
-       * corresponding checks.
        */
 
-      starts_at: computed('model.starts_at', 'role', function() {
-        let role = get(this, 'role'),
-          starts_at = get(this, 'model').get('starts_at'),
-          // is_disabled: TRUE when now.isAfter(starts_at), field: disabled
-          is_disabled = (starts_at ? moment().isAfter(moment(starts_at)) : false);
-        if(role === 'helpdeskadmin' || is_disabled) {
+      starts_at: computed('role', function() {
+        let role = get(this, 'role');
+
+        if(role === 'helpdeskadmin') {
           return [];
         }
         else  {
           return [afterToday()];
         }
       }),
-      ends_at:  computed('model.starts_at', 'role', function() {
-        let role = get(this, 'role'),
-          starts_at = get(this, 'model').get('starts_at'),
-          // is_disabled: TRUE when now.isAfter(starts_at), field: disabled
-          is_disabled = (starts_at ? moment().isAfter(moment(starts_at)) : false);
-        if(role === 'helpdeskadmin' || is_disabled) {
+      ends_at:  computed('role', function() {
+        let role = get(this, 'role');
+        if(role === 'helpdeskadmin') {
           return [];
         }
         else  {
