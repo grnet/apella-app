@@ -8,7 +8,7 @@ import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
 import {disable_field} from 'ui/utils/common/fields';
 import ENV from 'ui/config/environment';
-import {Register, resetHash} from 'ui/lib/register';
+import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
 import fetch from "ember-network/fetch";
 
 const {
@@ -95,7 +95,8 @@ export default AuthGen.extend({
   }],
 
   gens: {
-    register: Register
+    register: Register,
+    'register-intro': RegisterIntro
   },
 
   login: {

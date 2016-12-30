@@ -126,9 +126,22 @@ const RegisterSuccess = gen.GenRoutedObject.extend({
   templateName: 'apella-register-success'
 });
 
+const RegisterIntro = gen.GenRoutedObject.extend({
+  auth: false,
+  templateName: 'apella-register-intro',
+  menu: {
+    display: true,
+    label: 'register'
+  },
+  page: {
+    title: 'register',
+    breadcrumb: { display: true },
+  }
+});
+
 const Register = gen.GenRoutedObject.extend({
   auth: false,
-  gens: { success: RegisterSuccess },
+  gens: { success: RegisterSuccess},
   modelName: 'profile',
   args: [':userRole'],
   routeBaseClass: routes.CreateRoute.extend({
@@ -147,7 +160,7 @@ const Register = gen.GenRoutedObject.extend({
     }
   }),
   component: 'gen-form',
-  components: { beforeForm: 'register-intro' },
+  components: { beforeForm: 'register-form-intro' },
   getModel(params) {
     let userRole = this.paramsFor('auth.register').userRole;
     if (!['professor', 'manager', 'candidate'].includes(userRole)) {
@@ -197,7 +210,7 @@ const Register = gen.GenRoutedObject.extend({
       fields: [
         f('username'),
         f('password', {formAttrs: { type: 'password'}}),
-        f('password2', {formAttrs: { type: 'password'}})
+        f('password2', {label: 'password.confirm', formAttrs: { type: 'password'}})
       ],
       layout: {
         flex: [33, 33, 33]
@@ -318,4 +331,4 @@ const Register = gen.GenRoutedObject.extend({
 });
 
 
-export {Register, resetHash};
+export {Register, RegisterIntro, resetHash};
