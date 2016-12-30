@@ -8,7 +8,7 @@ import moment from 'moment';
 import {
   goToDetails, applyCandidacy, cancelPosition
 } from 'ui/utils/common/actions';
-
+import {position} from 'ui/lib/position/fieldsets';
 
 const {
   computed,
@@ -18,112 +18,71 @@ const {
 } = Ember;
 
 
-const candidaciesField = field('candidacies', {
-    valueQuery: function(store, params, model, value) {
-      let position_id = model.get('id');
-      // no use of params for now
-      let query = {position: position_id};
-      return store.query('candidacy', query);
-    },
-    label: null,
-    modelMeta: {
-      row: {
-        fields: ['id',
-          field('candidate.last_name_current', {label: 'last_name.label'}),
-          field('candidate.first_name_current', {label: 'first_name.label'}),
-          field('candidate.father_name_current', {label: 'father_name.label'}),
-          field('submitted_at_format', {label: 'submitted_at.label'}),
-          field('updated_at_format', {label: 'updated_at.label'})
-        ],
-        actions: ['goToDetails'],
-        actionsMap: {
-          goToDetails: goToDetails
-        }
-      },
+const pick_edit_fs = function() {
+  let role = get(this, 'role'),
+    starts_at = get(this, 'model.starts_at'),
+    ends_at = get(this, 'model.ends_at'),
+    state = get(this, 'model.state'),
+    now = moment(),
+    before_open = now.isBefore(starts_at),
+    open = now.isBetween(starts_at, ends_at, null, []),
+    fs = position.edit,
+    head = [fs.basic, fs.details],
+    tail = [fs.assistants];
+
+  if(state === 'posted') {
+    if(before_open) {
+      return head.concat(tail);
     }
-  });
-
-const assistantsField = field('assistants', {
-  label: null,
-  modelMeta: {
-    row: {
-      fields: ['id',
-        field('last_name_current', {label: 'last_name.label'}),
-        field('first_name_current', {label: 'first_name.label'}),
-        field('email', {label: 'email.label'}),
-      ],
-      actions: ['goToDetails'],
-      actionsMap: {
-        goToDetails: goToDetails
-      }
-    },
+    else if (open) {
+      return head.concat(fs.candidacies, tail);
+    }
+    // closed
+    else {
+      return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, tail);
+    }
   }
-});
-
-function get_registry_members(registry, store, params) {
-    let registry_id = registry.get('id'),
-      query = assign({}, params, { id: registry_id, registry_members: true});
-
-    return store.query('professor', query)
-};
-/*
- * These fields can get a value from the members of a registry.
- * The table with the members data have the same form
- */
-function committeeElectorsField(field_name, registry_type) {
-  let label = `registry.type.${registry_type}`;
-
-  return field(field_name, {
-  label: label,
-  query: computed('position', function() {
-    return function(table, store, field, params) {
-      let departmentID = table.get("form.changeset.department.id");
-      return store.query('registry', {department: departmentID}).then(function (registries) {
-        /*
-         * There are max 2 registries per department
-         * Here we take the external (type 2) registry
-         */
-        let registry = registries.findBy('type', registry_type);
-        return get_registry_members(registry, store, params);
-      });
-    };
-  }),
-  modelMeta: {
-    row: {
-      fields: ['id',
-        field('last_name_current', {label: 'last_name.label'}),
-        field('first_name_current', {label: 'first_name.label'}),
-        field('email', {label: 'email.label'}),
-      ],
-      actions: ['goToDetails'],
-      actionsMap: {
-        goToDetails: goToDetails
-      }
-    },
+  else if(state === 'cancelled') {
+      return head.concat(tail);
   }
-});
+  // in all other states
+  else {
+    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, tail);
+  }
 };
 
-const historyField = field('past_positions', {
-    valueQuery: function(store, params, model, value) {
-      let id = model.get('id');
-      let query = {id: id, history: true};
-      return store.query('position', query);
-    },
-    label: null,
-    modelMeta: {
-      row: {
-        fields: ['id', 'code', 'state_calc_verbose',
-          field('updated_at_format', {label: 'updated_at.label'})
-        ],
-        actions: ['goToDetails'],
-        actionsMap: {
-          goToDetails: goToDetails
-        }
-      },
-    }
-  });
+const pick_details_fs = function() {
+  let role = get(this, 'role'),
+    starts_at = get(this, 'model.starts_at'),
+    ends_at = get(this, 'model.ends_at'),
+    state = get(this, 'model.state'),
+    now = moment(),
+    before_open = now.isBefore(starts_at),
+    fs = position.details,
+    head = [fs.basic, fs.details],
+    tail = [fs.assistants];
 
+  if(state === 'posted') {
+    if(before_open) {
+      return head.concat(tail);
+    }
+    else {
+      return head.concat(fs.candidacies, tail);
+    }
+  }
+  else if(state === 'cancelled') {
+      return head.concat(fs.history, tail);
+  }
+  // in all other states
+  else {
+    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, fs.history, tail);
+  }
+};
+
+const pick_create_fs = function() {
+  let fs = position.create;
+  return [fs.basic].concat(fs.details, fs.assistants);
+};
 
 
 export default ApellaGen.extend({
@@ -221,24 +180,7 @@ export default ApellaGen.extend({
     onSubmit(model) {
       this.transitionTo('position.record.index', model);
     },
-    fieldsets: [{
-      label: 'fieldsets.labels.basic_info',
-      fields: ['title', 'department', 'description',
-        'discipline','subject_area', 'subject'],
-      layout: {
-        flex: [50, 50, 100, 100, 50, 50]
-      }
-    }, {
-      label: 'fieldsets.labels.details',
-      fields: ['fek', 'fek_posted_at', 'starts_at', 'ends_at'],
-      layout: {
-        flex: [50, 50, 50, 50]
-      },
-    }, {
-      label: 'assistants.label',
-      text: 'assistants_on_position_explain',
-      fields: [assistantsField]
-    }],
+    fieldsets: pick_create_fs(),
   },
   list: {
     sort: {
@@ -272,134 +214,12 @@ export default ApellaGen.extend({
     }
   },
   edit: {
-    fieldsets: [{
-      label: 'fieldsets.labels.basic_info',
-      fields: [disable_field('code'), disable_field('state_calc_verbose'), 'title',
-        'department', 'description', 'discipline','subject_area', 'subject'],
-      layout: {
-        flex: [50, 50, 50, 50, 100, 100, 50, 50]
-      }
-    }, {
-      label: 'fieldsets.labels.details',
-      fields: computed('role', 'model.starts_at', 'state', function() {
-        let role = get(this, 'role');
-        // admin user can edit all these fields
-        if(role === 'helpdeskadmin') {
-          return ['fek', 'fek_posted_at', 'starts_at', 'ends_at'];
-        }
-        // other users can edit date fields until the position become open
-        else {
-          let starts_at = this.get('model').get('starts_at'),
-            before_open = moment().isBefore(starts_at),
-            start_field, end_field;
-          if(before_open) {
-            start_field = 'starts_at';
-            end_field = 'ends_at';
-          }
-          else {
-            start_field = disable_field('starts_at');
-            end_field = disable_field('starts_at')
-          }
-          return [disable_field('fek'), disable_field('fek_posted_at'), start_field, end_field];
-        }
-      }),
-      layout: {
-        flex: [50, 50, 50, 50]
-      },
-    }, {
-      label: 'committee_members.label',
-      fields: [
-        committeeElectorsField('committee_internal', '1'),
-        committeeElectorsField('committee_external', '2')
-      ],
-      layout: {
-        flex: [100, 100]
-      }
-    }, {
-      label: 'electors_regular_members.label',
-      fields: [
-        committeeElectorsField('electors_regular_internal', '1'),
-        committeeElectorsField('electors_regular_external', '2')
-      ],
-      layout: {
-        flex: [100, 100]
-      }
-    }, {
-      label: 'electors_substitute_members.label',
-      fields: [
-        committeeElectorsField('electors_substitute_internal', '1'),
-        committeeElectorsField('electors_substitute_external', '2')
-      ],
-      layout: {
-        flex: [100, 100]
-      }
-    }, {
-      label: 'assistants.label',
-      text: 'assistants_on_position_explain',
-      fields: [assistantsField]
-    }],
+    fieldsets: computed('role', 'model.state', 'model.starts_at', 'model.ends_at', pick_edit_fs),
   },
   details: {
     page: {
       title: computed.readOnly('model.code')
     },
-    fieldsets: [{
-      label: 'fieldsets.labels.basic_info',
-      fields: ['code', 'state_calc_verbose', 'title',
-        field('department.title_current', {label: 'department.label'}),
-        'description', 'discipline', field('subject_area.title_current',{label: 'subject_area.label'}),
-        field('subject.title_current', {label: 'subject.label'})],
-      layout: {
-        flex: [50, 50, 50, 50, 100, 100, 50, 50]
-      }
-    }, {
-      label: 'fieldsets.labels.details',
-      fields: ['fek', field('fek_posted_at_format', {label: 'fek_posted_at.label'}),
-        field('starts_at_format', {label: 'starts_at.label'}),
-        field('ends_at_format', {label: 'ends_at.label'})],
-      layout: {
-        flex: [50, 50, 50, 50]
-      }
-    },
-    {
-      label: 'candidacy.menu_label',
-      fields: [candidaciesField]
-    }, {
-      label: 'committee_members.label',
-      fields: [
-        committeeElectorsField('committee_internal', '1'),
-        committeeElectorsField('committee_external', '2')
-      ],
-      layout: {
-        flex: [100, 100]
-      }
-    }, {
-      label: 'electors_regular_members.label',
-      fields: [
-        committeeElectorsField('electors_regular_internal', '1'),
-        committeeElectorsField('electors_regular_external', '2')
-      ],
-      layout: {
-        flex: [100, 100]
-      }
-    }, {
-      label: 'electors_substitute_members.label',
-      fields: [
-        committeeElectorsField('electors_substitute_internal', '1'),
-        committeeElectorsField('electors_substitute_external', '2')
-      ],
-      layout: {
-        flex: [100, 100]
-      }
-    },
-    {
-      label: 'assistants.label',
-      text: 'assistants_on_position_explain',
-      fields: [assistantsField]
-    },
-    {
-      label: 'position.history.title',
-      fields: [historyField]
-    }]
+    fieldsets: computed('role', 'model.state', 'model.starts_at', 'model.ends_at', pick_details_fs),
   }
 });
