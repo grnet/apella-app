@@ -461,3 +461,9 @@ class UserInterest(models.Model):
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
+
+
+from migration_models import (
+    OldApellaUserMigrationData,
+    OldApellaFileMigrationData,
+)
