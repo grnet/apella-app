@@ -1482,8 +1482,9 @@ spec:
             .drf_collection:
                 model: apella.models.Candidacy
                 model_serializers: [apella.serializers.position.CandidacyMixin]
-                mixins: [apella.views.mixins.CandidacyList]
                 filter_fields: [position, candidate, state]
+                mixins: [apella.views.mixins.CandidacyList,
+                    apella.views.mixins.UploadFilesViewSet]
             .cli_commands: {}
             '*':
                 id:
@@ -1538,6 +1539,24 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .datetime: {}
+                file_path:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
             actions:
                 .list: {}
                 .create: {}

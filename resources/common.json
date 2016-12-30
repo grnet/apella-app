@@ -19,6 +19,7 @@
     ],
 
     "CANDIDACY_STATES": [
+        ["draft", "Draft"],
         ["posted", "Posted"],
         ["cancelled", "Cancelled"]
     ],
@@ -63,7 +64,9 @@
         ["nomination_act", "Nomination Act"],
         ["revocation_decision", "Revocation Decision"],
         ["failed_election_decision", "Failed Election Decision"],
-        ["assistant_file", "Assistant Files"]
+        ["assistant_file", "Assistant File"],
+        ["self_evaluation_report", "Self Evaluation Report"],
+        ["attachment_file", "Attachment File"]
     ],
 
     "INSTITUTION_CATEGORIES": [

@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('source', models.CharField(max_length=30, choices=[['profile', 'Profile'], ['candidacy', 'Candidacy'], ['position', 'Position'], ['other', 'Other']])),
                 ('source_id', models.IntegerField()),
-                ('file_kind', models.CharField(max_length=40, choices=[['cv', 'CV'], ['diploma', 'Diploma'], ['publication', 'Publication'], ['id_passport', 'ID Passport'], ['application_form', 'Application Form'], ['electors_set_file', 'Electors Set File'], ['committee_set_file', 'Committee Set File'], ['committee_proposal', 'Committee Proposal'], ['committee_note', 'Committee Note'], ['electors_meeting_proposal', 'Electors Meeting Proposal'], ['nomination_proceedings', 'Nomination Proceedings'], ['proceedings_cover_letter', 'Proceedings Cover Letter'], ['nomination_act', 'Nomination Act'], ['revocation_decision', 'Revocation Decision'], ['failed_election_decision', 'Failed Election Decision'], ['assistant_file', 'Assistant Files']])),
+                ('file_kind', models.CharField(max_length=40, choices=[['cv', 'CV'], ['diploma', 'Diploma'], ['publication', 'Publication'], ['id_passport', 'ID Passport'], ['application_form', 'Application Form'], ['electors_set_file', 'Electors Set File'], ['committee_set_file', 'Committee Set File'], ['committee_proposal', 'Committee Proposal'], ['committee_note', 'Committee Note'], ['electors_meeting_proposal', 'Electors Meeting Proposal'], ['nomination_proceedings', 'Nomination Proceedings'], ['proceedings_cover_letter', 'Proceedings Cover Letter'], ['nomination_act', 'Nomination Act'], ['revocation_decision', 'Revocation Decision'], ['failed_election_decision', 'Failed Election Decision'], ['assistant_file', 'Assistant File'], ['self_evaluation_report', 'Self Evaluation Report'], ['attachment_file', 'Attachment File']])),
                 ('file_path', models.FileField(upload_to=apella.models.generate_filename)),
                 ('description', models.CharField(max_length=255, null=True, blank=True)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
             name='Candidacy',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('state', models.CharField(default=b'posted', max_length=30, choices=[['posted', 'Posted'], ['cancelled', 'Cancelled']])),
+                ('state', models.CharField(default=b'draft', max_length=30, choices=[['draft', 'Draft'], ['posted', 'Posted'], ['cancelled', 'Cancelled']])),
                 ('others_can_view', models.BooleanField(default=False)),
                 ('submitted_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),

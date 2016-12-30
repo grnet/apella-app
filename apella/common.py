@@ -141,4 +141,12 @@ FILE_KIND_TO_FIELD = {
         "field": "assistant_files",
         "many": True,
     },
+    "self_evaluation_report": {
+        "field": "self_evaluation_report",
+        "many": False,
+    },
+    "attachment_files": {
+        "field": "attachment_files",
+        "many": True,
+    },
 }

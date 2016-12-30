@@ -6,14 +6,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
 from django.conf import settings
 from django.core import validators
 
-<<<<<<< fb1d493fabc08264f340664a1d0efc227d8aacd5
 from apella.validators import before_today_validator, after_today_validator,\
     validate_dates_interval
-=======
-from apella.validators import before_today_validator, after_today_validator, \
-    validate_dates_interval, validate_position_dates, \
-    validate_candidate_files, validate_unique_candidacy
->>>>>>> Validate candidacy submission
 from apella import common
 from apella.helpers import assistant_can_edit, professor_participates,\
     position_is_latest
@@ -454,7 +448,7 @@ class Candidacy(CandidateProfile):
     candidate = models.ForeignKey(ApellaUser)
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
     state = models.CharField(
-        choices=common.CANDIDACY_STATES, max_length=30, default='posted')
+        choices=common.CANDIDACY_STATES, max_length=30, default='draft')
     others_can_view = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
@@ -488,6 +482,10 @@ class Candidacy(CandidateProfile):
             self, row, request, view):
         # TODO implement this
         return True
+
+    def check_resource_state_draft(self, row, request, view):
+        return self.check_resource_state_owned(row, request, view) \
+                and self.state == 'draft'
 
 
 class Registry(models.Model):
