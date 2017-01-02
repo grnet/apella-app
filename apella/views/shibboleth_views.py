@@ -201,7 +201,7 @@ def login(request):
     if created:
         data = urllib.quote(base64.b64encode(json.dumps(user_data)))
         redirect_url = token_register_url
-        token_fragment = '?initial=%s#token=%s' % (data, token)
+        token_fragment = '?initial=%s&academic=1&#token=%s' % (data, token)
     else:
         redirect_url = token_login_url
         token_fragment = '#token=' + token
