@@ -18,7 +18,8 @@ export default Select.extend({
     assert(`lookupModel and changedChoices are required for select-onchange`, key && query);
     mixin(this, {
       relatedQuery: computed('field.modelName', `object.${key}`, function() {
-          return query(this.get('store'), this.get(`object.${key}`));
+        let value = this.get(`object.${key}`);
+        return value ? query(this.get('store'), value) : Ember.A();
       })
     })
   })
