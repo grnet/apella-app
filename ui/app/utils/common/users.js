@@ -34,7 +34,7 @@ const USER_FIELDS = [
 
 const USER_FIELDS_EDIT = [
   field('username', { readonly: true }),
-  'email',
+  field('email', { readonly: true }),
   'first_name',
   'last_name',
   'father_name',
@@ -48,7 +48,7 @@ const USER_FIELDS_REGISTER = [
   field('username', { readonly: false }),
   'password',
   field('password2', { type: 'string', formAttrs: { type: 'password' }}),
-  'email',
+  field('email', { readonly: false }),
   'first_name',
   'last_name',
   'father_name',
