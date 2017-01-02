@@ -4,6 +4,8 @@ import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
 
+const { computed, get, set } = Ember;
+
 const USER_FIELDS_ALL = [
   'user_id',
   'username',
@@ -39,7 +41,36 @@ const USER_FIELDS_EDIT = [
   'id_passport',
   'mobile_phone_number',
   'home_phone_number'
-]
+];
+const USER_FIELDS_EDIT_ACADEMIC = USER_FIELDS_EDIT.slice(1);
+
+const USER_FIELDS_REGISTER = [
+  field('username', { readonly: false }),
+  'password',
+  field('password2', { type: 'string', formAttrs: { type: 'password' }}),
+  'email',
+  'first_name',
+  'last_name',
+  'father_name',
+  'id_passport',
+  'mobile_phone_number',
+  'home_phone_number'
+];
+const USER_FIELDS_REGISTER_ACADEMIC = USER_FIELDS_REGISTER.slice(3);
+
+const USER_FIELDS_REGISTER_REQUIRED = [
+  'username',
+  'password',
+  'password2',
+  'email',
+  'first_name',
+  'last_name',
+  'father_name',
+  'id_passport',
+  'mobile_phone_number',
+  'home_phone_number'
+];
+const USER_FIELDS_REGISTER_REQUIRED_ACADEMIC = USER_FIELDS_REGISTER_REQUIRED.slice(3);
 
 const PROFESSOR_FIELDS = [
   'institution',
@@ -50,13 +81,28 @@ const PROFESSOR_FIELDS = [
   }),
   'cv',
   'fek',
-  'discipline_text',
+  field('discipline_text', {
+    type: 'text',
+    required: computed('model.changeset.discipline_in_fek', function() {
+      let check = get(this, 'model.changeset.discipline_in_fek');
+      return !check;
+    }),
+    disabled: computed('model.changeset.discipline_in_fek', function() {
+      let check = get(this, 'model.changeset.discipline_in_fek');
+      if (check) { Ember.run.once(this, () => set(this, 'model.changeset.discipline_text', '')) };
+      return check;
+    })
+  }),
   field('discipline_in_fek',{
     hint: 'discipline_in_fek.hint',
   }),
   'is_foreign',
   'speaks_greek',
-]
+];
+
+const PROFESSOR_FIELDS_REGISTER_REQUIRED = [
+  'institution', 'department', 'rank', 'fek'
+];
 
 const INSTITUTION_MANGER_FIELDS = [
   'institution',
@@ -90,6 +136,20 @@ const USER_FIELDSET_EDIT = {
   }
 }
 
+const USER_FIELDSET_EDIT_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
+  fields: USER_FIELDS_EDIT_ACADEMIC
+});
+
+const USER_FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
+  fields: USER_FIELDS_REGISTER_ACADEMIC,
+  required: USER_FIELDS_REGISTER_REQUIRED_ACADEMIC
+});
+
+const USER_FIELDSET_REGISTER = Ember.assign({}, USER_FIELDSET_EDIT, {
+  fields: USER_FIELDS_REGISTER,
+  required: USER_FIELDS_REGISTER_REQUIRED
+});
+
 const USER_FIELDSET_DETAILS = {
   label: 'fieldsets.labels.user_info',
   fields: [
@@ -106,6 +166,10 @@ const USER_FIELDSET_DETAILS = {
   }
 }
 
+const USER_FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, USER_FIELDSET_DETAILS, {
+  fields: USER_FIELDSET_DETAILS.fields.slice(1)
+});
+
 const PROFESSOR_FIELDSET = {
   label: 'fieldsets.labels.more_info',
   fields: PROFESSOR_FIELDS,
@@ -113,6 +177,15 @@ const PROFESSOR_FIELDSET = {
     flex: [50, 50, 100, 50, 50, 100, 100, 100, 50, 50]
    }
 }
+
+const PROFESSOR_FIELDSET_REGISTER = Ember.assign({}, PROFESSOR_FIELDSET, {
+  label: Ember.computed('model.is_academic', function() {
+    let academic = this.get('model.is_academic');
+    if (academic) { return 'fieldsets.labels.user_info.academic'; }
+    return 'fieldsets.labels.more_info';
+  }),
+  required: PROFESSOR_FIELDS_REGISTER_REQUIRED
+});
 
 const INST_MANAGER_FIELDSET_MAIN = {
   label: 'fieldsets.labels.more_info',
@@ -198,7 +271,8 @@ const normalizeUserErrors = function(errors) {
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
-        USER_FIELDSET_DETAILS,
+        USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC, PROFESSOR_FIELDSET_REGISTER,
+        USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS, USER_FIELDS_ALL};

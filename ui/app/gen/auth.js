@@ -52,8 +52,35 @@ const PROFILE_ASSISTANT_FIELDSET = {
   }
 }
 
+const PROFILE_FIELDSETS = computed('model.role', function(){
+  let f = [];
+  let role = this.get('model').get('role');
+  if (role === 'assistant') {
+    f.push(PROFILE_ASSISTANT_FIELDSET)
+    return f;
+  }
+  f.push(USER_FIELDSET_EDIT);
+
+  if (role === 'professor') {
+    f.push(PROFESSOR_FIELDSET);
+  }
+  if (role === 'institutionmanager') {
+    f.push(INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB);
+  }
+  return f;
+})
+
 // GENS
 //
+const ProfileDetailsView = gen.GenRoutedObject.extend({
+  routeBaseClass: routes.DetailsRoute,
+  fieldsets: PROFILE_FIELDSETS,
+  component: 'gen-details',
+  getModel() {
+    return get(this, 'store').findRecord('profile', 'me');
+  }
+});
+
 const PositionInterest = gen.GenRoutedObject.extend({
   modelName: 'user-interest',
   path: 'my-interests',
@@ -201,13 +228,16 @@ export default AuthGen.extend({
        title: 'profile.menu_label',
     },
     gens: {
-      position_interest: PositionInterest
+      position_interest: PositionInterest,
+      details: ProfileDetailsView
     },
     modelName: 'profile',
     menu: {
       display: true,
       label: 'profile.menu_label',
     },
+    onSubmit: function() {},
+
     validators: computed('model.role', function(){
       let role = this.get('model').get('role');
       let f = Object.assign({}, USER_VALIDATORS);
@@ -219,23 +249,7 @@ export default AuthGen.extend({
       }
       return f;
     }),
-    fieldsets: computed('model.role', function(){
-      let f = [];
-      let role = this.get('model').get('role');
-      if (role === 'assistant') {
-        f.push(PROFILE_ASSISTANT_FIELDSET)
-        return f;
-      }
-      f.push(USER_FIELDSET_EDIT);
-
-      if (role === 'professor') {
-        f.push(PROFESSOR_FIELDSET);
-      }
-      if (role === 'institutionmanager') {
-        f.push(INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB);
-      }
-      return f;
-    }),
+    fieldsets: PROFILE_FIELDSETS,
 
     getModel() {
       return get(this, 'store').findRecord('profile', 'me');

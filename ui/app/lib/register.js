@@ -1,6 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import {USER_FIELDS_ALL} from 'ui/utils/common/users';
+import {
+  USER_FIELDS_ALL,
+  USER_FIELDSET_REGISTER,
+  USER_FIELDSET_REGISTER_ACADEMIC,
+  PROFESSOR_FIELDSET_REGISTER
+} from 'ui/utils/common/users';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import ENV from 'ui/config/environment';
@@ -15,8 +20,6 @@ const TEST_REGISTER_DATA = {
   mobile_phone_number: '6941111111',
   home_phone_number: '2101111111',
   rank: 'Professor',
-  institution: 1,
-  department: 1,
   cv_url: 'http://www.cvs.gr/cv-56772',
   fek: 'http://www.fek.gr/fek-145'
 };
@@ -97,19 +100,6 @@ function resetHash(win, replace='') {
     win.location.hash = replace;
   }
 }
-
-const requiredStringField = function(name, params) {
-  params = params || {};
-  let isI18n = params && params.formComponent && params.formComponent.startsWith('i18n');
-  return field(name, 'string', merge({
-    required: true,
-    readonly: params.readonly || computed(`model._content.${name}`, function() {
-      return !isI18n && get(this, `model._content.${name}`);
-    }),
-    disabled: reads('readonly')
-  }, params));
-}
-
 
 const RegisterSuccess = gen.GenRoutedObject.extend({
   auth: false,
@@ -204,112 +194,21 @@ const Register = gen.GenRoutedObject.extend({
     let model = get(this, 'model');
     let type = get(this, 'model.userRole');
 
-    let f = requiredStringField
-    let FS_LOGIN = {
-      label: 'register.login.fields',
-      fields: [
-        f('username'),
-        f('password', {formAttrs: { type: 'password'}}),
-        f('password2', {label: 'password.confirm', formAttrs: { type: 'password'}})
-      ],
-      layout: {
-        flex: [33, 33, 33]
-      }
-    };
-
-    let FS_ACCOUNT = {
-      label: 'register.account.fields',
-      fields: [
-        f('first_name', {formComponent: 'i18n-input-field'}),
-        f('last_name', {formComponent: 'i18n-input-field'}),
-        f('father_name', {formComponent: 'i18n-input-field'}),
-        f('id_passport'),
-        f('email'),
-        f('mobile_phone_number'),
-        f('home_phone_number')
-      ],
-      layout: {
-        flex: [30, 40, 30, 50, 50, 50, 50]
-      }
-    };
-
-    let FS_PROFESSOR = {
-      fields: [
-        f('rank'),
-        f('institution', {
-          type: 'model',
-          autocomplete: true,
-          modelName: 'institution',
-          formAttrs: {
-            optionLabelAttr: 'title_current'
-          }
-        }),
-        f('department', {
-          type: 'model',
-          modelName: 'department',
-          formComponent: 'select-onchange',
-          formAttrs: {
-            lookupModel: 'institution.id',
-            changedChoices: function(store, id) {
-              if (!id) { return Ember.RSVP.Promise.resolve([]); }
-              return store.query('department', {institution: id});
-            },
-            optionLabelAttr: 'title_current',
-          }
-        }),
-        f('cv_url', {
-          required: not('model.changeset.cv_url_check'),
-          disabled: computed('model.changeset.cv_url_check', function() {
-            let check = get(this, 'model.changeset.cv_url_check');
-            if (check) { Ember.run.once(this, () => set(this, 'model.changeset.cv_url', '')); };
-            return check;
-          })
-        }),
-        f('cv_url_check', {type: 'boolean', required: false, onChange(obj, key, val) { obj.set('cv_url', ''); }}),
-        f('cv', {
-          type: 'string',
-          required: reads('model.changeset.cv_url_check'),
-          disabled: computed('model.changeset.cv_url_check', function() {
-            let check = get(this, 'model.changeset.cv_url_check');
-            if (!check) { Ember.run.once(this, () => set(this, 'model.changeset.cv', null)) };
-            return !check;
-          })
-        }),
-        f('fek'),
-        f('discipline_in_fek', {type: 'boolean'}),
-        f('discipline_text', {
-          type: 'text',
-          required: computed('model.changeset.discipline_in_fek', function() {
-            let check = get(this, 'model.changeset.discipline_in_fek');
-            return !check;
-          }),
-          disabled: computed('model.changeset.discipline_in_fek', function() {
-            let check = get(this, 'model.changeset.discipline_in_fek');
-            if (check) { Ember.run.once(this, () => set(this, 'model.changeset.discipline_text', '')) };
-            return check;
-          })
-        })
-      ],
-      layout: {
-        flex: [25, 40, 35, 100, 30, 70, 60, 40, 100]
-      }
-    };
-    let FS_MANAGER = {}
-
     // resolve fieldsets
     let FIELDSETS = [];
     if (type === 'professor') {
-      if (!model.get('registration_token')) { // manager/foreign/candidate
-        FIELDSETS.push(FS_LOGIN);
+      if (get(model, 'is_academic')) {
+        FIELDSETS.push(USER_FIELDSET_REGISTER_ACADEMIC);
+      } else {
+        FIELDSETS.push(USER_FIELDSET_REGISTER);
       }
-      FIELDSETS.push(FS_ACCOUNT);
-      FIELDSETS.push(FS_PROFESSOR);
+      FIELDSETS.push(PROFESSOR_FIELDSET_REGISTER);
     }
     if (type === 'candidate') {
-        FIELDSETS.push(FS_LOGIN, FS_ACCOUNT);
+        FIELDSETS.push(USER_FIELDSET_REGISTER);
     }
     if (type === 'manager') {
-        FIELDSETS.push(FS_LOGIN, FS_ACCOUNT, FS_MANAGER);
+        FIELDSETS.push(USER_FIELDSET_REGISTER);
     }
     return FIELDSETS;
   }),
