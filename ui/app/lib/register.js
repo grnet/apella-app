@@ -136,26 +136,29 @@ const Register = gen.GenRoutedObject.extend({
   args: [':userRole'],
   routeBaseClass: routes.CreateRoute.extend({
     queryParams: {
-      initial: { refreshModel: false }
-    },
-    setupController(controller, model) {
-      this._super(...arguments);
-      let token = extractToken(window.location);
-      if (token) { resetHash(window); };
-      set(model, 'registration_token', (token && token.length) ? token : null);
+      initial: { refreshModel: false },
+      academic: { refreshModel: false }
     },
     resetController(controller) {
       set(controller, 'model.registration_token', null);
       set(controller, 'initial', false);
+      set(controller, 'academic', false);
     }
   }),
   component: 'gen-form',
   components: { beforeForm: 'register-form-intro' },
   getModel(params) {
+    let token = extractToken(window.location);
+    if (token) { resetHash(window); };
+    if (params.academic && !token) {
+      this.transitionTo('auth.register-intro');
+    }
+
     let userRole = this.paramsFor('auth.register').userRole;
     if (!['professor', 'manager', 'candidate'].includes(userRole)) {
       userRole = 'professor';
     }
+    set(this, 'gen.modelName', userRole);
 
     // extract default values from `initial` params
     let defaults = {
@@ -168,16 +171,9 @@ const Register = gen.GenRoutedObject.extend({
     merge(defaults, TEST_REGISTER_DATA);
     let gen = get(this, 'gen');
     let model = User.create(defaults, {userRole, gen});
-
-    let inst = this.store.query('institution', {});
-    let dept = this.store.query('department', {});
-    return Ember.RSVP.hash({inst, dept}).then((resp) => {
-      model.setProperties({
-        institution: resp.inst.objectAt(0),
-        department: resp.dept.objectAt(0)
-      });
-      return model;
-    });
+    set(model, 'registration_token', (token && token.length) ? token : null);
+    set(model, 'is_academic', !!token);
+    return Ember.RSVP.Promise.resolve(model);
   },
 
   onSubmit(model) {
