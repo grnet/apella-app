@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from rest_framework.authtoken.models import Token
@@ -141,3 +143,13 @@ def migrate_legacy(migration_key, migrate_id, shibboleth_id):
     user.save()
     return legacy
 
+
+def request_user_verify(user):
+    user.verification_pending = True
+    user.verification_request = datetime.now()
+
+
+def verify_user(user):
+    user.is_verified = True
+    user.verified_at = datetime.now()
+    user.verification_pending = False

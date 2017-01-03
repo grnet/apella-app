@@ -455,7 +455,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Professor
-                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.UploadFilesViewSet]
             .cli_commands: {}
             '*':
@@ -546,6 +546,12 @@ spec:
                     .drf_field: {}
                     .boolean: {}
                     .required: {}
+                verification_pending:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
                 is_verified:
                     .cli_option: {}
                     .field: {}
@@ -709,8 +715,8 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.InstitutionManager
-                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 filter_fields: [institution]
+                model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
             .cli_commands: {}
             '*':
                 id:
@@ -828,6 +834,12 @@ spec:
                             .string: {}
                             .blankable: {}
                             .nullable: {}
+                verification_pending:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
                 is_verified:
                     .cli_option: {}
                     .field: {}
@@ -949,7 +961,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Candidate
-                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.UploadFilesViewSet]
                 search_fields: [user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
             .cli_commands: {}
@@ -1000,6 +1012,12 @@ spec:
                     .read_only: {}
                     .ref:
                         to: apella-files
+                verification_pending:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
                 is_verified:
                     .cli_option: {}
                     .field: {}

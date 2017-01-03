@@ -189,6 +189,8 @@ class UserProfile(models.Model):
     activated_at = models.DateTimeField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     verified_at = models.DateTimeField(null=True, blank=True)
+    verification_pending = models.BooleanField(default=False)
+    verification_request = models.DateTimeField(null=True, blank=True)
     is_rejected = models.BooleanField(default=False)
     rejected_reason = models.TextField(null=True, blank=True)
 

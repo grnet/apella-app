@@ -66,6 +66,18 @@ class CustomUserView(djoser_views.UserView):
         resource = USER_ROLE_MODEL_RESOURCES[user.role]['resource']
         return adapter.get_serializer(resource)
 
+    def update(self, request, *args, **kwargs):
+        data = request.data
+        user = self.get_object()
+
+        if user.verification_pending:
+            raise PermissionDenied("user.pending.verification")
+
+        if user.is_verified:
+            raise PermissionDenied("user.verified")
+
+        return super(CustomUserView, self).update(request, *args, **kwargs)
+
 
 class CustomLoginSerializer(djoser_serializers.LoginSerializer):
 

@@ -81,6 +81,15 @@ def update_objects(fields, validated_data, instance=None, model=None):
     return instance
 
 
+class VerifiedUserMixin(object):
+
+    def update(self, instance, validated_data):
+        verification_request = \
+            self.context.get('request').data.get('verification_request')
+        if verification_request:
+            auth_hooks.request_user_verify(instance)
+        return super(VerifiedUserMixin, self).update(instance, validated_data)
+
 class NestedWritableObjectsMixin(object):
 
     NESTED_USER_KEY = 'user'
