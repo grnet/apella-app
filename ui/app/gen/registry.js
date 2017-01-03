@@ -18,7 +18,10 @@ export default ApellaGen.extend({
     // resolve ability for position model
     owned: computed('role', function() {
       return get(this, 'role') === 'institutionmanager';
-    }) // we expect server to reply with owned resources
+    }), // we expect server to reply with owned resources
+    can_create: computed('user.can_create_registries', function() {
+      return get(this, 'user.can_create_registries');
+    })
   },
 
   common: {
