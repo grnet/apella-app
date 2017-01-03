@@ -2,7 +2,9 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
 
-const { get } = Ember,
+const {
+  get, computed
+} = Ember,
       CHOICES = ENV.APP.resources;
 
 export default Ember.Mixin.create({
@@ -19,6 +21,10 @@ export default Ember.Mixin.create({
   }),
   rank: DS.attr({type: 'select', choices: CHOICES.RANKS, defaultValue:'Assistant Professor'}),
   is_foreign: DS.attr({type: 'boolean', defaultValue: false }),
+  is_foreign_descr: computed('is_foreign', 'locale.i18n', function() {
+    let is_foreign = get(this, 'is_foreign');
+    return is_foreign ? get(this, 'i18n').t('professor_foreign') : get(this, 'i18n').t('professor_domestic');
+  }),
   speaks_greek: DS.attr({type: 'boolean', defaultValue: true }),
   cv_url: DS.attr(),
   cv: DS.attr(),

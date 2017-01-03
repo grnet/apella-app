@@ -258,5 +258,9 @@ export default {
   'closed': 'Closed',
   // 1,2 is the type of registry
   'registry.type.1': 'Internal Registry',
-  'registry.type.2': 'External Registry'
+  'registry.type.2': 'External Registry',
+  'is_foreign_descr.label': 'User Type',
+  'professor_foreign': 'Foreign Professor/Researcher',
+  'professor_domestic': 'Domestic Professor/Researcher',
+  'id.label': 'ID'
 };
