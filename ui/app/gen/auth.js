@@ -251,8 +251,43 @@ export default AuthGen.extend({
     }),
     fieldsets: PROFILE_FIELDSETS,
 
+    extraActions: computed('model.is_verified', 'model.verification_pending', function() {
+      let isVerified = get(this, 'user.is_verified');
+      let verificationPending = get(this, 'user.verification_pending');
+      if (!isVerified) {
+        return [{
+          label: 'request.profile.verification',
+          icon: 'check_circle',
+          primary: true,
+          action: function(route, form) {
+            let model = get(form, 'model');
+            set(model, 'verification_request', new Date());
+            form.submit().then((model) => {
+              route.get('messageService').setSuccess('verification.request.submitted');
+              route.transitionTo('auth.profile.details');
+            });
+          },
+          confirm: true,
+          prompt: {
+            title: 'request.profile.verification',
+            message: 'request.profile.verification.message',
+            ok: 'submit',
+            cancel: 'cancel'
+          }
+        }]
+      }
+      return [];
+    }),
+
     getModel() {
-      return get(this, 'store').findRecord('profile', 'me');
+      return get(this, 'store').findRecord('profile', 'me').then((user) => {
+        let isVerified = get(user, 'is_verified');
+        let verificationPending = get(user, 'verification_pending');
+        if (verificationPending || isVerified) {
+          this.transitionTo('auth.profile.details');
+        }
+        return user;
+      });
     }
   }
 })

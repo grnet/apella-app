@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import {CRUDGen} from 'ember-gen/lib/gen';
 import ENV from 'ui/config/environment';
 import {field} from 'ember-gen/lib/util';
@@ -115,8 +116,18 @@ const urlValidator = [
     message: 'It should start with http or https'})
 ]
 
+const VerifiedUserMixin = Ember.Mixin.create({
+  is_verified: DS.attr('boolean'),
+  verified_at: DS.attr('date'),
+  verification_request: DS.attr('date'),
+  verification_pending: DS.attr('boolean'),
+  is_rejected: DS.attr('boolean'),
+  rejected_reason: DS.attr('string')
+});
+
 export {
   ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
-  booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator
+  booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
+  VerifiedUserMixin
 };
 

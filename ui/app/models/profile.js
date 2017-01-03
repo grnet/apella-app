@@ -4,10 +4,11 @@ import professorFields from 'ui/mixins/professor';
 import {normalizeUser, serializeUser, normalizeUserErrors} from 'ui/utils/common/users';
 import institutionManagerFields from 'ui/mixins/institution-manager';
 import assistantFields from 'ui/mixins/assistant';
+import {VerifiedUserMixin} from 'ui/lib/common';
 
 const { get } = Ember;
 
-export default User.extend(professorFields, institutionManagerFields, assistantFields, {
+export default User.extend(professorFields, institutionManagerFields, assistantFields, VerifiedUserMixin, {
   __api__: {
     namespace: 'auth',
     path: 'me',

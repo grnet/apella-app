@@ -31,5 +31,4 @@ export default Ember.Mixin.create({
   fek: DS.attr(),
   discipline_text: DS.attr(),
   discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true})
-
 });
