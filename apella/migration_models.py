@@ -17,7 +17,6 @@ class OldApellaUserMigrationData(models.Model):
     person_id_number = models.TextField()
     is_foreign = models.BooleanField()
     speaks_greek = models.BooleanField()
-    department_id = models.TextField()
     professor_subject_id = models.TextField()
     professor_rank = models.TextField()
     professor_institution_id = models.TextField()
@@ -27,6 +26,7 @@ class OldApellaUserMigrationData(models.Model):
     professor_subject_from_appointment = models.TextField()
     professor_subject_optional_freetext = models.TextField()
     professor_institution_cv_url = models.TextField()
+    manager_institution_id = models.TextField()
     manager_appointer_authority = models.TextField()
     manager_appointer_fullname = models.TextField()
     manager_deputy_name_el = models.TextField()
@@ -37,6 +37,7 @@ class OldApellaUserMigrationData(models.Model):
     manager_deputy_fathername_en = models.TextField()
     manager_deputy_mobile = models.TextField()
     manager_deputy_phone = models.TextField()
+    manager_deputy_email = models.TextField()
 
 
 class OldApellaFileMigrationData(models.Model):
