@@ -1,10 +1,13 @@
+import os
+
 from django.conf import settings
 from django.utils import timezone
+from django.core.files.base import ContentFile
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
-    Professor, ElectorParticipation
+    Professor, ElectorParticipation, ApellaFile
 from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy
 
@@ -126,6 +129,42 @@ class PositionMixin(ValidatorMixin):
         return instance
 
 
+def copy_single_file(existing_file, candidacy, source='candidacy'):
+    new_file = ApellaFile(
+        owner=existing_file.owner,
+        source=source,
+        file_kind=existing_file.file_kind,
+        source_id=candidacy.id,
+        description=existing_file.description)
+    new_file.file_path.save(
+        os.path.split(existing_file.file_path.file.name)[-1],
+        ContentFile(existing_file.file_path.file.read()))
+    new_file.save()
+    existing_file.file_path.file.close()
+    return new_file
+
+
+def copy_candidacy_files(candidacy, user):
+    if user.is_professor():
+        cv = user.professor.cv
+        diplomas = user.professor.diplomas.all()
+        publications = user.professor.publications.all()
+    elif user.is_candidate():
+        cv = user.candidate.cv
+        diplomas = user.candidate.diplomas.all()
+        publications = user.candidate.publications.all()
+
+    new_cv = copy_single_file(cv, candidacy)
+    candidacy.cv = new_cv
+    for diploma in diplomas:
+        new_diploma = copy_single_file(diploma, candidacy)
+        candidacy.diplomas.add(new_diploma)
+    for publication in publications:
+        new_publication = copy_single_file(publication, candidacy)
+        candidacy.publications.add(new_publication)
+    candidacy.save()
+
+
 class CandidacyMixin(object):
     def validate(self, data):
         user = self.context.get('request').user
@@ -154,6 +193,7 @@ class CandidacyMixin(object):
         code = str(obj.id)
         obj.code = code
         obj.save()
+        copy_candidacy_files(obj, user)
         return obj
 
     def update(self, instance, validated_data):
