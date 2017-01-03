@@ -14,8 +14,7 @@ class Command(BaseCommand):
     def preprocess(self, input_line):
         return input_line.strip().strip(';').split(';')
 
-
-    def read_csv_file(csv_reader, target_model_name):
+    def read_csv_file(self, csv_reader, target_model_name):
         modelclass = getattr(apella.models, target_model_name, None)
         if modelclass is None:
             m = "model not found: {0!r}".format(target_model_name)
@@ -48,4 +47,3 @@ class Command(BaseCommand):
         with open(csv_file_path) as f:
             csv_reader = csv.reader(f)
             self.read_csv_file(csv_reader, target_model_name)
-
