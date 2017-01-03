@@ -41,7 +41,6 @@ let CANDIDATE_FIELDSET =  {
 
 let CANDIDACY_FIELDSET =  {
       label: 'candidacy.candidacy_section.title',
-      text: 'candidacy.candidacy_section.subtitle',
       fields: ['selfEvaluation', 'additionalFiles', 'othersCanView'],
       flex: 50,
       layout: {
@@ -149,7 +148,43 @@ export default ApellaGen.extend({
     }
   },
   create: {
-    fieldsets: FS.create,
+    fieldsets: computed('model.position', 'role', function(){
+      if (get(this, 'role') == 'helpdeskadmin') {
+        return FS.create_helpdeskadmin
+      } else {
+        return FS.common
+      }
+    }),
+    getModel: function(params) {
+      var self = this;
+      if (params.position) {
+        let position = get(self,'store').findRecord('position', params.position);
+        let user_id = get(this, 'session.session.authenticated.user_id');
+        let role = get(this, 'session.session.authenticated.role');
+        let user = get(self, 'store').findRecord('user', user_id);
+        return position.then(function(position){
+          let c = self.store.createRecord('candidacy', {
+            position: position,
+          });
+          if (role != 'helpdeskadmin') {
+            return user.then(function(user) {
+              set(c, 'candidate', user);
+              return c
+            }, function(error) {
+              self.transitionTo('candidacy.index');
+            })
+          } else {
+            return c
+          }
+        }, function(error) {
+          self.transitionTo('candidacy.index')
+        })
+      }
+      this.transitionTo('candidacy.index')
+    },
+    routeMixins: {
+      queryParams: {'position': { refreshModel: true }},
+    }
   },
   details: {
     page: {

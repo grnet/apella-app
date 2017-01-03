@@ -25,8 +25,15 @@ const applyCandidacy = {
   label: 'applyCandidacy',
   icon: 'playlist add',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
+  hidden: computed('model.is_open', 'role', function(){
+    let role = get(this, 'role');
+    let is_helpdeskadmin = get(this, 'role') == 'helpdeskadmin';
+    if (is_helpdeskadmin)  return false;
+    return !get(this, 'model.is_open')
+  }),
   action(route, model){
-    console.log(get(model, 'code'))
+    let id = get(model, 'id');
+    route.transitionTo('candidacy.create', { queryParams: { position: id }});
   }
 };
 
