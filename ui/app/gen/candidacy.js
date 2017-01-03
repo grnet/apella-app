@@ -126,8 +126,7 @@ export default ApellaGen.extend({
       icon: 'assignment',
       display: computed('role', function() {
         let role = get(this, 'session.session.authenticated.role');
-        let forbiddenRoles = ['institutionmanager', 'helpdeskadmin'];
-
+        let forbiddenRoles = ['institutionmanager', 'assistant'];
         return (forbiddenRoles.includes(role) ? false : true);
       })
     },
