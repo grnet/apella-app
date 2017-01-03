@@ -5,37 +5,41 @@ import _ from 'lodash/lodash';
 import {disable_field} from 'ui/utils/common/fields';
 import {cancelCandidacy} from 'ui/utils/common/actions';
 
-const presence = validate.presence(true),
-      max_chars = validate.length({max: 200}),
-      mandatory = [validate.presence(true)],
-      mandatory_with_max_chars = [presence, max_chars],
-      {
-        get, computed, computed: { alias },
+const {
+        set, get, computed, computed: { alias },
         getOwner
-      } =Ember,
+      } = Ember,
       CANDIDACY_POSTED_ID = '2',
       POSITION_POSTED_ID = '2';
 
-let FS = {
-  list:  ['position.code', 'position.department.institution.title_current',
-          'position.department.title_current',
-          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
-  create: [{
-    label: 'candidacy.position_section.title',
-    text: 'candidacy.position_section.subtitle',
-    fields: ['position'],
-    flex: 100
-  },
-  {
-    label: 'candidacy.candidate_section.title',
-    text: 'candidacy.candidate_section.subtitle',
-    fields: ['candidate', 'cv', 'diploma', 'publication'],
-    flex: 50,
-    layout: {
-      flex: [50, 50, 50, 50]
-    },
-  },
-    {
+let POSITION_FIELDS = ['position.code_and_title', 'position.title',
+    'position.department.institution.title_current',
+    'position.department.title_current', 'position.discipline',
+    'position.fek', 'position.fek_posted_at_format',
+    'position.starts_at_format', 'position.ends_at_format',
+    'position.state_calc_verbose' ];
+
+let POSITION_FIELDSET =  {
+      label: 'candidacy.position_section.title',
+      text: 'candidacy.position_section.subtitle',
+      fields: _.map(POSITION_FIELDS, disable_field),
+      layout: {
+        flex: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30 ]
+      },
+      flex: 100
+};
+
+let CANDIDATE_FIELDSET =  {
+      label: 'candidacy.candidate_section.title',
+      text: 'candidacy.candidate_section.subtitle',
+      fields: _.map(['candidate.full_name_current', 'cv', 'diploma', 'publication'], disable_field),
+      flex: 50,
+      layout: {
+        flex: [50, 50, 50, 50]
+      },
+};
+
+let CANDIDACY_FIELDSET =  {
       label: 'candidacy.candidacy_section.title',
       text: 'candidacy.candidacy_section.subtitle',
       fields: ['selfEvaluation', 'additionalFiles', 'othersCanView'],
@@ -43,14 +47,25 @@ let FS = {
       layout: {
         flex: [50, 50, 50, 50]
       }
-    }
+};
+
+
+let FS = {
+  common: [
+    POSITION_FIELDSET,
+    CANDIDATE_FIELDSET,
+    CANDIDACY_FIELDSET
   ],
-  edit: {
-    position_fields: ['position.code_and_title', 'position.title', 'position.department.institution.title_current', 'position.department.title_current', 'position.discipline','position.fek', 'position.fek_posted_at_format', 'position.starts_at_format', 'position.ends_at_format' ],
-    position_layout: {
-      flex: [30, 30, 30, 30, 30, 30, 30, 30, 30 ]
-    }
-  }
+  list:  ['position.code', 'position.department.institution.title_current',
+          'position.department.title_current',
+          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
+  create_helpdeskadmin: [
+    POSITION_FIELDSET,
+    {
+      label: 'fieldsets.labels.candidate',
+      fields: ['candidate'],
+    },
+  ],
 };
 
 
@@ -88,13 +103,8 @@ export default ApellaGen.extend({
 
   common: {
     preloadModels: ['position', 'institution', 'department'],
+    fieldsets: FS.common,
     validators: {
-      candidate: mandatory,
-      position: mandatory,
-//      cv: mandatory_with_max_chars,
-//      diploma: mandatory_with_max_chars,
-//      publication: mandatory_with_max_chars,
-//      additionalFiles: mandatory_with_max_chars,
     }
   },
   list: {
@@ -145,82 +155,5 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.position.code')
     },
-    fieldsets:[
-      {
-        label: 'fieldsets.labels.candidate_details',
-        fields: [
-          field('candidate.full_name_current', {label: 'full_name_current.label'}),
-          field('candidate.email', {label: 'email.label'}),
-        ],
-        layout: {
-          flex: [50, 50]
-        }
-      },{
-        label: 'fieldsets.labels.candidacy_details',
-        fields: [
-          'state_verbose',
-          'submitted_at_format',
-          'updated_at_format',
-          'cv',
-          'diploma',
-          'publication',
-          'selfEvaluation',
-          'additionalFiles',
-        ],
-        layout: {
-          flex: [100, 50, 50, 50, 50, 50, 50, 50]
-        }
-      }, {
-        label: 'fieldsets.labels.position_details',
-        fields: [
-          'position.code',
-          'position.state_calc_verbose',
-          'position.title',
-          'position.description',
-          'position.discipline',
-          field('position.department.title_current', {label: 'department.label'}),
-          field('position.subject_area.title_current',{label: 'subject_area.label'}),
-          field('position.subject.title_current', {label: 'subject.label'}),
-          'position.fek',
-          'position.fek_posted_at_format',
-          'position.starts_at_format',
-          'position.ends_at_format',
-        ],
-        layout: {
-          flex: [50, 50, 100, 100, 50, 50, 50, 50, 50, 50, 50, 50]
-        }
-      }
-    ],
-  },
-  edit: {
-    fieldsets: computed('model.position.state', function() {
-      let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView', 'state'];
-      if (get(this, 'model.position.state') != POSITION_POSTED_ID) {
-        candidacy_fields = _.map(candidacy_fields, disable_field);
-      };
-
-      return [{
-        label: 'candidacy.position_section.title',
-        text: 'candidacy.position_section.subtitle',
-        fields: _.map(FS.edit.position_fields, disable_field),
-        layout: FS.edit.position_layout
-      },
-      {
-        label: 'candidacy.candidate_section.title',
-        text: 'candidacy.candidate_section.subtitle',
-        fields: [disable_field('candidate.full_name_current'), 'cv', 'diploma', 'publication'],
-        layout: {
-          flex: [50, 50, 50, 50]
-        },
-      },
-        {
-          label: 'candidacy.candidacy_section.title',
-          fields: candidacy_fields,
-          layout: {
-            flex: [50, 50, 50, 50]
-          }
-        }
-      ];
-    }),
   },
 });
