@@ -87,7 +87,8 @@ export default {
   'author.label': 'Author',
   'username': 'Username',
   'username.label': 'Username',
-  'full_name_current.label': 'Ονοματεπώνυμο',
+  'full_name_current.label': 'Full name',
+  'candidate.full_name_current.label': 'Full name',
   'role.label': 'Role',
   'role_verbose.label': 'Role',
   'organization.label': 'Organization',
@@ -151,11 +152,11 @@ export default {
     menu_label: 'Candidacies',
     position_section: {
       title: 'Position Information',
-      subtitle: 'All related info will be placed here.'
+      subtitle: 'Information concerning the position.'
     },
     candidate_section: {
       title: 'Candidate Info',
-      subtitle: 'You can modify these fields by editing your profile.'
+      subtitle: 'These fields can be modified by the candidate\'s profile.'
     },
     candidacy_section: {
       title: 'Candidacy Fields'
@@ -194,6 +195,7 @@ export default {
       position_details: 'Position details',
       candidate_details: 'Candidate info',
       candidacy_details: 'Candidacy info',
+      candidate: 'Candidate',
     },
     text: {
       user_interest: 'Choose your interests',
