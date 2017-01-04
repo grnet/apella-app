@@ -277,6 +277,8 @@ PERMISSION_RULES = [
     ('users', 'retrieve', 'candidate', '*', 'owned', ''),
     ('users', 'retrieve', 'assistant', '*', 'owned', ''),
     ('users', 'retrieve', 'institutionmanager', '*', 'owned', ''),
+    ('users', 'retrieve', 'assistant', '*', 'is_candidate', ''),
+    ('users', 'retrieve', 'institutionmanager', '*', 'is_candidate', ''),
     ('users', 'retrieve', 'helpdeskadmin', '*', '*', ''),
     ('users', 'retrieve', 'helpdeskuser', '*', 'owned', ''),
     ('users', 'list', 'helpdeskadmin', '*', '*', '')

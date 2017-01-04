@@ -93,6 +93,10 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.id
 
+    def check_resource_state_is_candidate(self, row, request, view):
+        return request.user.is_manager() and \
+            (self.is_candidate() or self.is_professor())
+
 
 def generate_filename(self, filename):
     url = "%s/%s/%d/%s/%s" % (
