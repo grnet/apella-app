@@ -25,9 +25,9 @@ const candidaciesField = field('candidacies', {
   modelMeta: {
     row: {
       fields: ['id',
-        field('candidate.last_name_current', {label: 'last_name.label'}),
-        field('candidate.first_name_current', {label: 'first_name.label'}),
-        field('candidate.father_name_current', {label: 'father_name.label'}),
+        i18nField('candidate.last_name', {label: 'last_name.label'}),
+        i18nField('candidate.first_name', {label: 'first_name.label'}),
+        i18nField('candidate.father_name', {label: 'father_name.label'}),
         field('submitted_at_format', {label: 'submitted_at.label'}),
         field('updated_at_format', {label: 'updated_at.label'})
       ],
@@ -46,8 +46,8 @@ const assistantsField = field('assistants', {
   modelMeta: {
     row: {
       fields: ['id',
-        field('last_name_current', {label: 'last_name.label'}),
-        field('first_name_current', {label: 'first_name.label'}),
+        i18nField('last_name', {label: 'last_name.label'}),
+        i18nField('first_name', {label: 'first_name.label'}),
         field('email', {label: 'email.label'}),
       ],
       actions: ['goToDetails'],
