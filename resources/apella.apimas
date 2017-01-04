@@ -468,31 +468,6 @@ spec:
                 url:
                     .drf_field: {}
                     .identity: {}
-                cv:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .nullable: {}
-                    .struct:
-                        id:
-                            .cli_option: {}
-                            .field: {}
-                            .drf_field: {}
-                            .serial: {}
-                            .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
-                        file_kind:
-                            .cli_option: {}
-                            .field: {}
-                            .drf_field: {}
-                            .string: {}
-                        file_path:
-                            .cli_option: {}
-                            .field: {}
-                            .drf_field: {}
-                            .file: {}
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -975,43 +950,6 @@ spec:
                 url:
                     .drf_field: {}
                     .identity: {}
-                cv:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .read_only: {}
-                    .ref:
-                        to: apella-files
-                diplomas:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .read_only: {}
-                    .ref:
-                        to: apella-files
-                        many: True
-                publications:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .read_only: {}
-                    .ref:
-                        to: apella-files
-                        many: True
-                id_passport_file:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .read_only: {}
-                    .ref:
-                        to: apella-files
-                application_form:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .read_only: {}
-                    .ref:
-                        to: apella-files
                 verification_pending:
                     .cli_option: {}
                     .field: {}
