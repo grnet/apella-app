@@ -62,6 +62,8 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     home_phone_number = models.CharField(max_length=30, blank=True)
     role = models.CharField(
         choices=common.USER_ROLES, max_length=20, default='candidate')
+    login_method = models.CharField(max_length=20, default='password',
+                                    blank=False)
 
     objects = UserManager()
 

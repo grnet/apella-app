@@ -166,7 +166,10 @@ SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
 
 DJOSER = {
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': 'apella/ui/auth/login#activate={uid}|{token}'
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'ACTIVATION_URL': 'apella/ui/auth/login#activate={uid}|{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'apella/ui/auth/login#reset={uid}|{token}'
 }
 
 APELLA_LEGACY_ACADEMIC_LOGIN_URL = None

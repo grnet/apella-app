@@ -120,6 +120,32 @@ class CustomActivationView(djoser_views.ActivationView):
         return Response(status=204)
 
 
+class CustomPasswordView(djoser_views.SetPasswordView):
+
+    def post(self, request):
+        if request.user and hasattr(request.user, 'login_method'):
+            if request.user.login_method != 'password':
+                raise PermissionDenied({"non_field_errors": "no.password.user"})
+        return super(CustomPasswordView, self).post(request)
+
+
+class CustomPasswordResetConfirmView(djoser_views.PasswordResetConfirmView):
+    pass
+
+
+class CustomPasswordResetView(djoser_views.PasswordResetView):
+
+    def get_users(self, email):
+        active_users = ApellaUser.objects.filter(
+            email__iexact=email,
+            is_active=True,
+            login_method__iexact='password'
+        )
+        if not len(active_users):
+            raise PermissionDenied({"email": "password.user.not.found"})
+        return active_users
+
+
 class CustomLogoutView(djoser_views.LogoutView):
     pass
 
