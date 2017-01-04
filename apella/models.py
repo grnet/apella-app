@@ -90,6 +90,8 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     def is_candidate(self):
         return self.role == 'candidate'
 
+    def check_resource_state_owned(self, row, request, view):
+        return request.user.id == self.id
 
 def generate_filename(self, filename):
     url = "%s/%s/%d/%s/%s" % (
