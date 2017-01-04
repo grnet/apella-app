@@ -3,7 +3,7 @@ import {ApellaGen} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import _ from 'lodash/lodash';
 import {disable_field} from 'ui/utils/common/fields';
-import {cancelCandidacy} from 'ui/utils/common/actions';
+import {cancelCandidacy, goToPosition} from 'ui/utils/common/actions';
 
 const {
         set, get, computed, computed: { alias },
@@ -162,9 +162,10 @@ export default ApellaGen.extend({
     },
     row: {
       fields: FS.list,
-      actions: ['gen:details', 'gen:edit', 'cancelCandidacy'],
+      actions: ['gen:details', 'goToPosition', 'gen:edit', 'cancelCandidacy'],
       actionsMap: {
-        cancelCandidacy: cancelCandidacy
+        cancelCandidacy: cancelCandidacy,
+        goToPosition: goToPosition,
       }
     }
   },

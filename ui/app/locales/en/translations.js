@@ -27,6 +27,7 @@ export default {
   'details.menu.label': 'Details',
   'details.label': 'Details',
   'details': 'Details', //For top bar
+  'position_details.label': 'Position details',
   'delete.menu.label': 'Delete',
   'delete.label': 'Delete',
   'delete': 'Delete', //For top bar

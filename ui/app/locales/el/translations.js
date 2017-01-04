@@ -26,6 +26,7 @@ export default {
   'details.menu.label': 'Λεπτομέρειες',
   'details.label': 'Λεπτομέρειες',
   'details': 'Λεπτομερειες', //For top bar
+  'position_details.label': 'Λεπτομέρειες θέσης',
   'delete.menu.label': 'Διαγραφή',
   'delete.label': 'Διαγραφή',
   'delete': 'Διαγραφη', //For top bar
