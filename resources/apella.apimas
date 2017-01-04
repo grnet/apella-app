@@ -133,6 +133,12 @@ spec:
                     .drf_field: {}
                     .string: {}
                     .required: {}
+                login_method:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
                 first_name:
                     .cli_option: {}
                     .field: {}
@@ -638,6 +644,12 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .readonly: {}
+                        login_method:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
             actions:
                 .list: {}
                 .create: {}
@@ -926,6 +938,12 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .readonly: {}
+                        login_method:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
             actions:
                 .list: {}
                 .create: {}
@@ -1062,6 +1080,12 @@ spec:
                             .string: {}
                             .required: {}
                         role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        login_method:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
