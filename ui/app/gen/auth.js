@@ -303,8 +303,11 @@ export default AuthGen.extend({
             let model = get(form, 'model');
             set(model, 'verification_request', new Date());
             form.submit().then((model) => {
-              route.get('messageService').setSuccess('verification.request.submitted');
-              route.transitionTo('auth.profile.details');
+              if (get(form, 'changeset.isValid')) {
+                route.get('messageService').setSuccess('verification.request.submitted');
+                route.transitionTo('auth.profile.details');
+              } else {
+              }
             });
           },
           confirm: true,
