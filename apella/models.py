@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -485,9 +487,29 @@ class Candidacy(CandidateProfile):
         # TODO implement this
         return True
 
-    def check_resource_state_draft(self, row, request, view):
-        return self.check_resource_state_owned(row, request, view) \
-                and self.state == 'draft'
+    def before_electors_meeting(days):
+        owned = self.check_resource_state_owned(row, request, view)
+        if not owned:
+            return False
+        position_state = self.position.state
+        if position_state == 'posted' or \
+                (position_state == 'electing' and not \
+                self.position.electors_meeting_date):
+            return True
+        elif position_state == 'electing' and \
+                self.position.electors_meeting_date:
+            if self.position.electors_meeting_date - timezone.now() > \
+                    timedelta(days=days):
+                return True
+        return False
+
+    def check_resource_state_five_before_electors_meeting(
+            self, row, request, view):
+        return self.before_electors_meeting(5)
+
+    def check_resource_state_one_before_electors_meeting(
+            self, row, request, view):
+        return self.before_electors_meeting(1)
 
 
 class Registry(models.Model):
