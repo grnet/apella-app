@@ -131,17 +131,12 @@ export default ApellaGen.extend({
     actions: [],
 
     getModel: function(params) {
-      // TODO replace with session's user group
-      let userGroup = 'admin';
-      let qs = this.getModelQueryParams(params);
-      if (userGroup == 'admin') {
-        return this.store.query('candidacy', qs);
+      let role = get(this, 'session.session.authenticated.role');
+      let user_id = get(this, 'session.session.authenticated.user_id');
+      if (role == 'candidate' || role == 'professor') {
+        return this.store.query('candidacy', {candidate: user_id});
       } else {
-      // TODO replace with session's user
-        let userId = '2';
-        qs['state'] = CANDIDACY_POSTED_ID;
-        qs['candidate'] = userId;
-        return this.store.query('candidacy', qs);
+        return this.store.findAll('candidacy');
       }
     },
     sortBy: 'position.code:asc',
