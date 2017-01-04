@@ -212,6 +212,9 @@ export default AuthGen.extend({
         if (error === "user.verification.error") {
           controller.set('userVerificationFailed', true);
         }
+        if (error === "user.not.active") {
+          controller.set('userNotActive', true);
+        }
         resetHash(window);
       },
       resetController(controller) {
@@ -219,6 +222,7 @@ export default AuthGen.extend({
         controller.set('userExists', false);
         controller.set('userNotVerified', false);
         controller.set('userVerificationFailed', false);
+        controller.set('userNotActive', false);
       }
     }]
   },

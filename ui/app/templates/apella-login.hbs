@@ -22,6 +22,9 @@
   {{#if userVerificationFailed }}
   {{toolbar-message warn=true message='user.verification.error.message'}}
   {{/if}}
+  {{#if userNotActive }}
+  {{toolbar-message warn=true message='user.not.active.error'}}
+  {{/if}}
 
 
   {{#page.content}}
