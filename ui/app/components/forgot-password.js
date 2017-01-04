@@ -52,7 +52,7 @@ export default Ember.Component.extend({
 
   modelMeta: {
     fields: [
-      ['email', {type: 'string', formAttrs: { type: 'email' }}],
+      ['email', {type: 'string', required: true, formAttrs: { type: 'email' }}],
     ]
   },
 

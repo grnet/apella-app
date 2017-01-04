@@ -83,6 +83,7 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   actions: ['change_password'],
   actionsMap: {
     'change_password': {
+      raised: false,
       label: 'password.change',
       confirm: true,
       action: function() {},
@@ -250,7 +251,7 @@ export default AuthGen.extend({
         let reset = extractReset(window.location);
         if (reset) { controller.set('resetToken', reset); }
 
-        //resetHash(window);
+        resetHash(window);
       },
       resetController(controller) {
         controller.set('userNotFound', false);

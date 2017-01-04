@@ -54,8 +54,8 @@ export default Ember.Component.extend({
 
   modelMeta: {
     fields: [
-      ['new_password', {type: 'string', formAttrs: { type: 'password' }}],
-      ['re_new_password', {type: 'string', formAttrs: { type: 'password' }}],
+      ['new_password', {type: 'string', required: true, formAttrs: { type: 'password' }}],
+      ['re_new_password', {type: 'string', required: true, formAttrs: { type: 'password' }}],
     ]
   },
 
