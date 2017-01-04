@@ -482,19 +482,11 @@ class Candidacy(CandidateProfile):
                         row, request, view) \
                 and self.state == 'posted'
 
-    def check_resource_state_after_closed_electors_meeting_open(
-            self, row, request, view):
-        # TODO implement this
-        return True
-
-    def before_electors_meeting(days):
-        owned = self.check_resource_state_owned(row, request, view)
-        if not owned:
-            return False
+    def before_electors_meeting(self, days):
         position_state = self.position.state
         if position_state == 'posted' or \
-                (position_state == 'electing' and not \
-                self.position.electors_meeting_date):
+                (position_state == 'electing' and not
+                    self.position.electors_meeting_date):
             return True
         elif position_state == 'electing' and \
                 self.position.electors_meeting_date:
@@ -505,11 +497,18 @@ class Candidacy(CandidateProfile):
 
     def check_resource_state_five_before_electors_meeting(
             self, row, request, view):
-        return self.before_electors_meeting(5)
+        return self.check_resource_state_owned(row, request, view) and \
+            self.before_electors_meeting(5)
 
     def check_resource_state_one_before_electors_meeting(
             self, row, request, view):
-        return self.before_electors_meeting(1)
+        return self.check_resource_state_owned(row, request, view) and \
+            self.before_electors_meeting(1)
+
+    def check_resource_state_after_closed_electors_meeting_open(
+            self, row, request, view):
+        return self.position.ends_at < timezone.now() and \
+            self.before_electors_meeting(0)
 
 
 class Registry(models.Model):
