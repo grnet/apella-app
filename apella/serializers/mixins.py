@@ -3,6 +3,7 @@ from rest_framework import serializers
 from rest_framework.utils import model_meta
 
 from apella.models import ApellaUser, Position, InstitutionManager
+from apella import auth_hooks
 
 
 class ValidatorMixin(object):
