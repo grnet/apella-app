@@ -79,7 +79,6 @@ const PROFESSOR_FIELDS = [
   field('cv_url', {
     hint: 'cv_url.hint',
   }),
-  'cv',
   'fek',
   field('discipline_text', {
     type: 'text',
@@ -99,6 +98,8 @@ const PROFESSOR_FIELDS = [
   'is_foreign',
   'speaks_greek',
 ];
+
+const PROFESSOR_FIELDS_REGISTER = PROFESSOR_FIELDS.concat();
 
 const PROFESSOR_FIELDS_REGISTER_REQUIRED = [
   'institution', 'department', 'rank', 'fek'
@@ -184,7 +185,8 @@ const PROFESSOR_FIELDSET_REGISTER = Ember.assign({}, PROFESSOR_FIELDSET, {
     if (academic) { return 'fieldsets.labels.user_info.academic'; }
     return 'fieldsets.labels.more_info';
   }),
-  required: PROFESSOR_FIELDS_REGISTER_REQUIRED
+  required: PROFESSOR_FIELDS_REGISTER_REQUIRED,
+  fields: PROFESSOR_FIELDS_REGISTER
 });
 
 const INST_MANAGER_FIELDSET_MAIN = {
