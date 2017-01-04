@@ -1410,6 +1410,12 @@ spec:
                     .drf_field: {}
                     .ref:
                         to: users
+                second_best:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: users
                 state:
                     .cli_option: {}
                     .field: {}
@@ -1471,6 +1477,18 @@ spec:
                     .drf_field:
                         onmodel: False
                     .string: {}
+                electors_meeting_to_set_committee_date:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .date: {}
+                electors_meeting_date:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .date: {}
             actions:
                 .list: {}
                 .create: {}
