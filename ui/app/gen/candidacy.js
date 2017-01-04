@@ -127,6 +127,7 @@ export default ApellaGen.extend({
   },
   list: {
     layout: 'table',
+    actions: [],
 
     getModel: function(params) {
       // TODO replace with session's user group
