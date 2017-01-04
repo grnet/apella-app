@@ -174,7 +174,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OldApellaUserMigrationData',
             fields=[
-                ('user_id', models.TextField(serialize=False, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('user_id', models.TextField()),
                 ('username', models.TextField()),
                 ('role', models.TextField()),
                 ('name_el', models.TextField()),
@@ -187,8 +188,8 @@ class Migration(migrations.Migration):
                 ('mobile', models.TextField()),
                 ('phone', models.TextField()),
                 ('person_id_number', models.TextField()),
-                ('is_foreign', models.BooleanField()),
-                ('speaks_greek', models.BooleanField()),
+                ('is_foreign', models.TextField()),
+                ('speaks_greek', models.TextField()),
                 ('professor_subject_id', models.TextField()),
                 ('professor_rank', models.TextField()),
                 ('professor_institution_id', models.TextField()),

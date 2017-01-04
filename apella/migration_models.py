@@ -2,7 +2,7 @@ from django.db import models
 
 
 class OldApellaUserMigrationData(models.Model):
-    user_id = models.TextField(primary_key=True)
+    user_id = models.TextField()
     username = models.TextField()
     role = models.TextField()
     name_el = models.TextField()
@@ -15,8 +15,8 @@ class OldApellaUserMigrationData(models.Model):
     mobile = models.TextField()
     phone = models.TextField()
     person_id_number = models.TextField()
-    is_foreign = models.BooleanField()
-    speaks_greek = models.BooleanField()
+    is_foreign = models.TextField()
+    speaks_greek = models.TextField()
     professor_subject_id = models.TextField()
     professor_rank = models.TextField()
     professor_institution_id = models.TextField()
