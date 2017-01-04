@@ -115,7 +115,8 @@ export default ApellaGen.extend({
     }),
     owned_open: computed('owned', 'model.position.state', 'model.state', function() {
       let position_is_open = get(this, 'model.position.state') === 'posted';
-      return get(this, 'owned') && position_is_open;
+      let candidacy_is_not_cancelled = get(this, 'model.state') != 'cancelled';
+      return get(this, 'owned') && position_is_open && candidacy_is_not_cancelled;
     })
   },
 
