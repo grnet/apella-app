@@ -1339,7 +1339,7 @@ spec:
                 model: apella.models.Candidacy
                 model_serializers: [apella.serializers.position.CandidacyMixin]
                 mixins: [apella.views.mixins.CandidacyList]
-                filter_fields: [position]
+                filter_fields: [position, candidate, state]
             .cli_commands: {}
             '*':
                 id:

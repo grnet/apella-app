@@ -33,6 +33,7 @@ PERMISSION_RULES = [
     ('assistants', 'partial_update', 'assistant', 'user/email', 'owned_by_assistant', '4.3.7'),
     ('candidacies', 'create', 'candidate', '*', '*', '3.3.3'),
     ('candidacies', 'create', 'professor', '*', '*', '1.3.9'),
+    ('candidacies', 'create', 'helpdeskadmin', '*', '*', '1.3.9'),
     ('candidacies', 'list', 'assistant', '*', '*', '4.3.16'),
     ('candidacies', 'list', 'candidate', '*', '*', '3.3.5'),
     ('candidacies', 'list', 'helpdeskadmin', '*', '*', '5.16'),

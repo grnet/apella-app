@@ -26,6 +26,7 @@ export default {
   'details.menu.label': 'Λεπτομέρειες',
   'details.label': 'Λεπτομέρειες',
   'details': 'Λεπτομερειες', //For top bar
+  'position_details.label': 'Λεπτομέρειες θέσης',
   'delete.menu.label': 'Διαγραφή',
   'delete.label': 'Διαγραφή',
   'delete': 'Διαγραφη', //For top bar
@@ -87,6 +88,7 @@ export default {
   'username': 'Όνομα Χρήστη',
   'username.label': 'Όνομα Χρήστη',
   'full_name_current.label': 'Ονοματεπώνυμο',
+  'candidate.full_name_current.label': 'Ονοματεπώνυμο',
   'role.label': 'Ρόλος',
   'role_verbose.label': 'Ρόλος',
   'organization.label': 'Οργανισμός',
@@ -148,12 +150,11 @@ export default {
     menu_label: 'Υποψηφιότητες',
     position_section: {
       title: 'Στοιχεία Θέσης',
-      subtitle: 'Όποια στοιχεία θέσης χρειάζονται θα τοποθετηθούν εδώ.'
+      subtitle: 'Τα στοιχεία της θέσης για την οποία γίνεται η υποβολή υποψηφιότητας'
     },
-
     candidate_section: {
       title: 'Στοιχεία Υποψηφίου',
-      subtitle: 'Τα παρακάτω στοιχεία μπορείτε να τα τροποποποίησετε στο προφίλ σας.'
+      subtitle: 'Τα παρακάτω στοιχεία μπορούν να τροποιοηθούν μόνο από το προφίλ του υποψηφίου'
     },
     candidacy_section: {
       title: 'Στοιχεία Υποψηφιότητας'
@@ -192,6 +193,7 @@ export default {
       position_details: 'Στοιχεία θέσης',
       candidate_details: 'Στοιχεία υποψηφίου',
       candidacy_details: 'Στοιχεία υποψηφιότητας',
+      candidate: 'Υποψήφιος',
     },
     text: {
       user_interest: 'Εκδηλώστε το ενδιαφέρον σας',

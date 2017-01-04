@@ -111,5 +111,24 @@ export default DS.Model.extend({
     else {
       return get(this, 'state_verbose');
     }
-  })
+  }),
+
+  /*
+   * Used to calculate if a user can apply for a position.
+   * If he has not already applied, then can_apply is true.
+   * */
+  session: Ember.inject.service(),
+  user_id: computed.alias('session.session.authenticated.user_id'),
+  currentUserCandidacy: computed('user_id', 'id', 'candidacies.[]', function() {
+    let position_id = get(this, 'id');
+    let candidate_id = get(this, 'user_id');
+    let promise = get(this, 'store').query('candidacy', {
+      position: position_id,
+      state: 'posted',
+      candidate: candidate_id
+    });
+    return DS.PromiseArray.create({promise})
+  }),
+  can_apply: computed.equal('currentUserCandidacy.length', 0)
+
 });

@@ -3,54 +3,85 @@ import {ApellaGen} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import _ from 'lodash/lodash';
 import {disable_field} from 'ui/utils/common/fields';
-import {cancelCandidacy} from 'ui/utils/common/actions';
+import {cancelCandidacy, goToPosition} from 'ui/utils/common/actions';
 
-const presence = validate.presence(true),
-      max_chars = validate.length({max: 200}),
-      mandatory = [validate.presence(true)],
-      mandatory_with_max_chars = [presence, max_chars],
-      {
-        get, computed, computed: { alias },
+const {
+        set, get, computed, computed: { alias },
         getOwner
-      } =Ember,
-      CANDIDACY_POSTED_ID = '2',
-      POSITION_POSTED_ID = '2';
+      } = Ember;
 
-let FS = {
-  list:  ['position.code', 'position.department.institution.title_current',
-          'position.department.title_current',
-          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
-  create: [{
-    label: 'candidacy.position_section.title',
-    text: 'candidacy.position_section.subtitle',
-    fields: ['position'],
-    flex: 100
-  },
-  {
-    label: 'candidacy.candidate_section.title',
-    text: 'candidacy.candidate_section.subtitle',
-    fields: ['candidate', 'cv', 'diploma', 'publication'],
-    flex: 50,
-    layout: {
-      flex: [50, 50, 50, 50]
-    },
-  },
-    {
+let POSITION_FIELDS = ['position', 'position.title',
+    'position.department.institution.title_current',
+    'position.department.title_current', 'position.discipline',
+    'position.fek', 'position.fek_posted_at_format',
+    'position.starts_at_format', 'position.ends_at_format',
+    'position.state_calc_verbose' ];
+
+let POSITION_FIELDSET =  {
+      label: 'candidacy.position_section.title',
+      text: 'candidacy.position_section.subtitle',
+      fields: _.map(POSITION_FIELDS, disable_field),
+      layout: {
+        flex: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30 ]
+      },
+      flex: 100
+};
+
+let CANDIDATE_FIELDSET =  {
+      label: 'candidacy.candidate_section.title',
+      text: 'candidacy.candidate_section.subtitle',
+      fields: _.map(['candidate', 'cv', 'diploma', 'publication'], disable_field),
+      flex: 50,
+      layout: {
+        flex: [50, 50, 50, 50]
+      },
+};
+
+let CANDIDACY_FIELDSET =  {
       label: 'candidacy.candidacy_section.title',
-      text: 'candidacy.candidacy_section.subtitle',
       fields: ['selfEvaluation', 'additionalFiles', 'othersCanView'],
       flex: 50,
       layout: {
         flex: [50, 50, 50, 50]
       }
-    }
+};
+
+
+let FS = {
+  common: [
+    POSITION_FIELDSET,
+    CANDIDATE_FIELDSET,
+    CANDIDACY_FIELDSET
   ],
-  edit: {
-    position_fields: ['position.code_and_title', 'position.title', 'position.department.institution.title_current', 'position.department.title_current', 'position.discipline','position.fek', 'position.fek_posted_at_format', 'position.starts_at_format', 'position.ends_at_format' ],
-    position_layout: {
-      flex: [30, 30, 30, 30, 30, 30, 30, 30, 30 ]
-    }
-  }
+  list:  ['position.code', 'position.title', 'position.department.institution.title_current',
+          'position.department.title_current',
+          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
+  create_helpdeskadmin: [
+    POSITION_FIELDSET,
+    {
+      label: 'fieldsets.labels.candidate',
+      fields: [field('candidate', {
+        query: function(table, store, field, params) {
+          let promises = [
+            store.query('user', {role: 'professor'}),
+            store.query('user', {role: 'candidate'}),
+          ]
+
+          var promise = Ember.RSVP.all(promises).then(function(arrays) {
+            var mergedArray = Ember.A();
+            arrays.forEach(function (records) {
+              mergedArray.pushObjects(records.toArray());
+            });
+            return mergedArray.uniqBy('id')
+          })
+
+          return DS.PromiseArray.create({
+            promise: promise,
+          })
+        }
+      })],
+    },
+  ],
 };
 
 
@@ -80,39 +111,32 @@ export default ApellaGen.extend({
       let role = get(this, 'role');
       return role === 'professor'; // TODO: resolve user.id participates
     }),
-    owned_open: computed('owned', 'model.position.state', 'model.state', function() {
-      let position_is_open = get(this, 'model.position.state') === 'posted';
-      return get(this, 'owned') && position_is_open;
+    owned_open: computed('owned', 'model.position.is_open', 'model.state', function() {
+      let position_is_open = get(this, 'model.position.is_open');
+      let candidacy_is_not_cancelled = get(this, 'model.state') != 'cancelled';
+      return get(this, 'owned') && position_is_open && candidacy_is_not_cancelled;
     })
   },
 
   common: {
     preloadModels: ['position', 'institution', 'department'],
+    fieldsets: FS.common,
     validators: {
-      candidate: mandatory,
-      position: mandatory,
-//      cv: mandatory_with_max_chars,
-//      diploma: mandatory_with_max_chars,
-//      publication: mandatory_with_max_chars,
-//      additionalFiles: mandatory_with_max_chars,
     }
   },
   list: {
     layout: 'table',
+    actions: [],
 
     getModel: function(params) {
-      // TODO replace with session's user group
-      let userGroup = 'admin';
-      let qs = this.getModelQueryParams(params);
-      if (userGroup == 'admin') {
-        return this.store.query('candidacy', qs);
+      let role = get(this, 'session.session.authenticated.role');
+      let user_id = get(this, 'session.session.authenticated.user_id');
+      if (role == 'candidate' || role == 'professor') {
+        return this.store.query('candidacy', {candidate: user_id});
       } else {
-      // TODO replace with session's user
-        let userId = '2';
-        qs['state'] = CANDIDACY_POSTED_ID;
-        qs['candidate'] = userId;
-        return this.store.query('candidacy', qs);
+        return this.store.findAll('candidacy');
       }
+
     },
     sortBy: 'position.code:asc',
     search: {
@@ -132,95 +156,58 @@ export default ApellaGen.extend({
     },
     row: {
       fields: FS.list,
-      actions: ['gen:details', 'gen:edit', 'cancelCandidacy'],
+      actions: ['gen:details', 'goToPosition', 'gen:edit', 'cancelCandidacy'],
       actionsMap: {
-        cancelCandidacy: cancelCandidacy
+        cancelCandidacy: cancelCandidacy,
+        goToPosition: goToPosition,
       }
     }
   },
   create: {
-    fieldsets: FS.create,
+    fieldsets: computed('model.position', 'role', function(){
+      if (get(this, 'role') == 'helpdeskadmin') {
+        return FS.create_helpdeskadmin
+      } else {
+        return FS.common
+      }
+    }),
+    onSubmit(model) {
+      this.transitionTo('candidacy.record.index', model)
+    },
+    getModel(params) {
+      var self = this;
+      if (params.position) {
+        let position = get(self,'store').findRecord('position', params.position);
+        let user_id = get(this, 'session.session.authenticated.user_id');
+        let role = get(this, 'session.session.authenticated.role');
+        let user = get(self, 'store').findRecord('user', user_id);
+        return position.then(function(position){
+          let c = self.store.createRecord('candidacy', {
+            position: position,
+          });
+          if (role != 'helpdeskadmin') {
+            return user.then(function(user) {
+              set(c, 'candidate', user);
+              return c
+            }, function(error) {
+              self.transitionTo('candidacy.index');
+            })
+          } else {
+            return c
+          }
+        }, function(error) {
+          self.transitionTo('candidacy.index')
+        })
+      }
+      this.transitionTo('candidacy.index')
+    },
+    routeMixins: {
+      queryParams: {'position': { refreshModel: true }},
+    }
   },
   details: {
     page: {
       title: computed.readOnly('model.position.code')
     },
-    fieldsets:[
-      {
-        label: 'fieldsets.labels.candidate_details',
-        fields: [
-          field('candidate.full_name_current', {label: 'full_name_current.label'}),
-          field('candidate.email', {label: 'email.label'}),
-        ],
-        layout: {
-          flex: [50, 50]
-        }
-      },{
-        label: 'fieldsets.labels.candidacy_details',
-        fields: [
-          'state_verbose',
-          'submitted_at_format',
-          'updated_at_format',
-          'cv',
-          'diploma',
-          'publication',
-          'selfEvaluation',
-          'additionalFiles',
-        ],
-        layout: {
-          flex: [100, 50, 50, 50, 50, 50, 50, 50]
-        }
-      }, {
-        label: 'fieldsets.labels.position_details',
-        fields: [
-          'position.code',
-          'position.state_calc_verbose',
-          'position.title',
-          'position.description',
-          'position.discipline',
-          field('position.department.title_current', {label: 'department.label'}),
-          field('position.subject_area.title_current',{label: 'subject_area.label'}),
-          field('position.subject.title_current', {label: 'subject.label'}),
-          'position.fek',
-          'position.fek_posted_at_format',
-          'position.starts_at_format',
-          'position.ends_at_format',
-        ],
-        layout: {
-          flex: [50, 50, 100, 100, 50, 50, 50, 50, 50, 50, 50, 50]
-        }
-      }
-    ],
-  },
-  edit: {
-    fieldsets: computed('model.position.state', function() {
-      let candidacy_fields = ['selfEvaluation', 'additionalFiles', 'othersCanView', 'state'];
-      if (get(this, 'model.position.state') != POSITION_POSTED_ID) {
-        candidacy_fields = _.map(candidacy_fields, disable_field);
-      };
-
-      return [{
-        label: 'candidacy.position_section.title',
-        text: 'candidacy.position_section.subtitle',
-        fields: _.map(FS.edit.position_fields, disable_field),
-        layout: FS.edit.position_layout
-      },
-      {
-        label: 'candidacy.candidate_section.title',
-        text: 'candidacy.candidate_section.subtitle',
-        fields: [disable_field('candidate.full_name_current'), 'cv', 'diploma', 'publication'],
-        layout: {
-          flex: [50, 50, 50, 50]
-        },
-      },
-        {
-          label: 'candidacy.candidacy_section.title',
-          fields: candidacy_fields,
-          layout: {
-            flex: [50, 50, 50, 50]
-          }
-        }
-      ];
-    }),
   },
 });

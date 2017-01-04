@@ -25,8 +25,15 @@ const applyCandidacy = {
   label: 'applyCandidacy',
   icon: 'playlist add',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
+  hidden: computed('model.is_open', 'role', 'model.can_apply', function(){
+    let role = get(this, 'role');
+    let is_helpdeskadmin = get(this, 'role') == 'helpdeskadmin';
+    if (is_helpdeskadmin)  return false;
+    return !get(this, 'model.is_open') || !get(this, 'model.can_apply')
+  }),
   action(route, model){
-    console.log(get(model, 'code'))
+    let id = get(model, 'id');
+    route.transitionTo('candidacy.create', { queryParams: { position: id }});
   }
 };
 
@@ -95,6 +102,16 @@ const cancelCandidacy = {
   }
 };
 
+const  goToPosition = {
+  label: 'position_details.label',
+  icon: 'business_center',
+  action(route, model) {
+    let position_id = get(this, 'model.position.id');
+    route.transitionTo('position.record.index', position_id);
+  }
+};
+
+
 export { goToDetails, applyCandidacy, cancelPosition,
-  cancelCandidacy };
+  cancelCandidacy, goToPosition };
 
