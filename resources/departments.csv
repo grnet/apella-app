@@ -88,9 +88,9 @@
 11;ΔΗΜΟΚΡΙΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΡΑΚΗΣ;DEMOCRITUS UNIVERSITY OF THRACE;28;ΠΟΛΥΤΕΧΝΙΚΗ;ENGINEERING;224;ΜΗΧΑΝΙΚΩΝ ΠΑΡΑΓΩΓΗΣ ΚΑΙ ΔΙΟΙΚΗΣΗΣ;PRODUCTION ENGINEERING AND MANAGEMENT
 11;ΔΗΜΟΚΡΙΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΡΑΚΗΣ;DEMOCRITUS UNIVERSITY OF THRACE;28;ΠΟΛΥΤΕΧΝΙΚΗ;ENGINEERING;234;ΑΡΧΙΤΕΚΤΟΝΩΝ ΜΗΧΑΝΙΚΩΝ;ARCHITECTURE
 11;ΔΗΜΟΚΡΙΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΡΑΚΗΣ;DEMOCRITUS UNIVERSITY OF THRACE;28;ΠΟΛΥΤΕΧΝΙΚΗ;ENGINEERING;476;ΜΗΧΑΝΙΚΩΝ ΠΕΡΙΒΑΛΛΟΝΤΟΣ;ENVIRONMENTAL ENGINEERING
-45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;29;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;HUMANITIES;8014;-;-
-45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;30;ΕΠΙΣΤΗΜΩΝ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY;8013;-;-
-45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;31;ΟΙΚΟΝΟΜΙΑΣ, ΔΙΟΙΚΗΣΗΣ ΚΑΙ ΝΟΜΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;ECONOMICS, BUSINESS ADMINISTRATION & LEGAL STUDIES;8012;-;-
+45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;29;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;HUMANITIES;8014;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;HUMANITIES
+45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;30;ΕΠΙΣΤΗΜΩΝ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY;8013;ΕΠΙΣΤΗΜΩΝ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY
+45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;31;ΟΙΚΟΝΟΜΙΑΣ, ΔΙΟΙΚΗΣΗΣ ΚΑΙ ΝΟΜΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;ECONOMICS, BUSINESS ADMINISTRATION & LEGAL STUDIES;8012;ΟΙΚΟΝΟΜΙΑΣ, ΔΙΟΙΚΗΣΗΣ ΚΑΙ ΝΟΜΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;ECONOMICS, BUSINESS ADMINISTRATION & LEGAL STUDIES
 12;ΕΘΝΙΚΟ & ΚΑΠΟΔΙΣΤΡΙΑΚΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΘΗΝΩΝ;NATIONAL AND KAPODISTRIAN UNIVERSITY OF ATHENS;32;ΕΠΙΣΤΗΜΗΣ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;PHYSICAL EDUCATION AND SPORT SCIENCES;401;ΕΠΙΣΤΗΜΗΣ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;PHYSICAL EDUCATION AND SPORTS SCIENCE
 12;ΕΘΝΙΚΟ & ΚΑΠΟΔΙΣΤΡΙΑΚΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΘΗΝΩΝ;NATIONAL AND KAPODISTRIAN UNIVERSITY OF ATHENS;33;ΕΠΙΣΤΗΜΩΝ ΤΗΣ ΑΓΩΓΗΣ;EDUCATIONAL SCIENCE;128;ΠΑΙΔΑΓΩΓΙΚΟ ΔΗΜΟΤΙΚΗΣ ΕΚΠΑΙΔΕΥΣΗΣ;PRIMARY EDUCATION
 12;ΕΘΝΙΚΟ & ΚΑΠΟΔΙΣΤΡΙΑΚΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΘΗΝΩΝ;NATIONAL AND KAPODISTRIAN UNIVERSITY OF ATHENS;33;ΕΠΙΣΤΗΜΩΝ ΤΗΣ ΑΓΩΓΗΣ;EDUCATIONAL SCIENCE;154;ΕΚΠΑΙΔΕΥΣΗΣ ΚΑΙ ΑΓΩΓΗΣ ΣΤΗΝ ΠΡΟΣΧΟΛΙΚΗ ΗΛΙΚΙΑ;EARLY CHILDHOOD EDUCATION
@@ -133,10 +133,10 @@
 13;ΕΘΝΙΚΟ ΜΕΤΣΟΒΙΟ ΠΟΛΥΤΕΧΝΕΙΟ;NATIONAL TECHNICAL UNIVERSITY OF ATHENS;46;ΝΑΥΠΗΓΩΝ ΜΗΧΑΝΟΛΟΓΩΝ ΜΗΧΑΝΙΚΩΝ;NAVAL ARCHITECTURE AND MARINE ENGINEERING;229;ΝΑΥΠΗΓΩΝ ΜΗΧΑΝΟΛΟΓΩΝ ΜΗΧΑΝΙΚΩΝ;NAVAL ARCHITECTURE AND MARINE ENGINEERING
 13;ΕΘΝΙΚΟ ΜΕΤΣΟΒΙΟ ΠΟΛΥΤΕΧΝΕΙΟ;NATIONAL TECHNICAL UNIVERSITY OF ATHENS;47;ΠΟΛΙΤΙΚΩΝ ΜΗΧΑΝΙΚΩΝ;CIVIL ENGINEERING;201;ΠΟΛΙΤΙΚΩΝ ΜΗΧΑΝΙΚΩΝ;CIVIL ENGINEERING
 13;ΕΘΝΙΚΟ ΜΕΤΣΟΒΙΟ ΠΟΛΥΤΕΧΝΕΙΟ;NATIONAL TECHNICAL UNIVERSITY OF ATHENS;48;ΧΗΜΙΚΩΝ ΜΗΧΑΝΙΚΩΝ;CHEMICAL ENGINEERING;235;ΧΗΜΙΚΩΝ ΜΗΧΑΝΙΚΩΝ;CHEMICAL ENGINEERING
-44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;49;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΣΠΟΥΔΩΝ;HUMANITIES;1023;-;-
-44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;50;ΕΦΑΡΜΟΣΜΕΝΩΝ ΤΕΧΝΩΝ;APPLIED ARTS;1024;-;-
-44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;51;ΘΕΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY;1025;-;-
-44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;52;ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SOCIAL SCIENCIES;1026;-;-
+44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;49;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΣΠΟΥΔΩΝ;HUMANITIES;1023;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΣΠΟΥΔΩΝ;HUMANITIES
+44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;50;ΕΦΑΡΜΟΣΜΕΝΩΝ ΤΕΧΝΩΝ;APPLIED ARTS;1024;ΕΦΑΡΜΟΣΜΕΝΩΝ ΤΕΧΝΩΝ;APPLIED ARTS
+44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;51;ΘΕΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY;1025;ΘΕΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY
+44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;52;ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SOCIAL SCIENCIES;1026;ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SOCIAL SCIENCIES
 14;ΙΟΝΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;IONIAN UNIVERSITY;53;ΕΠΙΣΤΗΜΗΣ ΤΗΣ ΠΛΗΡΟΦΟΡΙΑΣ ΚΑΙ ΠΛΗΡΟΦΟΡΙΚΗΣ;INFORMATION SCIENCE  AND INFORMATICS;342;ΑΡΧΕΙΟΝΟΜΙΑΣ, ΒΙΒΛΙΟΘΗΚΟΝΟΜΙΑΣ ΚΑΙ ΜΟΥΣΕΙΟΛΟΓΙΑΣ;ARCHIVES, LIBRARY SCIENCE AND MUSEOLOGY
 14;ΙΟΝΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;IONIAN UNIVERSITY;53;ΕΠΙΣΤΗΜΗΣ ΤΗΣ ΠΛΗΡΟΦΟΡΙΑΣ ΚΑΙ ΠΛΗΡΟΦΟΡΙΚΗΣ;INFORMATION SCIENCE  AND INFORMATICS;366;ΠΛΗΡΟΦΟΡΙΚΗΣ;INFORMATICS
 14;ΙΟΝΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;IONIAN UNIVERSITY;54;ΙΣΤΟΡΙΑΣ ΚΑΙ ΜΕΤΑΦΡΑΣΗΣ-ΔΙΕΡΜΗΝΕΙΑΣ;HISTORY AND TRANSLATION-INTERPRETATION;145;ΙΣΤΟΡΙΑΣ;HISTORY
@@ -541,7 +541,7 @@
 149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-;20103;ΙΝΣΤΙΤΟΥΤΟ ΕΔΑΦΟΫΔΑΤΙΚΩΝ ΠΟΡΩΝ;INSTITUTE OF AGRICULTURAL NATURAL RESOURCES
 149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-;20104;ΙΝΣΤΙΤΟΥΤΟ ΒΙΟΜΗΧΑΝΙΚΩΝ & ΚΤΗΝΟΤΡΟΦΙΚΩΝ ΦΥΤΩΝ;INSTITUTE OF INDUSTRIAL AND  FODDER PLANTS
 149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-;20105;ΙΝΣΤΙΤΟΥΤΟ ΜΕΣΟΓΕΙΑΚΩΝ ΔΑΣΙΚΩΝ ΟΙΚΟΣΥΣΤΗΜΑΤΩΝ;INSTITUTE OF MEDITERRANEAN FOREST ECOSYSTEMS
-149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-;20106;ΙΝΣΤΙΤΟΥΤΟ ΤΕΧΝΟΛΟΓΙΑΣ ΑΓΡΟΤΙΚΩΝ ΠΡΟΪΟΝΤΩΝ;INSTITUTE OF TECHNOLOGY OF AGRICULTURAL PRODUCTS
+149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-;20106;ΙΝΣΤΙΤΟΥΤΟ ΤΕΧΝΟΛΟΓΙΑΣ ΑΓΡΟΤΙΚΩΝ ΠΡΟΪΟΝΤΩΝ;lAND RECLAMATION INSTITUTE
 149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-;20107;ΙΝΣΤΙΤΟΥΤΟ ΑΓΡΟΤΙΚΗΣ ΟΙΚΟΝΟΜΙΑΣ & ΚΟΙΝΩΝΙΟΛΟΓΙΑΣ;AGRICULTURE ECONOMICS AND SOCIOLOGY INSTITUTE
 149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-;20108;ΙΝΣΤΙΤΟΥΤΟ ΕΛΙΑΣ, ΥΠΟΤΡΟΦΙΚΩΝ ΦΥΤΩΝ & ΑΜΠΕΛΟΥ;INSTITUTE FOR OLIVE TREE, SUBTROPICAL PLANTS AND VITICULTURE
 149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-;20110;ΙΝΣΤΙΤΟΥΤΟ ΑΜΠΕΛΟΥ   ;VINE INSTITUTE
