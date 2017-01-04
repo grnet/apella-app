@@ -220,7 +220,9 @@ class CandidateProfile(models.Model):
 
 
 class Professor(UserProfile, CandidateProfile):
-    institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
+    institution = models.ForeignKey(
+        Institution, on_delete=models.PROTECT, blank=True, null=True)
+    institution_freetext = models.CharField(max_length=255, blank=True)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
         choices=common.RANKS, max_length=30)
