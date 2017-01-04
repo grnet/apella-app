@@ -303,8 +303,7 @@ spec:
             .drf_collection:
                 model: apella.models.Department
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
-                mixins: [apella.views.mixins.DestroyProtectedObject,
-                         apella.views.mixins.DepartmentList]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [institution, school]
                 search_fields: [title__en, title__el]
                 ordering_fields: [id]

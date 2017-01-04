@@ -146,19 +146,6 @@ class CandidacyList(object):
         return super(CandidacyList, self).update(request, pk=None)
 
 
-class DepartmentList(generics.ListAPIView):
-
-    def get_queryset(self):
-        queryset = self.queryset
-        user = self.request.user
-        if isinstance(user, ApellaUser):
-            if user.is_manager():
-                institution_ids = InstitutionManager.objects. \
-                    filter(user=user).values_list('institution', flat=True)
-                queryset = queryset.filter(institution_id__in=institution_ids)
-        return queryset
-
-
 class RegistriesList(generics.ListAPIView):
 
     @detail_route()
