@@ -378,6 +378,11 @@ class Candidacy(models.Model):
                         row, request, view) \
                 and self.state == 'posted'
 
+    def check_resource_state_after_closed_electors_meeting_open(
+            self, row, request, view):
+        # TODO implement this
+        return True
+
 
 class Registry(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)

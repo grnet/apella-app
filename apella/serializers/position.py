@@ -128,9 +128,17 @@ class PositionMixin(ValidatorMixin):
 class CandidacyMixin(object):
     def validate(self, data):
         user = self.context.get('request').user
-        position = data['position']
-        if not user.is_helpdeskadmin():
-            validate_position_dates(position.starts_at, position.ends_at)
+        instance = getattr(self, 'instance')
+        if not instance:
+            instance = Candidacy(**data)
+
+        cancelling = 'state' in self.context.get('request').data and \
+            self.context.get('request').data['state'] == 'cancelled'
+        if not cancelling:
+            position = instance.position
+            candidate = instance.candidate
+            if not user.is_helpdeskadmin():
+                validate_position_dates(position.starts_at, position.ends_at)
         return super(CandidacyMixin, self).validate(data)
 
     def create(self, validated_data):
