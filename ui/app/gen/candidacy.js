@@ -8,9 +8,7 @@ import {cancelCandidacy, goToPosition} from 'ui/utils/common/actions';
 const {
         set, get, computed, computed: { alias },
         getOwner
-      } = Ember,
-      CANDIDACY_POSTED_ID = '2',
-      POSITION_POSTED_ID = '2';
+      } = Ember;
 
 let POSITION_FIELDS = ['position', 'position.title',
     'position.department.institution.title_current',
@@ -113,8 +111,8 @@ export default ApellaGen.extend({
       let role = get(this, 'role');
       return role === 'professor'; // TODO: resolve user.id participates
     }),
-    owned_open: computed('owned', 'model.position.state', 'model.state', function() {
-      let position_is_open = get(this, 'model.position.state') === 'posted';
+    owned_open: computed('owned', 'model.position.is_open', 'model.state', function() {
+      let position_is_open = get(this, 'model.position.is_open');
       let candidacy_is_not_cancelled = get(this, 'model.state') != 'cancelled';
       return get(this, 'owned') && position_is_open && candidacy_is_not_cancelled;
     })
@@ -138,6 +136,7 @@ export default ApellaGen.extend({
       } else {
         return this.store.findAll('candidacy');
       }
+
     },
     sortBy: 'position.code:asc',
     search: {
