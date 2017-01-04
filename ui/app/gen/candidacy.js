@@ -62,7 +62,26 @@ let FS = {
     POSITION_FIELDSET,
     {
       label: 'fieldsets.labels.candidate',
-      fields: ['candidate'],
+      fields: [field('candidate', {
+        query: function(table, store, field, params) {
+          let promises = [
+            store.query('user', {role: 'professor'}),
+            store.query('user', {role: 'candidate'}),
+          ]
+
+          var promise = Ember.RSVP.all(promises).then(function(arrays) {
+            var mergedArray = Ember.A();
+            arrays.forEach(function (records) {
+              mergedArray.pushObjects(records.toArray());
+            });
+            return mergedArray.uniqBy('id')
+          })
+
+          return DS.PromiseArray.create({
+            promise: promise,
+          })
+        }
+      })],
     },
   ],
 };
