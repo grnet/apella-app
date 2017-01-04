@@ -124,6 +124,9 @@ export default {
   'updated_at.label': 'Last Update Date',
   'submitted_at_format.label': 'Submission Date',
   'updated_at_format.label': 'Last Update Date',
+  'search.input.placeholder': 'Insert search term',
+  'table.is.empty': 'There are no items',
+  'table.is.loading': 'Loading',
 
   userInterest: {
     info: 'By pressing "Save" the search criteria will be saved, so that if a new position matche    s them you will be notified by the system.',

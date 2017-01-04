@@ -96,7 +96,7 @@ export default {
   'rank.label': 'Βαθμίδα',
   'cv_url.label': 'URL Βιογραφικού',
   'cv_url.hint': 'URL με το Βιογραφικό Σημείωμα στο δικτυακό τόπο του Ιδρύματος',
-  'is_foreign.label': 'Αλλοδαπός',
+  'is_foreign.label': 'Καθηγητής αλλοδαπής',
   'speaks_greek.label': 'Μιλω ελληνικά',
   'discipline_text.label': 'Γνωστικό αντικείμενο',
   'category_verbose.label': 'Κατηγορία',
@@ -122,6 +122,10 @@ export default {
   'updated_at.label': 'Ημερομηνία Τελευταίας Ενημέρωσης',
   'submitted_at_format.label': 'Ημερομηνία Υποβολής',
   'updated_at_format.label': 'Ημερομηνία Τελευταίας Ενημέρωσης',
+  'search.input.placeholder': 'Εισάγετε κριτήριο αναζήτησης',
+  'table.is.empty': 'Δεν υπάρχουν καταχωρήσεις',
+  'table.is.loading': 'Γίνεται αναζήτηση',
+
   userInterest: {
     info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρησης σχετικής θέσης στο μέλλον.',
     headers: {
@@ -134,7 +138,7 @@ export default {
     menu_label: 'Διαχειριστές Ιδρύματος',
     label: {
       authority_type: 'Αρχή Πιστοποίησης',
-      authority_full_name: 'Ονοματεπώνυμο Αρχής Πιστοποίησης',
+      authority_full_name: 'Ονοματεπώνυμο Πρύτανη/Προέδρου',
       role: 'Ρόλος',
       sub_fieldset: 'Αναπληρωτής Διαχειριστής Ιδρύματος'
     }
@@ -166,7 +170,7 @@ export default {
       cv: 'Βιογραφικό',
       diploma: 'Αντίγραφα Πτυχίων',
       publication: 'Αρχεία Δημοσιεύσεων',
-      self_evaluation: 'Έκθεση Αυτοαξιολόγησης',
+      self_evaluation: 'Υπόμνημα Αυτοαξιολόγησης',
       additional_files: 'Συμπληρωματικά Έγγραφα',
       candidate: 'Υποψήφιος'
     }

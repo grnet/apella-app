@@ -45,6 +45,9 @@ export default AuthGen.extend({
   },
 
   profile: {
+    page: {
+       title: 'profile.menu_label',
+    },
     gens: {
       position_interest: gen.GenRoutedObject.extend({
         modelName: 'user-interest',
@@ -68,7 +71,7 @@ export default AuthGen.extend({
           label: 'userInterest.menu_label'
         },
         page: {
-          title: 'my.interests',
+          title: 'userInterest.menu_label',
           breadcrumb: { display: true }
         }
       })
