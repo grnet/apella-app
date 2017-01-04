@@ -134,6 +134,7 @@ class CandidacyMixin(object):
 
         cancelling = 'state' in self.context.get('request').data and \
             self.context.get('request').data['state'] == 'cancelled'
+
         if not cancelling:
             position = instance.position
             candidate = instance.candidate
