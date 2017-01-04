@@ -144,6 +144,9 @@ export default ApellaGen.extend({
       }
       return model;
     },
+    onSubmit(model) {
+      this.transitionTo('assistant.record.index', model)
+    },
     fieldsets: computed('role', function() {
       if (get(this, 'role') === 'institutionmanager') {
         return  [
