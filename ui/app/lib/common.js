@@ -122,7 +122,8 @@ const VerifiedUserMixin = Ember.Mixin.create({
   verification_request: DS.attr('date'),
   verification_pending: DS.attr('boolean'),
   is_rejected: DS.attr('boolean'),
-  rejected_reason: DS.attr('string')
+  rejected_reason: DS.attr('string'),
+  login_method: DS.attr('string')
 });
 
 export {

@@ -25,6 +25,9 @@
   {{#if userNotActive }}
   {{toolbar-message warn=true message='user.not.active.error'}}
   {{/if}}
+  {{#if resetToken}}
+    {{reset-password token=resetToken visiblePopup=true }}
+  {{/if}}
 
 
   {{#page.content}}
@@ -53,6 +56,7 @@
             labels=(readonly gen.labels)
             beforeFormComponent=(readonly gen.components.beforeForm)
             _controller=this
+            extraActions=(readonly gen.extraActions)
 
             onInvalid=(route-action 'onFormInvalid')
             onSubmit=(route-action 'onFormSubmit')

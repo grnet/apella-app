@@ -12,7 +12,7 @@ import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
 import fetch from "ember-network/fetch";
 
 const {
-  computed: { reads, not },
+  computed: { reads, not, equal },
   get, set, computed,
   merge
 } = Ember;
@@ -23,6 +23,10 @@ function extractError(loc) {
 
 function extractActivate(loc) {
   return loc.hash && loc.hash.split("activate=")[1];
+}
+
+function extractReset(loc) {
+  return loc.hash && loc.hash.split("reset=")[1];
 }
 
 function extractToken(loc) {
@@ -76,6 +80,22 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   routeBaseClass: routes.DetailsRoute,
   fieldsets: PROFILE_FIELDSETS,
   component: 'gen-details',
+  actions: ['change_password'],
+  actionsMap: {
+    'change_password': {
+      label: 'password.change',
+      confirm: true,
+      action: function() {},
+      hidden: computed('model.login_method', function() {
+        return get(this, 'model.login_method') !== 'password';
+      }),
+      prompt: {
+        title: 'password.change',
+        contentComponent: 'change-password',
+        noControls: true
+      }
+    }
+  },
   getModel() {
     return get(this, 'store').findRecord('profile', 'me');
   }
@@ -127,6 +147,18 @@ export default AuthGen.extend({
   },
 
   login: {
+    extraActions: [
+      {
+        label: 'password.forgot',
+        confirm: true,
+        action: function() {},
+        prompt: {
+          title: 'password.forgot',
+          contentComponent: 'forgot-password',
+          noControls: true
+        }
+      }
+    ],
     config: {
       authenticator: 'apimas'
     },
@@ -215,7 +247,10 @@ export default AuthGen.extend({
         if (error === "user.not.active") {
           controller.set('userNotActive', true);
         }
-        resetHash(window);
+        let reset = extractReset(window.location);
+        if (reset) { controller.set('resetToken', reset); }
+
+        //resetHash(window);
       },
       resetController(controller) {
         controller.set('userNotFound', false);
