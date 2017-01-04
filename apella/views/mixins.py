@@ -170,6 +170,8 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['put'])
     def upload(self, request, pk=None):
         obj = self.get_object()
+        if 'file_path' not in request.FILES:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         file_path = request.FILES['file_path']
         file_kind = request.data['file_kind']
         file_description = request.data['file_description']
