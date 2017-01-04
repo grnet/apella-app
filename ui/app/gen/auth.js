@@ -177,14 +177,14 @@ export default AuthGen.extend({
           }).then((resp) => {
             let err, msg;
             if (resp.status === 204) {
-              msg = 'user.verification.success';
+              msg = 'user.email_verification.success';
             } else {
-              err = 'user.verification.error';
+              err = 'user.email_verification.error';
               resp.json().then((json) => {
                 if (!json.detail) { return; }
                 this.get('messageService').setError(json.detail);
               });
-              resetHash(window, "error=user.verification.error");
+              resetHash(window, "error=user.email_verification.error");
             }
             if (msg) { this.get('messageService').setSuccess(msg); }
             if (err) { this.get('messageService').setError(err); }
@@ -236,14 +236,14 @@ export default AuthGen.extend({
         if (error === "user.exists") {
           controller.set('userExists', true);
         }
+        if (error === "user.not.email_verified") {
+          controller.set('userNotEmailVerified', true);
+        }
         if (error === "user.not.verified") {
           controller.set('userNotVerified', true);
         }
-        if (error === "user.not.moderated") {
-          controller.set('userNotModerated', true);
-        }
-        if (error === "user.verification.error") {
-          controller.set('userVerificationFailed', true);
+        if (error === "user.email_verification.error") {
+          controller.set('userEmailVerificationFailed', true);
         }
         if (error === "user.not.active") {
           controller.set('userNotActive', true);

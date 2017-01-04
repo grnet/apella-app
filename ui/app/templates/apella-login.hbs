@@ -13,14 +13,14 @@
   {{#if userExists }}
   {{toolbar-message warn=true message='user.exists.error' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='pregnant_woman')}}
   {{/if}}
+  {{#if userNotEmailVerified }}
+  {{toolbar-message warn=true message='user.not.email_verified.error' buttonComponent=(component 'resend-verification-action')}}
+  {{/if}}
   {{#if userNotVerified }}
-  {{toolbar-message warn=true message='user.not.verified.error' buttonComponent=(component 'resend-verification-action')}}
+  {{toolbar-message warn=true message='user.not.verified.error'}}
   {{/if}}
-  {{#if userNotModerated }}
-  {{toolbar-message warn=true message='user.not.moderated.error'}}
-  {{/if}}
-  {{#if userVerificationFailed }}
-  {{toolbar-message warn=true message='user.verification.error.message'}}
+  {{#if userEmailVerificationFailed }}
+  {{toolbar-message warn=true message='user.email_verification.error.message'}}
   {{/if}}
   {{#if userNotActive }}
   {{toolbar-message warn=true message='user.not.active.error'}}
