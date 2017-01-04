@@ -188,12 +188,14 @@ class CandidacyMixin(object):
         user = self.context.get('request').user
         if not user.is_helpdesk():
             validated_data['candidate'] = user
-        validated_data['state'] = 'posted'
+        validated_data['state'] = 'draft'
         obj = super(CandidacyMixin, self).create(validated_data)
         code = str(obj.id)
         obj.code = code
         obj.save()
         copy_candidacy_files(obj, user)
+        obj.state = 'posted'
+        obj.save()
         return obj
 
     def update(self, instance, validated_data):
