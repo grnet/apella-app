@@ -12,7 +12,7 @@ const {
       CANDIDACY_POSTED_ID = '2',
       POSITION_POSTED_ID = '2';
 
-let POSITION_FIELDS = ['position.code_and_title', 'position.title',
+let POSITION_FIELDS = ['position', 'position.title',
     'position.department.institution.title_current',
     'position.department.title_current', 'position.discipline',
     'position.fek', 'position.fek_posted_at_format',
@@ -32,7 +32,7 @@ let POSITION_FIELDSET =  {
 let CANDIDATE_FIELDSET =  {
       label: 'candidacy.candidate_section.title',
       text: 'candidacy.candidate_section.subtitle',
-      fields: _.map(['candidate.full_name_current', 'cv', 'diploma', 'publication'], disable_field),
+      fields: _.map(['candidate', 'cv', 'diploma', 'publication'], disable_field),
       flex: 50,
       layout: {
         flex: [50, 50, 50, 50]
