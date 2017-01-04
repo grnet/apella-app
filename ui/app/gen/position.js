@@ -71,11 +71,11 @@ const pick_details_fs = function() {
     }
   }
   else if(state === 'cancelled') {
-      return head.concat(fs.history, tail);
+      return head.concat(/*fs.history, */tail);
   }
   // in all other states
   else {
-    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, fs.history, tail);
+    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, /*fs.history, */tail);
   }
 };
 
