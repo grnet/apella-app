@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core import validators
 
 from apella.validators import before_today_validator, after_today_validator,\
-    validate_dates_interval, validate_position_dates
+    validate_dates_interval
 from apella import common
 from apella.helpers import assistant_can_edit, professor_participates,\
     position_is_latest
@@ -92,6 +92,7 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.id
+
 
 def generate_filename(self, filename):
     url = "%s/%s/%d/%s/%s" % (
@@ -353,12 +354,6 @@ class Candidacy(models.Model):
     submitted_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     code = models.CharField(max_length=200)
-
-    def clean(self, *args, **kwargs):
-        validate_position_dates(
-            self.position.starts_at,
-            self.position.ends_at)
-        super(Candidacy, self).clean(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
