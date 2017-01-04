@@ -71,7 +71,7 @@ def update_objects(fields, validated_data, instance=None, model=None):
             setattr(instance, field_name, nested_object)
         elif field_name in validated_data:
             if field_name == 'password':
-                instance.set_password(validated_data.get(field_name))
+                continue
             else:
                 setattr(instance, field_name, validated_data.get(field_name))
     if many_to_many:
