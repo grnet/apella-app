@@ -171,7 +171,10 @@ export default ApellaGen.extend({
         return FS.common
       }
     }),
-    getModel: function(params) {
+    onSubmit(model) {
+      this.transitionTo('candidacy.record.index', model)
+    },
+    getModel(params) {
       var self = this;
       if (params.position) {
         let position = get(self,'store').findRecord('position', params.position);
