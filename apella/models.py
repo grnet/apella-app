@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
     UserManager
@@ -225,6 +226,14 @@ class Professor(UserProfile, CandidateProfile):
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
+
+    @property
+    def active_elections(self):
+        return self.committee_duty.filter(
+            Q(state='posted') | Q(state='electing')).count() + \
+            self.electorparticipation_set.filter(
+                Q(position__state='posted') |
+                Q(position__state='electing')).count()
 
     def save(self, *args, **kwargs):
         self.user.role = 'professor'

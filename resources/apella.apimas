@@ -474,6 +474,12 @@ spec:
                 url:
                     .drf_field: {}
                     .identity: {}
+                active_elections:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .integer: {}
                 institution:
                     .cli_option: {}
                     .field: {}
