@@ -167,7 +167,7 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
         "Position": "position"
     }
 
-    @detail_route(methods=['put'])
+    @detail_route(methods=['post'])
     def upload(self, request, pk=None):
         obj = self.get_object()
         if 'file_path' not in request.FILES:
