@@ -172,6 +172,24 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='OldApellaPositionMigrationData',
+            fields=[
+                ('position_serial', models.TextField(serialize=False, primary_key=True)),
+                ('description', models.TextField()),
+                ('title', models.TextField()),
+                ('subject_id', models.TextField()),
+                ('department_id', models.TextField()),
+                ('manager_id', models.TextField()),
+                ('subject_area_code', models.TextField()),
+                ('subject_code', models.TextField()),
+                ('gazette_publication_url', models.TextField()),
+                ('gazette_publication_date', models.TextField()),
+                ('state', models.TextField()),
+                ('opening_date', models.TextField()),
+                ('closing_date', models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='OldApellaUserMigrationData',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),

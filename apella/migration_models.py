@@ -46,3 +46,19 @@ class OldApellaFileMigrationData(models.Model):
     file_path = models.TextField()
     file_description = models.TextField()
     original_name = models.TextField()
+
+
+class OldApellaPositionMigrationData(models.Model):
+    position_serial = models.TextField(primary_key=True)
+    description = models.TextField()
+    title = models.TextField()
+    subject_id = models.TextField()
+    department_id = models.TextField()
+    manager_id = models.TextField()
+    subject_area_code = models.TextField()
+    subject_code = models.TextField()
+    gazette_publication_url = models.TextField()
+    gazette_publication_date = models.TextField()
+    state = models.TextField()
+    opening_date = models.TextField()
+    closing_date = models.TextField()

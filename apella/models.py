@@ -556,4 +556,5 @@ class UserInterest(models.Model):
 from migration_models import (
     OldApellaUserMigrationData,
     OldApellaFileMigrationData,
+    OldApellaPositionMigrationData,
 )
