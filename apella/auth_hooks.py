@@ -1,3 +1,5 @@
+import logging
+
 from datetime import datetime
 
 from django.contrib.auth import authenticate
@@ -6,6 +8,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.serializers import ValidationError
 from django.contrib.auth import user_logged_in, user_logged_out
 from apella.models import RegistrationToken, ApellaUser
+
+logger = logging.getLogger(__name__)
 
 
 def validate_new_user(validate, attrs):
@@ -49,7 +53,12 @@ def register_user(save, data, *args, **kwargs):
         user.user.set_unusable_password()
         # TODO: we may consider automatically verify the user entry
         # only in case user has not modified shibboleth provided data
-        user.is_verified = True
+        try:
+            validate_user_can_verify(user)
+            verify_user(user)
+        except ValidationError, e:
+            logger.error("user %r is not valid for automatic verification %r",
+                         user, e)
         token.delete()
 
     user.user.save()
@@ -144,7 +153,20 @@ def migrate_legacy(migration_key, migrate_id, shibboleth_id):
     return legacy
 
 
+def validate_user_can_verify(user):
+    # validate that current user can request account verification
+    if user.user.is_professor():
+        if not user.cv_id and not user.cv_url:
+            raise ValidationError({"non_field_errors": "cv.required.error"})
+
+    if user.user.is_candidate():
+        if not user.cv_id:
+            raise ValidationError({"non_field_errors": "cv.required.error"})
+
+    #TODO: include additional validations
+
 def request_user_verify(user):
+    validate_user_can_verify(user)
     user.verification_pending = True
     user.verification_request = datetime.now()
 
