@@ -175,7 +175,7 @@ PERMISSION_RULES = [
     ('positions', 'partial_update', 'assistant', 'starts_at', 'before_open', '4.3.11.c'),
     ('positions', 'partial_update', 'assistant', 'state', 'before_open', '4.3.11.b'),
     ('positions', 'partial_update', 'assistant', 'state', 'electing', '4.3.11.g, 4.3.11.h'),
-    ('positions', 'retrieve', 'assistant', '*', 'owned', ''),
+    ('positions', 'retrieve', 'assistant', '*', '*', ''),
     ('positions', 'retrieve', 'candidate', '*', '*', '3.3.4'),
     ('positions', 'retrieve', 'helpdeskadmin', '*', '*', '5.14'),
     ('positions', 'retrieve', 'helpdeskuser', '*', '*', '5.14'),
