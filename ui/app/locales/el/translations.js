@@ -190,7 +190,7 @@ export default {
       title: 'ΦΕΚ',
     },
     history: {
-      title: 'Ιστορικό θέσεων',
+      title: 'Ιστορικό θέσης',
     }
   },
   assistant: {
