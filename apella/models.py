@@ -209,7 +209,8 @@ class UserProfile(models.Model):
 
 
 class CandidateProfile(models.Model):
-    cv = models.ForeignKey(ApellaFile, blank=True, null=True)
+    cv = models.ForeignKey(
+        ApellaFile, blank=True, null=True, on_delete=models.SET_NULL)
     diplomas = models.ManyToManyField(
         ApellaFile, blank=True,
         related_name='%(app_label)s_%(class)s_diploma_files')
@@ -254,9 +255,11 @@ class Professor(UserProfile, CandidateProfile):
 class Candidate(UserProfile, CandidateProfile):
 
     id_passport_file = models.ForeignKey(
-        ApellaFile, blank=True, null=True, related_name='id_passport_files')
+        ApellaFile, blank=True, null=True,
+        related_name='id_passport_files', on_delete=models.SET_NULL)
     application_form = models.ForeignKey(
-        ApellaFile, blank=True, null=True, related_name='application_forms')
+        ApellaFile, blank=True, null=True,
+        related_name='application_forms', on_delete=models.SET_NULL)
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
@@ -348,34 +351,39 @@ class Position(models.Model):
     electors_meeting_date = models.DateField(blank=True, null=True)
     electors_set_file = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='electors_set_files')
+        related_name='electors_set_files', on_delete=models.SET_NULL)
     committee_set_file = models.ForeignKey(
-        ApellaFile, blank=True, null=True, related_name='committee_set_files')
+        ApellaFile, blank=True, null=True,
+        related_name='committee_set_files', on_delete=models.SET_NULL)
     committee_proposal = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='committee_proposal_files')
+        related_name='committee_proposal_files', on_delete=models.SET_NULL)
     committee_note = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='committee_note_files')
+        related_name='committee_note_files', on_delete=models.SET_NULL)
     electors_meeting_proposal = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='electors_meeting_proposal_files')
+        related_name='electors_meeting_proposal_files',
+        on_delete=models.SET_NULL)
     nomination_proceedings = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='nomination_proceedings_files')
+        related_name='nomination_proceedings_files',
+        on_delete=models.SET_NULL)
     proceedings_cover_letter = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='proceedings_cover_letter_files')
+        related_name='proceedings_cover_letter_files',
+        on_delete=models.SET_NULL)
     nomination_act = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='nomination_act_files')
-    nomination_act_fek = models.URLField()
+        related_name='nomination_act_files', on_delete=models.SET_NULL)
+    nomination_act_fek = models.URLField(blank=True)
     revocation_decision = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='revocation_decision_files')
+        related_name='revocation_decision_files', on_delete=models.SET_NULL)
     failed_election_decision = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='failed_election_decision_files')
+        related_name='failed_election_decision_files',
+        on_delete=models.SET_NULL)
     assistant_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='position_assistant_files')
 
@@ -459,7 +467,7 @@ class Candidacy(CandidateProfile):
     code = models.CharField(max_length=200)
     self_evaluation_report = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='self_evaluation_report')
+        related_name='self_evaluation_report', on_delete=models.SET_NULL)
     attachment_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='attachment_files')
 
