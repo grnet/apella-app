@@ -26,7 +26,7 @@ class DestroyProtectedObject(viewsets.ModelViewSet):
 class AssistantList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
-        if user.is_institutionmanager():
+        if user.is_manager():
             institution_id = user.institutionmanager.institution_id
             return InstitutionManager.objects.filter(
                 manager_role='assistant',

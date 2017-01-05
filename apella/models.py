@@ -332,6 +332,10 @@ class Position(models.Model):
     def check_resource_state_is_latest(self, row, request, view):
         return position_is_latest(self)
 
+    def check_resource_state_owned_by_assistant(self, row, request, view):
+        return position_is_latest(self) and \
+            assistant_can_edit(self, request.user)
+
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
         return InstitutionManager.objects.filter(
