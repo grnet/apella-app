@@ -18,7 +18,6 @@ const PROFILE_ASSISTANT_FIELDSET = {
   text: 'fieldsets.text.assistant_profile',
   fields: [
     field('username', { readonly: true }),
-    'password',
     'email',
     'mobile_phone_number',
     'home_phone_number',
@@ -26,7 +25,7 @@ const PROFILE_ASSISTANT_FIELDSET = {
     disable_field('last_name'),
     disable_field('father_name'),
     disable_field('id_passport'),
-    disable_field('institution.title_current'),
+    disable_field('institution'),
     disable_field('can_create_positions_verbose'),
     disable_field('can_create_registries_verbose'),
   ],
