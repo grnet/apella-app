@@ -54,7 +54,7 @@ class CustomUserView(djoser_views.UserView):
             return ApellaUser.objects.filter(id=user.id)
         if model.objects.filter(user_id=user.id).exists():
             return model.objects.filter(user_id=user.id)
-        return []
+        return model.objects.none()
 
     def get_object(self):
         queryset = self.get_queryset()
