@@ -2,7 +2,7 @@ import gen from 'ember-gen/lib/gen';
 import routes from 'ember-gen/lib/routes';
 import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
-import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
+import {USER_FIELDSET, USER_FIELDSET_DETAILS, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
@@ -63,7 +63,7 @@ const PROFILE_FIELDSETS = computed('model.role', function(){
     f.push(PROFILE_ASSISTANT_FIELDSET)
     return f;
   }
-  f.push(USER_FIELDSET_EDIT);
+  f.push(USER_FIELDSET_DETAILS);
 
   if (role === 'professor') {
     f.push(PROFESSOR_FIELDSET);
