@@ -292,11 +292,8 @@ class Position(models.Model):
         user = request.user
         if user.id == self.author.user.id:
             return True
-        if user.is_assistant():
-            return self in user.institutionmanager.assistant_duty.all()
         return InstitutionManager.objects.filter(
             user_id=user.id,
-            manager_role='institutionmanager',
             institution_id=self.department.institution.id).exists()
 
     def check_resource_state_open(self, row, request, view):
