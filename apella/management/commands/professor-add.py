@@ -23,7 +23,8 @@ class Command(ApellaCommand):
             institution = Institution.objects.get(id=institution_id)
             department = Department.objects.get(id=department_id)
             a = Professor.objects.create(
-                user=user, institution=institution, department=department)
+                user=user, is_verified=True, institution=institution,
+                department=department)
 
             self.stdout.write("Professor with id: %s created" % a.pk)
         except ApellaUser.DoesNotExist:

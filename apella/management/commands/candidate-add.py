@@ -17,7 +17,7 @@ class Command(ApellaCommand):
 
         try:
             user = get_user(user_id_or_username)
-            a = Candidate.objects.create(user=user)
+            a = Candidate.objects.create(user=user, is_verified=True)
 
             self.stdout.write("Candidate with id: %s created" % a.pk)
         except ApellaUser.DoesNotExist:

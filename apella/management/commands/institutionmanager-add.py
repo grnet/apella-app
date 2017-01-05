@@ -28,6 +28,7 @@ class Command(ApellaCommand):
             a = InstitutionManager.objects.create(
                 user=user,
                 institution=institution,
+                is_verified=True,
                 manager_role=options['role'])
 
             self.stdout.write("InstitutionManager with id: %s created" % a.pk)
