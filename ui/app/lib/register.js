@@ -11,18 +11,7 @@ import {field} from 'ember-gen';
 import ENV from 'ui/config/environment';
 import routes from 'ember-gen/lib/routes';
 
-const TEST_REGISTER_DATA = {
-  first_name: {el: 'Κώστας', en: 'Costas'},
-  last_name: {el: 'Παπαδημητρίου', en: 'Papadimitriou'},
-  father_name: {el: 'Γεώργιος', en: 'George'},
-  id_passport: '123456789',
-  email: 'kpap@grnet.gr',
-  mobile_phone_number: '6941111111',
-  home_phone_number: '2101111111',
-  rank: 'Professor',
-  cv_url: 'http://www.cvs.gr/cv-56772',
-  fek: 'http://www.fek.gr/fek-145'
-};
+const TEST_REGISTER_DATA = {};
 
 const User = Ember.Object.extend({
   save() { 
