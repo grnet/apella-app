@@ -127,6 +127,15 @@ export default {
   'search.input.placeholder': 'Insert search term',
   'table.is.empty': 'There are no items',
   'table.is.loading': 'Loading',
+  'value.not.set': 'Value not set',
+
+  // popup messages translations
+  'message.close': 'close',
+  'login.success': 'Successful login',
+  'form.saved': 'Form saved',
+  'form.invalid': 'Invalid form',
+  'form.error': 'Error in form',
+  'user.interests.saved': 'Your interests have been saved',
 
   userInterest: {
     info: 'By pressing "Save" the search criteria will be saved, so that if a new position matche    s them you will be notified by the system.',

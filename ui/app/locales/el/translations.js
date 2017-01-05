@@ -125,6 +125,15 @@ export default {
   'search.input.placeholder': 'Εισάγετε κριτήριο αναζήτησης',
   'table.is.empty': 'Δεν υπάρχουν καταχωρήσεις',
   'table.is.loading': 'Γίνεται αναζήτηση',
+  'value.not.set': 'Κενό πεδίο',
+
+  // popup messages translations
+  'message.close': 'Κλεισιμο',
+  'login.success': 'Επιτυχής είσοδος',
+  'form.saved': 'Επιτυχής καταχώρηση',
+  'form.invalid': 'Ανεπιτυχής καταχώρηση',
+  'form.error': 'Ανεπιτυχής καταχώρηση',
+  'user.interests.saved': 'Οι προτιμήσεις σας αποθηκεύτηκαν',
 
   userInterest: {
     info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρησης σχετικής θέσης στο μέλλον.',
@@ -248,7 +257,7 @@ export default {
       create_label: 'Δημιουργία',
       edit_label: 'Τροποποίηση',
       details_label: 'Προβολή',
-      save_label: 'Αποθήκευση',
+      save_label: 'Αποθηκευση',
     }
   },
   item: {
