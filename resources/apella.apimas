@@ -706,6 +706,7 @@ spec:
             .drf_collection:
                 model: apella.models.InstitutionManager
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                filter_fields: [institution]
             .cli_commands: {}
             '*':
                 id:
