@@ -107,6 +107,16 @@ export default ApellaGen.extend({
         return (permittedRoles.includes(role) ? true : false);
       })
     },
+    getModel: function(params) {
+      let role = get(this, 'session.session.authenticated.role');
+      let institution = get(this, 'session.session.authenticated.institution');
+      let id = institution.split('/').slice(-2)[0];
+      if (role == 'institutionmanager' || role == 'assistant') {
+        return this.store.query('department', {institution: id});
+      } else {
+        return this.store.findAll('department');
+      }
+    },
     page: {
       title: 'department.menu_label',
     },
