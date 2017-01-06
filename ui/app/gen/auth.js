@@ -5,7 +5,8 @@ import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
-        INSTITUTION_MANAGER_VALIDATORS, CANDIDATE_FILES_FIELDSET
+        INSTITUTION_MANAGER_VALIDATORS, CANDIDATE_FILES_FIELDSET,
+        USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
 import {disable_field} from 'ui/utils/common/fields';
 import ENV from 'ui/config/environment';

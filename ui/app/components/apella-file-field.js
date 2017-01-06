@@ -1,3 +1,4 @@
+import DS from 'ember-data';
 import Ember from 'ember';
 import BaseFieldMixin from 'ember-gen/lib/base-field';
 import ENV from 'ui/config/environment';
@@ -29,6 +30,12 @@ export default Ember.Component.extend(BaseFieldMixin, {
   files: computed('value.[]', 'value.id', function() {
     let multiple = get(this, 'multiple');
     let value = get(this, 'value');
+    if (value instanceof DS.PromiseObject) {
+      value = value.content;
+    }
+    if (value instanceof DS.PromiseManyArray) {
+      return value;
+    }
     if (value instanceof DS.Model) {
       return [value];
     }
@@ -37,9 +44,6 @@ export default Ember.Component.extend(BaseFieldMixin, {
     }
     if (value instanceof Array) { 
       return value;
-    }
-    if (value instanceof DS.PromiseObject) {
-      value = value.content;
     }
     if (value) { return [value]; }
     return [];

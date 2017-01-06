@@ -52,13 +52,17 @@ export default DRFSerializer.extend({
     return json;
   },
 
+  isEmbedded(key) {
+    return this.hasEmbeddedAlwaysOption && this.hasEmbeddedAlwaysOption(key);
+  },
+
   /**
    * Inject hasMany urls to id coercion here in order for relationships to
    * get setup as expected.
    */
   extractRelationships(modelClass, resourceHash) {
     modelClass.eachRelationship((key, relationshipMeta) => {
-      if (relationshipMeta.kind === 'hasMany') {
+      if (relationshipMeta.kind === 'hasMany' && !this.isEmbedded(key)) {
         let ids = (resourceHash[key] || []).map((url) => {
           // TODO: place this as a util method (idFromURL)
           return url.split('/').filter(Boolean).slice(-1)[0];
