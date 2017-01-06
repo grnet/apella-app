@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Token from 'ember-simple-auth-token/authenticators/token';
 import ENV from 'ui/config/environment';
+import {FILE_FIELDS} from 'ui/utils/common/users';
 
 const {
   merge, computed
@@ -13,6 +14,9 @@ function mergeProfileData(sessionData, profileResponse) {
   delete profileResponse.user;
   merge(sessionData, user);
   merge(sessionData, profileResponse);
+  for (let key of FILE_FIELDS) {
+    delete sessionData[key];
+  }
 
   // process unverified users as no-role users
   if (sessionData.hasOwnProperty('is_verified') && sessionData.is_verified === false) {

@@ -7,6 +7,14 @@ import {fileField} from 'ui/lib/common';
 
 const { assign, computed, get, set } = Ember;
 
+const FILE_FIELDS = [
+  'publications',
+  'id_passport_file',
+  'diplomas',
+  'cv',
+  'application_form'
+];
+
 const USER_FIELDS_ALL = [
   'user_id',
   'username',
@@ -276,6 +284,13 @@ const normalizeUser = function(hash, serializer) {
 
 const serializeUser = function(json) {
   let user_info = {};
+
+  for (let filefield of FILE_FIELDS) {
+    if (filefield in json) {
+      delete json[filefield];
+    }
+  }
+
   for (let field of USER_FIELDS_ALL) {
     if (field in json) {
       if (field=='user_id') {
