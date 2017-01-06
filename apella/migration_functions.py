@@ -1,47 +1,36 @@
 import logging
 import re
+from datetime import datetime
+
 from django.db import transaction
+from django.conf import settings
+from django.db.utils import IntegrityError
 
 from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \
-    OldApellaUserMigrationData
+    OldApellaUserMigrationData, Position, Subject, SubjectArea, \
+    OldApellaPositionMigrationData
 
 logger = logging.getLogger('apella')
 
 
-def get_institution(institution_id_str):
-    if not institution_id_str:
+def get_obj(id_str, model):
+    if not id_str:
         return None
     try:
-        institution_id = int(institution_id_str)
-        institution = Institution.objects.get(id=institution_id)
+        id = int(id_str)
+        obj = model.objects.get(id=id)
     except ValueError:
-        logger.error('invalid institution id %s' % institution_id_str)
+        logger.error('invalid id %s' % id_str)
         raise
     except TypeError:
-        logger.error('invalid institution id %s' % institution_id_str)
+        logger.error('invalid id %s' % id_str)
         raise
-    except Institution.DoesNotExist:
-        logger.error('institution %s does not exist' % institution_id_str)
+    except model.DoesNotExist:
+        logger.error('%s %s does not exist' % (model.__name__, id_str))
         raise
-    logger.info('got institution %s' % institution.id)
-    return institution
-
-
-def get_department(department_id_str):
-    if not department_id_str:
-        return None
-    try:
-        department_id = int(department_id_str)
-        department = Department.objects.get(id=department_id)
-    except ValueError:
-        logger.error('invalid department id %s' % department_id_str)
-        raise
-    except Department.DoesNotExist:
-        logger.error('department %s does not exist' % department_id_str)
-        raise
-    logger.info('got department %s' % department.id)
-    return department
+    logger.debug('got %s %s' % (model.__name__, id))
+    return obj
 
 
 def migrate_candidate(old_user, new_user):
@@ -50,8 +39,8 @@ def migrate_candidate(old_user, new_user):
 
 
 def migrate_professor(old_user, new_user):
-    institution = get_institution(old_user.professor_institution_id)
-    department = get_department(old_user.professor_department_id)
+    institution = get_obj(old_user.professor_institution_id, Institution)
+    department = get_obj(old_user.professor_department_id, Department)
 
     discipline_in_fek = False
     discipline_text = None
@@ -64,6 +53,7 @@ def migrate_professor(old_user, new_user):
     professor = Professor.objects.create(
         user=new_user,
         institution=institution,
+        institution_freetext=old_user.professor_institution_freetext,
         department=department,
         rank=old_user.professor_rank,
         is_foreign=bool(re.match('t', old_user.is_foreign, re.I)),
@@ -77,7 +67,7 @@ def migrate_professor(old_user, new_user):
 
 
 def migrate_institutionmanager(old_user, new_user):
-    institution = get_institution(old_user.manager_institution_id)
+    institution = get_obj(old_user.manager_institution_id, Institution)
 
     sub_first_name = MultiLangFields.objects.create(
         el=old_user.manager_deputy_name_el,
@@ -160,7 +150,7 @@ def migrate_user(old_user):
         home_phone_number=old_user.phone,
         is_active=True)
     logger.info(
-        'created user %s, user_id %s' % (new_user.id, old_user.user_id))
+        'created user %s from user_id %s' % (new_user.id, old_user.user_id))
 
     role = old_user.role
     if role == 'candidate':
@@ -173,5 +163,52 @@ def migrate_user(old_user):
     elif role == 'institutionmanager' or role == 'assistant':
         institutionmanager = migrate_institutionmanager(old_user, new_user)
         logger.info('created institution manager %s' % institutionmanager.id)
+        old_positions = OldApellaPositionMigrationData.objects.filter(
+            manager_id=str(old_user.user_id))
+        for old_position in old_positions:
+            migrate_position(old_position, institutionmanager)
 
     return new_user
+
+
+def migrate_position(old_position, author):
+
+    subject = get_obj(old_position.subject_code, Subject)
+    subject_area = get_obj(old_position.subject_area_code, SubjectArea)
+    department = get_obj(old_position.department_id, Department)
+    fek_posted_at = datetime.strptime(
+        old_position.gazette_publication_date, '%Y-%m-%d')
+    starts_at = datetime.strptime(
+        old_position.opening_date, '%Y-%m-%d')
+    ends_at = datetime.strptime(
+        old_position.closing_date, '%Y-%m-%d')
+
+    try:
+        new_position = Position.objects.create(
+            title=old_position.title,
+            description=old_position.description,
+            subject=subject,
+            subject_area=subject_area,
+            author=author,
+            discipline=old_position.subject_id,
+            department=department,
+            department_dep_number=0,
+            fek=old_position.gazette_publication_url,
+            fek_posted_at=fek_posted_at,
+            state='posted',
+            starts_at=starts_at,
+            ends_at=ends_at
+        )
+    except IntegrityError as e:
+        logger.error(
+            'failed to migrate position %s' % old_position.position_serial)
+        logger.error(e)
+        return
+
+    new_position.code = settings.POSITION_CODE_PREFIX + str(new_position.id)
+    new_position.save()
+
+    logger.info(
+        'migrated position %s, from old position %s' %
+        (new_position.id, old_position.position_serial))
+    return new_position
