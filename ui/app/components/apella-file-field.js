@@ -86,10 +86,13 @@ export default Ember.Component.extend(BaseFieldMixin, {
 
     deleteFile(file) {
       set(this, 'inProgress', true);
-      file.destroyRecord().then(() => {
-        this.reloadRecord().finally(() => {
-          set(this, 'inProgress', false);
-        });
+      return file.destroyRecord().then(() => {
+        return this.reloadRecord();
+      }).catch((err) => {
+        this.get('messages').setError('delete.file.error');
+        throw err;
+      }).finally(() => {
+        set(this, 'inProgress', false);
       });
     },
 
@@ -134,11 +137,14 @@ export default Ember.Component.extend(BaseFieldMixin, {
         if (resp.status < 200 || resp.status > 299) {
           resp.json().then((jresp) => {
             this.get('messages').setError(jresp.detail || jresp.message || resp.statusText);
+            throw jresp;
           }).catch(() => {
             this.get('messages').setError(resp.statusText);
+            throw resp;
           });
         } else {
           this.send('onUploadSuccess', file);
+          return file;
         }
       }).finally((err) => {
           set(this, 'inProgress', false);
