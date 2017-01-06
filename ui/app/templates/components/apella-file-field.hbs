@@ -1,5 +1,8 @@
 <md-container class="layout-row" >
 <label class={{concat 'md-label raised nowrap padded table-label' (if errors.length ' invalid' '')}}>{{ label }}</label>
+{{#if inProgress}}
+{{paper-icon "rotate-right" spin=true size=25}}
+{{/if}}
 <span class="flex-grow"></span>
 {{#if (and canAdd (not readonly))}}
 <md-container class="layout-row layout-align-end">
@@ -34,9 +37,6 @@
 {{/table.body}}
 {{/paper-data-table}}
 
-{{#if inProgress}}
-{{paper-icon "rotate-right" spin=true size=20}}
-{{/if}}
 <input type="file" onchange={{ action "handleFile" }} style="display: none" class="file-input"/>
 {{paper-divider}}
 <div class="md-errors-spacer"></div>
