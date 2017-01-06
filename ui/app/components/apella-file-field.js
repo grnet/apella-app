@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import BaseFieldMixin from 'ember-gen/lib/base-field';
 import ENV from 'ui/config/environment';
-import fetch from 'ember-network/fetch';
+import {uploadFile} from 'ui/utils/files';
 
 const {
   on,
@@ -115,39 +115,29 @@ export default Ember.Component.extend(BaseFieldMixin, {
       let kind = get(this, 'fattrs.kind');
       let adapter = get(this, 'store').adapterFor(path);
       let url = adapter._buildURL(path, id) + '/upload/';
+      let messages = get(this, 'messages');
 
       let target = event.target || this.fileInput;
       let files = target.files;
       if (!files.length) { return; }
-      let file = files[0]; // TODO: support for multiple uploads?
-
-      let data = new FormData();
-      data.append('file_kind', kind);
-      data.append('file_path', file);
-      data.append('file_description', '');
 
       set(this, 'inProgress', true);
-      return fetch(url, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Token ${token}`
-        },
-        body: data
-      }).then((resp) => {
-        if (resp.status < 200 || resp.status > 299) {
-          resp.json().then((jresp) => {
-            this.get('messages').setError(jresp.detail || jresp.message || resp.statusText);
-            throw jresp;
-          }).catch(() => {
-            this.get('messages').setError(resp.statusText);
-            throw resp;
-          });
-        } else {
-          this.send('onUploadSuccess', file);
-          return file;
-        }
+      let file = {
+        file: files[0],
+        file_kind: kind,
+        file_description: ''
+      };
+
+      return uploadFile(file, url, token).then((file) => {
+        this.send('onUploadSuccess', file);
+        messages.setSuccess('file.upload.success');
+        return file;
+      }).catch((err) => {
+        messages.setError('file.upload.error');
+        throw err;
       }).finally((err) => {
-          set(this, 'inProgress', false);
+        target.value = '';
+        set(this, 'inProgress', false);
       });
     }
   }
