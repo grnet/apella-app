@@ -153,6 +153,10 @@ class ApellaFile(models.Model):
         self.updated_at = timezone.now()
         super(ApellaFile, self).save(*args, **kwargs)
 
+    @property
+    def filename(self):
+        return self.file_path.name.split("/")[-1]
+
 
 class Institution(models.Model):
     category = models.CharField(

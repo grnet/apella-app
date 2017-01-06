@@ -155,6 +155,7 @@ API_PREFIX = 'apella/'
 TOKEN_LOGIN_URL = '/apella/ui/auth/login'
 TOKEN_REGISTER_URL = '/apella/ui/auth/register/professor'
 AUTH_USER_MODEL = 'apella.ApellaUser'
+DOWNLOAD_FILE_URL = '/apella/ui/auth/login'
 
 START_DATE_END_DATE_INTERVAL = 30
 LANGUAGES = {'el', 'en'}

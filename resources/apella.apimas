@@ -162,6 +162,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.ApellaFile
+                mixins: [apella.views.mixins.FilesViewSet]
             .cli_commands: {}
             '*':
                 id:

@@ -1,12 +1,18 @@
 import logging
+import uuid
 
 from datetime import datetime
 
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import user_logged_in, user_logged_out
+from django.core.cache import cache
+from django.conf import settings
+
 from rest_framework.authtoken.models import Token
 from rest_framework.serializers import ValidationError
-from django.contrib.auth import user_logged_in, user_logged_out
+from rest_framework.exceptions import PermissionDenied
+
 from apella.models import RegistrationToken, ApellaUser
 
 logger = logging.getLogger(__name__)
@@ -161,9 +167,10 @@ def validate_user_can_verify(user):
 
     if user.user.is_candidate():
         if not user.cv_id:
-            raise ValidationError({"non_field_errors": "cv.required.error"})
+            raise ValidationError({"cv": "cv.required.error"})
 
     #TODO: include additional validations
+
 
 def request_user_verify(user):
     validate_user_can_verify(user)
@@ -175,3 +182,29 @@ def verify_user(user):
     user.is_verified = True
     user.verified_at = datetime.now()
     user.verification_pending = False
+
+
+FILE_TOKEN_TIMEOUT = getattr(settings, 'FILE_TOKEN_TIMEOUT', 60)
+def validate_file_access(user, file):
+    return True
+
+
+def generate_file_token(user, file):
+    if not user.is_authenticated():
+        raise PermissionDenied()
+
+    validate_file_access(user, file)
+
+    cache_key = str(uuid.uuid4())
+    cache_value = file.pk
+    cache.set(cache_key, cache_value, FILE_TOKEN_TIMEOUT)
+    return cache_key
+
+
+def consume_file_token(user, file, token):
+    file_id = cache.get(token)
+    if not file_id or file_id != file.pk:
+        raise PermissionDenied()
+    validate_file_access(user, file)
+    cache.delete(token)
+

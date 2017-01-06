@@ -1,10 +1,17 @@
+import urlparse
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.decorators import detail_route
+
 from django.db.models import ProtectedError, Min, Q
 from django.conf import settings
 from django.utils import timezone
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
+
 
 from apimas.modeling.adapters.drf.mixins import HookMixin
 
@@ -12,6 +19,7 @@ from apella.models import InstitutionManager, Position, Department, \
         Candidacy, ApellaUser, ApellaFile, ElectorParticipation
 from apella.loader import adapter
 from apella.common import FILE_KINDS, FILE_KIND_TO_FIELD
+from apella import auth_hooks
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -157,6 +165,42 @@ class RegistriesList(generics.ListAPIView):
         return Response(
             ser(members, many=True, context={'request': request}).data)
 
+
+USE_X_SEND_FILE = getattr(settings, 'USE_X_SEND_FILE', False)
+
+class FilesViewSet(viewsets.ModelViewSet):
+
+    @detail_route(methods=['get', 'head'])
+    def download(self, request, pk=None):
+        response = HttpResponse(content_type='applciation/force-download')
+        user = request.user
+        file = get_object_or_404(ApellaFile, id=pk)
+
+        if request.method == 'HEAD':
+            token = auth_hooks.generate_file_token(user, file)
+            url = urlparse.urljoin(settings.API_HOST,
+                                   reverse('apella-files-download', args=(pk,)))
+            response['X-File-Location'] = "%s?token=%s" % (url, token)
+            return response
+
+        token = request.GET.get('token', None)
+        if token is None:
+            raise PermissionDenied("no.token")
+            #url = reverse('apella-files-download', args=(pk,))
+            #ui_url = getattr(settings, 'DOWNLOAD_FILE_URL', '')
+            #ui_download_url = '%s?#download=%s' % (ui_url, url)
+            #return HttpResponseRedirect(ui_download_url)
+
+        token = request.GET.get('token', None)
+
+        auth_hooks.consume_file_token(user, file, token)
+        disp = 'attachment; filename=%s' % file.filename
+        response['Content-Disposition'] = disp
+        if USE_X_SEND_FILE:
+            response['X-Sendfile'] = file.file_path.path
+        else:
+            response.content = open(file.file_path.path)
+        return response
 
 class UploadFilesViewSet(viewsets.ModelViewSet):
 
