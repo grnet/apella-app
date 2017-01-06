@@ -183,6 +183,18 @@ export default ApellaGen.extend({
     fieldsets: pick_create_fs(),
   },
   list: {
+    getModel(params) {
+      let role = get(this, 'session.session.authenticated.role');
+      if (role == 'professor' || role == 'candidate') {
+        return this.store.query('position', { state: 'posted' }).then(function(positions) {
+          return positions.filter(function(pos) {
+            return !get(pos, 'is_closed');
+          })
+        });
+      } else {
+        return this.store.findAll('position');
+      }
+    },
     sort: {
       active: true,
       fields: ['code', 'title'],
