@@ -519,6 +519,15 @@ spec:
                     .drf_field: {}
                     .read_only: {}
                     .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -540,6 +549,15 @@ spec:
                     .drf_field: {}
                     .read_only: {}
                     .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -561,6 +579,15 @@ spec:
                     .drf_field: {}
                     .read_only: {}
                     .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1106,6 +1133,15 @@ spec:
                     .drf_field: {}
                     .read_only: {}
                     .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1127,6 +1163,15 @@ spec:
                     .drf_field: {}
                     .read_only: {}
                     .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1148,6 +1193,15 @@ spec:
                     .drf_field: {}
                     .read_only: {}
                     .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1169,6 +1223,15 @@ spec:
                     .drf_field: {}
                     .read_only: {}
                     .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1190,6 +1253,15 @@ spec:
                     .drf_field: {}
                     .read_only: {}
                     .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
