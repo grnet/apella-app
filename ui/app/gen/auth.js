@@ -2,10 +2,11 @@ import gen from 'ember-gen/lib/gen';
 import routes from 'ember-gen/lib/routes';
 import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
-import {USER_FIELDSET, USER_FIELDSET_DETAILS, USER_VALIDATORS,
-        PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
+import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
+        PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
-        INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
+        INSTITUTION_MANAGER_VALIDATORS, CANDIDATE_FILES_FIELDSET
+       } from 'ui/utils/common/users';
 import {disable_field} from 'ui/utils/common/fields';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
@@ -67,6 +68,10 @@ const PROFILE_FIELDSETS = computed('model.role', function(){
 
   if (role === 'professor') {
     f.push(PROFESSOR_FIELDSET);
+    f.push(PROFESSOR_FILES_FIELDSET);
+  }
+  if (role === 'candidate') {
+    f.push(CANDIDATE_FILES_FIELDSET);
   }
   if (role === 'institutionmanager') {
     f.push(INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB);
@@ -215,7 +220,7 @@ export default AuthGen.extend({
         })
       },
 
-      beforeModel() {
+      beforeModel(transition) {
         let activate = extractActivate(window.location);
         if (activate) {
           return this.handleActivate(activate);
@@ -224,7 +229,7 @@ export default AuthGen.extend({
         if (token) {
           return this.handleTokenLogin(token);
         }
-        return this._super();
+        return this._super(transition);
       },
 
       setupController(controller, model) {
@@ -302,11 +307,11 @@ export default AuthGen.extend({
           action: function(route, form) {
             let model = get(form, 'model');
             set(model, 'verification_request', new Date());
-            form.submit().then((model) => {
-              if (get(form, 'changeset.isValid')) {
+            form.submit().then((model_or_err) => {
+              set(model, 'verification_request', null);
+              if (model_or_err && get(form, 'changeset.isValid') && !model_or_err.isAdapterError) {
                 route.get('messageService').setSuccess('verification.request.submitted');
                 route.transitionTo('auth.profile.details');
-              } else {
               }
             });
           },

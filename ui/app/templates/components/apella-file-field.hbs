@@ -1,0 +1,54 @@
+<md-container class="layout-row" >
+<label class={{concat 'md-label raised nowrap padded table-label' (if errors.length ' invalid' '')}}>{{ label }}</label>
+<span class="flex-grow"></span>
+{{#if (and canAdd (not readonly))}}
+<md-container class="layout-row layout-align-end">
+{{#paper-button disabled=inProgress onClick=(action 'handleAddClick')}}{{t 'file.field.add.file' }}{{/paper-button}}
+</md-container>
+{{/if}}
+</md-container>
+
+<md-input-container class="full-width no-margin">
+{{#paper-data-table as |table|}}
+{{#table.body as |body|}}
+  {{#each files as |file|}}
+    {{#body.row as |row|}}
+      {{#row.cell class="fullwidth"}}{{ file.filename }}{{/row.cell}}
+      {{#row.cell class="nowrap"}}{{ file.description }}{{/row.cell}}
+      {{#row.cell class="nowrap"}}{{ moment file.updated_at }}{{/row.cell}}
+
+      {{#row.cell class="nowrap"}}
+        {{#unless readonly}}
+        {{#paper-button disabled=inProgress iconButton=true onClick=(action "deleteFile" file)}}{{paper-icon "delete"}}{{/paper-button}}
+        {{/unless}}
+        {{#paper-button href=file.downloadURL disabled=inProgress iconButton=true onClick=(action "downloadFile" file)}}
+          {{paper-icon (if file.generatingLink "rotate-right" "get_app") spin=file.generatingLink }}
+        {{/paper-button}}
+      {{/row.cell}}
+    {{/body.row}}
+  {{else}}
+    {{#body.row as |row|}}
+      {{#row.cell class="fullwidth"}}{{t 'file.field.no.files' }}{{/row.cell}}
+    {{/body.row}}
+  {{/each}}
+{{/table.body}}
+{{/paper-data-table}}
+
+{{#if inProgress}}
+{{paper-icon "rotate-right" spin=true size=20}}
+{{/if}}
+<input type="file" onchange={{ action "handleFile" }} style="display: none" class="file-input"/>
+{{paper-divider}}
+<div class="md-errors-spacer"></div>
+{{#if errors.length }}
+<div class="md-input-messages-animation md-auto-hide" ng-messages>
+  {{#each errors as |error index|}}
+    <div
+      id="error-{{index}}"
+      class="md-input-error no-position">
+      {{error}}
+    </div>
+  {{/each}}
+</div>
+{{/if}}
+</md-input-container>

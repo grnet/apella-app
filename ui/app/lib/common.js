@@ -11,7 +11,8 @@ const {
   get,
   computed: { reads },
   computed,
-  merge
+  merge,
+  assign
 } = Ember;
 
 const ApellaGen = CRUDGen.extend({
@@ -126,9 +127,18 @@ const VerifiedUserMixin = Ember.Mixin.create({
   login_method: DS.attr('string')
 });
 
+function fileField(key, path, kind, attrs, formAttrs) {
+  return field(key, assign({}, {
+    type: 'file',
+    formComponent: 'apella-file-field',
+    formAttrs: assign({}, { path, kind }, formAttrs || {})
+  }, attrs || {}));
+}
+
+
 export {
   ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
-  VerifiedUserMixin
+  VerifiedUserMixin, fileField
 };
 

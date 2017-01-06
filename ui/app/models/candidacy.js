@@ -17,9 +17,9 @@ export default DS.Model.extend({
   submitted_at_format: computeDateFormat('submitted_at'),
   updated_at: DS.attr('date'),
   updated_at_format: computeDateFormat('submitted_at'),
-  cv: DS.attr({label: 'candidacy.label.cv'}),
-  diploma: DS.attr({label: 'candidacy.label.diploma'}),
-  publication: DS.attr({label: 'candidacy.label.publication'}),
+  cv: DS.belongsTo('apella-file', {label: 'candidacy.label.cv'}),
+  diplomas: DS.hasMany('apella-files', {label: 'candidacy.label.diploma'}),
+  publications: DS.hasMany('apella-files', {label: 'candidacy.label.publication'}),
   selfEvaluation: DS.attr({label: 'candidacy.label.self_evaluation'}),
   additionalFiles: DS.attr({label: 'candidacy.label.additional_files'}),
 

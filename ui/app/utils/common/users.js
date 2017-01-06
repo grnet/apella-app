@@ -3,8 +3,9 @@ import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
+import {fileField} from 'ui/lib/common';
 
-const { computed, get, set } = Ember;
+const { assign, computed, get, set } = Ember;
 
 const USER_FIELDS_ALL = [
   'user_id',
@@ -71,6 +72,25 @@ const USER_FIELDS_REGISTER_REQUIRED = [
   'home_phone_number'
 ];
 const USER_FIELDS_REGISTER_REQUIRED_ACADEMIC = USER_FIELDS_REGISTER_REQUIRED.slice(3);
+
+const PROFESSOR_FILES_FIELDS = [
+  fileField('cv', 'professor', 'cv', {})
+];
+
+const CANDIDATE_FILES_FIELDS = [
+  fileField('id_passport_file', 'candidate', 'id_passport', {
+  }),
+  fileField('application_form', 'candidate', 'application_form', {
+  }),
+  fileField('cv', 'candidate', 'cv', {
+  }),
+  fileField('diplomas', 'candidate', 'diploma', {}, {
+    multiple: true
+  }),
+  fileField('publications', 'candidate', 'publication', {}, {
+    multiple: true
+  }),
+]
 
 const PROFESSOR_FIELDS = [
   'institution',
@@ -179,6 +199,16 @@ const PROFESSOR_FIELDSET = {
    }
 }
 
+const PROFESSOR_FILES_FIELDSET = {
+  label: 'fieldsets.labels.files',
+  fields: PROFESSOR_FILES_FIELDS
+};
+
+const CANDIDATE_FILES_FIELDSET = {
+  label: 'fieldsets.labels.files',
+  fields: CANDIDATE_FILES_FIELDS 
+}
+
 const PROFESSOR_FIELDSET_REGISTER = Ember.assign({}, PROFESSOR_FIELDSET, {
   label: Ember.computed('model.is_academic', function() {
     let academic = this.get('model.is_academic');
@@ -273,8 +303,10 @@ const normalizeUserErrors = function(errors) {
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
+        USER_FIELDSET_DETAILS,
         USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC, PROFESSOR_FIELDSET_REGISTER,
         USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
-        PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
+        PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
+        CANDIDATE_FILES_FIELDSET,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS, USER_FIELDS_ALL};

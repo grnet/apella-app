@@ -4,11 +4,20 @@ import professorFields from 'ui/mixins/professor';
 import {normalizeUser, serializeUser, normalizeUserErrors} from 'ui/utils/common/users';
 import institutionManagerFields from 'ui/mixins/institution-manager';
 import assistantFields from 'ui/mixins/assistant';
+import candidateFields from 'ui/mixins/candidate';
 import {VerifiedUserMixin} from 'ui/lib/common';
 
 const { get } = Ember;
 
-export default User.extend(professorFields, institutionManagerFields, assistantFields, VerifiedUserMixin, {
+const inherits = [
+  candidateFields,
+  professorFields,
+  institutionManagerFields,
+  assistantFields,
+  VerifiedUserMixin
+];
+
+export default User.extend(...inherits, {
   __api__: {
     namespace: 'auth',
     path: 'me',

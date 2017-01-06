@@ -27,7 +27,7 @@ export default Ember.Mixin.create({
   }),
   speaks_greek: DS.attr({type: 'boolean', defaultValue: true }),
   cv_url: DS.attr(),
-  cv: DS.attr(),
+  cv: DS.belongsTo('apella-file'),
   fek: DS.attr(),
   discipline_text: DS.attr(),
   discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true})
