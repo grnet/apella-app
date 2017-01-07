@@ -16,7 +16,20 @@ const  position = {
   create: {
     basic: {
       label: 'fieldsets.labels.basic_info',
-      fields: ['title', 'department', 'description',
+      fields: ['title',
+        field('department', {
+          query: function(table, store, field, params) {
+            let role = get(field, 'session.session.authenticated.role');
+            if (role == 'institutionmanager' || role == 'assistant') {
+              let user_institution = get(field, 'session.session.authenticated.institution');
+              let id = user_institution.split('/').slice(-2)[0];
+              return store.query('department', { institution: id });
+            } else {
+              return store.findAll('department');
+            }
+          }
+        }),
+        'description',
         'discipline','subject_area', 'subject'],
       layout: {
         flex: [50, 50, 100, 100, 50, 50]

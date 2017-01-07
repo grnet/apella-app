@@ -23,7 +23,21 @@ export default ApellaGen.extend({
   common: {
     fieldsets: [{
       label: 'registry.main_section.title',
-      fields: [field('type', {label: 'common.type_label'}), field('department', {displayAttr: 'title_current'})],
+      fields: [field('type', {label: 'common.type_label'}),
+        field('department', {
+          displayAttr: 'title_current',
+          query: function(table, store, field, params) {
+            let role = get(field, 'session.session.authenticated.role');
+            if (role == 'institutionmanager' || role == 'assistant') {
+              let user_institution = get(field, 'session.session.authenticated.institution');
+              let id = user_institution.split('/').slice(-2)[0];
+              return store.query('department', { institution: id });
+            } else {
+              return store.findAll('department');
+            }
+          }
+        })
+      ],
       layout: {
         flex: [30, 70]
       }
