@@ -105,6 +105,11 @@ export default ApellaGen.extend({
     menu: {
       label: 'assistant.menu_label',
       icon: 'directions_run',
+      display: computed('role', function() {
+        let role = get(this, 'role');
+        let forbittenRoles = ['professor', 'candidate'];
+        return (forbittenRoles.includes(role) ? false : true);
+      })
 
     },
     layout: 'table',

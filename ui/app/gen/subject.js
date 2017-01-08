@@ -46,9 +46,8 @@ export default ApellaGen.extend({
       icon: 'local_library',
       label: 'subject.menu_label',
       display: computed('role', function() {
-        let role = get(this, 'session.session.authenticated.role');
+        let role = get(this, 'role');
         let permittedRoles = ['helpdeskuser', 'helpdeskadmin'];
-
         return (permittedRoles.includes(role) ? true : false);
       })
     },

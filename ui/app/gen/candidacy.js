@@ -149,7 +149,7 @@ export default ApellaGen.extend({
       label: 'candidacy.menu_label',
       icon: 'assignment',
       display: computed('role', function() {
-        let role = get(this, 'session.session.authenticated.role');
+        let role = get(this, 'role');
         let forbiddenRoles = ['institutionmanager', 'assistant'];
         return (forbiddenRoles.includes(role) ? false : true);
       })
