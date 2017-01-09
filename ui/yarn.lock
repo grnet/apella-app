@@ -703,7 +703,7 @@ broccoli-kitchen-sink-helpers@^0.3.1:
     glob "^5.0.10"
     mkdirp "^0.5.1"
 
-broccoli-merge-trees@^1.0.0, broccoli-merge-trees@^1.1.0, broccoli-merge-trees@^1.1.1, broccoli-merge-trees@^1.1.3:
+broccoli-merge-trees@^1.0.0, broccoli-merge-trees@^1.1.0, broccoli-merge-trees@^1.1.1, broccoli-merge-trees@^1.1.3, broccoli-merge-trees@^1.1.5:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-1.2.1.tgz#16a7494ed56dbe61611f6c2d4817cfbaad2a3055"
   dependencies:
@@ -1465,12 +1465,6 @@ ember-ajax@^2.4.1:
   dependencies:
     ember-cli-babel "^5.1.5"
 
-ember-array-contains-helper@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/ember-array-contains-helper/-/ember-array-contains-helper-1.3.0.tgz#31d4a484d602515192848d4345915597bc2945e9"
-  dependencies:
-    ember-cli-babel "^5.1.7"
-
 ember-basic-dropdown@^0.16.0:
   version "0.16.4"
   resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.16.4.tgz#6bf84654e4bbcf375c2a35cd341432d901c02ab5"
@@ -1485,16 +1479,22 @@ ember-can@^0.8.1, ember-can@0.8.1:
   dependencies:
     ember-cli-babel "^5.1.5"
 
-ember-changeset-validations@1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/ember-changeset-validations/-/ember-changeset-validations-1.2.4.tgz#2832f4c5daeebd139a8713ed30f8e902b360f286"
+ember-changeset-validations@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ember-changeset-validations/-/ember-changeset-validations-1.2.0.tgz#c8ba2d953deddd71d143c82607f6f6a189086927"
   dependencies:
-    ember-changeset "^1.2.0"
+    ember-changeset "^1.1.1"
     ember-cli-babel "^5.1.6"
 
-ember-changeset@^1.2.0, ember-changeset@1.2.0:
+ember-changeset@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-1.2.0.tgz#db06a8f3321f280dc6f156fa837a947bdd3c562a"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+
+ember-changeset@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-1.1.2.tgz#810bb7ce602645c0408b4cfe4285be96d254ae2a"
   dependencies:
     ember-cli-babel "^5.1.6"
 
@@ -1648,16 +1648,16 @@ ember-cli-mirage@0.2.2:
     pretender "^1.1.0"
     route-recognizer "^0.1.11"
 
-ember-cli-moment-shim@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-2.2.1.tgz#78870872a626177d0b04223c9eb6be0729590e61"
+ember-cli-moment-shim@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-3.0.1.tgz#c67c39f71c1c5a38bcc93bfa65b14e25f069895f"
   dependencies:
     broccoli-funnel "^1.0.0"
-    broccoli-merge-trees "^1.0.0"
+    broccoli-merge-trees "^1.1.5"
     broccoli-stew "^1.0.0"
     chalk "^1.1.1"
     ember-cli-babel "^5.0.0"
-    exists-sync "0.0.3"
+    exists-sync "0.0.4"
     lodash.defaults "^4.1.0"
     moment "^2.13.0"
     moment-timezone "^0.5.0"
@@ -1998,6 +1998,12 @@ ember-lodash@0.0.9:
     ember-cli-babel "^5.1.5"
     lodash-es "^3.10.0"
 
+ember-macro-helpers@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-0.4.0.tgz#914670001478fcccccb84819aca7630cc44526c8"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+
 ember-maybe-import-regenerator@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/ember-maybe-import-regenerator/-/ember-maybe-import-regenerator-0.1.4.tgz#bd3af07d91f797ea899852734b3e0ad8f510b03a"
@@ -2007,11 +2013,12 @@ ember-maybe-import-regenerator@^0.1.4:
     ember-cli-babel "^5.1.6"
     regenerator-runtime "^0.9.5"
 
-ember-moment@6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/ember-moment/-/ember-moment-6.1.0.tgz#5c2e7448e22007f9839c41e05bd3013a9eba2a82"
+ember-moment@7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/ember-moment/-/ember-moment-7.2.0.tgz#73202f5d62d7c645feb3abf580b3801c1beb6efd"
   dependencies:
     ember-cli-babel "^5.1.6"
+    ember-macro-helpers "^0.4.0"
 
 ember-network@^0.3.1:
   version "0.3.1"
