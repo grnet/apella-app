@@ -144,7 +144,7 @@ export default ApellaGen.extend({
 
   common: {
     validators: {
-      title: [validate.presence(true), validate.length({min:4, max:200})],
+      title: [validate.presence(true), validate.length({min:3, max:200})],
       description: [validate.presence(true), validate.length({max:300})],
 
       /*
