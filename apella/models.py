@@ -239,6 +239,9 @@ class Professor(UserProfile, CandidateProfile):
     is_foreign = models.BooleanField(default=False)
     speaks_greek = models.BooleanField(default=True)
     cv_url = models.URLField(blank=True)
+    cv_professor = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='professor_cv_files', on_delete=models.SET_NULL)
     fek = models.URLField()
     discipline_text = models.CharField(max_length=300, blank=True)
     discipline_in_fek = models.BooleanField(default=True)

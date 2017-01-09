@@ -81,6 +81,10 @@ FILE_KIND_TO_FIELD = {
         "field": "cv",
         "many": False,
     },
+    "cv_professor": {
+        "field": "cv_professor",
+        "many": False,
+    },
     "diploma": {
         "field": "diplomas",
         "many": True,

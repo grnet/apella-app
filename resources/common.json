@@ -50,6 +50,7 @@
 
     "FILE_KINDS": [
         ["cv", "CV"],
+        ["cv_professor", "CV"],
         ["diploma", "Diploma"],
         ["publication", "Publication"],
         ["id_passport", "ID Passport"],
