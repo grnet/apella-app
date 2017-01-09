@@ -174,10 +174,6 @@ def login(request):
             msg = 'user.not.email_verified'
             return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
 
-        if not user.is_verified:
-            msg = 'user.not.verified'
-            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
-
         token = auth_hooks.login_user(user.user, request)
         token = token.key
 
