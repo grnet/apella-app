@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import {CRUDGen} from 'ember-gen/lib/gen';
 import ENV from 'ui/config/environment';
 import {field} from 'ember-gen/lib/util';
 import moment from 'moment';
 import validate from 'ember-gen/validate';
+import _ from 'lodash/lodash';
 
 
 const {
@@ -76,6 +76,18 @@ function computeI18N(key, ...args) {
 }
 
 function computeI18NChoice(key, choices, ...args) {
+  /*
+   * This is very hacky. It's used to create a model for the substitute
+   * institution manager *only in the UI*. We cannot add this as a role in
+   * resources/common.json because that file is used in the backend, too.
+   */
+  if(key === 'role') {
+    let flat_choices = _.flatten(choices),
+      substitute_institution_manager = ['sub_institution_manager', 'Substitute Institution Manager'];
+    if(!flat_choices.includes('sub_institution_manager')) {
+      choices.pushObject(substitute_institution_manager)
+    }
+  }
   let hook, lastArg = args[args.length - 1];
   if (typeof lastArg === 'function') { hook = args.pop(); }
   let choicesValues = choices.map((key) => key[0]);

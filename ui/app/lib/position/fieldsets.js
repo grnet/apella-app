@@ -2,7 +2,8 @@ import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
 import moment from 'moment';
 import {
-  assistantsField, candidaciesField, committeeElectorsField, historyField
+  assistantsField, candidaciesField, committeeElectorsField, historyField,
+  contactField
 } from 'ui/lib/position/table_fields';
 
 const {
@@ -103,9 +104,8 @@ const  position = {
       }
     },
     assistants: {
-      label: 'assistants.label',
-      text: 'assistants_on_position_explain',
-      fields: [assistantsField]
+      label: 'contact',
+      fields: [contactField]
     },
     history: {
       label: 'position.history.title',

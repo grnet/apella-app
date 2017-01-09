@@ -289,5 +289,6 @@ export default {
   'professor_foreign': 'Foreign Professor/Researcher',
   'professor_domestic': 'Domestic Professor/Researcher',
   'id.label': 'ID',
-  'active_elections.label': 'Election Committees'
+  'active_elections.label': 'Election Committees',
+  'contact': 'Contact Information'
 };
