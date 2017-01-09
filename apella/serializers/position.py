@@ -1,8 +1,6 @@
-import os
-
 from django.conf import settings
 from django.utils import timezone
-from django.core.files.base import ContentFile
+from django.core.files import File
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
@@ -136,11 +134,8 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
         file_kind=existing_file.file_kind,
         source_id=candidacy.id,
         description=existing_file.description)
-    new_file.file_path.save(
-        os.path.split(existing_file.file_path.file.name)[-1],
-        ContentFile(existing_file.file_path.file.read()))
-    new_file.save()
-    existing_file.file_path.file.close()
+    with open(existing_file.file_path.path, 'r') as f:
+        new_file.file_path.save(existing_file.filename, File(f))
     return new_file
 
 
