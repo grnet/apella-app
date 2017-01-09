@@ -30,5 +30,6 @@ export default Ember.Mixin.create({
   cv: DS.belongsTo('apella-file'),
   fek: DS.attr(),
   discipline_text: DS.attr(),
-  discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true})
+  discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true}),
+  active_elections: DS.attr('number')
 });

@@ -288,5 +288,6 @@ export default {
   'is_foreign_descr.label': 'User Type',
   'professor_foreign': 'Foreign Professor/Researcher',
   'professor_domestic': 'Domestic Professor/Researcher',
-  'id.label': 'ID'
+  'id.label': 'ID',
+  'active_elections.label': 'Election Committees'
 };

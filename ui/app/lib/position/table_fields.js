@@ -90,21 +90,37 @@ function committeeElectorsField(field_name, registry_type) {
     }),
     modelMeta: {
       row: {
-        fields: ['id',
-          i18nField('last_name', {label: 'last_name.label'}),
-          i18nField('first_name', {label: 'first_name.label'}),
-          i18nField('department.title', {label: 'department.label'}),
-          i18nField('department.institution.title'),
-          'is_foreign_descr',
-          field('email', {label: 'email.label'}),
-        ],
+        fields: computed('', function() {
+          // all electors tables have ena extra column
+          if(field_name.startsWith('electors')) {
+            return ['id',
+              i18nField('last_name', {label: 'last_name.label'}),
+              i18nField('first_name', {label: 'first_name.label'}),
+              i18nField('department.title', {label: 'department.label'}),
+              i18nField('department.institution.title'),
+              'is_foreign_descr',
+              field('email', {label: 'email.label'}),
+              'active_elections'
+            ];
+          }
+          else {
+            return ['id',
+              i18nField('last_name', {label: 'last_name.label'}),
+              i18nField('first_name', {label: 'first_name.label'}),
+              i18nField('department.title', {label: 'department.label'}),
+              i18nField('department.institution.title'),
+              'is_foreign_descr',
+              field('email', {label: 'email.label'}),
+            ];
+          }
+        }),
         actions: ['goToDetails'],
         actionsMap: {
           goToDetails: goToDetails
         }
       },
     },
-  displayComponent: 'gen-display-field-table'
+    displayComponent: 'gen-display-field-table'
 
   });
 };

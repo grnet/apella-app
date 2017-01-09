@@ -326,5 +326,6 @@ export default {
   'is_foreign_descr.label': 'Κατηγορία Χρήστη',
   'professor_foreign': 'Καθηγητής/Ερευνητής Αλλοδαπής',
   'professor_domestic': 'Καθηγητής/Ερευνητής Ημεδαπής',
-  'id.label': 'Κωδικός'
+  'id.label': 'Κωδικός',
+  'active_elections.label': 'Εκλεκτορικά Σώματα'
 };
