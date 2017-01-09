@@ -11,8 +11,7 @@ const FILE_FIELDS = [
   'publications',
   'id_passport_file',
   'diplomas',
-  'cv',
-  'application_form'
+  'cv'
 ];
 
 const USER_FIELDS_ALL = [
@@ -87,8 +86,6 @@ const PROFESSOR_FILES_FIELDS = [
 
 const CANDIDATE_FILES_FIELDS = [
   fileField('id_passport_file', 'candidate', 'id_passport', {
-  }),
-  fileField('application_form', 'candidate', 'application_form', {
   }),
   fileField('cv', 'candidate', 'cv', {
   }),

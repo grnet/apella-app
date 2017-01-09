@@ -93,10 +93,6 @@ FILE_KIND_TO_FIELD = {
         "field": "id_passport_file",
         "many": False,
     },
-    "application_form": {
-        "field": "application_form",
-        "many": False,
-    },
     "electors_set_file": {
         "field": "electors_set_file",
         "many": False,

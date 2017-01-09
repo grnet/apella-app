@@ -53,7 +53,6 @@
         ["diploma", "Diploma"],
         ["publication", "Publication"],
         ["id_passport", "ID Passport"],
-        ["application_form", "Application Form"],
         ["electors_set_file", "Electors Set File"],
         ["committee_set_file", "Committee Set File"],
         ["committee_proposal", "Committee Proposal"],

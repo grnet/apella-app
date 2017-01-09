@@ -1247,36 +1247,6 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                application_form:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .read_only: {}
-                    .struct:
-                        id:
-                            .cli_option: {}
-                            .field: {}
-                            .drf_field: {}
-                            .serial: {}
-                            .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
-                        file_kind:
-                            .cli_option: {}
-                            .field: {}
-                            .drf_field: {}
-                            .string: {}
-                        file_path:
-                            .cli_option: {}
-                            .field: {}
-                            .drf_field: {}
-                            .file: {}
-                        description:
-                            .cli_option: {}
-                            .field: {}
-                            .drf_field: {}
-                            .string: {}
                 user:
                     .cli_option: {}
                     .field: {}

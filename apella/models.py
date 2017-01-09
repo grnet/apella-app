@@ -264,9 +264,6 @@ class Candidate(UserProfile, CandidateProfile):
     id_passport_file = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='id_passport_files', on_delete=models.SET_NULL)
-    application_form = models.ForeignKey(
-        ApellaFile, blank=True, null=True,
-        related_name='application_forms', on_delete=models.SET_NULL)
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id

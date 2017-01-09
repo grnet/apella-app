@@ -9,7 +9,6 @@ const CHOICES = ENV.APP.resources;
 
 export default Ember.Mixin.create({
   id_passport_file: DS.belongsTo('apella-file'),
-  application_form: DS.belongsTo('apella-file'),
   cv: DS.belongsTo('apella-file'),
   diplomas: DS.hasMany('apella-file'),
   publications: DS.hasMany('apella-file'),
