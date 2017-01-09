@@ -413,5 +413,15 @@ PERMISSION_RULES = [
     ('users', 'retrieve', 'helpdeskadmin', '*', '*', ''),
     ('users', 'retrieve', 'helpdeskuser', '*', 'owned', ''),
     ('users', 'list', 'helpdeskadmin', '*', '*', ''),
-    ('apella-files', 'list', 'helpdeskadmin', '*', '*', '')
+    ('apella-files', 'list', 'helpdeskadmin', '*', '*', ''),
+    ('apella-files', 'list', 'helpdeskuser', '*', '*', ''),
+    ('apella-files', 'list', 'candidate', '*', '*', ''),
+    ('apella-files', 'list', 'professor', '*', '*', ''),
+    ('apella-files', 'list', 'institutionmanager', '*', '*', ''),
+    ('apella-files', 'list', 'assistant', '*', '*', ''),
+    ('apella-files', 'retrieve', 'helpdeskadmin', '*', '*', ''),
+    ('apella-files', 'retrieve', 'candidate', '*', 'owned', ''),
+    ('apella-files', 'retrieve', 'professor', '*', 'owned', ''),
+    ('apella-files', 'retrieve', 'institutionmanager', '*', 'owned', ''),
+    ('apella-files', 'retrieve', 'assistant', '*', 'owned', ''),
 ]

@@ -153,6 +153,9 @@ class ApellaFile(models.Model):
         self.updated_at = timezone.now()
         super(ApellaFile, self).save(*args, **kwargs)
 
+    def check_resource_state_owned(self, row, request, view):
+        return request.user == self.owner
+
     @property
     def filename(self):
         return self.file_path.name.split("/")[-1]
