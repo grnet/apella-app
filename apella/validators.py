@@ -31,8 +31,7 @@ def validate_position_dates(start, end):
         raise ValidationError(_('Position closed at %s' % end))
 
 
-def validate_candidate_files(candidacy):
-    user = candidacy.candidate.user
+def validate_candidate_files(user):
     if user.is_candidate():
         cv = user.candidate.cv
         diplomas = user.candidate.diplomas.all()
