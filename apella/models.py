@@ -180,12 +180,11 @@ class ApellaFile(models.Model):
                 position__in=user_candidacies_positions_ids).exists()
         return False
 
-
     def check_resource_state_owned_by_manager(self, row, request, view):
         user = request.user
         if user == self.owner:
             return True
-        if owner.is_assistant() and user.is_manager():
+        if self.owner.is_assistant() and user.is_manager():
             return True
         if user.is_manager() and self.is_candidacy_file:
             user_department_ids = Department.objects.filter(
@@ -214,7 +213,7 @@ class ApellaFile(models.Model):
         elif user.is_manager():
             is_verified = user.institutionmanager.is_verified
 
-        if (hasattr(self, 'id_passport_file') or \
+        if (hasattr(self, 'id_passport_file') or
                 hasattr(self, 'professor_cv_file')) and \
                 is_owner and not is_verified:
             return True
