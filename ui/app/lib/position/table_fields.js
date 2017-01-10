@@ -38,7 +38,7 @@ const candidaciesField = field('candidacies', {
     },
   },
   displayComponent: 'gen-display-field-table',
-  readonly: true
+  disabled: true
 });
 
 const assistantsField = field('assistants', {
