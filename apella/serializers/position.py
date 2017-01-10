@@ -164,7 +164,9 @@ class CandidacyMixin(object):
     def validate(self, data):
         user = self.context.get('request').user
         instance = getattr(self, 'instance')
+        creating = False
         if not instance:
+            creating = True
             instance = Candidacy(**data)
 
         cancelling = 'state' in self.context.get('request').data and \
@@ -175,8 +177,9 @@ class CandidacyMixin(object):
             candidate = instance.candidate
             if not user.is_helpdeskadmin():
                 validate_position_dates(position.starts_at, position.ends_at)
-            validate_candidate_files(candidate)
-            validate_unique_candidacy(position, candidate)
+            if creating:
+                validate_candidate_files(candidate)
+                validate_unique_candidacy(position, candidate)
         return super(CandidacyMixin, self).validate(data)
 
     def create(self, validated_data):
