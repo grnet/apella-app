@@ -552,9 +552,6 @@ spec:
                             .drf_field: {}
                             .serial: {}
                             .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -582,9 +579,6 @@ spec:
                             .drf_field: {}
                             .serial: {}
                             .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -612,9 +606,6 @@ spec:
                             .drf_field: {}
                             .serial: {}
                             .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1166,9 +1157,6 @@ spec:
                             .drf_field: {}
                             .serial: {}
                             .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1196,9 +1184,6 @@ spec:
                             .drf_field: {}
                             .serial: {}
                             .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1226,9 +1211,6 @@ spec:
                             .drf_field: {}
                             .serial: {}
                             .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
@@ -1256,9 +1238,6 @@ spec:
                             .drf_field: {}
                             .serial: {}
                             .readonly: {}
-                        url:
-                            .drf_field: {}
-                            .identity: {}
                         file_kind:
                             .cli_option: {}
                             .field: {}
