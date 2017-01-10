@@ -156,6 +156,87 @@ class ApellaFile(models.Model):
     def check_resource_state_owned(self, row, request, view):
         return request.user == self.owner
 
+    def check_resource_state_others_can_view(self, row, request, view):
+        user = request.user
+        if not self.is_candidacy_file:
+            return False
+        user_candidacies_positions_ids = user.candidacy_set.filter(
+            state='posted').values_list('position', flat=True)
+
+        if self.apella_candidacy_cv_files.filter(
+                others_can_view=True).exists():
+            return self.apella_candidacy_cv_files.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
+        if self.apella_candidacy_diploma_files.filter(
+                others_can_view=True).exists():
+            return self.apella_candidacy_diploma_files.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
+        if self.apella_candidacy_publication_files.filter(
+                others_can_view=True).exists():
+            return self.apella_candidacy_publication_files.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
+        return False
+
+
+    def check_resource_state_owned_by_manager(self, row, request, view):
+        user = request.user
+        if user == self.owner:
+            return True
+        if owner.is_assistant() and user.is_manager():
+            return True
+        if user.is_manager() and self.is_candidacy_file:
+            user_department_ids = Department.objects.filter(
+                institution=user.institutionmanager.institution). \
+                    values_list('id', flat=True)
+            if self.apella_candidacy_cv_files.filter(
+                    position__department_id__in=user_department_ids,
+                    state='posted') or \
+                self.apella_candidacy_diploma_files.filter(
+                    position__department_id__in=user_department_ids,
+                    state='posted') or \
+                self.apella_candidacy_publication_files.filter(
+                    position__department_id__in=user_department_ids,
+                    state='posted'):
+                return True
+        return False
+
+    def check_resource_state_owned_free(self, row, request, view):
+        user = request.user
+        is_owner = self.owner == user
+        is_verified = True
+        if user.is_professor():
+            is_verified = user.professor.is_verified
+        elif user.is_candidate():
+            is_verified = user.candidate.is_verified
+        elif user.is_manager():
+            is_verified = user.institutionmanager.is_verified
+
+        if (hasattr(self, 'id_passport_file') or \
+                hasattr(self, 'professor_cv_file')) and \
+                is_owner and not is_verified:
+            return True
+        if self.is_profile_file and is_owner:
+            return True
+        return False
+
+    @property
+    def is_candidacy_file(self):
+        return self.apella_candidacy_cv_files.exists() or \
+            self.apella_candidacy_diploma_files.exists() or \
+            self.apella_candidacy_publication_files.exists()
+
+    @property
+    def is_profile_file(self):
+        return self.apella_candidate_cv_files.exists() or \
+            self.apella_candidate_diploma_files.exists() or \
+            self.apella_candidate_publication_files.exists() or \
+            self.apella_professor_cv_files.exists() or \
+            self.apella_professor_diploma_files.exists() or \
+            self.apella_professor_publication_files.exists()
+
     @property
     def filename(self):
         return self.file_path.name.split("/")[-1]
