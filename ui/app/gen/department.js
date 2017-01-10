@@ -129,7 +129,13 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: ['school', 'institution']
+        fields: computed('user.role', function() {
+          let role = get(this, 'user.role');
+          if (role == 'institutionmanager' || role == 'assistant') {
+            return ['school']
+          }
+          return ['school', 'institution']
+        })
       },
       serverSide: true,
       search: true,
