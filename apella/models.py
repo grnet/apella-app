@@ -130,6 +130,21 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
         return request.user.is_manager() and \
             (self.is_candidate() or self.is_professor())
 
+    def check_resource_state_is_cocandidate(self, row, request, view):
+        if not self.is_professor() and not self.is_candidate():
+            return False
+        user = request.user
+        candidacy_set = user.candidacy_set.filter(
+            state='posted')
+        if not candidacy_set:
+            return False
+
+        position_ids = candidacy_set.values_list(
+            'position', flat=True)
+        user_candidacy_set = self.candidacy_set.filter(
+            state='posted')
+        return user_candidacy_set.filter(position__in=position_ids)
+
 
 def generate_filename(self, filename):
     url = "%s/%s/%d/%s/%s" % (
