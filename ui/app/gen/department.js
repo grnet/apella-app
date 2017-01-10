@@ -112,10 +112,10 @@ export default ApellaGen.extend({
       let institution = get(this, 'session.session.authenticated.institution');
       let id = institution.split('/').slice(-2)[0];
       if (role == 'institutionmanager' || role == 'assistant') {
-        return this.store.query('department', {institution: id});
-      } else {
-        return this.store.findAll('department');
+        params = params || {};
+        params.institution = id;
       }
+      return this.store.query('department', params);
     },
     page: {
       title: 'department.menu_label',
