@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 DATA_DIR = os.path.abspath(os.getcwd())
 RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
-SETTINGS_DIR = '/etc/apella'
+SETTINGS_DIR = os.environ.get('APELLA_SETTINGS_DIR', '/etc/apella')
 SETTINGS_FILE = 'settings.conf'
 
 MEDIA_ROOT = '/tmp'
@@ -97,17 +97,40 @@ AUTH_USER_MODEL = 'apella.ApellaUser'
 START_DATE_END_DATE_INTERVAL = 30
 LANGUAGES = {'el', 'en'}
 
-LOGGING = None
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-SETTINGS_PATH = SETTINGS_FILE
+STATIC_URL = '/static/'
+API_HOST = None  # The host the app is served from
+API_PREFIX = 'apella/'
+TOKEN_LOGIN_URL = '/apella/ui/auth/login'
+TOKEN_REGISTER_URL = '/apella/ui/auth/register/professor'
+AUTH_USER_MODEL = 'apella.ApellaUser'
+DOWNLOAD_FILE_URL = '/apella/ui/auth/login'
 
-if not os.path.isfile(SETTINGS_PATH):
-    SETTINGS_PATH = os.path.join(SETTINGS_DIR, SETTINGS_FILE)
+START_DATE_END_DATE_INTERVAL = 30
+LANGUAGES = {'el', 'en'}
+POSITION_CODE_PREFIX = 'APP'
+
+CONFIG_FILE = 'apella.apimas'
+
+DJOSER = {
+    'SEND_ACTIVATION_EMAIL': True,
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'ACTIVATION_URL': 'apella/ui/auth/login#activate={uid}|{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'apella/ui/auth/login#reset={uid}|{token}'
+}
+
+
+SETTINGS_PATH = os.path.join(SETTINGS_DIR, SETTINGS_FILE)
 
 if not os.path.isfile(SETTINGS_PATH):
     m = "Cannot find settings file {0!r}"
     m = m.format(SETTINGS_PATH)
     raise RuntimeError(m)
+
+LOGGING = None
 
 execfile(SETTINGS_PATH)
 
@@ -146,39 +169,7 @@ if not LOGGING:
         }
     }
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-STATIC_URL = '/static/'
-API_HOST = None  # The host the app is served from
-API_PREFIX = 'apella/'
-TOKEN_LOGIN_URL = '/apella/ui/auth/login'
-TOKEN_REGISTER_URL = '/apella/ui/auth/register/professor'
-AUTH_USER_MODEL = 'apella.ApellaUser'
-DOWNLOAD_FILE_URL = '/apella/ui/auth/login'
-
-START_DATE_END_DATE_INTERVAL = 30
-LANGUAGES = {'el', 'en'}
-POSITION_CODE_PREFIX = 'APP'
-
-CONFIG_FILE = 'apella.apimas'
-
-SETTINGS_FILE = os.path.join(DATA_DIR, 'settings.conf')
-
-DJOSER = {
-    'SEND_ACTIVATION_EMAIL': True,
-    'SET_PASSWORD_RETYPE': True,
-    'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'ACTIVATION_URL': 'apella/ui/auth/login#activate={uid}|{token}',
-    'PASSWORD_RESET_CONFIRM_URL': 'apella/ui/auth/login#reset={uid}|{token}'
-}
-
 APELLA_LEGACY_ACADEMIC_LOGIN_URL = None
-
-if os.path.isfile(SETTINGS_FILE):
-    execfile(SETTINGS_FILE)
-else:
-    pass
 
 if not DEBUG and not API_HOST:
     raise Exception("API_HOST setting is required when DEBUG is set to False.")
