@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(unique=True, max_length=254, error_messages={b'unique': b'A user with that email already exists.'})),
                 ('is_staff', models.BooleanField(default=False)),
                 ('is_active', models.BooleanField(default=False)),
+                ('activated_at', models.DateTimeField(null=True, blank=True)),
                 ('email_verified', models.BooleanField(default=False)),
                 ('email_verified_at', models.DateTimeField(default=None, null=True)),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now)),
@@ -85,8 +86,6 @@ class Migration(migrations.Migration):
             name='Candidate',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('is_active', models.BooleanField(default=False)),
-                ('activated_at', models.DateTimeField(null=True, blank=True)),
                 ('is_verified', models.BooleanField(default=False)),
                 ('verified_at', models.DateTimeField(null=True, blank=True)),
                 ('verification_pending', models.BooleanField(default=False)),
@@ -130,8 +129,6 @@ class Migration(migrations.Migration):
             name='InstitutionManager',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('is_active', models.BooleanField(default=False)),
-                ('activated_at', models.DateTimeField(null=True, blank=True)),
                 ('is_verified', models.BooleanField(default=False)),
                 ('verified_at', models.DateTimeField(null=True, blank=True)),
                 ('verification_pending', models.BooleanField(default=False)),
@@ -258,8 +255,6 @@ class Migration(migrations.Migration):
             name='Professor',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('is_active', models.BooleanField(default=False)),
-                ('activated_at', models.DateTimeField(null=True, blank=True)),
                 ('is_verified', models.BooleanField(default=False)),
                 ('verified_at', models.DateTimeField(null=True, blank=True)),
                 ('verification_pending', models.BooleanField(default=False)),

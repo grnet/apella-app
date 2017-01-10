@@ -78,6 +78,7 @@ def activate_user(user):
     """
     user.email_verified = True
     user.is_active = True
+    user.activated_at = datetime.now()
 
 
 def authenticate_user(**kwargs):

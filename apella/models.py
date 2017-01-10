@@ -56,6 +56,7 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    activated_at = models.DateTimeField(null=True, blank=True)
     email_verified = models.BooleanField(default=False)
     email_verified_at = models.DateTimeField(null=True, default=None)
 
@@ -278,8 +279,6 @@ class Subject(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(ApellaUser)
-    is_active = models.BooleanField(default=False)
-    activated_at = models.DateTimeField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     verified_at = models.DateTimeField(null=True, blank=True)
     verification_pending = models.BooleanField(default=False)
