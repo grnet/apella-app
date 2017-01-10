@@ -126,7 +126,8 @@ DJOSER = {
 SETTINGS_PATH = os.path.join(SETTINGS_DIR, SETTINGS_FILE)
 
 if not os.path.isfile(SETTINGS_PATH):
-    m = "Cannot find settings file {0!r}"
+    m = "Cannot find settings file {0!r}. Consider using APELLA_SETTINGS_DIR "
+    m += "environment variable to set a custom path for settings.conf file."
     m = m.format(SETTINGS_PATH)
     raise RuntimeError(m)
 
