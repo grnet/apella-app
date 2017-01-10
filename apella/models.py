@@ -217,7 +217,8 @@ class UserProfile(models.Model):
 
 class CandidateProfile(models.Model):
     cv = models.ForeignKey(
-        ApellaFile, blank=True, null=True, on_delete=models.SET_NULL)
+        ApellaFile, blank=True, null=True, on_delete=models.SET_NULL,
+        related_name='%(app_label)s_%(class)s_cv_files')
     diplomas = models.ManyToManyField(
         ApellaFile, blank=True,
         related_name='%(app_label)s_%(class)s_diploma_files')
@@ -241,7 +242,7 @@ class Professor(UserProfile, CandidateProfile):
     cv_url = models.URLField(blank=True)
     cv_professor = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='professor_cv_files', on_delete=models.SET_NULL)
+        related_name='professor_cv_file', on_delete=models.SET_NULL)
     fek = models.URLField()
     discipline_text = models.CharField(max_length=300, blank=True)
     discipline_in_fek = models.BooleanField(default=True)
@@ -266,7 +267,7 @@ class Candidate(UserProfile, CandidateProfile):
 
     id_passport_file = models.ForeignKey(
         ApellaFile, blank=True, null=True,
-        related_name='id_passport_files', on_delete=models.SET_NULL)
+        related_name='id_passport_file', on_delete=models.SET_NULL)
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
