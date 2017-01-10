@@ -115,6 +115,12 @@ export default ApellaGen.extend({
         params = params || {};
         params.institution = id;
       }
+      if (params.filters) {
+        for (let fkey of Object.keys(params.filters)) {
+          params[fkey] = params.filters[fkey];
+        }
+        delete params.filters;
+      }
       return this.store.query('department', params);
     },
     page: {
