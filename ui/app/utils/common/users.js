@@ -108,9 +108,9 @@ const PROFESSOR_FILES_FIELDS = [
 const CANDIDATE_FILES_FIELDS = [
   fileField('id_passport_file', 'candidate', 'id_passport', {
     readonly: or('user.is_verified', 'user.verification_pending')
-  }),
+  }, { replace: true }),
   fileField('cv', 'candidate', 'cv', {
-  }),
+  }, { replace: true }),
   fileField('diplomas', 'candidate', 'diploma', {}, {
     multiple: true
   }),
