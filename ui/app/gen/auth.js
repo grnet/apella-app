@@ -85,11 +85,36 @@ const PROFILE_FIELDSETS = function(view) {
 // GENS
 //
 const ProfileDetailsView = gen.GenRoutedObject.extend({
+  partials: { bottom: 'profile-details-actions' },
   routeBaseClass: routes.DetailsRoute,
   fieldsets: PROFILE_FIELDSETS('details'),
   component: 'gen-details',
   actions: ['change_password'],
   actionsMap: {
+    'sync_position_files': {
+      label: 'sync.position.files',
+      raised: true,
+      action: function(route, profile) {
+        let messages = get(route, 'messageService');
+        profile.save().then(() => {
+          messages.setSuccess('sync.position.files.success');
+        }).catch(() => {
+          messages.setError('sync.position.files.error');
+        });
+      },
+      primary: true,
+      hidden: computed('model.is_verified', function() {
+        let verified = get(this, 'model.is_verified');
+        return !verified;
+      }),
+      confirm: true,
+      prompt: {
+        title: 'sync.position.files',
+        message: 'sync.position.files.confirm',
+        ok: 'ok',
+        cancel: 'cancel'
+      }
+    },
     'change_password': {
       raised: false,
       label: 'password.change',
