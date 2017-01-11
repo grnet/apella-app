@@ -101,7 +101,9 @@ export default Ember.Component.extend(BaseFieldMixin, {
     deleteFile(file) {
       set(this, 'inProgress', true);
       return file.destroyRecord().then(() => {
-        return this.reloadRecord();
+        return this.reloadRecord().then(() => {
+          this.get('messages').setSuccess('delete.file.success');
+        });
       }).catch((err) => {
         this.get('messages').setError('delete.file.error');
         throw err;
