@@ -50,7 +50,7 @@ export default DRFAdapter.extend(DataAdapterMixin,{
      * /registry/<id>/members
      */
     else if (query.registry_members) {
-      Ember.assert('Both query history and query id must be set', query.registry_members && query.id);
+      Ember.assert('Both registry_members flag and registry id must be set', query.registry_members && query.id);
       let id = query.id,
         modelName = 'registry';
       delete query['id'];
