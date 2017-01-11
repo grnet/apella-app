@@ -151,7 +151,7 @@ export default ApellaGen.extend({
   },
   details: {
     fieldsets: [{
-                 fields: ['title_current', 'dep_number', field('school.title_current', {label: 'school.label'}), 'institution.title_current'],
+        fields: ['title_current', 'dep_number', field('school.title_current', {label: 'school.label'}), 'institution.title_current'],
       layout: {
         flex: [100, 20, 40, 40]
       }
@@ -159,6 +159,21 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.title_current')
     },
+  },
+  edit: {
+    fieldsets: [{
+      fields: computed('role', function(){
+        let role = get(this, 'role');
+        if (role == 'institutionmanager') {
+          return ['dep_number',
+            field('title', {disabled: true}),
+            field('school', {disabled: true}),
+            field('institution', {disabled: true}) ]
+        } else {
+          return ['title', 'dep_number', 'school', 'institution']
+        }
+      })
+    }]
   },
   create: {
     onSubmit(model) {
