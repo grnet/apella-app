@@ -80,6 +80,7 @@ export default {
   'Failed': 'Άγονη',
   'Revoked': 'Αναπομπή',
   'Assistant': 'Βοηθός υπεύθυνου ιδρύματος',
+  'Manager': 'Υπεύθυνος ιδρύματος',
   'Candidate': 'Υποψήφιος',
   'Committee': 'Μέλος επιτροπής',
   'Institution Manager': 'Υπεύθυνος ιδρύματος',

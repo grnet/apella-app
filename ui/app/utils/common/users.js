@@ -5,7 +5,7 @@ import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
 import {fileField} from 'ui/lib/common';
 
-const { 
+const {
   assign,
   computed,
   get,
@@ -89,7 +89,7 @@ const USER_FIELDS_REGISTER_REQUIRED_ACADEMIC = USER_FIELDS_REGISTER_REQUIRED.sli
 
 const PROFESSOR_FILES_FIELDS = [
   fileField('cv', 'professor', 'cv', {
-    readonly: or('user.is_verified', 'user.verification_pending') 
+    readonly: or('user.is_verified', 'user.verification_pending')
   }, {
     replace: true
   }),
@@ -152,7 +152,7 @@ const PROFESSOR_FIELDS_REGISTER_REQUIRED = [
   'institution', 'department', 'rank', 'fek'
 ];
 
-const INSTITUTION_MANGER_FIELDS = [
+const INSTITUTION_MANAGER_FIELDS = [
   field('institution', {displayAttr: 'title_current'}),
   'authority',
   'authority_full_name',
@@ -254,9 +254,26 @@ const PROFESSOR_FIELDSET_REGISTER = Ember.assign({}, PROFESSOR_FIELDSET, {
 
 const INST_MANAGER_FIELDSET_MAIN = {
   label: 'fieldsets.labels.more_info',
-  fields: INSTITUTION_MANGER_FIELDS,
+  fields: INSTITUTION_MANAGER_FIELDS,
   layout: {
     flex: [50, 50, 50, 50]
+   }
+}
+
+const INST_MANAGER_FIELDSET_DETAILS_MAIN = {
+  label: 'fieldsets.labels.more_info',
+  fields: ['institution.title_current', 'authority', 'authority_full_name'],
+  layout: {
+    flex: [100, 50, 50]
+   }
+}
+
+const INST_MANAGER_FIELDSET_DETAILS_SUB = {
+  label: 'manager.label.sub_fieldset',
+  fields: ['sub_first_name_current', 'sub_last_name_current', 'sub_father_name_current',
+    'sub_email', 'sub_mobile_phone_number', 'sub_home_phone_number'],
+  layout: {
+    flex: [50, 50, 50, 50, 50, 50]
    }
 }
 
@@ -347,6 +364,7 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC, PROFESSOR_FIELDSET_REGISTER,
         USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
-        CANDIDATE_FILES_FIELDSET, 
+        CANDIDATE_FILES_FIELDSET,
+        INST_MANAGER_FIELDSET_DETAILS_MAIN, INST_MANAGER_FIELDSET_DETAILS_SUB,
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS, USER_FIELDS_ALL, FILE_FIELDS};

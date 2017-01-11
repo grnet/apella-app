@@ -4,7 +4,7 @@ import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
-        INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
+        INST_MANAGER_FIELDSET_DETAILS_MAIN, INST_MANAGER_FIELDSET_DETAILS_SUB,
         INSTITUTION_MANAGER_VALIDATORS, CANDIDATE_FILES_FIELDSET,
         USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
@@ -58,7 +58,7 @@ const PROFILE_ASSISTANT_FIELDSET = {
   }
 }
 
-const PROFILE_FIELDSETS = function(view) { 
+const PROFILE_FIELDSETS = function(view) {
   return computed('model.role', function(){
     let f = [];
     let role = this.get('model').get('role');
@@ -76,7 +76,7 @@ const PROFILE_FIELDSETS = function(view) {
       f.push(CANDIDATE_FILES_FIELDSET);
     }
     if (role === 'institutionmanager') {
-      f.push(INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB);
+      f.push(INST_MANAGER_FIELDSET_DETAILS_MAIN, INST_MANAGER_FIELDSET_DETAILS_SUB);
     }
     return f;
   });

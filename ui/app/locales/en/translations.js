@@ -40,6 +40,7 @@ export default {
   'Failed': 'Failed',
   'Revoked': 'Revoked',
   'Assistant': 'Assistant',
+  'Manager': 'Manager',
   'Candidate': 'Candidate',
   'Committee': 'Commitee',
   'Institution Manager': 'Institution Manager',
