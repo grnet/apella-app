@@ -11,6 +11,9 @@ module.exports = function(environment) {
       defaultLocale: 'el',
       locales: ['el', 'en']
     },
+    moment: {
+      outputFormat: 'DD/MM/YYYY HH:mm'
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
