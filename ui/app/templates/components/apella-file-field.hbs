@@ -1,5 +1,8 @@
 <md-container class="layout-row" >
+{{#unless fattrs.hideLabel }}
 <label class={{concat 'md-label raised nowrap padded table-label' (if errors.length ' invalid' '')}}>{{ label }}</label>
+{{/unless}}
+
 {{#if inProgress}}
 {{paper-icon "rotate-right" spin=true size=25}}
 {{/if}}
@@ -18,12 +21,15 @@
     {{#body.row as |row|}}
       {{#row.cell class="fullwidth"}}{{ file.filename }}{{/row.cell}}
       {{#row.cell class="nowrap"}}{{ file.description }}{{/row.cell}}
-      {{#row.cell class="nowrap"}}{{ moment file.updated_at }}{{/row.cell}}
+      {{#row.cell class="nowrap"}}{{ moment-format file.updated_at }}{{/row.cell}}
 
       {{#row.cell class="nowrap"}}
-        {{#unless readonly}}
-        {{#paper-button disabled=inProgress iconButton=true onClick=(action "deleteFile" file)}}{{paper-icon "delete"}}{{/paper-button}}
-        {{/unless}}
+        {{#if canReplace}}
+          {{#paper-button disabled=inProgress iconButton=true onClick=(action "handleAddClick")}}{{paper-icon "file_upload"}}{{/paper-button}}
+        {{/if}}
+        {{#if canDelete}}
+          {{#paper-button disabled=inProgress iconButton=true onClick=(action "deleteFile" file)}}{{paper-icon "delete"}}{{/paper-button}}
+        {{/if}}
         {{#paper-button href=file.downloadURL disabled=inProgress iconButton=true onClick=(action "downloadFile" file)}}
           {{paper-icon (if file.generatingLink "rotate-right" "get_app") spin=file.generatingLink }}
         {{/paper-button}}
