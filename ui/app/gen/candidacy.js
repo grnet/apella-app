@@ -86,6 +86,7 @@ let FS = {
 
 
 export default ApellaGen.extend({
+  order: 900,
   appIndex: true,
   modelName: 'candidacy',
   path: 'candidacies',

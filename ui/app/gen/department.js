@@ -85,6 +85,7 @@ const subjectsField = field('subjects', {
 });
 
 export default ApellaGen.extend({
+  order: 1100,
   modelName: 'department',
   auth: true,
   path: 'departments',

@@ -15,6 +15,7 @@ const FIELDS = [
 ]
 
 export default ApellaGen.extend({
+  order: 1200,
   modelName: 'school',
   auth: true,
   path: 'schools',

@@ -8,6 +8,7 @@ const {
 } = Ember;
 
 export default ApellaGen.extend({
+  order: 500,
   modelName: 'candidate',
   path: 'candidates',
   common: {

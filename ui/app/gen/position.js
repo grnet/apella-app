@@ -86,6 +86,7 @@ const pick_create_fs = function() {
 
 
 export default ApellaGen.extend({
+  order: 800,
   modelName: 'position',
   auth: true,
   path: 'positions',

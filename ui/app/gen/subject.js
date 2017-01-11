@@ -13,6 +13,7 @@ let FIELDS = [i18nField('title'), i18nField('area.title')];
 
 
 export default ApellaGen.extend({
+  order: 1400,
   modelName: 'subject',
   auth: true,
   path: 'subjects',

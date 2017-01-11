@@ -16,6 +16,7 @@ const {
 let all_validators = Object.assign(PROFESSOR_VALIDATORS, USER_VALIDATORS);
 
 export default ApellaGen.extend({
+  order: 600,
   modelName: 'professor',
   auth: true,
   path: 'professors',

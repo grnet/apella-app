@@ -19,6 +19,7 @@ const {
 let all_validators = Object.assign({}, USER_VALIDATORS, INSTITUTION_MANAGER_VALIDATORS);
 
 export default ApellaGen.extend({
+  order: 300,
   modelName: 'institution-manager',
   resourceName: 'institution-managers',
   auth: true,

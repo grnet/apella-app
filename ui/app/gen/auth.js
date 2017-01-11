@@ -148,6 +148,7 @@ const PositionInterest = gen.GenRoutedObject.extend({
   role: reads('session.session.authenticated.role'),
 
   menu: {
+    order: 150,
     display: computed('role', function(){
       let role = get(this, 'role');
       let allowedRoles = ['professor', 'candidate'];
@@ -163,7 +164,7 @@ const PositionInterest = gen.GenRoutedObject.extend({
 });
 
 export default AuthGen.extend({
-  order: 1,
+  order: 100,
   routeMixins: [{
       actions: {
         shibbolethLogin() {

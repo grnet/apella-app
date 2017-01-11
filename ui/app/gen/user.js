@@ -11,6 +11,7 @@ const {
 } = Ember;
 
 export default ApellaGen.extend({
+  order: 700,
   modelName: 'user',
   auth: true,
   path: 'users',

@@ -78,6 +78,7 @@ const ASSISTANT_VALIDATORS_EDIT_MANAGER = {
 let all_validators = Object.assign({}, USER_VALIDATORS);
 
 export default ApellaGen.extend({
+  order: 400,
   modelName: 'assistant',
   resourceName: 'assistants',
   auth: true,

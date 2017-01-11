@@ -9,6 +9,7 @@ const {
 } = Ember;
 
 export default ApellaGen.extend({
+  order: 1500,
   modelName: 'subject_area',
   auth: true,
   path: 'subject-areas',

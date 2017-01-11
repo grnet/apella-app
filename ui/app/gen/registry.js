@@ -9,6 +9,7 @@ let {
 } = Ember;
 
 export default ApellaGen.extend({
+  order: 1000,
   modelName: 'registry',
   auth: true,
   path: 'registries',

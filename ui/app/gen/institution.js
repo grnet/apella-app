@@ -21,6 +21,7 @@ let FS = {
 
 
 export default ApellaGen.extend({
+  order: 1300,
   modelName: 'institution',
   auth: true,
   path: 'institutions',

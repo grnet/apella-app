@@ -9,6 +9,7 @@ const {
 
 
 export default ApellaGen.extend({
+  order: 200,
   name: 'participations',
   resourceName: 'positions',
   path: 'participations',
