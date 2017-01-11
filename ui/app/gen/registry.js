@@ -1,12 +1,65 @@
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, i18nField} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
 import Users  from 'ui/gen/user';
+import {goToDetails} from 'ui/utils/common/actions';
 
 let {
-  computed, get
+  computed, get, assign
 } = Ember;
+
+const membersField = field('members', {
+  query: function(table, store, field, params) {
+    let locale = get(table, 'i18n.locale'),
+      default_ordering_param = {
+        ordering: 'user__id'
+      },
+      query = (params.ordering ? params : assign({}, params, default_ordering_param));
+    return store.query('professor', query);
+  },
+  // a list-like gen config
+  label: null,
+  modelMeta: {
+    row: {
+      fields: [
+        field('id', {type: 'string'}),
+        i18nField('last_name', {label: 'last_name.label'}),
+        i18nField('first_name', {label: 'first_name.label'}),
+        'is_foreign_descr',
+        i18nField('institution.title', {label: 'institution.label'}),
+        i18nField('department.title', {label: 'department.label'}),
+        'rank',
+        'discipline_text'
+      ],
+      actions: ['goToDetails'],
+      actionsMap: {
+        goToDetails: goToDetails
+      }
+    },
+    paginate: {
+      active: true,
+      serverSide: true,
+      limits: [5, 10, 15]
+    },
+    filter: {
+      search: false,
+      serverSide: true,
+      active: true,
+      meta: {
+        fields: [field('id', {type: 'string'}), 'last_name']
+      }
+    },
+    sort: {
+      serverSide: true,
+      active: true,
+      fields: ['id', 'last_name_current']
+    }
+  },
+  modelName: 'professor',
+  displayComponent: 'gen-display-field-table'
+});
+
 
 export default ApellaGen.extend({
   order: 1000,
@@ -31,14 +84,21 @@ export default ApellaGen.extend({
         field('department', {
           displayAttr: 'title_current',
           query: function(table, store, field, params) {
-            params = params || {};
+            // on load sort by title
+            let locale = get(table, 'i18n.locale');
+            let ordering_param = {
+              ordering: `title__${locale}`
+            };
+            let query;
             let role = get(field, 'session.session.authenticated.role');
             if (role == 'institutionmanager' || role == 'assistant') {
               let user_institution = get(field, 'session.session.authenticated.institution');
               let id = user_institution.split('/').slice(-2)[0];
-              params.institution = id;
+              query = assign({}, { institution: id }, ordering_param);
+            } else {
+              query = ordering_param;
             }
-            return store.query('department', params);
+            return store.query('department', query);
           }
         })
       ],
@@ -47,25 +107,7 @@ export default ApellaGen.extend({
       }
     },{
       label: 'registry.members_section.title',
-      fields: [field('members', { label: null,
-        modelMeta: {
-          filter: {
-            active: false,
-            search: true,
-            searchFields: ['last_name_current']
-          },
-          sort: {
-            active: true,
-            sortBy: 'last_name_current'
-          },
-          paginate: {
-            active: true
-          },
-          row: {
-            fields: ['id', 'last_name_current', 'first_name_current', 'email', 'institution.title_current', 'department.title_current', 'rank']
-          }
-        }
-      })]
+      fields: [membersField]
     }]
   },
 
