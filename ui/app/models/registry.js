@@ -6,7 +6,7 @@ const { computed, get } = Ember,
       CHOICES = ENV.APP.resources;
 
 export default DS.Model.extend({
-  type: DS.attr({type: 'select', choices: CHOICES.REGISTRY_TYPES, defaultValue: 2}),
+  type: DS.attr({type: 'select', choices: CHOICES.REGISTRY_TYPES, defaultValue: 2, translate: true}),
   department: DS.belongsTo('department', {formAttrs: {optionLabelAttr: 'title_current'}}),
   members: DS.hasMany('professor'),
 

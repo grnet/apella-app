@@ -12,7 +12,8 @@ export default DS.Model.extend({
   category: DS.attr({
     type: 'select',
     choices: CHOICES.INSTITUTION_CATEGORIES,
-    defaultValue: 'Institution'
+    defaultValue: 'Institution',
+    translate: true,
   }),
   organization: DS.attr({displayComponent: 'url-display'}),
   regulatory_framework: DS.attr({displayComponent: 'url-display'}),
