@@ -130,13 +130,12 @@ export default ApellaGen.extend({
 
     getModel: function(params) {
       let role = get(this, 'session.session.authenticated.role');
-      let user_id = get(this, 'session.session.authenticated.user_id');
       if (role == 'candidate' || role == 'professor') {
-        return this.store.query('candidacy', {candidate: user_id});
-      } else {
-        return this.store.findAll('candidacy');
+        let user_id = get(this, 'session.session.authenticated.user_id');
+        params = params || {};
+        params.candidate = user_id;
       }
-
+      return this.store.query('candidacy', params);
     },
     sortBy: 'position.code:asc',
     search: {
