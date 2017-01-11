@@ -19,6 +19,9 @@ export default Ember.Component.extend(BaseFieldMixin, {
 
   tagName: 'div',
   multiple: reads('fattrs.multiple'),
+  replace: reads('fattrs.replace'),
+  readonly: reads('field.readonly'),
+  disabled: reads('field.disabled'),
   session: inject.service('session'),
   messages: inject.service('messages'),
   inProgress: false,
@@ -47,6 +50,16 @@ export default Ember.Component.extend(BaseFieldMixin, {
     }
     if (value) { return [value]; }
     return [];
+  }),
+
+  canDelete: computed('readonly', 'disabled', function() {
+    let {readonly, disabled} = this.getProperties('readonly', 'disabled');
+    return !(readonly || disabled);
+  }),
+
+  canReplace: computed('readonly', 'disabled', 'replace', function() {
+    let {readonly, disabled, replace} = this.getProperties('readonly', 'disabled', 'replace');
+    return replace && !(readonly || disabled);
   }),
 
   canAdd: computed('files.length', 'multiple', function() {
