@@ -477,7 +477,9 @@ spec:
             .drf_collection:
                 model: apella.models.Professor
                 model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
-                mixins: [apella.views.mixins.UploadFilesViewSet]
+                mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.ProfessorList]
+                ordering_fields: [user__id]
+                filter_fields: [user__id]
             .cli_commands: {}
             '*':
                 id:

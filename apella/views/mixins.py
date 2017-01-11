@@ -12,13 +12,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
-
 from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
         Candidacy, ApellaUser, ApellaFile, ElectorParticipation
 from apella.loader import adapter
-from apella.common import FILE_KINDS, FILE_KIND_TO_FIELD
+from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 
 
@@ -30,6 +29,19 @@ class DestroyProtectedObject(viewsets.ModelViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except ProtectedError:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+class ProfessorList(generics.ListAPIView):
+    def get_queryset(self):
+        if 'last_name' in self.request.query_params:
+            last_name = self.request.query_params['last_name']
+            last_name_regex = r'^(' + last_name + '?)+'
+            user_ids = ApellaUser.objects.filter(
+                Q(last_name__el__iregex=last_name_regex) |
+                Q(last_name__en__iregex=last_name_regex)). \
+                values_list('id', flat=True)
+            return self.queryset.filter(user_id__in=user_ids)
+        return self.queryset
 
 
 class AssistantList(generics.ListAPIView):
@@ -168,6 +180,7 @@ class RegistriesList(generics.ListAPIView):
 
 USE_X_SEND_FILE = getattr(settings, 'USE_X_SEND_FILE', False)
 
+
 class FilesViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['get', 'head'])
@@ -201,6 +214,7 @@ class FilesViewSet(viewsets.ModelViewSet):
         else:
             response.content = open(file.file_path.path)
         return response
+
 
 class UploadFilesViewSet(viewsets.ModelViewSet):
 
