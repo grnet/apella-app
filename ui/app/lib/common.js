@@ -143,6 +143,8 @@ function fileField(key, path, kind, attrs, formAttrs) {
   return field(key, assign({}, {
     type: 'file',
     formComponent: 'apella-file-field',
+    displayComponent: 'apella-file-field',
+    displayAttrs: assign({hideLabel: true}, { path, kind }, formAttrs || {}),
     formAttrs: assign({}, { path, kind }, formAttrs || {})
   }, attrs || {}));
 }
