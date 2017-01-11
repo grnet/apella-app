@@ -236,7 +236,10 @@ const PROFESSOR_FILES_FIELDSET = {
 
 const CANDIDATE_FILES_FIELDSET = {
   label: 'fieldsets.labels.files',
-  fields: CANDIDATE_FILES_FIELDS 
+  fields: CANDIDATE_FILES_FIELDS,
+  layout: {
+    flex: [100, 100, 100, 100]
+  }
 }
 
 const PROFESSOR_FIELDSET_REGISTER = Ember.assign({}, PROFESSOR_FIELDSET, {

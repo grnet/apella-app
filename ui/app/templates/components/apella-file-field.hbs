@@ -1,7 +1,5 @@
 <md-container class="layout-row" >
-{{#unless fattrs.hideLabel }}
 <label class={{concat 'md-label raised nowrap padded table-label' (if errors.length ' invalid' '')}}>{{ label }}</label>
-{{/unless}}
 
 {{#if inProgress}}
 {{paper-icon "rotate-right" spin=true size=25}}
