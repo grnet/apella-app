@@ -107,7 +107,7 @@ export default ApellaGen.extend({
       icon: 'directions_run',
       display: computed('role', function() {
         let role = get(this, 'role');
-        let forbittenRoles = ['professor', 'candidate'];
+        let forbittenRoles = ['professor', 'candidate', 'assistant'];
         return (forbittenRoles.includes(role) ? false : true);
       })
 

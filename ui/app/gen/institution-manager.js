@@ -32,7 +32,12 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'manager.menu_label',
-      icon: 'sentiment very satisfied'
+      icon: 'sentiment very satisfied',
+      display: computed('role', function() {
+        let role = get(this, 'role');
+        let permittedRoles = ['helpdeskadmin'];
+        return (permittedRoles.includes(role) ? true : false);
+      })
     },
     layout: 'table',
     sortBy: 'username:asc',
