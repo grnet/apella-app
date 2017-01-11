@@ -57,14 +57,6 @@ def register_user(save, data, *args, **kwargs):
     if token:
         user.user.shibboleth_id = token.identifier
         user.user.set_unusable_password()
-        # TODO: we may consider automatically verify the user entry
-        # only in case user has not modified shibboleth provided data
-        try:
-            validate_user_can_verify(user)
-            verify_user(user)
-        except ValidationError, e:
-            logger.error("user %r is not valid for automatic verification %r",
-                         user, e)
         token.delete()
 
     user.user.save()
