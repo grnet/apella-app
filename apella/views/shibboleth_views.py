@@ -83,7 +83,7 @@ def create_registration_token(identifier, data):
 def legacy_login(request):
     headers = request.META
     debug_headers = getattr(settings, 'DEBUG_SHIBBOLETH_HEADERS_LEGACY', {})
-    if settings.DEBUG and headers:
+    if settings.DEBUG and debug_headers:
         headers = debug_headers
 
     shibboleth_data = dict(zip(*zip(*shibboleth_headers(headers))))
@@ -120,7 +120,7 @@ def login(request):
 
     headers = request.META
     debug_headers = getattr(settings, 'DEBUG_SHIBBOLETH_HEADERS', {})
-    if settings.DEBUG and headers:
+    if settings.DEBUG and debug_headers:
         headers = debug_headers
 
     shibboleth_data = dict(zip(*zip(*shibboleth_headers(headers))))
