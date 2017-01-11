@@ -109,17 +109,11 @@ export default ApellaGen.extend({
     },
     getModel: function(params) {
       let role = get(this, 'session.session.authenticated.role');
-      let institution = get(this, 'session.session.authenticated.institution');
-      let id = institution.split('/').slice(-2)[0];
       if (role == 'institutionmanager' || role == 'assistant') {
+        let institution = get(this, 'session.session.authenticated.institution');
+        let id = institution.split('/').slice(-2)[0];
         params = params || {};
         params.institution = id;
-      }
-      if (params.filters) {
-        for (let fkey of Object.keys(params.filters)) {
-          params[fkey] = params.filters[fkey];
-        }
-        delete params.filters;
       }
       return this.store.query('department', params);
     },
