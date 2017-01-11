@@ -8,7 +8,7 @@
   }}
 
   {{#if userNotFound }}
-  {{toolbar-message warn=true message='user.not.found.error' button=(hash action='shibbolethRegister' message='register.domestic.label' icon='pregnant_woman')}}
+  {{toolbar-message warn=true message='user.not.found.error' button=(hash action='shibbolethRegister' message='register' icon='pregnant_woman')}}
   {{/if}}
   {{#if userExists }}
   {{toolbar-message warn=true message='user.exists.error' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='pregnant_woman')}}
