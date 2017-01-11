@@ -172,5 +172,7 @@ if not LOGGING:
 
 APELLA_LEGACY_ACADEMIC_LOGIN_URL = None
 
+
+execfile(SETTINGS_FILE)
 if not DEBUG and not API_HOST:
     raise Exception("API_HOST setting is required when DEBUG is set to False.")
