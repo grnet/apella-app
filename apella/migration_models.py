@@ -1,9 +1,13 @@
+import hashlib
+import base64
+
 from django.db import models
 
 
 class OldApellaUserMigrationData(models.Model):
     user_id = models.TextField()
     username = models.TextField()
+    shibboleth_id = models.TextField()
     role = models.TextField()
     name_el = models.TextField()
     surname_el = models.TextField()
@@ -38,6 +42,25 @@ class OldApellaUserMigrationData(models.Model):
     manager_deputy_mobile = models.TextField()
     manager_deputy_phone = models.TextField()
     manager_deputy_email = models.TextField()
+
+    @staticmethod
+    def encode_password(password, salt):
+        if not isinstance(password, str):
+            password = password.encode('iso-8859-1')
+
+        if not isinstance(salt, str):
+            salt = salt.encode('iso-8859-1')
+
+        hasher = hashlib.sha1(password + salt)
+        return hasher.digest()
+
+    def check_password(self, password):
+        salt = self.password_salt
+        encoded = self.encode_password(password, salt)
+        encoded = base64.encodestring(encoded).strip()
+        if encoded != self.password:
+            m = "Wrong password for user {0!r}".format(self.username)
+            raise ValueError(m)
 
 
 class OldApellaFileMigrationData(models.Model):
