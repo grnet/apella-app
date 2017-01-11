@@ -69,7 +69,8 @@ export default Ember.Component.extend(BaseFieldMixin, {
   reloadRecord() {
     let errors = get(this, 'object._content.errors');
     errors && errors.clear();
-    return get(this, 'object._content').reload().then((record) => {
+    let object = get(this, 'object._content') || get(this, 'object');
+    return object.reload().then((record) => {
       let key = get(this, 'field.key');
       let multiple = get(this, 'multiple');
       let value = get(record, key);
