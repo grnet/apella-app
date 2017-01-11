@@ -4,6 +4,7 @@ import urlparse
 import logging
 import urllib
 import uuid
+import re
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
@@ -29,8 +30,8 @@ ABNORMAL_HEADERS = [
 def shibboleth_headers(headers):
     for key, val in headers.iteritems():
         if key in ABNORMAL_HEADERS or key.startswith('HTTP_SHIB'):
-            key = key.lstrip('HTTP_')
-            key = key.lstrip('SHIB_')
+            key = re.sub('^HTTP_', '', key)
+            key = re.sub('^SHIB_', '', key)
             yield key.lower(), val
 
 
