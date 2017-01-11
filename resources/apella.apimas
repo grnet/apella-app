@@ -64,7 +64,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .string: {}
+                    .email: {}
                     .required: {}
                 is_active:
                     .cli_option: {}
@@ -714,7 +714,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .string: {}
+                            .email: {}
                             .required: {}
                         first_name:
                             .cli_option: {}
@@ -905,7 +905,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .string: {}
+                    .email: {}
                     .blankable: {}
                     .nullable: {}
                 sub_first_name:
@@ -1008,7 +1008,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .string: {}
+                            .email: {}
                             .required: {}
                         first_name:
                             .cli_option: {}
@@ -1281,7 +1281,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .string: {}
+                            .email: {}
                             .required: {}
                         first_name:
                             .cli_option: {}
@@ -1859,7 +1859,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .string: {}
+                            .email: {}
                             .required: {}
                         role:
                             .cli_option: {}
