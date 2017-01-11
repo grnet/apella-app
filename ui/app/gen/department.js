@@ -6,7 +6,8 @@ import {i18nValidate} from 'ui/validators/i18n';
 
 const {
   get,
-  computed
+  computed,
+  assign
 } = Ember;
 
 const subjectsField = field('subjects', {
@@ -109,6 +110,10 @@ export default ApellaGen.extend({
       })
     },
     getModel: function(params) {
+      // on load sort by title
+      let locale = get(this, 'i18n.locale');
+      let ordering_key = `title__${locale}`;
+      params = assign({}, params, {ordering: ordering_key});
       let role = get(this, 'session.session.authenticated.role');
       if (role == 'institutionmanager' || role == 'assistant') {
         let institution = get(this, 'session.session.authenticated.institution');
@@ -127,8 +132,11 @@ export default ApellaGen.extend({
     page: {
       title: 'department.menu_label',
     },
+    layout: 'table',
     filter: {
       active: true,
+      serverSide: true,
+      search: true,
       meta: {
         fields: computed('user.role', function() {
           let role = get(this, 'user.role');
@@ -138,15 +146,19 @@ export default ApellaGen.extend({
           return ['school', 'institution']
         })
       },
+    },
+    sort: {
+      active: true,
       serverSide: true,
-      search: true,
-      searchFields: ['title']
+      fields: ['title_current']
     },
 
-    layout: 'table',
-    sortBy: 'title_current:asc',
     row: {
-      fields: ['title_current', field('school.title_current', {label: 'school.label', type: 'text'}), 'institution.title_current'],
+      fields: [
+        'title_current',
+        field('school.title_current', {label: 'school.label', type: 'text'}),
+        'institution.title_current'
+      ],
       actions: ['gen:details', 'gen:edit', 'remove']
     }
   },

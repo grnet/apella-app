@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {disable_field} from 'ui/utils/common/fields';
+import {disable_field, i18nField} from 'ui/utils/common/fields';
 import moment from 'moment';
 import {
   assistantsField, candidaciesField, committeeElectorsField, historyField,
@@ -20,14 +20,21 @@ const  position = {
       fields: ['title',
         field('department', {
           query: function(table, store, field, params) {
+            // on load sort by title
+            let locale = get(table, 'i18n.locale');
+            let ordering_param = {
+              ordering: `title__${locale}`
+            };
             let role = get(field, 'session.session.authenticated.role');
+            let query;
             if (role == 'institutionmanager' || role == 'assistant') {
               let user_institution = get(field, 'session.session.authenticated.institution');
               let id = user_institution.split('/').slice(-2)[0];
-              return store.query('department', { institution: id });
+              query = assign({}, { institution: id }, ordering_param);
             } else {
-              return store.findAll('department');
+              query = ordering_param;
             }
+              return store.query('department', query);
           }
         }),
         'description',
