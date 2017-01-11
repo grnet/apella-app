@@ -58,33 +58,35 @@ const PROFILE_ASSISTANT_FIELDSET = {
   }
 }
 
-const PROFILE_FIELDSETS = computed('model.role', function(){
-  let f = [];
-  let role = this.get('model').get('role');
-  if (role === 'assistant') {
-    f.push(PROFILE_ASSISTANT_FIELDSET)
-    return f;
-  }
-  f.push(USER_FIELDSET_DETAILS);
+const PROFILE_FIELDSETS = function(view) { 
+  return computed('model.role', function(){
+    let f = [];
+    let role = this.get('model').get('role');
+    if (role === 'assistant') {
+      f.push(PROFILE_ASSISTANT_FIELDSET)
+      return f;
+    }
+    f.push(USER_FIELDSET_DETAILS);
 
-  if (role === 'professor') {
-    f.push(PROFESSOR_FIELDSET);
-    f.push(PROFESSOR_FILES_FIELDSET);
-  }
-  if (role === 'candidate') {
-    f.push(CANDIDATE_FILES_FIELDSET);
-  }
-  if (role === 'institutionmanager') {
-    f.push(INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB);
-  }
-  return f;
-})
+    if (role === 'professor') {
+      f.push(PROFESSOR_FIELDSET);
+      f.push(PROFESSOR_FILES_FIELDSET);
+    }
+    if (role === 'candidate') {
+      f.push(CANDIDATE_FILES_FIELDSET);
+    }
+    if (role === 'institutionmanager') {
+      f.push(INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB);
+    }
+    return f;
+  });
+};
 
 // GENS
 //
 const ProfileDetailsView = gen.GenRoutedObject.extend({
   routeBaseClass: routes.DetailsRoute,
-  fieldsets: PROFILE_FIELDSETS,
+  fieldsets: PROFILE_FIELDSETS('details'),
   component: 'gen-details',
   actions: ['change_password'],
   actionsMap: {
@@ -295,7 +297,7 @@ export default AuthGen.extend({
       }
       return f;
     }),
-    fieldsets: PROFILE_FIELDSETS,
+    fieldsets: PROFILE_FIELDSETS('edit'),
 
     extraActions: computed('model.is_verified', 'model.verification_pending', function() {
       let isVerified = get(this, 'user.is_verified');

@@ -5,13 +5,20 @@ import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
 import {fileField} from 'ui/lib/common';
 
-const { assign, computed, get, set } = Ember;
+const { 
+  assign,
+  computed,
+  get,
+  set,
+  computed: { or }
+} = Ember;
 
 const FILE_FIELDS = [
   'publications',
   'id_passport_file',
   'diplomas',
-  'cv'
+  'cv',
+  'cv_professor'
 ];
 
 const USER_FIELDS_ALL = [
@@ -81,11 +88,26 @@ const USER_FIELDS_REGISTER_REQUIRED = [
 const USER_FIELDS_REGISTER_REQUIRED_ACADEMIC = USER_FIELDS_REGISTER_REQUIRED.slice(3);
 
 const PROFESSOR_FILES_FIELDS = [
-  fileField('cv', 'professor', 'cv', {})
+  fileField('cv', 'professor', 'cv', {
+    readonly: or('user.is_verified', 'user.verification_pending') 
+  }, {
+    replace: true
+  }),
+  fileField('cv_professor', 'professor', 'cv_professor', {
+  }, {
+    replace: true
+  }),
+  fileField('diplomas', 'professor', 'diploma', {}, {
+    multiple: true
+  }),
+  fileField('publications', 'professor', 'publication', {}, {
+    multiple: true
+  }),
 ];
 
 const CANDIDATE_FILES_FIELDS = [
   fileField('id_passport_file', 'candidate', 'id_passport', {
+    readonly: or('user.is_verified', 'user.verification_pending')
   }),
   fileField('cv', 'candidate', 'cv', {
   }),
@@ -98,8 +120,8 @@ const CANDIDATE_FILES_FIELDS = [
 ]
 
 const PROFESSOR_FIELDS = [
-  'institution',
-  'department',
+  field('institution', {displayAttr: 'title_current'}),
+  field('department', {displayAttr: 'title_current'}),
   'rank',
   field('cv_url', {
     hint: 'cv_url.hint',
@@ -131,7 +153,7 @@ const PROFESSOR_FIELDS_REGISTER_REQUIRED = [
 ];
 
 const INSTITUTION_MANGER_FIELDS = [
-  'institution',
+  field('institution', {displayAttr: 'title_current'}),
   'authority',
   'authority_full_name',
   'manager_role',
@@ -206,7 +228,10 @@ const PROFESSOR_FIELDSET = {
 
 const PROFESSOR_FILES_FIELDSET = {
   label: 'fieldsets.labels.files',
-  fields: PROFESSOR_FILES_FIELDS
+  fields: PROFESSOR_FILES_FIELDS,
+  layout: {
+    flex: [100, 100, 100, 100]
+  }
 };
 
 const CANDIDATE_FILES_FIELDSET = {
@@ -319,6 +344,6 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC, PROFESSOR_FIELDSET_REGISTER,
         USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
-        CANDIDATE_FILES_FIELDSET,
+        CANDIDATE_FILES_FIELDSET, 
         INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS, USER_FIELDS_ALL, FILE_FIELDS};
