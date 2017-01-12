@@ -895,83 +895,68 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .blankable: {}
-                    .nullable: {}
+                    .required: {}
                     .string: {}
                 sub_home_phone_number:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .blankable: {}
-                    .nullable: {}
+                    .required: {}
                     .string: {}
                 sub_email:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .required: {}
                     .email: {}
-                    .blankable: {}
-                    .nullable: {}
                 sub_first_name:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .nullable: {}
+                    .required: {}
                     .struct:
                         el:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
-                            .nullable: {}
                         en:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
-                            .nullable: {}
                 sub_last_name:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .nullable: {}
+                    .required: {}
                     .struct:
                         el:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
-                            .nullable: {}
                         en:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
-                            .nullable: {}
                 sub_father_name:
                     .cli_option: {}
                     .field: {}
-                    .nullable: {}
                     .drf_field: {}
+                    .required: {}
                     .struct:
                         el:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
-                            .nullable: {}
                         en:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                            .blankable: {}
-                            .nullable: {}
                 verification_pending:
                     .cli_option: {}
                     .field: {}
