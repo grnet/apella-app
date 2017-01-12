@@ -5,6 +5,7 @@ from django.db import models
 
 
 class OldApellaUserMigrationData(models.Model):
+    migration_key = models.TextField(null=True, default=None)
     user_id = models.TextField()
     username = models.TextField()
     passwd = models.TextField()

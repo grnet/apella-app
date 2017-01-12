@@ -175,7 +175,26 @@ def migrate_user_profile_files(old_user, new_user):
 
 
 @transaction.atomic
-def migrate_user(old_user):
+def migrate_username(username, password=None):
+    old_users = OldApellaUserMigrationData.objects.filter(username=username)
+    for old_user in old_users:
+        new_user = migrate_user(old_user, password)
+        if new_user:
+            return new_user
+
+
+@transaction.atomic
+def migrate_shibboleth_id(shibboleth_id):
+    old_users = OldApellaUserMigrationData.objects.filter(
+        shibboleth_id=shibboleth_id)
+    for old_user in old_users:
+        new_user = migrate_user(old_user)
+        if new_user:
+            return new_user
+
+
+@transaction.atomic
+def migrate_user(old_user, password=None):
 
     if ApellaUser.objects.filter(username=old_user.username).exists():
         if (not professor_exists(old_user.user_id) and
@@ -219,6 +238,13 @@ def migrate_user(old_user):
         home_phone_number=old_user.phone,
         is_active=True,
         email_verified=True)
+
+    if password:
+        new_user.set_password(password)
+        new_user.save()
+    else:
+        new_user.set_unusable_password()
+
     logger.info(
         'created user %s from user_id %s' % (new_user.id, old_user.user_id))
 

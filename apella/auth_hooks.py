@@ -14,6 +14,8 @@ from rest_framework.serializers import ValidationError
 from rest_framework.exceptions import PermissionDenied
 
 from apella.models import RegistrationToken, ApellaUser
+from apella.models import OldApellaUserMigrationData as OldUser
+from apella.migration_functions import migrate_username, migrate_shibboleth_id
 
 logger = logging.getLogger(__name__)
 
@@ -77,7 +79,35 @@ def authenticate_user(**kwargs):
     """
     Resolve user object based on post'ed credentials.
     """
-    return authenticate(**kwargs)
+    user = authenticate(**kwargs)
+    if user:
+        return user
+
+    if user is None:
+        username = kwargs.get('username', None)
+        password = kwargs.get('password', None)
+
+        if ApellaUser.objects.filter(username=username).exists():
+            return None
+
+        try:
+            old_users = OldUser.objects.filter(username=username)
+        except OldUser.DoesNotExist:
+            return None
+
+        password_valid = False
+        for old_user in old_users:
+            try:
+                old_user.check_password(password)
+                password_valid = True
+            except ValueError:
+                pass
+
+        if password_valid:
+            user = migrate_username(username, password)
+            if user:
+                return authenticate(**kwargs)
+            return None
 
 
 def validate_user_login(user, errors):
@@ -124,13 +154,14 @@ def init_legacy_migration(legacy_id, migration_key):
     Should return an identifier which will be used to migrate the legacy
     record.
     """
-    try:
-        user = ApellaUser.objects.get(shibboleth_id_legacy=legacy_id)
-        user.shibboleth_migration_key = migration_key
-        user.save()
-    except ApellaUser.DoesNotExist:
+    old_user = OldUser.objects.filter(shibboleth_id=legacy_id)
+    if old_user.exists():
+        old_user = old_user[0]
+    else:
         return None
-    return user.id
+    old_user.migration_key = migration_key
+    old_user.save()
+    return old_user.id
 
 
 def migrate_legacy(migration_key, migrate_id, shibboleth_id):
@@ -142,14 +173,17 @@ def migrate_legacy(migration_key, migrate_id, shibboleth_id):
     migrate_id: The legacy record identifier
     shibboleth_id: The new SP shibboleth identifier (targetedid or ....)
     """
-    user = get_object_or_404(
-        ApellaUser, id=migrate_id, shibboleth_migration_key=migration_key)
+    old_user = get_object_or_404(
+        OldUser, id=migrate_id, migration_key=migration_key)
+    user = migrate_shibboleth_id(old_user.shibboleth_id)
+    if not user:
+        old_user.migration_key = None
+        old_user.save()
+        return None
+
     user.shibboleth_id = shibboleth_id
-    user.shibboleth_migration_key = None
-    legacy = user.shibboleth_id_legacy
-    user.shibboleth_id_legacy = None
     user.save()
-    return legacy
+    return old_user.shibboleth_id
 
 
 def validate_user_can_verify(user):

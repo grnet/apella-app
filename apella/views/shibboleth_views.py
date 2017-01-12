@@ -75,7 +75,7 @@ def get_user_data(shib_data):
 
 
 
-def is_eligible_shibboleth_user(data):
+def is_eligible_shibboleth_user(data, legacy=False):
     affiliation = data.get('affiliation', None)
     if not affiliation:
         affiliation = data.get('primary_affiliation', None)
@@ -114,6 +114,12 @@ def legacy_login(request):
 
     shibboleth_data = dict(zip(*zip(*shibboleth_headers(headers))))
     identifier = shibboleth_data.get('remote_user', None)
+
+    try:
+        is_eligible_shibboleth_user(shibboleth_data, legacy=True)
+    except ValidationError, e:
+        logger.info('data not accepted %r: %r', shibboleth_data, e.message)
+        return HttpResponseRedirect(token_login_url + "#error=%s" % e.message)
 
     key = request.GET.get('migration_key', None)
     legacy_id = identifier
@@ -182,6 +188,11 @@ def login(request):
 
         legacy = auth_hooks.migrate_legacy(
             migration_key, migrate_id, identifier)
+
+        if legacy is None:
+            msg = 'migration.error'
+            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+
         logger.info("legacy id %s migrated to %s", legacy, identifier)
 
     request.session.pop('shibboleth_id', None)
