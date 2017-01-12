@@ -5,10 +5,13 @@ import csv
 
 class Command(BaseCommand):
 
-    help = "Load migration data from a .csv file into a target model."
+    help = (
+        "Load migration data from a .csv file into a target model.\n"
+        "Model name defaults to the name of the csv file.\n"
+    )
 
     def add_arguments(self, parser):
-        parser.add_argument('target_model_name')
+        parser.add_argument('-m', '--model-name', dest='model_name')
         parser.add_argument('csv_file')
 
     def preprocess(self, input_line):
@@ -43,7 +46,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         csv_file_path = options['csv_file']
-        target_model_name = options['target_model_name']
+        target_model_name = options.get('target_model_name')
+        if not target_model_name:
+            target_model_name = os.path.basename(csv_file_path)
+            target_model_name = target_model_name.rsplit(os.path.extsep)[0]
+
         with open(csv_file_path) as f:
             csv_reader = csv.reader(f)
             self.read_csv_file(csv_reader, target_model_name)
