@@ -9,6 +9,7 @@ import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager';
+import ASSISTANT from 'ui/utils/common/assistant';
 import {disable_field} from 'ui/utils/common/fields';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
@@ -44,27 +45,6 @@ function extractToken(loc) {
   return token;
 }
 
-const PROFILE_ASSISTANT_FIELDSET = {
-  label: 'fieldsets.labels.user_info',
-  text: 'fieldsets.text.assistant_profile',
-  fields: [
-    disable_field('user_id'),
-    field('username', { readonly: true }),
-    'email',
-    'mobile_phone_number',
-    'home_phone_number',
-    disable_field('first_name'),
-    disable_field('last_name'),
-    disable_field('father_name'),
-    disable_field('id_passport'),
-    disable_field('institution'),
-    disable_field('can_create_positions_verbose'),
-    disable_field('can_create_registries_verbose'),
-  ],
-  layout: {
-        flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 25]
-  }
-}
 
 let fields_with_user_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
 let fields_with_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
@@ -102,9 +82,13 @@ const PROFILE_FIELDSETS = function(view) {
       USER_FIELDSET = USER_FIELDSET_EDIT;
     }
 
-
     if (role === 'assistant') {
-      f.push(PROFILE_ASSISTANT_FIELDSET)
+      if (view === 'edit') {
+        f.push(ASSISTANT.FIELDSET)
+      }
+      if (view === 'details') {
+        f.push(ASSISTANT.FIELDSET_DETAILS)
+      }
     }
 
     if (role == 'helpdeskadmin') {
