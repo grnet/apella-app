@@ -125,17 +125,18 @@ def legacy_login(request):
     legacy_id = identifier
     if not key or not legacy_id:
         url = urlparse.urljoin(
-            settings.API_HOST, settings.TOKEN_LOGIN_URL)
+            settings.BASE_URL, settings.API_PREFIX, settings.TOKEN_LOGIN_URL)
         return HttpResponseRedirect(url + "#error=legacy.error")
 
     id = auth_hooks.init_legacy_migration(legacy_id, key)
     if id is None:
         url = urlparse.urljoin(
-            settings.API_HOST, reverse('shibboleth_login'))
+            settings.BASE_URL, settings.API_PREFIX, reverse('shibboleth_login'))
         return HttpResponseRedirect(url + "?login=1&migrate=0")
 
     params = "?login=1&migrate=%s"
-    url = urlparse.urljoin(settings.API_HOST, reverse('shibboleth_login'))
+    url = urlparse.urljoin(settings.BASE_URL, settings.API_PREFIX,
+                           reverse('shibboleth_login'))
     return HttpResponseRedirect(url + params % str(id))
 
 

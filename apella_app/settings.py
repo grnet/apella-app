@@ -102,7 +102,7 @@ LANGUAGES = {'el', 'en'}
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-API_HOST = None  # The host the app is served from
+BASE_URL = None  # The host the app is served from
 API_PREFIX = 'apella/'
 TOKEN_LOGIN_URL = '/apella/ui/auth/login'
 TOKEN_REGISTER_URL = '/apella/ui/auth/register/professor'
@@ -173,5 +173,5 @@ if not LOGGING:
     }
 
 
-if not DEBUG and not API_HOST:
-    raise Exception("API_HOST setting is required when DEBUG is set to False.")
+if not DEBUG and not BASE_URL:
+    raise Exception("BASE_URL setting is required when DEBUG is set to False.")
