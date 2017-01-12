@@ -1836,6 +1836,12 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                is_verified:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
                 user:
                     .cli_option: {}
                     .field: {}

@@ -91,6 +91,7 @@ class VerifiedUserMixin(object):
             auth_hooks.request_user_verify(instance)
         return super(VerifiedUserMixin, self).update(instance, validated_data)
 
+
 class NestedWritableObjectsMixin(object):
 
     NESTED_USER_KEY = 'user'
@@ -143,4 +144,9 @@ class Assistants(NestedWritableObjectsMixin):
         if user.is_institutionmanager():
             validated_data['institution'] = user.institutionmanager.institution
         validated_data['user']['role'] = 'assistant'
-        return super(Assistants, self).create(validated_data)
+        assistant = super(Assistants, self).create(validated_data)
+        auth_hooks.activate_user(assistant.user)
+        assistant.user.save()
+        auth_hooks.verify_user(assistant)
+        assistant.save()
+        return assistant
