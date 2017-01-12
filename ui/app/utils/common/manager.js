@@ -13,7 +13,7 @@ const {
   computed: { or }
 } = Ember;
 
-const INSTITUTION_MANAGER_VALIDATORS = {
+const VALIDATORS = {
   sub_first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   sub_last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   sub_father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
@@ -77,5 +77,6 @@ export {
   FIELDSET,
   FIELDSET_REGISTER,
   SUB_FIELDSET,
-  SUB_FIELDSET_REGISTER
+  SUB_FIELDSET_REGISTER,
+  VALIDATORS
 }

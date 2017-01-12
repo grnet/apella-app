@@ -358,7 +358,7 @@ export default AuthGen.extend({
         f = Object.assign(f, PROFESSOR_VALIDATORS);
       }
       if (role === 'institutionmanager') {
-        f = Object.assign(f, MANAGER.INSTITUTION_MANAGER_VALIDATORS);
+        f = Object.assign(f, MANAGER.VALIDATORS);
       }
       return f;
     }),

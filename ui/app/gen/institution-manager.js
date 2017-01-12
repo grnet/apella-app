@@ -9,6 +9,7 @@ import {USER_FIELDSET,
         INST_MANAGER_FIELDSET_MAIN,
         INST_MANAGER_FIELDSET_SUB,
         INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
+import MANAGER from 'ui/utils/common/manager'
 import {field} from 'ember-gen';
 
 const {
@@ -62,16 +63,16 @@ export default ApellaGen.extend({
     },
     fieldsets: [
       USER_FIELDSET_DETAILS,
-      INST_MANAGER_FIELDSET_DETAILS_MAIN,
-      INST_MANAGER_FIELDSET_DETAILS_SUB
+      MANAGER.FIELDSET,
+      MANAGER.SUB_FIELDSET
     ]
 
   },
   edit: {
     fieldsets: [
       USER_FIELDSET_EDIT,
-      INST_MANAGER_FIELDSET_MAIN,
-      INST_MANAGER_FIELDSET_SUB
+      MANAGER.FIELDSET,
+      MANAGER.SUB_FIELDSET
     ]
   },
   create: {
