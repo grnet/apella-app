@@ -1,6 +1,13 @@
 from django.core.management import BaseCommand, CommandError
 import apella.models
 import csv
+import os
+import sys
+from datetime import datetime
+
+
+def now():
+    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 
 class Command(BaseCommand):
@@ -23,6 +30,20 @@ class Command(BaseCommand):
             m = "model not found: {0!r}".format(target_model_name)
             raise CommandError(m)
 
+        count = modelclass.objects.all().count()
+        if count:
+            m = "Delete {0!r} existing rows in model {1!r} (y/n)? "
+            m = m.format(count, target_model_name)
+            sys.stdout.write(m)
+            sys.stdout.flush()
+            line = sys.stdin.readline()
+
+            if line.strip().lower() != 'y':
+                m = "Not confirmed."
+                raise RuntimeError(m)
+
+            modelclass.objects.all().delete()
+
         csv_iterator = iter(csv_reader)
         for header in csv_iterator:
             break
@@ -41,8 +62,12 @@ class Command(BaseCommand):
                 setattr(modelinstance, name, value)
             modelinstance.save()
             counter += 1
+            if counter % 100 == 0:
+                m = "{0}: Imported {1!r} rows so far.".format(now(), counter)
+                self.stdout.write(m)
 
-        self.stdout.write("Imported {0!r} rows.".format(counter))
+        m = "{0}: Imported a total of {1!r} rows.".format(now(), counter)
+        self.stdout.write(m)
 
     def handle(self, *args, **options):
         csv_file_path = options['csv_file']
