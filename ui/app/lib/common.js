@@ -54,6 +54,29 @@ function i18nField(key, attrs) {
   }, attrs));
 }
 
+
+function i18nUserSortField(key, attrs) {
+  attrs = attrs || {};
+  return field(`${key}_current`, merge({
+    _services: ['i18n'],
+    dataKey: computed('i18n.locale', function() {
+      let locale = get(this, 'i18n.locale');
+      console.log('>> dataKey', `user__${key}__${locale}`)
+      return `user__${key}__${locale}`;
+    }),
+    formComponent: 'i18n-input-field'
+  }, attrs));
+};
+
+function i18nUserSortAttr(key) {
+  return computed('i18n.local', function() {
+
+    let locale = get(this, 'i18n.locale');
+    console.log('!!!!!!', locale)
+    return `user__${key}__${locale}`;
+  })
+};
+
 // a `field` wrapper for computed properties related fields
 function computedField(key, dependency, attrs) {
   attrs = attrs || {};
@@ -165,6 +188,6 @@ function fileField(key, path, kind, attrs, formAttrs) {
 export {
   ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
-  VerifiedUserMixin, fileField
+  VerifiedUserMixin, fileField, i18nUserSortField, i18nUserSortAttr
 };
 

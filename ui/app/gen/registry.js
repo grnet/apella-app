@@ -1,4 +1,4 @@
-import {ApellaGen, i18nField} from 'ui/lib/common';
+import {ApellaGen, i18nField, i18nUserSortField, i18nUserSortAttr} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
@@ -8,6 +8,7 @@ import {goToDetails} from 'ui/utils/common/actions';
 let {
   computed, get, assign
 } = Ember;
+
 
 const membersField = field('members', {
   query: function(table, store, field, params) {
@@ -24,7 +25,8 @@ const membersField = field('members', {
     row: {
       fields: [
         field('user_id', {type: 'string'}),
-        i18nField('last_name', {label: 'last_name.label'}),
+//        field('last_name_current', {label: 'last_name.label', dataKey: 'user__last_name_current'}),
+        i18nUserSortField('last_name', {label: 'TEST'}),
         i18nField('first_name', {label: 'first_name.label'}),
         'is_foreign_descr',
         i18nField('institution.title', {label: 'institution.label'}),
@@ -54,7 +56,10 @@ const membersField = field('members', {
     sort: {
       serverSide: true,
       active: true,
-      fields: ['user_id', 'user__last_name_current']
+      fields: ['user_id', computed('i18n.locale', function() {
+        console.log('LOCALE', get(this, 'i18n.locale'))
+        return 'user__last_name__el';
+      })]
     },
   },
   modelName: 'professor',
