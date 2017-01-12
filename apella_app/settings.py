@@ -123,6 +123,7 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'apella/ui/auth/login#reset={uid}|{token}'
 }
 
+APELLA_LEGACY_ACADEMIC_LOGIN_URL = None
 
 SETTINGS_PATH = os.path.join(SETTINGS_DIR, SETTINGS_FILE)
 
@@ -171,9 +172,6 @@ if not LOGGING:
         }
     }
 
-APELLA_LEGACY_ACADEMIC_LOGIN_URL = None
 
-
-execfile(SETTINGS_FILE)
 if not DEBUG and not API_HOST:
     raise Exception("API_HOST setting is required when DEBUG is set to False.")
