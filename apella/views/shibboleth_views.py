@@ -47,7 +47,10 @@ def shibboleth_headers(headers):
 
 SHIBBOLETH_USER_MAP = {
     'name': 'first_name',
-    'mail': 'email'
+    'mail': 'email',
+    'displayname': 'first_name',
+    'mobile_number': 'mobile_phone_number',
+    'telephone_number': 'home_phone_number'
 }
 MULTILANG_FIELDS = ['first_name', 'last_name', 'father_name'];
 
