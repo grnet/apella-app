@@ -7,6 +7,8 @@ from django.db import models
 class OldApellaUserMigrationData(models.Model):
     user_id = models.TextField()
     username = models.TextField()
+    passwd = models.TextField()
+    passwd_salt models.TextField()
     shibboleth_id = models.TextField()
     role = models.TextField()
     name_el = models.TextField()
@@ -55,10 +57,10 @@ class OldApellaUserMigrationData(models.Model):
         return hasher.digest()
 
     def check_password(self, password):
-        salt = self.password_salt
+        salt = self.passwd_salt
         encoded = self.encode_password(password, salt)
         encoded = base64.encodestring(encoded).strip()
-        if encoded != self.password:
+        if encoded != self.passwd:
             m = "Wrong password for user {0!r}".format(self.username)
             raise ValueError(m)
 
