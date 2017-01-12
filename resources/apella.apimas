@@ -894,19 +894,22 @@ spec:
                 sub_mobile_phone_number:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field:
+                        allow_blank: False
                     .required: {}
                     .string: {}
                 sub_home_phone_number:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field:
+                        allow_blank: False
                     .required: {}
                     .string: {}
                 sub_email:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field:
+                        allow_blank: False
                     .required: {}
                     .email: {}
                 sub_first_name:
@@ -918,12 +921,14 @@ spec:
                         el:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field:
+                                allow_blank: False
                             .string: {}
                         en:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field:
+                                allow_blank: False
                             .string: {}
                 sub_last_name:
                     .cli_option: {}
@@ -934,12 +939,14 @@ spec:
                         el:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field:
+                                allow_blank: False
                             .string: {}
                         en:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field:
+                                allow_blank: False
                             .string: {}
                 sub_father_name:
                     .cli_option: {}
@@ -950,12 +957,14 @@ spec:
                         el:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field:
+                                allow_blank: False
                             .string: {}
                         en:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field:
+                                allow_blank: False
                             .string: {}
                 verification_pending:
                     .cli_option: {}
