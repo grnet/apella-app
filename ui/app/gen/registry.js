@@ -23,7 +23,7 @@ const membersField = field('members', {
   modelMeta: {
     row: {
       fields: [
-        field('id', {type: 'string'}),
+        field('user_id', {type: 'string'}),
         i18nField('last_name', {label: 'last_name.label'}),
         i18nField('first_name', {label: 'first_name.label'}),
         'is_foreign_descr',
@@ -43,18 +43,18 @@ const membersField = field('members', {
       limits: [5, 10, 15]
     },
     filter: {
-      search: false,
+      search: true,
       serverSide: true,
       active: true,
       meta: {
-        fields: [field('id', {type: 'string'}), 'last_name']
+        fields: [field('user_id', {type: 'string'})]
       }
     },
     sort: {
       serverSide: true,
       active: true,
-      fields: ['id', 'last_name_current']
-    }
+      fields: ['user_id', 'last_name_current']
+    },
   },
   modelName: 'professor',
   displayComponent: 'gen-display-field-table'

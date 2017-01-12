@@ -347,6 +347,7 @@ export default {
   'professor_foreign': 'Καθηγητής/Ερευνητής Αλλοδαπής',
   'professor_domestic': 'Καθηγητής/Ερευνητής Ημεδαπής',
   'id.label': 'Κωδικός',
+  'user_id.label': 'Κωδικός',
   'active_elections.label': 'Εκλεκτορικά Σώματα',
   'Substitute Institution Manager': 'Αναπληρωτής Υπέυθυνος Ιδρύματος',
   'contact': 'Στοιχεία Επικοινωνίας',

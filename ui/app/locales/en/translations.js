@@ -307,6 +307,7 @@ export default {
   'professor_foreign': 'Foreign Professor/Researcher',
   'professor_domestic': 'Domestic Professor/Researcher',
   'id.label': 'ID',
+  'user_id.label': 'ID',
   'active_elections.label': 'Election Committees',
   'contact': 'Contact Information',
   'five_before_electors_meeting': 'Can be uploaded up to 5 days before electors meeting',
