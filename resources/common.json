@@ -30,8 +30,8 @@
     ],
 
     "AUTHORITIES": [
-        ["1", "Dean"],
-        ["2", "President"]
+        ["dean", "Dean"],
+        ["president", "President"]
     ],
 
     "MANAGER_ROLES": [

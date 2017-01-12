@@ -135,7 +135,7 @@ class Migration(migrations.Migration):
                 ('verification_request', models.DateTimeField(null=True, blank=True)),
                 ('is_rejected', models.BooleanField(default=False)),
                 ('rejected_reason', models.TextField(null=True, blank=True)),
-                ('authority', models.CharField(max_length=1, choices=[['1', 'Dean'], ['2', 'President']])),
+                ('authority', models.CharField(max_length=1, choices=[['dean', 'Dean'], ['president', 'President']])),
                 ('authority_full_name', models.CharField(max_length=150)),
                 ('manager_role', models.CharField(max_length=20, choices=[['institutionmanager', 'Manager'], ['assistant', 'Assistant']])),
                 ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
