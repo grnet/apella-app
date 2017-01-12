@@ -89,3 +89,20 @@ class OldApellaPositionMigrationData(models.Model):
     state = models.TextField()
     opening_date = models.TextField()
     closing_date = models.TextField()
+
+
+class OldApellaCandidacyFileMigrationData(models.Model):
+    candidacy_serial = models.TextField()
+    position_serial = models.TextField()
+    candidate_user_id = models.TextField()
+    file_id = models.TextField()
+    file_type = models.TextField()
+    file_path = models.TextField()
+    status = models.TextField()
+
+
+class OldApellaCandidacyMigrationData(models.Model):
+    candidacy_serial = models.TextField()
+    position_serial = models.TextField()
+    candidate_user_id = models.TextField()
+    open_to_other_candidates = models.TextField()

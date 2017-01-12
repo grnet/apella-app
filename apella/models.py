@@ -662,4 +662,6 @@ from migration_models import (
     OldApellaUserMigrationData,
     OldApellaFileMigrationData,
     OldApellaPositionMigrationData,
+    OldApellaCandidacyFileMigrationData,
+    OldApellaCandidacyMigrationData,
 )

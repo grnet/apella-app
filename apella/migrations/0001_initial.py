@@ -158,6 +158,29 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='OldApellaCandidacyFileMigrationData',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('candidacy_serial', models.TextField()),
+                ('position_serial', models.TextField()),
+                ('candidate_user_id', models.TextField()),
+                ('file_id', models.TextField()),
+                ('file_type', models.TextField()),
+                ('file_path', models.TextField()),
+                ('status', models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='OldApellaCandidacyMigrationData',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('candidacy_serial', models.TextField()),
+                ('position_serial', models.TextField()),
+                ('candidate_user_id', models.TextField()),
+                ('open_to_other_candidates', models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='OldApellaFileMigrationData',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -191,6 +214,7 @@ class Migration(migrations.Migration):
             name='OldApellaUserMigrationData',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('migration_key', models.TextField(default=None, null=True)),
                 ('user_id', models.TextField()),
                 ('username', models.TextField()),
                 ('passwd', models.TextField()),
