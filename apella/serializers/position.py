@@ -14,7 +14,7 @@ def get_electors_regular_internal(instance):
     return Professor.objects.filter(
         electorparticipation__is_regular=True,
         electorparticipation__position_id=instance.id,
-        registry__type=1,
+        registry__type='internal',
         registry__department_id=instance.department.id).distinct()
 
 
@@ -22,7 +22,7 @@ def get_electors_regular_external(instance):
     return Professor.objects.filter(
         electorparticipation__is_regular=True,
         electorparticipation__position_id=instance.id,
-        registry__type=2,
+        registry__type='external',
         registry__department_id=instance.department.id).distinct()
 
 
@@ -30,7 +30,7 @@ def get_electors_sub_internal(instance):
     return Professor.objects.filter(
         electorparticipation__is_regular=False,
         electorparticipation__position_id=instance.id,
-        registry__type=1,
+        registry__type='internal',
         registry__department_id=instance.department.id).distinct()
 
 
@@ -38,19 +38,19 @@ def get_electors_sub_external(instance):
     return Professor.objects.filter(
         electorparticipation__is_regular=False,
         electorparticipation__position_id=instance.id,
-        registry__type=2,
+        registry__type='external',
         registry__department_id=instance.department.id).distinct()
 
 
 def get_committee_internal(instance):
     return instance.committee.filter(
-        registry__type=1,
+        registry__type='internal',
         registry__department_id=instance.department.id).distinct()
 
 
 def get_committee_external(instance):
     return instance.committee.filter(
-        registry__type=2,
+        registry__type='external',
         registry__department_id=instance.department.id).distinct()
 
 

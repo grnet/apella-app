@@ -549,7 +549,7 @@
     "action": "registry-add",
     "input": {
         "arg1" : "97",
-        "arg2" : "1",
+        "arg2" : "internal",
         "members": "1"
     },
     "db_state_change" : {
@@ -562,7 +562,7 @@
     "action": "registry-add",
     "input": {
         "arg1" : "97",
-        "arg2" : "2",
+        "arg2" : "external",
         "members": "2"
     },
     "db_state_change" : {
