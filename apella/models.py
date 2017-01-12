@@ -373,7 +373,7 @@ class Candidate(UserProfile, CandidateProfile):
 
 class InstitutionManager(UserProfile):
     institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
-    authority = models.CharField(choices=common.AUTHORITIES, max_length=1)
+    authority = models.CharField(choices=common.AUTHORITIES, max_length=30)
     authority_full_name = models.CharField(max_length=150)
     manager_role = models.CharField(
         choices=common.MANAGER_ROLES, max_length=20)
@@ -624,7 +624,7 @@ class Candidacy(CandidateProfile):
 class Registry(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     type = models.CharField(
-        choices=common.REGISTRY_TYPES, max_length=1, default='1')
+        choices=common.REGISTRY_TYPES, max_length=20, default='internal')
     members = models.ManyToManyField(Professor)
 
     class Meta:

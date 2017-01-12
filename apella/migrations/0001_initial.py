@@ -135,7 +135,7 @@ class Migration(migrations.Migration):
                 ('verification_request', models.DateTimeField(null=True, blank=True)),
                 ('is_rejected', models.BooleanField(default=False)),
                 ('rejected_reason', models.TextField(null=True, blank=True)),
-                ('authority', models.CharField(max_length=1, choices=[['dean', 'Dean'], ['president', 'President']])),
+                ('authority', models.CharField(max_length=30, choices=[['dean', 'Dean'], ['president', 'President']])),
                 ('authority_full_name', models.CharField(max_length=150)),
                 ('manager_role', models.CharField(max_length=20, choices=[['institutionmanager', 'Manager'], ['assistant', 'Assistant']])),
                 ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
@@ -304,7 +304,7 @@ class Migration(migrations.Migration):
             name='Registry',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('type', models.CharField(default=b'1', max_length=1, choices=[['internal', 'Internal'], ['external', 'External']])),
+                ('type', models.CharField(default=b'internal', max_length=20, choices=[['internal', 'Internal'], ['external', 'External']])),
                 ('department', models.ForeignKey(to='apella.Department', on_delete=django.db.models.deletion.PROTECT)),
                 ('members', models.ManyToManyField(to='apella.Professor')),
             ],
