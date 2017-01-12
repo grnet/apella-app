@@ -48,8 +48,8 @@ function extractToken(loc) {
 
 let fields_with_user_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
 let fields_with_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
-fields_with_user_id.unshiftObject('user_id');
-fields_with_id.unshiftObject('id');
+fields_with_user_id.unshiftObject(field('user_id', {disabled: true}));
+fields_with_id.unshiftObject(field('id', {disabled: true}));
 
 const USER_FIELDSET_USER_ID = {
   label: USER_FIELDSET_DETAILS.label,
