@@ -5,9 +5,10 @@ import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
         INST_MANAGER_FIELDSET_DETAILS_MAIN, INST_MANAGER_FIELDSET_DETAILS_SUB,
-        INSTITUTION_MANAGER_VALIDATORS, CANDIDATE_FILES_FIELDSET,
+        CANDIDATE_FILES_FIELDSET,
         USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
+import MANAGER from 'ui/utils/common/manager';
 import {disable_field} from 'ui/utils/common/fields';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
@@ -18,6 +19,12 @@ const {
   get, set, computed,
   merge
 } = Ember;
+
+
+// user can apply for position
+function isVerifiable(role) {
+  return role === 'candidate' || role === 'professor' || role === 'institutionmanager';
+}
 
 function extractError(loc) {
   return loc.hash && loc.hash.split("error=")[1];
@@ -66,7 +73,13 @@ const PROFILE_FIELDSETS = function(view) {
       f.push(PROFILE_ASSISTANT_FIELDSET)
       return f;
     }
-    f.push(USER_FIELDSET_DETAILS);
+    if (view === 'details') {
+      f.push(USER_FIELDSET_DETAILS);
+    }
+
+    if (view === 'edit') {
+      f.push(USER_FIELDSET_EDIT);
+    }
 
     if (role === 'professor') {
       f.push(PROFESSOR_FIELDSET);
@@ -75,8 +88,10 @@ const PROFILE_FIELDSETS = function(view) {
     if (role === 'candidate') {
       f.push(CANDIDATE_FILES_FIELDSET);
     }
+
     if (role === 'institutionmanager') {
-      f.push(INST_MANAGER_FIELDSET_DETAILS_MAIN, INST_MANAGER_FIELDSET_DETAILS_SUB);
+      f.push(MANAGER.FIELDSET);
+      f.push(MANAGER.SUB_FIELDSET);
     }
     return f;
   });
@@ -103,9 +118,11 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
         });
       },
       primary: true,
-      hidden: computed('model.is_verified', function() {
+      hidden: computed('model.is_verified', 'model.role', function() {
         let verified = get(this, 'model.is_verified');
-        return !verified;
+        let role = get(this, 'model.role');
+        if (isVerifiable(role)) { return !verified; }
+        return true;
       }),
       confirm: true,
       prompt: {
@@ -321,7 +338,7 @@ export default AuthGen.extend({
         f = Object.assign(f, PROFESSOR_VALIDATORS);
       }
       if (role === 'institutionmanager') {
-        f = Object.assign(f, INSTITUTION_MANAGER_VALIDATORS);
+        f = Object.assign(f, MANAGER.INSTITUTION_MANAGER_VALIDATORS);
       }
       return f;
     }),
@@ -361,8 +378,9 @@ export default AuthGen.extend({
     getModel() {
       return get(this, 'store').findRecord('profile', 'me').then((user) => {
         let isVerified = get(user, 'is_verified');
+        let role = get(user, 'role');
         let verificationPending = get(user, 'verification_pending');
-        if (verificationPending || isVerified) {
+        if (isVerifiable(role) && (verificationPending || isVerified)) {
           this.transitionTo('auth.profile.details');
         }
         return user;

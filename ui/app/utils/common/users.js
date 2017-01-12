@@ -145,28 +145,11 @@ const PROFESSOR_FIELDS = [
   'is_foreign',
   'speaks_greek',
 ];
-
 const PROFESSOR_FIELDS_REGISTER = PROFESSOR_FIELDS.concat();
 
 const PROFESSOR_FIELDS_REGISTER_REQUIRED = [
   'institution', 'department', 'rank', 'fek'
 ];
-
-const INSTITUTION_MANAGER_FIELDS = [
-  field('institution', {displayAttr: 'title_current'}),
-  'authority',
-  'authority_full_name',
-  'manager_role',
-]
-
-const INSTITUTION_SUB_MANAGER_FIELDS = [
-  'sub_first_name',
-  'sub_last_name',
-  'sub_father_name',
-  'sub_email',
-  'sub_mobile_phone_number',
-  'sub_home_phone_number'
-]
 
 const USER_FIELDSET = {
   label: 'fieldsets.labels.user_info',
@@ -252,39 +235,6 @@ const PROFESSOR_FIELDSET_REGISTER = Ember.assign({}, PROFESSOR_FIELDSET, {
   fields: PROFESSOR_FIELDS_REGISTER
 });
 
-const INST_MANAGER_FIELDSET_MAIN = {
-  label: 'fieldsets.labels.more_info',
-  fields: INSTITUTION_MANAGER_FIELDS,
-  layout: {
-    flex: [50, 50, 50, 50]
-   }
-}
-
-const INST_MANAGER_FIELDSET_DETAILS_MAIN = {
-  label: 'fieldsets.labels.more_info',
-  fields: ['institution.title_current', 'authority', 'authority_full_name'],
-  layout: {
-    flex: [100, 50, 50]
-   }
-}
-
-const INST_MANAGER_FIELDSET_DETAILS_SUB = {
-  label: 'manager.label.sub_fieldset',
-  fields: ['sub_first_name_current', 'sub_last_name_current', 'sub_father_name_current',
-    'sub_email', 'sub_mobile_phone_number', 'sub_home_phone_number'],
-  layout: {
-    flex: [50, 50, 50, 50, 50, 50]
-   }
-}
-
-const INST_MANAGER_FIELDSET_SUB = {
-  label: 'manager.label.sub_fieldset',
-  fields: INSTITUTION_SUB_MANAGER_FIELDS,
-  layout: {
-    flex: [50, 50, 50, 50, 50, 50]
-   }
-}
-
 const USER_VALIDATORS = {
   username: [validate.presence(true), validate.length({min:3, max:50})],
   first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
@@ -299,15 +249,6 @@ const USER_VALIDATORS = {
 const PROFESSOR_VALIDATORS = {
   cv_url: [validate.format({allowBlank: true, type:'url'})],
   institution: [validate.presence(true)],
-}
-
-const INSTITUTION_MANAGER_VALIDATORS = {
-  sub_first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  sub_last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  sub_father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  sub_mobile_phone_number: [validate.format({ type: 'phone' })],
-  sub_home_phone_number: [validate.format({ type: 'phone' })],
-  sub_email: [validate.format({ type: 'email' })],
 }
 
 const normalizeUser = function(hash, serializer) {
@@ -365,6 +306,4 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
         CANDIDATE_FILES_FIELDSET,
-        INST_MANAGER_FIELDSET_DETAILS_MAIN, INST_MANAGER_FIELDSET_DETAILS_SUB,
-        INST_MANAGER_FIELDSET_MAIN, INST_MANAGER_FIELDSET_SUB,
-        INSTITUTION_MANAGER_VALIDATORS, USER_FIELDS_ALL, FILE_FIELDS};
+        USER_FIELDS_ALL, FILE_FIELDS};

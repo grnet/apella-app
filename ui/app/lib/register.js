@@ -4,8 +4,11 @@ import {
   USER_FIELDS_ALL,
   USER_FIELDSET_REGISTER,
   USER_FIELDSET_REGISTER_ACADEMIC,
-  PROFESSOR_FIELDSET_REGISTER
+  PROFESSOR_FIELDSET_REGISTER,
+  INST_MANAGER_FIELDSET_SUB,
+  INST_MANAGER_FIELDSET_MAIN
 } from 'ui/utils/common/users';
+import MANAGER from 'ui/utils/common/manager';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import ENV from 'ui/config/environment';
@@ -36,6 +39,9 @@ const User = Ember.Object.extend({
       }
     });
     data['user_role'] = get(model, 'userRole');
+    if (data['user_role'] === 'manager') {
+      data['user_role'] = 'institutionmanager';
+    }
 
     set(model, 'errors', []);
     let promise = new Ember.RSVP.Promise(function(resolve, reject) {
@@ -194,6 +200,8 @@ const Register = gen.GenRoutedObject.extend({
     }
     if (type === 'manager') {
         FIELDSETS.push(USER_FIELDSET_REGISTER);
+        FIELDSETS.push(MANAGER.FIELDSET_REGISTER);
+        FIELDSETS.push(MANAGER.SUB_FIELDSET_REGISTER);
     }
     return FIELDSETS;
   }),
