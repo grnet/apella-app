@@ -1,4 +1,6 @@
-import {ApellaGen, i18nField, i18nUserSortField, i18nUserSortAttr} from 'ui/lib/common';
+import {
+  ApellaGen, i18nField, i18nUserSortField, i18nUserSortAttr, get_registry_members
+} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
@@ -11,6 +13,9 @@ let {
 
 
 const membersField = field('members', {
+  valueQuery: function(store, params, model, value) {
+    return get_registry_members(model, store, params);
+  },
   query: function(table, store, field, params) {
     let locale = get(table, 'i18n.locale'),
       default_ordering_param = {

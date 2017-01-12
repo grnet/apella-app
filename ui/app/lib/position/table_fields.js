@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {i18nField} from 'ui/lib/common';
+import {i18nField, get_registry_members} from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
 import moment from 'moment';
 import {
@@ -135,12 +135,6 @@ const contactField = field('institution-managers', {
 
 });
 
-function get_registry_members(registry, store, params) {
-  let registry_id = registry.get('id'),
-    query = assign({}, params, { id: registry_id, registry_members: true});
-
-  return store.query('professor', query)
-};
 /*
  * These fields can get a value from the members of a registry.
  * The table with the members data have the same form

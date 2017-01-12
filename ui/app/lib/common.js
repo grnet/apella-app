@@ -184,10 +184,16 @@ function fileField(key, path, kind, attrs, formAttrs) {
   }, attrs || {}));
 }
 
+function get_registry_members(registry, store, params) {
+  let registry_id = registry.get('id'),
+    query = assign({}, params, { id: registry_id, registry_members: true});
+
+  return store.query('professor', query);
+};
 
 export {
   ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
-  VerifiedUserMixin, fileField, i18nUserSortField, i18nUserSortAttr
+  VerifiedUserMixin, fileField, i18nUserSortField, i18nUserSortAttr, get_registry_members
 };
 
