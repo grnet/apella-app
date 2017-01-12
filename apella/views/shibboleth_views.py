@@ -20,7 +20,7 @@ from apella import auth_hooks
 LEGACY_URL = getattr(settings, 'APELLA_LEGACY_ACADEMIC_LOGIN_URL')
 MIGRATE_LEGACY = bool(LEGACY_URL)
 
-logger = logging.getLogger('shibboleth')
+logger = logging.getLogger(__name__)
 
 ABNORMAL_HEADERS = [
     'HTTP_EPPN', 'HTTP_REMOTE_USER'
