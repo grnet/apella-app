@@ -1,3 +1,4 @@
+import {field} from 'ember-gen';
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
@@ -37,15 +38,16 @@ export default ApellaGen.extend({
       },
       serverSide: true,
       search: true,
-      searchFields: ['email', 'username', 'first_name', 'last_name']
+      searchFields: ['id', 'email', 'username', 'first_name', 'last_name']
     },
     sort: {
       active: true,
-      sortBy: 'username',
-      serverSide: true
+      sortBy: 'id',
+      serverSide: true,
+      fields: ['id', 'username']
     },
     row: {
-      fields: ['username', 'email', 'full_name_current', 'role_verbose'],
+      fields: [field('id', {label: 'user_id.label'}), 'username', 'email', 'full_name_current', 'role_verbose'],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },

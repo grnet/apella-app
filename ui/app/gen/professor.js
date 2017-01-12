@@ -32,12 +32,15 @@ export default ApellaGen.extend({
       icon: 'sentiment_very_dissatisfied'
     },
     layout: 'table',
-    sortBy: 'username:asc',
-    search: {
-      fields: ['username', 'email']
+    filter: {
+      active: false,
+      serverSide: true,
+      search: true,
+      searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
     },
+    sortBy: 'username:asc',
     row: {
-      fields: ['username', 'email', 'full_name_current', 'rank', ],
+      fields: ['user_id', 'username', 'email', 'full_name_current', 'rank', ],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },

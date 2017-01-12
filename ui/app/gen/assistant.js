@@ -111,10 +111,15 @@ export default ApellaGen.extend({
         let forbittenRoles = ['professor', 'candidate', 'assistant'];
         return (forbittenRoles.includes(role) ? false : true);
       })
-
     },
     layout: 'table',
-    sortBy: 'username:asc',
+    filter: {
+      active: false,
+      serverSide: true,
+      search: true,
+      searchFields: ['id', 'email', 'username', 'first_name', 'last_name']
+    },
+    sortBy: 'id:asc',
     search: {
       fields: ['username', 'email']
     },
@@ -125,7 +130,7 @@ export default ApellaGen.extend({
                   'can_create_positions_verbose',
                   'can_create_registries_verbose'];
         }
-        return ['username', 'email', 'full_name_current', 'institution.title_current', ]
+        return ['user_id', 'username', 'email', 'full_name_current', 'institution.title_current', ]
       }),
       actions: ['gen:details', 'gen:edit', 'remove']
     },

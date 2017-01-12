@@ -137,6 +137,7 @@ export default {
   'current_password.label': 'Current password',
   'new_password.label': 'New password',
   're_new_password.label': 'Retype new password',
+  'user_id.label': 'User ID',
   'search.input.placeholder': 'Insert search term',
   'table.is.empty': 'There are no items',
   'table.is.loading': 'Loading',

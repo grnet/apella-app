@@ -36,7 +36,7 @@ spec:
                     apella.serializers.mixins.HelpdeskUsers]
                 ordering_fields: [username]
                 filter_fields: [role, is_active]
-                search_fields: [username, email, first_name__el, last_name__el, first_name__en, last_name__en]
+                search_fields: [id, username, email, first_name__el, last_name__el, first_name__en, last_name__en]
             .cli_commands: {}
             '*':
                 id:
@@ -480,7 +480,7 @@ spec:
                 mixins: [apella.views.mixins.UploadFilesViewSet]
                 ordering_fields: [user__id, user__last_name__en, user__last_name__el]
                 filter_fields: [user__id]
-                search_fields: [user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
+                search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
             .cli_commands: {}
             '*':
                 id:
@@ -852,8 +852,9 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.InstitutionManager
-                filter_fields: [institution]
+                filter_fields: [institution, manager_role]
                 model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
+                search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
             .cli_commands: {}
             '*':
                 id:
@@ -1106,7 +1107,7 @@ spec:
                 model: apella.models.Candidate
                 model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.UploadFilesViewSet]
-                search_fields: [user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
+                search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
             .cli_commands: {}
             '*':
                 id:
@@ -1800,6 +1801,7 @@ spec:
                 model: apella.models.InstitutionManager
                 model_serializers: [apella.serializers.mixins.Assistants]
                 mixins: [apella.views.mixins.AssistantList]
+                search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
             .cli_commands: {}
             '*':
                 id:

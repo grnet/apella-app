@@ -27,20 +27,22 @@ export default ApellaGen.extend({
       active: true,
       serverSide: true,
       search: true,
-      searchFields: ['email', 'username', 'first_name', 'last_name']
+      searchFields: ['id', 'email', 'username', 'first_name', 'last_name']
     },
-    sortBy: 'username:asc',
-    search: {
-      fields: ['username', 'email']
+    sort: {
+      active: true,
+      sortBy: 'id',
+      serverSide: true,
+      fields: ['id', 'username']
     },
     label: 'candidate.menu_label',
     row: {
-      fields: ['username', 'email', 'full_name_current'],
+      fields: ['user_id', 'username', 'email', 'full_name_current'],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
   details: {
-    fields: ['id', 'username', 'full_name_current'],
+    fields: ['user_id', 'username', 'full_name_current'],
     page: {
       title: computed.reads('model.full_name_current')
     }

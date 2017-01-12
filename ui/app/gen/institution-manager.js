@@ -41,12 +41,18 @@ export default ApellaGen.extend({
       })
     },
     layout: 'table',
-    sortBy: 'username:asc',
-    search: {
-      fields: ['username', 'email']
+    filter: {
+      active: true,
+      meta: {
+        fields: ['manager_role']
+      },
+      serverSide: true,
+      search: true,
+      searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
     },
+    sortBy: 'username:asc',
     row: {
-      fields: ['username', 'email', 'full_name_current', 'institution.title_current', 'manager_role_verbose'],
+      fields: ['user_id', 'username', 'email', 'full_name_current', 'institution.title_current', 'manager_role_verbose'],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },

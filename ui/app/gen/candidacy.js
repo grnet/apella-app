@@ -53,7 +53,7 @@ let FS = {
     CANDIDATE_FIELDSET,
     CANDIDACY_FIELDSET
   ],
-  list:  ['position.code', 'position.title', 'position.department.institution.title_current',
+  list:  ['position.code', field('candidate.id', {label: 'user_id.label'}), 'position.title', 'position.department.institution.title_current',
           'position.department.title_current',
           'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
   create_helpdeskadmin: [

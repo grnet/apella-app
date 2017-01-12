@@ -176,6 +176,7 @@ export default {
   'current_password.label': 'Τωρινό συνθηματικό',
   'new_password.label': 'Νέο συνθηματικό',
   're_new_password.label': 'Νέο συνθηματικό (ξανά)',
+  'user_id.label': 'Κωδικός χρήστη',
   'search.input.placeholder': 'Εισάγετε κριτήριο αναζήτησης',
   'table.is.empty': 'Δεν υπάρχουν καταχωρήσεις',
   'table.is.loading': 'Γίνεται αναζήτηση',
