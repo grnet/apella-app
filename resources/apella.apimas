@@ -889,7 +889,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
-                    .required: {}
+                    .readonly: {}
                 sub_mobile_phone_number:
                     .cli_option: {}
                     .field: {}

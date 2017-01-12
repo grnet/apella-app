@@ -376,7 +376,8 @@ class InstitutionManager(UserProfile):
     authority = models.CharField(choices=common.AUTHORITIES, max_length=30)
     authority_full_name = models.CharField(max_length=150)
     manager_role = models.CharField(
-        choices=common.MANAGER_ROLES, max_length=20)
+        choices=common.MANAGER_ROLES, max_length=20,
+        default="institutionmanager")
     sub_first_name = models.ForeignKey(
         MultiLangFields, related_name='sub_first_name',
         blank=True, null=True)
