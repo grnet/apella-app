@@ -76,8 +76,8 @@ const  position = {
     committee: {
       label: 'committee_members.label',
       fields: [
-        committeeElectorsField('committee_internal', '1'),
-        committeeElectorsField('committee_external', '2')
+        committeeElectorsField('committee_internal', 'internal'),
+        committeeElectorsField('committee_external', 'external')
       ],
       layout: {
         flex: [100, 100]
@@ -86,8 +86,8 @@ const  position = {
     electors_regular: {
       label: 'electors_regular_members.label',
       fields: [
-        committeeElectorsField('electors_regular_internal', '1'),
-        committeeElectorsField('electors_regular_external', '2')
+        committeeElectorsField('electors_regular_internal', 'internal'),
+        committeeElectorsField('electors_regular_external', 'external')
       ],
       layout: {
         flex: [100, 100]
@@ -96,8 +96,8 @@ const  position = {
     electors_substitite: {
       label: 'electors_substitute_members.label',
       fields: [
-        committeeElectorsField('electors_substitute_internal', '1'),
-        committeeElectorsField('electors_substitute_external', '2')
+        committeeElectorsField('electors_substitute_internal', 'internal'),
+        committeeElectorsField('electors_substitute_external', 'external')
       ],
       layout: {
         flex: [100, 100]
@@ -177,8 +177,8 @@ const  position = {
     committee: {
       label: 'committee_members.label',
       fields: [
-        committeeElectorsField('committee_internal', '1'),
-        committeeElectorsField('committee_external', '2')
+        committeeElectorsField('committee_internal', 'internal'),
+        committeeElectorsField('committee_external', 'external')
       ],
       layout: {
         flex: [100, 100]
@@ -187,8 +187,8 @@ const  position = {
     electors_regular: {
       label: 'electors_regular_members.label',
       fields: [
-        committeeElectorsField('electors_regular_internal', '1'),
-        committeeElectorsField('electors_regular_external', '2')
+        committeeElectorsField('electors_regular_internal', 'internal'),
+        committeeElectorsField('electors_regular_external', 'external')
       ],
       layout: {
         flex: [100, 100]
@@ -197,8 +197,8 @@ const  position = {
     electors_substitite: {
       label: 'electors_substitute_members.label',
       fields: [
-        committeeElectorsField('electors_substitute_internal', '1'),
-        committeeElectorsField('electors_substitute_external', '2')
+        committeeElectorsField('electors_substitute_internal', 'internal'),
+        committeeElectorsField('electors_substitute_external', 'external')
       ],
       layout: {
         flex: [100, 100]

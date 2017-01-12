@@ -329,8 +329,8 @@ export default {
   'open': 'Ανοιχτή',
   'closed': 'Κλειστή',
   // 1,2 is the type of registry
-  'registry.type.1': 'Εσωτερικό Μητρώο',
-  'registry.type.2': 'Εξωτερικό Μητρώο',
+  'registry.type.internal': 'Εσωτερικό Μητρώο',
+  'registry.type.external': 'Εξωτερικό Μητρώο',
   'is_foreign_descr.label': 'Κατηγορία Χρήστη',
   'professor_foreign': 'Καθηγητής/Ερευνητής Αλλοδαπής',
   'professor_domestic': 'Καθηγητής/Ερευνητής Ημεδαπής',
