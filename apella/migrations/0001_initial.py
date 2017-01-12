@@ -137,7 +137,7 @@ class Migration(migrations.Migration):
                 ('rejected_reason', models.TextField(null=True, blank=True)),
                 ('authority', models.CharField(max_length=30, choices=[['dean', 'Dean'], ['president', 'President']])),
                 ('authority_full_name', models.CharField(max_length=150)),
-                ('manager_role', models.CharField(max_length=20, choices=[['institutionmanager', 'Manager'], ['assistant', 'Assistant']])),
+                ('manager_role', models.CharField(default=b'institutionmanager', max_length=20, choices=[['institutionmanager', 'Manager'], ['assistant', 'Assistant']])),
                 ('sub_email', models.EmailField(max_length=254, null=True, blank=True)),
                 ('sub_mobile_phone_number', models.CharField(max_length=30, null=True, blank=True)),
                 ('sub_home_phone_number', models.CharField(max_length=30, null=True, blank=True)),
