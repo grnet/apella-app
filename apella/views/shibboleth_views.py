@@ -76,9 +76,21 @@ def get_user_data(shib_data):
 
 
 def is_eligible_shibboleth_user(data):
-    # hook to validate that all required fields are set or to apply other
-    # validation rules
-    # raise ValidationError
+    affiliation = data.get('affiliation', None)
+    if not affiliation:
+        affiliation = data.get('primary_affiliation', None)
+    if not affiliation:
+        affiliation = data.get('unscoped_affiliation', None)
+
+    if not affiliation:
+        raise ValidationError('no.affiliation')
+
+    faculty = affiliation and 'faculty' in affiliation.lower()
+    data['affiliation'] = affiliation
+
+    if not faculty:
+        logger.info("no faculty affiliation %r", affiliation)
+        raise ValidationError('no.faculty')
     return data
 
 
@@ -147,7 +159,7 @@ def login(request):
         is_eligible_shibboleth_user(shibboleth_data)
     except ValidationError, e:
         logger.info('data not accepted %r: %r', shibboleth_data, e.message)
-        return HttpResponseBadRequest(e.message)
+        return HttpResponseRedirect(token_login_url + "#error=%s" % e.message)
 
     # resolve which user model class should be used to lookup/create user
     UserModel = model_from_data(shibboleth_data)
