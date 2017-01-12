@@ -252,11 +252,11 @@ export default AuthGen.extend({
       beforeModel(transition) {
         let activate = extractActivate(window.location);
         if (activate) {
-          return this.handleActivate(activate);
+          return this.handleActivate(decodeURI(activate));
         }
         let token = extractToken(window.location);
         if (token) {
-          return this.handleTokenLogin(token);
+          return this.handleTokenLogin(decodeURI(token));
         }
         return this._super(transition);
       },
@@ -264,6 +264,8 @@ export default AuthGen.extend({
       setupController(controller, model) {
         this._super(controller, model);
         let error = extractError(window.location);
+        error = decodeURI(error);
+
         if (error === "user.not.found") {
           controller.set('userNotFound', true);
         }
@@ -283,7 +285,7 @@ export default AuthGen.extend({
           controller.set('userNotActive', true);
         }
         let reset = extractReset(window.location);
-        if (reset) { controller.set('resetToken', reset); }
+        if (reset) { controller.set('resetToken', decodeURI(reset)); }
 
         resetHash(window);
       },
