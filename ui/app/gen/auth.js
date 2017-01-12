@@ -48,6 +48,7 @@ const PROFILE_ASSISTANT_FIELDSET = {
   label: 'fieldsets.labels.user_info',
   text: 'fieldsets.text.assistant_profile',
   fields: [
+    disable_field('user_id'),
     field('username', { readonly: true }),
     'email',
     'mobile_phone_number',
@@ -61,35 +62,71 @@ const PROFILE_ASSISTANT_FIELDSET = {
     disable_field('can_create_registries_verbose'),
   ],
   layout: {
-        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 25]
+        flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 25]
   }
 }
+
+let fields_with_user_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
+let fields_with_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
+fields_with_user_id.unshiftObject('user_id');
+fields_with_id.unshiftObject('id');
+
+const USER_FIELDSET_USER_ID = {
+  label: USER_FIELDSET_DETAILS.label,
+  fields: fields_with_user_id,
+  layout: {
+    flex: [50, 50, 50, 50, 50, 50, 25, 25]
+  }
+}
+
+const USER_FIELDSET_ID = {
+  label: USER_FIELDSET_DETAILS.label,
+  fields: fields_with_id,
+  layout: {
+    flex: [50, 50, 50, 50, 50, 50, 25, 25]
+  }
+}
+
 
 const PROFILE_FIELDSETS = function(view) {
   return computed('model.role', function(){
     let f = [];
     let role = this.get('model').get('role');
-    if (role === 'assistant') {
-      f.push(PROFILE_ASSISTANT_FIELDSET)
-      return f;
-    }
+    let USER_FIELDSET
+
     if (view === 'details') {
-      f.push(USER_FIELDSET_DETAILS);
+      USER_FIELDSET = USER_FIELDSET_USER_ID
     }
 
     if (view === 'edit') {
-      f.push(USER_FIELDSET_EDIT);
+      USER_FIELDSET = USER_FIELDSET_EDIT;
+    }
+
+
+    if (role === 'assistant') {
+      f.push(PROFILE_ASSISTANT_FIELDSET)
+    }
+
+    if (role == 'helpdeskadmin') {
+      f.push(USER_FIELDSET_ID);
+    }
+    if (role == 'helpdeskuser') {
+      f.push(USER_FIELDSET_ID);
     }
 
     if (role === 'professor') {
+      f.push(USER_FIELDSET);
       f.push(PROFESSOR_FIELDSET);
       f.push(PROFESSOR_FILES_FIELDSET);
     }
+
     if (role === 'candidate') {
+      f.push(USER_FIELDSET);
       f.push(CANDIDATE_FILES_FIELDSET);
     }
 
     if (role === 'institutionmanager') {
+      f.push(USER_FIELDSET)
       f.push(MANAGER.FIELDSET);
       f.push(MANAGER.SUB_FIELDSET);
     }
