@@ -44,6 +44,7 @@ const membersField = field('members', {
     },
     filter: {
       search: true,
+      searchPlaceholder: 'search.placeholder_last_name',
       serverSide: true,
       active: true,
       meta: {
@@ -53,7 +54,7 @@ const membersField = field('members', {
     sort: {
       serverSide: true,
       active: true,
-      fields: ['user_id', 'last_name_current']
+      fields: ['user_id', 'user__last_name_current']
     },
   },
   modelName: 'professor',
@@ -62,7 +63,6 @@ const membersField = field('members', {
 
 
 export default ApellaGen.extend({
-  order: 1000,
   modelName: 'registry',
   auth: true,
   path: 'registries',
