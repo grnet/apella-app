@@ -165,6 +165,9 @@ def login(request):
     UserModel = model_from_data(shibboleth_data)
     user_data = get_user_data(shibboleth_data)
     logger.debug('login %r', user_data)
+    if getattr(settings, 'LOG_SHIBBOLETH_DATA', False):
+        logger.info(shibboleth_data)
+        logger.info(headers.keys())
 
     user = None
     token = None
