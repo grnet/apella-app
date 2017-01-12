@@ -1,15 +1,18 @@
 import logging
 import re
+import os
 from datetime import datetime
 
 from django.db import transaction
 from django.conf import settings
 from django.db.utils import IntegrityError
+from django.core.files import File
 
 from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \
     OldApellaUserMigrationData, Position, Subject, SubjectArea, \
-    OldApellaPositionMigrationData
+    OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData
+from apella.common import FILE_KIND_TO_FIELD
 
 logger = logging.getLogger('apella')
 
@@ -34,7 +37,9 @@ def get_obj(id_str, model):
 
 
 def migrate_candidate(old_user, new_user):
-    candidate = Candidate.objects.create(user=new_user)
+    candidate = Candidate.objects.create(
+        user=new_user,
+        is_verified=True)
     return candidate
 
 
@@ -61,7 +66,8 @@ def migrate_professor(old_user, new_user):
         cv_url=old_user.professor_institution_cv_url,
         fek=old_user.professor_appointment_gazette_url,
         discipline_in_fek=discipline_in_fek,
-        discipline_text=discipline_text)
+        discipline_text=discipline_text,
+        is_verified=True)
 
     return professor
 
@@ -91,7 +97,8 @@ def migrate_institutionmanager(old_user, new_user):
             sub_father_name=sub_father_name,
             sub_mobile_phone_number=old_user.manager_deputy_mobile,
             sub_home_phone_number=old_user.manager_deputy_phone,
-            sub_email=old_user.manager_deputy_email)
+            sub_email=old_user.manager_deputy_email,
+            is_verified=True)
     except ValueError as e:
         logger.error('failed to migrate user %s' % old_user.user_id)
         logger.error(e)
@@ -103,6 +110,64 @@ def migrate_institutionmanager(old_user, new_user):
 def professor_exists(user_id):
     return OldApellaUserMigrationData.objects.filter(
         role='professor', user_id=user_id).exists()
+
+FILE_KINDS_MAPPING = {
+    'BIOGRAFIKO' : 'cv',
+    'PTYXIO': 'diploma',
+    'DIMOSIEYSI': 'publication',
+    'TAYTOTHTA': 'id_passport',
+    'PROFILE': 'cv_professor'
+}
+
+def migrate_file(old_file, new_user, source, source_id):
+    if old_file.file_type not in FILE_KINDS_MAPPING:
+        logger.error('failed to migrate file, unknown file_type %s' %
+            old_file.file_type)
+        return
+    new_file = ApellaFile(
+        owner=new_user,
+        description=old_file.file_description,
+        file_kind=FILE_KINDS_MAPPING[old_file.file_type],
+        source=source,
+        source_id=source_id)
+    old_file_path = os.path.join(
+        settings.OLD_APELLA_MEDIA_ROOT, old_file.file_path)
+    with open(old_file_path, 'r') as f:
+        new_file.file_path.save(
+            old_file.original_name, File(f))
+        new_file.file_path.file.close()
+    logger.info(
+        'migrated profile file %s to %s' %
+        (old_file.id, new_file.id))
+
+    field_name, many = \
+        FILE_KIND_TO_FIELD[FILE_KINDS_MAPPING[old_file.file_type]].values()
+    if new_user.is_professor():
+        if not many:
+            setattr(new_user.professor, field_name, new_file)
+        else:
+            many_attr = getattr(new_user.professor, field_name)
+            many_attr.add(new_file)
+        new_user.professor.save()
+    elif new_user.is_candidate():
+        if not many:
+            setattr(new_user.candidate, field_name, new_file)
+        else:
+            many_attr = getattr(new_user.candidate, field_name)
+            many_attr.add(new_file)
+        new_user.candidate.save()
+
+
+def migrate_user_profile_files(old_user, new_user):
+    old_files = OldApellaFileMigrationData.objects.filter(
+        user_id=old_user.user_id)
+    i = 0
+    for old_file in old_files:
+        migrate_file(
+            old_file, new_user, 'profile', new_user.id)
+        i += 1
+    logger.info('migrated %s profile files for user %s' %
+        (i, new_user.id))
 
 
 @transaction.atomic
@@ -148,7 +213,8 @@ def migrate_user(old_user):
         id_passport=old_user.person_id_number,
         mobile_phone_number=old_user.mobile,
         home_phone_number=old_user.phone,
-        is_active=True)
+        is_active=True,
+        email_verified=True)
     logger.info(
         'created user %s from user_id %s' % (new_user.id, old_user.user_id))
 
@@ -157,9 +223,11 @@ def migrate_user(old_user):
         if not professor_exists(old_user.user_id):
             candidate = migrate_candidate(old_user, new_user)
             logger.info('created candidate %s' % candidate.id)
+            migrate_user_profile_files(old_user, new_user)
     elif role == 'professor':
         professor = migrate_professor(old_user, new_user)
         logger.info('created professor %s' % professor.id)
+        migrate_user_profile_files(old_user, new_user)
     elif role == 'institutionmanager' or role == 'assistant':
         institutionmanager = migrate_institutionmanager(old_user, new_user)
         logger.info('created institution manager %s' % institutionmanager.id)

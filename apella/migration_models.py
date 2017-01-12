@@ -41,7 +41,8 @@ class OldApellaUserMigrationData(models.Model):
 
 
 class OldApellaFileMigrationData(models.Model):
-    user_id = models.TextField(primary_key=True)
+    user_id = models.TextField()
+    header_id = models.TextField()
     file_type = models.TextField()
     file_path = models.TextField()
     file_description = models.TextField()

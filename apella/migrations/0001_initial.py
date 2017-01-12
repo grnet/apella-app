@@ -160,7 +160,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OldApellaFileMigrationData',
             fields=[
-                ('user_id', models.TextField(serialize=False, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('user_id', models.TextField()),
+                ('header_id', models.TextField()),
                 ('file_type', models.TextField()),
                 ('file_path', models.TextField()),
                 ('file_description', models.TextField()),

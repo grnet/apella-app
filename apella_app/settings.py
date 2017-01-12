@@ -16,6 +16,7 @@ SETTINGS_DIR = os.environ.get('APELLA_SETTINGS_DIR', '/etc/apella')
 SETTINGS_FILE = 'settings.conf'
 
 MEDIA_ROOT = '/tmp'
+OLD_APELLA_MEDIA_ROOT = '/tmp'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
