@@ -12,7 +12,7 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \
     OldApellaUserMigrationData, Position, Subject, SubjectArea, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData
-from apella.common import FILE_KIND_TO_FIELD
+from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
 logger = logging.getLogger('apella')
 
@@ -85,11 +85,15 @@ def migrate_institutionmanager(old_user, new_user):
         el=old_user.manager_deputy_fathername_el,
         en=old_user.manager_deputy_fathername_en)
 
+    authority = None
+    if old_user.manager_appointer_authority:
+        authority = [authority for authority, value in AUTHORITIES \
+                if authority == old_user.manager_appointer_authority.lower()][0]
     try:
         manager = InstitutionManager.objects.create(
             user=new_user,
             institution=institution,
-            authority=old_user.manager_appointer_authority,
+            authority=authority,
             authority_full_name=old_user.manager_appointer_fullname,
             manager_role=new_user.role,
             sub_first_name=sub_first_name,

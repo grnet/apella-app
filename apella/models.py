@@ -373,8 +373,10 @@ class Candidate(UserProfile, CandidateProfile):
 
 class InstitutionManager(UserProfile):
     institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
-    authority = models.CharField(choices=common.AUTHORITIES, max_length=30)
-    authority_full_name = models.CharField(max_length=150)
+    authority = models.CharField(choices=common.AUTHORITIES, max_length=30,
+        blank=True, null=True)
+    authority_full_name = models.CharField(
+        max_length=255, blank=True, null=True)
     manager_role = models.CharField(
         choices=common.MANAGER_ROLES, max_length=20,
         default="institutionmanager")
