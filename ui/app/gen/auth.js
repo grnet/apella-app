@@ -4,7 +4,6 @@ import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
-        INST_MANAGER_FIELDSET_DETAILS_MAIN, INST_MANAGER_FIELDSET_DETAILS_SUB,
         CANDIDATE_FILES_FIELDSET,
         USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
