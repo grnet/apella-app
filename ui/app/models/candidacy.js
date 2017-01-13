@@ -20,8 +20,8 @@ export default DS.Model.extend({
   cv: DS.belongsTo('apella-file', {label: 'candidacy.label.cv'}),
   diplomas: DS.hasMany('apella-files', {label: 'candidacy.label.diploma'}),
   publications: DS.hasMany('apella-files', {label: 'candidacy.label.publication'}),
-  selfEvaluation: DS.attr({label: 'candidacy.label.self_evaluation'}),
-  additionalFiles: DS.attr({label: 'candidacy.label.additional_files'}),
+  self_evaluation_report: DS.attr({label: 'candidacy.label.self_evaluation'}),
+  attachment_files: DS.attr({label: 'candidacy.label.attachment_files'}),
 
   title: computed('position.code', 'candidate.username', function(){
     return `${get(this, 'position.code')} (${get(this, 'candidate.username')})`

@@ -1,12 +1,11 @@
 import DS from 'ember-data';
 import Serializer from './application';
 
-const embedded = { embedded: 'always', serialize: 'ids' };
+const embedded = { embedded: 'always' };
 
 export default Serializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
-    diplomas: embedded,
-    publications: embedded,
-    cv: embedded,
+    self_evaluation_report: embedded,
+    attachment_files: embedded,
   }
 });

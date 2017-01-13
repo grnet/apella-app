@@ -154,6 +154,10 @@ export default {
   'form.error': 'Error in form',
   'user.interests.saved': 'Your interests have been saved',
 
+  // files
+  'file.field.add.file': 'Add file',
+  'field.no.files': 'No files',
+
   userInterest: {
     info: 'By pressing "Save" the search criteria will be saved, so that if a new position matche    s them you will be notified by the system.',
     headers: {
@@ -199,7 +203,7 @@ export default {
       diploma: 'Diplomas',
       publication: 'Publications',
       self_evaluation: 'Self Evaluation Report',
-      additional_files: 'Complementary documents',
+      attachment_files: 'Complementary documents',
       candidate: 'Candidate'
     }
   },
@@ -296,5 +300,7 @@ export default {
   'professor_domestic': 'Domestic Professor/Researcher',
   'id.label': 'ID',
   'active_elections.label': 'Election Committees',
-  'contact': 'Contact Information'
+  'contact': 'Contact Information',
+  'five_before_electors_meeting': 'Can be uploaded up to 5 days before electors meeting',
+  'one_before_electors_meeting': 'Can be uploaded up to previous day of the electors meeting',
 };

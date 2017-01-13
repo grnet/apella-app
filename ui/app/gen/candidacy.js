@@ -4,6 +4,7 @@ import validate from 'ember-gen/validate';
 import _ from 'lodash/lodash';
 import {disable_field} from 'ui/utils/common/fields';
 import {cancelCandidacy, goToPosition} from 'ui/utils/common/actions';
+import {fileField} from 'ui/lib/common';
 
 const {
         set, get, computed, computed: { alias },
@@ -31,19 +32,47 @@ let CANDIDATE_FIELDSET =  {
       label: 'candidacy.candidate_section.title',
       text: 'candidacy.candidate_section.subtitle',
       fields: _.map(['candidate', 'cv', 'diploma', 'publication'], disable_field),
-      flex: 50,
+      flex: 100,
       layout: {
         flex: [50, 50, 50, 50]
       },
 };
 
 let CANDIDACY_FIELDSET =  {
-      label: 'candidacy.candidacy_section.title',
-      fields: ['selfEvaluation', 'additionalFiles', 'othersCanView'],
-      flex: 50,
-      layout: {
-        flex: [50, 50, 50, 50]
-      }
+    label: 'candidacy.candidacy_section.title',
+    fields: [
+      fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+        hint: 'five_before_electors_meeting',
+      }, {
+        replace: true
+      }),
+     fileField('attachment_files', 'candidacy', 'attachment_files', {
+        hint: 'one_before_electors_meeting',
+      }, {
+        multiple: true
+      }),
+      'othersCanView'
+    ],
+    flex: 100,
+};
+
+let CANDIDACY_FIELDSET_DETAILS =  {
+    label: 'candidacy.candidacy_section.title',
+    fields: [
+      fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+        readonly: true,
+        hint: 'five_before_electors_meeting',
+      }, { replace: true}),
+     fileField('attachment_files', 'candidacy', 'attachment_files', {
+        readonly: true,
+        hint: 'one_before_electors_meeting',
+      }, { replace: true, multiple: true}),
+      'othersCanView'
+    ],
+    flex: 100,
+    layout: {
+      flex: [100, 100, 100]
+    }
 };
 
 
@@ -209,5 +238,10 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.position.code')
     },
+    fieldsets: [
+      POSITION_FIELDSET,
+      CANDIDATE_FIELDSET,
+      CANDIDACY_FIELDSET_DETAILS
+    ]
   },
 });
