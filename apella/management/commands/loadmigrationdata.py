@@ -71,7 +71,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         csv_file_path = options['csv_file']
-        target_model_name = options.get('target_model_name')
+        target_model_name = options.get('model_name')
         if not target_model_name:
             target_model_name = os.path.basename(csv_file_path)
             target_model_name = target_model_name.rsplit(os.path.extsep)[0]
