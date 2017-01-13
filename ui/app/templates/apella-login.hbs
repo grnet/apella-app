@@ -13,6 +13,9 @@
   {{#if userExists }}
   {{toolbar-message warn=true message='user.exists.error' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='pregnant_woman')}}
   {{/if}}
+  {{#if migrationError }}
+  {{toolbar-message warn=true message='user.migration.error'}}
+  {{/if}}
   {{#if userNotEmailVerified }}
   {{toolbar-message warn=true message='user.not.email_verified.error' buttonComponent=(component 'resend-verification-action')}}
   {{/if}}

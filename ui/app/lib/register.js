@@ -132,7 +132,8 @@ const Register = gen.GenRoutedObject.extend({
   routeBaseClass: routes.CreateRoute.extend({
     queryParams: {
       initial: { refreshModel: false },
-      academic: { refreshModel: false }
+      academic: { refreshModel: false },
+      warn_legacy: { refreshModel: false },
     },
     resetController(controller) {
       set(controller, 'model.registration_token', null);
@@ -168,6 +169,7 @@ const Register = gen.GenRoutedObject.extend({
     let model = User.create(defaults, {userRole, gen});
     set(model, 'registration_token', (token && token.length) ? token : null);
     set(model, 'is_academic', !!token);
+    set(model, 'warn_legacy', params.warn_legacy);
     return Ember.RSVP.Promise.resolve(model);
   },
 

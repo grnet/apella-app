@@ -309,6 +309,9 @@ export default AuthGen.extend({
         if (error === "user.exists") {
           controller.set('userExists', true);
         }
+        if (error === "migration.error") {
+          controller.set('migrationError', true);
+        }
         if (error === "user.not.email_verified") {
           controller.set('userNotEmailVerified', true);
         }
@@ -329,6 +332,7 @@ export default AuthGen.extend({
       resetController(controller) {
         controller.set('userNotFound', false);
         controller.set('userExists', false);
+        controller.set('migrationError', false);
         controller.set('userNotVerified', false);
         controller.set('userVerificationFailed', false);
         controller.set('userNotActive', false);

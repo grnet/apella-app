@@ -1,3 +1,6 @@
+{{#if object.warn_legacy }}
+  {{toolbar-message warn=true message='user.register.legacy.warning' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='pregnant_woman')}}
+{{/if}}
 <md-content class="md-padding">
 {{#if (eq object.userRole 'professor') }}
   {{#if object.registration_token }}

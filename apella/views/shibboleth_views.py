@@ -15,15 +15,18 @@ from django.db import transaction
 
 from apella.models import ApellaUser, Professor, MultiLangFields, \
     RegistrationToken
+from apella.models import OldApellaUserMigrationData as OldUser
 from apella import auth_hooks
+from apella.util import urljoin
 
+
+BASE_URL = settings.BASE_URL or '/';
+API_PREFIX = settings.API_PREFIX
 
 LEGACY_URL = getattr(settings, 'APELLA_LEGACY_ACADEMIC_LOGIN_URL')
 MIGRATE_LEGACY = bool(LEGACY_URL)
-TOKEN_LOGIN_URL = path.join(
-    settings.BASE_URL, settings.API_PREFIX, settings.TOKEN_LOGIN_URL)
-TOKEN_REGISTER_URL = path.join(
-    settings.BASE_URL, settings.API_PREFIX, settings.TOKEN_REGISTER_URL)
+TOKEN_LOGIN_URL = urljoin(BASE_URL, API_PREFIX, settings.TOKEN_LOGIN_URL)
+TOKEN_REGISTER_URL = urljoin(BASE_URL, API_PREFIX, settings.TOKEN_REGISTER_URL)
 
 
 logger = logging.getLogger(__name__)
@@ -130,17 +133,16 @@ def legacy_login(request):
     key = request.GET.get('migration_key', None)
     legacy_id = identifier
     if not key or not legacy_id:
-        url = path.join(
-            settings.BASE_URL, settings.API_PREFIX, settings.TOKEN_LOGIN_URL)
+        url = TOKEN_LOGIN_URL
         return HttpResponseRedirect(url + "#error=legacy.error")
 
     id = auth_hooks.init_legacy_migration(legacy_id, key)
     if id is None:
-        url = path.join(settings.BASE_URL, reverse('shibboleth_login'))
+        url = urljoin(BASE_URL, reverse('shibboleth_login'))
         return HttpResponseRedirect(url + "?login=1&migrate=0")
 
     params = "?login=1&migrate=%s"
-    url = path.join(settings.BASE_URL, reverse('shibboleth_login'))
+    url = urljoin(BASE_URL, reverse('shibboleth_login'))
     return HttpResponseRedirect(url + params % str(id))
 
 
@@ -240,7 +242,15 @@ def login(request):
     if created:
         data = urllib.quote(base64.b64encode(json.dumps(user_data)))
         redirect_url = TOKEN_REGISTER_URL
-        token_fragment = '?initial=%s&academic=1&#token=%s' % (data, token)
+        params = '?initial=%s&academic=1' % data
+
+        email = user_data.get('email', None)
+        warn_legacy = False
+        if email and OldUser.objects.filter(email=email).exists():
+            warn_legacy = True
+        if warn_legacy:
+            params = params + "&warn_legacy=1"
+        token_fragment = params + '#token=%s' % (token,)
     else:
         redirect_url = TOKEN_LOGIN_URL
         token_fragment = '#token=' + token
