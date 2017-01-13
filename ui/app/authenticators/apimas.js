@@ -23,6 +23,9 @@ function mergeProfileData(sessionData, profileResponse) {
     sessionData.pending_role = sessionData.role;
     delete sessionData.role;
   }
+  if (sessionData.login_method === 'academic') {
+    sessionData.username = sessionData.email;
+  }
   return sessionData;
 }
 
