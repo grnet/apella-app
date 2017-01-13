@@ -39,7 +39,6 @@ class Migration(migrations.Migration):
                 ('role', models.CharField(default=b'candidate', max_length=20, choices=[['institutionmanager', 'Institution Manager'], ['candidate', 'Candidate'], ['professor', 'Professor'], ['helpdeskadmin', 'Helpdesk Admin'], ['helpdeskuser', 'Helpdesk User'], ['assistant', 'Assistant']])),
                 ('login_method', models.CharField(default=b'password', max_length=20)),
                 ('shibboleth_id', models.CharField(default=None, max_length=255, unique=True, null=True)),
-                ('shibboleth_id_legacy', models.CharField(default=None, max_length=255, null=True)),
                 ('shibboleth_registration_key', models.CharField(default=None, max_length=255, null=True)),
                 ('shibboleth_migration_key', models.CharField(default=None, max_length=255, null=True)),
             ],
