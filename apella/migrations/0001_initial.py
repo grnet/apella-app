@@ -41,6 +41,7 @@ class Migration(migrations.Migration):
                 ('shibboleth_id', models.CharField(default=None, max_length=255, unique=True, null=True)),
                 ('shibboleth_registration_key', models.CharField(default=None, max_length=255, null=True)),
                 ('shibboleth_migration_key', models.CharField(default=None, max_length=255, null=True)),
+                ('old_user_id', models.IntegerField(null=True, blank=True)),
             ],
             options={
                 'verbose_name': 'user',
@@ -72,6 +73,7 @@ class Migration(migrations.Migration):
                 ('submitted_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('code', models.CharField(max_length=200)),
+                ('old_candidacy_id', models.IntegerField(null=True, blank=True)),
                 ('attachment_files', models.ManyToManyField(related_name='attachment_files', to='apella.ApellaFile', blank=True)),
                 ('candidate', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
                 ('cv', models.ForeignKey(related_name='apella_candidacy_cv_files', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='apella.ApellaFile', null=True)),

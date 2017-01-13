@@ -77,6 +77,7 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
         max_length=255, null=True, default=None)
     shibboleth_migration_key = models.CharField(
         max_length=255, null=True, default=None)
+    old_user_id = models.IntegerField(null=True, blank=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
@@ -574,6 +575,7 @@ class Candidacy(CandidateProfile):
         related_name='self_evaluation_report', on_delete=models.SET_NULL)
     attachment_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='attachment_files')
+    old_candidacy_id = models.IntegerField(blank=True, null=True)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(

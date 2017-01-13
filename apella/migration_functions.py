@@ -237,7 +237,8 @@ def migrate_user(old_user, password=None):
         mobile_phone_number=old_user.mobile,
         home_phone_number=old_user.phone,
         is_active=True,
-        email_verified=True)
+        email_verified=True,
+        old_user_id=int(old_user.user_id)
 
     if password:
         new_user.set_password(password)
