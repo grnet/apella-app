@@ -165,6 +165,8 @@ class CandidacyMixin(object):
         user = self.context.get('request').user
         instance = getattr(self, 'instance')
         creating = False
+
+        attachment_files = data.pop('attachment_files', [])
         if not instance:
             creating = True
             instance = Candidacy(**data)
@@ -180,13 +182,18 @@ class CandidacyMixin(object):
             if creating:
                 validate_candidate_files(candidate)
                 validate_unique_candidacy(position, candidate)
-        return super(CandidacyMixin, self).validate(data)
+
+        data = super(CandidacyMixin, self).validate(data)
+        data['attachment_files'] = attachment_files
+
+        return data
 
     def create(self, validated_data):
         user = self.context.get('request').user
         if not user.is_helpdesk():
             validated_data['candidate'] = user
         validated_data['state'] = 'draft'
+        attachment_files = validated_data.pop('attachment_files', [])
         obj = super(CandidacyMixin, self).create(validated_data)
         code = str(obj.id)
         obj.code = code
