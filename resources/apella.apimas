@@ -1730,6 +1730,60 @@ spec:
                     .drf_field:
                         onmodel: False
                     .string: {}
+                self_evaluation_report:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                attachment_files:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
             actions:
                 .list: {}
                 .create: {}
