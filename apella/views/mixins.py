@@ -31,6 +31,12 @@ class DestroyProtectedObject(viewsets.ModelViewSet):
         except ProtectedError:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
+class Professor(object):
+    def get_queryset(self):
+        queryset = self.queryset
+        if not 'ordering' in self.request.query_params:
+            queryset = self.queryset.order_by('user__last_name__el')
+        return queryset
 
 class AssistantList(generics.ListAPIView):
     def get_queryset(self):
