@@ -11,7 +11,8 @@ from django.core.files import File
 from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \
     OldApellaUserMigrationData, Position, Subject, SubjectArea, \
-    OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData
+    OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
+    Candidacy
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
 logger = logging.getLogger('apella')
@@ -238,7 +239,7 @@ def migrate_user(old_user, password=None):
         home_phone_number=old_user.phone,
         is_active=True,
         email_verified=True,
-        old_user_id=int(old_user.user_id)
+        old_user_id=int(old_user.user_id))
 
     if password:
         new_user.set_password(password)
@@ -312,3 +313,17 @@ def migrate_position(old_position, author):
         'migrated position %s, from old position %s' %
         (new_position.id, old_position.position_serial))
     return new_position
+
+
+def migrate_candidacy(old_candidacy, new_candidate, new_position):
+
+    candidacy = Candidacy.objects.create(
+        candidate=new_candidate,
+        position=new_position,
+        state='posted',
+        others_can_view=bool(
+            re.match('t', old_candidacy.open_to_other_candidates, re.I)),
+        old_candidacy_id=int(old_candidacy.candidacy_serial))
+
+    candidacy.code = str(candidacy.id)
+    candidacy.save()
