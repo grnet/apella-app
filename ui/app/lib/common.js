@@ -57,13 +57,16 @@ function i18nField(key, attrs) {
 
 function i18nUserSortField(key, attrs) {
   attrs = attrs || {};
+  //console.log('==========', get(this, 'i18n.locale'))
   return field(`${key}_current`, merge({
     _services: ['i18n'],
-    dataKey: computed('i18n.locale', function() {
-      let locale = get(this, 'i18n.locale');
-      console.log('>> dataKey', `user__${key}__${locale}`)
-      return `user__${key}__${locale}`;
+    sortKey: computed('i18n.locale', function() {
+      let locale = get(this, 'i18n.locale'),
+        dataKey = `user__${key}__${locale}`;
+      console.log('%cdataKey', 'background: cyan', dataKey)
+      return dataKey;
     }),
+    
     formComponent: 'i18n-input-field'
   }, attrs));
 };

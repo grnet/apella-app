@@ -13,6 +13,56 @@ let {
 } = Ember;
 
 
+// serverSide is a boolean value that is used for filtering, sorting, searching
+function membersAllModelMeta(serverSide) {
+  console.log('serverSide', serverSide)
+     // TMP: user__last_name__el
+    let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'user__last_name__el']);
+
+  return {
+    row: {
+      fields: [
+        field('user_id', {type: 'string', dataKey: 'user__id'}),
+        i18nUserSortField('last_name', {label: 'last_name.label'}),
+        i18nField('first_name', {label: 'first_name.label'}),
+        'is_foreign_descr',
+        i18nField('institution.title', {label: 'institution.label'}),
+        i18nField('department.title', {label: 'department.label'}),
+        'rank',
+        'discipline_text'
+      ],
+      actions: ['goToDetails'],
+      actionsMap: {
+        goToDetails: goToDetails
+      }
+    },
+    paginate: {
+      active: true,
+      serverSide: serverSide,
+      limits: [5, 10, 15]
+    },
+    filter: {
+      search: true,
+      searchPlaceholder: 'search.placeholder_last_name',
+      serverSide: serverSide,
+      active: true,
+      meta: {
+        fields: [field('user_id', {type: 'string'})]
+      }
+    },
+    sort: {
+      serverSide: serverSide,
+      active: true,
+      /*fields: ['user_id', computed('i18n.locale', function() {
+        console.log('LOCALE', get(this, 'i18n.locale'))
+        let a = ['user__last_name__el', {_services: ['i18n']}];
+        return 'user__last_name__el';
+      })]*/
+      fields: sortFields
+    }
+  };
+};
+
 const membersField = field('members', {
   valueQuery: function(store, params, model, value) {
     if(model.id) {
@@ -32,47 +82,8 @@ const membersField = field('members', {
   },
   // a list-like gen config
   label: null,
-  modelMeta: {
-    row: {
-      fields: [
-        field('user_id', {type: 'string'}),
-//        field('last_name_current', {label: 'last_name.label', dataKey: 'user__last_name_current'}),
-        i18nUserSortField('last_name', {label: 'TEST'}),
-        i18nField('first_name', {label: 'first_name.label'}),
-        'is_foreign_descr',
-        i18nField('institution.title', {label: 'institution.label'}),
-        i18nField('department.title', {label: 'department.label'}),
-        'rank',
-        'discipline_text'
-      ],
-      actions: ['goToDetails'],
-      actionsMap: {
-        goToDetails: goToDetails
-      }
-    },
-    paginate: {
-      active: true,
-      serverSide: true,
-      limits: [5, 10, 15]
-    },
-    filter: {
-      search: true,
-      searchPlaceholder: 'search.placeholder_last_name',
-      serverSide: true,
-      active: true,
-      meta: {
-        fields: [field('user_id', {type: 'string'})]
-      }
-    },
-    sort: {
-      serverSide: true,
-      active: true,
-      fields: ['user_id', computed('i18n.locale', function() {
-        console.log('LOCALE', get(this, 'i18n.locale'))
-        return 'user__last_name__el';
-      })]
-    },
-  },
+  modelMeta: membersAllModelMeta(false),
+  selectModelMeta: membersAllModelMeta(true),
   modelName: 'professor',
   displayComponent: 'gen-display-field-table'
 });

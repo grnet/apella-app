@@ -43,7 +43,7 @@ export default Ember.Mixin.create({
     } else {
       return get(this, 'institution.title_current')
     }
-  })
+  }),
 
-
+  user_id: DS.attr()
 });
