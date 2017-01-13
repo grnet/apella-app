@@ -1735,6 +1735,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .read_only: {}
+                    .nullable: {}
                     .struct:
                         id:
                             .cli_option: {}
