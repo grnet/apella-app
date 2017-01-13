@@ -73,8 +73,6 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
 
     shibboleth_id = models.CharField(
         max_length=255, unique=True, null=True, default=None)
-    shibboleth_id_legacy = models.CharField(
-        max_length=255, null=True, default=None)
     shibboleth_registration_key = models.CharField(
         max_length=255, null=True, default=None)
     shibboleth_migration_key = models.CharField(
