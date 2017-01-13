@@ -106,9 +106,6 @@ export default ApellaGen.extend({
     })
   },
 
-  common: {
-  },
-
   create: {
     onSubmit(model) {
       this.transitionTo('registry.record.index', model);
@@ -152,21 +149,25 @@ export default ApellaGen.extend({
       label: 'registry.menu_label'
     },
     layout: 'table',
-    sortBy: 'institution.title:asc',
     page: {
-     title: 'registry.menu_label'
+      title: 'registry.menu_label'
     },
     filter: {
+      search: false,
+      serverSide: true,
       active: true,
       meta: {
-        fields: ['type', 'department']
-      },
-      serverSide: true,
-      search: false,
+        fields: [field('id', {type: 'string'}), 'type', 'institution']
+      }
     },
-
+    sort: {
+      serverSide: true,
+      active: true,
+      fields: ['id', 'type_verbose', 'institution.title_current', 'department.title_current']
+    },
     row: {
       fields: [
+        'id',
         field('institution.title_current', {label: 'institution.label', type: 'text'}),
         field('department.title_current', {label: 'department.label', type: 'text'}),
         field('type_verbose', {label: 'type.label', type: 'text'})
