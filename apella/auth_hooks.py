@@ -182,6 +182,7 @@ def migrate_legacy(migration_key, migrate_id, shibboleth_id):
         return None
 
     user.shibboleth_id = shibboleth_id
+    user.shibboleth_migration_key = migration_key
     user.save()
     return old_user.shibboleth_id
 
