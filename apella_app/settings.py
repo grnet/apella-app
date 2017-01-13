@@ -105,8 +105,8 @@ LANGUAGES = {'el', 'en'}
 STATIC_URL = '/static/'
 BASE_URL = None  # The host the app is served from
 API_PREFIX = 'apella/'
-TOKEN_LOGIN_URL = '/apella/ui/auth/login'
-TOKEN_REGISTER_URL = '/apella/ui/auth/register/professor'
+TOKEN_LOGIN_URL = '/ui/auth/login'
+TOKEN_REGISTER_URL = '/ui/auth/register/professor'
 AUTH_USER_MODEL = 'apella.ApellaUser'
 DOWNLOAD_FILE_URL = '/apella/ui/auth/login'
 

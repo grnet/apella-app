@@ -6,6 +6,7 @@ import urllib
 import uuid
 import re
 
+from os import path
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -19,6 +20,11 @@ from apella import auth_hooks
 
 LEGACY_URL = getattr(settings, 'APELLA_LEGACY_ACADEMIC_LOGIN_URL')
 MIGRATE_LEGACY = bool(LEGACY_URL)
+TOKEN_LOGIN_URL = path.join(
+    settings.BASE_URL, settings.API_PREFIX, settings.TOKEN_LOGIN_URL)
+TOKEN_REGISTER_URL = path.join(
+    settings.BASE_URL, settings.API_PREFIX, settings.TOKEN_REGISTER_URL)
+
 
 logger = logging.getLogger(__name__)
 
@@ -119,24 +125,22 @@ def legacy_login(request):
         is_eligible_shibboleth_user(shibboleth_data, legacy=True)
     except ValidationError, e:
         logger.info('data not accepted %r: %r', shibboleth_data, e.message)
-        return HttpResponseRedirect(token_login_url + "#error=%s" % e.message)
+        return HttpResponseRedirect(TOKEN_LOGIN_URL+ "#error=%s" % e.message)
 
     key = request.GET.get('migration_key', None)
     legacy_id = identifier
     if not key or not legacy_id:
-        url = urlparse.urljoin(
+        url = path.join(
             settings.BASE_URL, settings.API_PREFIX, settings.TOKEN_LOGIN_URL)
         return HttpResponseRedirect(url + "#error=legacy.error")
 
     id = auth_hooks.init_legacy_migration(legacy_id, key)
     if id is None:
-        url = urlparse.urljoin(
-            settings.BASE_URL, settings.API_PREFIX, reverse('shibboleth_login'))
+        url = path.join(settings.BASE_URL, reverse('shibboleth_login'))
         return HttpResponseRedirect(url + "?login=1&migrate=0")
 
     params = "?login=1&migrate=%s"
-    url = urlparse.urljoin(settings.BASE_URL, settings.API_PREFIX,
-                           reverse('shibboleth_login'))
+    url = path.join(settings.BASE_URL, reverse('shibboleth_login'))
     return HttpResponseRedirect(url + params % str(id))
 
 
@@ -147,9 +151,6 @@ def login(request):
     force_login = request.GET.get('login', False) or (not force_register)
 
     migrate_id = request.GET.get('migrate', None)
-
-    token_login_url = settings.TOKEN_LOGIN_URL
-    token_register_url = settings.TOKEN_REGISTER_URL
 
     headers = request.META
     debug_headers = getattr(settings, 'DEBUG_SHIBBOLETH_HEADERS', {})
@@ -166,7 +167,7 @@ def login(request):
         is_eligible_shibboleth_user(shibboleth_data)
     except ValidationError, e:
         logger.info('data not accepted %r: %r', shibboleth_data, e.message)
-        return HttpResponseRedirect(token_login_url + "#error=%s" % e.message)
+        return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % e.message)
 
     # resolve which user model class should be used to lookup/create user
     UserModel = model_from_data(shibboleth_data)
@@ -192,7 +193,7 @@ def login(request):
 
         if legacy is None:
             msg = 'migration.error'
-            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+            return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
         logger.info("legacy id %s migrated to %s", legacy, identifier)
 
@@ -204,18 +205,19 @@ def login(request):
 
         if force_register:
             msg = "user.exists"
-            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+            return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
         # user not active
         if not user.user.is_active:
             msg = 'user.not.active'
-            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+            return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
         if not user.user.email_verified:
             msg = 'user.not.email_verified'
-            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+            return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
         token = auth_hooks.login_user(user.user, request)
+        user.user.last_login_shibboleth_data = json.dumps(shibboleth_data)
         token = token.key
 
     except UserModel.DoesNotExist:
@@ -230,17 +232,17 @@ def login(request):
 
         if force_login:
             msg = "user.not.found"
-            return HttpResponseRedirect(token_login_url + "#error=%s" % msg)
+            return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
         token = create_registration_token(identifier, user_data)
         created = True
 
     if created:
         data = urllib.quote(base64.b64encode(json.dumps(user_data)))
-        redirect_url = token_register_url
+        redirect_url = TOKEN_REGISTER_URL
         token_fragment = '?initial=%s&academic=1&#token=%s' % (data, token)
     else:
-        redirect_url = token_login_url
+        redirect_url = TOKEN_LOGIN_URL
         token_fragment = '#token=' + token
 
     redirect_url = redirect_url + token_fragment
