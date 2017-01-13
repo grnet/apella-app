@@ -416,6 +416,7 @@ class ProfessorRank(models.Model):
 
 class Position(models.Model):
     code = models.CharField(max_length=200)
+    old_code = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=300)
     discipline = models.CharField(max_length=300)
