@@ -63,30 +63,32 @@ function membersAllModelMeta(serverSide) {
   };
 };
 
-const membersField = field('members', {
-  valueQuery: function(store, params, model, value) {
-    if(model.id) {
-      return get_registry_members(model, store, params);
-    }
-    else {
-      return value ? value : [];
-    }
-  },
-  query: function(table, store, field, params) {
-    let locale = get(table, 'i18n.locale'),
-      default_ordering_param = {
-        ordering: 'user__id'
-      },
-      query = (params.ordering ? params : assign({}, params, default_ordering_param));
-    return store.query('professor', query);
-  },
-  // a list-like gen config
-  label: null,
-  modelMeta: membersAllModelMeta(false),
-  selectModelMeta: membersAllModelMeta(true),
-  modelName: 'professor',
-  displayComponent: 'gen-display-field-table'
-});
+function membersField(modelMetaSide, selectModelMetaSide) {
+  return field('members', {
+    valueQuery: function(store, params, model, value) {
+      if(model.id) {
+        return get_registry_members(model, store, params);
+      }
+      else {
+        return value ? value : [];
+      }
+    },
+    query: function(table, store, field, params) {
+      let locale = get(table, 'i18n.locale'),
+        default_ordering_param = {
+          ordering: 'user__id'
+        },
+        query = (params.ordering ? params : assign({}, params, default_ordering_param));
+      return store.query('professor', query);
+    },
+    // a list-like gen config
+    label: null,
+    modelMeta: membersAllModelMeta(modelMetaSide),
+    selectModelMeta: membersAllModelMeta(selectModelMetaSide),
+    modelName: 'professor',
+    displayComponent: 'gen-display-field-table'
+  });
+}
 
 
 export default ApellaGen.extend({
@@ -105,9 +107,15 @@ export default ApellaGen.extend({
   },
 
   common: {
+  },
+
+  create: {
+    onSubmit(model) {
+      this.transitionTo('registry.record.index', model);
+    },
     fieldsets: [{
       label: 'registry.main_section.title',
-      fields: [field('type', {label: 'common.type_label'}),
+      fields: [field('type', {label: 'type.label'}),
         field('department', {
           displayAttr: 'title_current',
           query: function(table, store, field, params) {
@@ -134,14 +142,8 @@ export default ApellaGen.extend({
       }
     },{
       label: 'registry.members_section.title',
-      fields: [membersField]
+      fields: [membersField(false, true)]
     }]
-  },
-
-  create: {
-    onSubmit(model) {
-      this.transitionTo('registry.record.index', model);
-    }
   },
 
   list: {
@@ -187,7 +189,7 @@ export default ApellaGen.extend({
       }
     },{
       label: 'registry.members_section.title',
-      fields: [membersField]
+      fields: [membersField(true, true)]
     }]
   },
   edit: {
@@ -202,7 +204,7 @@ export default ApellaGen.extend({
       }
     },{
       label: 'registry.members_section.title',
-      fields: [membersField]
+      fields: [membersField(true, true)]
     }]
   }
 });
