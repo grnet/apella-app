@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(DATA_DIR, ...)
 import os
 
-DATA_DIR = '/var/lib/apella/data'
+DATA_DIR = os.environ.get('APELLA_DATA_DIR', '/var/lib/apella/data')
 RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
 SETTINGS_DIR = os.environ.get('APELLA_SETTINGS_DIR', '/etc/apella')
 SETTINGS_FILE = 'settings.conf'
