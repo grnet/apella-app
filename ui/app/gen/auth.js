@@ -281,6 +281,7 @@ export default AuthGen.extend({
             let session = get(this, 'session');
             user.auth_token = token;
             resetHash(window);
+            this.get('messageService').setSuccess('login.success');
             return session.authenticate('authenticator:apimas', user);
           });
         })
