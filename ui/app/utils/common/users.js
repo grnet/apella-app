@@ -98,7 +98,16 @@ const USER_FIELDS_REGISTER = [
   'mobile_phone_number',
   'home_phone_number'
 ];
-const USER_FIELDS_REGISTER_ACADEMIC = USER_FIELDS_REGISTER.slice(3);
+
+const USER_FIELDS_REGISTER_ACADEMIC = [
+  field('email', { readonly: false }),
+  'first_name',
+  'last_name',
+  'father_name',
+  'id_passport',
+  'mobile_phone_number',
+  'home_phone_number'
+];
 
 const USER_FIELDS_REGISTER_REQUIRED = [
   'username',
@@ -195,12 +204,18 @@ const USER_FIELDSET_EDIT = {
 }
 
 const USER_FIELDSET_EDIT_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
-  fields: USER_FIELDS_EDIT_ACADEMIC
+  fields: USER_FIELDS_EDIT_ACADEMIC,
+  layout: {
+    flex: [100, 33, 33, 33, 33, 33, 33]
+  }
 });
 
 const USER_FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
   fields: USER_FIELDS_REGISTER_ACADEMIC,
-  required: USER_FIELDS_REGISTER_REQUIRED_ACADEMIC
+  required: USER_FIELDS_REGISTER_REQUIRED_ACADEMIC,
+  layout: {
+    flex: [100, 33, 33, 33, 33, 33, 33, 33, 33]
+  }
 });
 
 const USER_FIELDSET_REGISTER = Ember.assign({}, USER_FIELDSET_EDIT, {

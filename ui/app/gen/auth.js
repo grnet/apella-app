@@ -71,7 +71,7 @@ const PROFILE_FIELDSETS = function(view) {
   return computed('model.role', function(){
     let f = [];
     let role = this.get('model').get('role');
-    let USER_FIELDSET
+    let USER_FIELDSET;
 
     if (view === 'details') {
       USER_FIELDSET = USER_FIELDSET_USER_ID
