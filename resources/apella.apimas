@@ -27,6 +27,11 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .retrieve: {}
         users:
             .collection: {}
             .drf_collection:
@@ -210,6 +215,11 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .datetime: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .retrieve: {}
         institutions:
             .collection: {}
             .drf_collection:
@@ -477,7 +487,7 @@ spec:
             .drf_collection:
                 model: apella.models.Professor
                 model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
-                mixins: [apella.views.mixins.UploadFilesViewSet]
+                mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.Professor]
                 ordering_fields: [user_id, user__last_name__en, user__last_name__el]
                 filter_fields: [user_id]
                 search_fields: [user_id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
