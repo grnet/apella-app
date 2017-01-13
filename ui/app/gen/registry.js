@@ -28,14 +28,14 @@ export default ApellaGen.extend({
         field('department', {
           displayAttr: 'title_current',
           query: function(table, store, field, params) {
+            params = params || {};
             let role = get(field, 'session.session.authenticated.role');
             if (role == 'institutionmanager' || role == 'assistant') {
               let user_institution = get(field, 'session.session.authenticated.institution');
               let id = user_institution.split('/').slice(-2)[0];
-              return store.query('department', { institution: id });
-            } else {
-              return store.findAll('department');
+              params.institution = id;
             }
+            return store.query('department', params);
           }
         })
       ],

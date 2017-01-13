@@ -187,13 +187,14 @@ export default ApellaGen.extend({
     getModel(params) {
       let role = get(this, 'session.session.authenticated.role');
       if (role == 'professor' || role == 'candidate') {
-        return this.store.query('position', { state: 'posted' }).then(function(positions) {
+        params.state = 'posted';
+        return this.store.query('position', params).then(function(positions) {
           return positions.filter(function(pos) {
             return !get(pos, 'is_closed');
           })
         });
       } else {
-        return this.store.findAll('position');
+        return this.store.query('position', params);
       }
     },
     sort: {
