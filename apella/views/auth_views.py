@@ -156,7 +156,7 @@ def make_registration_serializer(serializer):
     """
     Polymorphic registration serializer based on provided `serializer`
     """
-    class RegistrationSerializer(serializer):
+    class RegistrationSerializer(serializer.model_ser_cls):
 
         def save(self, *args, **kwargs):
             save = super(RegistrationSerializer, self).save
@@ -167,7 +167,8 @@ def make_registration_serializer(serializer):
             validate = super(RegistrationSerializer, self).validate
             return auth_hooks.validate_new_user(validate, attrs)
 
-    return RegistrationSerializer
+    serializer.model_ser_cls = RegistrationSerializer
+    return serializer
 
 
 class CustomRegistrationView(djoser_views.RegistrationView,
