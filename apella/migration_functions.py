@@ -283,6 +283,7 @@ def migrate_position(old_position, author):
 
     try:
         new_position = Position.objects.create(
+            old_code=old_position.position_serial,
             title=old_position.title,
             description=old_position.description,
             subject=subject,
