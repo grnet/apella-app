@@ -59,6 +59,7 @@ def register_user(save, data, *args, **kwargs):
     if token:
         user.user.shibboleth_id = token.identifier
         user.user.set_unusable_password()
+        user.user.login_method = 'academic'
         token.delete()
 
     user.user.save()
@@ -183,6 +184,7 @@ def migrate_legacy(migration_key, migrate_id, shibboleth_id):
 
     user.shibboleth_id = shibboleth_id
     user.shibboleth_migration_key = migration_key
+    user.login_method = 'academic'
     user.save()
     return old_user.shibboleth_id
 

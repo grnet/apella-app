@@ -23,9 +23,9 @@ const FILE_FIELDS = [
 
 const USER_FIELDS_ALL = [
   'user_id',
+  'email',
   'username',
   'password',
-  'email',
   'first_name',
   'last_name',
   'father_name',
@@ -37,8 +37,8 @@ const USER_FIELDS_ALL = [
 
 const USER_FIELDS = [
   'username',
-  'password',
   'email',
+  'password',
   'first_name',
   'last_name',
   'father_name',
@@ -59,11 +59,38 @@ const USER_FIELDS_EDIT = [
 ];
 const USER_FIELDS_EDIT_ACADEMIC = USER_FIELDS_EDIT.slice(1);
 
+function samePassword({field, checkLen}) {
+  return (key, value, old, changes, content) => {
+    if (changes.password && value && value.length > (checkLen || 3)) {
+      if (value != changes.password) {
+        return 'passwords.do.not.match'
+      }
+    }
+    return true;
+  }
+};
+
 const USER_FIELDS_REGISTER = [
-  field('username', { readonly: false }),
-  'password',
-  field('password2', { type: 'string', formAttrs: { type: 'password' }}),
+  field('username', {
+    readonly: false,
+    validators: [validate.length({min: 4})]
+  }),
   field('email', { readonly: false }),
+  field('password', {
+    required: true,
+    type: 'string',
+    validators: [validate.length({min: 6})],
+    formAttrs: { type: 'password' }
+  }),
+  field('password2', {
+    required: true,
+    validators: [
+      validate.length({min: 6}),
+      samePassword({field: 'password', checkLen: 5})
+    ],
+    type: 'string',
+    formAttrs: { type: 'password' }
+  }),
   'first_name',
   'last_name',
   'father_name',
@@ -163,7 +190,7 @@ const USER_FIELDSET_EDIT = {
   label: 'fieldsets.labels.user_info',
   fields: USER_FIELDS_EDIT,
   layout: {
-        flex: [100, 50, 50, 50, 50, 50, 50]
+    flex: [50, 50, 50, 50, 33, 33, 33, 50]
   }
 }
 
@@ -178,7 +205,10 @@ const USER_FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
 
 const USER_FIELDSET_REGISTER = Ember.assign({}, USER_FIELDSET_EDIT, {
   fields: USER_FIELDS_REGISTER,
-  required: USER_FIELDS_REGISTER_REQUIRED
+  required: USER_FIELDS_REGISTER_REQUIRED,
+  layout: {
+    flex: [50, 50, 50, 50, 33, 33, 33, 33, 33, 33]
+  }
 });
 
 const USER_FIELDSET_DETAILS = {

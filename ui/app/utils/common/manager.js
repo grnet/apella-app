@@ -53,7 +53,7 @@ const FIELDSET_REGISTER = {
   label: 'fieldsets.labels.more_info',
   fields: FIELDS_REGISTER,
   layout: {
-    flex: [50, 50, 50, 50]
+    flex: [50, 50, 100]
    }
 };
 
@@ -61,7 +61,7 @@ const SUB_FIELDSET = {
   label: 'manager.label.sub_fieldset',
   fields: SUB_FIELDS,
   layout: {
-    flex: [50, 50, 50, 50, 50, 50]
+    flex: [33, 33, 33, 50, 50]
    }
 };
 
@@ -69,7 +69,7 @@ const SUB_FIELDSET_REGISTER = {
   label: 'manager.label.sub_fieldset',
   fields: SUB_FIELDS_REGISTER,
   layout: {
-    flex: [50, 50, 50, 50, 50, 50]
+    flex: [33, 33, 33, 50, 50]
    }
 };
 
