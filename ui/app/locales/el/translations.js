@@ -321,7 +321,6 @@ export default {
   },
   common: {
     create_label: 'Δημιουργία',
-    type_label: 'Είδος',
     id_label: 'Κωδικός',
     edit_label: 'Τροποποίηση',
     button: {
@@ -367,4 +366,5 @@ export default {
   'Research Director': 'Research Director *',
   'Principal Researcher': 'Principal Researcher',
   'Affiliated Researcher': 'Affiliated Researcher',
+  'type.label': 'Είδος'
 };

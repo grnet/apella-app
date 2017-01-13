@@ -282,7 +282,6 @@ export default {
   },
   common: {
     create_label: 'New',
-    type_label: 'Type',
     id_label: 'ID',
     edit_label: 'Edit',
     button: {
@@ -326,4 +325,5 @@ export default {
   'Research Director': 'Research Director',
   'Principal Researcher': 'Principal Researcher',
   'Affiliated Researcher': 'Affiliated Researcher',
+  'type.label': 'Type',
 };

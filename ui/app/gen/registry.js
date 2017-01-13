@@ -1,6 +1,7 @@
 import {
   ApellaGen, i18nField, i18nUserSortField, i18nUserSortAttr, get_registry_members
 } from 'ui/lib/common';
+import {disable_field} from 'ui/utils/common/fields';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
@@ -14,7 +15,12 @@ let {
 
 const membersField = field('members', {
   valueQuery: function(store, params, model, value) {
-    return get_registry_members(model, store, params);
+    if(model.id) {
+      return get_registry_members(model, store, params);
+    }
+    else {
+      return value ? value : [];
+    }
   },
   query: function(table, store, field, params) {
     let locale = get(table, 'i18n.locale'),
@@ -150,14 +156,42 @@ export default ApellaGen.extend({
       fields: [
         field('institution.title_current', {label: 'institution.label', type: 'text'}),
         field('department.title_current', {label: 'department.label', type: 'text'}),
-        field('type_verbose', {label: 'common.type_label', type: 'text'})
+        field('type_verbose', {label: 'type.label', type: 'text'})
       ],
       actions: ['gen:details', 'gen:edit', 'remove']
     }
   },
+
   details: {
     page: {
       title: computed.readOnly('model.id')
-    }
+    },
+    fieldsets: [{
+      label: 'registry.main_section.title',
+      fields: ['type',
+        i18nField('department.title'),
+      ],
+      layout: {
+        flex: [30, 70]
+      }
+    },{
+      label: 'registry.members_section.title',
+      fields: [membersField]
+    }]
+  },
+  edit: {
+    fieldsets: [{
+      label: 'registry.main_section.title',
+      fields: [
+        disable_field('type'),
+        disable_field('department', {displayAttr: 'title_current'}),
+      ],
+      layout: {
+        flex: [30, 70]
+      }
+    },{
+      label: 'registry.members_section.title',
+      fields: [membersField]
+    }]
   }
 });
