@@ -1,4 +1,5 @@
 import uuid
+import hashlib
 
 from django.db import transaction
 from django.shortcuts import get_object_or_404
@@ -216,8 +217,8 @@ class CustomRegistrationView(djoser_views.RegistrationView,
 
         token = request.data.get('registration_token', None)
         if token:
-            token = get_object_or_404(RegistrationToken, token=token)
-            user['username'] = str(uuid.uuid4())
+            get_object_or_404(RegistrationToken, token=token)
+            user['username'] = hashlib.md5(token).hexdigest()[:30]
             user['password'] = get_random_string(100)
             # TODO: extract token data to non-set request values
 
