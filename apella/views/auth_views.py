@@ -168,8 +168,10 @@ def make_registration_serializer(serializer):
             validate = super(RegistrationSerializer, self).validate
             return auth_hooks.validate_new_user(validate, attrs)
 
-    serializer.model_ser_cls = RegistrationSerializer
-    return serializer
+    class Serializer(serializer):
+        model_ser_cls = RegistrationSerializer
+
+    return Serializer
 
 
 class CustomRegistrationView(djoser_views.RegistrationView,
