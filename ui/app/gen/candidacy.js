@@ -5,6 +5,7 @@ import _ from 'lodash/lodash';
 import {disable_field} from 'ui/utils/common/fields';
 import {cancelCandidacy, goToPosition} from 'ui/utils/common/actions';
 import {fileField} from 'ui/lib/common';
+import moment from 'moment';
 
 const {
         set, get, computed, computed: { alias },
@@ -43,11 +44,29 @@ let CANDIDACY_FIELDSET =  {
     fields: [
       fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
         hint: 'five_before_electors_meeting',
+        readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
+          let electors_at = get(this, 'model.position.electors_meeting_date');
+          let position_closed = !get(this, 'model.position.is_open');
+          let after_deadline = false;
+          if (electors_at) {
+            after_deadline =  moment().add(5, 'days').isAfter(electors_at);
+          }
+          return position_closed || after_deadline;
+        })
       }, {
         replace: true
       }),
      fileField('attachment_files', 'candidacy', 'attachment_files', {
         hint: 'one_before_electors_meeting',
+        readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
+          let electors_at = get(this, 'model.position.electors_meeting_date');
+          let position_closed = !get(this, 'model.position.is_open');
+          let after_deadline = false;
+          if (electors_at) {
+            after_deadline =  moment().add(1, 'days').isAfter(electors_at);
+          }
+          return position_closed || after_deadline;
+        })
       }, {
         multiple: true
       }),
@@ -80,7 +99,6 @@ let FS = {
   common: [
     POSITION_FIELDSET,
     CANDIDATE_FIELDSET,
-    CANDIDACY_FIELDSET
   ],
   list:  ['position.code', field('candidate.id', {label: 'user_id.label'}), 'position.title', 'position.department.institution.title_current',
           'position.department.title_current',
@@ -233,6 +251,13 @@ export default ApellaGen.extend({
     routeMixins: {
       queryParams: {'position': { refreshModel: true }},
     }
+  },
+  edit: {
+    fieldsets: [
+      POSITION_FIELDSET,
+      CANDIDATE_FIELDSET,
+      CANDIDACY_FIELDSET
+    ]
   },
   details: {
     page: {
