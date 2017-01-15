@@ -55,6 +55,8 @@ export default DS.Model.extend({
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
+  electors_meeting_date: DS.attr('date'),
+  electors_meeting_date_format: computeDateFormat('electors_meeting_date'),
   code: DS.attr({label: 'code.label'}),
   // Use in candidacy select list
   code_and_title: computed('code', 'title', function() {
