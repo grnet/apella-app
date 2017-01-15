@@ -12,13 +12,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
-
 from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
-        Candidacy, ApellaUser, ApellaFile, ElectorParticipation
+    Candidacy, ApellaFile, ElectorParticipation
 from apella.loader import adapter
-from apella.common import FILE_KINDS, FILE_KIND_TO_FIELD
+from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 
 
@@ -31,12 +30,14 @@ class DestroyProtectedObject(viewsets.ModelViewSet):
         except ProtectedError:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
+
 class Professor(object):
     def get_queryset(self):
         queryset = self.queryset
-        if not 'ordering' in self.request.query_params:
+        if 'ordering' not in self.request.query_params:
             queryset = self.queryset.order_by('user__last_name__el')
         return queryset
+
 
 class AssistantList(generics.ListAPIView):
     def get_queryset(self):
@@ -166,13 +167,29 @@ class RegistriesList(generics.ListAPIView):
     @detail_route()
     def members(self, request, pk=None):
         registry = self.get_object()
-        members = registry.members
+        query_params = self.request.query_params
+        if 'ordering' not in query_params:
+            ordering = 'user__last_name__el'
+        else:
+            ordering = query_params['ordering']
+        if 'user_id' in query_params:
+            members = registry.members.filter(
+                user_id=query_params['user_id']). \
+                order_by(ordering)
+        else:
+            members = registry.members.order_by(ordering)
+        if 'search' in query_params:
+            search = query_params['search']
+            members = members.filter(
+                Q(user__last_name__en__icontains=search) |
+                Q(user__last_name__el__icontains=search))
         ser = adapter.get_serializer('professors')
         return Response(
             ser(members, many=True, context={'request': request}).data)
 
 
 USE_X_SEND_FILE = getattr(settings, 'USE_X_SEND_FILE', False)
+
 
 class FilesViewSet(viewsets.ModelViewSet):
 
@@ -207,6 +224,7 @@ class FilesViewSet(viewsets.ModelViewSet):
         else:
             response.content = open(file.file_path.path)
         return response
+
 
 class UploadFilesViewSet(viewsets.ModelViewSet):
 
