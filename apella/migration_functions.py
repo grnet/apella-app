@@ -12,7 +12,7 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \
     OldApellaUserMigrationData, Position, Subject, SubjectArea, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
-    Candidacy
+    Candidacy, OldApellaCandidacyMigrationData
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
 logger = logging.getLogger('apella')
@@ -86,10 +86,13 @@ def migrate_institutionmanager(old_user, new_user):
         el=old_user.manager_deputy_fathername_el,
         en=old_user.manager_deputy_fathername_en)
 
-    authority = None
     if old_user.manager_appointer_authority:
-        authority = [authority for authority, value in AUTHORITIES \
-                if authority == old_user.manager_appointer_authority.lower()][0]
+        authority = [
+            authority for authority, value in AUTHORITIES
+            if authority == old_user.manager_appointer_authority.lower()][0]
+    else:
+        authority = None
+
     try:
         manager = InstitutionManager.objects.create(
             user=new_user,
@@ -117,16 +120,18 @@ def professor_exists(user_id):
         role='professor', user_id=user_id).exists()
 
 FILE_KINDS_MAPPING = {
-    'BIOGRAFIKO' : 'cv',
+    'BIOGRAFIKO': 'cv',
     'PTYXIO': 'diploma',
     'DIMOSIEYSI': 'publication',
     'TAYTOTHTA': 'id_passport',
     'PROFILE': 'cv_professor'
 }
 
+
 def migrate_file(old_file, new_user, source, source_id):
     if old_file.file_type not in FILE_KINDS_MAPPING:
-        logger.error('failed to migrate file, unknown file_type %s' %
+        logger.error(
+            'failed to migrate file, unknown file_type %s' %
             old_file.file_type)
         return
     new_file = ApellaFile(
@@ -171,7 +176,8 @@ def migrate_user_profile_files(old_user, new_user):
         migrate_file(
             old_file, new_user, 'profile', new_user.id)
         i += 1
-    logger.info('migrated %s profile files for user %s' %
+    logger.info(
+        'migrated %s profile files for user %s' %
         (i, new_user.id))
 
 
@@ -256,10 +262,12 @@ def migrate_user(old_user, password=None):
             candidate = migrate_candidate(old_user, new_user)
             logger.info('created candidate %s' % candidate.id)
             migrate_user_profile_files(old_user, new_user)
+            migrate_candidacies(candidate_user=new_user)
     elif role == 'professor':
         professor = migrate_professor(old_user, new_user)
         logger.info('created professor %s' % professor.id)
         migrate_user_profile_files(old_user, new_user)
+        migrate_candidacies(candidate_user=new_user)
     elif role == 'institutionmanager' or role == 'assistant':
         institutionmanager = migrate_institutionmanager(old_user, new_user)
         logger.info('created institution manager %s' % institutionmanager.id)
@@ -312,7 +320,40 @@ def migrate_position(old_position, author):
     logger.info(
         'migrated position %s, from old position %s' %
         (new_position.id, old_position.position_serial))
+
+    migrate_candidacies(position=new_position)
     return new_position
+
+
+def migrate_candidacies(position=None, candidate_user=None):
+    if position:
+        old_candidacies = OldApellaCandidacyMigrationData.objects.filter(
+            position_serial=str(position.old_code))
+    elif candidate_user:
+        old_candidacies = OldApellaCandidacyMigrationData.objects.filter(
+            candidate_user_id=str(candidate_user.old_user_id))
+        for old_candidacy in old_candidacies:
+            try:
+                new_candidate = ApellaUser.objects.get(
+                    old_user_id=int(old_candidacy.candidate_user_id))
+            except ApellaUser.DoesNotExist:
+                logger.info(
+                    'cannot migrate candidacy %s: candidate %s does not exist'
+                    % (old_candidacy.candidacy_serial,
+                        old_candidacy.candidate_user_id))
+                continue
+
+            try:
+                new_position = Position.objects.get(
+                    old_code=old_candidacy.position_serial)
+            except Position.DoesNotExist:
+                logger.info(
+                    'cannot migrate candidacy %s: position %s does not exist' %
+                    (old_candidacy.candidacy_serial,
+                        old_candidacy.position_serial))
+                continue
+
+            migrate_candidacy(old_candidacy, new_candidate, new_position)
 
 
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
@@ -327,3 +368,6 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
 
     candidacy.code = str(candidacy.id)
     candidacy.save()
+    logger.info(
+        'migrated candidacy %s, to %s' %
+        (old_candidacy.candidacy_serial, candidacy.id))
