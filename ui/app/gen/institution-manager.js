@@ -53,7 +53,7 @@ export default ApellaGen.extend({
     },
     sortBy: 'username:asc',
     row: {
-      fields: ['user_id', 'username', 'email', 'full_name_current', 'institution.title_current', 'manager_role_verbose'],
+      fields: ['user_id', 'is_verified', 'username', 'email', 'full_name_current', 'institution.title_current', 'manager_role_verbose'],
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },

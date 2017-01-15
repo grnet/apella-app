@@ -40,7 +40,14 @@ export default ApellaGen.extend({
     },
     sortBy: 'username:asc',
     row: {
-      fields: ['user_id', 'username', 'email', 'full_name_current', 'rank', ],
+      fields: computed('role', function() {
+        let role = get(this, 'role');
+        let fs = ['user_id', 'username', 'email', 'full_name_current', 'rank', ];
+        if (role === ('helpdeskadmin' || 'helpdeskuser') ) {
+          fs.splice(1, 0, 'is_verified');
+        }
+        return fs;
+      }),
       actions: ['gen:details', 'gen:edit', 'remove']
     },
   },
