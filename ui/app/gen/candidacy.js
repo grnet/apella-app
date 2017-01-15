@@ -100,9 +100,13 @@ let FS = {
     POSITION_FIELDSET,
     CANDIDATE_FIELDSET,
   ],
-  list:  ['position.code', field('candidate.id', {label: 'user_id.label'}), 'position.title', 'position.department.institution.title_current',
+  list:  ['position.code', 'position.title', 'position.department.institution.title_current',
           'position.department.title_current',
           'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
+  list_with_user_id:  ['position.code', 'candidate.id', 'position.title', 'position.department.institution.title_current',
+          'position.department.title_current',
+          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
+
   create_helpdeskadmin: [
     POSITION_FIELDSET,
     {
@@ -202,7 +206,15 @@ export default ApellaGen.extend({
       })
     },
     row: {
-      fields: FS.list,
+      fields: computed('role', function() {
+        let role = get(this, 'role');
+        let fs = FS.list_with_user_id;
+        if (role === 'candidate' || role === 'professor' ) {
+          fs = FS.list
+        }
+        return fs;
+      }),
+
       actions: ['gen:details', 'goToPosition', 'gen:edit', 'cancelCandidacy'],
       actionsMap: {
         cancelCandidacy: cancelCandidacy,
