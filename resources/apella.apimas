@@ -1139,7 +1139,11 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .readonly: {}
+                is_rejected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
                 file_path:
                     .cli_option: {}
                     .field: {}
