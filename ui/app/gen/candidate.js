@@ -1,6 +1,7 @@
 import {ApellaGen} from 'ui/lib/common';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
+import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -41,12 +42,16 @@ export default ApellaGen.extend({
         let role = get(this, 'role');
         let fs = ['user_id', 'username', 'email', 'full_name_current'];
         if (role === ('helpdeskadmin' || 'helpdeskuser') ) {
-          fs.splice(1, 0, 'is_verified');
+          fs.splice(1, 0, field('status_verbose', {label: 'state.label'}));
         }
         return fs;
       }),
-
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
+      actionsMap: {
+        verifyUser: verifyUser,
+        rejectUser: rejectUser,
+        requestProfileChanges: requestProfileChanges,
+      }
     },
   },
   details: {

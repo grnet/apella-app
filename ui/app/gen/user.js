@@ -48,7 +48,7 @@ export default ApellaGen.extend({
       fields: ['id', 'username']
     },
     row: {
-           fields: [field('id', {label: 'user_id.label'}), field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'role_verbose'],
+      fields: [field('id', {label: 'user_id.label'}), field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'role_verbose'],
       actions: ['gen:details', 'gen:edit', 'remove', 'activateUser', 'deactivateUser'],
       actionsMap: {
         deactivateUser: deactivateUser,
@@ -59,7 +59,9 @@ export default ApellaGen.extend({
   },
   details: {
     page: {
+
       title: computed.readOnly('model.full_name_current')
+
     },
     fieldsets: [
       USER_FIELDSET_DETAILS

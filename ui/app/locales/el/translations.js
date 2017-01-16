@@ -355,4 +355,7 @@ export default {
   'active': 'Ενεργός',
   'inactive': 'Aνενεργός',
   'email_pending_verification': 'Αναμένεται ενεργοποίηση',
+  'rejected': 'Rejected',
+  'verified': 'Πιστοιποιημένος',
+  'pending_verification': 'Αναμένεται πιστοποίηση',
 };

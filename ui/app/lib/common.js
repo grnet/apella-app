@@ -136,7 +136,19 @@ const VerifiedUserMixin = Ember.Mixin.create({
   verification_pending: DS.attr('boolean'),
   is_rejected: DS.attr('boolean'),
   rejected_reason: DS.attr('string'),
-  login_method: DS.attr('string')
+  login_method: DS.attr('string'),
+  status_verbose: computed('is_verified', 'is_rejected', 'verification_pending',  'i18n.locale', function() {
+    if (get(this, 'is_rejected')) {
+      return get(this, 'i18n').t('rejected');
+    }
+    if (get(this, 'is_verified')) {
+      return get(this, 'i18n').t('verified');
+    }
+    if (get(this, 'verification_pending')) {
+      return get(this, 'i18n').t('pending_verification');
+    }
+    return '-';
+  }),
 });
 
 function fileField(key, path, kind, attrs, formAttrs) {

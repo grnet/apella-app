@@ -314,4 +314,7 @@ export default {
   'active': 'active',
   'inactive': 'inactive',
   'email_pending_verification': 'Email pending verification',
+  'rejected': 'Rejected',
+  'verified': 'Verified',
+  'pending_verification': 'Pending verification',
 };
