@@ -23,7 +23,7 @@ const  goToDetails = {
 
 const applyCandidacy = {
   label: 'applyCandidacy',
-  icon: 'playlist add',
+  icon: 'person_add',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
   hidden: computed('model.is_open', 'role', 'model.can_apply', function(){
     let role = get(this, 'role');
@@ -104,7 +104,7 @@ const cancelCandidacy = {
 
 const  goToPosition = {
   label: 'position_details.label',
-  icon: 'business_center',
+  icon: 'event_available',
   action(route, model) {
     let position_id = get(this, 'model.position.id');
     route.transitionTo('position.record.index', position_id);

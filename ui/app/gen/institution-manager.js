@@ -34,7 +34,7 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'manager.menu_label',
-      icon: 'sentiment very satisfied',
+      icon: 'supervisor_account',
       display: computed('role', function() {
         let role = get(this, 'role');
         let permittedRoles = ['helpdeskadmin'];

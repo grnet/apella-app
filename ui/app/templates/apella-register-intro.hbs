@@ -19,19 +19,19 @@
         {{#paper-button
           class="no-left-margin"
           onClick=(route-action 'shibbolethRegister')
-          raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'register.domestic.label'}}{{/paper-button}}
-        {{#paper-button 
-          class="no-left-margin" 
+          raised=true primary=true}}{{paper-icon 'person'}}{{t 'register.domestic.label'}}{{/paper-button}}
+        {{#paper-button
+          class="no-left-margin"
           onClick=(transition-to 'auth.register.index' 'professor')
-          raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.foreign.label'}}{{/paper-button}}
-        {{#paper-button 
+          raised=true primary=true}}{{paper-icon 'person_pin'}}{{t 'register.foreign.label'}}{{/paper-button}}
+        {{#paper-button
           class="no-left-margin"
           onClick=(transition-to 'auth.register.index' 'candidate')
-          raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.candidate.label'}}{{/paper-button}}
-        {{#paper-button 
+          raised=true primary=true}}{{paper-icon 'person_outline'}}{{t 'register.candidate.label'}}{{/paper-button}}
+        {{#paper-button
           class="no-left-margin"
           onClick=(transition-to 'auth.register.index' 'manager')
-          raised=true primary=true}}{{paper-icon 'account_box'}}{{t 'register.manager.label'}}{{/paper-button}}
+          raised=true primary=true}}{{paper-icon 'supervisor_account'}}{{t 'register.manager.label'}}{{/paper-button}}
       </md-card-content>
       <md-card-content>
         <h4>{{t 'resend.email.verification'}}</h4>

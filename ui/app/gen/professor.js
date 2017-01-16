@@ -29,7 +29,7 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'professor.menu_label',
-      icon: 'sentiment_very_dissatisfied'
+      icon: 'people'
     },
     layout: 'table',
     filter: {

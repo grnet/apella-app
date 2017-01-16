@@ -27,7 +27,7 @@ export default ApellaGen.extend({
       title: 'user.menu_label',
     },
     menu: {
-      icon: 'face',
+      icon: 'account_box',
       label: 'user.menu_label'
     },
     layout: 'table',

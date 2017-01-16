@@ -214,7 +214,7 @@ export default ApellaGen.extend({
       title: 'position.menu_label',
     },
     menu: {
-      icon: 'business_center',
+      icon: 'event_available',
       label: 'position.menu_label'
     },
     layout: 'table',

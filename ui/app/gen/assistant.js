@@ -105,7 +105,7 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'assistant.menu_label',
-      icon: 'directions_run',
+      icon: 'person_add',
       display: computed('role', function() {
         let role = get(this, 'role');
         let forbittenRoles = ['professor', 'candidate', 'assistant'];

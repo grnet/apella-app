@@ -20,7 +20,7 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'candidate.menu_label',
-      icon: 'sentiment_dissatisfied'
+      icon: 'people_outline'
     },
     layout: 'table',
     filter: {

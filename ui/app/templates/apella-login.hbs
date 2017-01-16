@@ -8,10 +8,10 @@
   }}
 
   {{#if userNotFound }}
-  {{toolbar-message warn=true message='user.not.found.error' button=(hash action='shibbolethRegister' message='register' icon='pregnant_woman')}}
+  {{toolbar-message warn=true message='user.not.found.error' button=(hash action='shibbolethRegister' message='register' icon='person')}}
   {{/if}}
   {{#if userExists }}
-  {{toolbar-message warn=true message='user.exists.error' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='pregnant_woman')}}
+  {{toolbar-message warn=true message='user.exists.error' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='person')}}
   {{/if}}
   {{#if migrationError }}
   {{toolbar-message warn=true message='user.migration.error'}}
@@ -77,7 +77,7 @@
           {{#paper-button
             class="no-margin"
             onClick=(route-action 'shibbolethLogin')
-            raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'login.domestic.label' }}{{/paper-button}}
+            raised=true primary=true}}{{paper-icon 'person'}}{{t 'login.domestic.label' }}{{/paper-button}}
         </md-card-content>
       </md-card>
     </md-content>

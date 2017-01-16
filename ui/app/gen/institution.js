@@ -48,7 +48,7 @@ export default ApellaGen.extend({
       title: 'institution.menu_label',
     },
     menu: {
-      icon: 'location_city',
+      icon: 'chrome_reader_mode',
       label: 'institution.menu_label'
     },
     sort: {

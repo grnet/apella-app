@@ -352,6 +352,7 @@ export default AuthGen.extend({
     modelName: 'profile',
     menu: {
       display: true,
+      icon: 'portrait',
       label: 'profile.menu_label',
     },
     onSubmit: function() {},

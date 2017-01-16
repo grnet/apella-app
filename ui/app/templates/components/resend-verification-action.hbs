@@ -1,7 +1,7 @@
 {{#paper-button
   class="no-margin flex-grow"
   onClick=(toggle-action "visiblePopup" this)
-  raised=true primary=true}}{{paper-icon 'pregnant_woman'}}{{t 'resend.verification.button.label' }}{{/paper-button}}
+  raised=true primary=true}}{{paper-icon 'redo'}}{{t 'resend.verification.button.label' }}{{/paper-button}}
 
 {{#if visiblePopup}}
 {{#paper-dialog fullscreen=true onClose=(toggle-action 'visiblePopup' this) clickOutsideToClose=true}}
@@ -23,8 +23,8 @@
     onSubmit=(action (toggle 'visiblePopup' this))
     messages=(hash success=(t 'email.verification.sent'))
     labels=(hash submit=(t 'send.verification.email'))
-    modelMeta=(gen-resource-meta (hash 
-      fields=(array 
+    modelMeta=(gen-resource-meta (hash
+      fields=(array
         (array 'email' (hash type='string' required=true formAttrs=(hash type='email')))
       )
     ))

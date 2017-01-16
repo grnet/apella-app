@@ -20,7 +20,7 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'helpdeskuser.menu_label',
-      icon: 'sentiment_dissatisfied'
+      icon: 'perm_identity'
     },
     layout: 'table',
     row: {
