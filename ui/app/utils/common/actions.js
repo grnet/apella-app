@@ -157,6 +157,91 @@ const activateUser = {
   }
 };
 
+const verifyUser = {
+  label: 'verifyUser',
+  icon: 'done',
+  action(route, model) {
+    model.set('is_verified', true);
+    model.set('is_rejected', false);
+    model.set('verification_pending', false);
+    let m = route.get('messageService')
+    return model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason;
+    });
+  },
+  hidden: computed('model.is_rejected', 'model.verification_pending', function(){
+    return !(get(this, 'model.is_rejected') || get(this, 'model.verification_pending'));
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'verify',
+    cancel: 'cancel',
+    message: 'prompt.verifyUser.message',
+    title: 'prompt.verifyUser.title',
+  }
+};
+
+const rejectUser = {
+  label: 'rejectUser',
+  icon: 'clear',
+  action(route, model) {
+    model.set('is_verified', false);
+    model.set('is_rejected', true);
+    model.set('verification_pending', false);
+    let m = route.get('messageService')
+    return model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason;
+    });
+  },
+  hidden: computed('model.is_verified', 'model.verification_pending', function(){
+    return !(get(this, 'model.is_verified') || get(this, 'model.verification_pending'));
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'reject',
+    cancel: 'cancel',
+    message: 'prompt.rejectUser.message',
+    title: 'prompt.rejectUser.title',
+  }
+};
+
+
+const requestProfileChanges = {
+  label: 'requestProfileChanges',
+  icon: 'compare_arrows',
+  action(route, model) {
+    model.set('verification_pending', false);
+    let m = route.get('messageService')
+    return model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason;
+    });
+  },
+  hidden: computed.not('model.verification_pending'),
+  confirm: true,
+  prompt: {
+    ok: 'requestChanages',
+    cancel: 'cancel',
+    message: 'prompt.requestProfileChanges.message',
+    title: 'prompt.requestProfileChanges.title',
+  }
+};
+
+
 const  goToPosition = {
   label: 'position_details.label',
   icon: 'event_available',
@@ -169,5 +254,7 @@ const  goToPosition = {
 
 export { goToDetails, applyCandidacy, cancelPosition,
   cancelCandidacy, goToPosition,
+  rejectUser, verifyUser,
+  requestProfileChanges,
   deactivateUser, activateUser};
 
