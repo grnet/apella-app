@@ -360,6 +360,8 @@ PERMISSION_RULES = [
     ('registries', 'members', 'assistant', '*', '*', ''),
     ('registries', 'members', 'helpdeskadmin', '*', '*', ''),
     ('registries', 'members', 'helpdeskuser', '*', '*', ''),
+    ('registries', 'members', 'professor', '*', '*', ''),
+    ('registries', 'members', 'candidate', '*', '*', ''),
     ('registries', 'retrieve', 'candidate', '*', '*', '3.3.9'),
     ('registries', 'retrieve', 'helpdeskadmin', '*', '*', '5.1.9'),
     ('registries', 'retrieve', 'helpdeskuser', '*', '*', '5.1.9'),
