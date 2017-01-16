@@ -340,7 +340,6 @@ export default {
   δοθεί δικαίωμα διαχείρισης όλων των θέσεων.',
   'open': 'Ανοιχτή',
   'closed': 'Κλειστή',
-  // 1,2 is the type of registry
   'registry.type.internal': 'Εσωτερικό Μητρώο',
   'registry.type.external': 'Εξωτερικό Μητρώο',
   'is_foreign_descr.label': 'Κατηγορία Χρήστη',

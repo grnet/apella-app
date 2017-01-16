@@ -300,7 +300,6 @@ export default {
   positions will be able to handle this position, too.',
   'open': 'Open',
   'closed': 'Closed',
-  // 1,2 is the type of registry
   'registry.type.internal': 'Internal Registry',
   'registry.type.external': 'External Registry',
   'is_foreign_descr.label': 'User Type',
