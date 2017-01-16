@@ -44,6 +44,16 @@ export default ApellaGen.extend({
   },
 
   list: {
+    getModel: function(params) {
+      let store = get(this, 'store');
+      params = params || {};
+      // Default ordering
+      if(!params.ordering) {
+          let locale = get(this, 'i18n.locale');
+          params.ordering = `title__${locale}`;
+      }
+      return store.query('institution', params)
+    },
     page: {
       title: 'institution.menu_label',
     },
