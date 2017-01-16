@@ -66,20 +66,26 @@ function membersAllModelMeta(serverSide) {
 function membersField(modelMetaSide, selectModelMetaSide) {
   return field('members', {
     valueQuery: function(store, params, model, value) {
-      if(model.id) {
-        return get_registry_members(model, store, params);
+
+      if(model.get('id')) {
+        // Default ordering (if other is not set)
+        if(!params.ordering) {
+          let locale = model.get('i18n.locale');
+          params.ordering = `user__last_name__${locale}`;
+        }
+          return get_registry_members(model, store, params);
       }
       else {
         return value ? value : [];
       }
     },
     query: function(table, store, field, params) {
-      let locale = get(table, 'i18n.locale'),
-        default_ordering_param = {
-          ordering: 'user__id'
-        },
-        query = (params.ordering ? params : assign({}, params, default_ordering_param));
-      return store.query('professor', query);
+      // Default ordering (if other is not set)
+      if(!params.ordering) {
+        let locale = get(table, 'i18n.locale');
+        params.ordering = `user__last_name__${locale}`;
+      }
+        return store.query('professor', params);
     },
     // a list-like gen config
     label: null,
