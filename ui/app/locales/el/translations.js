@@ -366,5 +366,6 @@ export default {
   'Research Director': 'Research Director *',
   'Principal Researcher': 'Principal Researcher',
   'Affiliated Researcher': 'Affiliated Researcher',
-  'type.label': 'Είδος'
+  'type.label': 'Είδος',
+  'list.filters.title': 'Φίλτρα'
 };

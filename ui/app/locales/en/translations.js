@@ -326,4 +326,5 @@ export default {
   'Principal Researcher': 'Principal Researcher',
   'Affiliated Researcher': 'Affiliated Researcher',
   'type.label': 'Type',
+  'list.filters.title': 'Filters'
 };
