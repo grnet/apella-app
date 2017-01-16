@@ -76,6 +76,11 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                email_verified:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
                     .readonly: {}
                 id_passport:
                     .cli_option: {}
