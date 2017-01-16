@@ -1,4 +1,4 @@
-{% extends "emails/base_email.txt %}
+{% extends "apella/emails/base_email.txt %}
 
 {% block content_el %}
 

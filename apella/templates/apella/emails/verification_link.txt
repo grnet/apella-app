@@ -1,8 +1,0 @@
-A translation in English follows
-
-
-Προς χρήστη {{ user.username }},
-Για την επαλήθευση του e-mail σας πατήστε στον ακόλουθο σύνδεσμο: {{ verification_url }}
-
-To user {{ user.username }},
-To verify your e-mail click on the following link: {{ verification_url }}
