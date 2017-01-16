@@ -161,6 +161,7 @@ const verifyUser = {
   label: 'verifyUser',
   icon: 'done',
   action(route, model) {
+    model.set('is_active', true);
     model.set('is_verified', true);
     model.set('is_rejected', false);
     model.set('verification_pending', false);
