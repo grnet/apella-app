@@ -12,7 +12,9 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \
     OldApellaUserMigrationData, Position, Subject, SubjectArea, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
-    Candidacy, OldApellaCandidacyMigrationData
+    Candidacy, OldApellaCandidacyMigrationData, \
+    OldApellaCandidacyFileMigrationData
+
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
 logger = logging.getLogger('apella')
@@ -120,53 +122,73 @@ def professor_exists(user_id):
         role='professor', user_id=user_id).exists()
 
 FILE_KINDS_MAPPING = {
-    'BIOGRAFIKO': 'cv',
-    'PTYXIO': 'diploma',
-    'DIMOSIEYSI': 'publication',
-    'TAYTOTHTA': 'id_passport',
-    'PROFILE': 'cv_professor'
+    'profile': {
+        'BIOGRAFIKO': 'cv',
+        'PTYXIO': 'diploma',
+        'DIMOSIEYSI': 'publication',
+        'TAYTOTHTA': 'id_passport',
+        'PROFILE': 'cv_professor'
+    },
+    'candidacy': {
+        'BIOGRAFIKO': 'cv',
+        'PTYXIO': 'diploma',
+        'DIMOSIEYSI': 'publication',
+        'EKTHESI_AUTOAKSIOLOGISIS': 'self_evaluation_report',
+        'SYMPLIROMATIKA_EGGRAFA': 'attachment_files'
+    }
 }
 
 
 def migrate_file(old_file, new_user, source, source_id):
-    if old_file.file_type not in FILE_KINDS_MAPPING:
+    if old_file.file_type not in FILE_KINDS_MAPPING[source]:
         logger.error(
-            'failed to migrate file, unknown file_type %s' %
-            old_file.file_type)
+            'failed to migrate file, unknown file_type %s for %s' %
+            (old_file.file_type, source))
         return
     new_file = ApellaFile(
         owner=new_user,
         description=old_file.file_description,
-        file_kind=FILE_KINDS_MAPPING[old_file.file_type],
+        file_kind=FILE_KINDS_MAPPING[source][old_file.file_type],
         source=source,
         source_id=source_id)
     old_file_path = os.path.join(
         settings.OLD_APELLA_MEDIA_ROOT, old_file.file_path)
     with open(old_file_path, 'r') as f:
-        new_file.file_path.save(
-            old_file.original_name, File(f))
-        new_file.file_path.file.close()
+        try:
+            new_file.file_path.save(
+                old_file.original_name, File(f))
+            new_file.file_path.file.close()
+        except IOError:
+            logger.error('failed to migrate file %s' % old_file.file_path)
     logger.info(
-        'migrated profile file %s to %s' %
-        (old_file.id, new_file.id))
+        'migrated %s file %s to %s' %
+        (source, old_file.id, new_file.id))
 
     field_name, many = \
-        FILE_KIND_TO_FIELD[FILE_KINDS_MAPPING[old_file.file_type]].values()
-    if new_user.is_professor():
+        FILE_KIND_TO_FIELD[FILE_KINDS_MAPPING[source][old_file.file_type]].values()
+    if source == 'profile':
+        if new_user.is_professor():
+            if not many:
+                setattr(new_user.professor, field_name, new_file)
+            else:
+                many_attr = getattr(new_user.professor, field_name)
+                many_attr.add(new_file)
+            new_user.professor.save()
+        elif new_user.is_candidate():
+            if not many:
+                setattr(new_user.candidate, field_name, new_file)
+            else:
+                many_attr = getattr(new_user.candidate, field_name)
+                many_attr.add(new_file)
+            new_user.candidate.save()
+    elif source == 'candidacy':
+        candidacy = Candidacy.objects.get(id=source_id)
         if not many:
-            setattr(new_user.professor, field_name, new_file)
+            setattr(candidacy, field_name, new_file)
         else:
-            many_attr = getattr(new_user.professor, field_name)
+            many_attr = getattr(candidacy, field_name)
             many_attr.add(new_file)
-        new_user.professor.save()
-    elif new_user.is_candidate():
-        if not many:
-            setattr(new_user.candidate, field_name, new_file)
-        else:
-            many_attr = getattr(new_user.candidate, field_name)
-            many_attr.add(new_file)
-        new_user.candidate.save()
-
+        candidacy.save()
 
 def migrate_user_profile_files(old_user, new_user):
     old_files = OldApellaFileMigrationData.objects.filter(
@@ -202,7 +224,6 @@ def migrate_shibboleth_id(shibboleth_id):
 
 @transaction.atomic
 def migrate_user(old_user, password=None):
-
     if ApellaUser.objects.filter(username=old_user.username).exists():
         if (not professor_exists(old_user.user_id) and
                 old_user.role == 'candidate') or old_user.role != 'candidate':
@@ -280,7 +301,6 @@ def migrate_user(old_user, password=None):
 
 
 def migrate_position(old_position, author):
-
     subject = get_obj(old_position.subject_code, Subject)
     subject_area = get_obj(old_position.subject_area_code, SubjectArea)
     department = get_obj(old_position.department_id, Department)
@@ -325,6 +345,7 @@ def migrate_position(old_position, author):
     return new_position
 
 
+@transaction.atomic
 def migrate_candidacies(position=None, candidate_user=None):
     if position:
         old_candidacies = OldApellaCandidacyMigrationData.objects.filter(
@@ -333,6 +354,12 @@ def migrate_candidacies(position=None, candidate_user=None):
         old_candidacies = OldApellaCandidacyMigrationData.objects.filter(
             candidate_user_id=str(candidate_user.old_user_id))
         for old_candidacy in old_candidacies:
+            if Candidacy.objects.filter(
+                    old_candidacy_id=int(old_candidacy.candidacy_serial)).exists():
+                logger.info(
+                    'already migrated candidacy %s' %
+                    old_candidacy.candidacy_serial)
+                continue
             try:
                 new_candidate = ApellaUser.objects.get(
                     old_user_id=int(old_candidacy.candidate_user_id))
@@ -356,8 +383,14 @@ def migrate_candidacies(position=None, candidate_user=None):
             migrate_candidacy(old_candidacy, new_candidate, new_position)
 
 
-def migrate_candidacy(old_candidacy, new_candidate, new_position):
+def migrate_candidacy_files(new_candidacy):
+    old_candidacy_files = OldApellaCandidacyFileMigrationData. \
+        objects.filter(candidacy_serial=str(new_candidacy.old_candidacy_id))
+    for old_file in old_candidacy_files:
+        migrate_file(
+            old_file, new_candidacy.candidate, 'candidacy', new_candidacy.id)
 
+def migrate_candidacy(old_candidacy, new_candidate, new_position):
     candidacy = Candidacy.objects.create(
         candidate=new_candidate,
         position=new_position,
@@ -371,3 +404,5 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
     logger.info(
         'migrated candidacy %s, to %s' %
         (old_candidacy.candidacy_serial, candidacy.id))
+
+    migrate_candidacy_files(candidacy)
