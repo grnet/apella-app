@@ -5,6 +5,7 @@ import validate from 'ember-gen/validate';
 import {USER_FIELDSET, USER_FIELDSET_EDIT,
         USER_FIELDSET_DETAILS,
         USER_VALIDATORS} from 'ui/utils/common/users';
+import {deactivateUser, activateUser} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -47,8 +48,13 @@ export default ApellaGen.extend({
       fields: ['id', 'username']
     },
     row: {
-      fields: [field('id', {label: 'user_id.label'}), 'is_active', 'username', 'email', 'full_name_current', 'role_verbose'],
-      actions: ['gen:details', 'gen:edit', 'remove']
+           fields: [field('id', {label: 'user_id.label'}), field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'role_verbose'],
+      actions: ['gen:details', 'gen:edit', 'remove', 'activateUser', 'deactivateUser'],
+      actionsMap: {
+        deactivateUser: deactivateUser,
+        activateUser: activateUser,
+      }
+
     },
   },
   details: {

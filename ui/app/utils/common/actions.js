@@ -102,6 +102,61 @@ const cancelCandidacy = {
   }
 };
 
+const deactivateUser = {
+  label: 'deactivateUser',
+  icon: 'clear',
+  accent: true,
+  action(route, model) {
+    model.set('is_active', false);
+    let m = route.get('messageService')
+    return model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason;
+    });
+  },
+  hidden: computed('model.is_active', 'model.email_verified', function(){
+    return !get(this, 'model.is_active') || !get(this, 'model.email_verified');
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'deactivate',
+    cancel: 'cancel',
+    message: 'prompt.deactivateUser.message',
+    title: 'prompt.deactivateUser.title',
+  }
+};
+
+const activateUser = {
+  label: 'activateUser',
+  icon: 'done',
+  action(route, model) {
+    model.set('is_active', true);
+    let m = route.get('messageService')
+    return model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason;
+    });
+  },
+  hidden: computed('model.is_active', 'model.email_verified', function(){
+    return get(this, 'model.is_active') || !get(this, 'model.email_verified');
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'activate',
+    cancel: 'cancel',
+    message: 'prompt.activateUser.message',
+    title: 'prompt.activateUser.title',
+  }
+};
+
 const  goToPosition = {
   label: 'position_details.label',
   icon: 'event_available',
@@ -113,5 +168,6 @@ const  goToPosition = {
 
 
 export { goToDetails, applyCandidacy, cancelPosition,
-  cancelCandidacy, goToPosition };
+  cancelCandidacy, goToPosition,
+  deactivateUser, activateUser};
 
