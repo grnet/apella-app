@@ -15,10 +15,13 @@ let {
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
 function membersAllModelMeta(serverSide) {
-  console.log('serverSide', serverSide)
-     // TMP: user__last_name__el
-    let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'user__last_name__el']);
-
+   let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_el', 'last_name_en']);
+  /*
+   * For now, hide the client side filtering, searching, ordering because these
+   * functionalities are not yet developed.
+   * TODO: Remove this code when client side functionalities are developed
+   */
+  let display = serverSide;
   return {
     row: {
       fields: [
@@ -42,22 +45,17 @@ function membersAllModelMeta(serverSide) {
       limits: [5, 10, 15]
     },
     filter: {
-      search: true,
+      search: display,
       searchPlaceholder: 'search.placeholder_last_name',
       serverSide: serverSide,
-      active: true,
+      active: display,
       meta: {
         fields: [field('user_id', {type: 'string'})]
       }
     },
     sort: {
       serverSide: serverSide,
-      active: true,
-      /*fields: ['user_id', computed('i18n.locale', function() {
-        console.log('LOCALE', get(this, 'i18n.locale'))
-        let a = ['user__last_name__el', {_services: ['i18n']}];
-        return 'user__last_name__el';
-      })]*/
+      active: display,
       fields: sortFields
     }
   };
@@ -164,10 +162,9 @@ export default ApellaGen.extend({
       active: true,
       meta: {
         fields: [
-          field('id', {type: 'string'}),
-          'type',
-          field('department.institution',
+          field('institution',
             {
+              label: 'institution.label',
               type: 'model',
               displayAttr: 'title_current',
               modelName: 'institution',
@@ -178,7 +175,9 @@ export default ApellaGen.extend({
                 params.ordering = `title_${locale}`;
                 return store.query('institution', params);
               }
-            })
+            }),
+          'type',
+          field('id', {type: 'string'}),
         ]
       }
     },
