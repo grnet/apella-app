@@ -98,7 +98,9 @@ class OldApellaCandidacyFileMigrationData(models.Model):
     file_id = models.TextField()
     file_type = models.TextField()
     file_path = models.TextField()
+    file_description = models.TextField()
     status = models.TextField()
+    original_name = models.TextField()
 
 
 class OldApellaCandidacyMigrationData(models.Model):
