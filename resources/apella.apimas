@@ -495,7 +495,7 @@ spec:
                 mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.Professor]
                 ordering_fields: [user_id, user__last_name__en, user__last_name__el]
                 filter_fields: [user_id]
-                search_fields: [user_id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
+                search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
             .cli_commands: {}
             '*':
                 id:
