@@ -163,7 +163,23 @@ export default ApellaGen.extend({
       serverSide: true,
       active: true,
       meta: {
-        fields: [field('id', {type: 'string'}), 'type', 'institution']
+        fields: [
+          field('id', {type: 'string'}),
+          'type',
+          field('department.institution',
+            {
+              type: 'model',
+              displayAttr: 'title_current',
+              modelName: 'institution',
+              dataKey: 'department.institution.id',
+              query: function(select, store, field, params) {
+                let locale = select.get('i18n.locale');
+                params = params || {};
+                params.ordering = `title_${locale}`;
+                return store.query('institution', params);
+              }
+            })
+        ]
       }
     },
     sort: {
