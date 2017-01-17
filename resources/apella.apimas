@@ -697,13 +697,16 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .readonly: {}
                 is_verified:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .readonly: {}
+                is_rejected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
                 user:
                     .cli_option: {}
                     .field: {}
@@ -992,7 +995,11 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .readonly: {}
+                is_rejected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
                 user:
                     .cli_option: {}
                     .field: {}
@@ -1133,7 +1140,6 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .readonly: {}
                 is_verified:
                     .cli_option: {}
                     .field: {}

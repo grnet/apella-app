@@ -11,6 +11,7 @@ import {USER_FIELDSET,
         INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager'
 import {field} from 'ember-gen';
+import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -53,8 +54,13 @@ export default ApellaGen.extend({
     },
     sortBy: 'username:asc',
     row: {
-      fields: ['user_id', 'is_verified', 'username', 'email', 'full_name_current', 'institution.title_current', 'manager_role_verbose'],
-      actions: ['gen:details', 'gen:edit', 'remove']
+      fields: ['user_id', field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'institution.title_current', 'manager_role_verbose'],
+      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
+      actionsMap: {
+        verifyUser: verifyUser,
+        rejectUser: rejectUser,
+        requestProfileChanges: requestProfileChanges,
+      }
     },
   },
   details: {

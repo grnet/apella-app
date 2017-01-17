@@ -7,6 +7,7 @@ import {USER_FIELDSET,
         PROFESSOR_FIELDSET,
         PROFESSOR_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
+import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -42,13 +43,18 @@ export default ApellaGen.extend({
     row: {
       fields: computed('role', function() {
         let role = get(this, 'role');
-        let fs = ['user_id', 'username', 'email', 'full_name_current', 'rank', ];
+        let fs = ['user_id', 'username', 'email', 'full_name_current', 'rank'];
         if (role === ('helpdeskadmin' || 'helpdeskuser') ) {
-          fs.splice(1, 0, 'is_verified');
+          fs.splice(1, 0, field('status_verbose', {label: 'state.label'}));
         }
         return fs;
       }),
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
+      actionsMap: {
+        verifyUser: verifyUser,
+        rejectUser: rejectUser,
+        requestProfileChanges: requestProfileChanges,
+      }
     },
   },
   details: {
