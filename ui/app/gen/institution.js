@@ -85,7 +85,7 @@ export default ApellaGen.extend({
     fieldsets: [{
       fields: computed('role', function() {
         if (get(this, 'role') == 'helpdeskadmin') {
-          return ['title', 'category', 'organization', 'regulatory_framework']
+          return ['title', field('category', {readonly:true}), 'organization', 'regulatory_framework']
         } else {
           return ['organization', 'regulatory_framework']
         }
