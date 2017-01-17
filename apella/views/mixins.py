@@ -111,6 +111,12 @@ class PositionMixin(object):
                 Q(state='posted', starts_at__lt=timezone.now()) |
                 Q(committee=user.professor.id) |
                 Q(electors=user.professor.id))
+        elif user.is_candidate():
+            position_ids = Candidacy.objects.filter(
+                candidate=user).values_list('position_id', flat=True)
+            queryset = queryset.filter(
+                Q(state='posted') |
+                Q(id__in=position_ids))
         if 'pk' in self.kwargs:
             return queryset.filter(id=self.kwargs['pk'])
         else:
