@@ -29,7 +29,7 @@ function membersAllModelMeta(serverSide) {
         i18nUserSortField('last_name', {label: 'last_name.label'}),
         i18nField('first_name', {label: 'first_name.label'}),
         'is_foreign_descr',
-        i18nField('institution.title', {label: 'institution.label'}),
+        field('institution_global', {label: 'institution.label'}),
         i18nField('department.title', {label: 'department.label'}),
         'rank',
         'discipline_text'
