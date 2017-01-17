@@ -205,7 +205,13 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: ['department']
+        fields: [
+          field('department', {
+            type: 'model',
+            displayAttr: 'title_current',
+            modelName: 'department'
+          })
+        ]
       },
       serverSide: true,
       search: true,
