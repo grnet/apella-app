@@ -356,7 +356,7 @@ export default {
   'inactive': 'Aνενεργός',
   'email_pending_verification': 'Αναμένεται ενεργοποίηση',
   'rejected': 'Rejected',
-  'verified': 'Πιστοιποιημένος',
+  'verified': 'Πιστοποιημένος',
   'pending_verification': 'Αναμένεται πιστοποίηση',
   // translations for professor rank dropdown
   'Professor': 'Καθηγητής',
@@ -367,4 +367,6 @@ export default {
   'Affiliated Researcher': 'Affiliated Researcher',
   'type.label': 'Είδος',
   'list.filters.title': 'Φίλτρα',
+  'list.filters.apply.label': 'ΕΦΑΡΜΟΓΗ',
+  'list.filters.clear.label': 'ΚΑΘΑΡΙΣΜΟΣ'
 };
