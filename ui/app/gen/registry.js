@@ -64,7 +64,7 @@ function membersAllModelMeta(serverSide) {
 function membersField(modelMetaSide, selectModelMetaSide) {
   return field('members', {
     valueQuery: function(store, params, model, value) {
-
+      // If the model has no id we are in create view
       if(model.get('id')) {
         // Default ordering (if other is not set)
         if(!params.ordering) {
@@ -152,9 +152,14 @@ export default ApellaGen.extend({
       icon: 'view list',
       label: 'registry.menu_label'
     },
-    layout: 'table',
     page: {
       title: 'registry.menu_label'
+    },
+    layout: 'table',
+    paginate: {
+      active: true,
+      serverSide: true,
+      limits: [5, 15, 20]
     },
     filter: {
       search: false,
@@ -168,7 +173,7 @@ export default ApellaGen.extend({
               type: 'model',
               displayAttr: 'title_current',
               modelName: 'institution',
-              dataKey: 'department.institution.id',
+              dataKey: 'department.institution',
               query: function(select, store, field, params) {
                 let locale = select.get('i18n.locale');
                 params = params || {};
