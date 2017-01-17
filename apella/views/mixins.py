@@ -170,6 +170,15 @@ class CandidacyList(object):
 
 class RegistriesList(generics.ListAPIView):
 
+    def get_queryset(self):
+        queryset = self.queryset
+        if 'ordering' not in self.request.query_params:
+            queryset = queryset.order_by(
+                'department__institution__title__el', 'department__title__el',
+                'type')
+        return queryset
+
+
     @detail_route()
     def members(self, request, pk=None):
         registry = self.get_object()
