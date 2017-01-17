@@ -19,7 +19,7 @@ export default Ember.Mixin.create({
       optionLabelAttr: 'title_current',
     }
   }),
-  rank: DS.attr({type: 'select', choices: CHOICES.RANKS, defaultValue:'Assistant Professor'}),
+  rank: DS.attr({type: 'select', choices: CHOICES.RANKS, defaultValue:'Assistant Professor', translate: true}),
   is_foreign: DS.attr({type: 'boolean', defaultValue: false }),
   is_foreign_descr: computed('is_foreign', 'locale.i18n', function() {
     let is_foreign = get(this, 'is_foreign');

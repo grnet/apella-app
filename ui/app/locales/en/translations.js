@@ -317,4 +317,11 @@ export default {
   'rejected': 'Rejected',
   'verified': 'Verified',
   'pending_verification': 'Pending verification',
+  // translations for professor rank dropdown
+  'Professor': 'Καθηγητής',
+  'Associate Professor': 'Associate Professor',
+  'Assistant Professor': 'Assistant Professor',
+  'Research Director': 'Research Director',
+  'Principal Researcher': 'Principal Researcher',
+  'Affiliated Researcher': 'Affiliated Researcher',
 };
