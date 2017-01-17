@@ -43,7 +43,7 @@ export default ApellaGen.extend({
     row: {
       fields: computed('role', function() {
         let role = get(this, 'role');
-        let fs = ['user_id', 'username', 'email', 'full_name_current', 'rank'];
+        let fs = ['user_id', 'institution_global', 'username', 'email', 'full_name_current', 'rank'];
         if (role === ('helpdeskadmin' || 'helpdeskuser') ) {
           fs.splice(1, 0, field('status_verbose', {label: 'state.label'}));
         }

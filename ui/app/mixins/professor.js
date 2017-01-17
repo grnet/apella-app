@@ -35,5 +35,15 @@ export default Ember.Mixin.create({
   fek: DS.attr(),
   discipline_text: DS.attr(),
   discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true}),
-  active_elections: DS.attr('number')
+  active_elections: DS.attr('number'),
+
+  institution_global: computed('is_foreign', 'institution.title_current', 'institution_freetext', function(){
+    if (get(this, 'is_foreign')) {
+      return get(this, 'institution_freetext')
+    } else {
+      return get(this, 'institution.title_current')
+    }
+  })
+
+
 });
