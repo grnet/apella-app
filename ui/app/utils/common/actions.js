@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
+function isHelpdesk(role) {
+  return role === 'helpdeskadmin' || role === 'helpdeskuser';
+}
+
 const {
   computed,
   get,
@@ -119,10 +123,8 @@ const deactivateUser = {
     });
   },
   hidden: computed('model.is_active', 'model.email_verified', 'role', function(){
-    let role = get(this, 'role');
-    let is_helpdesk = ( role === 'helpdeskadmin' || role === 'helpdeskuser');
-    if (!is_helpdesk) { return true}
-    return !get(this, 'model.is_active') || !get(this, 'model.email_verified') || !is_helpdesk;
+    if (!isHelpdesk(get(this, 'role')))  return true
+    return !get(this, 'model.is_active') || !get(this, 'model.email_verified');
   }),
   confirm: true,
   prompt: {
@@ -149,9 +151,7 @@ const activateUser = {
     });
   },
   hidden: computed('model.is_active', 'model.email_verified', 'role', function(){
-    let role = get(this, 'role');
-    let is_helpdesk = ( role === 'helpdeskadmin' || role === 'helpdeskuser');
-    if (!is_helpdesk) { return true}
+    if (!isHelpdesk(get(this, 'role')))  return true
     return get(this, 'model.is_active') || !get(this, 'model.email_verified');
   }),
   confirm: true,
@@ -182,9 +182,7 @@ const verifyUser = {
     });
   },
   hidden: computed('model.is_rejected', 'model.verification_pending', 'role',  function(){
-    let role = get(this, 'role');
-    let is_helpdesk = ( role === 'helpdeskadmin' || role === 'helpdeskuser');
-    if (!is_helpdesk) { return true}
+    if (!isHelpdesk(get(this, 'role')))  return true
     return !(get(this, 'model.is_rejected') || get(this, 'model.verification_pending'));
   }),
   confirm: true,
@@ -214,9 +212,7 @@ const rejectUser = {
     });
   },
   hidden: computed('model.is_verified', 'model.verification_pending', 'role', function(){
-    let role = get(this, 'role');
-    let is_helpdesk = ( role === 'helpdeskadmin' || role === 'helpdeskuser');
-    if (!is_helpdesk) { return true}
+    if (!isHelpdesk(get(this, 'role')))  return true
     return !(get(this, 'model.is_verified') || get(this, 'model.verification_pending')) ;
   }),
   confirm: true,
@@ -245,9 +241,7 @@ const requestProfileChanges = {
     });
   },
   hidden: computed('model.verification_pending', 'role', function(){
-    let role = get(this, 'role');
-    let is_helpdesk = ( role === 'helpdeskadmin' || role === 'helpdeskuser');
-    if (!is_helpdesk) { return true}
+    if (!isHelpdesk(get(this, 'role')))  return true
     return !get(this, 'model.verification_pending');
 
   }),
