@@ -343,17 +343,6 @@ class Professor(UserProfile, CandidateProfile):
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
 
-    def check_resource_state_owned_registry(self, row, request, view):
-        user = request.user
-        if user.is_manager():
-            return self.registry_set.filter(
-                department__institution= \
-                user.institutionmanager.institution).exists()
-        elif user.is_professor():
-            return self.registry_set.filter(
-                id__in=user.professor.registry_set.all())
-        return False
-
     @property
     def active_elections(self):
         return self.committee_duty.filter(
