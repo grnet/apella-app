@@ -826,7 +826,7 @@ spec:
             .drf_collection:
                 model: apella.models.Registry
                 mixins: [apella.views.mixins.RegistriesList]
-                filter_fields: [type, department]
+                filter_fields: [type, department, department__institution]
             .cli_commands: {}
             '*':
                 id:
