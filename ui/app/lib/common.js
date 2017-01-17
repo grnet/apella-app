@@ -54,30 +54,17 @@ function i18nField(key, attrs) {
   }, attrs));
 }
 
-
 function i18nUserSortField(key, attrs) {
   attrs = attrs || {};
-  //console.log('==========', get(this, 'i18n.locale'))
   return field(`${key}_current`, merge({
     _services: ['i18n'],
     sortKey: computed('i18n.locale', function() {
       let locale = get(this, 'i18n.locale'),
         dataKey = `user__${key}__${locale}`;
-      console.log('%cdataKey', 'background: cyan', dataKey)
       return dataKey;
     }),
-    
     formComponent: 'i18n-input-field'
   }, attrs));
-};
-
-function i18nUserSortAttr(key) {
-  return computed('i18n.local', function() {
-
-    let locale = get(this, 'i18n.locale');
-    console.log('!!!!!!', locale)
-    return `user__${key}__${locale}`;
-  })
 };
 
 // a `field` wrapper for computed properties related fields
@@ -197,6 +184,6 @@ function get_registry_members(registry, store, params) {
 export {
   ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
-  VerifiedUserMixin, fileField, i18nUserSortField, i18nUserSortAttr, get_registry_members
+  VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members
 };
 

@@ -1,5 +1,5 @@
 import {
-  ApellaGen, i18nField, i18nUserSortField, i18nUserSortAttr, get_registry_members
+  ApellaGen, i18nField, i18nUserSortField, get_registry_members
 } from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
 import gen from 'ember-gen/lib/gen';
