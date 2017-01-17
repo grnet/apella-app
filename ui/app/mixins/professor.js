@@ -9,6 +9,7 @@ const {
 
 export default Ember.Mixin.create({
   institution: DS.belongsTo('institution', {formAttrs: {optionLabelAttr: 'title_current'}}),
+  institution_freetext: DS.attr(),
   department: DS.belongsTo('department', {
     formComponent: 'select-onchange',
     formAttrs: {

@@ -156,13 +156,47 @@ const CANDIDATE_FILES_FIELDS = [
 ]
 
 const PROFESSOR_FIELDS = [
-  field('institution', {displayAttr: 'title_current'}),
-  field('department', {displayAttr: 'title_current'}),
+  field('institution', {
+    displayAttr: 'title_current',
+    required: computed('model.changeset.is_foreign', function() {
+      let check = get(this, 'model.changeset.is_foreign');
+      return !check;
+    }),
+    disabled: computed('model.changeset.is_foreign', function() {
+      let check = get(this, 'model.changeset.is_foreign');
+      if (check) { Ember.run.once(this, () => set(this, 'model.changeset.institution', null)) };
+      return check;
+    }),
+  }),
+  field('department', {
+    displayAttr: 'title_current',
+    required: computed('model.changeset.is_foreign', function() {
+      let check = get(this, 'model.changeset.is_foreign');
+      return !check;
+    }),
+    disabled: computed('model.changeset.is_foreign', function() {
+      let check = get(this, 'model.changeset.is_foreign');
+      if (check) { Ember.run.once(this, () => set(this, 'model.changeset.department', null)) };
+      return check;
+    }),
+  }),
   'rank',
   field('cv_url', {
     hint: 'cv_url.hint',
   }),
   'fek',
+  field('institution_freetext', {
+    type: 'text',
+    required: computed('model.changeset.is_foreign', function() {
+      let check = get(this, 'model.changeset.is_foreign');
+      return check;
+    }),
+    disabled: computed('model.changeset.is_foreign', function() {
+      let check = get(this, 'model.changeset.is_foreign');
+      if (!check) { Ember.run.once(this, () => set(this, 'model.changeset.institution_freetext', '')) };
+      return !check;
+    })
+  }),
   field('discipline_text', {
     type: 'text',
     required: computed('model.changeset.discipline_in_fek', function() {

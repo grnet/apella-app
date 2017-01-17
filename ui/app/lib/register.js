@@ -17,7 +17,7 @@ import routes from 'ember-gen/lib/routes';
 const TEST_REGISTER_DATA = {};
 
 const User = Ember.Object.extend({
-  save() { 
+  save() {
     let url = ENV.APP.backend_host + '/auth/register/';
     let model = this;
 
@@ -48,7 +48,7 @@ const User = Ember.Object.extend({
       Ember.$.ajax({
         method: 'POST',
         url,
-        data: JSON.stringify(data), 
+        data: JSON.stringify(data),
         dataType: 'json',
         contentType: 'application/json'
       }).then(function(resp) {
@@ -56,7 +56,7 @@ const User = Ember.Object.extend({
         //TODO resolve verification pending from backend
         model.set('emailVerificationPending', true);
         resolve(model);
-      }).catch(function(err) { 
+      }).catch(function(err) {
         if (err && err.status === 400 && err.responseJSON) {
           let errors = Object.keys(err.responseJSON).map((key) => {
             return {attribute: key, message: err.responseJSON[key]};
@@ -69,7 +69,7 @@ const User = Ember.Object.extend({
           set(model, 'errors', errors);
         }
         console.error(err);
-        reject(err); 
+        reject(err);
       });
     });
     return promise;
@@ -158,7 +158,8 @@ const Register = gen.GenRoutedObject.extend({
 
     // extract default values from `initial` params
     let defaults = {
-      discipline_in_fek: true
+      discipline_in_fek: true,
+      is_foreign: true
     };
     try {
       merge(defaults, JSON.parse(atob(params.initial)));
