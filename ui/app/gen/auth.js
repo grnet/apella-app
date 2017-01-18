@@ -370,10 +370,12 @@ export default AuthGen.extend({
     }),
     fieldsets: PROFILE_FIELDSETS('edit'),
 
-    extraActions: computed('model.is_verified', 'model.verification_pending', function() {
+    extraActions: computed('model.role', 'model.is_verified', 'model.verification_pending', function() {
       let isVerified = get(this, 'user.is_verified');
       let verificationPending = get(this, 'user.verification_pending');
-      if (!isVerified) {
+      let role = get(this, 'model.role');
+
+      if (!isVerified && isVerifiable(role)) {
         return [{
           label: 'request.profile.verification',
           icon: 'check_circle',
