@@ -32,11 +32,17 @@ let POSITION_FIELDSET =  {
 let CANDIDATE_FIELDSET =  {
       label: 'candidacy.candidate_section.title',
       text: 'candidacy.candidate_section.subtitle',
-      fields: _.map(['candidate', 'cv', 'diploma', 'publication'], disable_field),
+      fields: [disable_field('candidate'),
+        fileField('cv', 'candidate', 'cv', {
+          readonly: true,
+        }),
+        fileField('diplomas', 'candidate', 'diplomas', {
+          readonly: true,
+        }),
+        fileField('publications', 'candidate', 'publications', {
+          readonly: true
+        })],
       flex: 100,
-      layout: {
-        flex: [50, 50, 50, 50]
-      },
 };
 
 let CANDIDACY_FIELDSET =  {
