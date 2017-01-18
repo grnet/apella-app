@@ -126,15 +126,16 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   component: 'gen-details',
   actions: ['change_password'],
   actionsMap: {
-    'sync_position_files': {
-      label: 'sync.position.files',
+    'sync_candidacies': {
+      label: 'sync.candidacies',
       raised: true,
       action: function(route, profile) {
         let messages = get(route, 'messageService');
-        profile.save().then(() => {
-          messages.setSuccess('sync.position.files.success');
+        let [url, adapter] = [profile.userURL(), profile.userAdapter()];
+        adapter.ajax(url + 'sync_candidacies/', 'POST').then(() => {
+          messages.setSuccess('sync.candidacies.success');
         }).catch(() => {
-          messages.setError('sync.position.files.error');
+          messages.setError('sync.candidacies.error');
         });
       },
       primary: true,
@@ -146,8 +147,8 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
       }),
       confirm: true,
       prompt: {
-        title: 'sync.position.files',
-        message: 'sync.position.files.confirm',
+        title: 'sync_candidacies',
+        message: 'sync_candidacies.confirm',
         ok: 'ok',
         cancel: 'cancel'
       }

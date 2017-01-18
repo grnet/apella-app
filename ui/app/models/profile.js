@@ -18,6 +18,16 @@ const inherits = [
 ];
 
 export default User.extend(...inherits, {
+  userAdapter() {
+    return get(this, 'store').adapterFor(get(this, 'role'));
+  },
+
+  userURL() {
+    let id = get(this, 'user_id');
+    let adapter = this.userAdapter();
+    return adapter.buildURL(get(this, 'role'), id, 'findRecord');
+  },
+
   __api__: {
     namespace: 'auth',
     path: 'me',
