@@ -191,7 +191,7 @@ const PositionInterest = gen.GenRoutedObject.extend({
       let allowedRoles = ['professor', 'candidate'];
       return (allowedRoles.includes(role) ? true : false);
     }),
-    icon: 'access_alarm',
+    icon: 'notifications',
     label: 'userInterest.menu_label'
   },
   page: {

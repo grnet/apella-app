@@ -45,7 +45,7 @@ export default ApellaGen.extend({
       });
     },
     menu: {
-      icon: 'drafts',
+      icon: 'assignment',
       label: 'elections.menu_label',
       display: computed('role', function(){
         let role = get(this, 'role')
