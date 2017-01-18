@@ -298,4 +298,4 @@ class SyncCandidacies(object):
             position__ends_at__gt=datetime.now())
         for candidacy in active_candidacies:
             copy_candidacy_files(candidacy, candidate_user.user)
-        return Response(status=status.HTTP_200_OK)
+        return Response(request.data, status=status.HTTP_200_OK)

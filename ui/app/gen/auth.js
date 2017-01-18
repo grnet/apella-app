@@ -131,7 +131,7 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
       raised: true,
       action: function(route, profile) {
         let messages = get(route, 'messageService');
-        let [url, adapter] = [profile.userURL(), profile.userAdapter()];
+        let [url, adapter] = [profile.roleURL(), profile.userAdapter()];
         adapter.ajax(url + 'sync_candidacies/', 'POST').then(() => {
           messages.setSuccess('sync.candidacies.success');
         }).catch(() => {
