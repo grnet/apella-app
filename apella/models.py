@@ -519,15 +519,6 @@ class Position(models.Model):
             return before_open and assistant_can_edit(self, user)
         return False
 
-    def check_resource_state_closed(self, row, request, view):
-        user = request.user
-        is_closed = self.starts_at < timezone.now()
-        if user.is_institutionmanager():
-            return is_closed
-        elif user.is_assistant():
-            return is_closed and assistant_can_edit(self, user)
-        return False
-
     def check_resource_state_electing(self, row, request, view):
         user = request.user
         is_electing = self.state == 'electing'

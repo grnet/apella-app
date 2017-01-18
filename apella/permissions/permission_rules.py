@@ -314,7 +314,6 @@ PERMISSION_RULES = [
     ('positions', 'partial_update', 'assistant', 'committee', 'electing', '4.3.15'),
     ('positions', 'partial_update', 'assistant', 'elected', 'electing', '4.3.11.f'),
     ('positions', 'partial_update', 'assistant', 'second_best', 'electing', ''),
-    ('positions', 'partial_update', 'assistant', 'electors', 'closed', '4.3.14'),
     ('positions', 'partial_update', 'assistant', 'ends_at', 'before_open', '4.3.11.c'),
     ('positions', 'partial_update', 'assistant', 'starts_at', 'before_open', '4.3.11.c'),
     ('positions', 'partial_update', 'assistant', 'state', 'before_open', '4.3.11.b'),
