@@ -130,7 +130,7 @@ export default ApellaGen.extend({
     },
     fieldsets: [{
       label: 'registry.main_section.title',
-      fields: [field('type', {label: 'type.label'}),
+      fields: [
         field('department', {
           displayAttr: 'title_current',
           query: function(table, store, field, params) {
@@ -150,7 +150,9 @@ export default ApellaGen.extend({
             }
             return store.query('department', query);
           }
-        })
+        }),
+        field('type', {label: 'type.label'}),
+
       ],
       layout: {
         flex: [30, 70]
@@ -222,8 +224,9 @@ export default ApellaGen.extend({
     },
     fieldsets: [{
       label: 'registry.main_section.title',
-      fields: ['type',
+      fields: [
         i18nField('department.title'),
+        'type'
       ],
       layout: {
         flex: [30, 70]
@@ -237,15 +240,15 @@ export default ApellaGen.extend({
     fieldsets: [{
       label: 'registry.main_section.title',
       fields: [
-        disable_field('type'),
         disable_field('department', {displayAttr: 'title_current'}),
+        disable_field('type')
       ],
       layout: {
         flex: [30, 70]
       }
     },{
       label: 'registry.members_section.title',
-      fields: [membersField(true, true)]
+      fields: [membersField(false, true)]
     }]
   }
 });
