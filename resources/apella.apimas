@@ -702,6 +702,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                    .readonly: {}
                 is_verified:
                     .cli_option: {}
                     .field: {}
@@ -1145,6 +1146,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                    .readonly: {}
                 is_verified:
                     .cli_option: {}
                     .field: {}
