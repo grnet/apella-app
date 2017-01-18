@@ -299,7 +299,7 @@ class Migration(migrations.Migration):
                 ('is_foreign', models.BooleanField(default=False)),
                 ('speaks_greek', models.BooleanField(default=True)),
                 ('cv_url', models.URLField(blank=True)),
-                ('fek', models.URLField()),
+                ('fek', models.CharField(max_length=255)),
                 ('discipline_text', models.CharField(max_length=300, blank=True)),
                 ('discipline_in_fek', models.BooleanField(default=True)),
                 ('cv', models.ForeignKey(related_name='apella_professor_cv_files', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='apella.ApellaFile', null=True)),
