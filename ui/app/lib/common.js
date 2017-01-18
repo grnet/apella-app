@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import {CRUDGen} from 'ember-gen/lib/gen';
 import ENV from 'ui/config/environment';
 import {field} from 'ember-gen/lib/util';
