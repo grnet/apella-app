@@ -167,6 +167,8 @@ class CandidacyMixin(object):
         creating = False
 
         attachment_files = data.pop('attachment_files', [])
+        diplomas = data.pop('diplomas', [])
+        publications = data.pop('publications', [])
         if not instance:
             creating = True
             instance = Candidacy(**data)
@@ -185,6 +187,8 @@ class CandidacyMixin(object):
 
         data = super(CandidacyMixin, self).validate(data)
         data['attachment_files'] = attachment_files
+        data['diplomas'] = diplomas
+        data['publications'] = publications
 
         return data
 
@@ -194,6 +198,8 @@ class CandidacyMixin(object):
             validated_data['candidate'] = user
         validated_data['state'] = 'draft'
         attachment_files = validated_data.pop('attachment_files', [])
+        diplomas = validated_data.pop('diplomas', [])
+        publications = validated_data.pop('publications', [])
         obj = super(CandidacyMixin, self).create(validated_data)
         code = str(obj.id)
         obj.code = code
@@ -208,6 +214,9 @@ class CandidacyMixin(object):
         validated_data['updated_at'] = timezone.now()
         attachment_files = validated_data.pop('attachment_files', [])
         self_evaluation_report = validated_data.pop('self_evaluation_report', [])
+        cv = validated_data.pop('cv', [])
+        diplomas = validated_data.pop('diplomas', [])
+        publications = validated_data.pop('publications', [])
         instance = super(CandidacyMixin, self).update(instance, validated_data)
         if instance.state is not curr_candidacy.state:
             curr_candidacy.pk = None
