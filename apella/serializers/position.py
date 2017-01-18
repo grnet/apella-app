@@ -206,6 +206,8 @@ class CandidacyMixin(object):
     def update(self, instance, validated_data):
         curr_candidacy = Candidacy.objects.get(id=instance.id)
         validated_data['updated_at'] = timezone.now()
+        attachment_files = validated_data.pop('attachment_files', [])
+        self_evaluation_report = validated_data.pop('self_evaluation_report', [])
         instance = super(CandidacyMixin, self).update(instance, validated_data)
         if instance.state is not curr_candidacy.state:
             curr_candidacy.pk = None
