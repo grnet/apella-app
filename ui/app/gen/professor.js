@@ -30,7 +30,12 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'professor.menu_label',
-      icon: 'people'
+      icon: 'people',
+      display: computed('role', function() {
+        let role = get(this, 'role');
+        let forbiddenRoles = ['institutionmanager', 'assistant'];
+        return (forbiddenRoles.includes(role) ? false : true);
+      })
     },
     layout: 'table',
     filter: {
