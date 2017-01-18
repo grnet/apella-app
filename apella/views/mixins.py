@@ -1,4 +1,5 @@
 import urlparse
+from datetime import datetime
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -19,6 +20,7 @@ from apella.models import InstitutionManager, Position, Department, \
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
+from apella.serializers.position import copy_candidacy_files
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -178,7 +180,6 @@ class RegistriesList(generics.ListAPIView):
                 'type')
         return queryset
 
-
     @detail_route()
     def members(self, request, pk=None):
         registry = self.get_object()
@@ -216,18 +217,19 @@ class FilesViewSet(viewsets.ModelViewSet):
 
         if request.method == 'HEAD':
             token = auth_hooks.generate_file_token(user, file)
-            url = urlparse.urljoin(settings.BASE_URL, settings.API_PREFIX,
-                                   reverse('apella-files-download', args=(pk,)))
+            url = urlparse.urljoin(
+                settings.BASE_URL, settings.API_PREFIX,
+                reverse('apella-files-download', args=(pk,)))
             response['X-File-Location'] = "%s?token=%s" % (url, token)
             return response
 
         token = request.GET.get('token', None)
         if token is None:
             raise PermissionDenied("no.token")
-            #url = reverse('apella-files-download', args=(pk,))
-            #ui_url = getattr(settings, 'DOWNLOAD_FILE_URL', '')
-            #ui_download_url = '%s?#download=%s' % (ui_url, url)
-            #return HttpResponseRedirect(ui_download_url)
+            # url = reverse('apella-files-download', args=(pk,))
+            # ui_url = getattr(settings, 'DOWNLOAD_FILE_URL', '')
+            # ui_download_url = '%s?#download=%s' % (ui_url, url)
+            # return HttpResponseRedirect(ui_download_url)
 
         token = request.GET.get('token', None)
 
@@ -282,4 +284,18 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
             many_attr = getattr(obj, field_name)
             many_attr.add(uploaded_file)
         obj.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+class SyncCandidacies(object):
+    @detail_route(methods=['post'])
+    def sync_candidacies(self, request, pk=None):
+        candidate_user = self.get_object()
+        active_candidacies = Candidacy.objects.filter(
+            candidate=candidate_user.user,
+            state='posted',
+            position__state='posted',
+            position__ends_at__gt=datetime.now())
+        for candidacy in active_candidacies:
+            copy_candidacy_files(candidacy, candidate_user.user)
         return Response(status=status.HTTP_200_OK)

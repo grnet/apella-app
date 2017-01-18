@@ -492,7 +492,7 @@ spec:
             .drf_collection:
                 model: apella.models.Professor
                 model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
-                mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.Professor]
+                mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.Professor, apella.views.mixins.SyncCandidacies]
                 ordering_fields: [user_id, user__last_name__en, user__last_name__el]
                 filter_fields: [user_id]
                 search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
@@ -1128,7 +1128,7 @@ spec:
             .drf_collection:
                 model: apella.models.Candidate
                 model_serializers: [apella.serializers.mixins.VerifiedUserMixin, apella.serializers.mixins.NestedWritableObjectsMixin]
-                mixins: [apella.views.mixins.UploadFilesViewSet]
+                mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.SyncCandidacies]
                 search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
             .cli_commands: {}
             '*':

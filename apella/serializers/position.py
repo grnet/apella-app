@@ -151,6 +151,8 @@ def copy_candidacy_files(candidacy, user):
 
     new_cv = copy_single_file(cv, candidacy)
     candidacy.cv = new_cv
+    candidacy.diplomas.all().delete()
+    candidacy.publications.all().delete()
     for diploma in diplomas:
         new_diploma = copy_single_file(diploma, candidacy)
         candidacy.diplomas.add(new_diploma)
@@ -213,7 +215,8 @@ class CandidacyMixin(object):
         curr_candidacy = Candidacy.objects.get(id=instance.id)
         validated_data['updated_at'] = timezone.now()
         attachment_files = validated_data.pop('attachment_files', [])
-        self_evaluation_report = validated_data.pop('self_evaluation_report', [])
+        self_evaluation_report = validated_data.pop(
+            'self_evaluation_report', [])
         cv = validated_data.pop('cv', [])
         diplomas = validated_data.pop('diplomas', [])
         publications = validated_data.pop('publications', [])

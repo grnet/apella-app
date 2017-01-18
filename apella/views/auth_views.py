@@ -1,4 +1,3 @@
-import uuid
 import hashlib
 
 from django.db import transaction
@@ -70,7 +69,6 @@ class CustomUserView(djoser_views.UserView):
         return adapter.get_serializer(resource)
 
     def update(self, request, *args, **kwargs):
-        data = request.data
         user = self.get_object()
 
         if user.verification_pending:
@@ -87,8 +85,8 @@ class CustomLoginSerializer(djoser_serializers.LoginSerializer):
     def validate(self, attrs):
         username = attrs.get('username')
         password = attrs.get('password')
-        self.user = auth_hooks.authenticate_user(username=username,
-            password=password)
+        self.user = auth_hooks.authenticate_user(
+            username=username, password=password)
         if self.user:
             auth_hooks.validate_user_login(self.user, self.error_messages)
         else:
@@ -128,7 +126,8 @@ class CustomPasswordView(djoser_views.SetPasswordView):
     def post(self, request):
         if request.user and hasattr(request.user, 'login_method'):
             if request.user.login_method != 'password':
-                raise PermissionDenied({"non_field_errors": "no.password.user"})
+                raise PermissionDenied(
+                    {"non_field_errors": "no.password.user"})
         return super(CustomPasswordView, self).post(request)
 
 
@@ -200,14 +199,13 @@ class CustomRegistrationView(djoser_views.RegistrationView,
             self.send_email(**self.get_send_email_kwargs(user))
         return HttpResponse(status=202)
 
-
     @transaction.atomic
     def create(self, request, *args, **kwargs):
         resend_email = request.data.get('resend_verification', None)
         if resend_email:
             return self.resend_verification(request, resend_email)
 
-        user = request.data['user'];
+        user = request.data['user']
         if not user:
             request.data['user'] = user = {}
 
@@ -226,5 +224,3 @@ class CustomRegistrationView(djoser_views.RegistrationView,
 
         return super(CustomRegistrationView, self).create(
             request, *args, **kwargs)
-
-        return resp
