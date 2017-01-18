@@ -108,3 +108,8 @@ class OldApellaCandidacyMigrationData(models.Model):
     position_serial = models.TextField()
     candidate_user_id = models.TextField()
     open_to_other_candidates = models.TextField()
+
+class OldApellaInstitutionMigrationData(models.Model):
+    institution_id = models.TextField()
+    institution_bylaw_url = models.TextField()
+    institution_organization_url = models.TextField()

@@ -663,4 +663,5 @@ from migration_models import (
     OldApellaPositionMigrationData,
     OldApellaCandidacyFileMigrationData,
     OldApellaCandidacyMigrationData,
+    OldApellaInstitutionMigrationData
 )

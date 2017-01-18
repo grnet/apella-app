@@ -13,7 +13,7 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     OldApellaUserMigrationData, Position, Subject, SubjectArea, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
     Candidacy, OldApellaCandidacyMigrationData, \
-    OldApellaCandidacyFileMigrationData
+    OldApellaCandidacyFileMigrationData, OldApellaInstitutionMigrationData
 
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
@@ -406,3 +406,20 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
         (old_candidacy.candidacy_serial, candidacy.id))
 
     migrate_candidacy_files(candidacy)
+
+def migrate_institutions_metadata():
+    for old_institution in OldApellaInstitutionMigrationData.objects.all():
+        try:
+            new_institution = Institution.objects.get(
+                id=old_institution.institution_id)
+        except Institution.DoesNotExist:
+            logger.error(
+                'could not migrate institution\'s metadata:'
+                'institution %s dooes not exist' %
+                old_institution.institution_id)
+            continue
+        new_institution.organization = \
+            old_institution.institution_organization_url
+        new_institution.regulatory_framework = \
+            old_institution.institution_bylaw_url
+        new_institution.save()

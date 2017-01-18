@@ -196,6 +196,15 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='OldApellaInstitutionMigrationData',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('institution_id', models.TextField()),
+                ('institution_bylaw_url', models.TextField()),
+                ('institution_organization_url', models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='OldApellaPositionMigrationData',
             fields=[
                 ('position_serial', models.TextField(serialize=False, primary_key=True)),
