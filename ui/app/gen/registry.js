@@ -101,12 +101,26 @@ export default ApellaGen.extend({
   path: 'registries',
 
   abilityStates: {
-    // resolve ability for position model
-    owned: computed('role', function() {
-      return get(this, 'role') === 'institutionmanager';
-    }), // we expect server to reply with owned resources
-    can_create: computed('user.can_create_registries', function() {
-      return get(this, 'user.can_create_registries');
+    /*
+     * Permission rule "owned" executes for institutionmanager
+     * An institutionmanager ownes the registries of his institution.
+     */
+    owned: computed('model.institution.id', 'user.institution.id', function() {
+      let registry_institution_id =  this.get('model.institution.id'),
+        user_institution_id = get(this, 'user.institution').split('/').filter(v => v!=="").get('lastObject');
+      return registry_institution_id === user_institution_id;
+    }),
+    /*
+     * Permission rule "can_create" executes for assistants
+     * An assistant can create a registry for his own institution, if the
+     * institution manager has gave him the permission:
+     * user.can_create = true
+     */
+    can_create: computed('user.can_create_registries', 'model.institution.id', 'user.institution.id', function() {
+        let registry_institution_id =  this.get('model.institution.id'),
+          user_institution_id = get(this, 'user.institution').split('/').filter(v => v!=="").get('lastObject'),
+          can_create_registries  = get(this, 'user.can_create_registries');
+        return (registry_institution_id === user_institution_id) && can_create_registries;
     })
   },
 
