@@ -181,7 +181,6 @@ const verifyUser = {
     });
   },
   hidden: computed('model.is_verified', 'model.is_rejected',  'model.verification_pending', 'role',  function(){
-    console.log(get(this, 'model.is_verified'), 'verified');
     if (!isHelpdesk(get(this, 'role')))  return true
     if (get(this, 'model.is_verified')) return true
     if (get(this, 'model.is_rejected')) return false;
