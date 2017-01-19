@@ -1,4 +1,5 @@
 from django.core.management import BaseCommand, CommandError
+from django.db import transaction
 import apella.models
 import csv
 import os
@@ -24,6 +25,7 @@ class Command(BaseCommand):
     def preprocess(self, input_line):
         return input_line.strip().strip(';').split(';')
 
+    @transaction.atomic
     def read_csv_file(self, csv_reader, target_model_name):
         modelclass = getattr(apella.models, target_model_name, None)
         if modelclass is None:
