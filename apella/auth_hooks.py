@@ -214,6 +214,11 @@ def verify_user(user):
     user.verification_pending = False
 
 
+def request_user_changes(user):
+    user.verification_pending = False
+    user.changes_request = datetime.now()
+
+
 FILE_TOKEN_TIMEOUT = getattr(settings, 'FILE_TOKEN_TIMEOUT', 60)
 def validate_file_access(user, file):
     return True

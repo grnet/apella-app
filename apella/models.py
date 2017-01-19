@@ -299,6 +299,7 @@ class UserProfile(models.Model):
     verification_request = models.DateTimeField(null=True, blank=True)
     is_rejected = models.BooleanField(default=False)
     rejected_reason = models.TextField(null=True, blank=True)
+    changes_request = models.DateTimeField(null=True, blank=True)
 
     @property
     def email(self):
