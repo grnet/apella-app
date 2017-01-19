@@ -231,6 +231,7 @@ def request_user_verify(user):
     validate_user_can_verify(user)
     user.verification_pending = True
     user.verification_request = datetime.now()
+    user.save()
 
 
 def verify_user(user):
@@ -242,6 +243,7 @@ def verify_user(user):
 def request_user_changes(user):
     user.verification_pending = False
     user.changes_request = datetime.now()
+    user.save()
 
 
 FILE_TOKEN_TIMEOUT = getattr(settings, 'FILE_TOKEN_TIMEOUT', 60)
