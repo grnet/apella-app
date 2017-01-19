@@ -13,6 +13,25 @@ let {
 } = Ember;
 
 
+let memberQuickDetailsFieldsets = [
+  {
+    label: null,
+    fields: [
+      field('user_id', {type: 'string', dataKey: 'user__id'}),
+      i18nUserSortField('last_name', {label: 'last_name.label'}),
+      i18nField('first_name', {label: 'first_name.label'}),
+      'is_foreign_descr',
+      field('institution_global', {label: 'institution.label'}),
+      i18nField('department.title', {label: 'department.label'}),
+      'rank',
+      'discipline_text'
+    ],
+    layout: {
+      flex: [100, 100, 100, 100, 100, 100, 100, 100, 100]
+    }
+  }
+];
+
 // serverSide is a boolean value that is used for filtering, sorting, searching
 function membersAllModelMeta(serverSide) {
    let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_el', 'last_name_en']);
@@ -28,15 +47,26 @@ function membersAllModelMeta(serverSide) {
         field('user_id', {type: 'string', dataKey: 'user__id'}),
         i18nUserSortField('last_name', {label: 'last_name.label'}),
         i18nField('first_name', {label: 'first_name.label'}),
-        'is_foreign_descr',
-        field('institution_global', {label: 'institution.label'}),
         i18nField('department.title', {label: 'department.label'}),
-        'rank',
-        'discipline_text'
       ],
-      actions: ['goToDetails'],
+      actions: ['view_details'],
       actionsMap: {
-        goToDetails: goToDetails
+        view_details: {
+          icon: 'open_in_new',
+          detailsMeta: {
+            fieldsets: memberQuickDetailsFieldsets
+          },
+          action: function() {},
+          label: 'view.user.details',
+          confirm: true,
+          prompt: {
+            title: computed('model.user_id', function() {
+              return get(this, 'model.full_name_current');
+            }),
+            cancel: 'close',
+            contentComponent: 'member-quick-view'
+          }
+        }
       }
     },
     paginate: {
