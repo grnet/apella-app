@@ -2,6 +2,9 @@
 
 CONFIGBASE=/etc/apella
 RESOURCES=/usr/lib/apella/resources
+DATADIR=/var/lib/apella/data
+
+apella migrate
 
 apella loadinstitutions "${RESOURCES}/institutions.csv"
 apella loadschools "${RESOURCES}/schools.csv"
@@ -34,3 +37,14 @@ apella professor-rank-add \
 apella professor-rank-add \
     --rank-el 'Επίκουρος Καθηγητής' \
     --rank-en 'Assistant Professor' \
+
+
+for f in $(ls -1 "${DATADIR}"/migrate_data/*.csv; do
+    apella loadmigrationdata "${f}"
+done
+
+
+apella shell << EOF
+from apella.migration_functions import migrate_institutions_metadata
+migrate_institutions_metadata()
+EOF
