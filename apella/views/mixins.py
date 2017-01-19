@@ -22,6 +22,8 @@ from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 from apella.serializers.position import copy_candidacy_files
 
+from apella.util import urljoin
+
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
@@ -217,9 +219,8 @@ class FilesViewSet(viewsets.ModelViewSet):
 
         if request.method == 'HEAD':
             token = auth_hooks.generate_file_token(user, file)
-            url = urlparse.urljoin(
-                settings.BASE_URL, settings.API_PREFIX,
-                reverse('apella-files-download', args=(pk,)))
+            url = urljoin(settings.BASE_URL,
+                          reverse('apella-files-download', args=(pk,)))
             response['X-File-Location'] = "%s?token=%s" % (url, token)
             return response
 
