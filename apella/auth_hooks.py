@@ -192,14 +192,39 @@ def migrate_legacy(migration_key, migrate_id, shibboleth_id):
 def validate_user_can_verify(user):
     # validate that current user can request account verification
     if user.user.is_professor():
-        if not user.cv_id and not user.cv_url:
+        if not user.cv_professor and not user.cv_url:
             raise ValidationError({"non_field_errors": "cv.required.error"})
+        if not user.rank:
+            raise ValidationError({"rank": "rank.required.error"})
+        if user.user.is_foreign_professor():
+            if not user.institution_freetext:
+                raise ValidationError(
+                    {"institution_freetext":
+                        "institution_freetext.required.error"})
+            if not user.discipline_text:
+                raise ValidationError(
+                    {"discipline_text":
+                        "discipline_text.required.error"})
+
+        else:
+            if not user.institution:
+                raise ValidationError(
+                    {"institution": "institution.required.error"})
+            if not user.department:
+                raise ValidationError(
+                    {"department": "department.required.error"})
+            if not user.fek:
+                raise ValidationError(
+                    {"fek": "fek.required.error"})
+            if not user.discipline_in_fek and not user.discipline_text:
+                raise ValidationError(
+                    {"non_field_errors": "discipline.required.error"})
+
 
     if user.user.is_candidate():
-        if not user.cv_id:
-            raise ValidationError({"cv": "cv.required.error"})
-
-    #TODO: include additional validations
+        if not user.id_passport_file:
+            raise ValidationError({"id_passport_file":
+                "id_passport_file.required.error"})
 
 
 def request_user_verify(user):
