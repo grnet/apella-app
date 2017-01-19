@@ -124,12 +124,12 @@ const USER_FIELDS_REGISTER_REQUIRED = [
 const USER_FIELDS_REGISTER_REQUIRED_ACADEMIC = USER_FIELDS_REGISTER_REQUIRED.slice(3);
 
 const PROFESSOR_FILES_FIELDS = [
-  fileField('cv', 'professor', 'cv', {
+  fileField('cv_professor', 'professor', 'cv_professor', {
     readonly: or('user.is_verified', 'user.verification_pending')
   }, {
     replace: true
   }),
-  fileField('cv_professor', 'professor', 'cv_professor', {
+  fileField('cv', 'professor', 'cv', {
   }, {
     replace: true
   }),
