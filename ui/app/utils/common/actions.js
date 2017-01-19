@@ -170,7 +170,6 @@ const verifyUser = {
     model.set('is_active', true);
     model.set('is_verified', true);
     model.set('is_rejected', false);
-    model.set('verification_pending', false);
     let m = route.get('messageService')
     return model.save().then((value) => {
       m.setSuccess('form.saved');
@@ -181,9 +180,12 @@ const verifyUser = {
       return reason;
     });
   },
-  hidden: computed('model.is_rejected', 'model.verification_pending', 'role',  function(){
+  hidden: computed('model.is_verified', 'model.is_rejected',  'model.verification_pending', 'role',  function(){
+    console.log(get(this, 'model.is_verified'), 'verified');
     if (!isHelpdesk(get(this, 'role')))  return true
-    return !(get(this, 'model.is_rejected') || get(this, 'model.verification_pending'));
+    if (get(this, 'model.is_verified')) return true
+    if (get(this, 'model.is_rejected')) return false;
+    return !(get(this, 'model.verification_pending'));
   }),
   confirm: true,
   prompt: {
@@ -200,7 +202,6 @@ const rejectUser = {
   action(route, model) {
     model.set('is_verified', false);
     model.set('is_rejected', true);
-    model.set('verification_pending', false);
     let m = route.get('messageService')
     return model.save().then((value) => {
       m.setSuccess('form.saved');
@@ -211,9 +212,11 @@ const rejectUser = {
       return reason;
     });
   },
-  hidden: computed('model.is_verified', 'model.verification_pending', 'role', function(){
+  hidden: computed('model.is_rejected', 'model.is_verified', 'model.verification_pending', 'role', function(){
     if (!isHelpdesk(get(this, 'role')))  return true
-    return !(get(this, 'model.is_verified') || get(this, 'model.verification_pending')) ;
+    if (get(this, 'model.is_rejected')) return true;
+    if (get(this, 'model.is_verified')) return false;
+    return !(get(this, 'model.verification_pending'));
   }),
   confirm: true,
   prompt: {
@@ -229,7 +232,7 @@ const requestProfileChanges = {
   label: 'requestProfileChanges',
   icon: 'compare_arrows',
   action(route, model) {
-    model.set('verification_pending', false);
+    model.set('changes_request', new Date());
     let m = route.get('messageService')
     return model.save().then((value) => {
       m.setSuccess('form.saved');
@@ -240,8 +243,9 @@ const requestProfileChanges = {
       return reason;
     });
   },
-  hidden: computed('model.verification_pending', 'role', function(){
+  hidden: computed('model.verification_pending', 'model.is_rejected', 'model.is_verified',  'role', function(){
     if (!isHelpdesk(get(this, 'role')))  return true
+    if (get(this, 'model.is_rejected') || get(this, 'model.is_verified')) { return true }
     return !get(this, 'model.verification_pending');
 
   }),
