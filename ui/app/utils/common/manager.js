@@ -65,6 +65,21 @@ const SUB_FIELDSET = {
    }
 };
 
+const SUB_FIELDSET_DETAILS = {
+  label: 'manager.label.sub_fieldset',
+  fields: [
+    'sub_full_name_current',
+    'sub_email',
+    'sub_father_name_current',
+    'sub_mobile_phone_number',
+    'sub_home_phone_number'
+  ],
+  layout: {
+    flex: [50, 50, 50, 25, 25]
+   }
+};
+
+
 const SUB_FIELDSET_REGISTER = {
   label: 'manager.label.sub_fieldset',
   fields: SUB_FIELDS_REGISTER,
@@ -77,6 +92,7 @@ export {
   FIELDSET,
   FIELDSET_REGISTER,
   SUB_FIELDSET,
+  SUB_FIELDSET_DETAILS,
   SUB_FIELDSET_REGISTER,
   VALIDATORS
 }

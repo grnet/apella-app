@@ -70,7 +70,7 @@ export default ApellaGen.extend({
     fieldsets: [
       USER_FIELDSET_DETAILS,
       MANAGER.FIELDSET,
-      MANAGER.SUB_FIELDSET
+      MANAGER.SUB_FIELDSET_DETAILS
     ]
 
   },

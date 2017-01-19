@@ -25,4 +25,10 @@ export default Ember.Mixin.create({
   sub_first_name_current: computeI18N('sub_first_name'),
   sub_last_name_current: computeI18N('sub_last_name'),
   sub_father_name_current: computeI18N('sub_father_name'),
+  sub_full_name_current: Ember.computed('sub_first_name_current', 'sub_last_name_current', function(){
+    return `${this.get('sub_first_name_current')} ${this.get('sub_last_name_current')}`
+  }),
+
+
+
 });

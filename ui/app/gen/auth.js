@@ -111,7 +111,13 @@ const PROFILE_FIELDSETS = function(view) {
     if (role === 'institutionmanager') {
       f.push(USER_FIELDSET)
       f.push(MANAGER.FIELDSET);
-      f.push(MANAGER.SUB_FIELDSET);
+      if (view === 'edit') {
+        f.push(MANAGER.SUB_FIELDSET);
+      }
+      if (view === 'details') {
+        f.push(MANAGER.SUB_FIELDSET_DETAILS);
+      }
+
     }
     return f;
   });
