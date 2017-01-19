@@ -1,5 +1,7 @@
 import {ApellaGen} from 'ui/lib/common';
-import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS} from 'ui/utils/common/users';
+import {USER_FIELDSET, USER_FIELDSET_DETAILS,
+        CANDIDATE_FILES_FIELDSET,
+        USER_FIELDSET_EDIT, USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
 
@@ -7,6 +9,7 @@ const {
   computed,
   get
 } = Ember;
+
 
 export default ApellaGen.extend({
   order: 500,
@@ -55,10 +58,14 @@ export default ApellaGen.extend({
     },
   },
   details: {
-    fields: ['user_id', 'username', 'full_name_current'],
     page: {
       title: computed.reads('model.full_name_current')
-    }
+    },
+    fieldsets: [
+      USER_FIELDSET_DETAILS,
+      CANDIDATE_FILES_FIELDSET
+    ]
+
   },
   edit: {
     fieldsets: [

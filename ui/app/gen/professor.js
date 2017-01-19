@@ -5,6 +5,7 @@ import {USER_FIELDSET,
         USER_FIELDSET_EDIT,
         USER_VALIDATORS,
         PROFESSOR_FIELDSET,
+        PROFESSOR_FILES_FIELDSET,
         PROFESSOR_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
@@ -66,11 +67,17 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.full_name_current')
     },
-    fieldsets: [
-      USER_FIELDSET_DETAILS,
-      PROFESSOR_FIELDSET,
-    ]
-
+    fieldsets: computed('role', function(){
+      let role = get(this, 'role');
+      let f = [
+        USER_FIELDSET_DETAILS,
+        PROFESSOR_FIELDSET,
+      ]
+      if (role === 'helpdeskadmin' || role === 'helpdeskuser' ) {
+        f.push(PROFESSOR_FILES_FIELDSET);
+      }
+      return f;
+    })
   },
   edit: {
     fieldsets: [
