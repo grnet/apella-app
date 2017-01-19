@@ -159,7 +159,8 @@ const Register = gen.GenRoutedObject.extend({
     // extract default values from `initial` params
     let defaults = {
       discipline_in_fek: true,
-      is_foreign: true
+      is_foreign: true,
+      authority: 'dean',
     };
     try {
       merge(defaults, JSON.parse(atob(params.initial)));
