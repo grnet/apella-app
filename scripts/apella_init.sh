@@ -4,14 +4,20 @@ CONFIGBASE=/etc/apella
 RESOURCES=/usr/lib/apella/resources
 DATADIR=/var/lib/apella/data
 
-apella migrate
+cmd () {
+    echo " "
+    echo "--- $@"
+    "$@"
+}
 
-apella loadinstitutions "${RESOURCES}/institutions.csv"
-apella loadschools "${RESOURCES}/schools.csv"
-apella loaddepartments "${RESOURCES}/departments.csv"
-apella loadsubjects "${RESOURCES}/subject_areas_subjects.csv"
+cmd apella migrate
 
-apella user-add \
+cmd apella loadinstitutions "${RESOURCES}/institutions.csv"
+cmd apella loadschools "${RESOURCES}/schools.csv"
+cmd apella loaddepartments "${RESOURCES}/departments.csv"
+cmd apella loadsubjects "${RESOURCES}/subject_areas_subjects.csv"
+
+cmd apella user-add \
         --username 'charitini' \
         --password-from-json "${CONFIGBASE}/passwords" \
         --first-name-el 'Χαριτίνη' \
@@ -24,23 +30,23 @@ apella user-add \
         --email 'charitini@grnet.gr' \
 
 
-apella professor-rank-add \
+cmd apella professor-rank-add \
     --rank-el 'Καθηγητής' \
     --rank-en 'Professor' \
 
 
-apella professor-rank-add \
+cmd apella professor-rank-add \
     --rank-el 'Αναπληρωτής Καθηγητής' \
     --rank-en 'Associate Professor' \
 
 
-apella professor-rank-add \
+cmd apella professor-rank-add \
     --rank-el 'Επίκουρος Καθηγητής' \
     --rank-en 'Assistant Professor' \
 
 
-for f in $(ls -1 "${DATADIR}"/migrate_data/*.csv; do
-    apella loadmigrationdata "${f}"
+for f in "${DATADIR}"/migrate_data/*.csv; do
+    cmd apella loadmigrationdata "${f}"
 done
 
 
@@ -48,3 +54,4 @@ apella shell << EOF
 from apella.migration_functions import migrate_institutions_metadata
 migrate_institutions_metadata()
 EOF
+echo ' '
