@@ -5,6 +5,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.decorators import detail_route
+from rest_framework.serializers import ValidationError
 
 from django.db.models import ProtectedError, Min, Q
 from django.conf import settings
@@ -300,3 +301,21 @@ class SyncCandidacies(object):
         for candidacy in active_candidacies:
             copy_candidacy_files(candidacy, candidate_user.user)
         return Response(request.data, status=status.HTTP_200_OK)
+
+
+class CandidateProfile(object):
+    @detail_route(methods=['post'])
+    def request_verification(self, request, pk=None):
+        candidate_user = self.get_object()
+        try:
+            auth_hooks.request_user_verify(candidate_user)
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['post'])
+    def request_changes(self, request, pk=None):
+        candidate_user = self.get_object()
+        try:
+            auth_hooks.request_user_changes(candidate_user)
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
