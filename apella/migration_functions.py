@@ -292,15 +292,24 @@ def migrate_user(old_user, password=None):
     elif role == 'institutionmanager' or role == 'assistant':
         institutionmanager = migrate_institutionmanager(old_user, new_user)
         logger.info('created institution manager %s' % institutionmanager.id)
-        old_positions = OldApellaPositionMigrationData.objects.filter(
-            manager_id=str(old_user.user_id))
-        for old_position in old_positions:
-            migrate_position(old_position, institutionmanager)
+        department_ids = Department.objects.filter(
+            institution=institutionmanager.institution).values_list(
+                'id', flat=True)
+        if role == 'institutionmanager':
+            old_positions = OldApellaPositionMigrationData.objects.filter(
+                department_id__in=department_ids)
+            for old_position in old_positions:
+                migrate_position(old_position, institutionmanager)
 
     return new_user
 
 
 def migrate_position(old_position, author):
+    if Position.objects.filter(old_code=old_position.position_serial). \
+            exists():
+        logger.info('position %s already exists' % old_position.position_serial)
+        return
+
     subject = get_obj(old_position.subject_code, Subject)
     subject_area = get_obj(old_position.subject_area_code, SubjectArea)
     department = get_obj(old_position.department_id, Department)
