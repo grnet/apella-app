@@ -220,7 +220,7 @@ class FilesViewSet(viewsets.ModelViewSet):
 
         if request.method == 'HEAD':
             token = auth_hooks.generate_file_token(user, file)
-            url = urljoin(settings.BASE_URL,
+            url = urljoin(settings.BASE_URL or '/',
                           reverse('apella-files-download', args=(pk,)))
             response['X-File-Location'] = "%s?token=%s" % (url, token)
             return response
