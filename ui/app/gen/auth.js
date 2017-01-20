@@ -438,21 +438,26 @@ export default AuthGen.extend({
             let messages = get(route, 'messageService');
             let url = model.roleURL();
             let token = get(this, 'user.auth_token');
-            return fetch(url + 'request_verification/', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Token ${token}`
-              },
-            }).then((resp) => {
-              if (resp.status === 200) {
-                model.reload();
-                messages.setSuccess('request.verification.success');
-                route.transitionTo('auth.profile.details');
-              } else {
-                throw new Error(res);
+            form.submit().then((model_or_err) => {
+              if (model_or_err && !get(form, 'changeset.isValid') || model_or_err.isAdapterError) {
+                return;
               }
-            }).catch((err) => {
-              messages.setError('request.verification.error');
+              return fetch(url + 'request_verification/', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Token ${token}`
+                },
+              }).then((resp) => {
+                if (resp.status === 200) {
+                  model.reload();
+                  messages.setSuccess('request.verification.success');
+                  route.transitionTo('auth.profile.details');
+                } else {
+                  throw new Error(res);
+                }
+              }).catch((err) => {
+                messages.setError('request.verification.error');
+              });
             });
           },
           confirm: true,
