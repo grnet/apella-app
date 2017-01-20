@@ -61,10 +61,11 @@ const  position = {
       label: 'fieldsets.labels.basic_info',
       fields: ['code', 'state_calc_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
-        'description', 'discipline', field('subject_area.title_current',{label: 'subject_area.label'}),
+        'department.institution.title_current',
+        'discipline', 'description', field('subject_area.title_current',{label: 'subject_area.label'}),
         field('subject.title_current', {label: 'subject.label'})],
       layout: {
-        flex: [50, 50, 50, 50, 100, 100, 50, 50]
+        flex: [50, 50, 50, 50, 50, 50, 100, 50, 50]
       }
     },
     details: {
