@@ -643,13 +643,14 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
+                    .nullable: {}
                     .ref:
                         to: institutions
                 department:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .nullable: {}
                     .ref:
                         to: departments
                 rank:
@@ -662,6 +663,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .blankable: {}
                     .string: {}
                 is_foreign:
                     .cli_option: {}
@@ -684,19 +686,18 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
-                    .required: {}
+                    .blankable: {}
                 discipline_text:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .string: {}
-                    .required: {}
+                    .blankable: {}
                 discipline_in_fek:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .required: {}
                 verification_pending:
                     .cli_option: {}
                     .field: {}
