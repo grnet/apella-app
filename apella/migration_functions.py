@@ -285,6 +285,7 @@ def migrate_user(old_user, password=None):
             logger.info('created candidate %s' % candidate.id)
             migrate_user_profile_files(old_user, new_user)
             migrate_candidacies(candidate_user=new_user)
+        role = 'professor'
     elif role == 'professor':
         professor = migrate_professor(old_user, new_user)
         logger.info('created professor %s' % professor.id)
