@@ -190,10 +190,13 @@ def login(request):
             logger.error("forged migration")
             raise PermissionDenied("forged migration handshake")
 
-        legacy = auth_hooks.migrate_legacy(
-            migration_key, migrate_id, identifier)
-
-        if legacy is None:
+        try:
+            with transaction.atomic():
+                legacy = auth_hooks.migrate_legacy(
+                    migration_key, migrate_id, identifier)
+                if legacy is None:
+                    raise ValueError
+        except ValueError:
             msg = 'migration.error'
             return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
