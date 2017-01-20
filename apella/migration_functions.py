@@ -3,7 +3,7 @@ import re
 import os
 from datetime import datetime
 
-from django.db import transaction
+from django.db import transaction, DataError
 from django.conf import settings
 from django.db.utils import IntegrityError
 from django.core.files import File
@@ -153,13 +153,14 @@ def migrate_file(old_file, new_user, source, source_id):
         source_id=source_id)
     old_file_path = os.path.join(
         settings.OLD_APELLA_MEDIA_ROOT, old_file.file_path)
-    with open(old_file_path, 'r') as f:
-        try:
+    try:
+        with open(old_file_path, 'r') as f:
             new_file.file_path.save(
                 old_file.original_name, File(f))
             new_file.file_path.file.close()
-        except IOError:
-            logger.error('failed to migrate file %s' % old_file.file_path)
+    except IOError:
+        logger.error('failed to migrate file %s' % old_file.file_path)
+        return
     logger.info(
         'migrated %s file %s to %s' %
         (source, old_file.id, new_file.id))
@@ -338,6 +339,11 @@ def migrate_position(old_position, author):
             ends_at=ends_at
         )
     except IntegrityError as e:
+        logger.error(
+            'failed to migrate position %s' % old_position.position_serial)
+        logger.error(e)
+        return
+    except DataError as e:
         logger.error(
             'failed to migrate position %s' % old_position.position_serial)
         logger.error(e)
