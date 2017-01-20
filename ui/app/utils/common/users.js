@@ -155,67 +155,51 @@ const CANDIDATE_FILES_FIELDS = [
   }),
 ]
 
-const PROFESSOR_FIELDS = [
-  field('institution', {
-    displayAttr: 'title_current',
-    required: computed('model.changeset.is_foreign', function() {
-      let check = get(this, 'model.changeset.is_foreign');
-      return !check;
+const PROFESSOR_FIELDS = computed('model.is_foreign', function(){
+  let f = [
+    'rank',
+    field('cv_url', {
+      hint: 'cv_url.hint',
     }),
-    disabled: computed('model.changeset.is_foreign', function() {
-      let check = get(this, 'model.changeset.is_foreign');
-      if (check) { Ember.run.once(this, () => set(this, 'model.changeset.institution', null)) };
-      return check;
+  ];
+
+  let f_domestic = [
+    'institution',
+    'department',
+    'fek',
+    field('discipline_in_fek',{
+      hint: 'discipline_in_fek.hint',
     }),
-  }),
-  field('department', {
-    displayAttr: 'title_current',
-    required: computed('model.changeset.is_foreign', function() {
-      let check = get(this, 'model.changeset.is_foreign');
-      return !check;
+
+    field('discipline_text', {
+      type: 'text',
+      required: computed('model.changeset.discipline_in_fek', function() {
+        let check = get(this, 'model.changeset.discipline_in_fek');
+        return !check;
+      }),
+      disabled: computed('model.changeset.discipline_in_fek', function() {
+        let check = get(this, 'model.changeset.discipline_in_fek');
+        if (check) { Ember.run.once(this, () => set(this, 'model.changeset.discipline_text', '')) };
+        return check;
+      })
     }),
-    disabled: computed('model.changeset.is_foreign', function() {
-      let check = get(this, 'model.changeset.is_foreign');
-      if (check) { Ember.run.once(this, () => set(this, 'model.changeset.department', null)) };
-      return check;
-    }),
-  }),
-  'rank',
-  field('cv_url', {
-    hint: 'cv_url.hint',
-  }),
-  'fek',
-  field('institution_freetext', {
-    type: 'text',
-    required: computed('model.changeset.is_foreign', function() {
-      let check = get(this, 'model.changeset.is_foreign');
-      return check;
-    }),
-    disabled: computed('model.changeset.is_foreign', function() {
-      let check = get(this, 'model.changeset.is_foreign');
-      if (!check) { Ember.run.once(this, () => set(this, 'model.changeset.institution_freetext', '')) };
-      return !check;
-    })
-  }),
-  field('discipline_text', {
-    type: 'text',
-    required: computed('model.changeset.discipline_in_fek', function() {
-      let check = get(this, 'model.changeset.discipline_in_fek');
-      return !check;
-    }),
-    disabled: computed('model.changeset.discipline_in_fek', function() {
-      let check = get(this, 'model.changeset.discipline_in_fek');
-      if (check) { Ember.run.once(this, () => set(this, 'model.changeset.discipline_text', '')) };
-      return check;
-    })
-  }),
-  field('discipline_in_fek',{
-    hint: 'discipline_in_fek.hint',
-  }),
-  'is_foreign',
-  'speaks_greek',
-];
-const PROFESSOR_FIELDS_REGISTER = PROFESSOR_FIELDS.concat();
+  ];
+
+  let f_foreign = [
+    'institution_freetext',
+    'discipline_text',
+    'speaks_greek',
+  ];
+
+  if (get(this, 'model.is_foreign')) {
+    return f.concat(f_foreign);
+  } else {
+    return f.concat(f_domestic);
+  }
+
+});
+
+const PROFESSOR_FIELDS_REGISTER = PROFESSOR_FIELDS;
 
 const PROFESSOR_FIELDS_REGISTER_REQUIRED = [
   'institution', 'department', 'rank', 'fek'
@@ -276,6 +260,14 @@ const USER_FIELDSET_DETAILS = {
   }
 }
 
+const PROFESSOR_FLEX = computed('model.is_foreign', function() {
+  if (get(this, 'model.is_foreign') ) {
+    return [50, 50, 50, 50, 100]
+  } else {
+    return [50, 50, 50, 50, 50, 50, 100]
+  }
+})
+
 const USER_FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, USER_FIELDSET_DETAILS, {
   fields: USER_FIELDSET_DETAILS.fields.slice(1)
 });
@@ -284,7 +276,7 @@ const PROFESSOR_FIELDSET = {
   label: 'fieldsets.labels.more_info',
   fields: PROFESSOR_FIELDS,
   layout: {
-    flex: [50, 50, 100, 50, 50, 100, 100, 100, 50, 50]
+    flex: PROFESSOR_FLEX
    }
 }
 

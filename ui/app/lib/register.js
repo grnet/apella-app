@@ -43,6 +43,10 @@ const User = Ember.Object.extend({
       data['user_role'] = 'institutionmanager';
     }
 
+    if (get(model, 'is_foreign') ) {
+      data['is_foreign'] = true;
+    }
+
     set(model, 'errors', []);
     let promise = new Ember.RSVP.Promise(function(resolve, reject) {
       Ember.$.ajax({
@@ -150,18 +154,24 @@ const Register = gen.GenRoutedObject.extend({
       this.transitionTo('auth.register-intro');
     }
 
+    // extract default values from `initial` params
+    let defaults = {
+      discipline_in_fek: true,
+      authority: 'dean',
+    };
+
+
     let userRole = this.paramsFor('auth.register').userRole;
+
+    if (userRole == 'foreign-professor') {
+      defaults['is_foreign'] = true
+    }
+
     if (!['professor', 'manager', 'candidate'].includes(userRole)) {
       userRole = 'professor';
     }
     set(this, 'gen.modelName', userRole);
 
-    // extract default values from `initial` params
-    let defaults = {
-      discipline_in_fek: true,
-      is_foreign: true,
-      authority: 'dean',
-    };
     try {
       merge(defaults, JSON.parse(atob(params.initial)));
     } catch(err) {}
