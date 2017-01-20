@@ -309,6 +309,7 @@ class CandidateProfile(object):
         candidate_user = self.get_object()
         try:
             auth_hooks.request_user_verify(candidate_user)
+            candidate_user.save()
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
@@ -318,6 +319,7 @@ class CandidateProfile(object):
         candidate_user = self.get_object()
         try:
             auth_hooks.request_user_changes(candidate_user)
+            candidate_user.save()
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
