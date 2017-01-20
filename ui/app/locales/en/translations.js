@@ -151,6 +151,7 @@ export default {
   'full_name_current.label': 'Full name',
   'candidate.full_name_current.label': 'Full name',
   'role.label': 'Role',
+  'manager_role_verbose.label': 'Role',
   'role_verbose.label': 'Role',
   'organization.label': 'Organization',
   'regulatory_framework.label': 'Internal Regulation',

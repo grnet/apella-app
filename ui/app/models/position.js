@@ -35,7 +35,7 @@ export default DS.Model.extend({
       optionLabelAttr: 'title_current',
     }
   }),
-  fek: DS.attr(),
+  fek: DS.attr({label: 'position.fek.label'}),
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
   assistants: DS.hasMany('assistant'),
