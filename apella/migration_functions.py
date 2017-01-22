@@ -52,7 +52,7 @@ def migrate_professor(old_user, new_user):
 
     discipline_in_fek = False
     discipline_text = None
-    if old_user.professor_subject_from_appointment:
+    if bool(re.match('t', old_user.professor_subject_from_appointment, re.I)):
         discipline_in_fek = True
         discipline_text = old_user.professor_subject_from_appointment
     else:
@@ -208,6 +208,8 @@ def migrate_user_profile_files(old_user, new_user):
 def migrate_username(username, password=None):
     old_users = OldApellaUserMigrationData.objects.filter(username=username)
     for old_user in old_users:
+        if professor_exists(old_user.user_id) and old_user.role == 'candidate':
+            continue
         new_user = migrate_user(old_user, password)
         if new_user:
             return new_user
@@ -218,6 +220,8 @@ def migrate_shibboleth_id(shibboleth_id):
     old_users = OldApellaUserMigrationData.objects.filter(
         shibboleth_id=shibboleth_id)
     for old_user in old_users:
+        if professor_exists(old_user.user_id) and old_user.role == 'candidate':
+            continue
         new_user = migrate_user(old_user)
         if new_user:
             return new_user
@@ -226,18 +230,14 @@ def migrate_shibboleth_id(shibboleth_id):
 @transaction.atomic
 def migrate_user(old_user, password=None):
     if ApellaUser.objects.filter(username=old_user.username).exists():
-        if (not professor_exists(old_user.user_id) and
-                old_user.role == 'candidate') or old_user.role != 'candidate':
-            logger.error(
-                'a user with username %s already exists, user_id: %s' %
-                (old_user.username, old_user.user_id))
+        logger.error(
+            'a user with username %s already exists, user_id: %s' %
+            (old_user.username, old_user.user_id))
         return
     if ApellaUser.objects.filter(email=old_user.email).exists():
-        if (not professor_exists(old_user.user_id) and
-                old_user.role == 'candidate') or old_user.role != 'candidate':
-            logger.error(
-                'a user with email %s already exists, user_id: %s' %
-                (old_user.email, old_user.user_id))
+        logger.error(
+            'a user with email %s already exists, user_id: %s' %
+            (old_user.email, old_user.user_id))
         return
 
     first_name = MultiLangFields.objects.create(
@@ -285,7 +285,6 @@ def migrate_user(old_user, password=None):
             logger.info('created candidate %s' % candidate.id)
             migrate_user_profile_files(old_user, new_user)
             migrate_candidacies(candidate_user=new_user)
-        role = 'professor'
     elif role == 'professor':
         professor = migrate_professor(old_user, new_user)
         logger.info('created professor %s' % professor.id)
