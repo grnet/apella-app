@@ -5,6 +5,7 @@ select
     u.passwordsalt passwd_salt,
     u.shibbolethinfo_remoteuser as shibboleth_id,
     u.username username,
+    u.permanentauthtoken permanent_auth_token,
     case
         when r.discriminator = 'INSTITUTION_MANAGER' then 'institutionmanager'
         when r.discriminator = 'INSTITUTION_ASSISTANT' then 'assistant'

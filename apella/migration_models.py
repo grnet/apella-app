@@ -8,6 +8,7 @@ class OldApellaUserMigrationData(models.Model):
     migration_key = models.TextField(null=True, default=None)
     user_id = models.TextField()
     username = models.TextField()
+    permanent_auth_token = models.TextField(null=True, unique=True)
     passwd = models.TextField()
     passwd_salt = models.TextField()
     shibboleth_id = models.TextField()
@@ -65,6 +66,12 @@ class OldApellaUserMigrationData(models.Model):
             m = "Wrong password for user {0!r}".format(self.username)
             raise ValueError(m)
 
+    @classmethod
+    def get_user_by_token(cls, request):
+        token = request.GET.get('user', '')
+        user = cls.objects.get(permanent_auth_token=token)
+        return user
+
 
 class OldApellaFileMigrationData(models.Model):
     user_id = models.TextField()
@@ -108,6 +115,7 @@ class OldApellaCandidacyMigrationData(models.Model):
     position_serial = models.TextField()
     candidate_user_id = models.TextField()
     open_to_other_candidates = models.TextField()
+
 
 class OldApellaInstitutionMigrationData(models.Model):
     institution_id = models.TextField()
