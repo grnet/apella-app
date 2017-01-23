@@ -4,6 +4,14 @@ function isHelpdesk(role) {
   return role === 'helpdeskadmin' || role === 'helpdeskuser';
 }
 
+function call_utils(route, model) {
+  let messages = get(route, 'messageService');
+  let adapter = get(route, 'store').adapterFor(get(model, 'role'));
+  let url = adapter.buildURL(get(model, 'role'), get(model, 'id'), 'findRecord');
+  let token = get(route, 'user.auth_token');
+  return [url, token, messages]
+}
+
 const {
   computed,
   get,
@@ -226,37 +234,46 @@ const rejectUser = {
   }
 };
 
-
 const requestProfileChanges = {
-  label: 'requestProfileChanges',
+  label: 'request.profile.changes',
+  primary: true,
+  text: true,
   icon: 'compare_arrows',
-  action(route, model) {
-    model.set('changes_request', new Date());
-    let m = route.get('messageService')
-    return model.save().then((value) => {
-      m.setSuccess('form.saved');
-      return value;
-    }, (reason) => {
-      model.rollbackAttributes();
-      m.setError('reason.errors');
-      return reason;
+  action: function(route, model) {
+    let [url, token, messages] = call_utils(route, model);
+    return fetch(url + 'request_changes/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('request.changes.success');
+        });
+      } else {
+        throw new Error(res);
+      }
+    }).catch((err) => {
+      messages.setError('request.changes.error');
     });
   },
-  hidden: computed('model.verification_pending', 'model.is_rejected', 'model.is_verified',  'role', function(){
-    if (!isHelpdesk(get(this, 'role')))  return true
-    if (get(this, 'model.is_rejected') || get(this, 'model.is_verified')) { return true }
-    return !get(this, 'model.verification_pending');
-
-  }),
   confirm: true,
   prompt: {
-    ok: 'requestChanages',
-    cancel: 'cancel',
-    message: 'prompt.requestProfileChanges.message',
-    title: 'prompt.requestProfileChanges.title',
-  }
+    title: 'request.profile.changes',
+    message: 'request.profile.changes.message',
+    ok: 'submit',
+    cancel: 'cancel'
+  },
+  hidden: computed('model.verification_pending', 'model.is_verified', 'model.is_rejected', 'role', function() {
+    let verified = get(this, 'model.is_verified');
+    let rejected = get(this, 'model.is_rejected');
+    let pending = get(this, 'model.verification_pending');
+    let role = get(this, 'role');
+    if (isHelpdesk(role)) { return !(!verified  && !rejected && pending); }
+    return true;
+  }),
 };
-
 
 const  goToPosition = {
   label: 'position_details.label',

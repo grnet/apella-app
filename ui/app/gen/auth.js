@@ -132,50 +132,6 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   component: 'gen-details',
   actions: ['change_password'],
   actionsMap: {
-    'request_changes': {
-      label: 'request.profile.changes',
-      primary: true,
-      raised: true,
-      text: true,
-      icon: 'undo',
-      action: function(route, profile) {
-        let messages = get(route, 'messageService');
-        let url = profile.roleURL();
-        let token = get(this, 'user.auth_token');
-        return fetch(url + 'request_changes/', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Token ${token}`
-          },
-        }).then((resp) => {
-          if (resp.status === 200) {
-            profile.reload().then(() => {
-              messages.setSuccess('request.changes.success');
-              route.transitionTo('auth.profile.index');
-            });
-          } else {
-            throw new Error(res);
-          }
-        }).catch((err) => {
-          messages.setError('request.changes.error');
-        });
-      },
-      confirm: true,
-      prompt: {
-        title: 'request.profile.changes',
-        message: 'request.profile.changes.message',
-        ok: 'submit',
-        cancel: 'cancel'
-      },
-      hidden: computed('model.verification_pending', 'model.is_verified', 'model.role', function() {
-        let verified = get(this, 'model.is_verified');
-        let pending = get(this, 'model.verification_pending');
-        let role = get(this, 'model.role');
-        if (isVerifiable(role)) { return !(!verified && pending); }
-        return true;
-      }),
-    },
-
     'sync_candidacies': {
       label: 'sync.candidacies',
       raised: true,

@@ -41,6 +41,10 @@ export default {
   'password.reset.submit': 'Submit *',
   'request.profile.verification': 'Αιτηση επαληθευσης λογαριασμου',
   'request.profile.verification.message': 'Request profile verification message*',
+  'request.profile.changes': 'Αίτηση αλλαγής στοιχείων',
+  'request.profile.changes.message': 'Θα ζητηθεί αλλαγή στοιχείων από τον χρήστη',
+  'request.changes.success': 'Η αίτηση αλλαγής στοιχείων καταχωρήθηκε επιτυχώς',
+  'request.changes.error': 'Υπήρξε κάποιο σφάλμα κατά την αίτηση αλλαγής στοιχείων',
   'registration.success.email.pending': 'Success email pending *',
 
   'Auth': 'Χρήστης',

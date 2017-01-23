@@ -41,6 +41,10 @@ export default {
   'password.reset.submit': 'Submit',
   'request.profile.verification': 'Request profile verification',
   'request.profile.verification.message': 'Request profile verification message*',
+  'request.profile.changes': 'Request profile changes',
+  'request.profile.changes.message': 'The user will be asked to change his profile',
+  'request.changes.success': 'The profile change request has been successful',
+  'request.changes.error': 'There was an error with profile change request',
   'registration.success.email.pending': 'Success email pending *',
 
   'Auth': 'Auth',
