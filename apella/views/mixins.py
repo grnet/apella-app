@@ -173,7 +173,7 @@ class CandidacyList(object):
         return super(CandidacyList, self).update(request, pk=None)
 
 
-class RegistriesList(generics.ListAPIView):
+class RegistriesList(viewsets.GenericViewSet):
 
     def get_queryset(self):
         queryset = self.queryset
@@ -201,8 +201,13 @@ class RegistriesList(generics.ListAPIView):
             search = query_params['search']
             members = members.filter(
                 Q(user__last_name__en__icontains=search) |
-                Q(user__last_name__el__icontains=search))
+                Q(user__last_name__el__icontains=search)). \
+                order_by(ordering)
         ser = adapter.get_serializer('professors')
+        page = self.paginate_queryset(members)
+        if page is not None:
+            return self.get_paginated_response(
+                ser(page, many=True, context={'request': request}).data)
         return Response(
             ser(members, many=True, context={'request': request}).data)
 
