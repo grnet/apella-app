@@ -48,6 +48,8 @@ PERMISSION_RULES = [
     ('assistants', 'partial_update', 'assistant', 'user/home_phone_number', 'owned_by_assistant', '4.3.7'),
     ('assistants', 'partial_update', 'assistant', 'user/mobile_phone_number', 'owned_by_assistant', '4.3.7'),
     ('assistants', 'partial_update', 'assistant', 'user/email', 'owned_by_assistant', '4.3.7'),
+    ('assistants', 'verify_user', 'institutionmanager', '*', 'owned', ''),
+    ('assistants', 'reject_user', 'institutionmanager', '*', 'owned', ''),
     ('candidacies', 'create', 'candidate', '*', '*', '3.3.3'),
     ('candidacies', 'create', 'professor', '*', '*', '1.3.9'),
     ('candidacies', 'create', 'helpdeskadmin', '*', '*', '1.3.9'),
