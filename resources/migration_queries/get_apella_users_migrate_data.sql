@@ -16,6 +16,7 @@ select
         when r.discriminator = 'CANDIDATE' then 'candidate'
         else r.discriminator
     end as role,
+    r.status role_status,
     u.basicinfo_firstname name_el,
     u.basicinfo_lastname surname_el,
     u.basicinfo_fathername fathername_el,
