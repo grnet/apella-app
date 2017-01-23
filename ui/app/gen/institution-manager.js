@@ -42,19 +42,19 @@ export default ApellaGen.extend({
         return (permittedRoles.includes(role) ? true : false);
       })
     },
+    getModel: function(params) {
+      return this.store.query('institution-manager', {manager_role: 'institutionmanager'});
+    },
     layout: 'table',
     filter: {
       active: true,
-      meta: {
-        fields: ['manager_role']
-      },
       serverSide: true,
       search: true,
       searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
     },
     sortBy: 'username:asc',
     row: {
-      fields: ['user_id', field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'institution.title_current', 'manager_role_verbose'],
+      fields: ['user_id', field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'institution.title_current'],
       actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
       actionsMap: {
         verifyUser: verifyUser,
