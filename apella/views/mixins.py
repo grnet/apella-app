@@ -338,6 +338,7 @@ class CandidateProfile(object):
     def reject_user(self, request, pk=None):
         candidate_user = self.get_object()
         try:
+            reason = None
             if 'rejected_reason' in request.data:
                 reason = request.data['rejected_reason']
             auth_hooks.reject_user(candidate_user, reason=reason)
