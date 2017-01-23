@@ -233,6 +233,7 @@ def verify_user(user):
     user.is_verified = True
     user.verified_at = datetime.now()
     user.verification_pending = False
+    user.is_rejected = False
 
 
 def reject_user(user, reason=None):
