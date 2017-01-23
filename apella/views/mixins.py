@@ -323,3 +323,25 @@ class CandidateProfile(object):
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def verify_user(self, request, pk=None):
+        candidate_user = self.get_object()
+        try:
+            auth_hooks.verify_user(candidate_user)
+            candidate_user.save()
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def reject_user(self, request, pk=None):
+        candidate_user = self.get_object()
+        try:
+            if 'rejected_reason' in request.data:
+                reason = request.data['rejected_reason']
+            auth_hooks.reject_user(candidate_user, reason=reason)
+            candidate_user.save()
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_200_OK)

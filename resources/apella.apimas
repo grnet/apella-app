@@ -709,11 +709,30 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                    .readonly: {}
+                verified_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {}
+                    .readonly: {}
                 is_rejected:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                    .readonly: {}
+                rejected_reason:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                changes_request:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {}
+                    .readonly: {}
                 user:
                     .cli_option: {}
                     .field: {}
@@ -1153,11 +1172,30 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                    .readonly: {}
+                verified_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {}
+                    .readonly: {}
                 is_rejected:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                    .readonly: {}
+                rejected_reason:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                changes_request:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {}
+                    .readonly: {}
                 file_path:
                     .cli_option: {}
                     .field: {}

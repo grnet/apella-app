@@ -235,6 +235,14 @@ def verify_user(user):
     user.verification_pending = False
 
 
+def reject_user(user, reason=None):
+    user.is_verified = False
+    user.is_rejected = True
+    user.verification_pending = False
+    if reason:
+        user.rejected_reason = reason
+
+
 def request_user_changes(user):
     user.verification_pending = False
     user.changes_request = datetime.now()
