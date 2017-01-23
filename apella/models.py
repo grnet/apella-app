@@ -382,6 +382,7 @@ class Candidate(UserProfile, CandidateProfile):
 
 class InstitutionManager(UserProfile):
     institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
+    departments = models.ManyToManyField(Department, blank=True)
     authority = models.CharField(
         choices=common.AUTHORITIES, max_length=30,
         blank=True, null=True)
