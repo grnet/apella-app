@@ -172,65 +172,80 @@ const activateUser = {
 };
 
 const verifyUser = {
-  label: 'verifyUser',
+  label: 'verify.user',
   icon: 'done',
-  action(route, model) {
-    model.set('is_active', true);
-    model.set('is_verified', true);
-    model.set('is_rejected', false);
-    let m = route.get('messageService')
-    return model.save().then((value) => {
-      m.setSuccess('form.saved');
-      return value;
-    }, (reason) => {
-      model.rollbackAttributes();
-      m.setError('reason.errors');
-      return reason;
+  action: function(route, model) {
+    let [url, token, messages] = call_utils(route, model);
+    return fetch(url + 'verify_user/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('verify.user.success');
+        });
+      } else {
+        throw new Error(res);
+      }
+    }).catch((err) => {
+      messages.setError('verify.user.error');
     });
   },
-  hidden: computed('model.is_verified', 'model.is_rejected',  'model.verification_pending', 'role',  function(){
-    if (!isHelpdesk(get(this, 'role')))  return true
-    if (get(this, 'model.is_verified')) return true
-    if (get(this, 'model.is_rejected')) return false;
-    return !(get(this, 'model.verification_pending'));
-  }),
   confirm: true,
   prompt: {
-    ok: 'verify',
+    ok: 'submit',
     cancel: 'cancel',
-    message: 'prompt.verifyUser.message',
-    title: 'prompt.verifyUser.title',
-  }
+    message: 'verify.user.message',
+    title: 'verify.user.title',
+  },
+  hidden: computed('model.verification_pending', 'model.is_verified', 'model.is_rejected', 'role', function() {
+    let verified = get(this, 'model.is_verified');
+    let rejected = get(this, 'model.is_rejected');
+    let pending = get(this, 'model.verification_pending');
+    let role = get(this, 'role');
+    if (isHelpdesk(role)) { return !(rejected  || (!verified && pending)); }
+    return true;
+  }),
 };
 
 const rejectUser = {
-  label: 'rejectUser',
+  label: 'reject.user',
   icon: 'clear',
-  action(route, model) {
-    model.set('is_verified', false);
-    model.set('is_rejected', true);
-    let m = route.get('messageService')
-    return model.save().then((value) => {
-      m.setSuccess('form.saved');
-      return value;
-    }, (reason) => {
-      model.rollbackAttributes();
-      m.setError('reason.errors');
-      return reason;
+  action: function(route, model) {
+    let [url, token, messages] = call_utils(route, model);
+    return fetch(url + 'reject_user/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('reject.user.success');
+        });
+      } else {
+        throw new Error(res);
+      }
+    }).catch((err) => {
+      messages.setError('reject.user..error');
     });
   },
   hidden: computed('model.is_rejected', 'model.is_verified', 'model.verification_pending', 'role', function(){
-    if (!isHelpdesk(get(this, 'role')))  return true
-    if (get(this, 'model.is_rejected')) return true;
-    if (get(this, 'model.is_verified')) return false;
-    return !(get(this, 'model.verification_pending'));
+    let verified = get(this, 'model.is_verified');
+    let rejected = get(this, 'model.is_rejected');
+    let pending = get(this, 'model.verification_pending');
+    let role = get(this, 'role');
+    if (isHelpdesk(role)) { return !(verified  || (!rejected && pending)); }
+    return true;
   }),
   confirm: true,
   prompt: {
-    ok: 'reject',
+    ok: 'submit',
     cancel: 'cancel',
-    message: 'prompt.rejectUser.message',
-    title: 'prompt.rejectUser.title',
+    message: 'reject.user.message',
+    title: 'reject.user.title',
   }
 };
 
