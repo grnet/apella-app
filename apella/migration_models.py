@@ -8,7 +8,7 @@ class OldApellaUserMigrationData(models.Model):
     migration_key = models.TextField(null=True, default=None)
     user_id = models.TextField()
     username = models.TextField()
-    permanent_auth_token = models.TextField(null=True, unique=True)
+    permanent_auth_token = models.TextField(null=True)
     passwd = models.TextField()
     passwd_salt = models.TextField()
     shibboleth_id = models.TextField()
