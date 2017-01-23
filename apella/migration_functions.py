@@ -301,7 +301,7 @@ def migrate_user(old_user, password=None):
                 'id', flat=True)
         if role == 'institutionmanager':
             old_positions = OldApellaPositionMigrationData.objects.filter(
-                department_id__in=department_ids)
+                department_id__in=map(str, department_ids))
             for old_position in old_positions:
                 migrate_position(old_position, institutionmanager)
 
