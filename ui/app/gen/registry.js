@@ -34,7 +34,7 @@ let memberQuickDetailsFieldsets = [
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
 function membersAllModelMeta(serverSide) {
-   let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_el', 'last_name_en']);
+   let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']);
   /*
    * For now, hide the client side filtering, searching, ordering because these
    * functionalities are not yet developed.
@@ -79,17 +79,26 @@ function membersAllModelMeta(serverSide) {
       limits: [5, 10, 15]
     },
     filter: {
-      search: display,
+      search: true,
       searchPlaceholder: 'search.placeholder_last_name',
       serverSide: serverSide,
-      active: display,
+      active: true,
+      searchFields: ['first_name_current', 'last_name_current'],
       meta: {
-        fields: [field('user_id', {type: 'string'})]
+        fields: [
+          field('user_id', {type: 'string'}),
+          field('department', {
+            type: 'model',
+            autocomplete: true,
+            displayAttr: 'title_current',
+            modelName: 'department'
+          })
+        ]
       }
     },
     sort: {
       serverSide: serverSide,
-      active: display,
+      active: true,
       fields: sortFields
     }
   };
@@ -97,6 +106,7 @@ function membersAllModelMeta(serverSide) {
 
 function membersField(modelMetaSide, selectModelMetaSide) {
   return field('members', {
+    refreshValueQuery: modelMetaSide,
     valueQuery: function(store, params, model, value) {
       // If the model has no id we are in create view
       if(model.get('id')) {
