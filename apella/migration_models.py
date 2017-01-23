@@ -46,6 +46,8 @@ class OldApellaUserMigrationData(models.Model):
     manager_deputy_mobile = models.TextField()
     manager_deputy_phone = models.TextField()
     manager_deputy_email = models.TextField()
+    role_status = models.TextField(default='UNAPPROVED')
+
 
     @staticmethod
     def encode_password(password, salt):

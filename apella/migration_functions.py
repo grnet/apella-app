@@ -40,9 +40,10 @@ def get_obj(id_str, model):
 
 
 def migrate_candidate(old_user, new_user):
+    is_verified = True if old_user.role_status == 'ACTIVE' else False
     candidate = Candidate.objects.create(
         user=new_user,
-        is_verified=True)
+        is_verified=is_verified)
     return candidate
 
 
@@ -58,6 +59,8 @@ def migrate_professor(old_user, new_user):
     else:
         discipline_text = old_user.professor_subject_optional_freetext
 
+    is_verified = True if old_user.role_status == 'ACTIVE' else False
+
     professor = Professor.objects.create(
         user=new_user,
         institution=institution,
@@ -70,7 +73,7 @@ def migrate_professor(old_user, new_user):
         fek=old_user.professor_appointment_gazette_url,
         discipline_in_fek=discipline_in_fek,
         discipline_text=discipline_text,
-        is_verified=True)
+        is_verified=is_verified)
 
     return professor
 
