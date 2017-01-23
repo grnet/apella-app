@@ -6,8 +6,12 @@ function isHelpdesk(role) {
 
 function call_utils(route, model) {
   let messages = get(route, 'messageService');
-  let adapter = get(route, 'store').adapterFor(get(model, 'role'));
-  let url = adapter.buildURL(get(model, 'role'), get(model, 'id'), 'findRecord');
+  let role = get(model, 'role');
+  if ( role == 'institutionmanager' || role == 'assistant' ) {
+    role = 'institution-manager';
+  }
+  let adapter = get(route, 'store').adapterFor(role);
+  let url = adapter.buildURL(role, get(model, 'id'), 'findRecord');
   let token = get(route, 'user.auth_token');
   return [url, token, messages]
 }
