@@ -898,6 +898,7 @@ spec:
                 model: apella.models.InstitutionManager
                 filter_fields: [institution, manager_role]
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.CandidateProfile]
                 search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
             .cli_commands: {}
             '*':
