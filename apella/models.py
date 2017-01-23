@@ -371,7 +371,8 @@ class Candidate(UserProfile, CandidateProfile):
 
 class InstitutionManager(UserProfile):
     institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
-    authority = models.CharField(choices=common.AUTHORITIES, max_length=30,
+    authority = models.CharField(
+        choices=common.AUTHORITIES, max_length=30,
         blank=True, null=True)
     authority_full_name = models.CharField(
         max_length=255, blank=True, null=True)
@@ -415,11 +416,11 @@ class ProfessorRank(models.Model):
 
 
 class Position(models.Model):
-    code = models.CharField(max_length=200)
-    old_code = models.CharField(max_length=200)
-    title = models.CharField(max_length=200)
-    description = models.CharField(max_length=300)
-    discipline = models.CharField(max_length=300)
+    code = models.CharField(max_length=255)
+    old_code = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    discipline = models.TextField()
     ranks = models.ManyToManyField(ProfessorRank, blank=True)
     author = models.ForeignKey(
             InstitutionManager, related_name='authored_positions',
@@ -559,7 +560,7 @@ class Candidacy(CandidateProfile):
     others_can_view = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
-    code = models.CharField(max_length=200)
+    code = models.CharField(max_length=255)
     self_evaluation_report = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='self_evaluation_report', on_delete=models.SET_NULL)
@@ -635,7 +636,6 @@ class Registry(models.Model):
             user_id=request.user.id,
             institution_id=self.department.institution.id,
             can_create_registries=True).exists()
-
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
