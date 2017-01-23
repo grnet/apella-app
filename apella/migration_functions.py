@@ -47,6 +47,7 @@ def migrate_candidate(old_user, new_user):
     return candidate
 
 
+@transaction.atomic
 def migrate_professor(old_user, new_user):
     institution = get_obj(old_user.professor_institution_id, Institution)
     department = get_obj(old_user.professor_department_id, Department)
@@ -78,6 +79,7 @@ def migrate_professor(old_user, new_user):
     return professor
 
 
+@transaction.atomic
 def migrate_institutionmanager(old_user, new_user):
     institution = get_obj(old_user.manager_institution_id, Institution)
 
@@ -142,6 +144,7 @@ FILE_KINDS_MAPPING = {
 }
 
 
+@transaction.atomic
 def migrate_file(old_file, new_user, source, source_id):
     if old_file.file_type not in FILE_KINDS_MAPPING[source]:
         logger.error(
@@ -194,6 +197,7 @@ def migrate_file(old_file, new_user, source, source_id):
             many_attr.add(new_file)
         candidacy.save()
 
+@transaction.atomic
 def migrate_user_profile_files(old_user, new_user):
     old_files = OldApellaFileMigrationData.objects.filter(
         user_id=old_user.user_id)
@@ -308,6 +312,7 @@ def migrate_user(old_user, password=None):
     return new_user
 
 
+@transaction.atomic
 def migrate_position(old_position, author):
     if Position.objects.filter(old_code=old_position.position_serial). \
             exists():
@@ -401,6 +406,7 @@ def migrate_candidacies(position=None, candidate_user=None):
             migrate_candidacy(old_candidacy, new_candidate, new_position)
 
 
+@transaction.atomic
 def migrate_candidacy_files(new_candidacy):
     old_candidacy_files = OldApellaCandidacyFileMigrationData. \
         objects.filter(candidacy_serial=str(new_candidacy.old_candidacy_id))
@@ -408,6 +414,7 @@ def migrate_candidacy_files(new_candidacy):
         migrate_file(
             old_file, new_candidacy.candidate, 'candidacy', new_candidacy.id)
 
+@transaction.atomic
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
     candidacy = Candidacy.objects.create(
         candidate=new_candidate,
