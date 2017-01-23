@@ -47,7 +47,11 @@ function membersAllModelMeta(serverSide) {
         field('user_id', {type: 'string', dataKey: 'user__id'}),
         i18nUserSortField('last_name', {label: 'last_name.label'}),
         i18nField('first_name', {label: 'first_name.label'}),
+        'is_foreign_descr',
+        field('institution_global', {label: 'institution.label'}),
         i18nField('department.title', {label: 'department.label'}),
+        'rank',
+        'discipline_text'
       ],
       actions: ['view_details'],
       actionsMap: {
@@ -137,7 +141,7 @@ export default ApellaGen.extend({
      */
     owned: computed('model.institution.id', 'user.institution.id', function() {
       let registry_institution_id =  this.get('model.institution.id'),
-        user_institution_id = get(this, 'user.institution').split('/').filter(v => v!=="").get('lastObject');
+        user_institution_id = get(this, 'user.institution').split('/').slice(-2)[0];
       return registry_institution_id === user_institution_id;
     }),
     /*
@@ -148,7 +152,7 @@ export default ApellaGen.extend({
      */
     can_create: computed('user.can_create_registries', 'model.institution.id', 'user.institution.id', function() {
         let registry_institution_id =  this.get('model.institution.id'),
-          user_institution_id = get(this, 'user.institution').split('/').filter(v => v!=="").get('lastObject'),
+          user_institution_id = get(this, 'user.institution').split('/').slice(-2)[0];
           can_create_registries  = get(this, 'user.can_create_registries');
         return (registry_institution_id === user_institution_id) && can_create_registries;
     })
@@ -185,7 +189,7 @@ export default ApellaGen.extend({
 
       ],
       layout: {
-        flex: [30, 70]
+        flex: [70, 30]
       }
     },{
       label: 'registry.members_section.title',
@@ -259,7 +263,7 @@ export default ApellaGen.extend({
         'type'
       ],
       layout: {
-        flex: [30, 70]
+        flex: [70, 30]
       }
     },{
       label: 'registry.members_section.title',
@@ -267,6 +271,17 @@ export default ApellaGen.extend({
     }]
   },
   edit: {
+    /*
+     * Load the institution before the getModel returns the model registry.
+     * Use in the abilityState "owned".
+     */
+    getModel: function(params, model) {
+      return model.get('department').then(function(department) {
+        return department.get('institution').then(function(institution) {
+          return model;
+        })
+      })
+    },
     fieldsets: [{
       label: 'registry.main_section.title',
       fields: [
@@ -274,7 +289,7 @@ export default ApellaGen.extend({
         disable_field('type')
       ],
       layout: {
-        flex: [30, 70]
+        flex: [70, 30]
       }
     },{
       label: 'registry.members_section.title',
