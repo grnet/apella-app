@@ -232,7 +232,7 @@ spec:
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [title__en, title__el, category]
-                ordering_fields: [id]
+                ordering_fields: [id, title__el, title__en]
                 search_fields: [title__en, title__el]
             .cli_commands: {}
             '*':

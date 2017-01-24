@@ -13,10 +13,10 @@ const {
 let FS = {
   list: [
     i18nField('title'),
-    computedField('category_verbose', 'category'),
     'organization',
     'regulatory_framework'
-  ]
+  ],
+  common:  ['title', 'organization', 'regulatory_framework']
 };
 
 
@@ -52,6 +52,7 @@ export default ApellaGen.extend({
           let locale = get(this, 'i18n.locale');
           params.ordering = `title__${locale}`;
       }
+      params['category'] = 'Institution';
       return store.query('institution', params)
     },
     page: {
@@ -64,13 +65,10 @@ export default ApellaGen.extend({
     sort: {
       active: true,
       serverSide: true,
-      fields: ['title']
+      fields: ['title_current']
     },
     filter: {
-      active: true,
-      meta: {
-        fields: ['category']
-      },
+      active: false,
       serverSide: true,
       search: true,
       searchFields: ['title']
@@ -92,25 +90,12 @@ export default ApellaGen.extend({
     },
   },
   edit: {
-    fieldsets: [{
-      fields: computed('role', function() {
-        if (get(this, 'role') == 'helpdeskadmin') {
-          return ['title', field('category', {readonly:true}), 'organization', 'regulatory_framework']
-        } else {
-          return ['organization', 'regulatory_framework']
-        }
-      })
-    }]
+    fields: FS.common,
   },
   details: {
     page: {
       title: computed.readOnly('model.title_current'),
     },
-    fieldsets: [{
-        layout: {
-          flex: [100, 20, 40, 40]
-        },
-        fields: ['title_current', 'category_verbose', 'organization', 'regulatory_framework']
-    }]
+    fields: FS.list,
   }
 });
