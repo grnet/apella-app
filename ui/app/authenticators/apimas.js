@@ -60,6 +60,7 @@ export default Token.extend({
           user_id: credentials.user.id
         };
         merge(data, credentials.user);
+        mergeProfileData(data, credentials);
         resolve(data);
       });
     }
