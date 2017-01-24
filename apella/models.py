@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 
 from django.db import models
@@ -7,6 +8,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
     UserManager
 from django.conf import settings
 from django.core import validators
+from django.core.files.storage import FileSystemStorage
 
 from apella.validators import before_today_validator, after_today_validator,\
     validate_dates_interval
@@ -153,12 +155,20 @@ def generate_filename(self, filename):
     return url
 
 
+class OverwriteStorage(FileSystemStorage):
+    def get_available_name(self, name):
+        if self.exists(name):
+            os.remove(os.path.join(settings.MEDIA_ROOT, name))
+        return name
+
+
 class ApellaFile(models.Model):
     owner = models.ForeignKey(ApellaUser)
     source = models.CharField(choices=common.FILE_SOURCE, max_length=30)
     source_id = models.IntegerField()
     file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
-    file_path = models.FileField(upload_to=generate_filename)
+    file_path = models.FileField(
+        upload_to=generate_filename, storage=OverwriteStorage())
     description = models.CharField(max_length=255, blank=True, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
 
