@@ -6,6 +6,7 @@ import {USER_FIELDSET, USER_FIELDSET_DETAILS,
         USER_VALIDATORS} from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
+import {rejectUser, verifyUser} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -128,11 +129,18 @@ export default ApellaGen.extend({
         if (get(this, 'role') === 'institutionmanager') {
           return ['username', 'email', 'full_name_current',
                   'can_create_positions_verbose',
-                  'can_create_registries_verbose'];
+                  'can_create_registries_verbose',
+                  field('status_verbose', {label: 'state.label'})];
         }
-        return ['user_id', 'username', 'email', 'full_name_current', 'institution.title_current', ]
+        return ['user_id', 'username', 'email', 'full_name_current', 'institution.title_current',
+                field('status_verbose', {label: 'state.label'})]
       }),
-      actions: ['gen:details', 'gen:edit', 'remove']
+      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser'],
+      actionsMap: {
+        verifyUser: verifyUser,
+        rejectUser: rejectUser,
+      }
+
     },
   },
   details: {

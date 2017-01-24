@@ -7,13 +7,17 @@ function isHelpdesk(role) {
 function call_utils(route, model) {
   let messages = get(route, 'messageService');
   let role = get(model, 'role');
-  if ( role == 'institutionmanager' || role == 'assistant' ) {
+  if ( role == 'institutionmanager') {
     role = 'institution-manager';
   }
   let adapter = get(route, 'store').adapterFor(role);
   let url = adapter.buildURL(role, get(model, 'id'), 'findRecord');
   let token = get(route, 'user.auth_token');
   return [url, token, messages]
+}
+
+function managerVerifies(role, model_role) {
+  return role == 'institutionmanager' && model_role == 'assistant'
 }
 
 const {
@@ -121,7 +125,7 @@ const cancelCandidacy = {
 const deactivateUser = {
   label: 'deactivateUser',
   icon: 'clear',
-  accent: true,
+  acceet: true,
   action(route, model) {
     model.set('is_active', false);
     let m = route.get('messageService')
@@ -204,11 +208,13 @@ const verifyUser = {
     message: 'verify.user.message',
     title: 'verify.user.title',
   },
-  hidden: computed('model.verification_pending', 'model.is_verified', 'model.is_rejected', 'role', function() {
+  hidden: computed('model.verification_pending', 'model.is_verified', 'model.is_rejected', 'role', 'model.role', function() {
     let verified = get(this, 'model.is_verified');
     let rejected = get(this, 'model.is_rejected');
     let pending = get(this, 'model.verification_pending');
     let role = get(this, 'role');
+    let model_role = get(this, 'model.role');
+    if (managerVerifies(role, model_role)) { return verified }
     if (isHelpdesk(role)) { return !(rejected  || (!verified && pending)); }
     return true;
   }),
@@ -217,6 +223,7 @@ const verifyUser = {
 const rejectUser = {
   label: 'reject.user',
   icon: 'clear',
+  accent: true,
   action: function(route, model) {
     let [url, token, messages] = call_utils(route, model);
     return fetch(url + 'reject_user/', {
@@ -236,11 +243,13 @@ const rejectUser = {
       messages.setError('reject.user..error');
     });
   },
-  hidden: computed('model.is_rejected', 'model.is_verified', 'model.verification_pending', 'role', function(){
+  hidden: computed('model.is_rejected', 'model.is_verified', 'model.verification_pending', 'role', 'model.role', function(){
     let verified = get(this, 'model.is_verified');
     let rejected = get(this, 'model.is_rejected');
     let pending = get(this, 'model.verification_pending');
     let role = get(this, 'role');
+    let model_role = get(this, 'model.role');
+    if (managerVerifies(role, model_role)) { return rejected }
     if (isHelpdesk(role)) { return !(verified  || (!rejected && pending)); }
     return true;
   }),
