@@ -393,5 +393,9 @@ export default {
   'list.filters.clear.label': 'CLEAR',
   'user_data': 'User Information',
   'professor_data': 'Professor\'s Information',
-  'candidacy_data': 'Candidacies Information'
+  'candidacy_data': 'Candidacies Information',
+  'is_verified.label': 'Verified',
+  'is_rejected.label': 'Rejected',
+  'verification_pending.label': 'Pending verification',
+
 };

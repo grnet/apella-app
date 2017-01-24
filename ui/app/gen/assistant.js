@@ -115,7 +115,10 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     filter: {
-      active: false,
+      active: true,
+      meta: {
+        fields: ['is_verified', 'is_rejected', 'verification_pending']
+      },
       serverSide: true,
       search: true,
       searchFields: ['id', 'email', 'username', 'first_name', 'last_name']

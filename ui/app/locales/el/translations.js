@@ -393,5 +393,8 @@ export default {
   'list.filters.clear.label': 'ΚΑΘΑΡΙΣΜΟΣ',
   'user_data': 'Στοιχεία Χρήστη',
   'professor_data': 'Στοιχεία Ακαδημαϊκής Θέσης',
-  'candidacy_data': 'Στοιχεία Υποψηφιοτήτων'
+  'candidacy_data': 'Στοιχεία Υποψηφιοτήτων',
+  'is_verified.label': 'Επαληθευμένος',
+  'is_rejected.label': 'Rejected *',
+  'verification_pending.label': 'Αναμένεται επαλήθευση',
 };

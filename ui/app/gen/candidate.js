@@ -29,6 +29,9 @@ export default ApellaGen.extend({
     layout: 'table',
     filter: {
       active: true,
+      meta: {
+        fields: ['is_verified', 'is_rejected', 'verification_pending']
+      },
       serverSide: true,
       search: true,
       searchFields: ['id', 'email', 'username', 'first_name', 'last_name']
@@ -41,14 +44,9 @@ export default ApellaGen.extend({
     },
     label: 'candidate.menu_label',
     row: {
-      fields: computed('role', function() {
-        let role = get(this, 'role');
-        let fs = ['user_id', 'username', 'email', 'full_name_current'];
-        if (role === 'helpdeskadmin' || role === 'helpdeskuser' ) {
-          fs.splice(1, 0, field('status_verbose', {label: 'state.label'}));
-        }
-        return fs;
-      }),
+      fields: ['user_id',
+              field('status_verbose', {label: 'state.label'}),
+              'username', 'email', 'full_name_current'],
       actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
       actionsMap: {
         verifyUser: verifyUser,
