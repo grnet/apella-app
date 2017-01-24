@@ -13,7 +13,10 @@ const VerificationModel = Ember.Object.extend({
     let url = ENV.APP.backend_host + '/auth/register/';
     return fetch(url, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({resend_verification: email})
     }).then((resp) => {
       set(this, 'email', undefined);

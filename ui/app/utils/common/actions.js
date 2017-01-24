@@ -187,6 +187,7 @@ const verifyUser = {
     return fetch(url + 'verify_user/', {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Authorization': `Token ${token}`
       },
     }).then((resp) => {
@@ -229,6 +230,7 @@ const rejectUser = {
     return fetch(url + 'reject_user/', {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Authorization': `Token ${token}`
       },
     }).then((resp) => {

@@ -46,6 +46,7 @@ export default DS.Model.extend({
     return fetch(url, {
       method: 'HEAD',
       headers: {
+        'Accept': 'application/json',
         'Authorization': `Token ${token}`
       }
     }).then((resp) => {

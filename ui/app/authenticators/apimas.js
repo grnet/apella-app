@@ -41,7 +41,8 @@ export default Token.extend({
       method: 'GET',
       contentType: 'application/json',
       headers: {
-        'Authorization': `Token ${token}`
+        'Authorization': `Token ${token}`,
+        'Accept': 'application/json'
       },
     });
   },

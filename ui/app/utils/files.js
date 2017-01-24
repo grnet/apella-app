@@ -19,6 +19,7 @@ function uploadFile(file, url, token, file_data_key='file_path') {
   return fetch(url, {
     method: 'POST',
     headers: {
+      'Accept': 'application/json',
       'Authorization': `Token ${token}`
     },
     body: data

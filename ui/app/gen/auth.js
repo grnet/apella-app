@@ -250,7 +250,10 @@ export default AuthGen.extend({
           let data = {uid, token};
           return fetch(url, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
             body: JSON.stringify(data)
           }).then((resp) => {
             let err, msg;
@@ -277,7 +280,10 @@ export default AuthGen.extend({
         }
         let url = ENV.APP.backend_host + '/auth/me/';
         return fetch(url, {
-          headers: { 'Authorization': `Token ${token}` }
+          headers: { 
+            'Accept': 'application/json',
+            'Authorization': `Token ${token}`
+          }
         }).then((resp) => {
           if (resp.status !== 200) {
             return resp.json().then((json) => {
@@ -401,6 +407,7 @@ export default AuthGen.extend({
               return fetch(url + 'request_verification/', {
                 method: 'POST',
                 headers: {
+                  'Accept': 'application/json',
                   'Authorization': `Token ${token}`
                 },
               }).then((resp) => {
