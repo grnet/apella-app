@@ -40,7 +40,10 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     filter: {
-      active: false,
+      active: true,
+      meta: {
+        fields: ['institution']
+      },
       serverSide: true,
       search: true,
       searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
@@ -49,7 +52,9 @@ export default ApellaGen.extend({
     row: {
       fields: computed('role', function() {
         let role = get(this, 'role');
-        let fs = ['user_id', 'institution_global', 'username', 'email', 'full_name_current', 'rank'];
+        let fs = ['user_id',
+                  field('institution_global', {label: 'institution.label'}),
+                  'username', 'email', 'full_name_current', 'rank'];
         if (role === 'helpdeskadmin' || role === 'helpdeskuser' ) {
           fs.splice(1, 0, field('status_verbose', {label: 'state.label'}));
         }
