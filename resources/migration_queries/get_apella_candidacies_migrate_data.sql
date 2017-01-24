@@ -15,6 +15,7 @@ where
     and c.candidate_id = r.id
     and c.candidacies_id = pc.id
     and c.withdrawn is false
+    and c.permanent is true
     and p.phase_id = pp.id
     and pp.status in ('ENTAGMENI', 'ANOIXTI')
     and p.id in
