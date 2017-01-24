@@ -2,4 +2,5 @@ include *.txt *.md
 recursive-include resources *
 recursive-include scripts *
 recursive-include ui/dist *
+recursive-include apella/templates *
 prune apella/tests

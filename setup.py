@@ -42,6 +42,9 @@ def get_all_data_files(dest_path, source_path):
 
 UI_DATA_FILES = get_all_data_files('lib/apella/resources/www/ui', 'ui/dist')
 
+APELLA_TEMPLATE_FILES = get_all_data_files('apella/templates',
+                                           'apella/templates')
+
 MIGRATION_QUERY_FILES = get_all_data_files(
     'lib/apella/resources/migration_queries',
     'resources/migration_queries')
@@ -65,7 +68,7 @@ setup(
                                   'resources/institutions.csv',
                                   'resources/departments.csv']),
         ('lib/apella/scripts', ['scripts/apella_init.sh']),
-    ] + UI_DATA_FILES + MIGRATION_QUERY_FILES,
+    ] + UI_DATA_FILES + MIGRATION_QUERY_FILES + APELLA_TEMPLATE_FILES,
     zip_safe=False,
     install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRES,
