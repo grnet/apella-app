@@ -161,33 +161,20 @@ const PROFESSOR_FIELDS = computed('model.is_foreign', function(){
     field('cv_url', {
       hint: 'cv_url.hint',
     }),
+    'discipline_text',
   ];
 
   let f_domestic = [
     'institution',
     'department',
-    'fek',
     field('discipline_in_fek',{
       hint: 'discipline_in_fek.hint',
     }),
-
-    field('discipline_text', {
-      type: 'text',
-      required: computed('model.changeset.discipline_in_fek', function() {
-        let check = get(this, 'model.changeset.discipline_in_fek');
-        return !check;
-      }),
-      disabled: computed('model.changeset.discipline_in_fek', function() {
-        let check = get(this, 'model.changeset.discipline_in_fek');
-        if (check) { Ember.run.once(this, () => set(this, 'model.changeset.discipline_text', '')) };
-        return check;
-      })
-    }),
+    'fek',
   ];
 
   let f_foreign = [
     'institution_freetext',
-    'discipline_text',
     'speaks_greek',
   ];
 
@@ -264,7 +251,7 @@ const PROFESSOR_FLEX = computed('model.is_foreign', function() {
   if (get(this, 'model.is_foreign') ) {
     return [50, 50, 50, 50, 100]
   } else {
-    return [50, 50, 50, 50, 50, 50, 100]
+    return [50, 50, 100, 50, 50, 50, 50]
   }
 })
 
