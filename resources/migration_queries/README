@@ -5,3 +5,5 @@ worker where apella_init.sh is run.
 
 For testing, comment out the "and p.id in (...)" part since those IDs
 are for the production database.
+
+For production, comment "and pp.status in ('ENTAGMENI', 'ANOIXTI')"
