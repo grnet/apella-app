@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import fetch from "ember-network/fetch";
 
 function isHelpdesk(role) {
   return role === 'helpdeskadmin' || role === 'helpdeskuser';
