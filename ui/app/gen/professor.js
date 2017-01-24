@@ -42,7 +42,7 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: ['institution', 'is_verified', 'is_rejected', 'verification_pending']
+        fields: ['institution', 'is_foreign', 'is_verified', 'is_rejected', 'verification_pending']
       },
       serverSide: true,
       search: true,

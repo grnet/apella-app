@@ -494,7 +494,7 @@ spec:
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.Professor, apella.views.mixins.SyncCandidacies, apella.views.mixins.CandidateProfile]
                 ordering_fields: [user_id, user__last_name__en, user__last_name__el]
-                filter_fields: [user_id, institution, is_verified, is_rejected, verification_pending]
+                filter_fields: [user_id, institution, is_verified, is_rejected, verification_pending, is_foreign]
                 search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
             .cli_commands: {}
             '*':
