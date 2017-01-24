@@ -376,34 +376,34 @@ def migrate_candidacies(position=None, candidate_user=None):
     elif candidate_user:
         old_candidacies = OldApellaCandidacyMigrationData.objects.filter(
             candidate_user_id=str(candidate_user.old_user_id))
-        for old_candidacy in old_candidacies:
-            if Candidacy.objects.filter(
-                    old_candidacy_id=int(old_candidacy.candidacy_serial)).exists():
-                logger.info(
-                    'already migrated candidacy %s' %
-                    old_candidacy.candidacy_serial)
-                continue
-            try:
-                new_candidate = ApellaUser.objects.get(
-                    old_user_id=int(old_candidacy.candidate_user_id))
-            except ApellaUser.DoesNotExist:
-                logger.info(
-                    'cannot migrate candidacy %s: candidate %s does not exist'
-                    % (old_candidacy.candidacy_serial,
-                        old_candidacy.candidate_user_id))
-                continue
+    for old_candidacy in old_candidacies:
+        if Candidacy.objects.filter(
+                old_candidacy_id=int(old_candidacy.candidacy_serial)).exists():
+            logger.info(
+                'already migrated candidacy %s' %
+                old_candidacy.candidacy_serial)
+            continue
+        try:
+            new_candidate = ApellaUser.objects.get(
+                old_user_id=int(old_candidacy.candidate_user_id))
+        except ApellaUser.DoesNotExist:
+            logger.info(
+                'cannot migrate candidacy %s: candidate %s does not exist'
+                % (old_candidacy.candidacy_serial,
+                    old_candidacy.candidate_user_id))
+            continue
 
-            try:
-                new_position = Position.objects.get(
-                    old_code=old_candidacy.position_serial)
-            except Position.DoesNotExist:
-                logger.info(
-                    'cannot migrate candidacy %s: position %s does not exist' %
-                    (old_candidacy.candidacy_serial,
-                        old_candidacy.position_serial))
-                continue
+        try:
+            new_position = Position.objects.get(
+                old_code=old_candidacy.position_serial)
+        except Position.DoesNotExist:
+            logger.info(
+                'cannot migrate candidacy %s: position %s does not exist' %
+                (old_candidacy.candidacy_serial,
+                    old_candidacy.position_serial))
+            continue
 
-            migrate_candidacy(old_candidacy, new_candidate, new_position)
+        migrate_candidacy(old_candidacy, new_candidate, new_position)
 
 
 @transaction.atomic
