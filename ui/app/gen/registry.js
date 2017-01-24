@@ -78,7 +78,15 @@ let fs_prof_foreign = {
 
 let fs_candidacy = {
   label: 'candidacy_data',
-  fields: []
+  fields: [
+    fileField('diplomas', 'professor', 'diploma',
+      { readonly: true }, { multiple: true }),
+    fileField('publications', 'professor', 'publication',
+      { readonly: true }, { multiple: true }),
+  ],
+  layout: {
+    flex: [100, 100]
+  }
 };
 
 let fields_members_table = [
@@ -138,7 +146,10 @@ function membersAllModelMeta(serverSide) {
             let role = get(this, 'role'),
               hidden = true;
             if(role === 'institutionmanager' || role === 'assistant') {
-              let registry = Ui.__container__.lookup('controller:registry.record.index').get('model'),
+              let details = Ui.__container__.lookup('controller:registry.record.index'),
+                edit = Ui.__container__.lookup('controller:registry.record.edit.index'),
+                controller = details || edit,
+                registry = controller.get('model'),
                 registry_institution = get(registry, 'institution'),
                 registry_institution_id = get(registry_institution, 'id').split('/').slice(-2)[0],
                 user_institution = get(this, 'session.session.authenticated.institution'),
@@ -367,11 +378,12 @@ export default ApellaGen.extend({
     fieldsets: [{
       label: 'registry.main_section.title',
       fields: [
+        i18nField('institution.title'),
         i18nField('department.title'),
         'type'
       ],
       layout: {
-        flex: [70, 30]
+        flex: [100, 50, 50]
       }
     },{
       label: 'registry.members_section.title',
@@ -393,11 +405,12 @@ export default ApellaGen.extend({
     fieldsets: [{
       label: 'registry.main_section.title',
       fields: [
-        disable_field('department', {displayAttr: 'title_current'}),
+        disable_field('department.institution.title_current'),
+        disable_field('department', { displayAttr: 'title_current' }),
         disable_field('type')
       ],
       layout: {
-        flex: [70, 30]
+        flex: [50, 50, 50]
       }
     },{
       label: 'registry.members_section.title',
