@@ -43,12 +43,17 @@ export default ApellaGen.extend({
       })
     },
     getModel: function(params) {
-      return this.store.query('institution-manager', {manager_role: 'institutionmanager'});
+      params = params || {};
+      params['manager_role'] = 'institutionmanager';
+      return this.store.query('institution-manager', params);
     },
     layout: 'table',
     filter: {
       active: true,
       serverSide: true,
+      meta: {
+        fields: ['institution']
+      },
       search: true,
       searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
     },
