@@ -1,3 +1,4 @@
+import os
 import urlparse
 from datetime import datetime
 
@@ -248,6 +249,15 @@ class FilesViewSet(viewsets.ModelViewSet):
         else:
             response.content = open(file.file_path.path)
         return response
+
+    def destroy(self, request, pk=None):
+        obj = self.get_object()
+        try:
+            f = os.path.join(settings.MEDIA_ROOT, obj.file_path.name)
+            os.remove(f)
+        except OSError:
+            pass
+        return super(FilesViewSet, self).destroy(request, pk)
 
 
 class UploadFilesViewSet(viewsets.ModelViewSet):
