@@ -1,5 +1,5 @@
 import {
-  ApellaGen, i18nField, i18nUserSortField, get_registry_members
+  ApellaGen, i18nField, i18nUserSortField, get_registry_members, fileField
 } from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
 import gen from 'ember-gen/lib/gen';
@@ -13,24 +13,97 @@ let {
 } = Ember;
 
 
-let memberQuickDetailsFieldsets = [
-  {
-    label: null,
-    fields: [
-      field('user_id', {type: 'string', dataKey: 'user__id'}),
-      i18nUserSortField('last_name', {label: 'last_name.label'}),
-      i18nField('first_name', {label: 'first_name.label'}),
-      'is_foreign_descr',
-      field('institution_global', {label: 'institution.label'}),
-      i18nField('department.title', {label: 'department.label'}),
-      'rank',
-      'discipline_text'
-    ],
-    layout: {
-      flex: [100, 100, 100, 100, 100, 100, 100, 100, 100]
-    }
+// Fieldsets for quickDetailsView of professors
+let fs_user = {
+  label: 'user_data',
+  fields: [
+    'user_id',
+    i18nField('last_name', {label: 'last_name.label'}),
+    i18nField('first_name', {label: 'first_name.label'}),
+    i18nField('father_name', {label: 'father_name.label'}),
+  ],
+  layout: {
+    flex: [100, 33, 33, 33]
   }
+};
+
+let fs_contact = {
+  label: 'contact',
+  fields: [
+    'email',
+    'home_phone_number',
+    'mobile_phone_number'
+  ]
+};
+
+let fs_prof_domestic = {
+  label: 'professor_data',
+  fields: [
+    'is_foreign_descr',
+    field('institution_global', {label: 'institution.label'}),
+    i18nField('department.title', {label: 'department.label'}),
+    'cv_url',
+    fileField('cv_professor', 'professor', 'cv_professor',
+      { readonly: true }),
+    fileField('cv', 'professor', 'cv',
+      { readonly: true }),
+    'rank',
+    'fek',
+    'discipline_text',
+    'discipline_in_fek_verbose',
+  ],
+  layout: {
+    flex: [100, 50, 50, 100, 100, 100, 50, 50, 50, 50]
+  }
+};
+
+let fs_prof_foreign = {
+  label: 'professor_data',
+  fields: [
+    'is_foreign_descr',
+    field('institution_global', {label: 'institution.label'}),
+    'cv_url',
+    fileField('cv_professor', 'professor', 'cv_professor',
+      { readonly: true }),
+    fileField('cv', 'professor', 'cv',
+      { readonly: true }),
+    'rank',
+    'discipline_text',
+    field('speaks_greek_verbose', {label: 'speaks_greek.label'})
+  ],
+  layout: {
+    flex: [100, 100, 100, 100, 100, 50, 50, 100]
+  }
+};
+
+let fs_candidacy = {
+  label: 'candidacy_data',
+  fields: []
+};
+
+let fields_members_table = [
+    field('user_id', {type: 'string', dataKey: 'user__id'}),
+    i18nUserSortField('last_name', {label: 'last_name.label'}),
+    i18nField('first_name', {label: 'first_name.label'}),
+    'is_foreign_descr',
+    field('institution_global', {label: 'institution.label'}),
+    i18nField('department.title', {label: 'department.label'}),
+    'rank',
+    'discipline_text'
 ];
+
+function peak_fs_professors() {
+  let professor = get(this, 'model'),
+    is_foreign = professor.get('is_foreign'),
+    head = [fs_user, fs_contact],
+    tail = fs_candidacy;
+  if(is_foreign) {
+    return head.concat(fs_prof_foreign, tail);
+  }
+  else {
+    return head.concat(fs_prof_domestic, tail);
+  }
+};
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
 function membersAllModelMeta(serverSide) {
@@ -43,22 +116,13 @@ function membersAllModelMeta(serverSide) {
   let display = serverSide;
   return {
     row: {
-      fields: [
-        field('user_id', {type: 'string', dataKey: 'user__id'}),
-        i18nUserSortField('last_name', {label: 'last_name.label'}),
-        i18nField('first_name', {label: 'first_name.label'}),
-        'is_foreign_descr',
-        field('institution_global', {label: 'institution.label'}),
-        i18nField('department.title', {label: 'department.label'}),
-        'rank',
-        'discipline_text'
-      ],
+      fields: fields_members_table,
       actions: ['view_details'],
       actionsMap: {
         view_details: {
           icon: 'open_in_new',
           detailsMeta: {
-            fieldsets: memberQuickDetailsFieldsets
+            fieldsets: computed('model', peak_fs_professors)
           },
           action: function() {},
           /*

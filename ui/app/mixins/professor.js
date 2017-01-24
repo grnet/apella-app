@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
+import {booleanFormat} from 'ui/lib/common';
 
 const {
   get, computed
@@ -27,6 +28,7 @@ export default Ember.Mixin.create({
     return is_foreign ? get(this, 'i18n').t('professor_foreign') : get(this, 'i18n').t('professor_domestic');
   }),
   speaks_greek: DS.attr({type: 'boolean', defaultValue: true }),
+  speaks_greek_verbose: booleanFormat('speaks_greek'),
   cv_url: DS.attr(),
   cv: DS.belongsTo('apella-file'),
   cv_professor: DS.belongsTo('apella-file'),
@@ -35,6 +37,7 @@ export default Ember.Mixin.create({
   fek: DS.attr(),
   discipline_text: DS.attr(),
   discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true}),
+  discipline_in_fek_verbose: booleanFormat('discipline_in_fek'),
   active_elections: DS.attr('number'),
 
   institution_global: computed('is_foreign', 'institution.title_current', 'institution_freetext', function(){

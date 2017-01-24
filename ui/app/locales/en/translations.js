@@ -206,7 +206,7 @@ export default {
   'search.input.placeholder': 'Insert search term',
   'search.placeholder_last_name': 'User\'s Last Name',
   'table.is.empty': 'There are no items',
-  'table.is.loading': 'Loading',
+  'table.is.loading': 'Loading...',
   'value.not.set': 'Value not set',
   'select.options': 'Select',
   'select.options.cancel': 'Cancel',
@@ -390,5 +390,8 @@ export default {
   'type.label': 'Type',
   'list.filters.title': 'Filters',
   'list.filters.apply.label': 'APPLY',
-  'list.filters.clear.label': 'CLEAR'
+  'list.filters.clear.label': 'CLEAR',
+  'user_data': 'User Information',
+  'professor_data': 'Professor\'s Information',
+  'candidacy_data': 'Candidacies Information'
 };

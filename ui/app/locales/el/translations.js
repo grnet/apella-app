@@ -204,7 +204,7 @@ export default {
   'search.input.placeholder': 'Εισάγετε κριτήριο αναζήτησης',
   'search.placeholder_last_name': 'Επώνυμο Χρήστη',
   'table.is.empty': 'Δεν υπάρχουν καταχωρίσεις',
-  'table.is.loading': 'Γίνεται αναζήτηση',
+  'table.is.loading': 'Γίνεται αναζήτηση...',
   'value.not.set': 'Κενό πεδίο',
   'select.options': 'Επιλογή',
   'select.options.cancel': 'Ακυρωση',
@@ -390,5 +390,8 @@ export default {
   'type.label': 'Είδος',
   'list.filters.title': 'Φίλτρα',
   'list.filters.apply.label': 'ΕΦΑΡΜΟΓΗ',
-  'list.filters.clear.label': 'ΚΑΘΑΡΙΣΜΟΣ'
+  'list.filters.clear.label': 'ΚΑΘΑΡΙΣΜΟΣ',
+  'user_data': 'Στοιχεία Χρήστη',
+  'professor_data': 'Στοιχεία Ακαδημαϊκής Θέσης',
+  'candidacy_data': 'Στοιχεία Υποψηφιοτήτων'
 };
