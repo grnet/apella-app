@@ -631,6 +631,9 @@ class Registry(models.Model):
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=20, default='internal')
     members = models.ManyToManyField(Professor)
+    registry_set_decision_file = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='registry_set_decision_files', on_delete=models.SET_NULL)
 
     class Meta:
         # Each department can have only one internal and one external registry

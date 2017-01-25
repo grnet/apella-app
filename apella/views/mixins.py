@@ -270,7 +270,8 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
         "Professor": "profile",
         "Candidate": "profile",
         "Candidacy": "candidacy",
-        "Position": "position"
+        "Position": "position",
+        "Registry": "registry"
     }
 
     @detail_route(methods=['post'])

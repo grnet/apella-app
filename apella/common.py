@@ -149,4 +149,8 @@ FILE_KIND_TO_FIELD = {
         "field": "attachment_files",
         "many": True,
     },
+    "registry_set_decision_file": {
+        "field": "registry_set_decision_file",
+        "many": False,
+    },
 }

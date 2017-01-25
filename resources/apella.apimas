@@ -855,7 +855,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Registry
-                mixins: [apella.views.mixins.RegistriesList]
+                mixins: [apella.views.mixins.RegistriesList, apella.views.mixins.UploadFilesViewSet]
                 filter_fields: [id, type, department, department__institution]
             .cli_commands: {}
             '*':
@@ -887,6 +887,51 @@ spec:
                     .required: {}
                     .ref:
                         to: professors
+                file_path:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                registry_set_decision_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .read_only: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
             actions:
                 .list: {}
                 .create: {}
