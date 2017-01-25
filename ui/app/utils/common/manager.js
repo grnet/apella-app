@@ -68,9 +68,9 @@ const SUB_FIELDSET = {
 const SUB_FIELDSET_DETAILS = {
   label: 'manager.label.sub_fieldset',
   fields: [
-    'sub_full_name_current',
+    field('sub_full_name_current', {label: 'full_name_current.label'}),
     'sub_email',
-    'sub_father_name_current',
+    field('sub_father_name_current', {label: 'father_name.label'}),
     'sub_mobile_phone_number',
     'sub_home_phone_number'
   ],
