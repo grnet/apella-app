@@ -189,7 +189,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
     paginate: {
       active: true,
       serverSide: serverSide,
-      limits: [5, 10, 15]
+      limits: [10, 20, 30]
     },
     filter: {
       search: true,
@@ -332,7 +332,7 @@ export default ApellaGen.extend({
     paginate: {
       active: true,
       serverSide: true,
-      limits: [5, 15, 20]
+      limits: [10, 20, 30]
     },
     filter: {
       search: false,
