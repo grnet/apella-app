@@ -44,16 +44,14 @@ let fs_prof_domestic = {
     i18nField('department.title', {label: 'department.label'}),
     'cv_url',
     fileField('cv_professor', 'professor', 'cv_professor',
-      { readonly: true }),
-    fileField('cv', 'professor', 'cv',
-      { readonly: true }),
+      { readonly: true, label: 'cv.label' }),
     'rank',
     'fek',
     'discipline_text',
     'discipline_in_fek_verbose',
   ],
   layout: {
-    flex: [100, 50, 50, 100, 100, 100, 50, 50, 50, 50]
+    flex: [100, 50, 50, 100, 100, 50, 50, 50, 50]
   }
 };
 
@@ -64,30 +62,16 @@ let fs_prof_foreign = {
     field('institution_global', {label: 'institution.label'}),
     'cv_url',
     fileField('cv_professor', 'professor', 'cv_professor',
-      { readonly: true }),
-    fileField('cv', 'professor', 'cv',
-      { readonly: true }),
+      { readonly: true, label: 'cv.label' }),
     'rank',
     'discipline_text',
     field('speaks_greek_verbose', {label: 'speaks_greek.label'})
   ],
   layout: {
-    flex: [100, 100, 100, 100, 100, 50, 50, 100]
+    flex: [100, 100, 100, 100, 50, 50, 100]
   }
 };
 
-let fs_candidacy = {
-  label: 'candidacy_data',
-  fields: [
-    fileField('diplomas', 'professor', 'diploma',
-      { readonly: true }, { multiple: true }),
-    fileField('publications', 'professor', 'publication',
-      { readonly: true }, { multiple: true }),
-  ],
-  layout: {
-    flex: [100, 100]
-  }
-};
 
 let fields_members_table = [
     field('user_id', {type: 'string', dataKey: 'user__id'}),
@@ -103,13 +87,12 @@ let fields_members_table = [
 function peak_fs_professors() {
   let professor = get(this, 'model'),
     is_foreign = professor.get('is_foreign'),
-    head = [fs_user, fs_contact],
-    tail = fs_candidacy;
+    head = [fs_user, fs_contact];
   if(is_foreign) {
-    return head.concat(fs_prof_foreign, tail);
+    return head.concat(fs_prof_foreign);
   }
   else {
-    return head.concat(fs_prof_domestic, tail);
+    return head.concat(fs_prof_domestic);
   }
 };
 
