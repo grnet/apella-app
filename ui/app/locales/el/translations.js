@@ -202,7 +202,7 @@ export default {
   're_new_password.label': 'Νέο συνθηματικό (ξανά)',
   'user_id.label': 'Κωδικός χρήστη',
   'search.input.placeholder': 'Εισάγετε κριτήριο αναζήτησης',
-  'search.placeholder_last_name': 'Επώνυμο Χρήστη',
+  'search.placeholder_members': 'Επώνυμο / Γνωστικό Αντικείμενο',
   'table.is.empty': 'Δεν υπάρχουν καταχωρίσεις',
   'table.is.loading': 'Γίνεται αναζήτηση...',
   'value.not.set': 'Κενό πεδίο',

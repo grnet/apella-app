@@ -48,7 +48,7 @@ let fs_prof_domestic = {
     'rank',
     'fek',
     'discipline_text',
-    'discipline_in_fek_verbose',
+    field('discipline_in_fek_verbose', { label: 'discipline_in_fek.label' })
   ],
   layout: {
     flex: [100, 50, 50, 100, 100, 50, 50, 50, 50]
@@ -99,7 +99,7 @@ function peak_fs_professors() {
 // serverSide is a boolean value that is used for filtering, sorting, searching
 function membersAllModelMeta(serverSide, hideQuickView) {
    let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
-    searchFields = (serverSide ? ['last_name_current'] : ['last_name.el', 'last_name.en']);
+    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'discipline_text']);
   return {
     row: {
       fields: fields_members_table,
@@ -163,7 +163,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
     },
     filter: {
       search: true,
-      searchPlaceholder: 'search.placeholder_last_name',
+      searchPlaceholder: 'search.placeholder_members',
       serverSide: serverSide,
       active: true,
       searchFields: searchFields,
@@ -174,8 +174,9 @@ function membersAllModelMeta(serverSide, hideQuickView) {
             type: 'model',
             autocomplete: true,
             displayAttr: 'title_current',
-            modelName: 'institution'
-          })
+            modelName: 'institution',
+          }),
+          field('rank')
         ]
       }
     },
@@ -321,6 +322,7 @@ export default ApellaGen.extend({
                 let locale = select.get('i18n.locale');
                 params = params || {};
                 params.ordering = `title_${locale}`;
+                params.category = 'Institution';
                 return store.query('institution', params);
               }
             }),
