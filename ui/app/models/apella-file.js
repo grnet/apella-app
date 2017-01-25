@@ -25,6 +25,7 @@ export default DS.Model.extend({
   filename: computed('file_path', function() {
     let path = get(this, 'file_path');
     if (path) {
+      path = decodeURI(path);
       return path.split("/").slice(-1)[0];
     }
     return null;
