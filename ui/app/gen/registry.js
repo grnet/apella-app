@@ -377,7 +377,11 @@ export default ApellaGen.extend({
 
   details: {
     page: {
-      title: computed.readOnly('model.id')
+      title: computed('model.institution.title_current', function() {
+        let institution_title = get(this, 'model.institution.title_current'),
+          registry_id = get(this, 'model.id');
+        return `${institution_title} (${registry_id})`;
+      })
     },
     fieldsets: [{
       label: 'registry.main_section.title',
