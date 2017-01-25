@@ -169,7 +169,7 @@ class ApellaFile(models.Model):
     file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
     file_path = models.FileField(
         upload_to=generate_filename, storage=OverwriteStorage(), max_length=255)
-    description = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
