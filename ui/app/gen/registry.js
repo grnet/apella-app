@@ -37,7 +37,7 @@ let fs_contact = {
 };
 
 let fs_prof_domestic = {
-  label: 'professor_data',
+  label: 'professor_profile',
   fields: [
     'is_foreign_descr',
     field('institution_global', {label: 'institution.label'}),
@@ -56,7 +56,7 @@ let fs_prof_domestic = {
 };
 
 let fs_prof_foreign = {
-  label: 'professor_data',
+  label: 'professor_profile',
   fields: [
     'is_foreign_descr',
     field('institution_global', {label: 'institution.label'}),
