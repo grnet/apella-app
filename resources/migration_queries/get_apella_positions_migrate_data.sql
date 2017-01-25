@@ -3,7 +3,7 @@ select
     p.id position_serial,
     p.description description,
     p.name title,
-    p.subject_id subject_id,
+    su.name subject_id,
     p.department_id department_id,
     p.createdby_id manager_id,
     s.areaid subject_area_code,
@@ -21,7 +21,7 @@ select
     pc.openingdate opening_date,
     pc.closingdate closing_date
 from
-    position p, positionphase pp, positioncandidacies pc, sector s
+    position p, positionphase pp, positioncandidacies pc, sector s, subject su
 where
     p.phase_id = pp.id
     and p.sector_id = s.id
@@ -29,6 +29,7 @@ where
     and p.phase_id = pp.id
     and pp.status in ('ANOIXTI', 'ENTAGMENI')
     and p.permanent is true
+    and p.subject_id = su.id
     and p.id in
     (1580743, 1579871, 1551754, 1608651, 1601475, 1601581, 1601660, 1601764, 1601847, 1555596,
      1563659, 1561195, 1560254, 1561064, 1570004, 1570773, 1570414, 1571299, 1565946, 1565859,

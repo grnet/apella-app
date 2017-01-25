@@ -37,6 +37,7 @@ where
     and (cf.candidacy_id = c.id or cf.candidate_id = c.candidate_id)
     and cf.id = fh.id
     and fh.currentbody_id = fb.id
+    and fh.deleted is false
     and p.id in
     (1580743, 1579871, 1551754, 1608651, 1601475, 1601581, 1601660, 1601764, 1601847, 1555596,
      1563659, 1561195, 1560254, 1561064, 1570004, 1570773, 1570414, 1571299, 1565946, 1565859,
