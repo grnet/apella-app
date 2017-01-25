@@ -113,10 +113,8 @@ function membersAllModelMeta(serverSide, hideQuickView) {
           action: function() {},
           /*
            * Display the quickDetails button when:
-           * - The user is the institution manager or an assistant of
-           *   institution X and the registry belongs to institution X
-           * - The user is a professor of the department Y and the registry
-           *   belongs to department Y.
+           * The user is the institution manager or an assistant of
+           * institution X and the registry belongs to institution X
            *
            * TODO: Calculate this once per table-field and not per row.
            */
@@ -140,17 +138,6 @@ function membersAllModelMeta(serverSide, hideQuickView) {
                   user_institution = get(this, 'session.session.authenticated.institution'),
                   user_institution_id = user_institution.split('/').slice(-2)[0];
                 if(registry_institution_id === user_institution_id) {
-                  hidden = false;
-                }
-              }
-              else if (role === 'professor') {
-                let controller = Ui.__container__.lookup('controller:registry.record.index'),
-                  registry = controller.get('model'),
-                  registry_department = get(registry, 'department'),
-                  registry_department_id = get(registry_department, 'id').split('/').slice(-2)[0],
-                  user_department = get(this, 'session.session.authenticated.department'),
-                  user_department_id = user_department.split('/').slice(-2)[0];
-                if(registry_department_id === user_department_id) {
                   hidden = false;
                 }
               }
