@@ -17,6 +17,20 @@ export default DRFAdapter.extend(DataAdapterMixin,{
     return apiFor(type, this).pathForType(this, type);
   },
 
+  query(store, typeClass, query, recordArray) {
+    // convert true/false query params to True,False
+    if (query) {
+      Object.keys(query).forEach((key) => {
+        if (query.hasOwnProperty(key)) {
+          if (query[key] === false || query[key] === true) {
+            query[key] = query[key].toString().capitalize();
+          }
+        }
+      });
+    }
+    return this._super(store, typeClass, query, recordArray);
+  },
+
 	buildURL: function(modelName, id, snapshot, requestType, query) {
 		var url = this._super(modelName, id, snapshot, requestType, query);
     return apiFor(modelName, this).buildURL(this, url, id, snapshot, requestType, query);
