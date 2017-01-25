@@ -362,7 +362,7 @@ export default ApellaGen.extend({
     sort: {
       serverSide: true,
       active: true,
-      fields: ['id', 'type_verbose', 'institution.title_current']
+      fields: ['id', 'type_verbose']
     },
     row: {
       fields: [
