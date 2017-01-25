@@ -115,13 +115,8 @@ function peak_fs_professors() {
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
 function membersAllModelMeta(serverSide, hideQuickView) {
-   let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']);
-  /*
-   * For now, hide the client side filtering, searching, ordering because these
-   * functionalities are not yet developed.
-   * TODO: Remove this code when client side functionalities are developed
-   */
-  let display = serverSide;
+   let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
+    searchFields = (serverSide ? ['last_name_current'] : ['last_name.el', 'last_name.en']);
   return {
     row: {
       fields: fields_members_table,
@@ -201,15 +196,15 @@ function membersAllModelMeta(serverSide, hideQuickView) {
       searchPlaceholder: 'search.placeholder_last_name',
       serverSide: serverSide,
       active: true,
-      searchFields: ['first_name_current', 'last_name_current'],
+      searchFields: searchFields,
       meta: {
         fields: [
           field('user_id', {type: 'string'}),
-          field('department', {
+          field('institution', {
             type: 'model',
             autocomplete: true,
             displayAttr: 'title_current',
-            modelName: 'department'
+            modelName: 'institution'
           })
         ]
       }
