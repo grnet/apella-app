@@ -179,31 +179,32 @@ class RegistriesList(viewsets.GenericViewSet):
     def get_queryset(self):
         queryset = self.queryset
         if 'ordering' not in self.request.query_params:
-            queryset = queryset.order_by(
-                'department__institution__title__el', 'department__title__el',
-                'type')
+            queryset = queryset.order_by('department')
+        else:
+            ordering = self.request.query_params['ordering']
+            queryset = queryset.order_by(ordering)
         return queryset
 
     @detail_route()
     def members(self, request, pk=None):
         registry = self.get_object()
         query_params = self.request.query_params
-        if 'ordering' not in query_params:
-            ordering = 'user__last_name__el'
-        else:
-            ordering = query_params['ordering']
+        members = registry.members
         if 'user_id' in query_params:
-            members = registry.members.filter(
-                user_id=query_params['user_id']). \
-                order_by(ordering)
-        else:
-            members = registry.members.order_by(ordering)
+            members = members.filter(user_id=query_params['user_id'])
+        if 'institution' in query_params:
+            members = members.filter(institution=query_params['institution'])
         if 'search' in query_params:
             search = query_params['search']
             members = members.filter(
                 Q(user__last_name__en__icontains=search) |
-                Q(user__last_name__el__icontains=search)). \
-                order_by(ordering)
+                Q(user__last_name__el__icontains=search))
+        if 'ordering' not in query_params:
+            ordering = 'user__last_name__el'
+        else:
+            ordering = query_params['ordering']
+        members = members.order_by(ordering)
+
         ser = adapter.get_serializer('professors')
         page = self.paginate_queryset(members)
         if page is not None:
