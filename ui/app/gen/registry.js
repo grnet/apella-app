@@ -114,7 +114,7 @@ function peak_fs_professors() {
 };
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
-function membersAllModelMeta(serverSide) {
+function membersAllModelMeta(serverSide, hideQuickView) {
    let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']);
   /*
    * For now, hide the client side filtering, searching, ordering because these
@@ -145,30 +145,39 @@ function membersAllModelMeta(serverSide) {
           hidden: computed ('role', function() {
             let role = get(this, 'role'),
               hidden = true;
-            if(role === 'institutionmanager' || role === 'assistant') {
-              let details = Ui.__container__.lookup('controller:registry.record.index'),
-                edit = Ui.__container__.lookup('controller:registry.record.edit.index'),
-                controller = details || edit,
-                registry = controller.get('model'),
-                registry_institution = get(registry, 'institution'),
-                registry_institution_id = get(registry_institution, 'id').split('/').slice(-2)[0],
-                user_institution = get(this, 'session.session.authenticated.institution'),
-                user_institution_id = user_institution.split('/').slice(-2)[0];
-              if(registry_institution_id === user_institution_id) {
-                hidden = false;
-              }
+            if(hideQuickView === true) {
+              return true;
             }
-            else if (role === 'professor') {
-              let registry = Ui.__container__.lookup('controller:registry.record.index').get('model'),
-                registry_department = get(registry, 'department'),
-                registry_department_id = get(registry_department, 'id').split('/').slice(-2)[0],
-                user_department = get(this, 'session.session.authenticated.department'),
-                user_department_id = user_department.split('/').slice(-2)[0];
-              if(registry_department_id === user_department_id) {
-                hidden = false;
-              }
+            // false for edit and create view
+            else if( hideQuickView === false) {
+              return false;
             }
-            return hidden;
+            // undefined for details view
+            else {
+              if(role === 'institutionmanager' || role === 'assistant') {
+                let controller = Ui.__container__.lookup('controller:registry.record.index'),
+                  registry = controller.get('model'),
+                  registry_institution = get(registry, 'institution'),
+                  registry_institution_id = get(registry_institution, 'id').split('/').slice(-2)[0],
+                  user_institution = get(this, 'session.session.authenticated.institution'),
+                  user_institution_id = user_institution.split('/').slice(-2)[0];
+                if(registry_institution_id === user_institution_id) {
+                  hidden = false;
+                }
+              }
+              else if (role === 'professor') {
+                let controller = Ui.__container__.lookup('controller:registry.record.index'),
+                  registry = controller.get('model'),
+                  registry_department = get(registry, 'department'),
+                  registry_department_id = get(registry_department, 'id').split('/').slice(-2)[0],
+                  user_department = get(this, 'session.session.authenticated.department'),
+                  user_department_id = user_department.split('/').slice(-2)[0];
+                if(registry_department_id === user_department_id) {
+                  hidden = false;
+                }
+              }
+              return hidden;
+            }
           }),
           label: 'view.user.details',
           confirm: true,
@@ -213,7 +222,7 @@ function membersAllModelMeta(serverSide) {
   };
 };
 
-function membersField(modelMetaSide, selectModelMetaSide) {
+function membersField(modelMetaSide, selectModelMetaSide, hideQuickView) {
   return field('members', {
     refreshValueQuery: modelMetaSide,
     valueQuery: function(store, params, model, value) {
@@ -240,8 +249,8 @@ function membersField(modelMetaSide, selectModelMetaSide) {
     },
     // a list-like gen config
     label: null,
-    modelMeta: membersAllModelMeta(modelMetaSide),
-    selectModelMeta: membersAllModelMeta(selectModelMetaSide),
+    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView),
+    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView),
     modelName: 'professor',
     displayComponent: 'gen-display-field-table'
   });
@@ -312,7 +321,7 @@ export default ApellaGen.extend({
       }
     },{
       label: 'registry.members_section.title',
-      fields: [membersField(false, true)]
+      fields: [membersField(false, true, false)]
     }]
   },
 
@@ -414,7 +423,7 @@ export default ApellaGen.extend({
       }
     },{
       label: 'registry.members_section.title',
-      fields: [membersField(false, true)]
+      fields: [membersField(false, true, false)]
     }]
   }
 });
