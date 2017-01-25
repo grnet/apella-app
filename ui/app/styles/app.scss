@@ -28,3 +28,9 @@
 
 .fullwidth { width: 100%; }
 .nowrap { white-space: nowrap; }
+
+.breadcrumbs {
+  .crumb:not(:first-child) div {
+    text-transform: capitalize;
+  }
+}
