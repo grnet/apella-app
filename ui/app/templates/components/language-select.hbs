@@ -1,8 +1,5 @@
 {{#each locales as |loc|}}
-  {{#paper-button raised=true
-                  primary=(is-equal loc.id i18n.locale)
-                  mini=true
-                  onClick=(action "setLocale" loc.id)}}
-                  <img src='/apella/ui/assets/flag_{{loc.id}}.png' />
-  {{/paper-button}}
+  <a href="" {{action "setLocale" loc.id}} title={{loc.id}}>
+    <img src='/apella/ui/assets/flag_{{loc.id}}.png' />
+  </a>
 {{/each}}
