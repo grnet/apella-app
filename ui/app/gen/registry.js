@@ -362,7 +362,7 @@ export default ApellaGen.extend({
     sort: {
       serverSide: true,
       active: true,
-      fields: ['id', 'type_verbose', 'institution.title_current', 'department.title_current']
+      fields: ['id', 'type_verbose', 'institution.title_current']
     },
     row: {
       fields: [
@@ -413,7 +413,15 @@ export default ApellaGen.extend({
     fieldsets: [{
       label: 'registry.main_section.title',
       fields: [
-        disable_field('department.institution.title_current'),
+          field('institution',
+            {
+              label: 'institution.label',
+              type: 'model',
+              displayAttr: 'title_current',
+              modelName: 'institution',
+              dataKey: 'department.institution',
+              disabled: true
+            }),
         disable_field('department', { displayAttr: 'title_current' }),
         disable_field('type')
       ],
