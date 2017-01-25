@@ -363,9 +363,9 @@ export default ApellaGen.extend({
     row: {
       fields: [
         'id',
-        field('institution.title_current', {label: 'institution.label', type: 'text'}),
-        field('department.title_current', {label: 'department.label', type: 'text'}),
-        field('type_verbose', {label: 'type.label', type: 'text'})
+        i18nField('institution.title', {label: 'institution.label'}),
+        i18nField('department.title', {label: 'department.label', type: 'text'}),
+        field('type_verbose', {label: 'type.label', type: 'text', dataKey: 'type'})
       ],
       actions: ['gen:details', 'gen:edit', 'remove']
     }
