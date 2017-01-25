@@ -38,15 +38,22 @@ export default ApellaGen.extend({
     },
     sort: {
       active: true,
-      sortBy: 'id',
       serverSide: true,
-      fields: ['id', 'username']
+      fields: [
+        'user_id',
+        'username',
+        'email',
+      ]
     },
     label: 'candidate.menu_label',
     row: {
-      fields: ['user_id',
-              field('status_verbose', {label: 'state.label'}),
-              'username', 'email', 'full_name_current'],
+      fields: [
+        'user_id',
+        field('status_verbose', {label: 'state.label'}),
+        field('username', {dataKey: 'user__username'}),
+        field('email', {dataKey: 'user__email'}),
+        'full_name_current'
+      ],
       actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
       actionsMap: {
         verifyUser: verifyUser,

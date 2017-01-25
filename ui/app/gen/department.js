@@ -74,11 +74,6 @@ const subjectsField = field('subjects', {
         fields: [i18nField('title'), 'area']
       }
     },
-    sort: {
-      serverSide: true,
-      active: true,
-      fields: ['title']
-    }
   },
   modelName: 'subject',
   dataKey: 'title',
@@ -112,8 +107,11 @@ export default ApellaGen.extend({
     getModel: function(params) {
       // on load sort by title
       let locale = get(this, 'i18n.locale');
+      params = params || {};
       let ordering_key = `title__${locale}`;
-      params = assign({}, params, {ordering: ordering_key});
+      if (!params.ordering) {
+        params['ordering'] = ordering_key;
+      }
       let role = get(this, 'session.session.authenticated.role');
       if (role == 'institutionmanager' || role == 'assistant') {
         let institution = get(this, 'session.session.authenticated.institution');
@@ -150,12 +148,11 @@ export default ApellaGen.extend({
     sort: {
       active: true,
       serverSide: true,
-      fields: ['title_current']
+      fields: ['title']
     },
-
     row: {
       fields: [
-        'title_current',
+        i18nField('title'),
         field('school.title_current', {label: 'school.label', type: 'text'}),
         'institution.title_current'
       ],

@@ -123,20 +123,37 @@ export default ApellaGen.extend({
       search: true,
       searchFields: ['id', 'email', 'username', 'first_name', 'last_name']
     },
-    sortBy: 'id:asc',
+    sort: {
+      active: true,
+      serverSide: true,
+      fields: [
+        'user_id',
+        'username',
+        'email',
+      ]
+    },
     search: {
       fields: ['username', 'email']
     },
     row: {
       fields: computed('role', function(){
         if (get(this, 'role') === 'institutionmanager') {
-          return ['username', 'email', 'full_name_current',
-                  'can_create_positions_verbose',
-                  'can_create_registries_verbose',
-                  field('status_verbose', {label: 'state.label'})];
+          return [
+            field('status_verbose', {label: 'state.label'}),
+            field('username', {dataKey: 'user__username'}),
+            field('email', {dataKey: 'user__email'}),
+            'full_name_current',
+            'can_create_positions_verbose',
+            'can_create_registries_verbose',
+          ];
         }
-        return ['user_id', 'username', 'email', 'full_name_current', 'institution.title_current',
-                field('status_verbose', {label: 'state.label'})]
+        return [
+          'user_id',
+          field('status_verbose', {label: 'state.label'}),
+          field('username', {dataKey: 'user__username'}),
+          field('email', {dataKey: 'user__email'}),
+          'full_name_current', 'institution.title_current',
+        ]
       }),
       actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser'],
       actionsMap: {

@@ -43,9 +43,8 @@ export default ApellaGen.extend({
     },
     sort: {
       active: true,
-      sortBy: 'id',
       serverSide: true,
-      fields: ['id', 'username']
+      fields: ['id', 'username', 'email']
     },
     row: {
       fields: [field('id', {label: 'user_id.label'}), field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'role_verbose'],

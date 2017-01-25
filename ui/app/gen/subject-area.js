@@ -41,11 +41,14 @@ export default ApellaGen.extend({
       meta: {},
       searchFields: ['title']
     },
-
+    sort: {
+      active: true,
+      fields: ['title'],
+      serverSide: true
+    },
     layout: 'table',
-    sortBy: 'title_current:asc',
      row: {
-      fields: ['title_current'],
+      fields: [i18nField('title')],
       actions: ['gen:edit', 'remove']
     },
   },

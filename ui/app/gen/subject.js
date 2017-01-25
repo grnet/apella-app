@@ -34,7 +34,7 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: [i18nField('title'), 'area']
+        fields: ['area']
       },
       serverSide: true,
       search: true,

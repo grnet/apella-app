@@ -1,4 +1,4 @@
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, i18nField} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import validate from 'ember-gen/validate';
@@ -10,7 +10,7 @@ const {
 } = Ember;
 
 const FIELDS = [
-  'title_current',
+  i18nField('title'),
   field('institution.title_current', {label: 'institution.label', type: 'text'})
 ]
 
@@ -40,6 +40,11 @@ export default ApellaGen.extend({
         return (permittedRoles.includes(role) ? true : false);
       })
     },
+    sort: {
+      active: true,
+      serverSide: true,
+      fields: ['title']
+    },
     filter: {
       active: true,
       meta: {
@@ -49,7 +54,6 @@ export default ApellaGen.extend({
       search: true,
       searchFields: ['title']
     },
-
     layout: 'table',
     row: {
       fields: FIELDS,

@@ -65,7 +65,7 @@ export default ApellaGen.extend({
     sort: {
       active: true,
       serverSide: true,
-      fields: ['title_current']
+      fields: ['title']
     },
     filter: {
       active: false,

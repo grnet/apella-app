@@ -39,7 +39,7 @@ spec:
                 model_serializers: [
                     apella.serializers.mixins.NestedWritableObjectsMixin,
                     apella.serializers.mixins.HelpdeskUsers]
-                ordering_fields: [username]
+                ordering_fields: [id, username]
                 filter_fields: [role, is_active]
                 search_fields: [id, username, email, first_name__el, last_name__el, first_name__en, last_name__en]
             .cli_commands: {}
@@ -294,6 +294,7 @@ spec:
                 mixins: [apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [institution]
                 search_fields: [title__en, title__el]
+                ordering_fields: [id, title__en, title__el]
             .cli_commands: {}
             '*':
                 id:
@@ -341,8 +342,8 @@ spec:
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [institution, school]
+                ordering_fields: [id, title__el, title__en]
                 search_fields: [title__en, title__el]
-                ordering_fields: [id, title__en, title__el]
             .cli_commands: {}
             '*':
                 id:
@@ -402,7 +403,7 @@ spec:
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
                 search_fields: [title__en, title__el]
-                ordering_fields: [id]
+                ordering_fields: [id, title__en, title__el]
             .cli_commands: {}
             '*':
                 id:
@@ -445,7 +446,7 @@ spec:
                 mixins: [apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [area, title]
                 search_fields: [title__en, title__el]
-                ordering_fields: [id]
+                ordering_fields: [id, title__el, title__en]
             .cli_commands: {}
             '*':
                 id:
@@ -493,7 +494,7 @@ spec:
                 model: apella.models.Professor
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.Professor, apella.views.mixins.SyncCandidacies, apella.views.mixins.CandidateProfile]
-                ordering_fields: [user_id, user__last_name__en, user__last_name__el]
+                ordering_fields: [user_id, user__email, user__username]
                 filter_fields: [user_id, institution, is_verified, is_rejected, verification_pending, is_foreign]
                 search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en, discipline_text]
             .cli_commands: {}
@@ -899,6 +900,7 @@ spec:
                 filter_fields: [institution, manager_role, is_verified, is_rejected, verification_pending]
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.CandidateProfile]
+                ordering_fields: [user_id, user__email, user__username]
                 search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
             .cli_commands: {}
             '*':
@@ -1150,6 +1152,7 @@ spec:
                 model: apella.models.Candidate
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.SyncCandidacies, apella.views.mixins.CandidateProfile]
+                ordering_fields: [user_id, user__email, user__username]
                 search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
                 filter_fields: [is_verified, is_rejected, verification_pending]
             .cli_commands: {}
@@ -1729,6 +1732,7 @@ spec:
                 model: apella.models.Candidacy
                 model_serializers: [apella.serializers.position.CandidacyMixin]
                 filter_fields: [position, candidate, state]
+                ordering_fields: [position, candidate]
                 mixins: [apella.views.mixins.CandidacyList,
                     apella.views.mixins.UploadFilesViewSet]
             .cli_commands: {}
@@ -2005,6 +2009,7 @@ spec:
                 model: apella.models.InstitutionManager
                 model_serializers: [apella.serializers.mixins.Assistants]
                 mixins: [apella.views.mixins.AssistantList, apella.views.mixins.CandidateProfile]
+                ordering_fields: [user_id, user__email, user__username]
                 search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
                 filter_fields: [is_verified, is_rejected, verification_pending]
             .cli_commands: {}

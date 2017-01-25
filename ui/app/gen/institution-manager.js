@@ -57,9 +57,20 @@ export default ApellaGen.extend({
       search: true,
       searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
     },
-    sortBy: 'username:asc',
+    sort: {
+      active: true,
+      serverSide: true,
+      fields: [
+        'user_id',
+        'username',
+        'email',
+      ]
+    },
     row: {
-      fields: ['user_id', field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'institution.title_current'],
+      fields: ['user_id', field('status_verbose', {label: 'state.label'}),
+              field('username', {dataKey: 'user__username'}),
+              field('email', {dataKey: 'user__email'}),
+              'full_name_current', 'institution.title_current'],
       actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
       actionsMap: {
         verifyUser: verifyUser,

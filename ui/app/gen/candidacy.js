@@ -196,9 +196,6 @@ export default ApellaGen.extend({
       return this.store.query('candidacy', params);
     },
     sortBy: 'position.code:asc',
-    search: {
-      fields: FS.list,
-    },
     page: {
       title: 'candidacy.menu_label',
     },
