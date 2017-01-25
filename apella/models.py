@@ -338,7 +338,7 @@ class Professor(UserProfile, CandidateProfile):
     institution_freetext = models.CharField(max_length=255, blank=True)
     department = models.ForeignKey(Department, blank=True, null=True)
     rank = models.CharField(
-        choices=common.RANKS, max_length=30)
+        choices=common.RANKS, max_length=30, blank=True)
     is_foreign = models.BooleanField(default=False)
     speaks_greek = models.BooleanField(default=True)
     cv_url = models.URLField(blank=True)

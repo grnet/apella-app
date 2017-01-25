@@ -659,7 +659,6 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
-                    .required: {}
                 institution_freetext:
                     .cli_option: {}
                     .field: {}
