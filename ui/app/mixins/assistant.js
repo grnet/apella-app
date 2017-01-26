@@ -5,7 +5,7 @@ import {booleanFormat} from 'ui/lib/common';
 
 
 export default Ember.Mixin.create({
-  institution: DS.belongsTo('institution', {label: 'institution.label', formAttrs: {optionLabelAttr: 'title_current'}}),
+  department: DS.hasMany('department'),
   manager_role: DS.attr({defaultValue: 'assistant'}),
   can_create_registries: DS.attr({type: 'boolean', defaultValue: false }),
   can_create_positions: DS.attr({type: 'boolean', defaultValue: false }),

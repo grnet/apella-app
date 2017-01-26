@@ -1,4 +1,4 @@
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, i18nField} from 'ui/lib/common';
 import {i18nValidate} from 'ui/validators/i18n';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
@@ -69,6 +69,67 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
   }
 }
 
+const ASSISTANT_DEPARTMENT_FIELDSET = {
+  label: 'department.menu_label',
+  fields: [field('department', {
+    label: null,
+    modelName: 'department',
+    query: function(table, store, field, params) {
+      let institution = get(field, 'user.institution'),
+        institution_id = institution.split('/').slice(-2)[0],
+        locale = get(table, 'i18n.locale');
+      params = params || {};
+      params.institution = institution_id;
+      params.ordering = params.ordering || `title__${locale}`;
+      return store.query('department', params);
+    },
+    modelMeta: {
+      row: {
+        fields: [i18nField('title', {label: 'department.label'})]
+      },
+      paginate: {
+        active: true,
+        serverSide: true,
+        limits: [10, 20, 30]
+      },
+      filter: {
+        search: false,
+        serverSide: true,
+        active: true,
+        searchFields: [],
+        meta: {
+          fields: [
+            field('department', {
+              type: 'model',
+              autocomplete: true,
+              displayAttr: 'title_current',
+              modelName: 'department',
+              query: function(select, store, field, params) {
+                let locale = select.get('i18n.locale');
+                return store.findRecord('profile', 'me').then(function(me) {
+                  return me.get('institution').then(function(institution) {
+                    let institution_id = institution.get('id');
+                    params = params || {};
+                    params.ordering = `title__${locale}`;
+                    params.institution = institution_id;
+                    return store.query('department', params);
+                  })
+                })
+              },
+            })
+          ]
+        }
+      },
+      sort: {
+        serverSide: true,
+        active: true,
+        fields: ['id', 'title_current']
+      }
+    },
+    displayComponent: 'gen-display-field-table',
+  })]
+}
+
 const ASSISTANT_VALIDATORS_EDIT_MANAGER = {
   first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
@@ -84,6 +145,8 @@ export default ApellaGen.extend({
   resourceName: 'assistants',
   auth: true,
   path: 'assistants',
+  session: Ember.inject.service(),
+
   common: {
     validators: all_validators,
     fieldsets: [
@@ -169,7 +232,8 @@ export default ApellaGen.extend({
     },
     fieldsets: [
       USER_FIELDSET_DETAILS,
-      ASSISTANT_FIELDSET_DETAILS
+      ASSISTANT_FIELDSET_DETAILS,
+      ASSISTANT_DEPARTMENT_FIELDSET
     ]
   },
   create: {
@@ -190,7 +254,8 @@ export default ApellaGen.extend({
       if (get(this, 'role') === 'institutionmanager') {
         return  [
           USER_FIELDSET,
-          ASSISTANT_FIELDSET_MANAGER
+          ASSISTANT_FIELDSET_MANAGER,
+          ASSISTANT_DEPARTMENT_FIELDSET
         ]
       } else {
         return [
@@ -212,7 +277,8 @@ export default ApellaGen.extend({
       if (role === 'institutionmanager') {
         return  [
           ASSISTANT_FIELDSET_EDIT_MANAGER,
-          ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY
+          ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY,
+          ASSISTANT_DEPARTMENT_FIELDSET
         ]
       }
     })
