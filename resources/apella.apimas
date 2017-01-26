@@ -1635,13 +1635,6 @@ spec:
                     .drf_field: {}
                     .required: {}
                     .datetime: {}
-                assistants:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .ref:
-                        to: assistants
-                        many: True
                 electors:
                     .cli_option: {}
                     .field: {}

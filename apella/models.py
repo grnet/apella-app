@@ -443,8 +443,6 @@ class Position(models.Model):
     fek = models.URLField()
     fek_posted_at = models.DateTimeField()
 
-    assistants = models.ManyToManyField(
-            InstitutionManager, blank=True, related_name='assistant_duty')
     electors = models.ManyToManyField(
             Professor, blank=True, through='ElectorParticipation')
     committee = models.ManyToManyField(
@@ -582,10 +580,18 @@ class Candidacy(CandidateProfile):
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
-                user_id=request.user.id,
-                institution_id=self.position.department.institution.id). \
-                exists() or \
-                self.candidate.id == request.user.id
+            user_id=request.user.id,
+            institution_id=self.position.department.institution.id,
+            manager_role='institutionmanager'). \
+            exists() or \
+            self.candidate.id == request.user.id
+
+    def check_resource_state_owned_by_assistant(self, row, request, view):
+        return InstitutionManager.objects.filter(
+            user_id=request.user.id,
+            manager_role='assistant').exists() and \
+            self.position.department in \
+            request.user.institutionmanager.departments.all()
 
     def check_resource_state_others_can_view(self, row, request, view):
         return self.others_can_view

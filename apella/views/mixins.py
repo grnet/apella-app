@@ -106,12 +106,14 @@ class PositionMixin(object):
     def get_queryset(self):
         queryset = self.queryset
         user = self.request.user
-        if user.is_manager():
-            institution_ids = InstitutionManager.objects.filter(user=user). \
-                values_list('institution', flat=True)
-            departments = Department.objects.filter(
-                institution_id__in=institution_ids)
-            queryset = queryset.filter(department__in=departments)
+        if user.is_institutionmanager():
+            queryset = queryset.filter(
+                department__in= \
+                    user.institutionmanager.institution.department_set.all())
+        elif user.is_assistant():
+            queryset = queryset.filter(
+                department__in= \
+                    user.institutionmanager.departments.all())
         elif user.is_professor():
             queryset = queryset.filter(
                 Q(state='posted', starts_at__lt=timezone.now()) |

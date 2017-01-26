@@ -4,7 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def assistant_can_edit(position, user):
     return position.author.user == user or \
-        position in user.institutionmanager.assistant_duty.all()
+        (position.department in user.institutionmanager.departments.all() and \
+        user.institutionmanager.can_create_positions)
 
 
 def position_is_latest(position):
