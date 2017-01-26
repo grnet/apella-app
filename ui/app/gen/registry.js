@@ -246,7 +246,7 @@ export default ApellaGen.extend({
      */
     can_create: computed('user.can_create_registries', 'model.institution.id', 'user.institution.id', function() {
         let registry_institution_id =  this.get('model.institution.id'),
-          user_institution_id = get(this, 'user.institution').split('/').slice(-2)[0];
+          user_institution_id = get(this, 'user.institution').split('/').slice(-2)[0],
           can_create_registries  = get(this, 'user.can_create_registries');
         return (registry_institution_id === user_institution_id) && can_create_registries;
     })
