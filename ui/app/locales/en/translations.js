@@ -55,7 +55,7 @@ export default {
   'reject.user.message': 'Reject user message *',
   'reject.user.error': 'Reject user error *',
   'reject.user.success': 'Reject user success *',
-  'registration.success.email.pending': 'Success e-mail pending *',
+  'registration.success.email.pending': 'Your account has been successfully created.<br> You have received a verification e-mail',
 
   'Auth': 'User',
   'login.label': 'Login',
@@ -138,7 +138,7 @@ export default {
   'department.title_current.label': 'Department',
   'subject.label': 'Theme',
   'subject_area.label': 'Thematic area',
-  'fek.label': 'FEK (Government Gazette) number',
+  'fek.label': 'FEK (Government Gazette) appointment number',
   'position.fek.label': 'FEK (Government Gazette)',
   'fek_posted_at.label': 'FEK (Government Gazette) date',
   'position.fek_posted_at_format.label': 'FEK (Government Gazette) date',
@@ -173,7 +173,7 @@ export default {
   'cv_url.label': 'CV URL',
   'cv_url.hint': 'URL with CV on the website of your Academic Institution/Research Center',
   'is_foreign.label': 'Foreign professor',
-  'speaks_greek.label': 'Speaks greek',
+  'speaks_greek.label': 'I speak greek',
   'discipline_text.label': 'Discipline',
   'category_verbose.label': 'Category',
   'category.label': 'Category',
@@ -244,7 +244,6 @@ export default {
       authority_type: 'Verification Authority',
       authority_full_name: 'Authority Full name',
       role: 'Role',
-      sub_fieldset: 'Substitute Institution Administrator'
     }
   },
   professor: {
@@ -304,6 +303,8 @@ export default {
       files: 'Files',
       professor_profile: 'Professor\'s profile',
       candidate_profile: 'Candidate\'s profile',
+      manager_info: 'Manager info',
+      sub_info: 'Αναπληρωτής Διαχειριστής Ιδρύματος'
     },
     text: {
       user_interest: 'Choose your interests',

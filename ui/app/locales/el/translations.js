@@ -16,13 +16,13 @@ export default {
   'register.domestic.label': 'καθηγητης/ερευνητης ημεδαπης',
   'register.domestic.title': 'καθηγητης/ερευνητης ημεδαπης',
   'register.foreign.label': 'καθηγητης/ερευνητης αλλοδαπης',
-  'register.foreign.title': 'καθηγητης/ερευνητης αλλοδαπης',
+  'register.foreign.title': 'καθηγητής/ερευνητής αλλοδαπής',
   'register.candidate.label': 'υποψηφιος',
   'register.candidate.title': 'Υποψήφιος',
   'register.manager.label': 'διαχειριστης',
   'register.manager.title': 'Διαχειριστής ιδρύματος',
-  'register.foreign.intro': 'Register foreign intro *',
-  'register.domestic.intro': 'Register domestic intro *',
+  'register.foreign.intro': '',
+  'register.domestic.intro': '',
   'register.candidate.intro': 'Συμπληρώστε τα ακόλουθα στοιχεία για να εγγραφείτε ως υποψήφιος',
   'register.manager.intro': 'Συμπληρώστε τα ακόλουθα στοιχεία για να εγγραφείτε ως διαχειριστής ιδρύματος',
   'resend.activation.dialog.title': 'Resend activation',
@@ -55,7 +55,7 @@ export default {
   'reject.user.message': 'Επιθυμείτε να απορρίψετε τον χρήστη;',
   'reject.user.error': 'Σφάλμα κατά την απόρριψη του χρήστη',
   'reject.user.success': 'Επιτυχής απόρριψη χρήστη',
-  'registration.success.email.pending': 'Success email pending *',
+  'registration.success.email.pending': 'Ο λογαριασμός σας δημιουργήθηκε επιτυχώς.<br> Το e-mail επαλήθευσης έχει αποσταλεί στη διεύθυνση e-mail που δηλώσατε.',
 
   'Auth': 'Χρήστης',
   'login.label': 'Είσοδος',
@@ -137,7 +137,7 @@ export default {
   'department.title_current.label': 'Τμήμα',
   'subject.label': 'Θέμα',
   'subject_area.label': 'Θεματική περιοχή',
-  'fek.label': 'Αριθμός Φ.Ε.Κ.',
+  'fek.label': 'Αριθμός Φ.Ε.Κ. διορισμού',
   'position.fek.label': 'Φ.Ε.Κ.',
   'fek_posted_at.label': 'Ημερομηνία Φ.Ε.Κ.',
   'position.fek_posted_at_format.label': 'Ημερομηνία Φ.Ε.Κ.',
@@ -172,7 +172,7 @@ export default {
   'cv_url.label': 'URL Βιογραφικού',
   'cv_url.hint': 'URL με το Βιογραφικό Σημείωμα στο δικτυακό τόπο του Ιδρύματος',
   'is_foreign.label': 'Καθηγητής αλλοδαπής',
-  'speaks_greek.label': 'Μιλω ελληνικά',
+  'speaks_greek.label': 'Ομιλώ ελληνικά',
   'discipline_text.label': 'Γνωστικό αντικείμενο',
   'category_verbose.label': 'Κατηγορία',
   'category.label': 'Κατηγορία',
@@ -241,7 +241,6 @@ export default {
       authority_type: 'Αρχή Πιστοποίησης',
       authority_full_name: 'Ονοματεπώνυμο Πρύτανη/Προέδρου',
       role: 'Ρόλος',
-      sub_fieldset: 'Αναπληρωτής Διαχειριστής Ιδρύματος'
     }
   },
   professor: {
@@ -302,6 +301,8 @@ export default {
       files: 'Αρχεία',
       professor_profile: 'Προφίλ καθηγητή',
       candidate_profile: 'Προφίλ υποψηφίου',
+      manager_info: 'Στοιχεία διαχειριστή',
+      sub_info: 'Αναπληρωτής Διαχειριστής Ιδρύματος'
     },
     text: {
       user_interest: 'Εκδηλώστε το ενδιαφέρον σας',
@@ -395,8 +396,8 @@ export default {
   'list.filters.clear.label': 'ΚΑΘΑΡΙΣΜΟΣ',
   'user_data': 'Στοιχεία Χρήστη',
   'professor_profile': 'Προφίλ Καθηγητή',
-  'is_verified.label': 'Επαληθευμένος',
+  'is_verified.label': 'Πιστοποιημένος',
   'is_rejected.label': 'Απορριφθείς',
-  'verification_pending.label': 'Αναμένεται επαλήθευση',
+  'verification_pending.label': 'Αναμένεται πιστοποίηση',
   'is_active.label': 'Ενεργός',
 };

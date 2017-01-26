@@ -58,7 +58,7 @@ const FIELDSET_REGISTER = {
 };
 
 const SUB_FIELDSET = {
-  label: 'manager.label.sub_fieldset',
+  label: 'fieldsets.labels.sub_info',
   fields: SUB_FIELDS,
   layout: {
     flex: [33, 33, 33, 50, 50]
@@ -66,7 +66,7 @@ const SUB_FIELDSET = {
 };
 
 const SUB_FIELDSET_DETAILS = {
-  label: 'manager.label.sub_fieldset',
+  label: 'fieldsets.labels.sub_info',
   fields: [
     field('sub_full_name_current', {label: 'full_name_current.label'}),
     'sub_email',
@@ -81,7 +81,7 @@ const SUB_FIELDSET_DETAILS = {
 
 
 const SUB_FIELDSET_REGISTER = {
-  label: 'manager.label.sub_fieldset',
+  label: 'fieldsets.labels.sub_info',
   fields: SUB_FIELDS_REGISTER,
   layout: {
     flex: [33, 33, 33, 50, 50]
