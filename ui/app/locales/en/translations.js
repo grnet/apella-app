@@ -381,7 +381,7 @@ export default {
   'verified': 'Verified',
   'pending_verification': 'Pending verification',
   // translations for professor rank dropdown
-  'Professor': 'Καθηγητής',
+  'Professor': 'Professor',
   'Associate Professor': 'Associate Professor',
   'Assistant Professor': 'Assistant Professor',
   'Research Director': 'Research Director',
