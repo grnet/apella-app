@@ -165,8 +165,8 @@ const PROFESSOR_FIELDS = computed('model.is_foreign', function(){
   ];
 
   let f_domestic = [
-    'institution',
-    'department',
+    field('institution', {displayAttr: 'title_current'}),
+    field('department', {displayAttr: 'title_current'}),
     field('discipline_in_fek',{
       hint: 'discipline_in_fek.hint',
     }),
