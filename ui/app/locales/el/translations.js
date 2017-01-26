@@ -172,7 +172,9 @@ export default {
   'cv_url.label': 'URL Βιογραφικού',
   'cv_url.hint': 'URL με το Βιογραφικό Σημείωμα στο δικτυακό τόπο του Ιδρύματος',
   'is_foreign.label': 'Καθηγητής αλλοδαπής',
+  'is_foreign_verbose.label': 'Καθηγητής αλλοδαπής',
   'speaks_greek.label': 'Ομιλώ ελληνικά',
+  'speaks_greek_verbose.label': 'Ομιλώ ελληνικά',
   'discipline_text.label': 'Γνωστικό αντικείμενο',
   'category_verbose.label': 'Κατηγορία',
   'category.label': 'Κατηγορία',
@@ -344,6 +346,9 @@ export default {
   elections: {
     menu_label: 'Εκλογές',
   },
+  old_user: {
+    menu_label: 'Παλιοί χρήστες',
+  },
   common: {
     create_label: 'Δημιουργία',
     id_label: 'Κωδικός',
@@ -400,4 +405,19 @@ export default {
   'is_rejected.label': 'Απορριφθείς',
   'verification_pending.label': 'Αναμένεται πιστοποίηση',
   'is_active.label': 'Ενεργός',
+
+  // old_user fields
+  'name_el.label': 'Όνομα (el)',
+  'surname_el.label': 'Επίθετο (el)',
+  'fathername_el.label': 'Πατρώνυμο (el)',
+  'name_en.label': 'Όνομα (en)',
+  'surname_en.label': 'Επίθετο (en)',
+  'fathername_en.label': 'Πατρώνυμο (en)',
+  'professor_subject_id.label': 'ID θέματος',
+  'professor_institution_id.label': 'ID ιδρύματος' ,
+  'professor_department_id.label': 'ID τμήματος',
+  'professor_subject_from_appointment.label': 'Θέμα από το Φ.Ε.Κ.',
+  'professor_subject_optional_freetext.label': 'Θέμα (ελεύθερο κείμενο)',
+  'manager_institution_id.label': 'ID ιδρύματος υπευθύνου',
+
 };

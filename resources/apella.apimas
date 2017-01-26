@@ -2234,6 +2234,8 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.OldApellaUserMigrationData
+                ordering_fields: [user_id, username, email, surname_el, role, role_status]
+                search_fields: [user_id, username, email, surname_el, shibboleth_id, surname_en, role, role_status]
             .cli_commands: {}
             '*':
                 id:

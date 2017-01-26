@@ -173,7 +173,9 @@ export default {
   'cv_url.label': 'CV URL',
   'cv_url.hint': 'URL with CV on the website of your Academic Institution/Research Center',
   'is_foreign.label': 'Foreign professor',
+  'is_foreign_verbose.label': 'Foreign professor',
   'speaks_greek.label': 'I speak greek',
+  'speaks_greek_verbose.label': 'I speak greek',
   'discipline_text.label': 'Discipline',
   'category_verbose.label': 'Category',
   'category.label': 'Category',
@@ -346,6 +348,9 @@ export default {
   elections: {
     menu_label: 'Elections',
   },
+  old_user: {
+    menu_label: 'Old users',
+  },
   common: {
     create_label: 'New',
     id_label: 'ID',
@@ -400,5 +405,21 @@ export default {
   'is_rejected.label': 'Rejected',
   'verification_pending.label': 'Pending verification',
   'is_active.label': 'Active',
+
+  // old_user fields
+  'name_el.label': 'Name (el)',
+  'surname_el.label': 'Surname (el)',
+  'fathername_el.label': 'Fathername (el)',
+  'name_en.label': 'Name (en)',
+  'surname_en.label': 'Surname (en)',
+  'fathername_en.label': 'Fathername (en)',
+  'professor_subject_id.label': 'Subject ID',
+  'professor_institution_id.label': 'Institution ID' ,
+  'professor_department_id.label': 'Department ID',
+  'professor_subject_from_appointment.label': 'Subject from F.E.K.',
+  'professor_subject_optional_freetext.label': 'Subject (free text)',
+  'manager_institution_id.label': 'Manager institution ID',
+
+
 
 };
