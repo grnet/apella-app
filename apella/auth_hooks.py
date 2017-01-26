@@ -32,6 +32,10 @@ def validate_new_user(validate, attrs):
     Return::
         Validated data or raise a ValidationError
     """
+    user = attrs.get('user', [])
+    validate_email_unique(user.get('email'))
+    validate_username_unique(user.get('username'))
+
     return validate(attrs)
 
 
@@ -91,9 +95,8 @@ def authenticate_user(**kwargs):
         if ApellaUser.objects.filter(username=username).exists():
             return None
 
-        try:
-            old_users = OldUser.objects.filter(username=username)
-        except OldUser.DoesNotExist:
+        old_users = OldUser.objects.filter(username=username)
+        if not old_users:
             return None
 
         password_valid = False
@@ -273,3 +276,14 @@ def consume_file_token(user, file, token):
     validate_file_access(user, file)
     cache.delete(token)
 
+
+def validate_email_unique(email):
+    if ApellaUser.objects.filter(email=email).exists() or \
+            OldUser.objects.filter(email=email).exists():
+        raise ValidationError({"email": "email.exists"})
+
+
+def validate_username_unique(username):
+    if ApellaUser.objects.filter(username=username).exists() or \
+            OldUser.objects.filter(username=username).exists():
+        raise ValidationError({"username": "username.exists"})
