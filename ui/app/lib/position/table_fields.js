@@ -48,15 +48,6 @@ const managers_columns = [
   field('email', {label: 'email.label'}),
   'mobile_phone_number'
 ];
-const assistantsField = field('assistants', {
-  label: null,
-  modelMeta: {
-    row: {
-      fields: managers_columns,
-    },
-  },
-  displayComponent: 'gen-display-field-table'
-});
 
 const contactField = field('institution-managers', {
   label: null,
@@ -67,7 +58,6 @@ const contactField = field('institution-managers', {
     },
   },
   valueQuery: function(store, params, model, value) {
-    let assistants_ids = model.get('assistants').getEach('id');
     // find department, to get get its institution
     return model.get('department')
       .then(function(department) {
@@ -75,6 +65,8 @@ const contactField = field('institution-managers', {
           .then(function(institution) {
             let institution_id = institution.get('id');
             /*
+             * TODO: Check its functionality, what is going on with assistants
+             *
              * get all managers of institution (assistants, institution manager,
              * substitute institution manager)
              */
@@ -88,8 +80,7 @@ const contactField = field('institution-managers', {
                  * The info of sub_institution_manager are on the model of
                  * institution manager. We extract them and create a
                  * institution-manager model with role sub_institution_manager.
-                 * We do this because we want to display his info in a table
-                 * field with the assistants and the institution manager,
+                 * We do this because we want to display his info in a table.
                  */
                 if(!store.hasRecordForId('institution-manager', sub_institution_manager_id)) {
                   let first_name = institution_manager.get('sub_first_name'),
@@ -117,15 +108,13 @@ const contactField = field('institution-managers', {
                  * contact info of:
                  * - institution manager (position's institution)
                  * - substitute manager (position's institution)
-                 * - assistants attached on the current position
                  */
                 return store.peekAll('institution-manager').filter(function(manager) {
                   let role = manager.get('role'),
                     id = manager.get('id'),
-                    is_position_assistant = assistants_ids.includes(id),
                     is_institution_manager = (role === 'institutionmanager' && managers_ids.includes(id)),
                     is_sub_institution_manager = (role === 'sub_institution_manager' && managers_ids.includes(id));
-                  return (is_position_assistant || is_institution_manager || is_sub_institution_manager);
+                  return (is_institution_manager || is_sub_institution_manager);
                 });
               });
           });
@@ -216,6 +205,6 @@ const historyField = field('past_positions', {
 });
 
 export {
-  assistantsField, contactField, candidaciesField, committeeElectorsField,
+  contactField, candidaciesField, committeeElectorsField,
   historyField
 };

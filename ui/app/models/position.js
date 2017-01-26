@@ -37,7 +37,6 @@ export default DS.Model.extend({
   fek: DS.attr({label: 'position.fek.label'}),
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
-  assistants: DS.hasMany('assistant'),
   electors_regular_internal: DS.hasMany('professor'),
   electors_regular_external: DS.hasMany('professor'),
   electors_substitute_internal: DS.hasMany('professor'),

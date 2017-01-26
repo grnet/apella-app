@@ -27,27 +27,26 @@ const pick_edit_fs = function() {
     before_open = now.isBefore(starts_at),
     open = now.isBetween(starts_at, ends_at, null, []),
     fs = position.edit,
-    head = [fs.basic, fs.details],
-    tail = [fs.assistants];
+    head = [fs.basic, fs.details];
 
   if(state === 'posted') {
     if(before_open) {
-      return head.concat(tail);
+      return head;
     }
     else if (open) {
-      return head.concat(fs.candidacies, tail);
+      return head.concat(fs.candidacies);
     }
     // closed
     else {
-      return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, tail);
+      return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
     }
   }
   else if(state === 'cancelled') {
-      return head.concat(tail);
+      return head;
   }
   // in all other states
   else {
-    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, tail);
+    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
   }
 };
 
@@ -59,29 +58,28 @@ const pick_details_fs = function() {
     now = moment(),
     before_open = now.isBefore(starts_at),
     fs = position.details,
-    head = [fs.basic, fs.details],
-    tail = [fs.assistants];
+    head = [fs.basic, fs.details];
 
   if(state === 'posted') {
     if(before_open) {
-      return head.concat(tail);
+      return head;
     }
     else {
-      return head.concat(fs.candidacies, tail);
+      return head.concat(fs.candidacies);
     }
   }
   else if(state === 'cancelled') {
-      return head.concat(/*fs.history, */tail);
+      return head/*.concat(fs.history)*/;
   }
   // in all other states
   else {
-    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, /*fs.history, */tail);
+    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
   }
 };
 
 const pick_create_fs = function() {
   let fs = position.create;
-  return [fs.basic].concat(fs.details, fs.assistants);
+  return [fs.basic].concat(fs.details);
 };
 
 

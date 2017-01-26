@@ -2,7 +2,7 @@ import {field} from 'ember-gen';
 import {disable_field, i18nField} from 'ui/utils/common/fields';
 import moment from 'moment';
 import {
-  assistantsField, candidaciesField, committeeElectorsField, historyField,
+  candidaciesField, committeeElectorsField, historyField,
   contactField
 } from 'ui/lib/position/table_fields';
 
@@ -49,11 +49,6 @@ const  position = {
       layout: {
         flex: [50, 50, 50, 50]
       },
-    },
-    assistants: {
-      label: 'assistants.label',
-      text: 'assistants_on_position_explain',
-      fields: [assistantsField]
     }
   },
   details: {
@@ -110,10 +105,6 @@ const  position = {
       layout: {
         flex: [100, 100]
       }
-    },
-    assistants: {
-      label: 'contact',
-      fields: [contactField]
     },
     history: {
       label: 'position.history.title',
@@ -211,11 +202,6 @@ const  position = {
       layout: {
         flex: [100, 100]
       }
-    },
-    assistants: {
-      label: 'assistants.label',
-      text: 'assistants_on_position_explain',
-      fields: [assistantsField]
     }
   }
 };
