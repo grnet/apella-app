@@ -300,6 +300,8 @@ export default {
       candidacy_details: 'Στοιχεία υποψηφιότητας',
       candidate: 'Υποψήφιος',
       files: 'Αρχεία',
+      professor_profile: 'Προφίλ καθηγητή',
+      candidate_profile: 'Προφίλ υποψηφίου',
     },
     text: {
       user_interest: 'Εκδηλώστε το ενδιαφέρον σας',
@@ -396,4 +398,5 @@ export default {
   'is_verified.label': 'Επαληθευμένος',
   'is_rejected.label': 'Απορριφθείς',
   'verification_pending.label': 'Αναμένεται επαλήθευση',
+  'is_active.label': 'Ενεργός',
 };

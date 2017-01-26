@@ -302,6 +302,8 @@ export default {
       candidacy_details: 'Candidacy info',
       candidate: 'Candidate',
       files: 'Files',
+      professor_profile: 'Professor\'s profile',
+      candidate_profile: 'Candidate\'s profile',
     },
     text: {
       user_interest: 'Choose your interests',
@@ -396,5 +398,6 @@ export default {
   'is_verified.label': 'Verified',
   'is_rejected.label': 'Rejected',
   'verification_pending.label': 'Pending verification',
+  'is_active.label': 'Active',
 
 };

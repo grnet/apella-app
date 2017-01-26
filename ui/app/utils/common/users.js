@@ -260,7 +260,7 @@ const USER_FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, USER_FIELDSET_DETAILS, {
 });
 
 const PROFESSOR_FIELDSET = {
-  label: 'fieldsets.labels.more_info',
+  label: 'fieldsets.labels.professor_profile',
   fields: PROFESSOR_FIELDS,
   layout: {
     flex: PROFESSOR_FLEX
@@ -276,7 +276,7 @@ const PROFESSOR_FILES_FIELDSET = {
 };
 
 const CANDIDATE_FILES_FIELDSET = {
-  label: 'fieldsets.labels.files',
+  label: 'fieldsets.labels.candidate_profile',
   fields: CANDIDATE_FILES_FIELDS,
   layout: {
     flex: [100, 100, 100, 100]
