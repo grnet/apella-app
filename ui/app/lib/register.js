@@ -207,7 +207,6 @@ const Register = gen.GenRoutedObject.extend({
       } else {
         FIELDSETS.push(USER_FIELDSET_REGISTER);
       }
-      FIELDSETS.push(PROFESSOR_FIELDSET_REGISTER);
     }
     if (type === 'candidate') {
         FIELDSETS.push(USER_FIELDSET_REGISTER);
