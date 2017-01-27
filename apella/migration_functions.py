@@ -217,6 +217,8 @@ def migrate_username(username, password=None):
     for old_user in old_users:
         if professor_exists(old_user.user_id) and old_user.role == 'candidate':
             continue
+        if old_user.role == 'assistant':
+            return None
         new_user = migrate_user(old_user, password)
         if new_user:
             return new_user
