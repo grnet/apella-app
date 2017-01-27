@@ -11,12 +11,6 @@ const {
 const  CHOICES = ENV.APP.resources;
 
 export default DS.Model.extend({
-  __api__: {
-    normalize: function(hash, serializer) {
-        delete hash['members'];
-        return hash;
-      }
-  },
   type: DS.attr({type: 'select', choices: CHOICES.REGISTRY_TYPES, translate: true}),
   department: DS.belongsTo('department', {formAttrs: {optionLabelAttr: 'title_current'}}),
   members: DS.hasMany('professor'),
