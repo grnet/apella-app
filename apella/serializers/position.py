@@ -85,7 +85,6 @@ class PositionMixin(ValidatorMixin):
         user = self.context.get('request').user
 
         committee = data.pop('committee', [])
-        assistants = data.pop('assistants', [])
         ranks = data.pop('ranks', [])
 
         if not user.is_helpdeskadmin():
@@ -96,7 +95,6 @@ class PositionMixin(ValidatorMixin):
 
         data = super(PositionMixin, self).validate(data)
         data['committee'] = committee
-        data['assistants'] = assistants
         data['ranks'] = ranks
 
         return data
@@ -114,7 +112,6 @@ class PositionMixin(ValidatorMixin):
 
     def update(self, instance, validated_data):
         curr_position = Position.objects.get(id=instance.id)
-        assistants = curr_position.assistants.all()
         committee = curr_position.committee.all()
         ranks = curr_position.ranks.all()
 
@@ -125,7 +122,6 @@ class PositionMixin(ValidatorMixin):
         if instance.state != curr_position.state:
             curr_position.pk = None
             curr_position.save()
-            curr_position.assistants = assistants
             curr_position.committee = committee
             curr_position.ranks = ranks
             curr_position.save()
