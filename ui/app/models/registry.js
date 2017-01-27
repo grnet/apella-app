@@ -15,5 +15,6 @@ export default DS.Model.extend({
   department: DS.belongsTo('department', {formAttrs: {optionLabelAttr: 'title_current'}}),
   members: DS.hasMany('professor'),
   type_verbose: computeI18NChoice('type', CHOICES.REGISTRY_TYPES),
-  institution: readOnly('department.institution')
+  institution: readOnly('department.institution'),
+  registry_set_decision_file: DS.belongsTo('apella-file')
 });

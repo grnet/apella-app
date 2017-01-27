@@ -259,7 +259,7 @@ export default ApellaGen.extend({
 
   create: {
     onSubmit(model) {
-      this.transitionTo('registry.record.index', model);
+      this.transitionTo('registry.record.edit.index', model);
     },
     fieldsets: [{
       label: 'registry.main_section.title',
@@ -285,12 +285,11 @@ export default ApellaGen.extend({
           }
         }),
         field('type', {label: 'type.label'}),
-
       ],
       layout: {
         flex: [70, 30]
       }
-    },{
+    }, {
       label: 'registry.members_section.title',
       fields: [membersField(false, true, false)]
     }]
@@ -370,7 +369,13 @@ export default ApellaGen.extend({
       layout: {
         flex: [100, 50, 50]
       }
-    },{
+    }, {
+      label: 'registry_set_decision_file',
+      fields: [
+      fileField('registry_set_decision_file', 'registry', 'registry_set_decision_file',
+        { readonly: true, label: null })
+      ]
+    }, {
       label: 'registry.members_section.title',
       fields: [membersField(true, true)]
     }]
@@ -405,7 +410,13 @@ export default ApellaGen.extend({
       layout: {
         flex: [50, 50, 50]
       }
-    },{
+    }, {
+      label: 'registry_set_decision_file',
+      fields: [
+      fileField('registry_set_decision_file', 'registry', 'registry_set_decision_file',
+        { label: null }, { replace: true })
+      ]
+    }, {
       label: 'registry.members_section.title',
       fields: [membersField(false, true, false)]
     }]
