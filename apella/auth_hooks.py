@@ -33,8 +33,10 @@ def validate_new_user(validate, attrs):
         Validated data or raise a ValidationError
     """
     user = attrs.get('user', [])
-    validate_email_unique(user.get('email'))
-    validate_username_unique(user.get('username'))
+    if 'email' in user:
+        validate_email_unique(user.get('email'))
+    if 'username' in user:
+        validate_username_unique(user.get('username'))
 
     return validate(attrs)
 
@@ -219,11 +221,11 @@ def validate_user_can_verify(user):
                 raise ValidationError(
                     {"non_field_errors": "discipline.required.error"})
 
-
     if user.user.is_candidate():
         if not user.id_passport_file:
-            raise ValidationError({"id_passport_file":
-                "id_passport_file.required.error"})
+            raise ValidationError(
+                {"id_passport_file":
+                    "id_passport_file.required.error"})
 
 
 def request_user_verify(user):
@@ -253,6 +255,8 @@ def request_user_changes(user):
 
 
 FILE_TOKEN_TIMEOUT = getattr(settings, 'FILE_TOKEN_TIMEOUT', 60)
+
+
 def validate_file_access(user, file):
     return True
 
