@@ -71,7 +71,7 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
 
 const ASSISTANT_DEPARTMENT_FIELDSET = {
   label: 'department.menu_label',
-  fields: [field('department', {
+  fields: [field('departments', {
     label: null,
     modelName: 'department',
     query: function(table, store, field, params) {
