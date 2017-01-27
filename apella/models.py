@@ -10,8 +10,7 @@ from django.conf import settings
 from django.core import validators
 from django.core.files.storage import FileSystemStorage
 
-from apella.validators import before_today_validator, after_today_validator,\
-    validate_dates_interval
+from apella.validators import validate_dates_interval
 from apella import common
 from apella.helpers import assistant_can_edit, professor_participates,\
     position_is_latest
@@ -439,7 +438,7 @@ class Position(models.Model):
     subject_area = models.ForeignKey(SubjectArea, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
     fek = models.URLField()
-    fek_posted_at = models.DateTimeField(validators=[before_today_validator])
+    fek_posted_at = models.DateTimeField()
 
     assistants = models.ManyToManyField(
             InstitutionManager, blank=True, related_name='assistant_duty')
@@ -456,7 +455,7 @@ class Position(models.Model):
 
     state = models.CharField(
         choices=common.POSITION_STATES, max_length=30, default='posted')
-    starts_at = models.DateTimeField(validators=[after_today_validator])
+    starts_at = models.DateTimeField()
     ends_at = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)

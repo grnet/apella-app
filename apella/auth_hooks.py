@@ -32,7 +32,7 @@ def validate_new_user(validate, attrs):
     Return::
         Validated data or raise a ValidationError
     """
-    user = attrs.get('user', [])
+    user = attrs.get('user', {})
     if 'email' in user:
         validate_email_unique(user.get('email'))
     if 'username' in user:

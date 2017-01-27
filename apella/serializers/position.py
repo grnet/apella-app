@@ -7,7 +7,8 @@ from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     Professor, ElectorParticipation, ApellaFile
 from apella.validators import validate_position_dates, \
-    validate_candidate_files, validate_unique_candidacy
+    validate_candidate_files, validate_unique_candidacy, \
+    after_today_validator, before_today_validator
 
 
 def get_electors_regular_internal(instance):
@@ -81,9 +82,18 @@ def get_author(request):
 class PositionMixin(ValidatorMixin):
 
     def validate(self, data):
+        user = self.context.get('request').user
+
         committee = data.pop('committee', [])
         assistants = data.pop('assistants', [])
         ranks = data.pop('ranks', [])
+
+        if not user.is_helpdeskadmin():
+            if 'starts_at' in data:
+                after_today_validator(data['starts_at'])
+            if 'fek_posted_at' in data:
+                before_today_validator(data['fek_posted_at'])
+
         data = super(PositionMixin, self).validate(data)
         data['committee'] = committee
         data['assistants'] = assistants
