@@ -100,6 +100,11 @@ function peak_fs_professors() {
 function membersAllModelMeta(serverSide, hideQuickView) {
    let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'discipline_text']);
+
+
+   // For now, hide client side functionality
+  let display = serverSide;
+
   return {
     row: {
       fields: fields_members_table,
@@ -157,7 +162,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
       }
     },
     paginate: {
-      active: true,
+      active: display,
       serverSide: serverSide,
       limits: [10, 20, 30]
     },
@@ -165,7 +170,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
       search: true,
       searchPlaceholder: 'search.placeholder_members',
       serverSide: serverSide,
-      active: true,
+      active: display,
       searchFields: searchFields,
       meta: {
         fields: [
@@ -182,7 +187,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
     },
     sort: {
       serverSide: serverSide,
-      active: true,
+      active: display,
       fields: sortFields
     }
   };
