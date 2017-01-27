@@ -311,6 +311,8 @@ def migrate_user(old_user, password=None):
             for old_position in old_positions:
                 migrate_position(old_position, institutionmanager)
 
+    old_user.migrated_at = datetime.now()
+    old_user.save()
     return new_user
 
 
