@@ -88,6 +88,20 @@ def get_user_data(shib_data):
     return result
 
 
+SHIBBOLETH_DISPLAY_DATA = getattr(settings, 'SHIBBOLETH_DISPLAY_DATA', [
+    'name', 'displayname', 'cn', 'affiliation', 'orgunit_dn', 'givenname'
+]);
+def get_display_data(shib_data):
+    """
+    Filter shibboleth data for user display uses.
+    """
+    result = {}
+    for key, val in shib_data.iteritems():
+        if key in SHIBBOLETH_DISPLAY_DATA:
+            result[key] = val
+    return result
+
+
 
 def is_eligible_shibboleth_user(data, legacy=False):
     affiliation = data.get('affiliation', None)
@@ -181,6 +195,8 @@ def login(request):
     # resolve which user model class should be used to lookup/create user
     UserModel = model_from_data(shibboleth_data)
     user_data = get_user_data(shibboleth_data)
+    display_data = get_display_data(shibboleth_data)
+
     logger.debug('login %r', user_data)
     if getattr(settings, 'LOG_SHIBBOLETH_DATA', False):
         logger.info(shibboleth_data)
@@ -252,8 +268,9 @@ def login(request):
 
     if created:
         data = urllib.quote(base64.b64encode(json.dumps(user_data)))
+        remote_data = urllib.quote(base64.b64encode(json.dumps(display_data)))
         redirect_url = TOKEN_REGISTER_URL
-        params = '?initial=%s&academic=1' % data
+        params = '?initial=%s&academic=1&remote_data=%s' % (data, remote_data)
 
         email = user_data.get('email', None)
         warn_legacy = False
