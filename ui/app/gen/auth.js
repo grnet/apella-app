@@ -409,6 +409,7 @@ export default AuthGen.extend({
             let messages = get(route, 'messageService');
             let url = model.roleURL();
             let token = get(this, 'user.auth_token');
+            form.set('noMessages', true);
             form.submit().then((model_or_err) => {
               if (model_or_err && !get(form, 'changeset.isValid') || model_or_err.isAdapterError) {
                 return;
@@ -425,11 +426,27 @@ export default AuthGen.extend({
                   messages.setSuccess('request.verification.success');
                   route.transitionTo('auth.profile.details');
                 } else {
-                  throw new Error(res);
+                  return resp.json().then((errorResp) => {
+                    if (errorResp && errorResp.non_field_errors) {
+                      messages.setError(errorResp.non_field_errors);
+                    } else {
+                      let keys = Object.keys(errorResp);
+                      let msg = keys.reduce((acc, key) => { return acc + '\n' + errorResp[key]; }, '');
+                      messages.setError(msg);
+                    }
+                  });
                 }
               }).catch((err) => {
                 messages.setError('request.verification.error');
               });
+            }).finally(() => {
+              if (!get(form, 'isValid')) {
+                form.scrollToInvalid();
+                messages.setError('request.verification.error');
+              }
+              form.set('noMessages', false);
+            }).catch((err) => {
+              messages.setError('request.verification.error');
             });
           },
           confirm: true,
