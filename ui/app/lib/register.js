@@ -136,12 +136,14 @@ const Register = gen.GenRoutedObject.extend({
   routeBaseClass: routes.CreateRoute.extend({
     queryParams: {
       initial: { refreshModel: false },
+      remote_data: { refreshModel: false },
       academic: { refreshModel: false },
       warn_legacy: { refreshModel: false },
     },
     resetController(controller) {
       set(controller, 'model.registration_token', null);
       set(controller, 'initial', false);
+      set(controller, 'remote_data', false);
       set(controller, 'academic', false);
     }
   }),
@@ -177,11 +179,14 @@ const Register = gen.GenRoutedObject.extend({
     } catch(err) {}
 
     merge(defaults, TEST_REGISTER_DATA);
+    let remote_data = params.remote_data && JSON.parse(atob(params.remote_data));
     let gen = get(this, 'gen');
     let model = User.create(defaults, {userRole, gen});
     set(model, 'registration_token', (token && token.length) ? token : null);
     set(model, 'is_academic', !!token);
     set(model, 'warn_legacy', params.warn_legacy);
+    set(model, 'remote_data', remote_data);
+    set(model, 'userRole', userRole);
     return Ember.RSVP.Promise.resolve(model);
   },
 

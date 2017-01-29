@@ -1,0 +1,14 @@
+{{#paper-card as |card|}}
+  {{#card.title as |title|}}
+    {{#title.text as |ctext|}}
+      {{#ctext.headline}}{{t "shibboleth.remote.data" }}{{/ctext.headline}}
+    {{/title.text}}
+  {{/card.title}}
+  {{#card.content}}
+      {{#paper-content classNames="layout-wrap layout-xs-column layout-gt-xs-row" }}
+      {{#each-in object.remote_data as |key value|}}
+        {{gen-details-field componentName='gen-display-field-text' label=key model=object.remote_data key=key _layout=(hash flex=50)}}
+      {{/each-in}}
+      {{/paper-content}}
+  {{/card.content}}
+{{/paper-card}}

@@ -5,6 +5,9 @@
 {{#if (eq object.userRole 'professor') }}
   {{#if object.registration_token }}
   {{t 'register.domestic.intro' }}
+  {{#if object.remote_data}}
+  {{partial '_remote_data_card'}}
+  {{/if}}
   {{else}}
   {{t 'register.foreign.intro' }}
   {{/if}}
