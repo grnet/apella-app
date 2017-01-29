@@ -34,7 +34,12 @@ const VerificationModel = Ember.Object.extend({
 
 export default Ember.Component.extend({
   tagName: '',
-  model: computed(function() {
-    return VerificationModel.create()
+  verificationModel: computed(function() {
+    let model = get(this, 'model');
+    let init = {};
+    if (model && get(model, 'email')) {
+      init = {email: get(model, 'email')};
+    };
+    return VerificationModel.create(init);
   })
 })

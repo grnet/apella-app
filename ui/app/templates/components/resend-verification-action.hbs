@@ -17,7 +17,7 @@
   {{t "resend.activation.prompt.message" }}
   </md-content>
   {{gen-form
-    model
+    verificationModel 
     flat=true
     fieldsetFieldsComponent='paper-content'
     onSubmit=(action (toggle 'visiblePopup' this))
