@@ -2,10 +2,9 @@ import gen from 'ember-gen/lib/gen';
 import routes from 'ember-gen/lib/routes';
 import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
-import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
-        PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
-        CANDIDATE_FILES_FIELDSET,
-        USER_FIELDSET_DETAILS
+import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_FIELDSET_EDIT_ACADEMIC,
+        USER_VALIDATORS, PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
+        PROFESSOR_FILES_FIELDSET, CANDIDATE_FILES_FIELDSET, USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager';
 import ASSISTANT from 'ui/utils/common/assistant';
@@ -71,14 +70,18 @@ const PROFILE_FIELDSETS = function(view) {
   return computed('model.role', function(){
     let f = [];
     let role = this.get('model').get('role');
-    let USER_FIELDSET;
+    let is_academic = get(this, 'model.login_method') === 'academic';
+    let _USER_FIELDSET;
 
     if (view === 'details') {
-      USER_FIELDSET = USER_FIELDSET_USER_ID
+      _USER_FIELDSET = USER_FIELDSET_USER_ID
     }
 
     if (view === 'edit') {
-      USER_FIELDSET = USER_FIELDSET_EDIT;
+      _USER_FIELDSET = USER_FIELDSET_EDIT;
+      if (is_academic) {
+        _USER_FIELDSET = USER_FIELDSET_EDIT_ACADEMIC;
+      }
     }
 
     if (role === 'assistant') {
@@ -98,18 +101,18 @@ const PROFILE_FIELDSETS = function(view) {
     }
 
     if (role === 'professor') {
-      f.push(USER_FIELDSET);
+      f.push(_USER_FIELDSET);
       f.push(PROFESSOR_FIELDSET);
       f.push(PROFESSOR_FILES_FIELDSET);
     }
 
     if (role === 'candidate') {
-      f.push(USER_FIELDSET);
+      f.push(_USER_FIELDSET);
       f.push(CANDIDATE_FILES_FIELDSET);
     }
 
     if (role === 'institutionmanager') {
-      f.push(USER_FIELDSET)
+      f.push(_USER_FIELDSET);
       f.push(MANAGER.FIELDSET);
       if (view === 'edit') {
         f.push(MANAGER.SUB_FIELDSET);
