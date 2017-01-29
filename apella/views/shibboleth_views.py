@@ -219,9 +219,9 @@ def login(request):
             msg = 'user.not.active'
             return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
-        if not user.user.email_verified:
-            msg = 'user.not.email_verified'
-            return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
+        #if not user.user.email_verified:
+            #msg = 'user.not.email_verified'
+            #return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
         token = auth_hooks.login_user(user.user, request)
         user.user.remote_data = json.dumps(shibboleth_data)

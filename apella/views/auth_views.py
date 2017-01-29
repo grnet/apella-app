@@ -108,16 +108,26 @@ class CustomActivationSerializer(djoser_serializers.ActivationSerializer):
         return attrs
 
 
-class CustomActivationView(djoser_views.ActivationView):
+class CustomEmailVerificationView(djoser_views.ActivationView):
+    """
+    For djoser this view both verifies user email and activates user account.
+
+    For Apella this is the case just for a set of users as there are cases for
+    which we permit user activation, with grant to constrained access after login
+    (profile edit), prior to email verification.
+    """
 
     serializer_class = CustomActivationSerializer
 
     @transaction.atomic
     def action(self, serializer):
-        auth_hooks.activate_user(serializer.user)
+        should_activate = not bool(serializer.user.activated_at)
+        auth_hooks.verify_email(serializer.user, should_activate)
         serializer.user.save()
-        djoser_signals.user_activated.send(
-            sender=self.__class__, user=serializer.user, request=self.request)
+        if should_activate:
+            djoser_signals.user_activated.send(
+                sender=self.__class__, user=serializer.user,
+                request=self.request)
         return Response(status=204)
 
 

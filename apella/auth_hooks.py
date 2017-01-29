@@ -67,6 +67,12 @@ def register_user(save, data, *args, **kwargs):
         user.user.remote_data = token.remote_data
         user.user.set_unusable_password()
         user.user.login_method = 'academic'
+        # automatically activate shibboleth users
+        activate_user(user.user)
+        # verify email if remote_data.email === user.email???
+        #if user.user.email == json.loads(token.remote_data).get('email'):
+            #verify_email(user.user. False)
+        user.user.is_active = True
         token.delete()
 
     user.user.save()
@@ -74,13 +80,20 @@ def register_user(save, data, *args, **kwargs):
     return user
 
 
+
 def activate_user(user):
+    if not user.activated_at:
+        user.is_active = True
+        user.activated_at = datetime.now()
+
+
+def verify_email(user, activate=True):
     """
     Logic which gets executed when user visits the email verification url.
     """
     user.email_verified = True
-    user.is_active = True
-    user.activated_at = datetime.now()
+    if activate:
+        activate_user(user)
 
 
 def authenticate_user(**kwargs):
@@ -227,6 +240,12 @@ def validate_user_can_verify(user):
             raise ValidationError(
                 {"id_passport_file":
                     "id_passport_file.required.error"})
+
+    if not user.user.email_verified:
+            raise ValidationError(
+                {"email":
+                    "email.not.verified.error"})
+
 
 
 def request_user_verify(user):

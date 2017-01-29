@@ -17,7 +17,7 @@ apipatterns = [
     url(r'^api/auth/register/$',
         auth_views.CustomRegistrationView.as_view(), name='register'),
     url(r'^api/auth/activate/$',
-        auth_views.CustomActivationView.as_view(), name='activate'),
+        auth_views.CustomEmailVerificationView.as_view(), name='activate'),
     url(r'^api/auth/password/$',
         auth_views.CustomPasswordView.as_view(), name='set_password'),
     url(r'^api/auth/password-reset/$',
