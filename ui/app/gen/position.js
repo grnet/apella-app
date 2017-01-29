@@ -90,55 +90,29 @@ export default ApellaGen.extend({
   path: 'positions',
 
   abilityStates: {
-    is_latest: computed('model.is_latest', function(){
-      return get(this, 'model.is_latest');
-    }),
-    owned: computed('user.user_id', 'model.author', 'role', 'model.assistants.[]', function() {
-      let id = get(this, 'user.id').toString();
-
-      let is_attached_assistant = false;
-      let is_institutionmanager = get(this, 'role') === 'institutionmanager';
-      let is_author = this.get('model.author.user_id') == get(this, 'user.user_id');
-
-      if (this.get('model.assistants')) {
-        if (this.get('model.assistants').getEach('id')) {
-          let res = this.get('model.assistants').getEach('id');
-          if (res.includes(id)) {
-            is_attached_assistant = true;
-          }
-        }
+    can_create: computed('user.can_create_positions', 'role', function() {
+      let role = get(this, 'role');
+      let can_create = get(this, 'user.can_create_positions');
+      if (role === 'assistant') {
+        return can_create;
       }
-
-      return is_author || is_attached_assistant || is_institutionmanager;
-    }), // we expect server to reply with owned resources
-    'open': computed('model.state', 'model.ends_at', 'owned', 'is_latest',  function() {
+      return true
+    }),
+    'open': computed('model.state', 'model.ends_at', 'is_latest',  function() {
       return get(this, 'model.state') === 'open' &&
         moment(get(this, 'model.ends_at')).isBefore(new Date()) &&
-        get(this, 'is_latest') &&
-        get(this, 'owned');
+        get(this, 'is_latest')
     }),
-    closed: computed('model.starts_at', 'owned', 'is_latest',  function() {
-      return moment(get(this, 'model.starts_at')).isBefore(moment(new Date())) &&
-        get(this, 'is_latest') &&
-        get(this, 'owned');
+    electing: computed('state', 'can_create', 'model.is_latest', function() {
+      return get(this, 'model.state') === 'electing' &&
+        get(this, 'model.is_latest') &&
+        get(this, 'can_create');
     }),
-    electing: computed('model.state', 'closed', 'owned', 'is_latest', function() {
-      return get(this, 'model.state') === 'posted' &&
-        get(this, 'closed') &&
-        get(this, 'is_latest') &&
-        get(this, 'owned');
-    }),
-    before_open: computed('owned', 'model.starts_at', 'is_latest',  function(){
+    before_open: computed('model.starts_at', 'model.is_latest', 'can_create', function(){
       return moment(new Date()).isBefore(moment(get(this, 'model.starts_at'))) &&
-        get(this, 'is_latest') &&
-        get(this, 'owned');
+        get(this, 'model.is_latest') &&
+        get(this, 'can_create');
     }),
-    is_latest: computed('model.is_latest', function(){
-      return get(this, 'model.is_latest')
-    }),
-    can_create: computed('user.can_create_positions', function() {
-      return get(this, 'user.can_create_positions');
-    })
   },
 
   common: {
