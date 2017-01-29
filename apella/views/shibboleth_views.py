@@ -45,9 +45,14 @@ ABNORMAL_HEADERS = [
     'HTTP_UNSCOPED_AFFILIATION'
 ]
 
+EXCLUDED_HEADERS = [
+    'HTTP_SHIB_SESSION_INDEX', 'HTTP_SHIB_SESSION_ID'
+]
 
 def shibboleth_headers(headers):
     for key, val in headers.iteritems():
+        if key in EXCLUDED_HEADERS:
+            continue
         if key in ABNORMAL_HEADERS or key.startswith('HTTP_SHIB'):
             key = re.sub('^HTTP_', '', key)
             key = re.sub('^SHIB_', '', key)
