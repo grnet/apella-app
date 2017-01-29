@@ -29,7 +29,10 @@
   {{toolbar-message warn=true message='user.not.active.error'}}
   {{/if}}
   {{#if resetToken}}
-    {{reset-password token=resetToken visiblePopup=true }}
+  {{reset-password token=resetToken visiblePopup=true }}
+  {{/if}}
+  {{#if noAffiliation }}
+  {{toolbar-message warn=true message='user.invalid.affiliation.error'}}
   {{/if}}
 
 

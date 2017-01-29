@@ -343,6 +343,9 @@ export default AuthGen.extend({
         if (error === "user.not.active") {
           controller.set('userNotActive', true);
         }
+        if (error === "no.affiliation") {
+          controller.set('noAffiliation', true);
+        }
         let reset = extractReset(window.location);
         if (reset) { controller.set('resetToken', decodeURI(reset)); }
 
