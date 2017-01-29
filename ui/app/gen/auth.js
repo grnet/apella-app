@@ -306,7 +306,9 @@ export default AuthGen.extend({
       beforeModel(transition) {
         let activate = extractActivate(window.location);
         if (activate) {
-          return this.handleActivate(decodeURI(activate));
+          return this.handleActivate(decodeURI(activate)).finally(() => {
+            return this.transitionTo('index');
+          });
         }
         let token = extractToken(window.location);
         if (token) {
