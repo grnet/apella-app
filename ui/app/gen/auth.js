@@ -377,6 +377,7 @@ export default AuthGen.extend({
       label: 'profile.menu_label',
     },
     onSubmit: function() {},
+    components: { beforeForm: 'profile-form-intro' },
 
     validators: computed('model.role', function(){
       let role = this.get('model').get('role');

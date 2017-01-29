@@ -1,0 +1,3 @@
+{{#if (not object.email_verified) }}
+  {{toolbar-message warn=true message='user.not.email_verified.error' buttonComponent=(component 'resend-verification-action') model=object}}
+{{/if}}
