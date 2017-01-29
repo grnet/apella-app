@@ -192,7 +192,15 @@ const Register = gen.GenRoutedObject.extend({
 
   onSubmit(model) {
     this.controllerFor('auth.register.index').set('registeredModel', model);
-    this.transitionTo('auth.register.success.index');
+    if (get(model, 'user.is_active')) {
+      if (get(model, 'user.login_method') === 'academic') {
+        this.send('shibbolethLogin');
+      } else {
+        this.transitionTo('auth.login.index');
+      }
+    } else {
+      this.transitionTo('auth.register.success.index');
+    }
     return false;
   },
 
