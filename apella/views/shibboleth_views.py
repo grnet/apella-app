@@ -107,10 +107,12 @@ def model_from_data(data):
     return Professor
 
 
-def create_registration_token(identifier, data):
+def create_registration_token(identifier, data, remote_data):
     data = json.dumps(data)
+    remote_data = json.dumps(remote_data)
     token = RegistrationToken.objects.create(
-        token=str(uuid.uuid4()), identifier=identifier, data=data)
+        token=str(uuid.uuid4()), identifier=identifier, data=data,
+        remote_data=remote_data)
     return token.token
 
 
@@ -222,7 +224,8 @@ def login(request):
             return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
         token = auth_hooks.login_user(user.user, request)
-        user.user.last_login_shibboleth_data = json.dumps(shibboleth_data)
+        user.user.remote_data = json.dumps(shibboleth_data)
+        user.user.save()
         token = token.key
 
     except UserModel.DoesNotExist:
@@ -239,7 +242,7 @@ def login(request):
             msg = "user.not.found"
             return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
-        token = create_registration_token(identifier, user_data)
+        token = create_registration_token(identifier, user_data, shibboleth_data)
         created = True
 
     if created:

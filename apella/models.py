@@ -25,6 +25,7 @@ class RegistrationToken(models.Model):
     token = models.CharField(max_length=255, unique=True, blank=True)
     identifier = models.CharField(max_length=255, blank=True)
     data = models.TextField(blank=True)
+    remote_data = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -78,6 +79,7 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
         max_length=255, null=True, default=None)
     shibboleth_migration_key = models.CharField(
         max_length=255, null=True, default=None)
+    remote_data = models.TextField(blank=True)
     old_user_id = models.IntegerField(null=True, blank=True)
 
     USERNAME_FIELD = 'username'
