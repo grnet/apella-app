@@ -2,7 +2,7 @@
   <div class="md-toolbar-tools">
     <span class="flex-grow">{{t message }}</span>
     <span class="flex-grow"></span>
-    {{#if buttonComponent }}{{ buttonComponent }}{{/if}}
+    {{#if buttonComponent }}{{ component buttonComponent model=model}}{{/if}}
     {{#if button }}
     {{#paper-button
       class="no-left-margin flex-grow"
