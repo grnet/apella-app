@@ -426,7 +426,9 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
         state='posted',
         others_can_view=bool(
             re.match('t', old_candidacy.open_to_other_candidates, re.I)),
-        old_candidacy_id=int(old_candidacy.candidacy_serial))
+        old_candidacy_id=int(old_candidacy.candidacy_serial),
+        submitted_at=old_candidacy.created_at,
+        updated_at=old_candidacy.updated_at)
 
     candidacy.code = str(candidacy.id)
     candidacy.save()
