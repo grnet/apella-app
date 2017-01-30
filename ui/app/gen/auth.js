@@ -86,10 +86,10 @@ const PROFILE_FIELDSETS = function(view) {
 
     if (role === 'assistant') {
       if (view === 'edit') {
-        f.push(ASSISTANT.FIELDSET)
+        f.push(ASSISTANT.FIELDSET, ASSISTANT.FIELDSET_PERMISSIONS_INFO);
       }
       if (view === 'details') {
-        f.push(ASSISTANT.FIELDSET_DETAILS)
+        f.push(ASSISTANT.FIELDSET_DETAILS, ASSISTANT.FIELDSET_PERMISSIONS_INFO);
       }
     }
 
