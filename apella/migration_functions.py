@@ -14,7 +14,7 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
     Candidacy, OldApellaCandidacyMigrationData, \
     OldApellaCandidacyFileMigrationData, OldApellaInstitutionMigrationData, \
-    OldApellaCandidateAssistantProfessorMigrationData
+    OldApellaCandidateAssistantProfessorMigrationData, generate_filename
 
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
@@ -171,14 +171,20 @@ def migrate_file(old_file, new_user, source, source_id):
         source_id=source_id)
     old_file_path = os.path.join(
         settings.OLD_APELLA_MEDIA_ROOT, old_file.file_path)
+    new_file_path = os.path.join(
+        settings.MEDIA_ROOT,
+        generate_filename(new_file, old_file.file_path))
+    if not os.path.isdir(os.path.dirname(new_file_path)):
+        os.makedirs(os.path.dirname(new_file_path))
     try:
-        with open(old_file_path, 'r') as f:
-            new_file.file_path.save(
-                old_file.original_name, File(f))
-            new_file.file_path.file.close()
-    except IOError:
-        logger.error('failed to migrate file %s' % old_file.file_path)
-        return
+        os.link(old_file_path, new_file_path)
+    except OSError as e:
+        logger.error(
+            'failed to migrate file %s: %s' %
+            (old_file_path, e.args))
+
+    new_file.file_path = new_file_path
+    new_file.save()
     logger.info(
         'migrated %s file %s to %s' %
         (source, old_file.id, new_file.id))
