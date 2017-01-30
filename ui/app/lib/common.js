@@ -110,7 +110,7 @@ function computeI18NChoice(key, choices, ...args) {
     let i18n = get(this, 'i18n');
     let value = get(this, key);
     let i18nKey = '';
-    if (choicesValues.indexOf(value)>0) {
+    if (choicesValues.indexOf(value)>=0) {
       i18nKey = choices[choicesValues.indexOf(value)][1];
     }
     return value && i18nKey && i18n.t(i18nKey);
