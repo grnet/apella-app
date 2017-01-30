@@ -4,10 +4,11 @@ import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_FIELDSET_EDIT_ACADEMIC,
         USER_VALIDATORS, PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
-        PROFESSOR_FILES_FIELDSET, CANDIDATE_FILES_FIELDSET, USER_FIELDSET_DETAILS
+        PROFESSOR_FILES_FIELDSET, USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager';
 import ASSISTANT from 'ui/utils/common/assistant';
+import CANDIDATE from 'ui/utils/common/candidate';
 import {disable_field} from 'ui/utils/common/fields';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
@@ -108,7 +109,7 @@ const PROFILE_FIELDSETS = function(view) {
 
     if (role === 'candidate') {
       f.push(_USER_FIELDSET);
-      f.push(CANDIDATE_FILES_FIELDSET);
+      f.push(CANDIDATE.FILES_FIELDSET);
     }
 
     if (role === 'institutionmanager') {
@@ -283,7 +284,7 @@ export default AuthGen.extend({
         }
         let url = ENV.APP.backend_host + '/auth/me/';
         return fetch(url, {
-          headers: { 
+          headers: {
             'Accept': 'application/json',
             'Authorization': `Token ${token}`
           }

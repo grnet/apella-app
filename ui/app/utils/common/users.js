@@ -141,20 +141,6 @@ const PROFESSOR_FILES_FIELDS = [
   }),
 ];
 
-const CANDIDATE_FILES_FIELDS = [
-  fileField('id_passport_file', 'candidate', 'id_passport', {
-    readonly: or('user.is_verified', 'user.verification_pending')
-  }, { replace: true }),
-  fileField('cv', 'candidate', 'cv', {
-  }, { replace: true }),
-  fileField('diplomas', 'candidate', 'diploma', {}, {
-    multiple: true
-  }),
-  fileField('publications', 'candidate', 'publication', {}, {
-    multiple: true
-  }),
-]
-
 const PROFESSOR_FIELDS = computed('model.is_foreign', function(){
   let f = [
     'rank',
@@ -275,13 +261,7 @@ const PROFESSOR_FILES_FIELDSET = {
   }
 };
 
-const CANDIDATE_FILES_FIELDSET = {
-  label: 'fieldsets.labels.candidate_profile',
-  fields: CANDIDATE_FILES_FIELDS,
-  layout: {
-    flex: [100, 100, 100, 100]
-  }
-}
+
 
 const PROFESSOR_FIELDSET_REGISTER = Ember.assign({}, PROFESSOR_FIELDSET, {
   label: Ember.computed('model.is_academic', function() {
@@ -363,5 +343,4 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC, PROFESSOR_FIELDSET_REGISTER,
         USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
         PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
-        CANDIDATE_FILES_FIELDSET,
         USER_FIELDS_ALL, FILE_FIELDS};

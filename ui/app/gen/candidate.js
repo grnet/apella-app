@@ -1,7 +1,7 @@
 import {ApellaGen} from 'ui/lib/common';
 import {USER_FIELDSET, USER_FIELDSET_DETAILS,
-        CANDIDATE_FILES_FIELDSET,
         USER_FIELDSET_EDIT, USER_VALIDATORS} from 'ui/utils/common/users';
+import CANDIDATE from 'ui/utils/common/candidate';
 import {field} from 'ember-gen';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
 
@@ -68,7 +68,7 @@ export default ApellaGen.extend({
     },
     fieldsets: [
       USER_FIELDSET_DETAILS,
-      CANDIDATE_FILES_FIELDSET
+      CANDIDATE.FILES_FIELDSET
     ]
 
   },
