@@ -47,7 +47,7 @@ const PasswordModel = Ember.Object.extend({
 export default Ember.Component.extend({
   tagName: '',
 
-  model: computed(function() {
+  formModel: computed(function() {
     return PasswordModel.create({container: getOwner(this)})
   }),
 
