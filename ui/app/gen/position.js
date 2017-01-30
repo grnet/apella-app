@@ -90,6 +90,9 @@ export default ApellaGen.extend({
   path: 'positions',
 
   abilityStates: {
+    is_latest: computed('model.is_latest', function(){
+       return get(this, 'model.is_latest');
+    }),
     can_create: computed('user.can_create_positions', 'role', function() {
       let role = get(this, 'role');
       let can_create = get(this, 'user.can_create_positions');
@@ -103,16 +106,27 @@ export default ApellaGen.extend({
         moment(get(this, 'model.ends_at')).isBefore(new Date()) &&
         get(this, 'is_latest')
     }),
-    electing: computed('state', 'can_create', 'model.is_latest', function() {
+    electing: computed('state', 'can_create', 'is_latest', function() {
       return get(this, 'model.state') === 'electing' &&
-        get(this, 'model.is_latest') &&
+        get(this, 'is_latest') &&
         get(this, 'can_create');
     }),
-    before_open: computed('model.starts_at', 'model.is_latest', 'can_create', function(){
+    before_open: computed('model.starts_at', 'is_latest', 'can_create', function(){
       return moment(new Date()).isBefore(moment(get(this, 'model.starts_at'))) &&
-        get(this, 'model.is_latest') &&
+        get(this, 'is_latest') &&
         get(this, 'can_create');
     }),
+    owned: computed('model.author.user_id', 'user.user_id', 'role',  function() {
+      let is_author = this.get('model.author.user_id') == get(this, 'user.user_id');
+      let is_manager = get(this, 'role') == 'institutionmanager';
+      return is_manager || is_author;
+    }),
+    owned_by_assistant: computed('role', 'user.can_create_positions', 'is_latest', function(){
+      let is_assistant = get(this, 'role') == 'assistant';
+      let can_create = get(this, 'user.can_create_positions');
+      let is_latest = get(this, 'is_latest');
+      return is_assistant && can_create && is_latest;
+    })
   },
 
   common: {
