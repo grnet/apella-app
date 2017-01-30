@@ -136,7 +136,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
             // undefined for details view
             else {
               if(role === 'institutionmanager' || role === 'assistant') {
-                let controller = Ui.__container__.lookup('controller:registry.record.index'),
+                let controller = this.container.lookup('controller:registry.record.index'),
                   registry = controller.get('model'),
                   registry_institution = get(registry, 'institution'),
                   registry_institution_id = get(registry_institution, 'id').split('/').slice(-2)[0],
