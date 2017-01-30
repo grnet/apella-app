@@ -74,7 +74,7 @@ class CustomUserView(djoser_views.UserView):
         if user.verification_pending:
             raise PermissionDenied("user.pending.verification")
 
-        if user.is_verified:
+        if user.is_verified and not user.user.is_assistant():
             raise PermissionDenied("user.verified")
 
         return super(CustomUserView, self).update(request, *args, **kwargs)
