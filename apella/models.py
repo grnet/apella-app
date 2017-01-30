@@ -652,7 +652,7 @@ class Registry(models.Model):
             user_id=request.user.id,
             institution_id=self.department.institution.id).exists()
 
-    def check_resource_state_can_create(self, row, request, view):
+    def check_resource_state_can_create_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
             user_id=request.user.id,
             institution_id=self.department.institution.id,
