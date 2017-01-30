@@ -54,7 +54,7 @@ def migrate_professor(old_user, new_user):
 
     discipline_in_fek = False
     discipline_text = None
-    if bool(re.match('t', old_user.professor_subject_from_appointment, re.I)):
+    if old_user.professor_subject_from_appointment:
         discipline_in_fek = True
         discipline_text = old_user.professor_subject_from_appointment
     else:
