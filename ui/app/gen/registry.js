@@ -245,15 +245,28 @@ export default ApellaGen.extend({
     }),
     /*
      * Permission rule "can_create" executes for assistants
-     * An assistant can create a registry for his own institution, if the
+     * An can create a registry if the institution manager has given him
+     * the permission: user.can_create = true
+     */
+
+    can_create: computed('user.can_create_registries', function() {
+      return get(this, 'user.can_create_registries');
+    }),
+
+    /*
+     * Permission rule "can_create_owned" executes for assistants
+     * An assistant can_create_owned a registry for his own department, if the
      * institution manager has gave him the permission:
      * user.can_create = true
      */
-    can_create: computed('user.can_create_registries', 'model.institution.id', 'user.institution.id', function() {
-        let registry_institution_id =  this.get('model.institution.id'),
-          user_institution_id = get(this, 'user.institution').split('/').slice(-2)[0],
-          can_create_registries  = get(this, 'user.can_create_registries');
-        return (registry_institution_id === user_institution_id) && can_create_registries;
+    can_create_owned: computed('can_create', 'model.department.id', 'user.departments', function() {
+        let registry_department =  get(this, 'model.department.id'),
+          user_departments = get(this, 'user.departments').map(function(el){
+            return el.split('/').slice(-2)[0]
+          }),
+          can_create  = get(this, 'can_create');
+        let owns = user_departments.includes(registry_department);
+        return owns && can_create;
     })
   },
 
