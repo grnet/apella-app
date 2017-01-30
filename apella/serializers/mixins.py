@@ -135,7 +135,7 @@ class Assistants(NestedWritableObjectsMixin):
             validated_data['institution'] = user.institutionmanager.institution
         validated_data['user']['role'] = 'assistant'
         assistant = super(Assistants, self).create(validated_data)
-        auth_hooks.activate_user(assistant.user)
+        auth_hooks.verify_email(assistant.user)
         assistant.user.save()
         auth_hooks.verify_user(assistant)
         assistant.save()
