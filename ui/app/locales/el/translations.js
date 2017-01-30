@@ -169,6 +169,7 @@ export default {
   'organization.label': 'Οργανισμός',
   'regulatory_framework.label': 'Εσωτερικός κανονισμός',
   'rank.label': 'Βαθμίδα',
+  'rank_verbose.label': 'Βαθμίδα',
   'cv_url.label': 'URL Βιογραφικού',
   'cv_url.hint': 'URL με το Βιογραφικό Σημείωμα στο δικτυακό τόπο του Ιδρύματος',
   'is_foreign.label': 'Καθηγητής αλλοδαπής',

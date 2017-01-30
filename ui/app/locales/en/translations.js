@@ -170,6 +170,7 @@ export default {
   'organization.label': 'Organization',
   'regulatory_framework.label': 'Internal Regulation',
   'rank.label': 'Rank',
+  'rank_verbose.label': 'Rank',
   'cv_url.label': 'CV URL',
   'cv_url.hint': 'URL with CV on the website of your Academic Institution/Research Center',
   'is_foreign.label': 'Foreign professor',

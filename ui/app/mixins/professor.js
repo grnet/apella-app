@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import {booleanFormat} from 'ui/lib/common';
+import {booleanFormat, computeI18NChoice} from 'ui/lib/common';
 
 const {
   get, computed
@@ -22,6 +22,7 @@ export default Ember.Mixin.create({
     }
   }),
   rank: DS.attr({type: 'select', choices: CHOICES.RANKS, defaultValue:'Assistant Professor', translate: true}),
+  rank_verbose: computeI18NChoice('rank', CHOICES.RANKS),
   is_foreign: DS.attr({type: 'boolean', defaultValue: false }),
   is_foreign_descr: computed('is_foreign', 'locale.i18n', function() {
     let is_foreign = get(this, 'is_foreign');

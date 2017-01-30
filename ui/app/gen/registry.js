@@ -80,7 +80,7 @@ let fields_members_table = [
     'is_foreign_descr',
     field('institution_global', {label: 'institution.label'}),
     i18nField('department.title', {label: 'department.label'}),
-    'rank',
+    'rank_verbose',
     'discipline_text'
 ];
 

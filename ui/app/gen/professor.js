@@ -65,7 +65,7 @@ export default ApellaGen.extend({
         field('institution_global', {label: 'institution.label'}),
         field('username', {dataKey: 'user__username'}),
         field('email', {dataKey: 'user__email'}),
-        'full_name_current', 'rank'
+        'full_name_current', 'rank_verbose'
       ],
       actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
       actionsMap: {

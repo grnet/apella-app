@@ -109,7 +109,10 @@ function computeI18NChoice(key, choices, ...args) {
   return computed(key, 'i18n.locale', ...args, function() {
     let i18n = get(this, 'i18n');
     let value = get(this, key);
-    let i18nKey = choices[choicesValues.indexOf(value)][1];
+    let i18nKey = '';
+    if (choicesValues.indexOf(value)>0) {
+      i18nKey = choices[choicesValues.indexOf(value)][1];
+    }
     return value && i18nKey && i18n.t(i18nKey);
   });
 }
