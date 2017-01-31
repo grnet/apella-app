@@ -34,8 +34,8 @@ select
     p.institution_freetext professor_institution_freetext,
     p.department_id professor_department_id,
     p.fek professor_appointment_gazette_url,
-    sg.name professor_subject_from_appointment,
-    sf.name professor_subject_optional_freetext,
+    sf.name professor_subject_from_appointment,
+    sg.name professor_subject_optional_freetext,
     p.profileurl professor_institution_cv_url,
     case
         when im.institution_id is not null then im.institution_id
