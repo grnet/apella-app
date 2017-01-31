@@ -295,6 +295,7 @@ export default {
       basic_info: 'Βασικά στοιχεία',
       details: 'Λεπτομέρειες',
       user_info: 'Στοιχεία λογαριασμού',
+      profile_info: 'Στοιχεία προφίλ',
       more_info: 'Περισσότερα στοιχεία',
       user_interest: 'Εκδλήλωση ενδιαφέροντος',
       position_details: 'Στοιχεία θέσης',

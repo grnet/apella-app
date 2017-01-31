@@ -296,7 +296,8 @@ export default {
     labels: {
       basic_info: 'Basic info',
       details: 'Details',
-      user_info: 'Profile',
+      user_info: 'User',
+      profile_info: 'Profile',
       more_info: 'More info',
       user_interest: 'User interest',
       position_details: 'Position details',
