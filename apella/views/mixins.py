@@ -14,15 +14,17 @@ from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import MultipleObjectsReturned
 
 from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
-    Candidacy, ApellaFile, ElectorParticipation
+    Candidacy, ApellaFile, ElectorParticipation, OldApellaUserMigrationData
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 from apella.serializers.position import copy_candidacy_files
+from apella.migration_functions import migrate_user_profile_files
 
 from apella.util import urljoin
 
@@ -108,12 +110,12 @@ class PositionMixin(object):
         user = self.request.user
         if user.is_institutionmanager():
             queryset = queryset.filter(
-                department__in= \
-                    user.institutionmanager.institution.department_set.all())
+                department__in=user.institutionmanager.
+                institution.department_set.all())
         elif user.is_assistant():
             queryset = queryset.filter(
-                department__in= \
-                    user.institutionmanager.departments.all())
+                department__in=user.institutionmanager.
+                departments.all())
         elif user.is_professor():
             queryset = queryset.filter(
                 Q(state='posted', starts_at__lt=timezone.now()) |
@@ -367,4 +369,27 @@ class CandidateProfile(object):
             candidate_user.save()
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def migrate_user_profile_files(self, request, pk=None):
+        candidate_user = self.get_object()
+        if 'old_user_id' not in request.data:
+            return Response(
+                {"old_user_id": "old_user_id.required.error"},
+                status=status.HTTP_400_BAD_REQUEST)
+        else:
+            try:
+                old_user = OldApellaUserMigrationData.objects.get(
+                    user_id=int(request.data['old_user_id']),
+                    role=candidate_user.user.role)
+            except OldApellaUserMigrationData.DoesNotExist as dne:
+                return Response(
+                    dne.message, status=status.HTTP_400_BAD_REQUEST)
+            except MultipleObjectsReturned as mor:
+                return Response(
+                    mor.message, status=status.HTTP_400_BAD_REQUEST)
+
+            migrate_user_profile_files(old_user, candidate_user.user)
+
         return Response(request.data, status=status.HTTP_200_OK)
