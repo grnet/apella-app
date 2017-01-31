@@ -3,10 +3,8 @@ import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
         USER_FIELDSET_DETAILS,
         USER_FIELDSET_EDIT,
-        USER_VALIDATORS,
-        PROFESSOR_FIELDSET,
-        PROFESSOR_FILES_FIELDSET,
-        PROFESSOR_VALIDATORS} from 'ui/utils/common/users';
+        USER_VALIDATORS} from 'ui/utils/common/users';
+import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
 
@@ -15,7 +13,7 @@ const {
   get
 } = Ember;
 
-let all_validators = Object.assign(PROFESSOR_VALIDATORS, USER_VALIDATORS);
+let all_validators = Object.assign(PROFESSOR.VALIDATORS, USER_VALIDATORS);
 
 export default ApellaGen.extend({
   order: 600,
@@ -83,10 +81,10 @@ export default ApellaGen.extend({
       let role = get(this, 'role');
       let f = [
         USER_FIELDSET_DETAILS,
-        PROFESSOR_FIELDSET,
+        PROFESSOR.FIELDSET,
       ]
       if (role === 'helpdeskadmin' || role === 'helpdeskuser' ) {
-        f.push(PROFESSOR_FILES_FIELDSET);
+        f.push(PROFESSOR.FILES_FIELDSET);
       }
       return f;
     })
@@ -94,16 +92,14 @@ export default ApellaGen.extend({
   edit: {
     fieldsets: [
       USER_FIELDSET_EDIT,
-      PROFESSOR_FIELDSET,
+      PROFESSOR.FIELDSET,
     ]
   },
   create: {
     fieldsets: [
       USER_FIELDSET,
-      PROFESSOR_FIELDSET,
+      PROFESSOR.FIELDSET,
     ]
   }
-
-
 
 });

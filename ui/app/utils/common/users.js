@@ -123,60 +123,6 @@ const USER_FIELDS_REGISTER_REQUIRED = [
 ];
 const USER_FIELDS_REGISTER_REQUIRED_ACADEMIC = USER_FIELDS_REGISTER_REQUIRED.slice(3);
 
-const PROFESSOR_FILES_FIELDS = [
-  fileField('cv_professor', 'professor', 'cv_professor', {
-    readonly: or('user.is_verified', 'user.verification_pending')
-  }, {
-    replace: true
-  }),
-  fileField('cv', 'professor', 'cv', {
-  }, {
-    replace: true
-  }),
-  fileField('diplomas', 'professor', 'diploma', {}, {
-    multiple: true
-  }),
-  fileField('publications', 'professor', 'publication', {}, {
-    multiple: true
-  }),
-];
-
-const PROFESSOR_FIELDS = computed('model.is_foreign', function(){
-  let f = [
-    'rank',
-    field('cv_url', {
-      hint: 'cv_url.hint',
-    }),
-    'discipline_text',
-  ];
-
-  let f_domestic = [
-    field('institution', {displayAttr: 'title_current'}),
-    field('department', {displayAttr: 'title_current'}),
-    field('discipline_in_fek',{
-      hint: 'discipline_in_fek.hint',
-    }),
-    'fek',
-  ];
-
-  let f_foreign = [
-    'institution_freetext',
-    'speaks_greek',
-  ];
-
-  if (get(this, 'model.is_foreign')) {
-    return f.concat(f_foreign);
-  } else {
-    return f.concat(f_domestic);
-  }
-
-});
-
-const PROFESSOR_FIELDS_REGISTER = PROFESSOR_FIELDS;
-
-const PROFESSOR_FIELDS_REGISTER_REQUIRED = [
-  'institution', 'department', 'rank', 'fek'
-];
 
 const USER_FIELDSET = {
   label: 'fieldsets.labels.user_info',
@@ -233,44 +179,9 @@ const USER_FIELDSET_DETAILS = {
   }
 }
 
-const PROFESSOR_FLEX = computed('model.is_foreign', function() {
-  if (get(this, 'model.is_foreign') ) {
-    return [50, 50, 50, 50, 100]
-  } else {
-    return [50, 50, 100, 50, 50, 50, 50]
-  }
-})
 
 const USER_FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, USER_FIELDSET_DETAILS, {
   fields: USER_FIELDSET_DETAILS.fields.slice(1)
-});
-
-const PROFESSOR_FIELDSET = {
-  label: 'fieldsets.labels.professor_profile',
-  fields: PROFESSOR_FIELDS,
-  layout: {
-    flex: PROFESSOR_FLEX
-   }
-}
-
-const PROFESSOR_FILES_FIELDSET = {
-  label: 'fieldsets.labels.files',
-  fields: PROFESSOR_FILES_FIELDS,
-  layout: {
-    flex: [100, 100, 100, 100]
-  }
-};
-
-
-
-const PROFESSOR_FIELDSET_REGISTER = Ember.assign({}, PROFESSOR_FIELDSET, {
-  label: Ember.computed('model.is_academic', function() {
-    let academic = this.get('model.is_academic');
-    if (academic) { return 'fieldsets.labels.user_info.academic'; }
-    return 'fieldsets.labels.more_info';
-  }),
-  required: PROFESSOR_FIELDS_REGISTER_REQUIRED,
-  fields: PROFESSOR_FIELDS_REGISTER
 });
 
 const USER_VALIDATORS = {
@@ -282,11 +193,6 @@ const USER_VALIDATORS = {
   home_phone_number: [validate.format({ type: 'phone' })],
   email: [validate.format({ type: 'email' })],
   id_passport: [validate.presence(true)],
-}
-
-const PROFESSOR_VALIDATORS = {
-  cv_url: [validate.format({allowBlank: true, type:'url'})],
-  institution: [validate.presence(true)],
 }
 
 const normalizeUser = function(hash, serializer) {
@@ -340,7 +246,6 @@ const normalizeUserErrors = function(errors) {
 export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         USER_FIELDSET_DETAILS,
-        USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC, PROFESSOR_FIELDSET_REGISTER,
+        USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC,
         USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
-        PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS, PROFESSOR_FILES_FIELDSET,
         USER_FIELDS_ALL, FILE_FIELDS};

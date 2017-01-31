@@ -3,12 +3,13 @@ import routes from 'ember-gen/lib/routes';
 import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_FIELDSET_EDIT_ACADEMIC,
-        USER_VALIDATORS, PROFESSOR_FIELDSET, PROFESSOR_VALIDATORS,
-        PROFESSOR_FILES_FIELDSET, USER_FIELDSET_DETAILS
+        USER_VALIDATORS,
+        USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager';
 import ASSISTANT from 'ui/utils/common/assistant';
 import CANDIDATE from 'ui/utils/common/candidate';
+import PROFESSOR from 'ui/utils/common/professor';
 import {disable_field} from 'ui/utils/common/fields';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
@@ -103,8 +104,8 @@ const PROFILE_FIELDSETS = function(view) {
 
     if (role === 'professor') {
       f.push(_USER_FIELDSET);
-      f.push(PROFESSOR_FIELDSET);
-      f.push(PROFESSOR_FILES_FIELDSET);
+      f.push(PROFESSOR.FIELDSET);
+      f.push(PROFESSOR.FILES_FIELDSET);
     }
 
     if (role === 'candidate') {
@@ -384,7 +385,7 @@ export default AuthGen.extend({
       let role = this.get('model').get('role');
       let f = Object.assign({}, USER_VALIDATORS);
       if (role === 'professor') {
-        f = Object.assign(f, PROFESSOR_VALIDATORS);
+        f = Object.assign(f, PROFESSOR.VALIDATORS);
       }
       if (role === 'institutionmanager') {
         f = Object.assign(f, MANAGER.VALIDATORS);
