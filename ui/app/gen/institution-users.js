@@ -151,7 +151,7 @@ export default ApellaGen.extend({
   modelName: 'assistant',
   resourceName: 'assistants',
   auth: true,
-  path: 'assistants',
+  path: 'institution-users',
   session: Ember.inject.service(),
 
   common: {
@@ -172,16 +172,21 @@ export default ApellaGen.extend({
 
   list: {
     page: {
-      title: 'assistant.menu_label',
+      title: 'institution_users.label',
     },
     menu: {
-      label: 'assistant.menu_label',
-      icon: 'person_add',
+      label: 'institution_users.label',
+      icon: 'perm contact calendar',
       display: computed('role', function() {
         let role = get(this, 'role');
         let forbittenRoles = ['professor', 'candidate', 'assistant'];
         return (forbittenRoles.includes(role) ? false : true);
       })
+    },
+    getModel: function(params) {
+      params = params || {};
+      params.is_secretary = false;
+      return this.store.query('assistant', params);
     },
     layout: 'table',
     filter: {

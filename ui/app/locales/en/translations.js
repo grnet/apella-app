@@ -289,9 +289,6 @@ export default {
       title: 'Position history',
     }
   },
-  assistant: {
-    menu_label: 'Assistants',
-  },
   fieldsets:{
     labels: {
       basic_info: 'Basic info',
@@ -422,5 +419,8 @@ export default {
   'professor_subject_optional_freetext.label': 'Subject (free text)',
   'manager_institution_id.label': 'Manager institution ID',
   'registry_set_decision_file': 'Decision File',
-  'is_secretary.label': 'Secretary'
+  'is_secretary.label': 'Secretary',
+  'secretaries.label': 'Secretaries',
+  'institution_users.label': 'Institution Users'
+
 };

@@ -423,5 +423,7 @@ export default {
   'manager_institution_id.label': 'ID ιδρύματος υπευθύνου',
 
   'registry_set_decision_file': 'Αρχείο Σύστασης Μητρώου',
-  'is_secretary.label': 'Γραμματεία'
+  'is_secretary.label': 'Γραμματεία',
+  'secretaries.label': 'Γραμματείες',
+  'institution_users.label': 'Χρήστες Ιδρύματος'
 };
