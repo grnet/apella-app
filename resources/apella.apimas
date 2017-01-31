@@ -39,7 +39,7 @@ spec:
                 model_serializers: [
                     apella.serializers.mixins.NestedWritableObjectsMixin,
                     apella.serializers.mixins.HelpdeskUsers]
-                ordering_fields: [id, username]
+                ordering_fields: [id, username, email]
                 filter_fields: [role, is_active]
                 search_fields: [id, username, email, first_name__el, last_name__el, first_name__en, last_name__en]
             .cli_commands: {}
