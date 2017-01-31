@@ -37,6 +37,8 @@ def validate_new_user(validate, attrs):
         validate_email_unique(user.get('email'))
     if 'username' in user:
         validate_username_unique(user.get('username'))
+    if 'id_passport' in user:
+        validate_id_passport_unique(user.get('id_passport'))
 
     return validate(attrs)
 
@@ -311,3 +313,9 @@ def validate_username_unique(username):
     if ApellaUser.objects.filter(username=username).exists() or \
             OldUser.objects.filter(username=username).exists():
         raise ValidationError({"username": "username.exists"})
+
+
+def validate_id_passport_unique(id_passport):
+    if ApellaUser.objects.filter(id_passport=id_passport).exists() or \
+            OldUser.objects.filter(person_id_number=id_passport).exists():
+        raise ValidationError({"id_passport": "id_passport.exists"})
