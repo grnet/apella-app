@@ -422,5 +422,6 @@ export default {
   'professor_subject_optional_freetext.label': 'Θέμα (ελεύθερο κείμενο)',
   'manager_institution_id.label': 'ID ιδρύματος υπευθύνου',
 
-  'registry_set_decision_file': 'Αρχείο Σύστασης Μητρώου'
+  'registry_set_decision_file': 'Αρχείο Σύστασης Μητρώου',
+  'is_secretary.label': 'Γραμματεία'
 };

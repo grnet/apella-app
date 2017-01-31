@@ -12,4 +12,7 @@ export default Ember.Mixin.create({
   can_create_positions: DS.attr({type: 'boolean', defaultValue: false }),
   can_create_registries_verbose: booleanFormat('can_create_registries'),
   can_create_positions_verbose: booleanFormat('can_create_positions'),
+  is_secretary: DS.attr({type: 'boolean', defaultValue: false, displayComponent: 'boolean-display' }),
+  is_secretary_verbose: booleanFormat('is_secretary')
+
 });

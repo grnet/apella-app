@@ -24,17 +24,17 @@ const ASSISTANT_FIELDSET_MANAGER = {
 
 const ASSISTANT_FIELDSET = {
   label: 'fieldsets.labels.more_info',
-  fields: ['institution', 'can_create_registries', 'can_create_positions'],
+  fields: ['institution', 'is_secretary', 'can_create_registries', 'can_create_positions'],
   layout: {
-    flex: [100, 50, 50]
+    flex: [100, 33, 33, 33]
    }
 }
 
 const ASSISTANT_FIELDSET_DETAILS = {
   label: 'fieldsets.labels.more_info',
-  fields: ['institution.title_current', 'can_create_registries_verbose', 'can_create_positions_verbose'],
+  fields: ['institution.title_current', 'is_secretary', 'can_create_registries_verbose', 'can_create_positions_verbose'],
   layout: {
-    flex: [100, 50, 50]
+    flex: [100, 33, 33, 33]
    }
 }
 
@@ -44,15 +44,16 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER = {
   text: 'fieldsets.text.manager_can_edit',
   fields: [
     field('username', { readonly: true }),
-    'can_create_positions',
-    'can_create_registries',
     'first_name',
     'last_name',
     'father_name',
-    'id_passport'
+    'id_passport',
+    'is_secretary',
+    'can_create_positions',
+    'can_create_registries'
   ],
   layout: {
-    flex: [50,25,25, 50, 50, 50, 50]
+    flex: [100, 50, 50, 50, 50, 33, 33, 33]
   }
 }
 

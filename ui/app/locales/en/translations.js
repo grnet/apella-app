@@ -421,5 +421,6 @@ export default {
   'professor_subject_from_appointment.label': 'Subject from F.E.K.',
   'professor_subject_optional_freetext.label': 'Subject (free text)',
   'manager_institution_id.label': 'Manager institution ID',
-  'registry_set_decision_file': 'Decision File'
+  'registry_set_decision_file': 'Decision File',
+  'is_secretary.label': 'Secretary'
 };
