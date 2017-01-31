@@ -4,9 +4,6 @@ import {
   USER_FIELDS_ALL,
   USER_FIELDSET_REGISTER,
   USER_FIELDSET_REGISTER_ACADEMIC,
-  PROFESSOR_FIELDSET_REGISTER,
-  INST_MANAGER_FIELDSET_SUB,
-  INST_MANAGER_FIELDSET_MAIN
 } from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager';
 import gen from 'ember-gen/lib/gen';
