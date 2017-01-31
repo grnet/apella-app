@@ -2123,6 +2123,11 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                is_secretary:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
                 is_verified:
                     .cli_option: {}
                     .field: {}

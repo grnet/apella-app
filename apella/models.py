@@ -413,6 +413,7 @@ class InstitutionManager(UserProfile):
         max_length=30, blank=True, null=True)
     can_create_registries = models.BooleanField(default=False)
     can_create_positions = models.BooleanField(default=False)
+    is_secretary = models.BooleanField(default=False)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
