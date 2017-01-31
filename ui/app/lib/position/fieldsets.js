@@ -20,21 +20,45 @@ const  position = {
       fields: ['title',
         field('department', {
           query: function(table, store, field, params) {
+
+            // If the logged in user is an assistant, department field is a
+            // select list  with the assistant's departments
+            let role = get(field, 'session.session.authenticated.role');
+            if (role == 'assistant') {
+              let deps = get(field, 'session.session.authenticated.departments');
+              let promises = deps.map((url) => {
+                let id = url.split('/').slice(-2)[0];
+                return store.findRecord('department', id);
+              })
+
+              var promise = Ember.RSVP.all(promises).then((res) => {
+                return res;
+              }, (error) => {
+                return [];
+              });
+
+              return DS.PromiseArray.create({
+                promise : promise
+              })
+            }
+
             // on load sort by title
             let locale = get(table, 'i18n.locale');
             let ordering_param = {
               ordering: `title__${locale}`
             };
-            let role = get(field, 'session.session.authenticated.role');
             let query;
-            if (role == 'institutionmanager' || role == 'assistant') {
+            // If the logged in user is an institutionmanager, department field
+            // is a select list with all the deparments that belong to the
+            // institutionmanager's institution
+            if (role == 'institutionmanager') {
               let user_institution = get(field, 'session.session.authenticated.institution');
               let id = user_institution.split('/').slice(-2)[0];
               query = assign({}, { institution: id }, ordering_param);
             } else {
               query = ordering_param;
             }
-              return store.query('department', query);
+            return store.query('department', query);
           }
         }),
         'description',
