@@ -49,7 +49,6 @@ class OldApellaUserMigrationData(models.Model):
     role_status = models.TextField(default='UNAPPROVED')
     migrated_at = models.DateTimeField(null=True, blank=True)
 
-
     @staticmethod
     def encode_password(password, salt):
         if not isinstance(password, str):
@@ -126,3 +125,15 @@ class OldApellaInstitutionMigrationData(models.Model):
     institution_id = models.TextField()
     institution_bylaw_url = models.TextField()
     institution_organization_url = models.TextField()
+
+
+class OldApellaCandidateAssistantProfessorMigrationData(models.Model):
+    user_id = models.TextField()
+    account_status = models.TextField()
+    surname_el = models.TextField()
+    name_el = models.TextField()
+    fathername_el = models.TextField()
+    email = models.TextField()
+    institution = models.TextField()
+    department = models.TextField()
+    rank = models.TextField()

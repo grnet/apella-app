@@ -13,7 +13,8 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     OldApellaUserMigrationData, Position, Subject, SubjectArea, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
     Candidacy, OldApellaCandidacyMigrationData, \
-    OldApellaCandidacyFileMigrationData, OldApellaInstitutionMigrationData
+    OldApellaCandidacyFileMigrationData, OldApellaInstitutionMigrationData, \
+    OldApellaCandidateAssistantProfessorMigrationData
 
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
@@ -36,6 +37,17 @@ def get_obj(id_str, model):
         logger.error('%s %s does not exist' % (model.__name__, id_str))
         raise
     logger.debug('got %s %s' % (model.__name__, id))
+    return obj
+
+
+def get_obj_by_name_el(name, model):
+    if not name:
+        return None
+    try:
+        obj = model.objects.get(title__el=name)
+    except model.DoesNotExist:
+        logger.error('%s %s does not exist' % (model.__name__, name))
+        raise
     return obj
 
 
@@ -172,7 +184,8 @@ def migrate_file(old_file, new_user, source, source_id):
         (source, old_file.id, new_file.id))
 
     field_name, many = \
-        FILE_KIND_TO_FIELD[FILE_KINDS_MAPPING[source][old_file.file_type]].values()
+        FILE_KIND_TO_FIELD[FILE_KINDS_MAPPING[source][old_file.file_type]].\
+        values()
     if source == 'profile':
         if new_user.is_professor():
             if not many:
@@ -196,6 +209,7 @@ def migrate_file(old_file, new_user, source, source_id):
             many_attr = getattr(candidacy, field_name)
             many_attr.add(new_file)
         candidacy.save()
+
 
 @transaction.atomic
 def migrate_user_profile_files(old_user, new_user):
@@ -289,7 +303,14 @@ def migrate_user(old_user, password=None):
 
     role = old_user.role
     if role == 'candidate':
-        if not professor_exists(old_user.user_id):
+        if candidate_assistant_professor_exists(old_user.user_id):
+            assistant_professor = \
+                migrate_candidate_to_assistant_professor(old_user, new_user)
+            logger.info(
+                'created assistant professor %s' % assistant_professor.id)
+            migrate_user_profile_files(old_user, new_user)
+            migrate_candidacies(candidate_user=new_user)
+        elif not professor_exists(old_user.user_id):
             candidate = migrate_candidate(old_user, new_user)
             logger.info('created candidate %s' % candidate.id)
             migrate_user_profile_files(old_user, new_user)
@@ -320,7 +341,8 @@ def migrate_user(old_user, password=None):
 def migrate_position(old_position, author):
     if Position.objects.filter(old_code=old_position.position_serial). \
             exists():
-        logger.info('position %s already exists' % old_position.position_serial)
+        logger.info(
+            'position %s already exists' % old_position.position_serial)
         return
 
     subject = get_obj(old_position.subject_code, Subject)
@@ -418,6 +440,7 @@ def migrate_candidacy_files(new_candidacy):
         migrate_file(
             old_file, new_candidacy.candidate, 'candidacy', new_candidacy.id)
 
+
 @transaction.atomic
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
     candidacy = Candidacy.objects.create(
@@ -438,6 +461,7 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
 
     migrate_candidacy_files(candidacy)
 
+
 def migrate_institutions_metadata():
     for old_institution in OldApellaInstitutionMigrationData.objects.all():
         try:
@@ -454,3 +478,23 @@ def migrate_institutions_metadata():
         new_institution.regulatory_framework = \
             old_institution.institution_bylaw_url
         new_institution.save()
+
+
+def candidate_assistant_professor_exists(old_user_id):
+    return OldApellaCandidateAssistantProfessorMigrationData.objects.filter(
+        user_id=old_user_id).exists()
+
+
+def migrate_candidate_to_assistant_professor(old_user, new_user):
+    ap = OldApellaCandidateAssistantProfessorMigrationData.objects.get(
+        user_id=old_user.user_id)
+    institution = get_obj_by_name_el(ap.institution, Institution)
+    department = get_obj_by_name_el(ap.department, Department)
+    old_user.professor_institution_id = institution.id
+    old_user.professor_department_id = department.id
+    old_user.role_status = ap.account_status
+    old_user.professor_rank = 'Assistant Professor'
+    old_user.role_status = 'UNVERIFIED'
+    new_user.role = 'professor'
+    new_user.save()
+    return migrate_professor(old_user, new_user)
