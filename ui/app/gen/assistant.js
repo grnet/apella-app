@@ -57,7 +57,7 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER = {
 }
 
 const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
-  label: 'fieldsets.labels.user_info',
+  label: 'contact',
   text: 'fieldsets.text.assistant_can_edit',
   fields: [
     field('email', { readonly: true }),
@@ -69,66 +69,72 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
   }
 }
 
-const ASSISTANT_DEPARTMENT_FIELDSET = {
-  label: 'department.menu_label',
-  fields: [field('departments', {
-    label: null,
-    modelName: 'department',
-    query: function(table, store, field, params) {
-      let institution = get(field, 'user.institution'),
-        institution_id = institution.split('/').slice(-2)[0],
-        locale = get(table, 'i18n.locale');
-      params = params || {};
-      params.institution = institution_id;
-      params.ordering = params.ordering || `title__${locale}`;
-      return store.query('department', params);
-    },
-    modelMeta: {
-      row: {
-        fields: [i18nField('title', {label: 'department.label'})]
+function get_department_fieldset(hide_remove_btn) {
+  return {
+    label: 'department.menu_label',
+    text: 'fieldsets.text.manager_can_edit',
+    fields: [field('departments', {
+      label: null,
+      modelName: 'department',
+      query: function(table, store, field, params) {
+        let institution = get(field, 'user.institution'),
+          institution_id = institution.split('/').slice(-2)[0],
+          locale = get(table, 'i18n.locale');
+        params = params || {};
+        params.institution = institution_id;
+        params.ordering = params.ordering || `title__${locale}`;
+        return store.query('department', params);
       },
-      paginate: {
-        active: true,
-        serverSide: true,
-        limits: [10, 20, 30]
-      },
-      filter: {
-        search: false,
-        serverSide: true,
-        active: true,
-        searchFields: [],
-        meta: {
-          fields: [
-            field('department', {
-              type: 'model',
-              autocomplete: true,
-              displayAttr: 'title_current',
-              modelName: 'department',
-              query: function(select, store, field, params) {
-                let locale = select.get('i18n.locale');
-                return store.findRecord('profile', 'me').then(function(me) {
-                  return me.get('institution').then(function(institution) {
-                    let institution_id = institution.get('id');
-                    params = params || {};
-                    params.ordering = `title__${locale}`;
-                    params.institution = institution_id;
-                    return store.query('department', params);
+      modelMeta: {
+        row: {
+          fields: [i18nField('title', {label: 'department.label'})],
+          actionsMap: function(hide_remove_btn) {
+            return { remove: { hidden: hide_remove_btn }};
+          }
+        },
+        paginate: {
+          active: true,
+          serverSide: true,
+          limits: [10, 20, 30]
+        },
+        filter: {
+          search: false,
+          serverSide: true,
+          active: true,
+          searchFields: [],
+          meta: {
+            fields: [
+              field('department', {
+                type: 'model',
+                autocomplete: true,
+                displayAttr: 'title_current',
+                modelName: 'department',
+                query: function(select, store, field, params) {
+                  let locale = select.get('i18n.locale');
+                  return store.findRecord('profile', 'me').then(function(me) {
+                    return me.get('institution').then(function(institution) {
+                      let institution_id = institution.get('id');
+                      params = params || {};
+                      params.ordering = `title__${locale}`;
+                      params.institution = institution_id;
+                      return store.query('department', params);
+                    })
                   })
-                })
-              },
-            })
-          ]
+                },
+              })
+            ]
+          }
+        },
+        sort: {
+          serverSide: true,
+          active: true,
+          fields: ['id', 'title_current']
         }
       },
-      sort: {
-        serverSide: true,
-        active: true,
-        fields: ['id', 'title_current']
-      }
-    },
-    displayComponent: 'gen-display-field-table',
-  })]
-}
+      displayComponent: 'gen-display-field-table',
+    })]
+  };
+};
 
 const ASSISTANT_VALIDATORS_EDIT_MANAGER = {
   first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
@@ -233,7 +239,7 @@ export default ApellaGen.extend({
     fieldsets: [
       USER_FIELDSET_DETAILS,
       ASSISTANT_FIELDSET_DETAILS,
-      ASSISTANT_DEPARTMENT_FIELDSET
+      get_department_fieldset(true)
     ]
   },
   create: {
@@ -255,7 +261,7 @@ export default ApellaGen.extend({
         return  [
           USER_FIELDSET,
           ASSISTANT_FIELDSET_MANAGER,
-          ASSISTANT_DEPARTMENT_FIELDSET
+          get_department_fieldset(false)
         ]
       } else {
         return [
@@ -278,7 +284,7 @@ export default ApellaGen.extend({
         return  [
           ASSISTANT_FIELDSET_EDIT_MANAGER,
           ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY,
-          ASSISTANT_DEPARTMENT_FIELDSET
+          get_department_fieldset(false)
         ]
       }
     })
