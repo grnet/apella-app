@@ -71,10 +71,11 @@ class CustomUserView(djoser_views.UserView):
     def update(self, request, *args, **kwargs):
         user = self.get_object()
 
-        if user.verification_pending:
+        if hasattr(user, 'verification_pending') and user.verification_pending:
             raise PermissionDenied("user.pending.verification")
 
-        if user.is_verified and not user.user.is_assistant():
+        if hasattr(user, 'is_verified') and \
+                user.is_verified and not user.user.is_assistant():
             raise PermissionDenied("user.verified")
 
         return super(CustomUserView, self).update(request, *args, **kwargs)
