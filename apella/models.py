@@ -115,10 +115,10 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
         return self.role == 'professor'
 
     def is_academic_professor(self):
-        return self.is_professor() and self.shibboleth_id
+        return self.is_professor() and not self.professor.is_foreign
 
     def is_foreign_professor(self):
-        return self.is_professor() and not self.shibboleth_id
+        return self.is_professor() and self.professor.is_foreign
 
     def is_candidate(self):
         return self.role == 'candidate'
