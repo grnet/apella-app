@@ -38,7 +38,7 @@ export default ApellaGen.extend({
       icon: 'supervisor_account',
       display: computed('role', function() {
         let role = get(this, 'role');
-        let permittedRoles = ['helpdeskadmin'];
+        let permittedRoles = ['helpdeskadmin', 'helpdeskuser'];
         return (permittedRoles.includes(role) ? true : false);
       })
     },
