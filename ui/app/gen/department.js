@@ -159,13 +159,14 @@ export default ApellaGen.extend({
     sort: {
       active: true,
       serverSide: true,
-      fields: ['title']
+      fields: ['title', 'dep_number']
     },
     row: {
       fields: [
         i18nField('title'),
         field('school.title_current', {label: 'school.label', type: 'text'}),
-        'institution.title_current'
+        'institution.title_current',
+        'dep_number'
       ],
       actions: ['gen:details', 'gen:edit', 'remove']
     }

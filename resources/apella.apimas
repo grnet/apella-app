@@ -342,7 +342,7 @@ spec:
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
                 filter_fields: [institution, school]
-                ordering_fields: [id, title__el, title__en]
+                ordering_fields: [id, title__el, title__en, dep_number]
                 search_fields: [title__en, title__el]
             .cli_commands: {}
             '*':
