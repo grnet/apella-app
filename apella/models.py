@@ -169,7 +169,8 @@ class ApellaFile(models.Model):
     source_id = models.IntegerField()
     file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
     file_path = models.FileField(
-        upload_to=generate_filename, storage=OverwriteStorage(), max_length=255)
+        upload_to=generate_filename,
+        storage=OverwriteStorage(), max_length=255)
     description = models.TextField(blank=True, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
 
@@ -272,6 +273,7 @@ class Institution(models.Model):
     organization = models.URLField(blank=True)
     regulatory_framework = models.URLField(blank=True)
     title = models.ForeignKey(MultiLangFields)
+    has_shibboleth = models.BooleanField(default=False)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
@@ -294,7 +296,6 @@ class Department(models.Model):
         user = request.user
         return self in user.institutionmanager.departments.all() and \
             user.institutionmanager.can_create_positions
-
 
 
 class SubjectArea(models.Model):

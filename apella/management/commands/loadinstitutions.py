@@ -21,7 +21,7 @@ class Command(LoadDataCommand):
             renamed = 0
             deleted = 0
             for institution_record in csv_file:
-                ircid, title_el, title_en, category_str = \
+                ircid, title_el, title_en, category_str, shibboleth = \
                     self.preprocess(institution_record)
 
                 try:
@@ -39,6 +39,7 @@ class Command(LoadDataCommand):
                 category = [key for key, value
                             in common.INSTITUTION_CATEGORIES
                             if category_str == key]
+                has_shibboleth = True if shibboleth == '1' else False
 
                 if not category:
                     self.stdout.write(
@@ -59,6 +60,8 @@ class Command(LoadDataCommand):
                         "Renamed institution %s from %s, %s to %s, %s" %
                         (ircid, title_el_before, title_en_before,
                             title.el, title.en))
+                    institution.has_shibboleth = has_shibboleth
+                    institution.save()
                     renamed += 1
                     continue
 
@@ -67,7 +70,8 @@ class Command(LoadDataCommand):
                 institution_data = {
                         'id': ircid,
                         'title': title,
-                        'category': category[0]
+                        'category': category[0],
+                        'has_shibboleth': has_shibboleth
                 }
                 Institution.objects.create(**institution_data)
                 success += 1

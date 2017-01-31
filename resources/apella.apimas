@@ -231,7 +231,7 @@ spec:
                 model: apella.models.Institution
                 model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
                 mixins: [apella.views.mixins.DestroyProtectedObject]
-                filter_fields: [title__en, title__el, category]
+                filter_fields: [title__en, title__el, category, has_shibboleth]
                 ordering_fields: [id, title__el, title__en]
                 search_fields: [title__en, title__el]
             .cli_commands: {}
@@ -280,6 +280,11 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                has_shibboleth:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
             actions:
                 .list: {}
                 .create: {}
