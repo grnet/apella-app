@@ -232,11 +232,14 @@ class ApellaFile(models.Model):
         is_owner = self.owner == user
         is_verified = True
         if user.is_professor():
-            is_verified = user.professor.is_verified
+            is_verified = user.professor.is_verified or \
+                user.professor.verification_pending
         elif user.is_candidate():
-            is_verified = user.candidate.is_verified
+            is_verified = user.candidate.is_verified or \
+                user.candidate.verification_pending
         elif user.is_manager():
-            is_verified = user.institutionmanager.is_verified
+            is_verified = user.institutionmanager.is_verified or \
+                user.institutionmanager.verification_pending
 
         if (hasattr(self, 'id_passport_file') or
                 hasattr(self, 'professor_cv_file')) and \
