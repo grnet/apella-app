@@ -290,6 +290,12 @@ class Department(models.Model):
     title = models.ForeignKey(MultiLangFields)
     dep_number = models.IntegerField(blank=True, null=True)
 
+    def check_resource_state_owned_by_assistant(self, row, request, view):
+        user = request.user
+        return self in user.institutionmanager.departments.all() and \
+            user.institutionmanager.can_create_positions
+
+
 
 class SubjectArea(models.Model):
     title = models.ForeignKey(MultiLangFields)

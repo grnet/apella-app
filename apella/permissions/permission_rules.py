@@ -131,6 +131,8 @@ PERMISSION_RULES = [
     ('departments', 'partial_update', 'helpdeskadmin', '*', '*', '5.2.5'),
     ('departments', 'update', 'institutionmanager', 'dep_number', '*', '5.2.5'),
     ('departments', 'partial_update', 'institutionmanager', 'dep_number', '*', '5.2.5'),
+    ('departments', 'update', 'assistant', 'dep_number', 'owned_by_assistant', ''),
+    ('departments', 'partial_update', 'assistant', 'dep_number', 'owned_by_assistant', ''),
     ('helpdeskusers', 'create', 'helpdeskadmin', '*', '*', ''),
     ('helpdeskusers', 'list', 'helpdeskadmin', '*', '*', ''),
     ('helpdeskusers', 'update', 'helpdeskadmin', 'user/email', '*', ''),
