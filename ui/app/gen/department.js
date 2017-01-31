@@ -86,6 +86,17 @@ export default ApellaGen.extend({
   auth: true,
   path: 'departments',
   session: Ember.inject.service(),
+  abilityStates: {
+    owned_by_assistant: computed('role', 'user.can_create_positions', 'user.departments', 'model.id', function(){
+      let is_assistant = get(this, 'role') == 'assistant';
+      let can_create = get(this, 'user.can_create_positions');
+      let is_own = get(this, 'user.departments').map((url) => {
+        return url.split('/').slice(-2)[0]
+      }).includes(get(this, 'model.id'));
+      return is_assistant && can_create && is_own;
+    })
+  },
+
 
   common: {
     proloadModels: ['institution', 'department'],
@@ -100,8 +111,8 @@ export default ApellaGen.extend({
       label: 'department.menu_label',
       display: computed('role', function() { // role can be used here because it is defined in ApellaGen._metaMixin
         let role = get(this, 'role');
-        let permittedRoles = ['helpdeskuser', 'helpdeskadmin', 'institutionmanager'];
-        return (permittedRoles.includes(role) ? true : false);
+        let forbittenRoles = ['candidate', 'professor'];
+        return (forbittenRoles.includes(role) ? false: true);
       })
     },
     getModel: function(params) {
@@ -174,7 +185,7 @@ export default ApellaGen.extend({
     fieldsets: [{
       fields: computed('role', function(){
         let role = get(this, 'role');
-        if (role == 'institutionmanager') {
+        if (role == 'institutionmanager' || role == 'assistant') {
           return [
             'dep_number',
             field('title_current', {disabled: true}),
