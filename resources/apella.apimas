@@ -2553,6 +2553,12 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
+                migrated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {}
+                    .readonly: {}
             actions:
                 .list: {}
                 .update: {}
