@@ -8,31 +8,6 @@
   }}
 
   {{#paper-content class="md-padding"}}
-    <md-card class="flex-100">
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-title">{{t 'register.title'}}</span>
-          <p class="md-subhead">{{t 'register.description' }}</p>
-        </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
-        {{#paper-button
-          class="no-left-margin"
-          onClick=(route-action 'shibbolethRegister')
-          raised=true primary=true}}{{paper-icon 'person'}}{{t 'register.domestic.label'}}{{/paper-button}}
-        {{#paper-button
-          class="no-left-margin"
-          onClick=(transition-to 'auth.register.index' 'foreign-professor')
-          raised=true primary=true}}{{paper-icon 'person_pin'}}{{t 'register.foreign.label'}}{{/paper-button}}
-        {{#paper-button
-          class="no-left-margin"
-          onClick=(transition-to 'auth.register.index' 'candidate')
-          raised=true primary=true}}{{paper-icon 'person_outline'}}{{t 'register.candidate.label'}}{{/paper-button}}
-      </md-card-content>
-      <md-card-content>
-        <h4>{{t 'resend.email.verification'}}</h4>
-        {{resend-verification-action}}
-      </md-card-content>
-    </md-card>
+    {{ partial '_register_card' }}
   {{/paper-content}}
 {{/gen-page}}

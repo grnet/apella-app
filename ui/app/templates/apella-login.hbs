@@ -1,3 +1,4 @@
+
 {{#gen-page classNames=(if gen.nested 'nested' '') as |page|}}
   {{page.toolbar
     pageTitle=(t gen.page.title model)
@@ -37,58 +38,38 @@
 
 
   {{#page.content}}
+    <md-content>
+
     {{#if gen.partials.top}}
       {{ partial gen.partials.top }}
     {{/if}}
 
-    <md-content class="flex layout-row md-padding">
-      <md-card class="flex-50">
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-title">{{t 'login.username.title'}}</span>
-            <p class="md-subhead">{{t 'login.login.description' }}</p>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-          {{ component gen.component
-            model
+    {{#paper-content class="layout-row md-padding "}}
+      {{#paper-button primary=true raised=true class=(concat 'flex-grow ' (if newUserSelected '' 'selected')) onClick=(action (mut newUserSelected) false)}}{{t 'old.user'}}{{/paper-button}}
+      {{#paper-button primary=true raised=true class=(concat 'flex-grow ' (if newUserSelected 'selected' '')) onClick=(action (mut newUserSelected) true)}}{{t 'new.user'}}{{/paper-button}}
+    {{/paper-content}}
 
-            fieldsetFieldsComponent='paper-content'
-            flat=true
+    {{#if (not newUserSelected) }}
+      {{#paper-content class="md-padding no-vert-padding"}}
+          <p class="md-padding no-vert-padding">
+            {{t 'old.user.info'}}
+          </p>
+          {{ partial '_login_card' }}
+      {{/paper-content}}
+    {{else}}
+      {{#paper-content class="md-padding no-vert-padding"}}
+          <p class="md-padding no-vert-padding">
+            {{t 'new.user.info'}}
+          </p>
+          {{ partial '_register_card' }}
+      {{/paper-content}}
+    {{/if}}
 
-            modelMeta=(readonly gen.resource)
-            validators=(readonly gen.resource.validators)
-            messages=(readonly gen.messages)
-            labels=(readonly gen.labels)
-            beforeFormComponent=(readonly gen.components.beforeForm)
-            _controller=this
-            extraActions=(readonly gen.extraActions)
 
-            onInvalid=(route-action 'onFormInvalid')
-            onSubmit=(route-action 'onFormSubmit')
-          }}
-        </md-card-content>
-      </md-card>
-      <md-card class="flex-50">
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-title">{{t 'login.domestic.title'}}</span>
-            <p class="md-subhead">{{t 'login.domestic.description' }}</p>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-          {{#paper-button
-            class="no-margin"
-            onClick=(route-action 'shibbolethLogin')
-            raised=true primary=true}}{{paper-icon 'person'}}{{t 'login.domestic.label' }}{{/paper-button}}
-        </md-card-content>
-      </md-card>
-    </md-content>
-    <md-content class="flex layout-row md-padding">
-    </md-content>
     {{#if gen.partials.bottom}}
       {{ partial gen.partials.bottom }}
     {{/if}}
+  </md-content>
   {{/page.content}}
 
 {{/gen-page}}

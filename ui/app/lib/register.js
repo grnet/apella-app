@@ -159,7 +159,6 @@ const Register = gen.GenRoutedObject.extend({
       authority: 'dean',
     };
 
-
     let userRole = this.paramsFor('auth.register').userRole;
 
     if (userRole == 'foreign-professor') {

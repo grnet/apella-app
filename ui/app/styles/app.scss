@@ -48,3 +48,9 @@
 .button-padding {
   padding: 0 10px !important;
 }
+
+.md-button.selected {
+  background-color: color($color-green, '800') !important;
+}
+
+.no-vert-padding { padding-top: 0 !important; padding-bottom: 0 !important; }
