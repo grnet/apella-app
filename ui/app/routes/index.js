@@ -5,7 +5,6 @@ const {
 } = Ember;
 
 const ROLE_ROUTE_MAP = {
-  'institutionmanager': 'institution.index',
   'professor': 'position.index',
 }
 
