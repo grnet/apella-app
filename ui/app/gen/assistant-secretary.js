@@ -14,29 +14,31 @@ const {
   get
 } = Ember;
 
-const ASSISTANT_FIELDSET_MANAGER = {
+// Permissions for create/edit view [common]
+const FS_PERMISSIONS_MODIFIABLE = {
   label: 'fieldsets.labels.more_info',
-  fields: ['can_create_registries', 'can_create_positions'],
+  fields: [
+    field('is_secretary_verbose', { disabled:  true, label: 'is_secretary.label' }),
+    'can_create_registries',
+    'can_create_positions'
+  ],
   layout: {
-    flex: [50, 50]
+    flex: [33, 33, 33]
   }
-}
+};
 
-const ASSISTANT_FIELDSET = {
+
+const FS_PERMISSIONS_DETAILS = {
   label: 'fieldsets.labels.more_info',
-  fields: ['institution', 'is_secretary', 'can_create_registries', 'can_create_positions'],
+  fields: [
+    'institution.title_current',
+    'is_secretary_verbose',
+    'can_create_registries_verbose',
+    'can_create_positions_verbose'],
   layout: {
     flex: [100, 33, 33, 33]
    }
-}
-
-const ASSISTANT_FIELDSET_DETAILS = {
-  label: 'fieldsets.labels.more_info',
-  fields: ['institution.title_current', 'is_secretary_verbose', 'can_create_registries_verbose', 'can_create_positions_verbose'],
-  layout: {
-    flex: [100, 33, 33, 33]
-   }
-}
+};
 
 
 const ASSISTANT_FIELDSET_EDIT_MANAGER = {
@@ -48,9 +50,6 @@ const ASSISTANT_FIELDSET_EDIT_MANAGER = {
     'last_name',
     'father_name',
     'id_passport',
-    'is_secretary',
-    'can_create_positions',
-    'can_create_registries'
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 33, 33, 33]
@@ -159,7 +158,6 @@ export default ApellaGen.extend({
     validators: all_validators,
     fieldsets: [
       USER_FIELDSET,
-      ASSISTANT_FIELDSET
     ],
 
   },
@@ -245,7 +243,7 @@ export default ApellaGen.extend({
     },
     fieldsets: [
       USER_FIELDSET_DETAILS,
-      ASSISTANT_FIELDSET_DETAILS,
+      FS_PERMISSIONS_DETAILS,
       get_department_fieldset(true)
     ]
   },
@@ -257,37 +255,19 @@ export default ApellaGen.extend({
     onSubmit(model) {
       this.transitionTo('secretaries.record.index', model)
     },
-    fieldsets: computed('role', function() {
-      if (get(this, 'role') === 'institutionmanager') {
-        return  [
-          USER_FIELDSET,
-          ASSISTANT_FIELDSET_MANAGER,
-          get_department_fieldset(false)
-        ]
-      } else {
-        return [
-          USER_FIELDSET,
-          ASSISTANT_FIELDSET
-        ]
-      }
-    })
+    fieldsets: [
+      USER_FIELDSET,
+      FS_PERMISSIONS_MODIFIABLE,
+      get_department_fieldset(false)
+    ]
   },
   edit: {
-    validators: computed('role', function(){
-      let role = get(this, 'role')
-      if (role === 'institutionmanager') {
-        return ASSISTANT_VALIDATORS_EDIT_MANAGER
-      }
-    }),
-    fieldsets: computed('role', function() {
-      let role = get(this, 'role')
-      if (role === 'institutionmanager') {
-        return  [
-          ASSISTANT_FIELDSET_EDIT_MANAGER,
-          ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY,
-          get_department_fieldset(false)
-        ]
-      }
-    })
+    validators: ASSISTANT_VALIDATORS_EDIT_MANAGER,
+    fieldsets: [
+      ASSISTANT_FIELDSET_EDIT_MANAGER,
+      FS_PERMISSIONS_MODIFIABLE,
+      ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY,
+      get_department_fieldset(false)
+    ]
   }
 });
