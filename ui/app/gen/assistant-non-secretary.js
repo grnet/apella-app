@@ -40,33 +40,33 @@ const FS_PERMISSIONS_DETAILS = {
    }
 };
 
-const ASSISTANT_FIELDSET_EDIT_MANAGER = {
+const FS_NAMES = {
   label: 'fieldsets.labels.user_info',
   text: 'fieldsets.text.manager_can_edit',
   fields: [
-    field('username', { readonly: true }),
+  disable_field('username'),
     'first_name',
     'last_name',
     'father_name',
     'id_passport',
   ],
   layout: {
-    flex: [100, 50, 50, 50, 50, 33, 33, 33]
+    flex: [100, 50, 50, 50, 50]
   }
-}
+};
 
-const ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY = {
+const FS_CONTACT = {
   label: 'contact',
   text: 'fieldsets.text.assistant_can_edit',
   fields: [
-    field('email', { readonly: true }),
-    field('mobile_phone_number', { readonly: true }),
-    field('home_phone_number', { readonly: true })
+    disable_field('email'),
+    disable_field('mobile_phone_number'),
+    disable_field('home_phone_number')
   ],
   layout: {
     flex: [100, 50, 50]
   }
-}
+};
 
 function get_department_fieldset(hide_remove_btn) {
   return {
@@ -135,7 +135,7 @@ function get_department_fieldset(hide_remove_btn) {
   };
 };
 
-const ASSISTANT_VALIDATORS_EDIT_MANAGER = {
+const EDIT_VALIDATORS = {
   first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
@@ -248,13 +248,7 @@ export default ApellaGen.extend({
   },
   create: {
     processModel: function(model) {
-      let role = reads('session.session.authenticated.role');
-      if (role === 'institutionmanager') {
-        let institution = reads('session.session.authenticated.institution');
-        get(this, 'store').findRecord('inst', institution).then((inst) => {
-          model.set('institution', inst)
-        })
-      }
+      model.set('is_secretary', false);
       return model;
     },
     onSubmit(model) {
@@ -267,11 +261,11 @@ export default ApellaGen.extend({
     ]
   },
   edit: {
-    validators: ASSISTANT_VALIDATORS_EDIT_MANAGER,
+    validators: EDIT_VALIDATORS,
     fieldsets: [
-      ASSISTANT_FIELDSET_EDIT_MANAGER,
+      FS_NAMES,
       FS_PERMISSIONS_MODIFIABLE,
-      ASSISTANT_FIELDSET_EDIT_MANAGER_READONLY,
+      FS_CONTACT,
       get_department_fieldset(false)
     ]
   }
