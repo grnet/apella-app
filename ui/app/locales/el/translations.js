@@ -423,9 +423,12 @@ export default {
   'professor_subject_from_appointment.label': 'Θέμα από το Φ.Ε.Κ.',
   'professor_subject_optional_freetext.label': 'Θέμα (ελεύθερο κείμενο)',
   'manager_institution_id.label': 'ID ιδρύματος υπευθύνου',
-
   'registry_set_decision_file': 'Αρχείο Σύστασης Μητρώου',
   'is_secretary.label': 'Γραμματεία',
   'secretaries.label': 'Γραμματείες',
-  'institution_users.label': 'Χρήστες Ιδρύματος'
+  'institution_users.label': 'Χρήστες Ιδρύματος',
+  'row.remove.ok': 'ΝΑΙ',
+  'row.remove.cancel': 'ΑΚΥΡΩΣΗ',
+  'row.remove.confirm.title': 'Αφαίρεση',
+  'row.remove.confirm.message': 'Είστε σίγουρος/η πως θέλετε να προχωρήσετε σε αυτή την αφαίρεση;'
 };

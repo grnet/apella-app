@@ -424,5 +424,9 @@ export default {
   'registry_set_decision_file': 'Decision File',
   'is_secretary.label': 'Secretary',
   'secretaries.label': 'Secretaries',
-  'institution_users.label': 'Institution Users'
+  'institution_users.label': 'Institution Users',
+  'row.remove.ok': 'YES',
+  'row.remove.cancel': 'NO',
+  'row.remove.confirm.title': 'Removal',
+  'row.remove.confirm.message': 'Are you sure you want to remove this item?'
 };
