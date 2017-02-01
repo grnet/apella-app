@@ -74,6 +74,7 @@ function get_department_fieldset(hide_remove_btn) {
     text: 'fieldsets.text.manager_can_edit',
     fields: [field('departments', {
       label: null,
+      required: true,
       modelName: 'department',
       query: function(table, store, field, params) {
         let institution = get(field, 'user.institution'),
@@ -142,8 +143,6 @@ const EDIT_VALIDATORS = {
   id_passport: [validate.presence(true)],
 }
 
-let all_validators = Object.assign({}, USER_VALIDATORS);
-
 export default ApellaGen.extend({
   order: 400,
   name: 'institution-users',
@@ -153,13 +152,6 @@ export default ApellaGen.extend({
   path: 'institution-users',
   session: Ember.inject.service(),
 
-  common: {
-    validators: all_validators,
-    fieldsets: [
-      USER_FIELDSET,
-    ],
-
-  },
   abilityStates: {
     // resolve ability for position model
     owned: computed('role', function() {
@@ -258,15 +250,16 @@ export default ApellaGen.extend({
       USER_FIELDSET,
       FS_PERMISSIONS_MODIFIABLE,
       get_department_fieldset(false)
-    ]
+    ],
+    validators: USER_VALIDATORS
   },
   edit: {
-    validators: EDIT_VALIDATORS,
     fieldsets: [
       FS_NAMES,
       FS_PERMISSIONS_MODIFIABLE,
       FS_CONTACT,
       get_department_fieldset(false)
-    ]
+    ],
+    validators: EDIT_VALIDATORS
   }
 });
