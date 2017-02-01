@@ -23,6 +23,10 @@ const {
 
 
 // user can apply for position
+function canApply(role) {
+  return role === 'candidate' || role === 'professor';
+}
+
 function isVerifiable(role) {
   return role === 'candidate' || role === 'professor' || role === 'institutionmanager';
 }
@@ -153,7 +157,7 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
       hidden: computed('model.is_verified', 'model.role', function() {
         let verified = get(this, 'model.is_verified');
         let role = get(this, 'model.role');
-        if (isVerifiable(role)) { return !verified; }
+        if (canApply(role)) { return !verified; }
         return true;
       }),
       confirm: true,
