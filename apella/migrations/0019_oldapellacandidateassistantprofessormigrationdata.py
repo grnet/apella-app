@@ -24,6 +24,8 @@ class Migration(migrations.Migration):
                 ('institution', models.TextField()),
                 ('department', models.TextField()),
                 ('rank', models.TextField()),
+                ('fek', models.TextField()),
+                ('discipline_from_fek', models.TextField()),
             ],
         ),
     ]

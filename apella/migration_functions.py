@@ -494,7 +494,9 @@ def migrate_candidate_to_assistant_professor(old_user, new_user):
     old_user.professor_department_id = department.id
     old_user.role_status = ap.account_status
     old_user.professor_rank = 'Assistant Professor'
-    old_user.role_status = 'UNVERIFIED'
+    old_user.role_status = ap.account_status
+    old_user.professor_appointment_gazette_url = ap.fek
+    old_user.professor_subject_from_appointment = ap.discipline_from_fek
     new_user.role = 'professor'
     new_user.save()
     return migrate_professor(old_user, new_user)
