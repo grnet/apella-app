@@ -14,7 +14,7 @@ export default ApellaGen.extend({
     },
     menu: {
       label: 'old_user.menu_label',
-      icon: 'wc',
+      icon: 'contacts',
     },
     layout: 'table',
     row: {
