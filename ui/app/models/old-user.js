@@ -1,5 +1,6 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
+import {computeDateFormat} from 'ui/lib/common';
 
 const { computed, get } = Ember;
 
@@ -43,6 +44,8 @@ export default DS.Model.extend({
   manager_deputy_phone: DS.attr({label: 'home_phone_number.label'}),
   manager_deputy_email: DS.attr({label: 'email.label'}),
   role_status: DS.attr({label: 'state.label'}),
+  migrated_at: DS.attr('date'),
+  migrated_at_format: computeDateFormat('migrated_at'),
 
   speaks_greek_verbose: computed('speaks_greek', function(){
     let f = get(this, 'speaks_greek');

@@ -1,5 +1,6 @@
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
+import {field} from 'ember-gen';
 
 const { computed, get } = Ember;
 
@@ -18,7 +19,9 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: ['user_id', 'username', 'name_el', 'surname_el', 'email', 'role', 'role_status'],
+      fields: ['user_id',
+        field('migrated_at_format', {dataKey: 'migrated_at'}),
+       'username', 'name_el', 'surname_el', 'email', 'role', 'role_status'],
       actions: ['gen:details'],
     },
     filter: {
@@ -30,7 +33,10 @@ export default ApellaGen.extend({
     sort: {
       active: true,
       serverSide: true,
-      fields: ['user_id', 'username', 'email', 'surname_el', 'role', 'role_status']
+      fields: [
+        'user_id', 'username', 'email', 'surname_el', 'role', 'role_status',
+        'migrated_at_format',
+      ]
     },
   },
   details: {
@@ -41,7 +47,7 @@ export default ApellaGen.extend({
       let role = get(this, 'model.role');
       let f = [{
         label: 'fieldsets.labels.user_info',
-        fields: ['user_id', 'username', 'role', 'name_el', 'name_en', 'surname_el', 'surname_en', 'fathername_el', 'fathername_en', 'email', 'mobile', 'phone'],
+        fields: ['user_id', 'migrated_at_format', 'username', 'role', 'name_el', 'name_en', 'surname_el', 'surname_en', 'fathername_el', 'fathername_en', 'email', 'mobile', 'phone'],
         layout: {
           flex: [50, 25, 25, 50, 50, 50, 50, 50, 50, 50, 25, 25]
         }
