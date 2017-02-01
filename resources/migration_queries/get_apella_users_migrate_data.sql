@@ -4,7 +4,11 @@ select
     u.password passwd,
     u.passwordsalt passwd_salt,
     u.shibbolethinfo_remoteuser as shibboleth_id,
-    u.username username,
+    case
+        when u.username == '' then 'user' || u.id
+        when u.username is null then 'user' || u.id
+        else u.username
+    end as username,
     u.permanentauthtoken permanent_auth_token,
     case
         when r.discriminator = 'INSTITUTION_MANAGER' then 'institutionmanager'
