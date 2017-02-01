@@ -9,6 +9,7 @@ from djoser import signals as djoser_signals
 from djoser import settings as djoser_settings
 from rest_framework import mixins
 from rest_framework.response import Response
+from rest_framework.decorators import detail_route
 
 from apella.loader import adapter
 from apella import auth_hooks
@@ -68,8 +69,22 @@ class CustomUserView(djoser_views.UserView):
         resource = USER_ROLE_MODEL_RESOURCES[user.role]['resource']
         return adapter.get_serializer(resource)
 
+    @transaction.atomic
+    def _enable_academic(self, request, *args, **kwargs):
+        user = request.user
+        token = request.data.get('token', None)
+        if not user or not token:
+            raise PermissionDenied
+        user = auth_hooks.consume_enable_shibboleth_token(token, user)
+        if user:
+            return HttpResponse(status=202)
+        raise ValidationError({"non_field_errors": "generic.error"})
+
     def update(self, request, *args, **kwargs):
         user = self.get_object()
+
+        if request.GET.get('enable_academic', False):
+            return self._enable_academic(request, *args, **kwargs)
 
         if hasattr(user, 'verification_pending') and user.verification_pending:
             raise PermissionDenied("user.pending.verification")
