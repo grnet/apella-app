@@ -14,14 +14,15 @@ const {
   computed: { or }
 } = Ember;
 
+// Fieldsets for assistants profile
 
 const FIELDSET = {
   label: 'fieldsets.labels.user_info',
   text: 'fieldsets.text.assistant_profile',
   fields: [
     disable_field('user_id'),
-    field('username', { readonly: true }),
-    'email',
+    disable_field('username'),
+    disable_field('email'),
     'mobile_phone_number',
     'home_phone_number',
     disable_field('first_name'),
