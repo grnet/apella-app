@@ -216,7 +216,8 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView) {
         let locale = get(table, 'i18n.locale');
         params.ordering = `user__last_name__${locale}`;
       }
-        return store.query('professor', params);
+      params.is_verified = true;
+      return store.query('professor', params);
     },
     // a list-like gen config
     label: null,
