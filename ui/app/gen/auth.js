@@ -39,6 +39,10 @@ function extractActivate(loc) {
   return loc.hash && loc.hash.split("activate=")[1];
 }
 
+function extractAcademic(loc) {
+  return loc.hash && loc.hash.split("enable-academic=")[1];
+}
+
 function extractReset(loc) {
   return loc.hash && loc.hash.split("reset=")[1];
 }
@@ -140,6 +144,7 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   fieldsets: PROFILE_FIELDSETS('details'),
   component: 'gen-details',
   actions: ['change_password'],
+  partials: { top: 'profile-details-intro' },
   actionsMap: {
     'sync_candidacies': {
       label: 'sync.candidacies',
@@ -252,8 +257,42 @@ export default AuthGen.extend({
     },
     templateName: 'apella-login',
     routeMixins: [{
+      handleEnableAcademic(token) {
+        let user = get(this, 'session.session.authenticated');
+        if (!user) { throw new Error("not.authorized"); }
+
+        let auth_token = get(user, 'auth_token');
+        let id = get(user, 'id');
+        let url = ENV.APP.backend_host + '/auth/me/?enable_academic=1'
+        let data = {token: token};
+        return fetch(url, {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${auth_token}`
+          },
+          body: JSON.stringify(data)
+        }).then((resp) => {
+          let err, msg;
+          if (resp.status === 202) {
+            this.get('messageService').setSuccess('enable.academic.success');
+          } else {
+            return resp.json().then((json) => {
+              if (json && json.shibboleth) {
+                this.get('messageService').setError(json.shibboleth);
+              }
+            }).catch(() => {
+              this.get('messageService').setError('enable.academic.error');
+              throw new Error();
+            });
+          }
+        });
+      },
+
       handleActivate(activate) {
         let [uid, token] = activate.split("|");
+        resetHash(window);
         if (uid && token) {
           let url = ENV.APP.backend_host + '/auth/activate/';
           let data = {uid, token};
@@ -284,7 +323,7 @@ export default AuthGen.extend({
 
       handleTokenLogin(token) {
         if (get(this, 'session.isAutneticated')) {
-          resetHash();
+          resetHash(window);
           return;
         }
         let url = ENV.APP.backend_host + '/auth/me/';
@@ -319,6 +358,12 @@ export default AuthGen.extend({
         let token = extractToken(window.location);
         if (token) {
           return this.handleTokenLogin(decodeURI(token));
+        }
+        let academic = extractAcademic(window.location);
+        if (academic) {
+          return this.handleEnableAcademic(academic).finally(() => {
+            return this.transitionTo('index');
+          });
         }
         return this._super(transition);
       },

@@ -22,6 +22,8 @@ export default DS.Model.extend({
   is_stuff: DS.attr({type: 'boolean', defaultValue: false}),
   is_active: DS.attr({type: 'boolean', defaultValue: false}),
   email_verified: DS.attr({type: 'boolean', defaultValue: false}),
+  can_set_academic: DS.attr({type: 'boolean'}),
+  can_upgrade_role: DS.attr({type: 'boolean'}),
 
   role_verbose: computeI18NChoice('role', CHOICES.USER_ROLES),
   first_name_current: computeI18N('first_name'),

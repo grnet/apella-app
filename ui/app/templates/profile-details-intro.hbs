@@ -1,0 +1,6 @@
+{{#if model.can_upgrade_role }}
+  {{toolbar-message class='md-soft-warn' model=model message='candidate.upgrade.academic.prompt' buttonComponent=(component 'enable-academic-action' args=(hash upgrade=1))}}
+{{/if}}
+{{#if model.can_set_academic }}
+  {{toolbar-message class='md-soft-warn' model=model message='enable.academic.login.prompt' buttonComponent=(component 'enable-academic-action')}}
+{{/if}}

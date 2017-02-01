@@ -40,3 +40,11 @@
     text-transform: capitalize;
   }
 }
+
+.md-soft-warn {
+  background-color: color($color-yellow, '800') !important;
+}
+
+.button-padding {
+  padding: 0 10px !important;
+}
