@@ -193,7 +193,7 @@ export default {
   'position.department.school.institution.title_current.label': 'Institution',
   'position.department.title_current.label': 'Department',
   'position.state_calc_verbose.label': 'Position State',
-  'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy',
+  'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy.',
   'candidacy.state': 'Candidacy State',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
@@ -236,7 +236,7 @@ export default {
   'field.no.files': 'No files',
 
   userInterest: {
-    info: 'By pressing "Save" the search criteria will be saved, so that if a new position matche    s them you will be notified by the system.',
+    info: 'By pressing "Save" the search criteria will be saved, so that if a new position matches them you will be notified by the system.',
     headers: {
       subject_area: 'Subject areas/ Subjects',
       institution: 'Institutions/ Departments'
@@ -312,9 +312,9 @@ export default {
     },
     text: {
       user_interest: 'Choose your interests',
-      manager_can_edit: 'The following fields can only be edited by the institution manager',
-      assistant_can_edit: 'The following fields can only be edited by the assistant',
-      assistant_profile: 'The disabled fields can only be edited by the institition manager',
+      manager_can_edit: 'The following fields can only be edited by the institution manager.',
+      assistant_can_edit: 'The following fields can only be edited by the assistant.',
+      assistant_profile: 'The disabled fields can only be edited by the institition manager.',
     }
   },
   institution: {
@@ -425,5 +425,4 @@ export default {
   'is_secretary.label': 'Secretary',
   'secretaries.label': 'Secretaries',
   'institution_users.label': 'Institution Users'
-
 };
