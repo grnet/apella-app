@@ -81,7 +81,16 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
-                    .readonly: {}
+                can_set_academic:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                can_upgrade_role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
                 id_passport:
                     .cli_option: {}
                     .field: {}
@@ -830,6 +839,18 @@ spec:
                             .drf_field: {}
                             .boolean: {}
                             .readonly: {}
+                        can_set_academic:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_upgrade_role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
                         id_passport:
                             .cli_option: {}
                             .field: {}
@@ -1181,6 +1202,18 @@ spec:
                             .drf_field: {}
                             .boolean: {}
                             .readonly: {}
+                        can_set_academic:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_upgrade_role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
                         id_passport:
                             .cli_option: {}
                             .field: {}
@@ -1485,6 +1518,18 @@ spec:
                             .drf_field: {}
                             .boolean: {}
                         email_verified:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_set_academic:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_upgrade_role:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
@@ -2255,6 +2300,18 @@ spec:
                             .drf_field: {}
                             .boolean: {}
                         email_verified:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_set_academic:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_upgrade_role:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
