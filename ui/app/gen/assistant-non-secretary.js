@@ -148,6 +148,7 @@ let all_validators = Object.assign({}, USER_VALIDATORS);
 
 export default ApellaGen.extend({
   order: 400,
+  name: 'institution-users',
   modelName: 'assistant',
   resourceName: 'assistants',
   auth: true,
@@ -260,7 +261,7 @@ export default ApellaGen.extend({
       return model;
     },
     onSubmit(model) {
-      this.transitionTo('assistant.record.index', model)
+      this.transitionTo('institution-users.record.index', model)
     },
     fieldsets: computed('role', function() {
       if (get(this, 'role') === 'institutionmanager') {
