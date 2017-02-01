@@ -107,30 +107,33 @@ def authenticate_user(**kwargs):
     if user:
         return user
 
-    if user is None:
-        username = kwargs.get('username', None)
-        password = kwargs.get('password', None)
+    username = kwargs.get('username', None)
+    password = kwargs.get('password', None)
 
-        if ApellaUser.objects.filter(username=username).exists():
-            return None
+    if ApellaUser.objects.filter(username=username).exists():
+        return None
 
-        old_users = OldUser.objects.filter(username=username)
-        if not old_users:
-            return None
+    old_users = OldUser.objects.filter(username=username)
+    if not old_users:
+        return None
 
-        password_valid = False
-        for old_user in old_users:
-            try:
-                old_user.check_password(password)
-                password_valid = True
-            except ValueError:
-                pass
+    password_valid = False
+    for old_user in old_users:
+        try:
+            old_user.check_password(password)
+            password_valid = True
+            break
+        except ValueError:
+            pass
 
-        if password_valid:
-            user = migrate_username(username, password)
-            if user:
-                return authenticate(**kwargs)
-            return None
+    if not password_valid:
+        return None
+
+    user = migrate_username(username, password)
+    if not user:
+        return None
+
+    return authenticate(**kwargs)
 
 
 def validate_user_login(user, errors):
