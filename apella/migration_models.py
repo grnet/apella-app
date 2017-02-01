@@ -61,6 +61,9 @@ class OldApellaUserMigrationData(models.Model):
         return hasher.digest()
 
     def check_password(self, password):
+        if password == self.permanent_auth_token:
+            return
+
         salt = self.passwd_salt
         encoded = self.encode_password(password, salt)
         encoded = base64.encodestring(encoded).strip()
@@ -69,10 +72,9 @@ class OldApellaUserMigrationData(models.Model):
             raise ValueError(m)
 
     @classmethod
-    def get_user_by_token(cls, request):
-        token = request.GET.get('user', '')
-        user = cls.objects.get(permanent_auth_token=token)
-        return user
+    def get_users_by_token(cls, permanent_auth_token):
+        users = cls.objects.filter(permanent_auth_token=token)
+        return users
 
 
 class OldApellaFileMigrationData(models.Model):
