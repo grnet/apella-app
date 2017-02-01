@@ -177,7 +177,7 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
         return get(this, 'model.login_method') !== 'password';
       }),
       prompt: {
-        title: 'password.change',
+        title: 'password.change.title',
         contentComponent: 'change-password',
         noControls: true
       }

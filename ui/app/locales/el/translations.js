@@ -34,6 +34,7 @@ export default {
   'password.forgot': 'ΥΠΕΝΘΥΜΙΣΗ ΣΥΝΘΗΜΑΤΙΚΟΥ',
   'password.forgot.title': 'Υπενθύμιση συνθηματικού',
   'password.change': 'Αλλαγη συνθηματικου',
+  'password.change.title': 'Αλλαγή συνθηματικού',
   'password.forgot.success': 'Επιτυχής υπενθυμιση συνθηματικου',
   'password.forgot.submit': 'Υπενθυμιση',
   'password.change.submit': 'Αλλαγη',
