@@ -38,6 +38,7 @@ const FIELDSET_PERMISSIONS_INFO = {
   label: 'fieldsets.labels.more_info',
   fields: [
     field('institution', {displayAttr: 'title_current', disabled: true}),
+    field('is_secretary_verbose', { disabled: true, label: 'is_secretary.label' }),
     disable_field('can_create_positions_verbose'),
     disable_field('can_create_registries_verbose'),
     field('departments', {
@@ -54,7 +55,7 @@ const FIELDSET_PERMISSIONS_INFO = {
     })
   ],
   layout: {
-    flex: [50, 25, 25, 100]
+    flex: [100, 33, 33, 33, 100]
   }
 };
 
@@ -71,11 +72,12 @@ const FIELDSET_DETAILS = {
     'father_name_current',
     'id_passport',
     field('institution', {displayAttr: 'title_current'}),
+    'is_secretary_verbose',
     'can_create_positions_verbose',
     'can_create_registries_verbose',
   ],
   layout: {
-        flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 25]
+        flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 33, 33, 33]
   }
 }
 
