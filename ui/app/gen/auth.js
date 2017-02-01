@@ -237,7 +237,7 @@ export default AuthGen.extend({
         confirm: true,
         action: function() {},
         prompt: {
-          title: 'password.forgot',
+          title: 'password.forgot.title',
           contentComponent: 'forgot-password',
           noControls: true
         }
@@ -453,7 +453,7 @@ export default AuthGen.extend({
           },
           confirm: true,
           prompt: {
-            title: 'request.profile.verification',
+            title: 'request.profile.verification.title',
             message: 'request.profile.verification.message',
             ok: 'submit',
             cancel: 'cancel'
