@@ -7,6 +7,7 @@ import uuid
 import re
 
 from os import path
+from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -172,6 +173,7 @@ def legacy_login(request):
 def login(request):
     force_register = request.GET.get('register', False)
     force_login = request.GET.get('login', False) or (not force_register)
+    enable_login = request.GET.get('enable-user', False)
 
     migrate_id = request.GET.get('migrate', None)
 
@@ -205,6 +207,13 @@ def login(request):
     user = None
     token = None
     created = False
+
+    if enable_login:
+        enable_user = get_object_or_404(ApellaUser, pk=enable_login)
+        key = auth_hooks.init_enable_shibboleth(enable_user, identifier,
+                                                shibboleth_data)
+        redirect_url = TOKEN_LOGIN_URL + "#enable-academic=%s" % key
+        return HttpResponseRedirect(redirect_url)
 
     if migrate_id and migrate_id != "0":
         s_identifier = request.session.pop('shibboleth_id', None)

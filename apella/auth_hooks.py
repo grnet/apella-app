@@ -1,3 +1,4 @@
+import json
 import logging
 import uuid
 
@@ -319,3 +320,65 @@ def validate_id_passport_unique(id_passport):
     if ApellaUser.objects.filter(id_passport=id_passport).exists() or \
             OldUser.objects.filter(person_id_number=id_passport).exists():
         raise ValidationError({"id_passport": "id_passport.exists"})
+
+
+def validate_shibboleth_id_unique(shibboleth_id):
+    if ApellaUser.objects.filter(shibboleth_id=shibboleth_id).exists() or \
+            OldUser.objects.filter(shibboleth_id=shibboleth_id).exists():
+        raise ValidationError({"shibboleth": "shibboleth.id.exists"})
+
+
+ENABLE_ACADEMIC_TOKEN_TIMEOUT = \
+    getattr(settings, 'ENABLE_ACADEMIC_TOKEN_TIMEOUT', 30)
+
+
+def init_enable_shibboleth(user, identifier, data):
+    """
+    Generate a token for the user transition to academic
+    """
+    # TODO: validate user can enable academic account
+    if not user.is_professor():
+        raise PermissionDenied()
+
+    token = str(uuid.uuid4())
+    token_data = {
+        'user': user.pk,
+        'identifier': identifier,
+        'data': data
+    }
+
+    timeout = ENABLE_ACADEMIC_TOKEN_TIMEOUT
+    cache.set('enable-academic-%s' % token, json.dumps(token_data), timeout)
+    return token
+
+
+def consume_enable_shibboleth_token(token, user):
+    logger.info("consuming enable shibboleth token for user %d", user.pk)
+    # TODO: validate user can enable academic account
+    data = cache.get('enable-academic-%s' % token, None)
+    if not data:
+        raise PermissionDenied
+
+    data = json.loads(data)
+    if data.get('user', None) != user.pk:
+        raise PermissionDenied
+    return enable_shibboleth(
+        user, data.get('identifier', None), data.get('data', None))
+
+
+def enable_shibboleth(user, identifier, data):
+    if user.login_method == 'academic':
+        raise ValidationError
+
+    logger.info("enable shibboleth login for user %d, identifier=%r",
+                user.pk, identifier)
+
+    validate_shibboleth_id_unique(identifier)
+    user.set_unusable_password()
+    user.login_method = 'academic'
+    user.shibboleth_id = identifier
+    user.shibboleth_enabled_at = datetime.now()
+    user.remote_data = json.dumps(data)
+    user.can_set_academic = False
+    user.save()
+    return user
