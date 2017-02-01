@@ -426,12 +426,14 @@ export default {
   'professor_subject_from_appointment.label': 'Subject from F.E.K.',
   'professor_subject_optional_freetext.label': 'Subject (free text)',
   'manager_institution_id.label': 'Manager institution ID',
+  'migrated_at_format.label': 'Migrated at',
+
   'registry_set_decision_file': 'Decision File',
   'is_secretary.label': 'Secretary',
   'secretaries.label': 'Secretaries',
   'institution_users.label': 'Institution Users',
   'row.remove.ok': 'YES',
-  'row.remove.cancel': 'NO',
+  'row.remove.cancel': 'cancel',
   'row.remove.confirm.title': 'Removal',
   'row.remove.confirm.message': 'Are you sure you want to remove this item?'
 };
