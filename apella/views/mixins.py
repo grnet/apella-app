@@ -10,7 +10,6 @@ from rest_framework.serializers import ValidationError
 
 from django.db.models import ProtectedError, Min, Q
 from django.conf import settings
-from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
@@ -118,19 +117,20 @@ class PositionMixin(object):
                 departments.all())
         elif user.is_professor():
             queryset = queryset.filter(
-                Q(state='posted', ends_at__lt=timezone.now()) |
+                Q(state='posted', ends_at__gte=datetime.now()) |
                 Q(committee=user.professor.id) |
                 Q(electors=user.professor.id))
         elif user.is_candidate():
             position_ids = Candidacy.objects.filter(
                 candidate=user).values_list('position_id', flat=True)
             queryset = queryset.filter(
-                Q(state='posted', ends_at__lt=timezone.now()) |
+                Q(state='posted', ends_at__gte=datetime.now()) |
                 Q(id__in=position_ids))
         if 'pk' in self.kwargs:
             return queryset.filter(id=self.kwargs['pk'])
         else:
-            ids = queryset.values('code').annotate(Min('id')).values('id__min')
+            ids = queryset.values('code').annotate(Min('id')). \
+                values('id__min')
             return queryset.filter(id__in=ids)
 
     def update(self, request, *args, **kwargs):
@@ -389,7 +389,7 @@ class CandidateProfile(object):
             except MultipleObjectsReturned as mor:
                 return Response(
                     mor.message, status=status.HTTP_400_BAD_REQUEST)
-
+            # TODO remove current files, if exist
             migrate_user_profile_files(old_user, candidate_user.user)
 
         return Response(request.data, status=status.HTTP_200_OK)
