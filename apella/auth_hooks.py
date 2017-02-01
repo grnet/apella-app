@@ -111,10 +111,16 @@ def authenticate_user(**kwargs):
     password = kwargs.get('password', None)
 
     if ApellaUser.objects.filter(username=username).exists():
+        m = "Not looking for old username {u!r}: it exists as ApellaUSer"
+        m = m.format(u=username)
+        logger.info(m)
         return None
 
     old_users = OldUser.objects.filter(username=username)
     if not old_users:
+        m = "Username {u!r} not found in old users"
+        m = m.format(u=username)
+        logger.info(m)
         return None
 
     password_valid = False
@@ -127,10 +133,16 @@ def authenticate_user(**kwargs):
             pass
 
     if not password_valid:
+        m = "Cannot verify password/link for old username {u!r}"
+        m = m.format(u=username)
+        logger.info(m)
         return None
 
     user = migrate_username(username, password)
     if not user:
+        m = "Migration for old username {u!r} failed."
+        m = m.format(u=username)
+        logger.info(m)
         return None
 
     return authenticate(**kwargs)
