@@ -54,3 +54,10 @@
 }
 
 .no-vert-padding { padding-top: 0 !important; padding-bottom: 0 !important; }
+
+footer {
+  border-top: 1px solid color($color-grey, '200');
+  .link { color: #aaa; }
+  font-size: 0.8rem;
+  padding: 0.5rem;
+}
