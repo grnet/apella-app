@@ -57,6 +57,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE_CLASSES = (
+    'apella.middleware.ExceptionLoggingMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -166,7 +167,7 @@ if not LOGGING:
             }
         },
         'loggers': {
-            'apella': {
+            '': {
                 'handlers': ['console', 'file'],
                 'level': 'INFO'
             }
