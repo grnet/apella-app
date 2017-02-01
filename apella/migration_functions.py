@@ -173,7 +173,7 @@ def migrate_file(old_file, new_user, source, source_id):
         settings.OLD_APELLA_MEDIA_ROOT, old_file.file_path)
     new_file_path = os.path.join(
         settings.MEDIA_ROOT,
-        generate_filename(new_file, old_file.file_path))
+        generate_filename(new_file, old_file.original_name))
     if not os.path.isdir(os.path.dirname(new_file_path)):
         os.makedirs(os.path.dirname(new_file_path))
     try:
