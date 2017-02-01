@@ -7,6 +7,7 @@ import {USER_FIELDSET, USER_FIELDSET_DETAILS,
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
 import {rejectUser, verifyUser} from 'ui/utils/common/actions';
+import { fs_viewed_by_others } from 'ui/utils/common/assistant';
 
 const {
   computed,
@@ -14,134 +15,7 @@ const {
   get
 } = Ember;
 
-// Permissions for create/edit view [common]
-const FS_PERMISSIONS_MODIFIABLE = {
-  label: 'fieldsets.labels.more_info',
-  fields: [
-    field('is_secretary_verbose', { disabled:  true, label: 'is_secretary.label' }),
-    'can_create_registries',
-    'can_create_positions'
-  ],
-  layout: {
-    flex: [33, 33, 33]
-  }
-};
-
-const FS_PERMISSIONS_DETAILS = {
-  label: 'fieldsets.labels.more_info',
-  fields: [
-    'institution.title_current',
-    'is_secretary',
-    'can_create_registries_verbose',
-    'can_create_positions_verbose'
-  ],
-  layout: {
-    flex: [100, 33, 33, 33]
-   }
-};
-
-const FS_NAMES = {
-  label: 'fieldsets.labels.user_info',
-  text: 'fieldsets.text.manager_can_edit',
-  fields: [
-  disable_field('username'),
-    'first_name',
-    'last_name',
-    'father_name',
-    'id_passport',
-  ],
-  layout: {
-    flex: [100, 50, 50, 50, 50]
-  }
-};
-
-const FS_CONTACT = {
-  label: 'contact',
-  text: 'fieldsets.text.assistant_can_edit',
-  fields: [
-    disable_field('email'),
-    disable_field('mobile_phone_number'),
-    disable_field('home_phone_number')
-  ],
-  layout: {
-    flex: [100, 50, 50]
-  }
-};
-
-function get_department_fieldset(hide_remove_btn) {
-  return {
-    label: 'department.menu_label',
-    text: 'fieldsets.text.manager_can_edit',
-    fields: [field('departments', {
-      label: null,
-      required: true,
-      modelName: 'department',
-      query: function(table, store, field, params) {
-        let institution = get(field, 'user.institution'),
-          institution_id = institution.split('/').slice(-2)[0],
-          locale = get(table, 'i18n.locale');
-        params = params || {};
-        params.institution = institution_id;
-        params.ordering = params.ordering || `title__${locale}`;
-        return store.query('department', params);
-      },
-      modelMeta: {
-        row: {
-          fields: [i18nField('title', {label: 'department.label'})],
-          actionsMap: function(hide_remove_btn) {
-            return { remove: { hidden: hide_remove_btn }};
-          }
-        },
-        paginate: {
-          active: true,
-          serverSide: true,
-          limits: [10, 20, 30]
-        },
-        filter: {
-          search: false,
-          serverSide: true,
-          active: true,
-          searchFields: [],
-          meta: {
-            fields: [
-              field('department', {
-                type: 'model',
-                autocomplete: true,
-                displayAttr: 'title_current',
-                modelName: 'department',
-                query: function(select, store, field, params) {
-                  let locale = select.get('i18n.locale');
-                  return store.findRecord('profile', 'me').then(function(me) {
-                    return me.get('institution').then(function(institution) {
-                      let institution_id = institution.get('id');
-                      params = params || {};
-                      params.ordering = `title__${locale}`;
-                      params.institution = institution_id;
-                      return store.query('department', params);
-                    })
-                  })
-                },
-              })
-            ]
-          }
-        },
-        sort: {
-          serverSide: true,
-          active: true,
-          fields: ['id', 'title_current']
-        }
-      },
-      displayComponent: 'gen-display-field-table',
-    })]
-  };
-};
-
-const EDIT_VALIDATORS = {
-  first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  id_passport: [validate.presence(true)],
-}
+let fs = fs_viewed_by_others;
 
 export default ApellaGen.extend({
   order: 400,
@@ -234,8 +108,8 @@ export default ApellaGen.extend({
     },
     fieldsets: [
       USER_FIELDSET_DETAILS,
-      FS_PERMISSIONS_DETAILS,
-      get_department_fieldset(true)
+      fs.permissions_details,
+      fs.get_department_fieldset(true)
     ]
   },
   create: {
@@ -248,18 +122,18 @@ export default ApellaGen.extend({
     },
     fieldsets: [
       USER_FIELDSET,
-      FS_PERMISSIONS_MODIFIABLE,
-      get_department_fieldset(false)
+      fs.permissions_modifiable,
+      fs.get_department_fieldset(false)
     ],
     validators: USER_VALIDATORS
   },
   edit: {
     fieldsets: [
-      FS_NAMES,
-      FS_PERMISSIONS_MODIFIABLE,
-      FS_CONTACT,
-      get_department_fieldset(false)
+      fs.names,
+      fs.permissions_modifiable,
+      fs.contact,
+      fs.get_department_fieldset(false)
     ],
-    validators: EDIT_VALIDATORS
+    validators: fs.edit_validators
   }
 });
