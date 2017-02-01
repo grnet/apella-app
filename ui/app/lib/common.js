@@ -120,14 +120,14 @@ function computeI18NChoice(key, choices, ...args) {
 function computeDateFormat(key) {
   return computed(key, function() {
     let date = get(this, key)
-    return moment(date).format(DATE_FORMAT);
+    return date ? moment(date).format(DATE_FORMAT) : '-';
   });
 };
 
 function computeDateTimeFormat(key) {
   return computed(key, function() {
     let date = get(this, key)
-    return moment(date).format(DATE_TIME_FORMAT);
+    return date ? moment(date).format(DATE_TIME_FORMAT) : '';
   });
 };
 
