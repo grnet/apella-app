@@ -8,6 +8,7 @@ export default {
   'login.domestic.title': 'Home organization Login',
   'login.domestic.description': '',
   'login.domestic.label': 'Home organization Login',
+  'shibboleth.remote.data': 'Home organization data',
 
    // register
   'register': 'Register',
@@ -175,7 +176,10 @@ export default {
   'rank.label': 'Rank',
   'rank_verbose.label': 'Rank',
   'cv_url.label': 'CV URL',
+  'cv_professor.label': 'CV',
   'cv_url.hint': 'URL with CV on the website of your Academic Institution/Research Center',
+  'cv_in_url.label': 'CV in url',
+  'cv_in_url.hint': 'My CV is on the website of my Academic Institution/Research Center.',
   'is_foreign.label': 'Foreign professor',
   'is_foreign_verbose.label': 'Foreign professor',
   'speaks_greek.label': 'I speak greek',
@@ -305,6 +309,7 @@ export default {
       candidacy_details: 'Candidacy info',
       candidate: 'Candidate',
       files: 'Files',
+      candidate_files: 'Candidacy files',
       professor_profile: 'Professor\'s profile',
       candidate_profile: 'Candidate\'s profile',
       manager_info: 'Manager info',
