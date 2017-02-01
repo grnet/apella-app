@@ -31,6 +31,7 @@ export default Ember.Mixin.create({
   speaks_greek: DS.attr({type: 'boolean', defaultValue: true, displayComponent: 'boolean-display' }),
   speaks_greek_verbose: booleanFormat('speaks_greek'),
   cv_url: DS.attr({displayComponent: 'url-display'}),
+  cv_in_url: DS.attr({type: 'boolean', displayComponent: 'boolean-display'}),
   cv: DS.belongsTo('apella-file'),
   cv_professor: DS.belongsTo('apella-file'),
   diplomas: DS.hasMany('apella-file'),

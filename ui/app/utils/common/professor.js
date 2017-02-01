@@ -15,13 +15,8 @@ const {
 
 
 const FILES_FIELDSET = {
-  label: 'fieldsets.labels.files',
+  label: 'fieldsets.labels.candidate_files',
   fields: [
-    fileField('cv_professor', 'professor', 'cv_professor', {
-      readonly: or('user.is_verified', 'user.verification_pending')
-    }, {
-      replace: true
-    }),
     fileField('cv', 'professor', 'cv', {
     }, {
       replace: true
@@ -34,18 +29,40 @@ const FILES_FIELDSET = {
     }),
   ],
   layout: {
-    flex: [100, 100, 100, 100]
+    flex: [100, 100, 100]
   }
 };
 
 
-const FIELDS = computed('model.is_foreign', function(){
+const FIELDS = computed('model.is_foreign', 'model.changeset.cv_in_url', function(){
   let f = [
     'rank',
+    'discipline_text',
+    field('cv_in_url', {
+      hint: 'cv_in_url.hint',
+    }),
     field('cv_url', {
       hint: 'cv_url.hint',
+      disabled: computed('model.changeset.cv_in_url', function() {
+        let check = get(this, 'model.changeset.cv_in_url');
+        if (!check) { Ember.run.once(this, () => set(this, 'model.changeset.cv_url', '')) };
+        return !check;
+      })
     }),
-    'discipline_text',
+    fileField('cv_professor', 'professor', 'cv_professor', {
+      readonly: or('user.is_verified', 'user.verification_pending'),
+      disabled: computed('model.changeset.cv_in_url', function() {
+        let check = get(this, 'model.changeset.cv_in_url');
+        if (check) {
+          Ember.run.once(this, () =>
+            set(this, 'model.changeset.cv_professor', null)
+          ) };
+        return check;
+      })
+    }, {
+      replace: true
+    }),
+
   ];
 
   let f_domestic = [
@@ -72,15 +89,19 @@ const FIELDS = computed('model.is_foreign', function(){
 
 const FIELDS_REGISTER = FIELDS;
 
-const FIELDS_REGISTER_REQUIRED = [
-  'institution', 'department', 'rank', 'fek'
-];
+const FIELDS_REGISTER_REQUIRED = computed('model.is_foreign', function(){
+  if (get(this, 'model.is_foreign')) {
+    return ['institution_freetext'];
+  } else {
+    return ['institution', 'department', 'rank', 'fek'];
+  }
+});
 
 const FLEX = computed('model.is_foreign', function() {
   if (get(this, 'model.is_foreign') ) {
     return [50, 50, 50, 50, 100]
   } else {
-    return [50, 50, 100, 50, 50, 50, 50]
+    return [50, 50, 50, 50, 100, 50, 50, 100, 100]
   }
 })
 
