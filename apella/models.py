@@ -73,6 +73,11 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+    can_set_academic = models.BooleanField(default=False)
+    can_upgrade_role = models.BooleanField(default=False)
+
+
+    shibboleth_enabled_at = models.DateTimeField(null=True, default=None)
     shibboleth_id = models.CharField(
         max_length=255, unique=True, null=True, default=None)
     shibboleth_registration_key = models.CharField(
