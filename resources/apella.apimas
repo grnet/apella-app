@@ -2294,6 +2294,12 @@ spec:
                                     .drf_field: {}
                                     .string: {}
                                     .required: {}
+                        login_method:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
                         is_active:
                             .cli_option: {}
                             .field: {}
