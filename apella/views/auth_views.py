@@ -3,6 +3,7 @@ import hashlib
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django.utils.crypto import get_random_string
 from djoser import views as djoser_views
 from djoser import serializers as djoser_serializers
 from djoser import signals as djoser_signals
@@ -10,14 +11,14 @@ from djoser import settings as djoser_settings
 from rest_framework import mixins
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.serializers import ValidationError
 
 from apella.loader import adapter
 from apella import auth_hooks
 from apella.models import ApellaUser, InstitutionManager, Professor, \
-    Candidate, RegistrationToken
-from rest_framework.exceptions import PermissionDenied
-from rest_framework.serializers import ValidationError
-from django.utils.crypto import get_random_string
+    Candidate, RegistrationToken, OldApellaUserMigrationData
+from apella.migration_functions import migrate_username
 
 
 USER_ROLE_MODEL_RESOURCES = {
@@ -169,9 +170,21 @@ class CustomPasswordResetView(djoser_views.PasswordResetView):
             is_active=True,
             login_method__iexact='password'
         )
-        if not len(active_users):
+        if len(active_users):
+            return active_users
+
+        active_old_users = OldApellaUserMigrationData.objects.filter(
+            email__iexact=email,
+            role_status='ACTIVE',
+            migrated_at=None,
+            shibboleth_id=''
+        )
+
+        if not len(active_users) and not len(active_old_users):
             raise PermissionDenied({"email": "password.user.not.found"})
-        return active_users
+
+        new_user = migrate_username(active_old_users[0].username)
+        return [new_user]
 
 
 class CustomLogoutView(djoser_views.LogoutView):
