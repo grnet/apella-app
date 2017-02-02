@@ -212,7 +212,18 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: ['code', 'title', 'state_calc_verbose', field('department.title_current', {label: 'department.label'})],
+      fields: computed('role', function(){
+        let role = get(this, 'role');
+        let f = [
+          'code', 'title', 'state_calc_verbose',
+          field('department.title_current', {label: 'department.label'}),
+        ];
+        if (!(role == 'institutionmanager' || role == 'assistant')) {
+          f.pushObject(field('institution.title_current'));
+        }
+        return f;
+      }),
+
       actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition' ],
       actionsMap: {
         applyCandidacy: applyCandidacy,

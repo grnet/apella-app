@@ -3,7 +3,11 @@ import ENV from 'ui/config/environment';
 import {computeI18N, computeI18NChoice, computeDateFormat, computeDateTimeFormat} from 'ui/lib/common';
 
 
-const { computed, get } = Ember,
+const {
+  computed,
+  computed: { readOnly },
+  get
+} = Ember,
       CHOICES = ENV.APP.resources;
 
 
@@ -19,6 +23,7 @@ export default DS.Model.extend({
       optionLabelAttr: 'title_current'
     }
   }),
+  institution: readOnly('department.institution'),
   subject_area: DS.belongsTo('subject-area', {
     autocomplete: true,
     formAttrs: {
