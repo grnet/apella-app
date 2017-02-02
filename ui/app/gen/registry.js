@@ -355,6 +355,7 @@ export default ApellaGen.extend({
         fields: [
           field('institution',
             {
+              autocomplete: true,
               label: 'institution.label',
               type: 'model',
               displayAttr: 'title_current',

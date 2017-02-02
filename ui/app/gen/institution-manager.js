@@ -52,7 +52,7 @@ export default ApellaGen.extend({
       active: true,
       serverSide: true,
       meta: {
-        fields: ['institution', 'is_verified', 'is_rejected', 'verification_pending']
+        fields: [field('institution', {autocomplete: true}), 'is_verified', 'is_rejected', 'verification_pending']
       },
       search: true,
       searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']

@@ -20,6 +20,7 @@ export default DS.Model.extend({
     }
   }),
   subject_area: DS.belongsTo('subject-area', {
+    autocomplete: true,
     formAttrs: {
       optionLabelAttr: 'title_current'
     }

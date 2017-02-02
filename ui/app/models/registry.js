@@ -12,7 +12,7 @@ const  CHOICES = ENV.APP.resources;
 
 export default DS.Model.extend({
   type: DS.attr({type: 'select', choices: CHOICES.REGISTRY_TYPES, translate: true}),
-  department: DS.belongsTo('department', {formAttrs: {optionLabelAttr: 'title_current'}}),
+  department: DS.belongsTo('department', { autocomplete: true, formAttrs: {optionLabelAttr: 'title_current'}}),
   members: DS.hasMany('professor'),
   type_verbose: computeI18NChoice('type', CHOICES.REGISTRY_TYPES),
   institution: readOnly('department.institution'),

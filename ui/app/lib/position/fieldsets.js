@@ -19,6 +19,7 @@ const  position = {
       label: 'fieldsets.labels.basic_info',
       fields: ['title',
         field('department', {
+          autocomplete: true,
           query: function(table, store, field, params) {
 
             // If the logged in user is an assistant, department field is a

@@ -9,7 +9,10 @@ const {
       CHOICES = ENV.APP.resources;
 
 export default Ember.Mixin.create({
-  institution: DS.belongsTo('institution', {formAttrs: {optionLabelAttr: 'title_current'}}),
+  institution: DS.belongsTo('institution', {
+    autocomplete: true,
+    formAttrs: {optionLabelAttr: 'title_current'}
+  }),
   institution_freetext: DS.attr(),
   department: DS.belongsTo('department', {
     formComponent: 'select-onchange',

@@ -193,6 +193,7 @@ export default ApellaGen.extend({
       meta: {
         fields: [
           field('department', {
+            autocomplete: true,
             type: 'model',
             displayAttr: 'title_current',
             modelName: 'department'
