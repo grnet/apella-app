@@ -63,7 +63,7 @@ const USER_FIELDSET_USER_ID = {
   label: USER_FIELDSET_DETAILS.label,
   fields: fields_with_user_id,
   layout: {
-    flex: [50, 50, 50, 50, 50, 50, 25, 25]
+    flex: [50, 50, 50, 50, 50, 50, 50, 50]
   }
 }
 
