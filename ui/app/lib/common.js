@@ -153,7 +153,6 @@ const VerifiedUserMixin = Ember.Mixin.create({
   verification_pending: DS.attr('boolean'),
   is_rejected: DS.attr('boolean'),
   rejected_reason: DS.attr('string'),
-  login_method: DS.attr('string'),
   changes_request: DS.attr('date'),
   status_verbose: computed('is_verified', 'is_rejected', 'verification_pending',  'i18n.locale', function() {
     if (get(this, 'is_rejected')) {
