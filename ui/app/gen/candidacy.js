@@ -42,6 +42,9 @@ let CANDIDATE_FIELDSET =  {
         fileField('publications', 'candidate', 'publications', {
           readonly: true
         })],
+      layout: {
+        flex: [100, 100, 100, 100]
+      },
       flex: 100,
 };
 
