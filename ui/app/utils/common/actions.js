@@ -315,10 +315,27 @@ const  goToPosition = {
   }
 };
 
+const change_password = {
+  raised: false,
+  label: 'password.change',
+  confirm: true,
+  action: function() {},
+  hidden: computed('model.login_method', function() {
+    return get(this, 'model.login_method') !== 'password';
+  }),
+  prompt: {
+    title: 'password.change.title',
+    contentComponent: 'change-password',
+    noControls: true
+  }
+}
+
 
 export { goToDetails, applyCandidacy, cancelPosition,
   cancelCandidacy, goToPosition,
   rejectUser, verifyUser,
   requestProfileChanges,
-  deactivateUser, activateUser};
+  deactivateUser, activateUser,
+  change_password
+};
 

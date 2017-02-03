@@ -11,6 +11,7 @@ import ASSISTANT from 'ui/utils/common/assistant';
 import CANDIDATE from 'ui/utils/common/candidate';
 import PROFESSOR from 'ui/utils/common/professor';
 import {disable_field} from 'ui/utils/common/fields';
+import {change_password} from 'ui/utils/common/actions';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
 import fetch from "ember-network/fetch";
@@ -173,20 +174,7 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
         cancel: 'cancel'
       }
     },
-    'change_password': {
-      raised: false,
-      label: 'password.change',
-      confirm: true,
-      action: function() {},
-      hidden: computed('model.login_method', function() {
-        return get(this, 'model.login_method') !== 'password';
-      }),
-      prompt: {
-        title: 'password.change.title',
-        contentComponent: 'change-password',
-        noControls: true
-      }
-    }
+    'change_password': change_password
   },
   getModel() {
     return get(this, 'store').findRecord('profile', 'me');
