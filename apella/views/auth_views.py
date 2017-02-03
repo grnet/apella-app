@@ -175,7 +175,6 @@ class CustomPasswordResetView(djoser_views.PasswordResetView):
 
         active_old_users = OldApellaUserMigrationData.objects.filter(
             email__iexact=email,
-            role_status='ACTIVE',
             migrated_at=None,
             shibboleth_id=''
         )
