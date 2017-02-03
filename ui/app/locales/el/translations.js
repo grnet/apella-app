@@ -100,6 +100,7 @@ export default {
   'delete': 'Διαγραφη', //For top bar
   'Draft':'Πρόχειρο',
   'Posted': 'Ενταγμένη',
+  'Submitted': 'Υποβεβλημένη',
   'Cancelled': 'Ακυρωθείσα',
   'Electing': 'Επιλογή',
   'Successful': 'Στελεχωμένη',

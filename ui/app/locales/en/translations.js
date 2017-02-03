@@ -102,6 +102,7 @@ export default {
   'delete': 'Delete', //For top bar
   'Draft':'Draft',
   'Posted': 'Posted',
+  'Submitted': 'Submitted',
   'Cancelled': 'Cancelled',
   'Electing': 'Electing',
   'Successful': 'Successful',
