@@ -336,6 +336,7 @@ export { goToDetails, applyCandidacy, cancelPosition,
   rejectUser, verifyUser,
   requestProfileChanges,
   deactivateUser, activateUser,
-  change_password
+  change_password,
+  isHelpdesk,
 };
 
