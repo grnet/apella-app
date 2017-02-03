@@ -435,5 +435,10 @@ export default {
   'row.remove.ok': 'YES',
   'row.remove.cancel': 'cancel',
   'row.remove.confirm.title': 'Removal',
-  'row.remove.confirm.message': 'Are you sure you want to remove this item?'
+  'row.remove.confirm.message': 'Are you sure you want to remove this item?',
+  'user.created': 'User has been created',
+  'user.email_verification.success': 'Your e-mail has been successfully verified',
+  'user.email_verification.error': 'Error in e-mail verification',
+  'email.not.verified': 'Your e-mail has not been verified',
+  'user.email_verification.error': 'E-mail verification error',
 };

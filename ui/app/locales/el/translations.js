@@ -437,5 +437,10 @@ export default {
   'row.remove.ok': 'ΝΑΙ',
   'row.remove.cancel': 'ΑΚΥΡΩΣΗ',
   'row.remove.confirm.title': 'Αφαίρεση',
-  'row.remove.confirm.message': 'Είστε σίγουρος/η πως θέλετε να αφαιρέσετε αυτή την εγγραφή;'
+  'row.remove.confirm.message': 'Είστε σίγουρος/η πως θέλετε να αφαιρέσετε αυτή την εγγραφή;',
+  'user.created': 'Ο λογαριασμός δημιουργήθηκε',
+  'user.email_verification.success': 'Το e-mail σας επαληθεύτηκε',
+  'user.email_verification.error': 'Σφάλμα κατά την επαλήθευση του e-mail σας',
+  'email.not.verified': 'Το e-mail σας δεν έχει επαληθευτεί',
+  'user.email_verification.error': 'Σφάλμα κατά την επαλήθευση του e-mail σας',
 };
