@@ -306,7 +306,6 @@ export default {
       more_info: 'Περισσότερα στοιχεία',
       user_interest: 'Εκδλήλωση ενδιαφέροντος',
       position_details: 'Στοιχεία θέσης',
-      candidate_details: 'Στοιχεία υποψηφίου',
       candidacy_details: 'Στοιχεία υποψηφιότητας',
       candidate: 'Υποψήφιος',
       files: 'Αρχεία',

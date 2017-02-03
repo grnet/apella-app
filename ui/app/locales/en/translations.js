@@ -306,7 +306,6 @@ export default {
       more_info: 'More info',
       user_interest: 'User interest',
       position_details: 'Position details',
-      candidate_details: 'Candidate info',
       candidacy_details: 'Candidacy info',
       candidate: 'Candidate',
       files: 'Files',
