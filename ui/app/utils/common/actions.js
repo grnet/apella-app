@@ -126,7 +126,7 @@ const cancelCandidacy = {
 const deactivateUser = {
   label: 'deactivateUser',
   icon: 'clear',
-  acceet: true,
+  accent: true,
   action(route, model) {
     model.set('is_active', false);
     let m = route.get('messageService')
