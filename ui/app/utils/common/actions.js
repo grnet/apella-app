@@ -268,7 +268,6 @@ const rejectUser = {
 const requestProfileChanges = {
   label: 'request.profile.changes',
   primary: true,
-  text: true,
   icon: 'compare_arrows',
   action: function(route, model) {
     let [url, token, messages] = call_utils(route, model);
