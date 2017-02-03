@@ -177,3 +177,6 @@ if not LOGGING:
 
 if not DEBUG and not BASE_URL:
     raise Exception("BASE_URL setting is required when DEBUG is set to False.")
+
+
+SERVER_EMAIL = 'no_reply@grnet.gr'
