@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 
 DATA_DIR = os.environ.get('APELLA_DATA_DIR', '/var/lib/apella/data')
-RESOURCES_DIR = os.path.join(DATA_DIR, 'resources')
+RESOURCES_DIR = os.environ.get('APELLA_RESOURCES_DIR',
+                               '/usr/lib/apella/resources')
 SETTINGS_DIR = os.environ.get('APELLA_SETTINGS_DIR', '/etc/apella')
 SETTINGS_FILE = 'settings.conf'
 
