@@ -72,7 +72,7 @@ def register_user(save, data, *args, **kwargs):
         user.user.login_method = 'academic'
         # automatically activate shibboleth users
         activate_user(user.user)
-        if user.user.email == json.loads(token.remote_data).get('email'):
+        if user.user.email == json.loads(token.remote_data).get('mail'):
             verify_email(user.user, False)
         user.user.is_active = True
         token.delete()
