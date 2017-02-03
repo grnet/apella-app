@@ -212,7 +212,7 @@ class CandidacyMixin(object):
         code = str(obj.id)
         obj.code = code
         obj.save()
-        copy_candidacy_files(obj, user)
+        copy_candidacy_files(obj, validated_data.get('candidate'))
         obj.state = 'posted'
         obj.save()
         return obj
