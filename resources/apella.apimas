@@ -1840,6 +1840,12 @@ spec:
                     .drf_field: {}
                     .nullable: {}
                     .date: {}
+                old_code:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .string: {}
             actions:
                 .list: {}
                 .create: {}
