@@ -1,5 +1,5 @@
 from apella.management.utils import ApellaCommand
-from apella.models import OldApellaUserMigrationData as OldUsers
+from apella.models import OldApellaUserMigrationData as OldUsers, ApellaUser
 from apella.emails import send_new_credentials_to_old_users_email
 
 
@@ -22,11 +22,13 @@ class Command(ApellaCommand):
 
         dry_run = options['dry_run']
         for email in emails:
+            if ApellaUser.objects.filter(email=email).exists():
+                self.stdout.write(
+                    'ApellaUser with email %s already exists.' % email)
+                continue
             if dry_run:
                 self.stdout.write('%s' % email)
             else:
                 old_users = OldUsers.objects.filter(email__iexact=email)
                 send_new_credentials_to_old_users_email([old_users[0]])
                 self.stdout.write('new credentials email sent to %s' % email)
-
-        self.stdout.write('Found %d emails' % emails.count())
