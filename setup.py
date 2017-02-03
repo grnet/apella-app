@@ -42,8 +42,9 @@ def get_all_data_files(dest_path, source_path):
 
 UI_DATA_FILES = get_all_data_files('lib/apella/resources/www/ui', 'ui/dist')
 
-APELLA_TEMPLATE_FILES = get_all_data_files('apella/templates',
-                                           'apella/templates')
+APELLA_TEMPLATE_FILES = get_all_data_files(
+        'lib/apella/resources/templates',
+        'apella/templates')
 
 MIGRATION_QUERY_FILES = get_all_data_files(
     'lib/apella/resources/migration_queries',
