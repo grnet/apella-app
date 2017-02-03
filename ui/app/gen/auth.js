@@ -443,14 +443,15 @@ export default AuthGen.extend({
     }),
     fieldsets: PROFILE_FIELDSETS('edit'),
 
-    extraActions: computed('model.role', 'model.is_verified', 'model.verification_pending', function() {
+    extraActions: computed('model.role', 'model.is_verified', 'model.is_rejected', 'model.verification_pending', function() {
       let isVerified = get(this, 'user.is_verified');
+      let isRejected = get(this, 'user.is_rejected');
       let verificationPending = get(this, 'user.verification_pending');
       let role = get(this, 'model.role');
 
       if (!isVerifiable(role)) { return []; }
 
-      if (!isVerified) {
+      if (!isVerified && !isRejected) {
         return [{
           label: 'request.profile.verification',
           icon: 'check_circle',
