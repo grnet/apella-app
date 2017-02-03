@@ -73,7 +73,7 @@ const FIELDSET_DETAILS = {
     'father_name_current',
     'id_passport',
     field('institution', {displayAttr: 'title_current'}),
-    'is_secretary_verbose',
+    field('is_secretary_verbose', {label: 'is_secretary.label'}),
     'can_create_positions_verbose',
     'can_create_registries_verbose',
   ],
@@ -102,7 +102,7 @@ let fs_viewed_by_others = {
     label: 'fieldsets.labels.more_info',
     fields: [
       'institution.title_current',
-      'is_secretary_verbose',
+      field('is_secretary_verbose', {label: 'is_secretary.label'}),
       'can_create_registries_verbose',
       'can_create_positions_verbose'],
     layout: {
