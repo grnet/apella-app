@@ -11,7 +11,7 @@ import ASSISTANT from 'ui/utils/common/assistant';
 import CANDIDATE from 'ui/utils/common/candidate';
 import PROFESSOR from 'ui/utils/common/professor';
 import {disable_field} from 'ui/utils/common/fields';
-import {change_password} from 'ui/utils/common/actions';
+import {change_password, isHelpdesk} from 'ui/utils/common/actions';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
 import fetch from "ember-network/fetch";
@@ -417,7 +417,16 @@ export default AuthGen.extend({
     },
     onSubmit: function() {},
     components: { beforeForm: 'profile-form-intro' },
-
+    actions: computed('model.role', function(){
+      let role = get(this, 'model.role');
+      if (isHelpdesk(role)) {
+        return ['change_password']
+      }
+      return []
+    }),
+    actionsMap: {
+      'change_password': change_password
+    },
     validators: computed('model.role', function(){
       let role = this.get('model').get('role');
       let f = Object.assign({}, USER_VALIDATORS);
