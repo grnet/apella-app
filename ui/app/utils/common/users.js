@@ -166,7 +166,7 @@ const USER_FIELDSET_REGISTER = Ember.assign({}, USER_FIELDSET_EDIT, {
 const USER_FIELDSET_DETAILS = {
   label: 'fieldsets.labels.user_info',
   fields: [
-    'username',
+    field('username', {disabled: true}),
     'email',
     'full_name_current',
     'father_name_current',
