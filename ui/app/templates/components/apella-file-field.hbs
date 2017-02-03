@@ -1,4 +1,4 @@
-<md-container class="layout-row" >
+<md-container class={{concat 'layout-row ' (if disabled 'field-disabled')}} >
 <label class={{concat 'md-label raised nowrap padded table-label' (if errors.length ' invalid' '')}}>{{ label }}</label>
 
 {{#if inProgress}}
@@ -12,7 +12,7 @@
 {{/if}}
 </md-container>
 
-<md-input-container class="full-width" style="margin-top: 0; padding: 0;">
+<md-input-container class={{concat 'fullwidth ' (if disabled 'field-disabled')}} style="margin-top: 0; padding: 0;">
 {{#paper-data-table as |table|}}
 {{#table.body as |body|}}
   {{#each files as |file|}}
@@ -28,9 +28,11 @@
         {{#if canDelete}}
           {{#paper-button disabled=inProgress iconButton=true onClick=(action "deleteFile" file)}}{{paper-icon "delete"}}{{/paper-button}}
         {{/if}}
-        {{#paper-button href=file.downloadURL disabled=inProgress iconButton=true onClick=(action "downloadFile" file)}}
-          {{paper-icon (if file.generatingLink "rotate-right" "get_app") spin=file.generatingLink }}
-        {{/paper-button}}
+        {{#if (not disabled) }}
+          {{#paper-button href=file.downloadURL disabled=inProgress iconButton=true onClick=(action "downloadFile" file)}}
+            {{paper-icon (if file.generatingLink "rotate-right" "get_app") spin=file.generatingLink }}
+          {{/paper-button}}
+        {{/if}}
       {{/row.cell}}
     {{/body.row}}
   {{else}}

@@ -10,7 +10,7 @@ const {
   computed,
   get,
   set,
-  computed: { or }
+  computed: { or, bool }
 } = Ember;
 
 
@@ -51,14 +51,7 @@ const FIELDS = computed('model.is_foreign', 'model.changeset.cv_in_url', functio
     }),
     fileField('cv_professor', 'professor', 'cv_professor', {
       readonly: or('user.is_verified', 'user.verification_pending'),
-      disabled: computed('model.changeset.cv_in_url', function() {
-        let check = get(this, 'model.changeset.cv_in_url');
-        if (check) {
-          Ember.run.once(this, () =>
-            set(this, 'model.changeset.cv_professor', null)
-          ) };
-        return check;
-      })
+      disabled: bool('model.changeset.cv_in_url')
     }, {
       replace: true
     }),

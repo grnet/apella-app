@@ -25,6 +25,7 @@ export default Ember.Component.extend(BaseFieldMixin, {
   session: inject.service('session'),
   messages: inject.service('messages'),
   inProgress: false,
+  attributeBindings: ['disabled'],
 
   inputAttrs: {
     readonly: true

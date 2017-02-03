@@ -61,3 +61,10 @@ footer {
   font-size: 0.8rem;
   padding: 0.5rem;
 }
+
+.field-disabled {
+  label.md-label {
+    color: color($color-grey, '500') !important;
+  }
+  table tr td { color: color($color-grey, '500') !important; }
+}
