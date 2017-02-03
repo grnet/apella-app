@@ -412,6 +412,7 @@ export default {
   'is_rejected.label': 'Rejected',
   'verification_pending.label': 'Pending verification',
   'is_active.label': 'Active',
+  'login_method.label': 'Login method',
 
   // old_user fields
   'name_el.label': 'Name (el)',

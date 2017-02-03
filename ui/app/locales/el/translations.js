@@ -414,6 +414,7 @@ export default {
   'is_rejected.label': 'Απορριφθείς',
   'verification_pending.label': 'Αναμένεται πιστοποίηση',
   'is_active.label': 'Ενεργός',
+  'login_method.label': 'Σύνδεση',
 
   // old_user fields
   'name_el.label': 'Όνομα (el)',
