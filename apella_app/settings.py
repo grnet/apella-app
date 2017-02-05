@@ -205,4 +205,4 @@ if not DEBUG and not BASE_URL:
     raise Exception("BASE_URL setting is required when DEBUG is set to False.")
 
 
-SERVER_EMAIL = 'no-reply@apella.grnet.gr'
+DEFAULT_FROM_EMAIL = 'no-reply@apella.grnet.gr'

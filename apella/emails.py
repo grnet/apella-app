@@ -17,7 +17,7 @@ def send_new_credentials_to_old_users_email(old_users):
             'apella/emails/old_user_new_credentials_body.txt',
             {'old_user': old_user, 'login_url': login_url}
         )
-        sender = settings.SERVER_EMAIL
+        sender = settings.DEFAULT_FROM_EMAIL
         send_mail(
             subject,
             body,
