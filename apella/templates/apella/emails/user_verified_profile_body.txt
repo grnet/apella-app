@@ -1,0 +1,15 @@
+A translation in Engilsh follows
+
+Προς: {{ user.first_name.el }} {{ user.last_name.el }}
+
+Σας ενημερώνουμε ότι ο λογαριασμός σας στην εφαρμογή ΑΠΕΛΛΑ έχει πιστοποιηθεί.
+
+Όνομα χρήστη: {{ user.username }}
+
+
+
+Το: {{ user.first_name.en }} {{ user.last_name.en }}
+
+We would like to inform you that your account at APELLA has been verified.
+
+Username: {{ user.username }}

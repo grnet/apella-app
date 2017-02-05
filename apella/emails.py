@@ -25,3 +25,21 @@ def send_new_credentials_to_old_users_email(old_users):
             [old_user.email],
             fail_silently=False
         )
+
+
+def send_user_verified_profile_email(user):
+    subject = render_to_string(
+        'apella/emails/user_verified_profile_subject.txt'). \
+        replace('\n', ' ')
+    body = render_to_string(
+        'apella/emails/user_verified_profile_body.txt',
+        {'user': user}
+    )
+    sender = settings.DEFAULT_FROM_EMAIL
+    send_mail(
+        subject,
+        body,
+        sender,
+        [user.email],
+        fail_silently=False
+    )

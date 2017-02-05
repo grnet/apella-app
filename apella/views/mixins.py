@@ -24,6 +24,7 @@ from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 from apella.serializers.position import copy_candidacy_files
 from apella.migration_functions import migrate_user_profile_files
+from apella.emails import send_user_verified_profile_email
 
 from apella.util import urljoin
 
@@ -354,6 +355,7 @@ class CandidateProfile(object):
         try:
             auth_hooks.verify_user(candidate_user)
             candidate_user.save()
+            send_user_verified_profile_email(candidate_user.user)
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
