@@ -64,8 +64,9 @@ const  position = {
         }),
         'description',
         'discipline','subject_area', 'subject'],
+
       layout: {
-        flex: [50, 50, 100, 100, 50, 50]
+        flex: [50, 50, 100, 100, 50, 50, 50]
       }
     },
     details: {
@@ -79,13 +80,13 @@ const  position = {
   details: {
     basic: {
       label: 'fieldsets.labels.basic_info',
-      fields: ['code', 'state_calc_verbose', 'title',
+      fields: ['code', 'old_code', 'state_calc_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
         'department.institution.title_current',
         'discipline', 'description', field('subject_area.title_current',{label: 'subject_area.label'}),
         field('subject.title_current', {label: 'subject.label'})],
       layout: {
-        flex: [50, 50, 50, 50, 50, 50, 100, 50, 50]
+        flex: [25, 25, 50, 50, 50, 50, 50, 100, 50, 50]
       }
     },
     details: {
@@ -159,7 +160,7 @@ const  position = {
           subject_area =disable_field('subject_area');
           subject = disable_field('subject');
         }
-        return [disable_field('code'), disable_field('state_calc_verbose'),
+        return [disable_field('code'), disable_field('old_code'), disable_field('state_calc_verbose'),
         title, department, description, discipline, subject_area, subject];
       }),
       layout: {

@@ -1607,7 +1607,7 @@ spec:
                     apella.views.mixins.DestroyProtectedObject,
                     apella.views.mixins.UploadFilesViewSet]
                 hook_class: apella.views.mixins.PositionHookMixin
-                filter_fields: [title, id, state, department, code, electors, committee]
+                filter_fields: [title, id, state, department, code, old_code, electors, committee]
                 ordering_fields: [title, id, state, department, code]
                 search_fields: [title, id, state]
             .cli_commands: {}

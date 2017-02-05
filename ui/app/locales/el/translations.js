@@ -190,6 +190,7 @@ export default {
   'discipline_in_fek.hint': 'Το γνωστικό αντικείμενο αναγράφεται στο ΦΕΚ διορισμού μου',
   'dep_number.label': 'Αριθμός μελών Δ.Ε.Π.',
   'code.label': 'Κωδικός',
+  'old_code.label': 'Παλιός κωδικός',
   'position.code.label': 'Κωδικός θέσης',
   'position.code_and_title.label': 'Κωδικός - Τίτλος θέσης',
   'position.title.label': 'Τίτλος θέσης',
