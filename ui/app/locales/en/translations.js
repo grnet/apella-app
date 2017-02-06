@@ -450,6 +450,7 @@ export default {
   'user.email_verification.success': 'Your e-mail has been successfully verified',
   'user.email_verification.error': 'Error in e-mail verification',
   'email.not.verified': 'Your e-mail has not been verified',
+  'user.not.email_verified.error': 'Your e-mail has not been verified',
   'user.email_verification.error': 'E-mail verification error',
 
   // server errors
