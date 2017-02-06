@@ -24,7 +24,7 @@ from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 from apella.serializers.position import copy_candidacy_files
 from apella.migration_functions import migrate_user_profile_files
-from apella.emails import send_user_verified_profile_email
+from apella.emails import send_user_email
 
 from apella.util import urljoin
 
@@ -345,6 +345,10 @@ class CandidateProfile(object):
         try:
             auth_hooks.request_user_changes(candidate_user)
             candidate_user.save()
+            send_user_email(
+                candidate_user.user,
+                'apella/emails/user_profile_request_changes_subject.txt',
+                'apella/emails/user_profile_request_changes_body.txt')
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
@@ -355,7 +359,10 @@ class CandidateProfile(object):
         try:
             auth_hooks.verify_user(candidate_user)
             candidate_user.save()
-            send_user_verified_profile_email(candidate_user.user)
+            send_user_email(
+                candidate_user.user,
+                'apella/emails/user_verified_profile_subject.txt',
+                'apella/emails/user_verified_profile_body.txt')
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
@@ -369,6 +376,10 @@ class CandidateProfile(object):
                 reason = request.data['rejected_reason']
             auth_hooks.reject_user(candidate_user, reason=reason)
             candidate_user.save()
+            send_user_email(
+                candidate_user.user,
+                'apella/emails/user_rejected_profile_subject.txt',
+                'apella/emails/user_rejected_profile_body.txt')
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)

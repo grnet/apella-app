@@ -1,0 +1,17 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι ο λογαριασμός σας στο πληροφοριακό σύστημα ΑΠΕΛΛΑ έχει απορριφθεί.
+
+Όνομα χρήστη: {{ user.username }}
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We would like to inform you that your account for the APELLA information system has been rejected.
+
+Username: {{ user.username }}
+
+{% endblock content_en %}

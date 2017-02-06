@@ -1,0 +1,17 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι η πιστοποίηση του λογαριασμού σας στο πληροφοριακό σύστημα ΑΠΕΛΛΑ εκκρεμεί, λόγω απαραίτητων αλλαγών στις οποίες θα πρέπει να προβείτε στα προσωπικά σας στοιχεία.
+
+Όνομα χρήστη: {{ user.username }}
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We would like to inform you, that the verification of your account at APELLA information system is pending, due to necessary changes that have been requested.
+
+Username: {{ user.username }}
+
+{% endblock content_en %}

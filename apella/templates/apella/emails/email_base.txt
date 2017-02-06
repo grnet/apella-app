@@ -13,7 +13,7 @@ A translation in English follows
 
 
 To user {{ user.first_name.en }} {{ user.last_name.en }},
-{% block content_en %}{% endblock content_en %}}
+{% block content_en %}{% endblock content_en %}
 {% block more_en %}
     {% if url %}
         You can <a href="{{ login_url }}">sign in</a> your account and learn more, by visiting the <a href="{{ url }}">link.</a>
