@@ -8,7 +8,7 @@ const {
 
 const FILES_FIELDS = [
   fileField('id_passport_file', 'candidate', 'id_passport', {
-    readonly: or('user.is_verified', 'user.verification_pending')
+    readonly: or('model.is_verified', 'model.verification_pending')
   }, { replace: true }),
   fileField('cv', 'candidate', 'cv', {
   }, { replace: true }),
