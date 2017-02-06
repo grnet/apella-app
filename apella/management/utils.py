@@ -41,4 +41,4 @@ class LoadDataCommand(BaseCommand):
         parser.add_argument('csv_file')
 
     def preprocess(self, input_line):
-        return input_line.strip().strip(';').split(';')
+        return input_line.strip().split(';')

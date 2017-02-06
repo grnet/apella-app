@@ -294,6 +294,19 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                    .readonly: {}
+                idp:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                schac_home_organization:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
             actions:
                 .list: {}
                 .create: {}

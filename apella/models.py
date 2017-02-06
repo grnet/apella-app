@@ -76,7 +76,6 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     can_set_academic = models.BooleanField(default=False)
     can_upgrade_role = models.BooleanField(default=False)
 
-
     shibboleth_enabled_at = models.DateTimeField(null=True, default=None)
     shibboleth_id = models.CharField(
         max_length=255, unique=True, null=True, default=None)
@@ -282,6 +281,8 @@ class Institution(models.Model):
     regulatory_framework = models.URLField(blank=True)
     title = models.ForeignKey(MultiLangFields)
     has_shibboleth = models.BooleanField(default=False)
+    idp = models.CharField(max_length=255, blank=True)
+    schac_home_organization = models.CharField(max_length=255, blank=True)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(

@@ -21,7 +21,8 @@ class Command(LoadDataCommand):
             renamed = 0
             deleted = 0
             for institution_record in csv_file:
-                ircid, title_el, title_en, category_str, shibboleth = \
+                ircid, title_el, title_en, category_str, shibboleth, \
+                    idp, schac_home_organization = \
                     self.preprocess(institution_record)
 
                 try:
@@ -56,12 +57,15 @@ class Command(LoadDataCommand):
                     title.el = title_el
                     title.en = title_en
                     title.save()
+                    institution.has_shibboleth = has_shibboleth
+                    institution.idp = idp
+                    institution.schac_home_organization = \
+                        schac_home_organization
+                    institution.save()
                     self.stdout.write(
                         "Renamed institution %s from %s, %s to %s, %s" %
                         (ircid, title_el_before, title_en_before,
                             title.el, title.en))
-                    institution.has_shibboleth = has_shibboleth
-                    institution.save()
                     renamed += 1
                     continue
 
@@ -71,7 +75,9 @@ class Command(LoadDataCommand):
                         'id': ircid,
                         'title': title,
                         'category': category[0],
-                        'has_shibboleth': has_shibboleth
+                        'has_shibboleth': has_shibboleth,
+                        'idp': idp,
+                        'schac_home_organization': schac_home_organization
                 }
                 Institution.objects.create(**institution_data)
                 success += 1
