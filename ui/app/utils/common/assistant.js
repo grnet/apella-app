@@ -176,6 +176,7 @@ let fs_viewed_by_others = {
                   autocomplete: true,
                   displayAttr: 'title_current',
                   modelName: 'department',
+                  dataKey: 'id',
                   query: function(select, store, field, params) {
                     let locale = select.get('i18n.locale');
                     return store.findRecord('profile', 'me').then(function(me) {
