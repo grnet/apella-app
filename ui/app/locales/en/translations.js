@@ -37,6 +37,7 @@ export default {
   'password.forgot.title': 'Forgot password',
   'password.change': 'Change password',
   'password.change.title': 'Change password',
+  'password.change.success': 'Password has been successfully changed',
   'password.forgot.success': 'Password has been successfully changed',
   'password.forgot.submit': 'Submit',
   'password.change.submit': 'Change',
@@ -443,4 +444,7 @@ export default {
   'user.email_verification.error': 'Error in e-mail verification',
   'email.not.verified': 'Your e-mail has not been verified',
   'user.email_verification.error': 'E-mail verification error',
+
+  // server errors
+  'The two password fields didn\'t match.': 'The two password fields didn\'t match.',
 };

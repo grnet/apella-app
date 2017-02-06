@@ -36,6 +36,7 @@ export default {
   'password.forgot.title': 'Υπενθύμιση συνθηματικού',
   'password.change': 'Αλλαγη συνθηματικου',
   'password.change.title': 'Αλλαγή συνθηματικού',
+  'password.change.success': 'Επιτυχής αλλαγή συνθηματικού',
   'password.forgot.success': 'Επιτυχής υπενθυμιση συνθηματικου',
   'password.forgot.submit': 'Υπενθυμιση',
   'password.change.submit': 'Αλλαγη',
@@ -445,4 +446,7 @@ export default {
   'user.email_verification.error': 'Σφάλμα κατά την επαλήθευση του e-mail σας',
   'email.not.verified': 'Το e-mail σας δεν έχει επαληθευτεί',
   'user.email_verification.error': 'Σφάλμα κατά την επαλήθευση του e-mail σας',
+
+  // server errors
+  'The two password fields didn\'t match.': 'Το συνθηματικό και η επαλήθευση συνθηματικού πρέπει να ταιριάζουν.',
 };
