@@ -48,8 +48,8 @@ const USER_FIELDS = [
 ]
 
 const USER_FIELDS_EDIT = [
-  field('username', { readonly: true }),
-  field('email', { readonly: true }),
+  field('username', { disabled: true }),
+  field('email', { disabled: true }),
   'first_name',
   'last_name',
   'father_name',
@@ -72,10 +72,10 @@ function samePassword({field, checkLen}) {
 
 const USER_FIELDS_REGISTER = [
   field('username', {
-    readonly: false,
+    disabled: false,
     validators: [validate.length({min: 4})]
   }),
-  field('email', { readonly: false }),
+  field('email', { disabled: false }),
   field('password', {
     required: true,
     type: 'string',
@@ -100,7 +100,7 @@ const USER_FIELDS_REGISTER = [
 ];
 
 const USER_FIELDS_REGISTER_ACADEMIC = [
-  field('email', { readonly: false }),
+  field('email', { disabled: false }),
   'first_name',
   'last_name',
   'father_name',
