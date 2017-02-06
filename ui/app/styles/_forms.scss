@@ -1,0 +1,10 @@
+// colors
+$gray-label: rgba(0,0,0,.54);
+$gray-disabled-value: rgba(0,0,0,.5);
+
+*[disabled] *:not(label){
+    color: $gray-disabled-value !important;
+}
+*[disabled] label {
+    color:  $gray-label !important;
+}
