@@ -17,17 +17,17 @@ cmd apella loadschools "${RESOURCES}/schools.csv"
 cmd apella loaddepartments "${RESOURCES}/departments.csv"
 cmd apella loadsubjects "${RESOURCES}/subject_areas_subjects.csv"
 
-cmd apella user-add \
-        --username 'charitini' \
-        --password-from-json "${CONFIGBASE}/passwords" \
-        --first-name-el 'Χαριτίνη' \
-        --first-name-el 'Charitini' \
-        --last-name-el 'Μπλιάτσιου' \
-        --first-name-en 'Charitini' \
-        --last-name-en 'Bliatsiou' \
-        --role 'helpdeskadmin' \
-        --father-name-en 'Athanasios' \
-        --email 'charitini@grnet.gr' \
+#cmd apella user-add \
+#        --username 'charitini' \
+#        --password-from-json "${CONFIGBASE}/passwords" \
+#        --first-name-el 'Χαριτίνη' \
+#        --first-name-el 'Charitini' \
+#        --last-name-el 'Μπλιάτσιου' \
+#        --first-name-en 'Charitini' \
+#        --last-name-en 'Bliatsiou' \
+#        --role 'helpdeskadmin' \
+#        --father-name-en 'Athanasios' \
+#        --email 'charitini@grnet.gr' \
 
 
 cmd apella professor-rank-add \
