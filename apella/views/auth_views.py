@@ -237,6 +237,15 @@ class CustomRegistrationView(djoser_views.RegistrationView,
             self.send_email(**self.get_send_email_kwargs(user))
         return HttpResponse(status=202)
 
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        djoser_signals.user_registered.send(
+            sender=self.__class__, user=instance.user, request=self.request)
+        if djoser_settings.get('SEND_ACTIVATION_EMAIL') \
+                and not instance.user.email_verified:
+            self.send_email(**self.get_send_email_kwargs(instance.user))
+
     @transaction.atomic
     def create(self, request, *args, **kwargs):
         resend_email = request.data.get('resend_verification', None)
