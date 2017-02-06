@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import validate from 'ember-gen/validate';
 import fetch from "ember-network/fetch";
 import ENV from 'ui/config/environment';
+import {validateConfirmation} from 'ember-changeset-validations/validators';
 
 const {
   computed,
@@ -56,9 +58,21 @@ export default Ember.Component.extend({
 
   modelMeta: {
     fields: [
-      ['current_password', {type: 'string', formAttrs: { type: 'password' }}],
-      ['new_password', {type: 'string', formAttrs: { type: 'password' }}],
-      ['re_new_password', {type: 'string', formAttrs: { type: 'password' }}]
+      ['current_password', {
+        type: 'string',
+        formAttrs: { type: 'password' },
+        validators: [validate.presence(true)]
+      }],
+      ['new_password', {
+        type: 'string',
+        formAttrs: { type: 'password' },
+        validators: [validate.length({min: 6})]
+      }],
+      ['re_new_password', {
+        type: 'string',
+        formAttrs: { type: 'password' },
+        validators: [validateConfirmation({ on: 'new_password' })]
+      }]
     ]
   },
 
