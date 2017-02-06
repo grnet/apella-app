@@ -25,7 +25,6 @@ export default DS.Model.extend({
   }),
   institution: readOnly('department.institution'),
   subject_area: DS.belongsTo('subject-area', {
-    autocomplete: true,
     formAttrs: {
       optionLabelAttr: 'title_current'
     }
