@@ -88,7 +88,7 @@ def migrate_professor(old_user, new_user):
         discipline_text=discipline_text,
         is_verified=is_verified)
 
-    if institution.has_shibboleth:
+    if institution and institution.has_shibboleth:
         new_user.can_set_academic = True
         new_user.save()
     return professor
