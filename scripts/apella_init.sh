@@ -10,6 +10,8 @@ cmd () {
     "$@"
 }
 
+cmd apella run-installation-validations
+
 cmd apella migrate
 
 cmd apella loadinstitutions "${RESOURCES}/institutions.csv"
