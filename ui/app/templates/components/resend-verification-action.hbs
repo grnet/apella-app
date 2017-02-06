@@ -17,11 +17,11 @@
   {{t "resend.activation.prompt.message" }}
   </md-content>
   {{gen-form
-    verificationModel 
+    verificationModel
     flat=true
     fieldsetFieldsComponent='paper-content'
     onSubmit=(action (toggle 'visiblePopup' this))
-    messages=(hash success=(t 'email.verification.sent'))
+    messages=(hash success='email.verification.sent')
     labels=(hash submit=(t 'send.verification.email'))
     modelMeta=(gen-resource-meta (hash
       fields=(array
