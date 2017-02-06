@@ -2,7 +2,7 @@ import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
-import {ApellaGen, i18nField, computedField} from 'ui/lib/common';
+import {ApellaGen, i18nField} from 'ui/lib/common';
 
 const {
   computed,

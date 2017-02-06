@@ -68,16 +68,6 @@ function i18nUserSortField(key, attrs) {
   }, attrs));
 };
 
-// a `field` wrapper for computed properties related fields
-function computedField(key, dependency, attrs) {
-  attrs = attrs || {};
-  return field(key, merge({
-    sortKey: dependency,
-    dataKey: dependency,
-    readonly: true
-  }, attrs));
-}
-
 function computeI18N(key, ...args) {
   let hook, lastArg = args[args.length - 1];
   if (typeof lastArg === 'function') { hook = args.pop(); }
@@ -186,7 +176,7 @@ function get_registry_members(registry, store, params) {
 };
 
 export {
-  ApellaGen, i18nField, computedField, computeI18N, computeI18NChoice,
+  ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members
 };
