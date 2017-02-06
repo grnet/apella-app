@@ -2,7 +2,9 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι η πιστοποίηση του λογαριασμού σας στο πληροφοριακό σύστημα ΑΠΕΛΛΑ εκκρεμεί, λόγω απαραίτητων αλλαγών στις οποίες θα πρέπει να προβείτε στα προσωπικά σας στοιχεία.
+Σας ενημερώνουμε ότι η πιστοποίηση του λογαριασμού σας στο πληροφοριακό σύστημα ΑΠΕΛΛΑ παραμένει σε εκκρεμότητα.
+Θα πρέπει να συνδεθείτε στο λογαριασμό σας και να κάνετε τις απαραίτητες διορθώσεις των στοιχείων σας, από την καρτέλα "Προφίλ".
+Στη συνέχεια, θα πρέπει να υποβάλετε εκ νέου αίτημα πιστοποίησης του λογαριασμού σας.
 
 Όνομα χρήστη: {{ user.username }}
 
@@ -10,7 +12,9 @@
 
 {% block content_en %}
 
-We would like to inform you, that the verification of your account at APELLA information system is pending, due to necessary changes that have been requested.
+We would like to inform you that the verification of your account at APELLA information system is pending.
+You should sign in your account and proceed to the requested changes, by selecting the tab "Profile".
+You have to submit a new verification request, subsequently.
 
 Username: {{ user.username }}
 
