@@ -38,7 +38,7 @@ export default {
   'password.change': 'Change password',
   'password.change.title': 'Change password',
   'password.change.success': 'Password has been successfully changed',
-  'password.forgot.success': 'Password has been successfully changed',
+  'password.forgot.success': 'Success',
   'password.forgot.submit': 'Submit',
   'password.change.submit': 'Change',
   'password.reset': 'Password reset',
