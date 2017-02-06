@@ -37,11 +37,15 @@ export default {
   'password.change': 'Αλλαγη συνθηματικου',
   'password.change.title': 'Αλλαγή συνθηματικού',
   'password.change.success': 'Επιτυχής αλλαγή συνθηματικού',
-  'password.forgot.success': 'Επιτυχής υπενθυμιση συνθηματικου',
+  'password.change.error': 'Σφάλμα κατά την αλλαγή συνθηματικού',
+  'password.forgot.success': 'Επιτυχής υπενθύμιση συνθηματικου',
   'password.forgot.submit': 'Υπενθυμιση',
   'password.change.submit': 'Αλλαγη',
-  'password.reset': 'Password reset *',
+  'password.reset': 'Αλλαγή συνθηματικού',
+  'password.reset.message': 'Εισάγετε εδώ το νέο συνθηματικό',
   'password.reset.submit': 'Υποβολη',
+  'password.reset.success': 'Επιτυχής αλλαγή συνθηματικού',
+  'password.reset.error': 'Σφάλμα κατά την αλλαγή συνθηματικού',
   'request.profile.verification': 'Αιτηση πιστοποιησης λογαριασμου',
   'request.profile.verification.title': 'Πιστοποίηση λογαριασμού',
   'request.profile.verification.message': 'Θα πρέπει να έχετε συμπληρώσει όλα τα στοιχεία που απαιτούνται για την πιστοποίησή σας.<br> Τα στοιχεία θα ελεγχθούν από το Γραφείο Αρωγής Χρηστών. <br> Είστε σίγουρος/η; ',
@@ -455,4 +459,5 @@ export default {
 
   // server errors
   'The two password fields didn\'t match.': 'Το συνθηματικό και η επαλήθευση συνθηματικού πρέπει να ταιριάζουν.',
+  'Unable to login with provided credentials.': 'Ανεπιτυχής είσοδος',
 };

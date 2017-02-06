@@ -38,11 +38,14 @@ export default {
   'password.change': 'Change password',
   'password.change.title': 'Change password',
   'password.change.success': 'Password has been successfully changed',
+  'password.change.error': 'Error in password change',
   'password.forgot.success': 'successful password reset',
   'password.forgot.submit': 'Submit',
   'password.change.submit': 'Change',
   'password.reset': 'Password reset',
   'password.reset.submit': 'Submit',
+  'password.reset.success': 'Password has been successfully reset',
+  'password.reset.error': 'Error in password reset',
   'request.profile.verification': 'Request profile verification',
   'request.profile.verification.title': 'Profile verification',
   'request.profile.verification.message': 'Your profile will be verified by the competent authority',
@@ -451,4 +454,5 @@ export default {
 
   // server errors
   'The two password fields didn\'t match.': 'The two password fields didn\'t match.',
+  'Unable to login with provided credentials.': 'Unable to login with provided credentials.',
 };
