@@ -1,15 +1,17 @@
-A translation in Engilsh follows
+{% extends "apella/emails/email_base.txt" %}
 
-Προς: {{ user.first_name.el }} {{ user.last_name.el }}
+{% block content_el %}
 
-Σας ενημερώνουμε ότι ο λογαριασμός σας στην εφαρμογή ΑΠΕΛΛΑ έχει πιστοποιηθεί.
+Σας ενημερώνουμε ότι ο λογαριασμός σας στο πληροφοριακό σύστημα ΑΠΕΛΛΑ έχει πιστοποιηθεί.
 
 Όνομα χρήστη: {{ user.username }}
 
+{% endblock content_el %}
 
+{% block content_en %}
 
-Το: {{ user.first_name.en }} {{ user.last_name.en }}
-
-We would like to inform you that your account at APELLA has been verified.
+We would like to inform you that your account for the APELLA information system has been verified.
 
 Username: {{ user.username }}
+
+{% endblock content_en %}

@@ -6,6 +6,9 @@ A translation in English follows
     {% if url %}
         Mπορείτε να δείτε περισσότερα πραγματοποιώντας <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στον <a href="{{ url }}">σύνδεσμο.</a>
     {% endif %}
+
+ΠΡΟΣΟΧΗ:
+Παρακαλούμε MHN απαντήσετε σε αυτό το e-mail. Για οποιαδήποτε απορία ή διευκρίνιση μπορείτε να επικοινωνήσετε με το Γραφείο Αρωγής Χρηστών.
 {% endblock more_el %}
 
 
@@ -15,6 +18,9 @@ To user {{ user.first_name.en }} {{ user.last_name.en }},
     {% if url %}
         You can <a href="{{ login_url }}">sign in</a> your account and learn more, by visiting the <a href="{{ url }}">link.</a>
     {% endif %}
+
+NOTICE:
+Please do NOT reply to this e-mail. For any questions or clarification please contact the Helpdesk.
 {% endblock more_en %}
 
 {% block note %}{% endblock note %}
