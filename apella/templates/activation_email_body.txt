@@ -1,8 +1,19 @@
-A translation in English follows
+{% extends "apella/emails/email_base.txt" %}
 
+{% block content_el %}
 
-Προς χρήστη {{ user.username }},
-Για την επαλήθευση του e-mail σας πατήστε στον ακόλουθο σύνδεσμο: {{ protocol }}://{{ domain }}/{{ url }}
+Για την επαλήθευση του e-mail σας πατήστε στον ακόλουθο σύνδεσμο:
+{{ protocol }}://{{ domain }}/{{ url }}
 
-To user {{ user.username }},
-To verify your e-mail click on the following link: {{ protocol }}://{{ domain }}/{{ url }}
+Όνομα χρήστη: {{ user.username }}
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+To verify your e-mail click on the following link:
+{{ protocol }}://{{ domain }}/{{ url }}
+
+Username: {{ user.username }}
+
+{% endblock content_en %}
