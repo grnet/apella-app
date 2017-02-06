@@ -13,7 +13,7 @@ export default {
    // register
   'register': 'Εγγραφή',
   'register.title': 'Εγγραφή',
-  'register.description': 'Eπιλέξτε είδος χρήστη',
+  'register.description': 'Eπιλέξτε κατηγορία χρήστη',
   'register.domestic.label': 'καθηγητης/ερευνητης ημεδαπης',
   'register.domestic.title': 'καθηγητής/ερευνητής ημεδαπής',
   'register.foreign.label': 'καθηγητης/ερευνητης αλλοδαπης',
@@ -22,7 +22,7 @@ export default {
   'register.candidate.title': 'Υποψήφιος',
   'register.manager.label': 'διαχειριστης',
   'register.manager.title': 'Διαχειριστής ιδρύματος',
-  'register.foreign.intro': '',
+  'register.foreign.intro': 'Συμπληρώστε τα ακόλουθα στοιχεία για να εγγραφείτε ως καθηγητής/ερευνητής αλλοδαπής',
   'register.domestic.intro': '',
   'register.candidate.intro': 'Συμπληρώστε τα ακόλουθα στοιχεία για να εγγραφείτε ως υποψήφιος',
   'register.manager.intro': 'Συμπληρώστε τα ακόλουθα στοιχεία για να εγγραφείτε ως διαχειριστής ιδρύματος',
@@ -44,11 +44,13 @@ export default {
   'password.reset.submit': 'Υποβολη',
   'request.profile.verification': 'Αιτηση πιστοποιησης λογαριασμου',
   'request.profile.verification.title': 'Πιστοποίηση λογαριασμού',
-  'request.profile.verification.message': 'Το προφίλ σας θα πιστοποιηθεί από την αρμόδια αρχή ',
+  'request.profile.verification.message': 'Θα πρέπει να έχετε συμπληρώσει όλα τα στοιχεία που απαιτούνται για την πιστοποίησή σας.<br> Τα στοιχεία θα ελεγχθούν από το Γραφείο Αρωγής Χρηστών. <br> Είστε σίγουρος/η; ',
   'request.profile.changes': 'Αίτηση αλλαγής στοιχείων',
   'request.profile.changes.message': 'Θα ζητηθεί αλλαγή στοιχείων από τον χρήστη',
   'request.changes.success': 'Η αίτηση αλλαγής στοιχείων καταχωρήθηκε επιτυχώς',
   'request.changes.error': 'Υπήρξε κάποιο σφάλμα κατά την αίτηση αλλαγής στοιχείων',
+  'request.verification.success': 'Το αίτημα υποβλήθηκε επιτυχώς',
+  'request.verification.error': 'Ανεπιτυχής καταχώριση',
   'verify.user': 'Πιστοποίηση χρήστη',
   'verify.user.title': 'Πιστοποίηση χρήστη',
   'verify.user.message': 'Πιστοιποείτε ότι τα στοιχεία του προφίλ του χρήστη είναι σωστά;',
@@ -238,6 +240,8 @@ export default {
   // files
   'file.field.add.file': 'Προσθηκη αρχειου',
   'field.no.files': 'Δεν υπάρχουν αρχεία',
+  'file.upload.success': 'Επιτυχής μεταφόρτωση αρχείου',
+  'file.upload.error': 'Σφάλμα κατά τη μεταφόρτωση αρχείου',
 
   userInterest: {
     info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρισης σχετικής θέσης στο μέλλον.',
@@ -446,6 +450,8 @@ export default {
   'user.email_verification.error': 'Σφάλμα κατά την επαλήθευση του e-mail σας',
   'email.not.verified': 'Το e-mail σας δεν έχει επαληθευτεί',
   'user.email_verification.error': 'Σφάλμα κατά την επαλήθευση του e-mail σας',
+  'old.user.info': 'Εάν είστε ήδη χρήστης της εφαρμογής ή διατηρείτε λογαριασμό χρήστη στην παλαιά έκδοση της εφαρμογής, μπορείτε να συνδεθείτε εδώ:',
+  'new.user.info': 'Εάν δεν είστε ήδη χρήστης της εφαρμογής και δε διατηρείτε λογαριασμό χρήστη στην παλαιά έκδοση της εφαρμογής, μπορείτε να εγγραφείτε επιλέγοντας την κατάλληλη κατηγορία χρήστη. Διαφορετικά, επισκεφθείτε την καρτέλα «Παλιός χρήστης».',
 
   // server errors
   'The two password fields didn\'t match.': 'Το συνθηματικό και η επαλήθευση συνθηματικού πρέπει να ταιριάζουν.',

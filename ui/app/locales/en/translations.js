@@ -38,7 +38,7 @@ export default {
   'password.change': 'Change password',
   'password.change.title': 'Change password',
   'password.change.success': 'Password has been successfully changed',
-  'password.forgot.success': 'Success',
+  'password.forgot.success': 'successful password reset',
   'password.forgot.submit': 'Submit',
   'password.change.submit': 'Change',
   'password.reset': 'Password reset',
@@ -50,6 +50,8 @@ export default {
   'request.profile.changes.message': 'The user will be asked to change his profile',
   'request.changes.success': 'The profile change request has been successful',
   'request.changes.error': 'There was an error with profile change request',
+  'request.verfication.success': 'Request verification success',
+  'request.verification.error': 'Request.verification.error',
   'verify.user': 'Verify user',
   'verify.user.title': 'Verify user',
   'verify.user.message': 'Verify user',
@@ -241,6 +243,8 @@ export default {
   // files
   'file.field.add.file': 'Add file',
   'field.no.files': 'No files',
+  'file.upload.success': 'File upload success',
+  'file.upload.error': 'File upload error',
 
   userInterest: {
     info: 'By pressing "Save" the search criteria will be saved, so that if a new position matches them you will be notified by the system.',
