@@ -4,7 +4,9 @@
 
 Σας ενημερώνουμε ότι ο λογαριασμός σας στο πληροφοριακό σύστημα ΑΠΕΛΛΑ έχει απορριφθεί.
 
+{% if not user.shibboleth_id %}
 Όνομα χρήστη: {{ user.username }}
+{% endif %}
 
 {% endblock content_el %}
 
@@ -12,6 +14,8 @@
 
 We would like to inform you that your account for the APELLA information system has been rejected.
 
+{% if not user.shibboleth_id %}
 Username: {{ user.username }}
+{% endif %}
 
 {% endblock content_en %}
