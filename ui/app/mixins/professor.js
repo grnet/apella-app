@@ -4,7 +4,7 @@ import ENV from 'ui/config/environment';
 import {booleanFormat, computeI18NChoice} from 'ui/lib/common';
 
 const {
-  get, computed
+  get, set, computed, on
 } = Ember,
       CHOICES = ENV.APP.resources;
 

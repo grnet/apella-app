@@ -204,6 +204,12 @@ const normalizeUser = function(hash, serializer) {
       hash['user_id'] = user_info['id'];
     }
   });
+
+  // handle client-side only attribute
+  hash.cv_in_url = false;
+  if (hash.cv_url && hash.cv_url.length > 0) {
+    hash.cv_in_url = true;
+  }
   delete hash['user'];
   return hash;
 }

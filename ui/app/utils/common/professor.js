@@ -10,7 +10,7 @@ const {
   computed,
   get,
   set,
-  computed: { or, bool }
+  computed: { or, bool, not }
 } = Ember;
 
 
@@ -43,15 +43,43 @@ const FIELDS = computed('model.is_foreign', 'model.changeset.cv_in_url', functio
     }),
     field('cv_url', {
       hint: 'cv_url.hint',
+      required: bool('model.changeset.cv_in_url'),
       disabled: computed('model.changeset.cv_in_url', function() {
         let check = get(this, 'model.changeset.cv_in_url');
         if (!check) { Ember.run.once(this, () => set(this, 'model.changeset.cv_url', '')) };
+        if (check) { get(this, 'model.changeset').propertyDidChange('cv_professor'); }
         return !check;
       })
     }),
     fileField('cv_professor', 'professor', 'cv_professor', {
       readonly: or('user.is_verified', 'user.verification_pending'),
-      disabled: bool('model.changeset.cv_in_url')
+      required: not('model.changeset.cv_in_url'),
+      disabled: computed('model.changeset.cv_in_url', function() {
+        let check = get(this, 'model.changeset.cv_in_url');
+        let changed = get(this, 'model.cv_in_url') != check;
+        let cv = get(this, 'model.cv_professor');
+        if (!changed) { return; }
+
+        let prompt =  this.container.lookup("service:prompt");
+        if (check && cv && cv.content) { Ember.run.once(this, () => {
+          prompt.prompt('confirm.cv.professor.unset').then(() => {
+            let file = get(this, 'model.cv_professor'); 
+            file && file.content && file.content.destroyRecord().then(() => {
+              Ember.run.once(this, () => {
+                get(this, 'model').set('cv_professor', null);
+                get(this, 'model.changeset').set('cv_professor', null);
+              });
+            });
+          }).catch(() => {
+            Ember.run.once(this, () => {
+              get(this, 'model').set('cv_in_url', false);
+              get(this, 'model.changeset').set('cv_in_url', false);
+              get(this, 'model.changeset').set('cv_url', null);
+            });
+          });
+        }) };
+        return check;
+      })
     }, {
       replace: true
     }),
