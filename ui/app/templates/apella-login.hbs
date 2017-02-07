@@ -9,7 +9,7 @@
   }}
 
   {{#if userNotFound }}
-  {{toolbar-message warn=true message='user.not.found.error' button=(hash action='shibbolethRegister' message='register' icon='person')}}
+  {{toolbar-message warn=true message='user.not.found.error'}}
   {{/if}}
   {{#if userExists }}
   {{toolbar-message warn=true message='user.exists.error' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='person')}}
