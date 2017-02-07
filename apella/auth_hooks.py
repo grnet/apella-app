@@ -94,6 +94,7 @@ def verify_email(user, activate=True):
     Logic which gets executed when user visits the email verification url.
     """
     user.email_verified = True
+    user.email_verified_at = datetime.now()
     if activate:
         activate_user(user)
 
