@@ -1,11 +1,11 @@
-<md-container class={{concat 'layout-row ' (if disabled 'field-disabled')}} >
+<md-container class={{concat 'layout-row ' (if disabled 'field-disabled') (if errors.length ' ng-invalid')}} >
 <label class={{concat 'md-label raised nowrap padded table-label' (if errors.length ' invalid' '')}}>{{ label }}</label>
 
 {{#if inProgress}}
 {{paper-icon "rotate-right" spin=true size=25}}
 {{/if}}
 <span class="flex-grow"></span>
-{{#if (and canAdd (not readonly))}}
+{{#if (and canAdd (not readonly) (not disabled))}}
 <md-container class="layout-row layout-align-end">
 {{#paper-button disabled=inProgress onClick=(action 'handleAddClick')}}{{t 'file.field.add.file' }}{{/paper-button}}
 </md-container>
@@ -58,3 +58,4 @@
 </div>
 {{/if}}
 </md-input-container>
+{{yield}}
