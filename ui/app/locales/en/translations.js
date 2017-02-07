@@ -448,10 +448,10 @@ export default {
   'row.remove.confirm.message': 'Are you sure you want to remove this item?',
   'user.created': 'User has been created',
   'user.email_verification.success': 'Your e-mail has been successfully verified',
-  'user.email_verification.error': 'Error in e-mail verification',
+  'user.email_verification.error': 'E-mail verification error',
+  'user.email_verification.error.message': 'E-mail verification error',
   'email.not.verified': 'Your e-mail has not been verified',
   'user.not.email_verified.error': 'Your e-mail has not been verified',
-  'user.email_verification.error': 'E-mail verification error',
 
   // server errors
   'The two password fields didn\'t match.': 'The two password fields didn\'t match.',
@@ -459,4 +459,11 @@ export default {
   'enable.academic.login.prompt': 'Enable academic login',
   'enable.academic.login.label': 'Academic login',
   'candidate.upgrade.academic.prompt': 'Enable academic login',
+  'user.register.legacy.warning': 'The email address released by your institution is already in use',
+  'user.not.found.error': 'User not found',
+  'user.exists.error': 'User exists',
+  'user.migration.error': 'User migration error',
+  'user.not.verified.error': 'User not verified error',
+  'user.not.active.error': 'The user is not active',
+  'user.invalid.affiliation.error': 'The affiliation value released by your institution is not eligible.',
 };
