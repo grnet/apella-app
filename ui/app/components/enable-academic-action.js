@@ -18,7 +18,7 @@ export default Action.extend({
     label: 'enable.academic.login.label',
     text: true,
     icon: 'person',
-    confirm: true,
+    confirm: false,
     action: function(route, profile, args) {
       let id = profile.get('user_id');
       let url = ENV.APP.shibboleth_login_url + '?login=1&enable-user=' + id;
