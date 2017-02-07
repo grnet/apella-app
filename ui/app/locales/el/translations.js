@@ -246,6 +246,8 @@ export default {
   'field.no.files': 'Δεν υπάρχουν αρχεία',
   'file.upload.success': 'Επιτυχής μεταφόρτωση αρχείου',
   'file.upload.error': 'Σφάλμα κατά τη μεταφόρτωση αρχείου',
+  'delete.file.error': 'Δεν επιτρέπεται η διαγραφή του αρχείου',
+  'delete.file.success':  'Επιτυχής διαγραφή αρχείου;',
 
   userInterest: {
     info: 'Πατώντας το κουμπί «Αποθήκευση» θα αποθηκευτούν τα κριτήρια αναζήτησης, ώστε να ειδοποιηθείτε από το σύστημα σε περίπτωση καταχώρισης σχετικής θέσης στο μέλλον.',
@@ -461,6 +463,8 @@ export default {
 
   // server errors
   'The two password fields didn\'t match.': 'Το συνθηματικό και η επαλήθευση συνθηματικού πρέπει να ταιριάζουν.',
+  'This list may not be empty.': 'Δεν έχετε προσθέσει μέλη στο μητρώο',
+  'The fields department, type must make a unique set.': 'Υπάρχει ήδη αυτό το είδος μητρώου γι αυτό το τμήμα',
   'Unable to login with provided credentials.': 'Ανεπιτυχής είσοδος',
   'enable.academic.login.prompt': 'Σύνδεση μέσω οικείου φορέα',
   'enable.academic.login.label': 'Συνδεση',

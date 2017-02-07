@@ -248,6 +248,8 @@ export default {
   'field.no.files': 'No files',
   'file.upload.success': 'File upload success',
   'file.upload.error': 'File upload error',
+  'delete.file.error': 'Delete file error',
+  'delete.file.success': 'Delete file success',
 
   userInterest: {
     info: 'By pressing "Save" the search criteria will be saved, so that if a new position matches them you will be notified by the system.',
