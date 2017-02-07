@@ -46,15 +46,15 @@
 
 
     {{#if (not newUserSelected) }}
-      {{#paper-content class="md-padding no-vert-padding"}}
-          <p class="md-padding no-vert-padding">
+      {{#paper-content class="md-padding"}}
+          <p class="md-padding">
             {{t 'old.user.info'}}
           </p>
           {{ partial '_login_card' }}
       {{/paper-content}}
     {{else}}
-      {{#paper-content class="md-padding no-vert-padding"}}
-          <p class="md-padding no-vert-padding">
+      {{#paper-content class="md-padding"}}
+          <p class="md-padding">
             {{t 'new.user.info'}}
           </p>
           {{ partial '_register_card' }}
