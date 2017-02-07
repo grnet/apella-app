@@ -456,4 +456,7 @@ export default {
   // server errors
   'The two password fields didn\'t match.': 'The two password fields didn\'t match.',
   'Unable to login with provided credentials.': 'Unable to login with provided credentials.',
+  'enable.academic.login.prompt': 'Enable academic login',
+  'enable.academic.login.label': 'Academic login',
+  'candidate.upgrade.academic.prompt': 'Enable academic login',
 };

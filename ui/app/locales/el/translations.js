@@ -461,4 +461,7 @@ export default {
   // server errors
   'The two password fields didn\'t match.': 'Το συνθηματικό και η επαλήθευση συνθηματικού πρέπει να ταιριάζουν.',
   'Unable to login with provided credentials.': 'Ανεπιτυχής είσοδος',
+  'enable.academic.login.prompt': 'Σύνδεση μέσω οικείου φορέα',
+  'enable.academic.login.label': 'Οικειος φορεας',
+  'candidate.upgrade.academic.prompt': 'Σύνδεση μέσω οικείου φορέα',
 };
