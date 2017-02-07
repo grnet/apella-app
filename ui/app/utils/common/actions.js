@@ -125,7 +125,7 @@ const cancelCandidacy = {
 
 const deactivateUser = {
   label: 'deactivateUser',
-  icon: 'clear',
+  icon: 'cancel',
   accent: true,
   action(route, model) {
     model.set('is_active', false);
@@ -154,7 +154,7 @@ const deactivateUser = {
 
 const activateUser = {
   label: 'activateUser',
-  icon: 'done',
+  icon: 'check_circle',
   action(route, model) {
     model.set('is_active', true);
     let m = route.get('messageService')
@@ -182,7 +182,7 @@ const activateUser = {
 
 const verifyUser = {
   label: 'verify.user',
-  icon: 'done',
+  icon: 'check_circle',
   action: function(route, model) {
     let [url, token, messages] = call_utils(route, model);
     return fetch(url + 'verify_user/', {
@@ -224,7 +224,7 @@ const verifyUser = {
 
 const rejectUser = {
   label: 'reject.user',
-  icon: 'clear',
+  icon: 'cancel',
   accent: true,
   action: function(route, model) {
     let [url, token, messages] = call_utils(route, model);
@@ -268,7 +268,7 @@ const rejectUser = {
 const requestProfileChanges = {
   label: 'request.profile.changes',
   primary: true,
-  icon: 'compare_arrows',
+  icon: 'sync_problem',
   action: function(route, model) {
     let [url, token, messages] = call_utils(route, model);
     return fetch(url + 'request_changes/', {
