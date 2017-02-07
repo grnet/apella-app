@@ -303,9 +303,9 @@ def migrate_user(old_user, password=None):
 
     if password:
         new_user.set_password(password)
-        new_user.save()
     else:
         new_user.set_unusable_password()
+    new_user.save()
 
     logger.info(
         'created user %s from user_id %s' % (new_user.id, old_user.user_id))
