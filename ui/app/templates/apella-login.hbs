@@ -44,10 +44,6 @@
       {{ partial gen.partials.top }}
     {{/if}}
 
-    {{#paper-content class="layout-row md-padding "}}
-      {{#paper-button primary=true raised=true class=(concat 'flex-grow ' (if newUserSelected '' 'selected')) onClick=(action (mut newUserSelected) false)}}{{t 'old.user'}}{{/paper-button}}
-      {{#paper-button primary=true raised=true class=(concat 'flex-grow ' (if newUserSelected 'selected' '')) onClick=(action (mut newUserSelected) true)}}{{t 'new.user'}}{{/paper-button}}
-    {{/paper-content}}
 
     {{#if (not newUserSelected) }}
       {{#paper-content class="md-padding no-vert-padding"}}
