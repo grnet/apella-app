@@ -4,7 +4,7 @@ import ENV from 'ui/config/environment';
 import {FILE_FIELDS} from 'ui/utils/common/users';
 
 const {
-  merge, computed
+  merge, computed, get, set, inject
 } = Ember;
 
 function mergeProfileData(sessionData, profileResponse) {
@@ -30,10 +30,13 @@ function mergeProfileData(sessionData, profileResponse) {
 }
 
 export default Token.extend({
+
   init() {
     this._super();
     this.serverTokenEndpoint = ENV.APP.backend_host + '/auth/login/';
   },
+
+  gen: inject.service(),
 
   getUserProfile(token) {
     return $.ajax({
@@ -44,6 +47,18 @@ export default Token.extend({
         'Authorization': `Token ${token}`,
         'Accept': 'application/json'
       },
+    }).then((user) => {
+      if (user && user.user && user.user.can_set_academic) {
+        let gen = get(this, 'gen');
+        gen.get('gens').forEach((gen) => {
+          let name = get(gen, 'routeName');
+          if (!name.startsWith('auth')) {
+            set(gen, 'hasPermission', false);
+            set(gen, 'menuDisplay', false);
+          }
+        });
+      }
+      return user;
     });
   },
 

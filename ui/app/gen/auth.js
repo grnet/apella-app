@@ -246,6 +246,10 @@ export default AuthGen.extend({
     templateName: 'apella-login',
     routeMixins: [{
       handleEnableAcademic(token) {
+        if (token == "success") {
+          this.get('messageService').setSuccess('enable.academic.success');
+          return Ember.RSVP.Promise.resolve();
+        }
         let user = get(this, 'session.session.authenticated');
         if (!user) { throw new Error("not.authorized"); }
 
@@ -264,7 +268,9 @@ export default AuthGen.extend({
         }).then((resp) => {
           let err, msg;
           if (resp.status === 202) {
-            this.get('messageService').setSuccess('enable.academic.success');
+            window.location.hash = "#enable-academic=success";
+            window.location.reload();
+            return;
           } else {
             return resp.json().then((json) => {
               if (json && json.shibboleth) {

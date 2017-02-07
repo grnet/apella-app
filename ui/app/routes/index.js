@@ -16,6 +16,8 @@ export default Ember.Route.extend({
     if (get(this, 'session.isAuthenticated')) {
       let role = get(this, 'session.session.authenticated.role');
       transition.abort();
+      let set_academic = get(this, 'session.session.authenticated.can_set_academic');
+      if (set_academic) { return this.transitionTo('auth.profile'); }
       return this.transitionTo(ROLE_ROUTE_MAP[role] || DEFAULT_ROUTE);
     }
   }
