@@ -183,7 +183,10 @@ class CustomPasswordResetView(djoser_views.PasswordResetView):
             raise PermissionDenied({"email": "password.user.not.found"})
 
         new_user = migrate_username(active_old_users[0].username)
-        return [new_user]
+        if new_user:
+            return [new_user]
+        else:
+            raise PermissionDenied({"non_field_errors": "user.migration.error"})
 
 
 class CustomLogoutView(djoser_views.LogoutView):
