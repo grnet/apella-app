@@ -12,13 +12,22 @@ class Command(ApellaCommand):
             dest='dry_run',
             help='List users that will receive email'
         )
+        parser.add_argument(
+            '--institution',
+            dest='institution',
+            help='Select specified institution\'s users to receive email'
+        )
 
     def handle(self, *args, **options):
+        institution = options['institution']
         emails = OldUsers.objects. \
             exclude(permanent_auth_token__isnull=True). \
             exclude(permanent_auth_token__exact=''). \
             filter(role_status='ACTIVE', shibboleth_id='', passwd=''). \
             values_list('email', flat=True).distinct()
+
+        if institution:
+            emails = emails.filter(professor_institution_id=institution)
 
         dry_run = options['dry_run']
         for email in emails:
