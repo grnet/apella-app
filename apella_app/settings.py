@@ -15,6 +15,7 @@ DATA_DIR = os.environ.get('APELLA_DATA_DIR', '/var/lib/apella/data')
 RESOURCES_DIR = os.environ.get('APELLA_RESOURCES_DIR',
                                '/usr/lib/apella/resources')
 SETTINGS_DIR = os.environ.get('APELLA_SETTINGS_DIR', '/etc/apella')
+LOGFILE = os.environ.get('APELLA_LOGFILE', '/var/log/apella/apella.log')
 SETTINGS_FILE = 'settings.conf'
 
 MEDIA_ROOT = os.path.join(DATA_DIR, 'files')
@@ -183,7 +184,7 @@ if not LOGGING:
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
-                'filename': os.path.join(DATA_DIR, 'apella.log'),
+                'filename': LOGFILE,
                 'formatter': 'verbose'
             },
             'console': {
