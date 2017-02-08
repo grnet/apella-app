@@ -15,7 +15,7 @@ from django.core.exceptions import ValidationError, PermissionDenied
 from django.db import transaction
 
 from apella.models import ApellaUser, Professor, MultiLangFields, \
-    RegistrationToken
+    RegistrationToken, Institution
 from apella.models import OldApellaUserMigrationData as OldUser
 from apella import auth_hooks
 from apella.util import urljoin
@@ -103,7 +103,7 @@ def get_display_data(shib_data):
     return result
 
 
-
+SHIBBOLETH_IDP_WHITELIST = getattr(settings, 'SHIBBOLETH_IDP_WHITELIST', [])
 def is_eligible_shibboleth_user(data, legacy=False):
     affiliation = data.get('affiliation', None)
     if not affiliation:
@@ -120,6 +120,17 @@ def is_eligible_shibboleth_user(data, legacy=False):
     if not faculty:
         logger.info("no faculty affiliation %r", affiliation)
         raise ValidationError('no.faculty')
+
+    eptid = data.get('eptid', None)
+    if not eptid:
+        logger.info("non accepted eptid %r", eptid)
+        raise ValidationError('no.eptid')
+
+    institutions = Institution.objects.filter(idp__startswith=eptid)
+    if not institutions.exists() and eptid not in SHIBBOLETH_IDP_WHITELIST:
+        logger.info("non accepted eptid %r", eptid)
+        raise ValidationError('non.accepted.idp')
+
     return data
 
 

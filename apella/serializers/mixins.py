@@ -1,8 +1,9 @@
 from django.conf import settings
 from rest_framework import serializers
 from rest_framework.utils import model_meta
+from rest_framework.serializers import ValidationError
 
-from apella.models import ApellaUser, Position, InstitutionManager
+from apella.models import ApellaUser, Position, InstitutionManager, Institution
 from apella import auth_hooks
 
 
@@ -140,3 +141,23 @@ class Assistants(NestedWritableObjectsMixin):
         auth_hooks.verify_user(assistant)
         assistant.save()
         return assistant
+
+
+class Professors(object):
+
+    def validate_institution(self, value):
+        user = self.instance and self.instance.user
+        if user and user.shibboleth_idp:
+            if not value or (value.idp != user.shibboleth_idp):
+                raise ValidationError("invalid.institution")
+
+        if user.shibboleth_idp:
+            idp = user.shibboleth_idp
+            org = user.shibboleth_schac_home_organization
+            insts = Institution.objects.filter(idp__startswith=idp)
+            if insts.count > 1:
+                if user.shibboleth_schac_home_organization:
+                    insts = insts.filter(schac_home_organization=org)
+                    if not value in insts:
+                        raise ValidationError("invalid.institution")
+        return value
