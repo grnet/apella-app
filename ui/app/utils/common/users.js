@@ -32,7 +32,9 @@ const USER_FIELDS_ALL = [
   'role',
   'id_passport',
   'mobile_phone_number',
-  'home_phone_number'
+  'home_phone_number',
+  'shibboleth_idp',
+  'shibboleth_schac_home_organization'
 ]
 
 const USER_FIELDS = [

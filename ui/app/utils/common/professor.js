@@ -87,7 +87,21 @@ const FIELDS = computed('model.is_foreign', 'model.changeset.cv_in_url', functio
   ];
 
   let f_domestic = [
-    field('institution', {displayAttr: 'title_current'}),
+    field('institution', {
+      query: computed('user.shibboleth_idp', function() {
+        let idp = get(this, 'user.shibboleth_idp');
+        return function(table, store, field, params) {
+          var model = get(field, 'modelName');
+          params = params || {};
+          if (idp && idp.length > 0) { params.idp = idp; }
+          if (params) {
+            return store.query(model, params);
+          }
+          return store.findAll(model);
+        }
+      }),
+      displayAttr: 'title_current'
+    }),
     field('department', {displayAttr: 'title_current'}),
     field('discipline_in_fek',{
       hint: 'discipline_in_fek.hint',

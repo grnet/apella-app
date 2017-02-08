@@ -31,6 +31,9 @@ export default DS.Model.extend({
   father_name_current: computeI18N('father_name'),
   login_method: DS.attr('string'),
 
+  shibboleth_idp: DS.attr(),
+  shibboleth_schac_home_organization: DS.attr(),
+
   full_name_current: computed('first_name_current', 'last_name_current', function(){
     return `${this.get('first_name_current')} ${this.get('last_name_current')}`
   }),
