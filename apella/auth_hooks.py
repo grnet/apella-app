@@ -14,7 +14,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.serializers import ValidationError
 from rest_framework.exceptions import PermissionDenied
 
-from apella.models import RegistrationToken, ApellaUser
+from apella.models import RegistrationToken, ApellaUser, Institution
 from apella.models import OldApellaUserMigrationData as OldUser
 from apella.migration_functions import migrate_username, migrate_shibboleth_id
 
@@ -44,6 +44,25 @@ def validate_new_user(validate, attrs):
     return validate(attrs)
 
 
+def init_user_from_remote_data(user, remote):
+    eptid = remote.get('eptid', None)
+    org = remote.get('schac_home_organization', None)
+    institutions = []
+    if eptid:
+        user.user.shibboleth_idp = eptid
+
+    if eptid and hasattr(user, 'institution'):
+        institutions = Institution.objects.filter(idp__startswith=eptid)
+
+    if org:
+        user.user.shibboleth_schac_home_organization = org
+        if institutions.count() > 1:
+            institutions = institutions.filter(schac_home_organization=org)
+
+    if institutions.count() == 1 and not user.institution:
+        user.institution = institutions.get()
+
+
 def register_user(save, data, *args, **kwargs):
     """
     Create a new user record.
@@ -70,6 +89,8 @@ def register_user(save, data, *args, **kwargs):
         user.user.remote_data = token.remote_data
         user.user.set_unusable_password()
         user.user.login_method = 'academic'
+        init_user_from_remote_data(user, json.loads(token.remote_data))
+
         # automatically activate shibboleth users
         activate_user(user.user)
         if user.user.email == json.loads(token.remote_data).get('mail'):
@@ -389,6 +410,7 @@ def enable_shibboleth(user, identifier, data):
                 user.pk, identifier)
 
     validate_shibboleth_id_unique(identifier)
+    init_user_from_remote_data(user.professor, data)
     user.set_unusable_password()
     user.login_method = 'academic'
     user.shibboleth_id = identifier
