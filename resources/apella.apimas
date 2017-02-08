@@ -91,6 +91,18 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .boolean: {}
+                shibboleth_idp:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                shibboleth_schac_home_organization:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
                 id_passport:
                     .cli_option: {}
                     .field: {}
@@ -864,6 +876,18 @@ spec:
                             .drf_field: {}
                             .boolean: {}
                             .readonly: {}
+                        shibboleth_idp:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        shibboleth_schac_home_organization:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
                         id_passport:
                             .cli_option: {}
                             .field: {}
@@ -1227,6 +1251,18 @@ spec:
                             .drf_field: {}
                             .boolean: {}
                             .readonly: {}
+                        shibboleth_idp:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        shibboleth_schac_home_organization:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
                         id_passport:
                             .cli_option: {}
                             .field: {}
@@ -1547,6 +1583,18 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .boolean: {}
+                            .readonly: {}
+                        shibboleth_idp:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        shibboleth_schac_home_organization:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
                             .readonly: {}
                         id_passport:
                             .cli_option: {}
@@ -2341,6 +2389,18 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .boolean: {}
+                            .readonly: {}
+                        shibboleth_idp:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        shibboleth_schac_home_organization:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
                             .readonly: {}
                         id_passport:
                             .cli_option: {}
