@@ -5,7 +5,8 @@ select
     r.user_id candidate_user_id,
     c.opentoothercandidates open_to_other_candidates,
     pc.createdat created_at,
-    pc.updatedat updated_at
+    pc.updatedat updated_at,
+    c.withdrawndate as withdrawn_at
 from
     position p,
     positionphase pp,

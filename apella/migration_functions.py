@@ -460,10 +460,11 @@ def migrate_candidacy_files(new_candidacy):
 
 @transaction.atomic
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
+    state = 'cancelled' if old_candidacy.withdrawn_at else 'posted'
     candidacy = Candidacy.objects.create(
         candidate=new_candidate,
         position=new_position,
-        state='posted',
+        state=state,
         others_can_view=bool(
             re.match('t', old_candidacy.open_to_other_candidates, re.I)),
         old_candidacy_id=int(old_candidacy.candidacy_serial),

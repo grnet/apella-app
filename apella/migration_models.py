@@ -121,6 +121,7 @@ class OldApellaCandidacyMigrationData(models.Model):
     open_to_other_candidates = models.TextField()
     created_at = models.DateTimeField(null=True)
     updated_at = models.DateTimeField(null=True)
+    withdrawn_at = models.DateTimeField(null=True)
 
 
 class OldApellaInstitutionMigrationData(models.Model):
