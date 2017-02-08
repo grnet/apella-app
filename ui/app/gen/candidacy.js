@@ -32,7 +32,11 @@ let POSITION_FIELDSET =  {
 let CANDIDATE_FIELDSET =  {
       label: 'candidacy.candidate_section.title',
       text: 'candidacy.candidate_section.subtitle',
-      fields: [disable_field('candidate'),
+      fields: [
+        field('candidate', {
+          disabled: true,
+          displayAttr: 'full_name_current',
+        }),
         fileField('cv', 'candidate', 'cv', {
           readonly: true,
         }),
