@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'ui/config/environment';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
@@ -93,7 +94,7 @@ const FIELDS = computed('model.is_foreign', 'model.changeset.cv_in_url', functio
         return function(table, store, field, params) {
           var model = get(field, 'modelName');
           params = params || {};
-          if (idp && idp.length > 0) { params.idp = idp; }
+          if (idp && idp.length > 0 && (ENV.APP.idp_whitelist || []).indexOf(idp) === -1) { params.idp = idp; }
           if (params) {
             return store.query(model, params);
           }
