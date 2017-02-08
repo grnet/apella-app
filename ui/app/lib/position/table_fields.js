@@ -25,11 +25,10 @@ const candidaciesField = field('candidacies', {
   modelMeta: {
     row: {
       fields: ['id',
-        i18nField('candidate.last_name', {label: 'last_name.label'}),
-        i18nField('candidate.first_name', {label: 'first_name.label'}),
-        i18nField('candidate.father_name', {label: 'father_name.label'}),
+        i18nField('candidate.full_name', {label: 'last_name.label'}),
         field('submitted_at_format', {label: 'submitted_at.label'}),
-        field('updated_at_format', {label: 'updated_at.label'})
+        field('updated_at_format', {label: 'updated_at.label'}),
+        field('state_verbose', {label: 'candidacy.state'})
       ],
       actions: ['goToDetails'],
       actionsMap: {
