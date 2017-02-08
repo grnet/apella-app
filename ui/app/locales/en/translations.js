@@ -114,6 +114,8 @@ export default {
   'Successful': 'Successful',
   'Failed': 'Failed',
   'Revoked': 'Revoked',
+  'Helpdesk Admin': 'Helpdesk Admin',
+  'Helpdesk User': 'Helpdesk User',
   'Assistant': 'Assistant',
   'Manager': 'Manager',
   'Candidate': 'Candidate',

@@ -113,6 +113,8 @@ export default {
   'Successful': 'Στελεχωμένη',
   'Failed': 'Άγονη',
   'Revoked': 'Αναπομπή',
+  'Helpdesk Admin': 'Υπεύθυνος helpdesk',
+  'Helpdesk User': 'Χρήστης helpdesk',
   'Assistant': 'Βοηθός υπεύθυνου ιδρύματος',
   'Manager': 'Υπεύθυνος ιδρύματος',
   'Candidate': 'Υποψήφιος',
