@@ -117,8 +117,11 @@ class PositionMixin(object):
                 department__in=user.institutionmanager.
                 departments.all())
         elif user.is_professor():
+            position_ids = Candidacy.objects.filter(
+                candidate=user).values_list('position_id', flat=True)
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=datetime.now()) |
+                Q(id__in=position_ids) |
                 Q(committee=user.professor.id) |
                 Q(electors=user.professor.id))
         elif user.is_candidate():
