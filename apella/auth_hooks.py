@@ -131,11 +131,17 @@ def authenticate_user(**kwargs):
     username = kwargs.get('username', None)
     password = kwargs.get('password', None)
 
-    if ApellaUser.objects.filter(username=username).exists():
-        m = "Not looking for old username {u!r}: it exists as ApellaUSer"
-        m = m.format(u=username)
-        logger.info(m)
-        return None
+    try:
+        user = ApellaUser.objects.get(username=username)
+        if user.has_usable_password():
+            m = ("Not looking for old username {u!r}: it exists as "
+                 "ApellaUser with a usable password")
+            m = m.format(u=username)
+            logger.info(m)
+            return None
+    except ApellaUser.DoesNotExist:
+        pass
+
 
     old_users = OldUser.objects.filter(username=username)
     if not old_users:
