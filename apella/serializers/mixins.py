@@ -154,7 +154,7 @@ class Professors(object):
         if user.shibboleth_idp:
             idp = user.shibboleth_idp
             org = user.shibboleth_schac_home_organization
-            insts = Institution.objects.filter(idp__startswith=idp)
+            insts = Institution.objects.filter(idp=idp)
             if insts.count > 1:
                 if user.shibboleth_schac_home_organization:
                     insts = insts.filter(schac_home_organization=org)

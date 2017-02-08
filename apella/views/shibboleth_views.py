@@ -121,14 +121,14 @@ def is_eligible_shibboleth_user(data, legacy=False):
         logger.info("no faculty affiliation %r", affiliation)
         raise ValidationError('no.faculty')
 
-    eptid = data.get('eptid', None)
-    if not eptid:
-        logger.info("non accepted eptid %r", eptid)
-        raise ValidationError('no.eptid')
+    idp = data.get('identity_provider', None)
+    if not idp:
+        logger.info("non accepted idp %r", idp)
+        raise ValidationError('no.idp')
 
-    institutions = Institution.objects.filter(idp__startswith=eptid)
-    if not institutions.exists() and eptid not in SHIBBOLETH_IDP_WHITELIST:
-        logger.info("non accepted eptid %r", eptid)
+    institutions = Institution.objects.filter(idp=idp)
+    if not institutions.exists() and idp not in SHIBBOLETH_IDP_WHITELIST:
+        logger.info("non accepted idp %r", idp)
         raise ValidationError('non.accepted.idp')
 
     return data

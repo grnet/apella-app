@@ -45,14 +45,14 @@ def validate_new_user(validate, attrs):
 
 
 def init_user_from_remote_data(user, remote):
-    eptid = remote.get('eptid', None)
+    idp = remote.get('identity_provider', None)
     org = remote.get('schac_home_organization', None)
     institutions = []
-    if eptid:
-        user.user.shibboleth_idp = eptid
+    if idp:
+        user.user.shibboleth_idp = idp
 
-    if eptid and hasattr(user, 'institution'):
-        institutions = Institution.objects.filter(idp__startswith=eptid)
+    if idp and hasattr(user, 'institution'):
+        institutions = Institution.objects.filter(idp=idp)
 
     if org:
         user.user.shibboleth_schac_home_organization = org
