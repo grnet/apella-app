@@ -507,7 +507,8 @@ def migrate_candidate_to_assistant_professor(old_user, new_user):
     ap = OldApellaCandidateAssistantProfessorMigrationData.objects.get(
         user_id=old_user.user_id)
     institution = get_obj_by_name_el(ap.institution, Institution)
-    department = get_obj_by_name_el(ap.department, Department)
+    department = Department.objects.get(
+        title__el=ap.department, institution=institution)
     old_user.professor_institution_id = institution.id
     old_user.professor_department_id = department.id
     old_user.role_status = ap.account_status
