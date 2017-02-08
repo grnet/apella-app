@@ -143,11 +143,13 @@ class Assistants(NestedWritableObjectsMixin):
         return assistant
 
 
+SHIBBOLETH_IDP_WHITELIST = getattr(settings, 'SHIBBOLETH_IDP_WHITELIST', [])
 class Professors(object):
 
     def validate_institution(self, value):
         user = self.instance and self.instance.user
-        if user and user.shibboleth_idp:
+        if user and user.shibboleth_idp and \
+                not user.shibboleth_idp in SHIBBOLETH_IDP_WHITELIST:
             if not value or (value.idp != user.shibboleth_idp):
                 raise ValidationError("invalid.institution")
 
