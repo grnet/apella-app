@@ -242,74 +242,87 @@ def migrate_username(username, password=None):
             continue
         if old_user.role == 'assistant':
             return None
-        new_user = migrate_user(old_user, password)
+        new_user = migrate_user(old_user, password=password)
         if new_user:
             return new_user
 
 
 @transaction.atomic
-def migrate_shibboleth_id(shibboleth_id):
+def migrate_shibboleth_id(shibboleth_id, migration_key):
     old_users = OldApellaUserMigrationData.objects.filter(
         shibboleth_id=shibboleth_id)
     for old_user in old_users:
         if professor_exists(old_user.user_id) and old_user.role == 'candidate':
             continue
-        new_user = migrate_user(old_user)
+        new_user = migrate_user(
+            old_user, shibboleth_id=shibboleth_id, migration_key=migration_key)
         if new_user:
             return new_user
 
 
 @transaction.atomic
-def migrate_user(old_user, password=None):
-    if ApellaUser.objects.filter(username=old_user.username).exists():
-        logger.error(
-            'a user with username %s already exists, user_id: %s' %
-            (old_user.username, old_user.user_id))
-        return
+def migrate_user(old_user, password=None, shibboleth_id=None, migration_key=None):
+    new_user = None
     if ApellaUser.objects.filter(email=old_user.email).exists():
-        logger.error(
-            'a user with email %s already exists, user_id: %s' %
-            (old_user.email, old_user.user_id))
-        return
+        new_user = ApellaUser.objects.get(email=old_user.email)
 
-    first_name = MultiLangFields.objects.create(
-        el=old_user.name_el,
-        en=old_user.name_en)
-    last_name = MultiLangFields.objects.create(
-        el=old_user.surname_el,
-        en=old_user.surname_en)
-    father_name = MultiLangFields.objects.create(
-        el=old_user.fathername_el,
-        en=old_user.fathername_en)
+    if not new_user:
+        first_name = MultiLangFields.objects.create(
+            el=old_user.name_el,
+            en=old_user.name_en)
+        last_name = MultiLangFields.objects.create(
+            el=old_user.surname_el,
+            en=old_user.surname_en)
+        father_name = MultiLangFields.objects.create(
+            el=old_user.fathername_el,
+            en=old_user.fathername_en)
 
-    if not old_user.username or old_user.username == '':
-        username = 'user' + old_user.user_id
-    else:
-        username = old_user.username
+        if not old_user.username or old_user.username == '':
+            username = 'user' + old_user.user_id
+        else:
+            username = old_user.username
 
-    new_user = ApellaUser.objects.create(
-        username=username,
-        role=old_user.role,
-        first_name=first_name,
-        last_name=last_name,
-        father_name=father_name,
-        email=old_user.email,
-        id_passport=old_user.person_id_number,
-        mobile_phone_number=old_user.mobile,
-        home_phone_number=old_user.phone,
-        is_active=True,
-        email_verified=True,
-        old_user_id=int(old_user.user_id))
+        try:
+            new_user = ApellaUser.objects.create(
+                username=username,
+                role=old_user.role,
+                first_name=first_name,
+                last_name=last_name,
+                father_name=father_name,
+                email=old_user.email,
+                id_passport=old_user.person_id_number,
+                mobile_phone_number=old_user.mobile,
+                home_phone_number=old_user.phone,
+                is_active=True,
+                email_verified=True,
+                old_user_id=int(old_user.user_id))
+            logger.info(
+                'created user %s from user_id %s' % (new_user.id, old_user.user_id))
+        except IntegrityError as e:
+            logger.error(
+                'failed to create new user from %s' %  old_user.user_id)
+            logger.error(e)
+            return
 
     if password:
         new_user.set_password(password)
     else:
         new_user.set_unusable_password()
+
+    if shibboleth_id and migration_key:
+        new_user.shibboleth_id = shibboleth_id
+        new_user.shibboleth_migration_key = migration_key
+        new_user.login_method = 'academic'
     new_user.save()
 
-    logger.info(
-        'created user %s from user_id %s' % (new_user.id, old_user.user_id))
+    if not old_user.migrated_at:
+        migrate_user_role(old_user, new_user)
 
+    old_user.migrated_at = datetime.now()
+    old_user.save()
+    return new_user
+
+def migrate_user_role(old_user, new_user):
     role = old_user.role
     if role == 'candidate':
         if candidate_assistant_professor_exists(old_user.user_id):
@@ -329,21 +342,16 @@ def migrate_user(old_user, password=None):
         logger.info('created professor %s' % professor.id)
         migrate_user_profile_files(old_user, new_user)
         migrate_candidacies(candidate_user=new_user)
-    elif role == 'institutionmanager' or role == 'assistant':
+    elif role == 'institutionmanager':
         institutionmanager = migrate_institutionmanager(old_user, new_user)
         logger.info('created institution manager %s' % institutionmanager.id)
         department_ids = Department.objects.filter(
             institution=institutionmanager.institution).values_list(
                 'id', flat=True)
-        if role == 'institutionmanager':
-            old_positions = OldApellaPositionMigrationData.objects.filter(
-                department_id__in=map(str, department_ids))
-            for old_position in old_positions:
-                migrate_position(old_position, institutionmanager)
-
-    old_user.migrated_at = datetime.now()
-    old_user.save()
-    return new_user
+        old_positions = OldApellaPositionMigrationData.objects.filter(
+            department_id__in=map(str, department_ids))
+        for old_position in old_positions:
+            migrate_position(old_position, institutionmanager)
 
 
 @transaction.atomic
