@@ -24,6 +24,7 @@ def config(request):
     resources = load_resources()
     permissions = load_permissions()
     holidays = load_holidays()
+    idp_whitelist = getattr(settings, 'SHIBBOLETH_IDP_WHITELIST', [])
 
     config_data = {
         'resources': resources,
@@ -33,7 +34,8 @@ def config(request):
         'prefix': prefix,
         'api_endpoint': api_endpoint,
         'backend_host': backend_host,
-        'shibboleth_login_url': shibboleth_login_url
+        'shibboleth_login_url': shibboleth_login_url,
+        'idp_whitelist': idp_whitelist
     }
     return HttpResponse(json.dumps(config_data),
                         content_type='application/json')
