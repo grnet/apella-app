@@ -77,10 +77,8 @@ let fields_members_table = [
     field('user_id', {type: 'string', dataKey: 'user__id'}),
     i18nUserSortField('last_name', {label: 'last_name.label'}),
     i18nField('first_name', {label: 'first_name.label'}),
-    'is_foreign_descr',
     field('institution_global', {label: 'institution.label'}),
     i18nField('department.title', {label: 'department.label'}),
-    'rank_verbose',
     'discipline_text'
 ];
 
