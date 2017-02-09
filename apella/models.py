@@ -181,7 +181,6 @@ class ApellaFile(models.Model):
     updated_at = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
-        self.updated_at = timezone.now()
         super(ApellaFile, self).save(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):

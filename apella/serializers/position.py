@@ -139,7 +139,8 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
         source=source,
         file_kind=existing_file.file_kind,
         source_id=candidacy.id,
-        description=existing_file.description)
+        description=existing_file.description,
+        updated_at=timezone.now())
     with open(existing_file.file_path.path, 'r') as f:
         new_file.file_path.save(existing_file.filename, File(f))
     return new_file
