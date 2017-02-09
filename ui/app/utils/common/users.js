@@ -138,7 +138,7 @@ const USER_FIELDSET_EDIT = {
   label: 'fieldsets.labels.user_info',
   fields: USER_FIELDS_EDIT,
   layout: {
-    flex: [50, 50, 50, 50, 33, 33, 33, 50]
+    flex: [50, 50, 33, 33, 33, 33, 33, 33]
   }
 }
 
