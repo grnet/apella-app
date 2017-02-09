@@ -1,7 +1,6 @@
 import json
 import urlparse
 
-from apella.permissions.permission_rules import PERMISSION_RULES
 from apella.common import load_resources, load_permissions, load_holidays
 from django.conf import settings
 from django.core.urlresolvers import reverse

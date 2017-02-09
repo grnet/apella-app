@@ -7,7 +7,6 @@ from django.conf import settings
 
 from apimas.modeling.core.exceptions import ApimasException
 from collections import defaultdict
-from apella.permissions.permission_rules import PERMISSION_RULES
 
 VALIDATION_SCHEMA = {
     'root': {
@@ -36,7 +35,7 @@ def rule_to_dict(data, args):
 
 def load_permissions():
     PERMISSIONS = defaultdict(lambda: dict)
-    for rule in PERMISSION_RULES:
+    for rule in settings.PERMISSION_RULES:
         rule_to_dict(PERMISSIONS, list(rule))
     return PERMISSIONS
 
