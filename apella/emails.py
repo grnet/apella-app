@@ -27,9 +27,13 @@ def send_new_credentials_to_old_users_email(old_users):
         )
 
 
-def send_user_email(user, template_subject, template_body):
+def send_user_email(user, template_subject, template_body, extra_context=()):
     subject = render_to_string(template_subject).replace('\n', ' ')
-    body = render_to_string(template_body, {'user': user})
+    template_context = {}
+    if extra_context:
+        template_context.update(extra_context)
+    template_context['user'] = user
+    body = render_to_string(template_body, template_context)
     sender = settings.DEFAULT_FROM_EMAIL
     send_mail(
         subject,

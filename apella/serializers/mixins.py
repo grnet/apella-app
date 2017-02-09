@@ -3,8 +3,10 @@ from rest_framework import serializers
 from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
-from apella.models import ApellaUser, Position, InstitutionManager, Institution
+from apella.models import ApellaUser, Position, InstitutionManager, \
+    Institution, Registry
 from apella import auth_hooks
+from apella.emails import send_user_email
 
 
 class ValidatorMixin(object):
@@ -163,3 +165,40 @@ class Professors(object):
                     if not value in insts:
                         raise ValidationError("invalid.institution")
         return value
+
+
+def send_registry_emails(members, department):
+    department_title_el = department.title.el
+    department_title_en = department.title.en
+    institution_title_el = department.institution.title.el
+    institution_title_en = department.institution.title.en
+
+    for professor in members:
+        send_user_email(
+            professor.user,
+            'apella/emails/registry_add_member_to_member_subject.txt',
+            'apella/emails/registry_add_member_to_member_body.txt',
+            extra_context={
+                'department_title_el': department_title_el,
+                'department_title_en': department_title_en,
+                'institution_title_el': institution_title_el,
+                'institution_title_en': institution_title_en
+            }
+        )
+
+
+class Registries(object):
+    def create(self, validated_data):
+        members = validated_data.get('members', [])
+        department = validated_data.get('department', None)
+        send_registry_emails(members, department)
+        return super(Registries, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        department = validated_data.get('department', None)
+        members_before = instance.members.all()
+        members_after = validated_data.get('members', [])
+        members_to_send = [member for member in members_after
+                if member not in members_before]
+        send_registry_emails(members_to_send, department)
+        return super(Registries, self).update(instance, validated_data)
