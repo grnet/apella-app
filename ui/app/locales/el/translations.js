@@ -467,6 +467,7 @@ export default {
   'The two password fields didn\'t match.': 'Το συνθηματικό και η επαλήθευση συνθηματικού πρέπει να ταιριάζουν.',
   'This list may not be empty.': 'Δεν έχετε προσθέσει μέλη στο μητρώο',
   'The fields department, type must make a unique set.': 'Υπάρχει ήδη αυτό το είδος μητρώου γι αυτό το τμήμα',
+  'You have already submitted a candidacy for this position': 'Έχετε ήδη υποβάλει υποψηφιότητα για αυτή τη θέση',
   'Unable to login with provided credentials.': 'Ανεπιτυχής είσοδος',
   'enable.academic.login.prompt': 'Σύνδεση μέσω οικείου φορέα',
   'enable.academic.login.label': 'Συνδεση',
