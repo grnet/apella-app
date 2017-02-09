@@ -200,6 +200,7 @@ export default {
   'dep_number.label': 'Αριθμός μελών Δ.Ε.Π.',
   'code.label': 'Κωδικός',
   'old_code.label': 'Παλιός κωδικός',
+  'position.old_code.label': 'Παλιός κωδικός θέσης',
   'position.code.label': 'Κωδικός θέσης',
   'position.code_and_title.label': 'Κωδικός - Τίτλος θέσης',
   'position.title.label': 'Τίτλος θέσης',

@@ -12,7 +12,9 @@ const {
         getOwner
       } = Ember;
 
-let POSITION_FIELDS = ['position', 'position.title',
+let POSITION_FIELDS = [
+    'position',
+    'position.old_code',
     'position.department.institution.title_current',
     'position.department.title_current', 'position.discipline',
     'position.fek', 'position.fek_posted_at_format',
@@ -24,7 +26,7 @@ let POSITION_FIELDSET =  {
       text: 'candidacy.position_section.subtitle',
       fields: _.map(POSITION_FIELDS, disable_field),
       layout: {
-        flex: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30 ]
+        flex: [60, 30, 30, 30, 30, 30, 30, 30, 30, 30 ]
       },
       flex: 100
 };

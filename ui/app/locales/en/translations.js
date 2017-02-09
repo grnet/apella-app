@@ -201,6 +201,7 @@ export default {
   'dep_number.label': 'Number of teaching staff',
   'code.label': 'Code',
   'old_code.label': 'Old code',
+  'position.old_code.label': 'Position old code',
   'position.code.label': 'Position code',
   'position.code_and_title.label': 'Position code - Title',
   'position.title.label': 'Position Title',
