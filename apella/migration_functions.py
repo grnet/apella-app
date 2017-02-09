@@ -248,7 +248,7 @@ def migrate_username(username, password=None):
 
 
 @transaction.atomic
-def migrate_shibboleth_id(shibboleth_id, migration_key):
+def migrate_shibboleth_id(shibboleth_id, migration_key=None):
     old_users = OldApellaUserMigrationData.objects.filter(
         shibboleth_id=shibboleth_id)
     for old_user in old_users:
