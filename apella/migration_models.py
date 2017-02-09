@@ -84,6 +84,7 @@ class OldApellaFileMigrationData(models.Model):
     file_path = models.TextField()
     file_description = models.TextField()
     original_name = models.TextField()
+    updated_at = models.DateTimeField(null=True)
 
 
 class OldApellaPositionMigrationData(models.Model):
@@ -110,8 +111,8 @@ class OldApellaCandidacyFileMigrationData(models.Model):
     file_type = models.TextField()
     file_path = models.TextField()
     file_description = models.TextField()
-    status = models.TextField()
     original_name = models.TextField()
+    updated_at = models.DateTimeField(null=True)
 
 
 class OldApellaCandidacyMigrationData(models.Model):

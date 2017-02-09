@@ -7,10 +7,9 @@ select
     fh.type as file_type,
     fb.storedfilepath file_path,
     fb.originalfilename original_name,
-    pp.status status
+    fb.date updated_at
 from
     position p,
-    positionphase pp,
     positioncandidacies pc,
     candidacy c,
     (   select
@@ -30,7 +29,6 @@ from
     fileheader fh,
     filebody fb
 where
-    p.phase_id = pp.id
     and pc.position_id = p.id
     and pc.id = c.candidacies_id
     and (cf.candidacy_id = c.id or cf.candidate_id = c.candidate_id)

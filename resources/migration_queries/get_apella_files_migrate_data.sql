@@ -5,7 +5,8 @@ select
     fh.type file_type,
     fh.description file_description,
     fb.storedfilepath file_path,
-    fb.originalfilename original_name
+    fb.originalfilename original_name,
+    fb.date updated_at
 from
     users u,
     fileheader fh,
