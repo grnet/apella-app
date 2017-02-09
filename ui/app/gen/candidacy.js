@@ -247,27 +247,38 @@ export default ApellaGen.extend({
     },
     getModel(params) {
       var self = this;
+      var store = get(this, 'store');
       if (params.position) {
-        let position = get(self,'store').findRecord('position', params.position);
+        let position = store.findRecord('position', params.position);
         let user_id = get(this, 'session.session.authenticated.user_id');
         let role = get(this, 'session.session.authenticated.role');
-        let user = get(self, 'store').findRecord('user', user_id);
-        return position.then(function(position){
-          let c = self.store.createRecord('candidacy', {
+        let user = store.findRecord('user', user_id);
+        let me = store.findRecord('profile', 'me');
+
+        return position.then(function(position) {
+          let c = store.createRecord('candidacy', {
             position: position,
           });
-          if (role != 'helpdeskadmin') {
-            return user.then(function(user) {
-              set(c, 'candidate', user);
-              return c
-            }, function(error) {
-              self.transitionTo('candidacy.index');
-            })
-          } else {
-            return c
+          if (role == 'helpdeskadmin') {
+            return c;
           }
-        }, function(error) {
-          self.transitionTo('candidacy.index')
+          return me.then(function(me) {
+            let promises = [
+              user,
+              get(me, 'cv'),
+              get(me, 'diplomas'),
+              get(me, 'publications')
+            ];
+
+            return Ember.RSVP.all(promises).then((res) => {
+                set(c, 'candidate', res[0]);
+                set(c, 'cv', res[1]);
+                set(c, 'diplomas', res[2]);
+                set(c, 'publications', res[3]);
+                return c
+            });
+
+          })
         })
       }
       this.transitionTo('candidacy.index')
