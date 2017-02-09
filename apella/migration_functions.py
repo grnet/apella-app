@@ -166,13 +166,14 @@ def migrate_file(old_file, new_user, source, source_id):
             'failed to migrate file, unknown file_type %s for %s' %
             (old_file.file_type, source))
         return
+    updated_at = old_file.updated_at if old_file.updated_at else datetime.now()
     new_file = ApellaFile(
         owner=new_user,
         description=old_file.file_description,
         file_kind=FILE_KINDS_MAPPING[source][old_file.file_type],
         source=source,
         source_id=source_id,
-        updated_at=old_file.updated_at)
+        updated_at=updated_at)
     old_file_path = os.path.join(
         settings.OLD_APELLA_MEDIA_ROOT, old_file.file_path)
     new_file_path = os.path.join(
