@@ -293,7 +293,7 @@ export default {
     label: {
       position: 'Position',
       state: 'State',
-      others_can_view: 'Visible to others',
+      others_can_view: 'Other Candidates are allowed to access the data of my candidacy',
       cv: 'Curriculum Vitae',
       diploma: 'Diplomas',
       publication: 'Publications',
