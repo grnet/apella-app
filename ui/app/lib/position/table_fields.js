@@ -30,10 +30,6 @@ const candidaciesField = field('candidacies', {
         field('updated_at_format', {label: 'updated_at.label'}),
         field('state_verbose', {label: 'candidacy.state'})
       ],
-      actions: ['goToDetails'],
-      actionsMap: {
-        goToDetails: goToDetails
-      }
     },
   },
   displayComponent: 'gen-display-field-table',
