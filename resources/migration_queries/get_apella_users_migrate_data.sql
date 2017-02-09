@@ -5,7 +5,7 @@ select
     u.passwordsalt passwd_salt,
     u.shibbolethinfo_remoteuser as shibboleth_id,
     case
-        when u.username == '' then 'user' || u.id
+        when u.username = '' then 'user' || u.id
         when u.username is null then 'user' || u.id
         else u.username
     end as username,

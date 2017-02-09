@@ -29,7 +29,7 @@ from
     fileheader fh,
     filebody fb
 where
-    and pc.position_id = p.id
+    pc.position_id = p.id
     and pc.id = c.candidacies_id
     and (cf.candidacy_id = c.id or cf.candidate_id = c.candidate_id)
     and cf.id = fh.id
