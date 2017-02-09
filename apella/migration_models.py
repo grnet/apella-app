@@ -119,8 +119,7 @@ class OldApellaCandidacyMigrationData(models.Model):
     position_serial = models.TextField()
     candidate_user_id = models.TextField()
     open_to_other_candidates = models.TextField()
-    created_at = models.DateTimeField(null=True)
-    updated_at = models.DateTimeField(null=True)
+    submitted_at = models.DateTimeField(null=True)
     withdrawn_at = models.DateTimeField(null=True)
 
 
