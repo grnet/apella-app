@@ -243,7 +243,7 @@ export default ApellaGen.extend({
       }
     }),
     onSubmit(model) {
-      this.transitionTo('candidacy.record.index', model)
+      this.transitionTo('candidacy.record.edit', model)
     },
     getModel(params) {
       var self = this;
