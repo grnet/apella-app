@@ -171,7 +171,8 @@ def migrate_file(old_file, new_user, source, source_id):
         description=old_file.file_description,
         file_kind=FILE_KINDS_MAPPING[source][old_file.file_type],
         source=source,
-        source_id=source_id)
+        source_id=source_id,
+        updated_at=old_file.updated_at)
     old_file_path = os.path.join(
         settings.OLD_APELLA_MEDIA_ROOT, old_file.file_path)
     new_file_path = os.path.join(
@@ -468,8 +469,8 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
         others_can_view=bool(
             re.match('t', old_candidacy.open_to_other_candidates, re.I)),
         old_candidacy_id=int(old_candidacy.candidacy_serial),
-        submitted_at=old_candidacy.created_at,
-        updated_at=old_candidacy.updated_at)
+        submitted_at=old_candidacy.submitted_at,
+        updated_at=old_candidacy.withdrawn_at)
 
     candidacy.code = str(candidacy.id)
     candidacy.save()
