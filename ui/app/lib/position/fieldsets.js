@@ -63,8 +63,10 @@ const  position = {
           }
         }),
         'description',
-        'discipline','subject_area', 'subject'],
-
+        'discipline',
+        'subject_area',
+        'subject'
+      ],
       layout: {
         flex: [50, 50, 100, 100, 50, 50, 50]
       }
