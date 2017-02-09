@@ -31,7 +31,6 @@ from
     filebody fb
 where
     p.phase_id = pp.id
-    and pp.status in ('ANOIXTI', 'ENTAGMENI')
     and pc.position_id = p.id
     and pc.id = c.candidacies_id
     and (cf.candidacy_id = c.id or cf.candidate_id = c.candidate_id)

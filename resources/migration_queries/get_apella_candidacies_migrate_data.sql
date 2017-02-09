@@ -18,7 +18,6 @@ where
     and c.candidacies_id = pc.id
     and c.permanent is true
     and p.phase_id = pp.id
-    and pp.status in ('ENTAGMENI', 'ANOIXTI')
     and p.id in
     (1580743, 1579871, 1551754, 1608651, 1601475, 1601581, 1601660, 1601764, 1601847, 1555596,
      1563659, 1561195, 1560254, 1561064, 1570004, 1570773, 1570414, 1571299, 1565946, 1565859,

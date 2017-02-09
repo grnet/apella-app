@@ -27,7 +27,6 @@ where
     and p.sector_id = s.id
     and pc.position_id = p.id
     and p.phase_id = pp.id
-    and pp.status in ('ANOIXTI', 'ENTAGMENI')
     and p.permanent is true
     and p.subject_id = su.id
     and p.id in
