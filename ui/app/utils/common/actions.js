@@ -94,7 +94,12 @@ const applyCandidacy = {
   label: 'applyCandidacy',
   icon: 'person_add',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
-  hidden: true,
+  hidden: computed('model.is_open', 'role', 'model.can_apply', function(){
+    let role = get(this, 'role');
+    let is_helpdeskadmin = get(this, 'role') == 'helpdeskadmin';
+    if (is_helpdeskadmin)  return false;
+    return !get(this, 'model.is_open') || !get(this, 'model.can_apply')
+  }),
   action(route, model){
     let id = get(model, 'id');
     route.transitionTo('candidacy.create', { queryParams: { position: id }});
