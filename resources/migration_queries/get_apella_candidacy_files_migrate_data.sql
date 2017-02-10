@@ -7,7 +7,10 @@ select
     fh.type as file_type,
     fb.storedfilepath file_path,
     fb.originalfilename original_name,
-    fb.date updated_at
+    case
+        when fb.date is null then '1970-01-01'
+        else fb.date
+    end as updated_at
 from
     position p,
     positioncandidacies pc,
