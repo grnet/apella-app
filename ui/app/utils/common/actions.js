@@ -139,7 +139,6 @@ const cancelCandidacy = {
   label: 'withdrawal',
   icon: 'delete forever',
   accent: true,
-  permissions: [{action: 'edit'}],
   action(route, model) {
     return model.get('candidate').then(() => {
       model.set('state', 'cancelled');
@@ -154,14 +153,53 @@ const cancelCandidacy = {
       });
     })
   },
-  hidden: true,
+  hidden: computed('model.state', 'model.position.is_open', 'model.position.is_closed', 'model.position.state', 'model.candidate.id', 'model.position.electors_meeting_date', 'model.position.code', function() {
+
+    let candidacy_cancelled = get(this, 'model.state') == 'cancelled';
+    let code = get(this, 'model.position.code');
+    if (candidacy_cancelled) { return true; }
+
+    let role = get(this, 'session.session.authenticated.role');
+    console.log(role, 'role sto hidden');
+    let user_id = get(this, 'session.session.authenticated.user_id');
+    let position_open = get(this, 'model.position.is_open');
+    let position_closed = get(this, 'model.position.is_closed');
+    let position_electing = get(this, 'model.position.state') == 'electing';
+    let is_helpdeskadmin = role == 'helpdeskadmin';
+    let is_candidate = user_id == get(this, 'model.candidate.id');
+    let electors_at = get(this, 'model.position_closed.electors_meeting_date');
+    let before_deadline = true;
+    if (electors_at) {
+      before_deadline =  moment().isBefore(electors_at);
+    }
+
+    if (is_helpdeskadmin && (position_closed || position_electing) && before_deadline) { return false; }
+    if (is_candidate && (position_open || position_closed)) { return false; }
+
+    return true;
+
+  }),
   confirm: true,
-  prompt: {
-    ok: 'withdrawal',
-    cancel: 'cancel',
-    message: 'prompt.withdrawal.message',
-    title: 'prompt.withdrawal.title',
-  }
+  prompt: computed('model.position.is_open', function(){
+    let role = get(this, 'session.session.authenticated.role');
+    let position_open = get(this, 'model.position.is_open');
+    let is_helpdeskadmin = role == 'helpdeskadmin';
+    let message = 'prompt.withdrawal_helpdesk.message';
+    let noControls = true;
+
+    if (is_helpdeskadmin || position_open ) {
+      message = 'prompt.withdrawal.message';
+      noControls = false;
+    }
+
+    return {
+      ok: 'withdrawal',
+      cancel: 'cancel',
+      title: 'prompt.withdrawal.title',
+      noControls: noControls,
+      message: message
+    };
+  })
 };
 
 const deactivateUser = {
