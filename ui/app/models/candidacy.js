@@ -22,7 +22,7 @@ export default DS.Model.extend({
   submitted_at: DS.attr('date'),
   submitted_at_format: computeDateFormat('submitted_at'),
   updated_at: DS.attr('date'),
-  updated_at_format: computeDateFormat('submitted_at'),
+  updated_at_format: computeDateFormat('updated_at'),
   cv: DS.belongsTo('apella-file', {label: 'candidacy.label.cv'}),
   diplomas: DS.hasMany('apella-files', {label: 'candidacy.label.diploma'}),
   publications: DS.hasMany('apella-files', {label: 'candidacy.label.publication'}),
