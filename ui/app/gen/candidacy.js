@@ -167,22 +167,43 @@ export default ApellaGen.extend({
       ability.setProperties(props);
       return ability;
     }),
+    position_open: alias('model.position.is_open'),
+    others_can_view: alias('model.othersCanView'),
 
     owned: computed('role', 'user.user_id', 'model.candidate.id', function() {
       let is_institutionmanager = get(this, 'role') === 'institutionmanager';
       let is_candidate_owning = get(this, 'user.user_id') == get(this, 'model.candidate.id')
       return is_institutionmanager || is_candidate_owning;
-    }), // we expect server to reply with owned resources if user is an institution manager
-    others_can_view: alias('model.othersCanView'),
-    participates: computed('role', function() {
-      let role = get(this, 'role');
-      return role === 'professor'; // TODO: resolve user.id participates
     }),
-    owned_open: computed('owned', 'model.position.is_open', 'model.state', function() {
-      let position_is_open = get(this, 'model.position.is_open');
-      let candidacy_is_not_cancelled = get(this, 'model.state') != 'cancelled';
-      return get(this, 'owned') && position_is_open && candidacy_is_not_cancelled;
+
+    owned_open: computed('owned', 'position_open', 'model.state', function() {
+      let position_open = get(this, 'position_open');
+      let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
+      return get(this, 'owned') && position_open && candidacy_not_cancelled;
+    }),
+
+    five_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', function() {
+      let electors_at = get(this, 'model.position.electors_meeting_date');
+      let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
+      let position_open = get(this, 'position_open');
+      let before_deadline = false;
+      if (electors_at) {
+        before_deadline =  moment().add(5, 'days').isBefore(electors_at);
+      }
+      return candidacy_not_cancelled && (position_open || before_deadline);
+    }),
+
+    one_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', function() {
+      let electors_at = get(this, 'model.position.electors_meeting_date');
+      let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
+      let position_open = get(this, 'position_open');
+      let before_deadline = false;
+      if (electors_at) {
+        before_deadline =  moment().add(1, 'days').isBefore(electors_at);
+      }
+      return candidacy_not_cancelled && (position_open || before_deadline);
     })
+
   },
 
   common: {
