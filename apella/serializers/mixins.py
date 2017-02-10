@@ -194,7 +194,7 @@ class Registries(object):
         return super(Registries, self).create(validated_data)
 
     def update(self, instance, validated_data):
-        department = validated_data.get('department', None)
+        department = validated_data.get('department', instance.department)
         members_before = instance.members.all()
         members_after = validated_data.get('members', [])
         members_to_send = [member for member in members_after
