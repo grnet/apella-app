@@ -419,13 +419,7 @@ export default AuthGen.extend({
     },
     onSubmit: function() {},
     components: { beforeForm: 'profile-form-intro' },
-    actions: computed('model.role', function(){
-      let role = get(this, 'model.role');
-      if (isHelpdesk(role)) {
-        return ['change_password']
-      }
-      return []
-    }),
+    actions: ['change_password'],
     actionsMap: {
       'change_password': change_password
     },
