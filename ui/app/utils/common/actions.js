@@ -106,9 +106,7 @@ const cancelCandidacy = {
       });
     })
   },
-  hidden: computed('model.state', function(){
-    return get(this, 'model.state') === 'cancelled';
-  }),
+  hidden: true,
   confirm: true,
   prompt: {
     ok: 'withdrawal',
