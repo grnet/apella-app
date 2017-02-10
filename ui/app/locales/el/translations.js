@@ -108,7 +108,7 @@ export default {
   'Draft':'Πρόχειρο',
   'Posted': 'Ενταγμένη',
   'Submitted': 'Υποβεβλημένη',
-  'Cancelled': 'Ακυρωθείσα',
+  'Cancelled': 'Αποσυρθείσα',
   'Electing': 'Επιλογή',
   'Successful': 'Στελεχωμένη',
   'Failed': 'Άγονη',
