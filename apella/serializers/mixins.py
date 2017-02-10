@@ -3,8 +3,7 @@ from rest_framework import serializers
 from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
-from apella.models import ApellaUser, Position, InstitutionManager, \
-    Institution, Registry
+from apella.models import ApellaUser, Institution
 from apella import auth_hooks
 from apella.emails import send_user_email
 

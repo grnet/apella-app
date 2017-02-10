@@ -73,7 +73,7 @@ class OldApellaUserMigrationData(models.Model):
 
     @classmethod
     def get_users_by_token(cls, permanent_auth_token):
-        users = cls.objects.filter(permanent_auth_token=token)
+        users = cls.objects.filter(permanent_auth_token=permanent_auth_token)
         return users
 
 

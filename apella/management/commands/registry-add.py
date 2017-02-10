@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 
 from apella.models import Department, Registry, Professor
-from apella.management.utils import get_user, ApellaCommand
+from apella.management.utils import ApellaCommand
 from apella import common
 
 

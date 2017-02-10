@@ -6,7 +6,6 @@ from datetime import datetime
 from django.db import transaction, DataError
 from django.conf import settings
 from django.db.utils import IntegrityError
-from django.core.files import File
 
 from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \

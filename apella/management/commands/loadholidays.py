@@ -1,4 +1,3 @@
-import os
 import json
 from apella.management.utils import LoadDataCommand, smart_locale_unicode
 

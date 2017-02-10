@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 from django.core.exceptions import ValidationError
 from django.conf import settings
 

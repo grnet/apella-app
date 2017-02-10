@@ -2,8 +2,6 @@ import locale
 
 from django.utils.encoding import smart_unicode
 from django.core.management import BaseCommand
-from django.conf import settings
-from django.apps import apps
 
 from apella.models import ApellaUser
 

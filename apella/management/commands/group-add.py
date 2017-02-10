@@ -1,4 +1,3 @@
-from django.db.utils import IntegrityError
 from apella.management.utils import ApellaCommand
 from django.core.management.base import CommandError
 from django.contrib.auth.models import Group

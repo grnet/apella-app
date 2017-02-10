@@ -1,6 +1,6 @@
 import csv
 
-from django.core.management import BaseCommand, CommandError
+from django.core.management import BaseCommand
 
 from apella.models import OldApellaUserMigrationData
 

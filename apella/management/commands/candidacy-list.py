@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 from apella.management.utils import ApellaCommand
 from apella.models import Candidacy
 
