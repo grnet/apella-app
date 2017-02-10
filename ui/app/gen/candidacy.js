@@ -186,7 +186,7 @@ export default ApellaGen.extend({
       let electors_at = get(this, 'model.position.electors_meeting_date');
       let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
       let position_open = get(this, 'position_open');
-      let before_deadline = false;
+      let before_deadline = true;
       if (electors_at) {
         before_deadline =  moment().add(5, 'days').isBefore(electors_at);
       }
@@ -197,7 +197,7 @@ export default ApellaGen.extend({
       let electors_at = get(this, 'model.position.electors_meeting_date');
       let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
       let position_open = get(this, 'position_open');
-      let before_deadline = false;
+      let before_deadline = true;
       if (electors_at) {
         before_deadline =  moment().add(1, 'days').isBefore(electors_at);
       }
