@@ -88,10 +88,11 @@ export default DS.Model.extend({
     return (now.isBetween(start, end) || now.isSame(start) || now.isSame(end));
   }),
 
-  is_closed: computed('ends_at', function() {
+  is_closed: computed('ends_at', 'state', function() {
     let now = moment(),
+      posted = get(this, 'state') == 'posted',
       end = get(this, 'ends_at');
-    return now.isAfter(end);
+    return now.isAfter(end) && posted;
   }),
 
   /*
