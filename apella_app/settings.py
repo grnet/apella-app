@@ -206,7 +206,7 @@ if not DEBUG and not BASE_URL:
     raise Exception("BASE_URL setting is required when DEBUG is set to False.")
 
 DEFAULT_FROM_EMAIL = 'no-reply@apella.grnet.gr'
-PERMISSIONS_LIMITED = True
+PERMISSIONS_LIMITED = False
 if PERMISSIONS_LIMITED:
     from apella.permissions.permission_rules_limited import PERMISSION_RULES
 else:
