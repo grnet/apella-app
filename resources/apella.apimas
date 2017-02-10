@@ -598,6 +598,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 cv:
                     .cli_option: {}
                     .field: {}
@@ -625,6 +630,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 diplomas:
                     .cli_option: {}
                     .field: {}
@@ -652,6 +662,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 publications:
                     .cli_option: {}
                     .field: {}
@@ -679,6 +694,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 institution:
                     .cli_option: {}
                     .field: {}
@@ -1006,6 +1026,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -1400,6 +1425,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 diplomas:
                     .cli_option: {}
                     .field: {}
@@ -1427,6 +1457,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 publications:
                     .cli_option: {}
                     .field: {}
@@ -1454,6 +1489,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 id_passport_file:
                     .cli_option: {}
                     .field: {}
@@ -1481,6 +1521,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 user:
                     .cli_option: {}
                     .field: {}
@@ -2023,6 +2068,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 diplomas:
                     .cli_option: {}
                     .field: {}
@@ -2050,6 +2100,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 publications:
                     .cli_option: {}
                     .field: {}
@@ -2077,6 +2132,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 self_evaluation_report:
                     .cli_option: {}
                     .field: {}
@@ -2105,6 +2165,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 attachment_files:
                     .cli_option: {}
                     .field: {}
@@ -2132,6 +2197,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
