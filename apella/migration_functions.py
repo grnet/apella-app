@@ -356,6 +356,14 @@ def migrate_user_role(old_user, new_user):
             migrate_position(old_position, institutionmanager)
 
 
+STATE_MAPPING = {
+    'CANCELLED': 'cancelled',
+    'ENTAGMENI': 'posted',
+    'ANOIXTI': 'posted',
+    'EPILOGI': 'electing',
+    'STELEXOMENI': 'successful'
+}
+
 @transaction.atomic
 def migrate_position(old_position, author):
     if Position.objects.filter(old_code=old_position.position_serial). \
@@ -374,6 +382,9 @@ def migrate_position(old_position, author):
     ends_at = datetime.strptime(
         old_position.closing_date, '%Y-%m-%d')
 
+    state = 'posted'
+    if old_position.state in STATE_MAPPING:
+        state = STATE_MAPPING.get(old_position.state)
     try:
         new_position = Position.objects.create(
             old_code=old_position.position_serial,
@@ -387,7 +398,7 @@ def migrate_position(old_position, author):
             department_dep_number=0,
             fek=old_position.gazette_publication_url,
             fek_posted_at=fek_posted_at,
-            state='posted',
+            state=state,
             starts_at=starts_at,
             ends_at=ends_at
         )
