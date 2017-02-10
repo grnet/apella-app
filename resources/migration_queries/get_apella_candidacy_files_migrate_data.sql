@@ -37,7 +37,9 @@ where
     and pc.id = c.candidacies_id
     and (cf.candidacy_id = c.id or cf.candidate_id = c.candidate_id)
     and cf.id = fh.id
-    and fh.currentbody_id = fb.id
+    and fb.id = cfb.files_id
+    and c.id = cfb.candidacy_id
+    and fb.header_id = fh.id
     and fh.deleted is false
     and p.id in :positions_to_migrate
 ) to '/tmp/OldApellaCandidacyFileMigrationData.csv' with csv header delimiter ',';
