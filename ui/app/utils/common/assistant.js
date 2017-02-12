@@ -3,7 +3,6 @@ import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
-import {fileField} from 'ui/lib/common';
 import {i18nField} from 'ui/lib/common';
 
 const {
