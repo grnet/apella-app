@@ -239,6 +239,7 @@ export default {
   'diplomas.label': 'Diplomas',
   'publications.label': 'Publications',
   'institution_freetext.label': 'Foreign institution',
+  'assistant_files.label': 'Administrative documents',
 
   // popup messages translations
   'message.close': 'close',
@@ -330,6 +331,7 @@ export default {
       candidate_profile: 'Candidate\'s profile',
       manager_info: 'Manager info',
       sub_info: 'Substitute Institution Manager'
+      assistant_files: 'Other administrative documents',
     },
     text: {
       user_interest: 'Choose your interests',

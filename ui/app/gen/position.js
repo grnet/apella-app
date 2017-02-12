@@ -37,55 +37,60 @@ const pick_edit_fs = function() {
     before_open = now.isBefore(starts_at),
     open = now.isBetween(starts_at, ends_at, null, []),
     fs = position.edit,
-    head = [fs.basic, fs.details];
+    head = [fs.basic, fs.details],
+    res;
 
   if(state === 'posted') {
     if(before_open) {
-      return head;
+      res = head;
     }
     else if (open) {
-      return head.concat(fs.candidacies);
+      res = head.concat(fs.candidacies);
     }
     // closed
     else {
-      return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
+      res = head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
     }
   }
   else if(state === 'cancelled') {
-      return head;
+      res = head;
   }
   // in all other states
   else {
-    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
+    res = head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
   }
+  return res.concat(fs.assistant_files);
 };
 
 const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies) {
+  let res;
+
   if(state === 'posted') {
     if(before_open) {
-      return head;
+      res = head;
     }
     else {
       if (display_candidacies) {
-        return head.concat(fs.candidacies);
+        res =  head.concat(fs.candidacies);
       }
       else {
-        return head;
+        res = head;
       }
     }
   }
   else if(state === 'cancelled') {
-      return head/*.concat(fs.history)*/;
+      res =  head/*.concat(fs.history)*/;
   }
   // in all other states
   else {
     if (display_candidacies) {
-      return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+      res = head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
     }
-    else{
-      return head.concat(fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+    else {
+      res = head.concat(fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
     }
   }
+  return res.concat(fs.assistant_files);
 };
 
 const pick_details_fs = function() {

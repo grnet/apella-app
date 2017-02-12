@@ -237,7 +237,8 @@ export default {
   'cv.label': 'Βιογραφικό',
   'diplomas.label': 'Διπλώματα',
   'publications.label': 'Δημοσιεύσεις',
-  'institution_freetext.label': 'Ίδρυμα αλλοδαπής',
+  'institution_freetext.label': 'Ιδρυμα αλλοδαπής',
+  'assistant_files.label': 'Διοικητικά έγγραφα',
 
   // popup messages translations
   'message.close': 'Κλεισιμο',
@@ -331,7 +332,8 @@ export default {
       professor_profile: 'Προφίλ καθηγητή',
       candidate_profile: 'Προφίλ υποψηφίου',
       manager_info: 'Στοιχεία διαχειριστή',
-      sub_info: 'Αναπληρωτής Διαχειριστής Ιδρύματος'
+      sub_info: 'Αναπληρωτής Διαχειριστής Ιδρύματος',
+      assistant_files: 'Λοιπά διοικητικά έγγραφα',
     },
     text: {
       user_interest: 'Εκδηλώστε το ενδιαφέρον σας',

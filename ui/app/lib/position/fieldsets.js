@@ -1,6 +1,7 @@
 import _ from 'lodash/lodash';
 import {field} from 'ember-gen';
 import {disable_field, i18nField} from 'ui/utils/common/fields';
+import {fileField} from 'ui/lib/common';
 import moment from 'moment';
 import {
   candidaciesField, committeeElectorsField, historyField,
@@ -204,6 +205,16 @@ const  position = {
         flex: [100, 100]
       }
     },
+    assistant_files: {
+      label: 'fieldsets.labels.assistant_files',
+      fields: [
+        fileField('assistant_files', 'position', 'assistant_files', {
+          readonly: true
+        }, {
+          multiple: true
+        }),
+      ]
+    },
     history: {
       label: 'position.history.title',
       fields: [historyField]
@@ -300,7 +311,23 @@ const  position = {
       layout: {
         flex: [100, 100]
       }
-    }
+    },
+    assistant_files: {
+      label: 'fieldsets.labels.assistant_files',
+      fields: [
+        fileField('assistant_files', 'position', 'assistant_files', {
+          readonly: computed('model.state', function(){
+            if (['cancelled', 'successful', 'failed'].includes(get(this, 'model.state'))) {
+              return true;
+            }
+            return false;
+          }),
+        }, {
+          multiple: true
+        }),
+      ]
+    },
+
   }
 };
 

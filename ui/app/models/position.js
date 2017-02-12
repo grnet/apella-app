@@ -68,6 +68,10 @@ export default DS.Model.extend({
   electors_meeting_date_format: computeDateFormat('electors_meeting_date'),
   code: DS.attr({label: 'code.label'}),
   old_code: DS.attr(),
+
+  // files
+  assistant_files: DS.hasMany('apella-file'),
+
   // Use in candidacy select list
   code_and_title: computed('code', 'title', function() {
     return `${this.get('code')} -  ${this.get('title')}`;
