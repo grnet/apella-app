@@ -31,6 +31,7 @@ from
             candidatefile
     ) cf,
     fileheader fh,
+    candidacy_filebody cfb,
     filebody fb
 where
     pc.position_id = p.id
