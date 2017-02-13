@@ -1959,6 +1959,38 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .string: {}
+                assistant_files:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}

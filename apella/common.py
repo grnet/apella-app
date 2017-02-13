@@ -138,7 +138,7 @@ FILE_KIND_TO_FIELD = {
         "field": "failed_election_decision",
         "many": False,
     },
-    "assistant_file": {
+    "assistant_files": {
         "field": "assistant_files",
         "many": True,
     },
