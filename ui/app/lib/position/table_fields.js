@@ -14,27 +14,35 @@ const {
   merge, assign
 } = Ember;
 
-const candidaciesField = field('candidacies', {
-  valueQuery: function(store, params, model, value) {
-    let position_id = model.get('id');
-    // no use of params for now
-    let query = {position: position_id};
-    return store.query('candidacy', query);
-  },
-  label: null,
-  modelMeta: {
-    row: {
-      fields: ['id',
-        i18nField('candidate.full_name', {label: 'last_name.label'}),
-        field('submitted_at_format', {label: 'submitted_at.label'}),
-        field('updated_at_format', {label: 'updated_at.label'}),
-        field('state_verbose', {label: 'candidacy.state'})
-      ],
+// params used for view details of candidacy from position view
+const candidaciesField = function(type, hidden, calc) {
+  return field('candidacies', {
+    valueQuery: function(store, params, model, value) {
+      let position_id = model.get('id');
+      // no use of params for now
+      let query = {position: position_id};
+      return store.query('candidacy', query);
     },
-  },
-  displayComponent: 'gen-display-field-table',
-  disabled: true
-});
+    label: null,
+    modelMeta: {
+      row: {
+        fields: [
+          'id',
+          i18nField('candidate.full_name', {label: 'last_name.label'}),
+          field('submitted_at_format', {label: 'submitted_at.label'}),
+          field('updated_at_format', {label: 'updated_at.label'}),
+          field('state_verbose', {label: 'candidacy.state'})
+        ],
+        actions: ['goToDetails'],
+        actionsMap: {
+          goToDetails: goToDetails(type, hidden, calc)
+        },
+      },
+    },
+    displayComponent: 'gen-display-field-table',
+    disabled: true
+  });
+};
 
 const managers_columns = [
   i18nField('last_name', {label: 'last_name.label'}),
@@ -169,7 +177,7 @@ function committeeElectorsField(field_name, registry_type) {
         }),
         actions: ['goToDetails'],
         actionsMap: {
-          goToDetails: goToDetails
+          goToDetails: goToDetails(undefined, false, false)
         }
       },
     },
@@ -192,7 +200,7 @@ const historyField = field('past_positions', {
       ],
       actions: ['goToDetails'],
       actionsMap: {
-        goToDetails: goToDetails
+        goToDetails: goToDetails(undefined, false, false)
       }
     },
   },

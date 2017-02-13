@@ -1,3 +1,4 @@
+import _ from 'lodash/lodash';
 import {field} from 'ember-gen';
 import {disable_field, i18nField} from 'ui/utils/common/fields';
 import moment from 'moment';
@@ -102,7 +103,55 @@ const  position = {
     },
     candidacies: {
       label: 'candidacy.menu_label',
-      fields: [candidaciesField]
+      fields: computed('user.role','user.user_id', 'user.id', 'model.electors',
+        'model.committee', function() {
+        let user = get(this, 'user'),
+          role = get(user, 'role'),
+          position = get(this, 'model'),
+          type = 'candidacy',
+          hidden = false,
+          calculate = false;
+        /*
+         * Helpdesk user and admin should see candidacies' details.
+         * If an assistant or a manager is allowed to see a position should see
+         * and candidacies' details.
+         */
+        if (['helpdeskadmin','helpdeskuser','manager', 'assistant'].indexOf(role) > -1) {
+          hidden = false;
+          calculate = false;
+        }
+        /*
+         * A professor can see candidacies' details when:
+         * - Is member in any related committee of the position
+         * - The candidacy is his/hers
+         * - The candidacy has othersCanView true
+         *
+         * The last 2 are calculated inside candidaciesField.
+         *
+         * A candidate can see candidacies' details when:
+         * - The candidacy is his/hers
+         * - The candidacy has othersCanView true
+         *
+         * These 2 are calculated inside candidaciesField.
+         */
+
+        else if (['professor', 'candidate'].indexOf(role) > -1) {
+          hidden = undefined;
+          calculate = true;
+          if (role === 'professor') {
+            let electors = position.hasMany('electors').ids(),
+              committee = position.hasMany('committee').ids(),
+              related_profs = _.union(electors, committee),
+              professor_id = user.id + '',
+              is_related_prof = related_profs.indexOf(professor_id) > -1;
+            if(is_related_prof) {
+              hidden = false;
+              calculate = false;
+            }
+          }
+        }
+        return [candidaciesField(type, hidden, calculate)]
+      })
     },
     committee: {
       label: 'committee_members.label',
@@ -199,7 +248,7 @@ const  position = {
     },
     candidacies: {
       label: 'candidacy.menu_label',
-      fields: [candidaciesField]
+      fields: [candidaciesField(undefined, false, false)]
     },
     committee: {
       label: 'committee_members.label',
