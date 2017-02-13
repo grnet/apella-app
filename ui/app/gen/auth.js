@@ -195,7 +195,11 @@ const PositionInterest = gen.GenRoutedObject.extend({
 
   menu: {
     order: 150,
-    display: false,
+    display: computed('role', function(){
+      let role = get(this, 'role');
+      let allowedRoles = ['professor', 'candidate'];
+      return (allowedRoles.includes(role) ? true : false);
+    }),
     icon: 'notifications',
     label: 'userInterest.menu_label'
   },
