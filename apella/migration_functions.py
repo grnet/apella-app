@@ -186,6 +186,7 @@ def migrate_file(old_file, new_user, source, source_id):
         logger.error(
             'failed to migrate file %s: %s' %
             (old_file_path, e.args))
+        return
 
     new_file.file_path = new_file_path
     new_file.save()
