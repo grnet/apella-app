@@ -17,8 +17,8 @@ const VALIDATORS = {
   sub_first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   sub_last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   sub_father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  sub_mobile_phone_number: [validate.format({ type: 'phone' })],
-  sub_home_phone_number: [validate.format({ type: 'phone' })],
+  sub_mobile_phone_number: [validate.presence(true)],
+  sub_home_phone_number: [validate.presence(true)],
   sub_email: [validate.format({ type: 'email' })],
 }
 
