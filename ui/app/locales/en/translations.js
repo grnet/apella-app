@@ -240,6 +240,17 @@ export default {
   'publications.label': 'Publications',
   'institution_freetext.label': 'Foreign institution',
   'assistant_files.label': 'Administrative documents',
+  'electors_meeting_proposal.label': 'Invitation for convocation of the Committee',
+  'electors_meeting_date.label': 'Committees convocation date',
+  'electors_meeting_date_format.label': 'Committees convocation date',
+  'nomination_proceedings.label': 'Nomination proceedings',
+  'proceedings_cover_letter.label': 'Proceedings Cover Letter',
+  'second_best.label': 'Second Most Appropriate Candidate',
+  'nomination_act.label': 'Nomination act',
+  'nomination_act_fek.label': 'FEK (Government Gazette) of Nomination Act',
+  'revocation_decision.label': 'Decision to Revoke',
+  'failed_election_decision.label': 'Failed election decision',
+
 
   // popup messages translations
   'message.close': 'close',
@@ -330,7 +341,8 @@ export default {
       professor_profile: 'Professor\'s profile',
       candidate_profile: 'Candidate\'s profile',
       manager_info: 'Manager info',
-      sub_info: 'Substitute Institution Manager'
+      sub_info: 'Substitute Institution Manager',
+      election: 'Election',
       assistant_files: 'Other administrative documents',
     },
     text: {

@@ -59,6 +59,11 @@ const pick_edit_fs = function() {
   else {
     res = head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
   }
+
+  if (state === 'electing') {
+    res = res.concat(fs.election);
+  }
+
   return res.concat(fs.assistant_files);
 };
 
@@ -84,10 +89,10 @@ const pick_details_fs_by_state = function(fs, state, before_open, head, display_
   // in all other states
   else {
     if (display_candidacies) {
-      res = head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+      res = head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite, fs.election/*, fs.history, */);
     }
     else {
-      res = head.concat(fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+    res = head.concat(fs.committee, fs.electors_regular, fs.electors_substitite, fs.election/*, fs.history, */);
     }
   }
   return res.concat(fs.assistant_files);

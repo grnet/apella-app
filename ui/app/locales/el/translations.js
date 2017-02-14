@@ -162,7 +162,7 @@ export default {
   'committee.label': 'Εισηγητική Επιτροπή',
   'committee_members.label': 'Μέλη Εισηγητικής Επιτροπής',
   'assistants.label': 'Βοηθοί Υπεύθυνου Ιδρύματος',
-  'elected.label': 'Εκλεγμένος',
+  'elected.label': 'Εκλεγείς',
   'state.label': 'Κατάσταση',
   'state_calc_verbose.label': 'Κατάσταση',
   'discipline.label': 'Γνωστικό αντικείμενο',
@@ -239,6 +239,16 @@ export default {
   'publications.label': 'Δημοσιεύσεις',
   'institution_freetext.label': 'Ιδρυμα αλλοδαπής',
   'assistant_files.label': 'Διοικητικά έγγραφα',
+  'electors_meeting_proposal.label': 'Πρόσκληση για σύγκληση του εκλεκτορικού σώματος για επιλογή',
+  'electors_meeting_date.label': 'Ημερομηνία σύγκλησης του εκλεκτορικού σώματος',
+  'electors_meeting_date_format.label': 'Ημερομηνία σύγκλησης του εκλεκτορικού σώματος',
+  'nomination_proceedings.label': 'Πρακτικό επιλογής',
+  'proceedings_cover_letter.label': 'Διαβιβαστικό πρακτικού επιλογής προς τον Πρύτανη',
+  'second_best.label': 'Δεύτερος καταλληλότερος υποψήφιος',
+  'nomination_act.label': 'Πράξη διορισμού',
+  'nomination_act_fek.label': 'Φ.Ε.Κ. διορισμού',
+  'revocation_decision.label': 'Απόφαση αναπομπής',
+  'failed_election_decision.label': 'Διαπιστωτική πράξη άγονης εκλογής',
 
   // popup messages translations
   'message.close': 'Κλεισιμο',
@@ -333,6 +343,7 @@ export default {
       candidate_profile: 'Προφίλ υποψηφίου',
       manager_info: 'Στοιχεία διαχειριστή',
       sub_info: 'Αναπληρωτής Διαχειριστής Ιδρύματος',
+      election: 'Εκλογή',
       assistant_files: 'Λοιπά διοικητικά έγγραφα',
     },
     text: {

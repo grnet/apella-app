@@ -54,7 +54,8 @@ export default DS.Model.extend({
   committee: DS.hasMany('professor'),
   committee_internal: DS.hasMany('professor'),
   committee_external: DS.hasMany('professor'),
-  elected: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'username'}}),
+  elected: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
+  second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
   state: DS.attr({type: 'select', choices: CHOICES.POSITION_STATES, defaultValue: 'posted'}),
   state_verbose: computeI18NChoice('state', CHOICES.POSITION_STATES),
   starts_at: DS.attr('date'),
@@ -68,8 +69,15 @@ export default DS.Model.extend({
   electors_meeting_date_format: computeDateFormat('electors_meeting_date'),
   code: DS.attr({label: 'code.label'}),
   old_code: DS.attr(),
+  nomination_act_fek: DS.attr(),
 
   // files
+  electors_meeting_proposal: DS.belongsTo('apella-file'),
+  nomination_proceedings: DS.belongsTo('apella-file'),
+  proceedings_cover_letter: DS.belongsTo('apella-file'),
+  nomination_act: DS.belongsTo('apella-file'),
+  revocation_decision: DS.belongsTo('apella-file'),
+  failed_election_decision: DS.belongsTo('apella-file'),
   assistant_files: DS.hasMany('apella-file'),
 
   // Use in candidacy select list
