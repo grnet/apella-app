@@ -17,29 +17,27 @@ from
     positioncandidacies pc,
     candidacy c,
     (   select
-            id,
-            candidacy_id,
-            null candidate_id
+            id header_id,
+            candidacy_id
         from
             candidacyfile
         union
         select
-            id,
-            null candidacy_id,
-            candidate_id
+            fb.header_id header_id,
+            cfb.candidacy_id candidacy_id
         from
-            candidatefile
+            candidacy_filebody cfb,
+            filebody fb
+        where
+            cfb.files_id = fb.id
     ) cf,
     fileheader fh,
-    candidacy_filebody cfb,
     filebody fb
 where
     pc.position_id = p.id
     and pc.id = c.candidacies_id
-    and (cf.candidacy_id = c.id or cf.candidate_id = c.candidate_id)
-    and cf.id = fh.id
-    and fb.id = cfb.files_id
-    and c.id = cfb.candidacy_id
+    and cf.candidacy_id = c.id
+    and cf.header_id = fh.id
     and fb.header_id = fh.id
     and fh.deleted is false
     and p.id in :positions_to_migrate
