@@ -8,14 +8,19 @@ const {
 
 const FILES_FIELDS = [
   fileField('id_passport_file', 'candidate', 'id_passport', {
-    readonly: or('model.is_verified', 'model.verification_pending')
+    readonly: true
   }, { replace: true }),
   fileField('cv', 'candidate', 'cv', {
+    readonly: true
   }, { replace: true }),
-  fileField('diplomas', 'candidate', 'diploma', {}, {
+  fileField('diplomas', 'candidate', 'diploma', {
+    readonly: true
+  }, {
     multiple: true
   }),
-  fileField('publications', 'candidate', 'publication', {}, {
+  fileField('publications', 'candidate', 'publication', {
+    readonly: true
+  }, {
     multiple: true
   }),
 ]

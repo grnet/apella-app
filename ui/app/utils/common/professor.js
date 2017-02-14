@@ -19,13 +19,18 @@ const FILES_FIELDSET = {
   label: 'fieldsets.labels.candidate_files',
   fields: [
     fileField('cv', 'professor', 'cv', {
+      readonly: true
     }, {
       replace: true
     }),
-    fileField('diplomas', 'professor', 'diploma', {}, {
+    fileField('diplomas', 'professor', 'diploma', {
+      readonly: true
+    }, {
       multiple: true
     }),
-    fileField('publications', 'professor', 'publication', {}, {
+    fileField('publications', 'professor', 'publication', {
+      readonly: true
+    }, {
       multiple: true
     }),
   ],
@@ -64,7 +69,7 @@ const FIELDS = computed('model.is_foreign', 'model.changeset.cv_in_url', functio
         let prompt =  this.container.lookup("service:prompt");
         if (check && cv && cv.content) { Ember.run.once(this, () => {
           prompt.prompt('confirm.cv.professor.unset').then(() => {
-            let file = get(this, 'model.cv_professor'); 
+            let file = get(this, 'model.cv_professor');
             file && file.content && file.content.destroyRecord().then(() => {
               Ember.run.once(this, () => {
                 get(this, 'model').set('cv_professor', null);
