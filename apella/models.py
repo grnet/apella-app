@@ -278,8 +278,8 @@ class Institution(models.Model):
     category = models.CharField(
         choices=common.INSTITUTION_CATEGORIES,
         max_length=30, default='Institution')
-    organization = models.URLField(blank=True)
-    regulatory_framework = models.URLField(blank=True)
+    organization = models.URLField(blank=True, max_length=255)
+    regulatory_framework = models.URLField(blank=True, max_length=255)
     title = models.ForeignKey(MultiLangFields)
     has_shibboleth = models.BooleanField(default=False)
     idp = models.CharField(max_length=255, blank=True)
@@ -359,7 +359,7 @@ class Professor(UserProfile, CandidateProfile):
         choices=common.RANKS, max_length=30, blank=True)
     is_foreign = models.BooleanField(default=False)
     speaks_greek = models.BooleanField(default=True)
-    cv_url = models.URLField(blank=True)
+    cv_url = models.URLField(blank=True, max_length=255)
     cv_professor = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='professor_cv_file', on_delete=models.SET_NULL)
@@ -458,7 +458,7 @@ class Position(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     subject_area = models.ForeignKey(SubjectArea, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    fek = models.URLField()
+    fek = models.URLField(max_length=255)
     fek_posted_at = models.DateTimeField()
 
     electors = models.ManyToManyField(
@@ -509,7 +509,7 @@ class Position(models.Model):
     nomination_act = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='nomination_act_files', on_delete=models.SET_NULL)
-    nomination_act_fek = models.URLField(blank=True)
+    nomination_act_fek = models.URLField(blank=True, max_length=255)
     revocation_decision = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='revocation_decision_files', on_delete=models.SET_NULL)
