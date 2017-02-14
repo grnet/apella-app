@@ -482,4 +482,8 @@ export default {
   'user.not.verified.error': 'Ο χρήστης δεν έχει πιστοποιηθεί',
   'user.not.active.error': 'Ο χρήστης είναι ανενεργός',
   'user.invalid.affiliation.error': 'Ο οικείος φορέας επέστρεψε μη επιτρεπτή τιμή στο πεδίο της κατηγορίας προσώπων (affiliation).',
+
+  '{description} can\'t be blank': 'Το πεδίο \'{description}\' δεν μπορεί να είναι κενό',
+  'identification.field': 'όνομα χρήστη',
+  'password.field': 'συνθηματικό'
 };
