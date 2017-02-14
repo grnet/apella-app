@@ -483,7 +483,16 @@ export default {
   'user.not.active.error': 'Ο χρήστης είναι ανενεργός',
   'user.invalid.affiliation.error': 'Ο οικείος φορέας επέστρεψε μη επιτρεπτή τιμή στο πεδίο της κατηγορίας προσώπων (affiliation).',
 
-  '{description} can\'t be blank': 'Το πεδίο \'{description}\' δεν μπορεί να είναι κενό',
+  '{description} is invalid': 'To πεδίο δεν είναι έγκυρο',
+  '{description} can\'t be blank': 'Tο πεδίο \'{description}\' δεν μπορεί να είναι κενό',
+  '{description} is too short (minimum is {min} characters)': 'To πεδίο \'{description}\' χρειάζεται τουλάχιστον {min} χαρακτήρες',
+  'username.field': 'όνομα χρήστη',
+  'email.field': 'email',
   'identification.field': 'όνομα χρήστη',
-  'password.field': 'συνθηματικό'
+  'password.field': 'συνθηματικό',
+  'password2.field': 'επαλήθευση συνθηματικού',
+  'id_passport.field': 'Αριθμός δελτίου ταυτότητας ή διαβατήριο',
+  'mobile_phone_number.field': 'κινητό τηλέφωνο',
+  'home_phone_number.field': 'σταθερό τηλέφωνο',
+  'passwords.do.not.match': 'Τα δύο συνθηματικά δεν ταιριάζουν',
 };

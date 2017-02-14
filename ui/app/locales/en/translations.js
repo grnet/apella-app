@@ -474,4 +474,18 @@ export default {
   'user.not.verified.error': 'User not verified error',
   'user.not.active.error': 'The user is not active',
   'user.invalid.affiliation.error': 'The affiliation value released by your institution is not eligible.',
+
+  '{description} is invalid': 'The field is invalid',
+  '{description} can\'t be blank': 'The field \'{description}\' cannot be blank',
+  '{description} is too short (minimum is {min} characters)': 'Field \'{description}\' is too short (minumum {min} characters',
+  'username.field': 'username',
+  'email.field': 'email',
+  'identification.field': 'username',
+  'password.field': 'password',
+  'password2.field': 'retype password',
+  'id_passport.field': 'ID or passport number',
+  'mobile_phone_number.field': 'mobile',
+  'home_phone_number.field': 'home phone',
+  'passwords.do.not.match': 'Τα δύο συνθηματικά δεν ταιριάζουν',
+
 };
