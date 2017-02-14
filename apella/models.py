@@ -31,8 +31,8 @@ class RegistrationToken(models.Model):
 
 class ApellaUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
-        max_length=30, unique=True,
-        help_text='Required. 30 characters or fewer. Letters, digits and '
+        max_length=255, unique=True,
+        help_text='Required. 255 characters or fewer. Letters, digits and '
                   '@/./+/-/_ only.',
         validators=[
             validators.RegexValidator(r'^[\w.@+-]+$',
