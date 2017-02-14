@@ -248,7 +248,7 @@ export default ApellaGen.extend({
         return fs;
       }),
 
-      actions: ['gen:details', 'goToPosition', 'gen:edit', 'cancelCandidacy'],
+      actions: ['gen:details', 'goToPosition', 'cancelCandidacy'],
       actionsMap: {
         cancelCandidacy: cancelCandidacy,
         goToPosition: goToPosition,
@@ -316,6 +316,7 @@ export default ApellaGen.extend({
     ]
   },
   details: {
+    actions: [],
     page: {
       title: computed.readOnly('model.position.code')
     },
