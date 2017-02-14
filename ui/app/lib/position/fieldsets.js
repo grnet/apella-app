@@ -188,7 +188,7 @@ const  position = {
           }
           else {
             start_field = disable_field('starts_at');
-            end_field = disable_field('starts_at')
+            end_field = disable_field('ends_at')
           }
           return [disable_field('fek'), disable_field('fek_posted_at'), start_field, end_field];
         }
