@@ -211,7 +211,7 @@ export default ApellaGen.extend({
         return f;
       }),
 
-      actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition' ],
+      actions: ['gen:details','applyCandidacy', 'remove', 'cancelPosition' ],
       actionsMap: {
         applyCandidacy: applyCandidacy,
         cancelPosition: cancelPosition
