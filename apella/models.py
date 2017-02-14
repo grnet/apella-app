@@ -63,9 +63,9 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     email_verified_at = models.DateTimeField(null=True, default=None)
 
     date_joined = models.DateTimeField(default=timezone.now)
-    id_passport = models.CharField(max_length=30, blank=True)
-    mobile_phone_number = models.CharField(max_length=30, blank=True)
-    home_phone_number = models.CharField(max_length=30, blank=True)
+    id_passport = models.CharField(max_length=255, blank=True)
+    mobile_phone_number = models.CharField(max_length=255, blank=True)
+    home_phone_number = models.CharField(max_length=255, blank=True)
     role = models.CharField(
         choices=common.USER_ROLES, max_length=20, default='candidate')
     login_method = models.CharField(max_length=20, default='password',
