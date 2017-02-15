@@ -205,6 +205,37 @@ const  position = {
         flex: [100, 100]
       }
     },
+    election: {
+      label: 'fieldsets.labels.election',
+      fields: [
+        fileField('electors_meeting_proposal', 'position', 'electors_meeting_proposal', {
+          readonly: true,
+        }),
+        'electors_meeting_date',
+        fileField('nomination_proceedings', 'position', 'nomination_proceedings', {
+          readonly: true,
+        }),
+        fileField('proceedings_cover_letter', 'position', 'proceedings_cover_letter', {
+          readonly: true,
+        }),
+        field('elected.full_name_current', {label: 'full_name_current.label'}),
+        field('second_best.full_name_current', {label: 'full_name_current.label'}),
+        fileField('nomination_act', 'position', 'nomination_act', {
+          readonly: true,
+        }),
+        'nomination_act_fek',
+        fileField('revocation_decision', 'position', 'revocation_decision', {
+          readonly: true
+        }),
+        fileField('failed_election_decision', 'position', 'failed_election_decision', {
+          readonly: true
+        }),
+      ],
+      layout: {
+        flex: [100, 100, 100, 100, 50, 50, 100, 100, 100, 100]
+      }
+    },
+
     assistant_files: {
       label: 'fieldsets.labels.assistant_files',
       fields: [
