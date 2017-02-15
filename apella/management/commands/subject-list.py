@@ -11,9 +11,9 @@ class Command(BaseCommand):
 
         subjects = Subject.objects.all()
         if subjects:
-            self.stdout.write('ID\tTitle\tArea')
+            self.stdout.write('ID\tTitle\tArea\tOld Code')
         for subject in subjects:
             self.stdout.write(
-                '%s\t%s\t%s (%s)' %
-                (subject.id, subject.title, subject.area.title,
-                    subject.area.id))
+                '%s\t%s\t%s (%s)\t%s' %
+                (subject.id, subject.title.el, subject.area.title.el,
+                    subject.area.id, subject.old_code))

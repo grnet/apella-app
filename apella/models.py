@@ -315,6 +315,7 @@ class SubjectArea(models.Model):
 class Subject(models.Model):
     area = models.ForeignKey(SubjectArea)
     title = models.ForeignKey(MultiLangFields)
+    old_code = models.CharField(max_length=255, blank=True, null=True)
 
 
 class UserProfile(models.Model):
