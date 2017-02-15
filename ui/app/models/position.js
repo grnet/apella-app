@@ -39,7 +39,7 @@ export default DS.Model.extend({
       optionLabelAttr: 'title_current',
     }
   }),
-  fek: DS.attr({label: 'position.fek.label'}),
+  fek: DS.attr({label: 'position.fek.label', displayComponent: 'url-display'}),
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
   electors_regular_internal: DS.hasMany('professor'),
