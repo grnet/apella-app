@@ -328,8 +328,26 @@ const  position = {
         }),
         fileField('proceedings_cover_letter', 'position', 'proceedings_cover_letter', {
         }),
-        'elected',
-        'second_best',
+        field('elected', {
+          query: function(table, store, field, params) {
+            let position_id = get(field, 'model').get('id');
+            let candidacies = store.query('candidacy', {position: position_id});
+            let promise = candidacies.then((items) => {
+              return Ember.RSVP.all(items.getEach('candidate'));
+            });
+            return DS.PromiseArray.create({promise});
+          },
+        }),
+        field('second_best', {
+          query: function(table, store, field, params) {
+            let position_id = get(field, 'model').get('id');
+            let candidacies = store.query('candidacy', {position: position_id});
+            let promise = candidacies.then((items) => {
+              return Ember.RSVP.all(items.getEach('candidate'));
+            });
+            return DS.PromiseArray.create({promise});
+          },
+        }),
         fileField('nomination_act', 'position', 'nomination_act', {
           hint: 'nomination_act.hint',
           disabled: computed('model.changeset.proceedings_cover_letter', function(){
