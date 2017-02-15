@@ -88,7 +88,7 @@ export default DS.Model.extend({
     return (now.isBetween(start, end) || now.isSame(start) || now.isSame(end));
   }),
   nomination_act: DS.belongsTo('apella-file'),
-  nomination_act_fek: DS.attr(),
+  nomination_act_fek: DS.attr({displayComponent: 'url-display'}),
   nomination_proceedings: DS.belongsTo('apella-file'),
   old_code: DS.attr(),
   participation: DS.attr(),
