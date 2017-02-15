@@ -13,5 +13,6 @@ export default Serializer.extend(DS.EmbeddedRecordsMixin, {
     failed_election_decision: embedded,
     electors_meeting_proposal: embedded,
     assistant_files: embedded,
+    electors_set_file: embedded
   }
 });

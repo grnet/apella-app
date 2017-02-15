@@ -61,6 +61,7 @@ export default DS.Model.extend({
   electors_meeting_proposal: DS.belongsTo('apella-file'),
   electors_regular_external: DS.hasMany('professor'),
   electors_regular_internal: DS.hasMany('professor'),
+  electors_set_file: DS.belongsTo('apella-file'),
   electors_substitute_external: DS.hasMany('professor'),
   electors_substitute_internal: DS.hasMany('professor'),
   ends_at: DS.attr('date'),
