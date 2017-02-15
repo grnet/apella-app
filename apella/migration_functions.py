@@ -38,17 +38,9 @@ def get_obj(id_str, model):
     logger.debug('got %s %s' % (model.__name__, id))
     return obj
 
-
-def get_obj_by_name_el(name, model):
-    if not name:
-        return None
-    try:
-        obj = model.objects.get(title__el=name)
-    except model.DoesNotExist:
-        logger.error('%s %s does not exist' % (model.__name__, name))
-        raise
-    return obj
-
+def get_subject(id_str, subject_area_id):
+    old_code = subject_area_id + '.' + id_str
+    return Subject.objects.get(old_code=old_code)
 
 def migrate_candidate(old_user, new_user):
     is_verified = True if old_user.role_status == 'ACTIVE' else False
@@ -372,8 +364,10 @@ def migrate_position(old_position, author):
             'position %s already exists' % old_position.position_serial)
         return
 
-    subject = get_obj(old_position.subject_code, Subject)
     subject_area = get_obj(old_position.subject_area_code, SubjectArea)
+    old_code = str(subject_area.id) + '.' + old_position.subject_code
+    subject = Subject.objects.get(old_code=old_code)
+
     department = get_obj(old_position.department_id, Department)
     fek_posted_at = datetime.strptime(
         old_position.gazette_publication_date, '%Y-%m-%d')
