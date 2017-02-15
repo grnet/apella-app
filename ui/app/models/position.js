@@ -16,88 +16,66 @@ position_states_expanded.splice(0,1);
 
 
 export default DS.Model.extend({
-  title: DS.attr(),
-  description: DS.attr({type:'text'}),
-  discipline: DS.attr(),
-  department_dep_number: DS.attr(),
+  assistant_files: DS.hasMany('apella-file'),
   author: DS.belongsTo('institution-manager'),
-
+  can_apply: computed.equal('currentUserCandidacy.length', 0),
+  candidacies: DS.hasMany('candidacy'),
+  code: DS.attr({label: 'code.label'}),
+  // Use in candidacy select list
+  code_and_title: computed('code', 'title', function() {
+    return `${this.get('code')} -  ${this.get('title')}`;
+  }),
+  committee: DS.hasMany('professor'),
+  committee_external: DS.hasMany('professor'),
+  committee_internal: DS.hasMany('professor'),
+  created_at: DS.attr('date'),
+  /*
+   * Calculate if a user can apply for a position.
+   * If he has not already applied, then can_apply is true.
+   * */
+  currentUserCandidacy: computed('user_id', 'id', 'candidacies.[]', function() {
+    let position_id = get(this, 'id');
+    let candidate_id = get(this, 'user_id');
+    let promise = get(this, 'store').query('candidacy', {
+      position: position_id,
+      state: 'posted',
+      candidate: candidate_id
+    });
+    return DS.PromiseArray.create({promise})
+  }),
   department: DS.belongsTo('department', {
     formAttrs: {
       optionLabelAttr: 'title_current'
     }
   }),
-  institution: readOnly('department.institution'),
-  subject_area: DS.belongsTo('subject-area', {
-    formAttrs: {
-      optionLabelAttr: 'title_current'
-    }
-  }),
-  subject: DS.belongsTo('subject', {
-    formComponent: 'select-onchange',
-    formAttrs: {
-      lookupModel: 'subject_area',
-      changedChoices: function(store, value) {
-        return store.query('subject', {area: get(value, 'id')})
-      },
-      optionLabelAttr: 'title_current',
-    }
-  }),
+  department_dep_number: DS.attr(),
+  discipline: DS.attr(),
+  description: DS.attr({type:'text'}),
+  elected: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
+  electors: DS.hasMany('professor'),
+  electors_meeting_date: DS.attr('date'),
+  electors_meeting_date_format: computeDateFormat('electors_meeting_date'),
+  electors_meeting_proposal: DS.belongsTo('apella-file'),
+  electors_regular_external: DS.hasMany('professor'),
+  electors_regular_internal: DS.hasMany('professor'),
+  electors_substitute_external: DS.hasMany('professor'),
+  electors_substitute_internal: DS.hasMany('professor'),
+  ends_at: DS.attr('date'),
+  ends_at_format: computeDateFormat('ends_at'),
+  failed_election_decision: DS.belongsTo('apella-file'),
   fek: DS.attr({label: 'position.fek.label', displayComponent: 'url-display'}),
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
-  electors: DS.hasMany('professor'),
-  electors_regular_internal: DS.hasMany('professor'),
-  electors_regular_external: DS.hasMany('professor'),
-  electors_substitute_internal: DS.hasMany('professor'),
-  electors_substitute_external: DS.hasMany('professor'),
-  committee: DS.hasMany('professor'),
-  committee_internal: DS.hasMany('professor'),
-  committee_external: DS.hasMany('professor'),
-  elected: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
-  second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
-  state: DS.attr({type: 'select', choices: CHOICES.POSITION_STATES, defaultValue: 'posted'}),
-  state_verbose: computeI18NChoice('state', CHOICES.POSITION_STATES),
-  starts_at: DS.attr('date'),
-  starts_at_format: computeDateFormat('starts_at'),
-  ends_at: DS.attr('date'),
-  ends_at_format: computeDateFormat('ends_at'),
-  created_at: DS.attr('date'),
-  updated_at: DS.attr('date'),
-  updated_at_format: computeDateTimeFormat('updated_at'),
-  electors_meeting_date: DS.attr('date'),
-  electors_meeting_date_format: computeDateFormat('electors_meeting_date'),
-  code: DS.attr({label: 'code.label'}),
-  old_code: DS.attr(),
-  nomination_act_fek: DS.attr(),
-
-  // files
-  electors_meeting_proposal: DS.belongsTo('apella-file'),
-  nomination_proceedings: DS.belongsTo('apella-file'),
-  proceedings_cover_letter: DS.belongsTo('apella-file'),
-  nomination_act: DS.belongsTo('apella-file'),
-  revocation_decision: DS.belongsTo('apella-file'),
-  failed_election_decision: DS.belongsTo('apella-file'),
-  assistant_files: DS.hasMany('apella-file'),
-
-  // Use in candidacy select list
-  code_and_title: computed('code', 'title', function() {
-    return `${this.get('code')} -  ${this.get('title')}`;
+  institution: readOnly('department.institution'),
+  is_closed: computed('ends_at', 'state', function() {
+    let now = moment(),
+      posted = get(this, 'state') == 'posted',
+      end = get(this, 'ends_at');
+    return now.isAfter(end) && posted;
   }),
-
-  candidacies: DS.hasMany('candidacy'),
-
-  participation: DS.attr(),
-  participation_current: computed('participation', 'i18n.locale', function(){
-    return this.get('i18n').t(this.get('participation'));
-  }),
-
-  past_positions: DS.hasMany('position'),
-
   is_latest: computed('code', 'id', function() {
     return get(this, 'code').replace('APP','') === get(this, 'id');
   }),
-
   is_open: computed('starts_at', 'ends_at', function() {
     let now = moment(),
       start = get(this, 'starts_at'),
@@ -105,14 +83,23 @@ export default DS.Model.extend({
 
     return (now.isBetween(start, end) || now.isSame(start) || now.isSame(end));
   }),
-
-  is_closed: computed('ends_at', 'state', function() {
-    let now = moment(),
-      posted = get(this, 'state') == 'posted',
-      end = get(this, 'ends_at');
-    return now.isAfter(end) && posted;
+  nomination_act: DS.belongsTo('apella-file'),
+  nomination_act_fek: DS.attr(),
+  nomination_proceedings: DS.belongsTo('apella-file'),
+  old_code: DS.attr(),
+  participation: DS.attr(),
+  participation_current: computed('participation', 'i18n.locale', function(){
+    return this.get('i18n').t(this.get('participation'));
   }),
-
+  past_positions: DS.hasMany('position'),
+  proceedings_cover_letter: DS.belongsTo('apella-file'),
+  revocation_decision: DS.belongsTo('apella-file'),
+  second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
+  // Use in currentUserCandidacy
+  session: Ember.inject.service(),
+  starts_at: DS.attr('date'),
+  starts_at_format: computeDateFormat('starts_at'),
+  state: DS.attr({type: 'select', choices: CHOICES.POSITION_STATES, defaultValue: 'posted'}),
   /*
    * If a position is in state "posted" we display a state depending on the
    * ability to accept candidacies at the current time. These states are:
@@ -138,23 +125,25 @@ export default DS.Model.extend({
     }
   }),
   state_expanded: DS.attr({type: 'select', choices: position_states_expanded}),
-
-  /*
-   * Used to calculate if a user can apply for a position.
-   * If he has not already applied, then can_apply is true.
-   * */
-  session: Ember.inject.service(),
-  user_id: computed.alias('session.session.authenticated.user_id'),
-  currentUserCandidacy: computed('user_id', 'id', 'candidacies.[]', function() {
-    let position_id = get(this, 'id');
-    let candidate_id = get(this, 'user_id');
-    let promise = get(this, 'store').query('candidacy', {
-      position: position_id,
-      state: 'posted',
-      candidate: candidate_id
-    });
-    return DS.PromiseArray.create({promise})
+  state_verbose: computeI18NChoice('state', CHOICES.POSITION_STATES),
+  subject: DS.belongsTo('subject', {
+    formComponent: 'select-onchange',
+    formAttrs: {
+      lookupModel: 'subject_area',
+      changedChoices: function(store, value) {
+        return store.query('subject', {area: get(value, 'id')})
+      },
+      optionLabelAttr: 'title_current',
+    }
   }),
-  can_apply: computed.equal('currentUserCandidacy.length', 0)
-
+  subject_area: DS.belongsTo('subject-area', {
+    formAttrs: {
+      optionLabelAttr: 'title_current'
+    }
+  }),
+  title: DS.attr(),
+  updated_at: DS.attr('date'),
+  updated_at_format: computeDateTimeFormat('updated_at'),
+  // Use in currentUserCandidacy
+  user_id: computed.alias('session.session.authenticated.user_id'),
 });
