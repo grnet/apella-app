@@ -132,13 +132,11 @@ class OldApellaInstitutionMigrationData(models.Model):
 
 class OldApellaCandidateAssistantProfessorMigrationData(models.Model):
     user_id = models.TextField()
-    account_status = models.TextField()
     surname_el = models.TextField()
     name_el = models.TextField()
     fathername_el = models.TextField()
     email = models.TextField()
     institution = models.TextField()
     department = models.TextField()
-    rank = models.TextField()
     fek = models.TextField()
     discipline_from_fek = models.TextField()
