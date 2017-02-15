@@ -1958,6 +1958,38 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .readonly: {}
+                electors_set_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                     .string: {}
                 nomination_act_fek:
                     .cli_option: {}
