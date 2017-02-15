@@ -16,6 +16,9 @@ position_states_expanded.splice(0,1);
 
 
 export default DS.Model.extend({
+
+  // All keys have been sorted alphabetically
+
   assistant_files: DS.hasMany('apella-file'),
   author: DS.belongsTo('institution-manager'),
   can_apply: computed.equal('currentUserCandidacy.length', 0),
