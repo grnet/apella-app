@@ -84,7 +84,9 @@ class Command(LoadDataCommand):
                         s_title_en_before = title.en
                         title.el = title_el
                         title.en = title_en
+                        s.old_code = rid
                         title.save()
+                        s.save()
                         self.stdout.write(
                             "Renamed subject %s from %s, %s to %s, %s" %
                             (s_id, s_title_el_before, s_title_en_before,
@@ -94,9 +96,11 @@ class Command(LoadDataCommand):
 
                     title = MultiLangFields.objects.create(
                         el=title_el, en=title_en)
+
                     subject_data = {
                             'area': area,
-                            'title': title
+                            'title': title,
+                            'old_code': rid
                     }
                     Subject.objects.create(**subject_data)
                     success_subjects += 1
