@@ -244,10 +244,13 @@ export default {
   'electors_meeting_date.label': 'Committees convocation date',
   'electors_meeting_date_format.label': 'Committees convocation date',
   'nomination_proceedings.label': 'Nomination proceedings',
+  'nomination_proceedings.hint': ' "The field can be edited only if "Invitation for convocation of the Committee" and "Committees convocation date" are filled',
   'proceedings_cover_letter.label': 'Proceedings Cover Letter',
   'second_best.label': 'Second Most Appropriate Candidate',
   'nomination_act.label': 'Nomination act',
+  'nomination_act.hint': 'The field "Nomination act" can be filled only if the field "Proceedings Cover Letter" is filled',
   'nomination_act_fek.label': 'FEK (Government Gazette) of Nomination Act',
+  'nomination_act_fek.hint': 'The field "FEK (Government Gazette) of Nomination Act" can be filled only if the field "Proceedings Cover Letter" is filled',
   'revocation_decision.label': 'Decision to Revoke',
   'failed_election_decision.label': 'Failed election decision',
 

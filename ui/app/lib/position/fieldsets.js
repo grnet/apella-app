@@ -318,21 +318,32 @@ const  position = {
         fileField('electors_meeting_proposal', 'position', 'electors_meeting_proposal', {}),
         'electors_meeting_date',
         fileField('nomination_proceedings', 'position', 'nomination_proceedings', {
-          readonly: computed('model.electors_meeting_proposal',
-                      'model.electors_meeting_date', function(){
-            return !(get(this, 'model.electors_meeting_proposal')
-              && get(this, 'model.electors_meeting_date'));
+          hint: 'nomination_proceedings.hint',
+          disabled: computed('model.changeset.electors_meeting_proposal',
+                      'model.changeset.electors_meeting_date', function(){
+            let proposal = get(this, 'model.changeset.electors_meeting_proposal');
+            let date = get(this, 'model.changeset.electors_meeting_date');
+            return !(date && proposal && proposal.content);
           })
         }),
         fileField('proceedings_cover_letter', 'position', 'proceedings_cover_letter', {
-          readonly: true
         }),
         'elected',
         'second_best',
         fileField('nomination_act', 'position', 'nomination_act', {
-          readonly: true
+          hint: 'nomination_act.hint',
+          disabled: computed('model.changeset.proceedings_cover_letter', function(){
+            let cover = get(this, 'model.changeset.proceedings_cover_letter');
+            return !(cover && cover.content);
+          })
         }),
-        'nomination_act_fek',
+        field('nomination_act_fek', {
+          hint: 'nomination_act_fek.hint',
+          disabled: computed('model.changeset.proceedings_cover_letter', function(){
+            let cover = get(this, 'model.changeset.proceedings_cover_letter');
+            return !(cover && cover.content);
+          })
+        }),
         fileField('revocation_decision', 'position', 'revocation_decision', {
           readonly: true
         }),
