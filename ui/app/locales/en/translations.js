@@ -241,6 +241,7 @@ export default {
   'institution_freetext.label': 'Foreign institution',
   'assistant_files.label': 'Administrative documents',
   'electors_meeting_proposal.label': 'Invitation for convocation of the Committee',
+  'electors_set_file.label': 'Decision to form electing committee', // TODO: Check it!
   'electors_meeting_date.label': 'Committees convocation date',
   'electors_meeting_date_format.label': 'Committees convocation date',
   'nomination_proceedings.label': 'Nomination proceedings',

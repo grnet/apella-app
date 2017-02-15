@@ -240,6 +240,7 @@ export default {
   'institution_freetext.label': 'Ιδρυμα αλλοδαπής',
   'assistant_files.label': 'Διοικητικά έγγραφα',
   'electors_meeting_proposal.label': 'Πρόσκληση για σύγκληση του εκλεκτορικού σώματος για επιλογή',
+  'electors_set_file.label': 'Απόφαση σύστασης εκλεκτορικού σώματος',
   'electors_meeting_date.label': 'Ημερομηνία σύγκλησης του εκλεκτορικού σώματος',
   'electors_meeting_date_format.label': 'Ημερομηνία σύγκλησης του εκλεκτορικού σώματος',
   'nomination_proceedings.label': 'Πρακτικό επιλογής',
