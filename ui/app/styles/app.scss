@@ -78,3 +78,11 @@ footer {
 .page-content >div:first-child {
   flex-grow: 1;
 }
+
+.truncate {
+  display: inline-block;
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
