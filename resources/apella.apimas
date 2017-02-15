@@ -1958,6 +1958,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .readonly: {}
+                    .string: {}
                 electors_set_file:
                     .cli_option: {}
                     .field: {}
@@ -1990,7 +1991,6 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .datetime: {}
-                    .string: {}
                 nomination_act_fek:
                     .cli_option: {}
                     .field: {}
