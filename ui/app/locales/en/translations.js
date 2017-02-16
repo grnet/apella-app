@@ -254,6 +254,8 @@ export default {
   'nomination_act_fek.hint': 'The field "FEK (Government Gazette) of Nomination Act" can be filled only if the field "Proceedings Cover Letter" is filled',
   'revocation_decision.label': 'Decision to Revoke',
   'failed_election_decision.label': 'Failed election decision',
+  'cover_letter.should.be.filled': 'Cover letter should be filled',
+  'cannot.be.filled.if.nomination': 'The file cannot be filled if either nomination act or nomination F.E.K. are filled',
 
 
   // popup messages translations
