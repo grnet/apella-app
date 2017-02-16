@@ -136,6 +136,14 @@ function committeeElectorsField(field_name, registry_type) {
 
   return field(field_name, {
     label: label,
+    disabled: computed('model.changeset.committee_set_file', function(){
+      let file = get(this, 'model.changeset.committee_set_file');
+      if(field_name.startsWith('committee')) {
+        return !(file && file.content);
+      } else {
+        return false;
+      }
+    }),
     query: computed('position', function() {
       return function(table, store, field, params) {
         let departmentID = table.get("form.changeset.department.id");

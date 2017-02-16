@@ -256,7 +256,10 @@ export default {
   'failed_election_decision.label': 'Failed election decision',
   'cover_letter.should.be.filled': 'Cover letter should be filled',
   'cannot.be.filled.if.nomination': 'The file cannot be filled if either nomination act or nomination F.E.K. are filled',
-
+  'committee_set_file.label': 'Decision to form Committee',
+  'committee_set_file.hint': 'Το πεδίο "Πρακτικό ορισμού της εισηγητικής επιτροπής" μπορεί να συμπληρωθεί μόνο εάν έχει συμπληρωθεί ημερομηνία σύγκλησης του εκλεκτορικού σώματος για τον ορισμό της επιτροπής.',
+  'committee_proposal.label': 'Committee proposal',
+  'committee_note.label': 'Committee note',
 
   // popup messages translations
   'message.close': 'close',
@@ -356,7 +359,8 @@ export default {
       user_interest: 'Choose your interests',
       manager_can_edit: 'The following fields can only be edited by the institution manager.',
       assistant_can_edit: 'The following fields can only be edited by the assistant.',
-      assistant_profile: 'The disabled fields can only be edited by the institution manager.',
+      assistant_profile: 'The disabled fields can only be edited by the institition manager.',
+      committee: '<p>Τα μέλη της εισηγητικής επιτροπής μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Πρακτικό ορισμού της εισηγητικής επιτροπής".</p><ul><li>Τα μέλη της επιτροπής πρέπει να είναι ακριβώς 3.</li><li>Τουλάχιστον ένα μέλος της επιτροπής πρέπει να προέρχεται από το μητρώο εξωτερικών μελών του Τμήματος.</li></ul>',
     }
   },
   institution: {

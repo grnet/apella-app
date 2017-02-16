@@ -324,12 +324,35 @@ const  position = {
     },
     committee: {
       label: 'fieldsets.labels.committee',
+      text: 'fieldsets.text.committee',
       fields: [
+        fileField('committee_set_file', 'position', 'committee_set_file', {
+          hint: 'committee_set_file.hint',
+          disabled: computed('model.changeset.electors_meeting_to_set_committee_date', function(){
+            let date = get(this, 'model.changeset.electors_meeting_to_set_committee_date');
+            return !(date);
+          })
+        }, {
+          preventDelete: true,
+          replace: true
+        }),
         committeeElectorsField('committee_internal', 'internal'),
-        committeeElectorsField('committee_external', 'external')
+        committeeElectorsField('committee_external', 'external'),
+        fileField('committee_proposal', 'position', 'committee_proposal', {
+          disabled: computed('model.changeset.committee_note', function(){
+            let file = get(this, 'model.changeset.committee_note');
+            return file && file.content;
+          })
+        }),
+        fileField('committee_note', 'position', 'committee_note', {
+          disabled: computed('model.changeset.committee_proposal', function(){
+            let file = get(this, 'model.changeset.committee_proposal');
+            return file && file.content;
+          })
+        }),
       ],
       layout: {
-        flex: [100, 100]
+        flex: [100, 100, 100, 100, 100]
       }
     },
     electors_regular: {
