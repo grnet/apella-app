@@ -22,6 +22,7 @@ export default Ember.Component.extend(BaseFieldMixin, {
   replace: reads('fattrs.replace'),
   readonly: reads('field.readonly'),
   disabled: reads('field.disabled'),
+  preventDelete: reads('fattrs.preventDelete'),
   session: inject.service('session'),
   messages: inject.service('messages'),
   inProgress: false,
@@ -43,18 +44,19 @@ export default Ember.Component.extend(BaseFieldMixin, {
     if (value instanceof DS.Model) {
       return [value];
     }
-    if (value instanceof DS.ManyArray) { 
+    if (value instanceof DS.ManyArray) {
       return value;
     }
-    if (value instanceof Array) { 
+    if (value instanceof Array) {
       return value;
     }
     if (value) { return [value]; }
     return [];
   }),
 
-  canDelete: computed('readonly', 'disabled', function() {
-    let {readonly, disabled} = this.getProperties('readonly', 'disabled');
+  canDelete: computed('readonly', 'disabled', 'preventDelete', function() {
+    let {readonly, disabled, preventDelete} = this.getProperties('readonly', 'disabled', 'preventDelete');
+    if (preventDelete) { return false; }
     return !(readonly || disabled);
   }),
 
