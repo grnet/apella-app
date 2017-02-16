@@ -32,7 +32,7 @@ export default DS.Store.extend({
     }
 
     if (cacheMatch && (cacheMatch[1] + TIMEOUT) >= now) {
-      return new Ember.RSVP.Promise((r) => { r(cacheMatch[0]) });
+      return Ember.RSVP.Promise.resolve(cacheMatch[0]);
     }
 
     return this._super(...arguments).then((resp) => {
