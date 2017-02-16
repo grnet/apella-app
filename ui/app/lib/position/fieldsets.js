@@ -369,6 +369,7 @@ const  position = {
     },
     electors: {
       label: 'fieldsets.labels.electors',
+      text: 'fieldsets.text.electors',
       fields: [
         fileField('electors_set_file', 'position', 'electors_set_file', {
         }, {
