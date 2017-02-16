@@ -4,6 +4,7 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
+    sourcemaps: { enabled: false },
     fingerprint: {
       exclude: ['**/flag_*.png', '**/logo_*.png'],
     }
