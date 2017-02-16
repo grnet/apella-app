@@ -6,12 +6,12 @@ const {
 } = Ember;
 
 
-function uploadFile(file, url, token, file_data_key='file_path') {
+function uploadFile(file, url, token, file_data_key='file_upload') {
   let data = new FormData();
   data.append(file_data_key, file.file);
 
   Object.keys(file).forEach((key) => {
-    if (key !== 'file') {
+    if (key !== file_data_key) {
       data.append(key, file[key]);
     }
   });
