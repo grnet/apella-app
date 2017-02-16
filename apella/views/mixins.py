@@ -286,15 +286,15 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['post'])
     def upload(self, request, pk=None):
         obj = self.get_object()
-        if 'file_path' not in request.FILES:
+        if 'file_upload' not in request.FILES:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        file_path = request.FILES['file_path']
+        file_upload = request.FILES['file_upload']
         file_kind = request.data['file_kind']
         file_description = request.data['file_description']
 
         if file_kind not in FILE_KIND_TO_FIELD:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        if not file_path:
+        if not file_upload:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         field_name, many = FILE_KIND_TO_FIELD[file_kind].values()
@@ -306,9 +306,14 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
                 file_kind=file_kind,
                 source=self.FILE_SOURCE[obj.__class__.__name__],
                 source_id=obj.id,
-                file_path=file_path,
+                file_content=file_upload,
+                file_name=file_upload.file.name,
                 description=file_description,
                 updated_at=timezone.now())
+        file_path = generate_filename(
+            uploaded_file, file_upload.file.name)
+        uploaded_file.file_content = file_path
+        uploaded_file.save()
 
         if not many:
             setattr(obj, field_name, uploaded_file)

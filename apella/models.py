@@ -157,7 +157,7 @@ def generate_filename(apellafile, filename):
             apellafile.owner.username,
             apellafile.file_kind,
             apellafile.id,
-            splitext(filename)[1])
+            os.path.splitext(filename)[1])
     return path
 
 
@@ -173,11 +173,12 @@ class ApellaFile(models.Model):
     source = models.CharField(choices=common.FILE_SOURCE, max_length=30)
     source_id = models.IntegerField()
     file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
-    file_path = models.FileField(
+    file_content = models.FileField(
         upload_to=generate_filename,
         storage=OverwriteStorage(), max_length=1024)
     description = models.TextField(blank=True, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
+    file_name = models.CharField(max_length=1024)
 
     def save(self, *args, **kwargs):
         super(ApellaFile, self).save(*args, **kwargs)
@@ -267,10 +268,6 @@ class ApellaFile(models.Model):
             self.apella_professor_cv_files.exists() or \
             self.apella_professor_diploma_files.exists() or \
             self.apella_professor_publication_files.exists()
-
-    @property
-    def filename(self):
-        return self.file_path.name.split("/")[-1]
 
 
 class Institution(models.Model):

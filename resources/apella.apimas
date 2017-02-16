@@ -210,11 +210,16 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
-                file_path:
+                file_content:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .file: {}
+                file_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
                 description:
                     .cli_option: {}
                     .field: {}
@@ -553,7 +558,7 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .integer: {}
-                file_path:
+                file_upload:
                     .cli_option: {}
                     .field: {}
                     .drf_field:
@@ -588,11 +593,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -620,11 +625,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -652,11 +657,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -684,11 +689,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -981,7 +986,7 @@ spec:
                     .required: {}
                     .ref:
                         to: professors
-                file_path:
+                file_upload:
                     .cli_option: {}
                     .field: {}
                     .drf_field:
@@ -1016,11 +1021,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -1380,7 +1385,7 @@ spec:
                     .drf_field: {}
                     .datetime: {}
                     .readonly: {}
-                file_path:
+                file_upload:
                     .cli_option: {}
                     .field: {}
                     .drf_field:
@@ -1415,11 +1420,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -1447,11 +1452,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -1479,11 +1484,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -1511,11 +1516,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -1917,7 +1922,7 @@ spec:
                     .ref:
                         to: professor-ranks
                         many: True
-                file_path:
+                file_upload:
                     .cli_option: {}
                     .field: {}
                     .drf_field:
@@ -2022,7 +2027,7 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .datetime: {}
-                file_path:
+                file_upload:
                     .cli_option: {}
                     .field: {}
                     .drf_field:
@@ -2058,11 +2063,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -2090,11 +2095,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -2122,11 +2127,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -2155,11 +2160,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}
@@ -2187,11 +2192,11 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .string: {}
-                        file_path:
+                        file_name:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .file: {}
+                            .string: {}
                         description:
                             .cli_option: {}
                             .field: {}

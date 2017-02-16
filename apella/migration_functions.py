@@ -212,7 +212,7 @@ def link_migrated_files(apellafiles):
     for apellafile in apellafiles:
         nr_files += 1
 
-        old_file_path = apellafile.old_file_path:
+        old_file_path = apellafile.old_file_path
         if not old_file_path:
             continue
 
