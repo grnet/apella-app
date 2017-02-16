@@ -136,12 +136,13 @@ function committeeElectorsField(field_name, registry_type) {
 
   return field(field_name, {
     label: label,
-    disabled: computed('model.changeset.committee_set_file', function(){
-      let file = get(this, 'model.changeset.committee_set_file');
+    disabled: computed('model.changeset.committee_set_file', 'model.changeset.electors_set_file', function(){
+      let file1 = get(this, 'model.changeset.committee_set_file');
+      let file2 = get(this, 'model.changeset.electors_set_file');
       if(field_name.startsWith('committee')) {
-        return !(file && file.content);
+        return !(file1 && file1.content);
       } else {
-        return false;
+        return !(file2 && file2.content);
       }
     }),
     query: computed('position', function() {

@@ -244,6 +244,7 @@ export default {
   'electors_set_file.label': 'Decision to form electing committee', // TODO: Check it!
   'electors_meeting_date.label': 'Committees convocation date',
   'electors_meeting_date_format.label': 'Committees convocation date',
+  'electors_meeting_to_set_committee_date.label': 'Electors meeting date to set committee date',
   'nomination_proceedings.label': 'Nomination proceedings',
   'nomination_proceedings.hint': ' "The field can be edited only if "Invitation for convocation of the Committee" and "Committees convocation date" are filled',
   'proceedings_cover_letter.label': 'Proceedings Cover Letter',
@@ -354,6 +355,7 @@ export default {
       committee: 'Committee',
       election: 'Election',
       assistant_files: 'Other administrative documents',
+      electors: 'Electors',
     },
     text: {
       user_interest: 'Choose your interests',

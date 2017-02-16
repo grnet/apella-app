@@ -63,6 +63,7 @@ export default DS.Model.extend({
   electors_meeting_date: DS.attr('date'),
   electors_meeting_date_format: computeDateFormat('electors_meeting_date'),
   electors_meeting_proposal: DS.belongsTo('apella-file'),
+  electors_meeting_to_set_committee_date: DS.attr('date'),
   electors_regular_external: DS.hasMany('professor'),
   electors_regular_internal: DS.hasMany('professor'),
   electors_set_file: DS.belongsTo('apella-file'),

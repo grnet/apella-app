@@ -194,6 +194,18 @@ const  position = {
         flex: [100, 100, 100, 100, 100]
       }
     },
+    electors: {
+      label: 'fieldsets.labels.electors',
+      fields: [
+        fileField('electors_set_file', 'position', 'electors_set_file', {
+          readonly: true
+        }),
+        'electors_meeting_to_set_committee_date',
+      ],
+      layout: {
+        flex: [100, 100]
+      }
+    },
     electors_regular: {
       label: 'electors_regular_members.label',
       fields: [
@@ -353,6 +365,20 @@ const  position = {
       ],
       layout: {
         flex: [100, 100, 100, 100, 100]
+      }
+    },
+    electors: {
+      label: 'fieldsets.labels.electors',
+      fields: [
+        fileField('electors_set_file', 'position', 'electors_set_file', {
+        }, {
+          preventDelete: true,
+          replace: true
+        }),
+        'electors_meeting_to_set_committee_date',
+      ],
+      layout: {
+        flex: [100, 100]
       }
     },
     electors_regular: {
