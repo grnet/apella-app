@@ -346,7 +346,11 @@ const  position = {
     election: {
       label: 'fieldsets.labels.election',
       fields: [
-        fileField('electors_meeting_proposal', 'position', 'electors_meeting_proposal', {}),
+        fileField('electors_meeting_proposal', 'position', 'electors_meeting_proposal', {
+        }, {
+          preventDelete: true,
+          replace: true,
+        }),
         'electors_meeting_date',
         fileField('nomination_proceedings', 'position', 'nomination_proceedings', {
           hint: 'nomination_proceedings.hint',
@@ -356,8 +360,14 @@ const  position = {
             let date = get(this, 'model.changeset.electors_meeting_date');
             return !(date && proposal && proposal.content);
           })
+        }, {
+          preventDelete: true,
+          replace: true
         }),
         fileField('proceedings_cover_letter', 'position', 'proceedings_cover_letter', {
+        }, {
+          preventDelete: true,
+          replace: true
         }),
         field('elected', {
           query: function(table, store, field, params) {
