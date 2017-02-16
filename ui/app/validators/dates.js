@@ -15,7 +15,7 @@ const {
 
 export function afterToday(options) {
   return (key, value) => {
-    if (moment(value).isAfter(TOMORROW)) {
+    if (!value || moment(value).isAfter(TOMORROW)) {
       return true;
     } else {
       return `${moment(value).format(DATE_FORMAT)} should be after today`;
@@ -25,7 +25,7 @@ export function afterToday(options) {
 
 export function beforeToday(options) {
   return (key, value) => {
-    if (moment(value).isBefore(TODAY)) {
+    if (!value || moment(value).isBefore(TODAY)) {
       return true;
     } else {
       return `${moment(value).format(DATE_FORMAT)}  should be before today`;
