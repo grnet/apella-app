@@ -31,6 +31,10 @@ export default DS.Model.extend({
   committee: DS.hasMany('professor'),
   committee_external: DS.hasMany('professor'),
   committee_internal: DS.hasMany('professor'),
+  committee_note: DS.belongsTo('apella-file'),
+  committee_proposal: DS.belongsTo('apella-file'),
+  committee_set_file: DS.belongsTo('apella-file'),
+
   created_at: DS.attr('date'),
   /*
    * Calculate if a user can apply for a position.
