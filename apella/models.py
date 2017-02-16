@@ -152,14 +152,13 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
         return user_candidacy_set.filter(position__in=position_ids)
 
 
-def generate_filename(self, filename):
-    url = "%s/%s/%d/%s/%s" % (
-            self.owner.username,
-            self.source,
-            self.source_id,
-            self.file_kind,
-            filename)
-    return url
+def generate_filename(apellafile, filename):
+    path = "%s/%s-%s%s" % (
+            apellafile.owner.username,
+            apellafile.file_kind,
+            apellafile.id,
+            splitext(filename)[1])
+    return path
 
 
 class OverwriteStorage(FileSystemStorage):
