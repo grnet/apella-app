@@ -16,22 +16,15 @@ export default DS.Model.extend({
   generatingLink: false,
 
   file_kind: DS.attr(),
-  file_path: DS.attr(),
+  file_name: DS.attr(),
   owner: DS.attr(),
   source: DS.attr(),
   description: DS.attr(),
   updated_at: DS.attr('date'),
 
-  filename: computed('file_path', function() {
-    let path = get(this, 'file_path');
-    if (path) {
-      path = decodeURI(path);
-      return path.split("/").slice(-1)[0];
-    }
-    return null;
-  }),
+  filename: reads('file_name'),
 
-  downloadURL: computed('file_path', function() {
+  downloadURL: computed(function() {
     let modelName = this.constructor.modelName;
     let adapter = this.store.adapterFor(modelName);
     let token = get(this, 'token');
