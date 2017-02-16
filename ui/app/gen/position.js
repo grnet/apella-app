@@ -49,7 +49,7 @@ const pick_edit_fs = function() {
     }
     // closed
     else {
-      res = head.concat(fs.candidacies, fs.electors_regular, fs.electors_substitite, fs.committee);
+      res = head.concat(fs.candidacies, fs.electors_regular, fs.electors_substitite);
     }
   }
   else if(state === 'cancelled') {
@@ -57,11 +57,11 @@ const pick_edit_fs = function() {
   }
   // in all other states
   else {
-    res = head.concat(fs.candidacies, fs.electors_regular, fs.electors_substitite, fs.committee);
+    res = head.concat(fs.candidacies, fs.electors_regular, fs.electors_substitite);
   }
 
   if (state === 'electing') {
-    res = res.concat(fs.election);
+    res = res.concat(fs.committee, fs.election);
   }
 
   return res.concat(fs.assistant_files);
