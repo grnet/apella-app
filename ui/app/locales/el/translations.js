@@ -349,8 +349,10 @@ export default {
       candidate_profile: 'Προφίλ υποψηφίου',
       manager_info: 'Στοιχεία διαχειριστή',
       sub_info: 'Αναπληρωτής Διαχειριστής Ιδρύματος',
+      committee: 'Εισηγητική επιτροπή',
       election: 'Εκλογή',
       assistant_files: 'Λοιπά διοικητικά έγγραφα',
+
     },
     text: {
       user_interest: 'Εκδηλώστε το ενδιαφέρον σας',

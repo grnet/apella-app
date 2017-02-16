@@ -176,7 +176,7 @@ const  position = {
       })
     },
     committee: {
-      label: 'committee_members.label',
+      label: 'fieldsets.labels.committee',
       fields: [
         committeeElectorsField('committee_internal', 'internal'),
         committeeElectorsField('committee_external', 'external')
@@ -314,7 +314,7 @@ const  position = {
       fields: [candidaciesField(undefined, false, false)]
     },
     committee: {
-      label: 'committee_members.label',
+      label: 'fieldsets.labels.committee',
       fields: [
         committeeElectorsField('committee_internal', 'internal'),
         committeeElectorsField('committee_external', 'external')

@@ -348,6 +348,7 @@ export default {
       candidate_profile: 'Candidate\'s profile',
       manager_info: 'Manager info',
       sub_info: 'Substitute Institution Manager',
+      committee: 'Committee',
       election: 'Election',
       assistant_files: 'Other administrative documents',
     },
