@@ -1959,6 +1959,102 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .string: {}
+                committee_set_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
+                committee_proposal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
+                committee_note:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_path:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .file: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {}
                 electors_set_file:
                     .cli_option: {}
                     .field: {}
