@@ -162,23 +162,13 @@ def migrate_file(old_file, new_user, source, source_id):
         source=source,
         source_id=source_id,
         updated_at=updated_at)
-    old_file_path = os.path.join(
-        settings.OLD_APELLA_MEDIA_ROOT, old_file.file_path)
     new_file_path = os.path.join(
         settings.MEDIA_ROOT,
         generate_filename(new_file, old_file.original_name))
-    if not os.path.isdir(os.path.dirname(new_file_path)):
-        os.makedirs(os.path.dirname(new_file_path))
-    try:
-        os.link(old_file_path, new_file_path)
-    except OSError as e:
-        logger.error(
-            'failed to migrate file %s: %s' %
-            (old_file_path, e.args))
-        return
-
     new_file.file_path = new_file_path
+    new_file.old_file_path = old_file.file_path
     new_file.save()
+
     logger.info(
         'migrated %s file %s to %s' %
         (source, old_file.id, new_file.id))
@@ -209,6 +199,66 @@ def migrate_file(old_file, new_user, source, source_id):
             many_attr = getattr(candidacy, field_name)
             many_attr.add(new_file)
         candidacy.save()
+
+
+def link_migrated_files(apellafiles):
+    path_join = os.path.join
+    old_root = settings.OLD_APELLA_MEDIA_ROOT
+    new_root = settings.MEDIA_ROOT
+    nr_files = 0
+    missing_files = 0
+    error_files = 0
+
+    for apellafile in apellafiles:
+        nr_files += 1
+
+        old_file_path = apellafile.old_file_path:
+        if not old_file_path:
+            continue
+
+        old_full_path = path_join(old_root, old_file_path)
+        new_full_path = path_join(new_root, apellafile.file_path)
+
+        retry = 1
+        while retry >= 0:
+            try:
+                os.link(old_full_path, new_full_path)
+                missing_files += 1
+                break
+
+            except OSError as e:
+                pass
+
+            if e.errno == errno.EEXIST:
+                break
+
+            elif e.errno == errno.ENOENT:
+                if not os.path.exists(old_full_path):
+                    m = "Cannot link %r to %r: source is missing"
+                    m = m % (old_full_path, new_full_path)
+                    logger.error(m)
+                    error_files += 1
+                    break
+
+                try:
+                    os.makedirs(os.path.dirname(new_full_path))
+                except OSError as ee:
+                    m = "Cannot link %r to %r: makedirs failed: %s"
+                    m = m % (old_full_path, new_full_path, ee)
+                    logger.error(m)
+                    error_files += 1
+                    break
+
+            else:
+                m = "Cannot link %r to %r: %s"
+                m = m % (old_full_path, new_full_path, e)
+                logger.error(m)
+                error_files += 1
+                break
+
+            retry -= 1
+
+    return nr_files, missing_files, error_files
 
 
 @transaction.atomic
