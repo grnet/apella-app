@@ -178,11 +178,20 @@ const  position = {
     committee: {
       label: 'fieldsets.labels.committee',
       fields: [
+        fileField('committee_set_file', 'position', 'committee_set_file', {
+          readonly: true
+        }),
         committeeElectorsField('committee_internal', 'internal'),
-        committeeElectorsField('committee_external', 'external')
+        committeeElectorsField('committee_external', 'external'),
+        fileField('committee_proposal', 'position', 'committee_proposal', {
+          readonly: true
+        }),
+        fileField('committee_note', 'position', 'committee_note', {
+          readonly: true
+        }),
       ],
       layout: {
-        flex: [100, 100]
+        flex: [100, 100, 100, 100, 100]
       }
     },
     electors_regular: {
