@@ -255,7 +255,7 @@ class FilesViewSet(viewsets.ModelViewSet):
             # ui_download_url = '%s?#download=%s' % (ui_url, url)
             # return HttpResponseRedirect(ui_download_url)
 
-        file_id = auth_hooks.consume_file_token(user, token)
+        file_id = auth_hooks.consume_file_token(token)
         if not file_id == pk:
             raise Http404
 
