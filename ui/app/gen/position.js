@@ -190,6 +190,7 @@ export default ApellaGen.extend({
       },
       serverSide: true,
       search: true,
+      searchPlaceholder: 'search.placeholder_positions'
     },
     page: {
       title: 'position.menu_label',
