@@ -707,3 +707,5 @@ from migration_models import (
     OldApellaInstitutionMigrationData,
     OldApellaCandidateAssistantProfessorMigrationData
 )
+
+from serials import Serials
