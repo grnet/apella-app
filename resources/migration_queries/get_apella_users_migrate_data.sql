@@ -85,10 +85,12 @@ from
                 null feksubject_id,
                 pf.rank_id rank_id,
                 pf.speakinggreek speakinggreek,
-                null profileurl,
+                p.profileurl profileurl,
                 true is_foreign,
                 null fek
-            from professorforeign pf
+            from professorforeign pf, professor p
+            where
+                p.id = pf.id
         ) p on (p.id = r.id)
     left outer join rank on (rank.id = p.rank_id)
     left outer join (select * from rank_name where locale = 'en') rn on (rn.rank_id = rank.id)
