@@ -1952,7 +1952,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .nullable: {}
-                    .date: {}
+                    .datetime: {}
                 old_code:
                     .cli_option: {}
                     .field: {}

@@ -483,7 +483,7 @@ class Position(models.Model):
     department_dep_number = models.IntegerField()
     electors_meeting_to_set_committee_date = models.DateField(
         blank=True, null=True)
-    electors_meeting_date = models.DateField(blank=True, null=True)
+    electors_meeting_date = models.DateTimeField(blank=True, null=True)
     electors_set_file = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='electors_set_files', on_delete=models.SET_NULL)
