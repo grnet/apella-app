@@ -179,7 +179,7 @@ def migrate_file(old_file, new_user, source, source_id):
         settings.MEDIA_ROOT,
         generate_filename(new_file, old_file.original_name))
     new_file.file_content = new_file_path
-    #new_file.old_file_path = old_file.file_path
+    new_file.old_file_path = old_file.file_path
     new_file.save()
 
     logger.info(
@@ -215,7 +215,7 @@ def link_migrated_files(apellafiles):
             continue
 
         old_full_path = path_join(old_root, old_file_path)
-        new_full_path = path_join(new_root, apellafile.file_path)
+        new_full_path = path_join(new_root, apellafile.file_content.path)
 
         retry = 1
         while retry >= 0:
