@@ -15,7 +15,7 @@ const {
 } = Ember;
 
 // params used for view details of candidacy from position view
-const candidaciesField = function(type, hidden, calc) {
+const candidaciesField = function(type, hidden, calc, calc_params) {
   return field('candidacies', {
     valueQuery: function(store, params, model, value) {
       let position_id = model.get('id');
@@ -35,7 +35,7 @@ const candidaciesField = function(type, hidden, calc) {
         ],
         actions: ['goToDetails'],
         actionsMap: {
-          goToDetails: goToDetails(type, hidden, calc)
+          goToDetails: goToDetails(type, hidden, calc, calc_params)
         },
       },
     },

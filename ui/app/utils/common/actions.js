@@ -62,7 +62,6 @@ function  goToDetails(type, hidden, calc, calc_params) {
               me_user_id = get(this, 'session.session.authenticated.user_id') + '',
               is_owned = candidate_user_id === me_user_id,
               others_can_view = get(this, 'model.othersCanView');
-
             if(others_can_view || is_owned) {
               hidden = false;
             }

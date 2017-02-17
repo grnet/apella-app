@@ -110,7 +110,8 @@ const  position = {
           position = get(this, 'model'),
           type = 'candidacy',
           hidden = false,
-          calculate = false;
+          calculate = false,
+          is_position_candidate = false;
         /*
          * Helpdesk user and admin should see candidacies' details.
          * If an assistant or a manager is allowed to see a position should see
@@ -145,7 +146,7 @@ const  position = {
            * Here we use this property to check if the logged in user is a
            * candidate of the position.
            */
-          let is_position_candidate = !get(position, 'can_apply');
+          is_position_candidate = !get(position, 'can_apply');
           hidden = undefined;
           calculate = true;
           if (role === 'professor') {
@@ -170,7 +171,7 @@ const  position = {
             calculate = false;
           }
         }
-        return [candidaciesField(type, hidden, calculate)]
+        return [candidaciesField(type, hidden, calculate, is_position_candidate)]
       })
     },
     committee: {
