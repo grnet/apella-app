@@ -117,7 +117,7 @@ const  position = {
          * If an assistant or a manager is allowed to see a position should see
          * and candidacies' details.
          */
-        if (['helpdeskadmin','helpdeskuser','manager', 'assistant'].indexOf(role) > -1) {
+        if (['helpdeskadmin','helpdeskuser','institutionmanager', 'assistant'].indexOf(role) > -1) {
           hidden = false;
           calculate = false;
         }
