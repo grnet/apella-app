@@ -186,6 +186,9 @@ class ApellaFile(models.Model):
     def save(self, *args, **kwargs):
         super(ApellaFile, self).save(*args, **kwargs)
 
+    def check_user_can_download(self, user):
+        return user.id == self.owner_id
+
     def check_resource_state_owned(self, row, request, view):
         return request.user == self.owner
 

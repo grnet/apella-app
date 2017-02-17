@@ -10,7 +10,7 @@ from rest_framework.serializers import ValidationError
 
 from django.db.models import ProtectedError, Min, Q
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import MultipleObjectsReturned
@@ -235,10 +235,12 @@ class FilesViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['get', 'head'])
     def download(self, request, pk=None):
         response = HttpResponse(content_type='application/force-download')
-        user = request.user
-        file = get_object_or_404(ApellaFile, id=pk)
-
         if request.method == 'HEAD':
+            user = request.user
+            file = get_object_or_404(ApellaFile, id=pk)
+            if not file.check_user_can_download(user):
+                raise Http404
+
             token = auth_hooks.generate_file_token(user, file)
             url = urljoin(settings.BASE_URL or '/',
                           reverse('apella-files-download', args=(pk,)))
@@ -253,9 +255,11 @@ class FilesViewSet(viewsets.ModelViewSet):
             # ui_download_url = '%s?#download=%s' % (ui_url, url)
             # return HttpResponseRedirect(ui_download_url)
 
-        token = request.GET.get('token', None)
+        file_id = auth_hooks.consume_file_token(user, token)
+        if not file_id == pk:
+            raise Http404
 
-        auth_hooks.consume_file_token(user, file, token)
+        file = get_object_or_404(ApellaFile, id=file_id)
         disp = 'attachment; filename=%s' % file.file_name
         response['Content-Disposition'] = disp
         if USE_X_SEND_FILE:

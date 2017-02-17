@@ -318,28 +318,22 @@ def request_user_changes(user):
 FILE_TOKEN_TIMEOUT = getattr(settings, 'FILE_TOKEN_TIMEOUT', 60)
 
 
-def validate_file_access(user, file):
-    return True
-
-
 def generate_file_token(user, file):
     if not user.is_authenticated():
         raise PermissionDenied()
 
-    validate_file_access(user, file)
-
-    cache_key = str(uuid.uuid4())
-    cache_value = file.pk
-    cache.set(cache_key, cache_value, FILE_TOKEN_TIMEOUT)
-    return cache_key
+    token = 'download-' + str(uuid.uuid4())
+    file_id = file.pk
+    cache.set(token, file_id, FILE_TOKEN_TIMEOUT)
+    return token
 
 
-def consume_file_token(user, file, token):
+def consume_file_token(user, token):
     file_id = cache.get(token)
-    if not file_id or file_id != file.pk:
+    if not file_id:
         raise PermissionDenied()
-    validate_file_access(user, file)
     cache.delete(token)
+    return file_id
 
 
 def validate_email_unique(email):
