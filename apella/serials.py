@@ -10,23 +10,30 @@ class Serials(Model):
 
     serials = {}
 
-    def get_serial(self, serial_name):
-        new_serial, max_serial = self.serials.get(serial_name, (None, None))
+    @classmethod
+    def get_serial(cls, serial_name):
+        new_serial, max_serial = cls.serials.get(serial_name, (None, None))
         if new_serial is None or new_serial >= max_serial:
             increment = getattr(settings, 'SERIAL_ALLOCATION_INCREMENT', 1000)
             new_serial, max_serial = \
-                    self.allocate_serial(serial_name, increment)
+                    cls.allocate_serial(serial_name, increment)
 
-        self.serials[serial_name] = (new_serial + 1, max_serial)
+        cls.serials[serial_name] = (new_serial + 1, max_serial)
         return new_serial
 
-    def allocate_serial(self, serial_name, increment):
-        autocommit = transaction.get_autocommit()
-        transaction.set_autocommit(False)
+    @classmethod
+    def allocate_serial(cls, serial_name, increment):
+        # This must be run outside atomic blocks. If ATOMIC_REQUESTS is
+        # enabled, you must run it in a middleware. Middleware run before
+        # ATOMIC_REQUESTS takes effect.
 
-        serialob = self.objects.select_for_update().get(serial_name)
-        new_serial = serialob.value
-        max_serial = new_serial + increment
-        serialob.value = max_serial
-        serialob.save()
+        connection = transaction.get_connection()
+        connection.validate_no_atomic_block()
+
+        with transaction.atomic():
+            serialob = cls.objects.select_for_update().get(serial_name)
+            new_serial = serialob.value
+            max_serial = new_serial + increment
+            serialob.value = max_serial
+            serialob.save()
         return new_serial
