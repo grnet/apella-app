@@ -140,7 +140,7 @@ const FIELDS_REGISTER_REQUIRED = computed('model.is_foreign', function(){
 
 const FLEX = computed('model.is_foreign', function() {
   if (get(this, 'model.is_foreign') ) {
-    return [50, 50, 50, 50, 100]
+    return [50, 50, 50, 50, 100, 50, 50]
   } else {
     return [50, 50, 50, 50, 100, 50, 50, 100, 100]
   }
