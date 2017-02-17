@@ -38,9 +38,10 @@ class Serials(Model):
         connection.validate_no_atomic_block()
 
         with transaction.atomic():
-            serialob = cls.objects.select_for_update().get(serial_name)
+            serialob, created = cls.objects.select_for_update().\
+                                get_or_create(id=serial_name)
             new_serial = serialob.value
             max_serial = new_serial + increment
             serialob.value = max_serial
             serialob.save()
-        return new_serial
+        return new_serial, max_serial
