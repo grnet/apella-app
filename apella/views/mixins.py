@@ -19,7 +19,8 @@ from django.utils import timezone
 from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
-    Candidacy, ApellaFile, ElectorParticipation, OldApellaUserMigrationData
+    Candidacy, ApellaFile, ElectorParticipation, \
+    OldApellaUserMigrationData, generate_filename, ApellaFileId
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
@@ -255,18 +256,18 @@ class FilesViewSet(viewsets.ModelViewSet):
         token = request.GET.get('token', None)
 
         auth_hooks.consume_file_token(user, file, token)
-        disp = 'attachment; filename=%s' % file.filename
+        disp = 'attachment; filename=%s' % file.file_name
         response['Content-Disposition'] = disp
         if USE_X_SEND_FILE:
-            response['X-Sendfile'] = file.file_path.path
+            response['X-Sendfile'] = file.file_content.path
         else:
-            response.content = open(file.file_path.path)
+            response.content = open(file.file_content.path)
         return response
 
     def destroy(self, request, pk=None):
         obj = self.get_object()
         try:
-            f = os.path.join(settings.MEDIA_ROOT, obj.file_path.name)
+            f = os.path.join(settings.MEDIA_ROOT, obj.file_content.name)
             os.remove(f)
         except OSError:
             pass
@@ -301,19 +302,17 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
         if field_name not in obj._meta.get_all_field_names():
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+        apella_file_id = ApellaFileId.objects.create()
         uploaded_file = ApellaFile.objects.create(
                 owner=request.user,
                 file_kind=file_kind,
                 source=self.FILE_SOURCE[obj.__class__.__name__],
                 source_id=obj.id,
                 file_content=file_upload,
-                file_name=file_upload.file.name,
+                file_name=file_upload.name,
                 description=file_description,
-                updated_at=timezone.now())
-        file_path = generate_filename(
-            uploaded_file, file_upload.file.name)
-        uploaded_file.file_content = file_path
-        uploaded_file.save()
+                updated_at=timezone.now(),
+                file_id=apella_file_id)
 
         if not many:
             setattr(obj, field_name, uploaded_file)

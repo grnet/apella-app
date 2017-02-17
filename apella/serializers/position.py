@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
-    Professor, ElectorParticipation, ApellaFile
+    Professor, ElectorParticipation, ApellaFile, ApellaFileId
 from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator
@@ -134,15 +134,18 @@ class PositionMixin(ValidatorMixin):
 
 
 def copy_single_file(existing_file, candidacy, source='candidacy'):
+    new_file_id = ApellaFileId.objects.create()
     new_file = ApellaFile(
         owner=existing_file.owner,
         source=source,
         file_kind=existing_file.file_kind,
         source_id=candidacy.id,
         description=existing_file.description,
-        updated_at=timezone.now())
-    with open(existing_file.file_path.path, 'r') as f:
-        new_file.file_path.save(existing_file.filename, File(f))
+        updated_at=timezone.now(),
+        file_id = new_file_id,
+        file_name=existing_file.file_name)
+    with open(existing_file.file_content.path, 'r') as f:
+        new_file.file_content.save(existing_file.file_name, File(f))
     return new_file
 
 

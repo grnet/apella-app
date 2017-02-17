@@ -156,7 +156,7 @@ def generate_filename(apellafile, filename):
     path = "%s/%s-%s%s" % (
             apellafile.owner.username,
             apellafile.file_kind,
-            apellafile.id,
+            apellafile.file_id.id,
             os.path.splitext(filename)[1])
     return path
 
@@ -167,15 +167,17 @@ class OverwriteStorage(FileSystemStorage):
             os.remove(os.path.join(settings.MEDIA_ROOT, name))
         return name
 
+class ApellaFileId(models.Model):
+    pass
 
 class ApellaFile(models.Model):
+    file_id = models.ForeignKey(ApellaFileId)
     owner = models.ForeignKey(ApellaUser)
     source = models.CharField(choices=common.FILE_SOURCE, max_length=30)
     source_id = models.IntegerField()
     file_kind = models.CharField(choices=common.FILE_KINDS, max_length=40)
     file_content = models.FileField(
-        upload_to=generate_filename,
-        storage=OverwriteStorage(), max_length=1024)
+        upload_to=generate_filename, max_length=1024)
     description = models.TextField(blank=True, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
     file_name = models.CharField(max_length=1024)
