@@ -369,7 +369,6 @@ const  position = {
     },
     electors: {
       label: 'fieldsets.labels.electors',
-      text: 'fieldsets.text.electors',
       fields: [
         fileField('electors_set_file', 'position', 'electors_set_file', {
         }, {
@@ -383,6 +382,14 @@ const  position = {
       }
     },
     electors_regular: {
+      text: computed('model.department_dep_number', function(){
+        let num = get(this, 'model.department_dep_number');
+        if (num > 40) {
+          return 'fieldsets.text.electors_regular_big';
+        } else {
+          return 'fieldsets.text.electors_regular_small';
+        }
+      }),
       label: 'electors_regular_members.label',
       fields: [
         committeeElectorsField('electors_regular_internal', 'internal'),
@@ -393,6 +400,14 @@ const  position = {
       }
     },
     electors_substitite: {
+      text: computed('model.department_dep_number', function(){
+        let num = get(this, 'model.department_dep_number');
+        if (num > 40) {
+          return 'fieldsets.text.electors_substitute_big';
+        } else {
+          return 'fieldsets.text.electors_substitute_small';
+        }
+      }),
       label: 'electors_substitute_members.label',
       fields: [
         committeeElectorsField('electors_substitute_internal', 'internal'),
