@@ -38,9 +38,6 @@ def get_obj(id_str, model):
     logger.debug('got %s %s' % (model.__name__, id))
     return obj
 
-def get_subject(id_str, subject_area_id):
-    old_code = subject_area_id + '.' + id_str
-    return Subject.objects.get(old_code=old_code)
 
 def migrate_candidate(old_user, new_user):
     is_verified = True if old_user.role_status == 'ACTIVE' else False
@@ -366,7 +363,14 @@ def migrate_position(old_position, author):
 
     subject_area = get_obj(old_position.subject_area_code, SubjectArea)
     old_code = str(subject_area.id) + '.' + old_position.subject_code
-    subject = Subject.objects.get(old_code=old_code)
+    try:
+        subject = Subject.objects.get(old_code=old_code)
+    except Subject.DoesNotExist:
+        logger.error(
+            "subject %s does not exist; "
+            "position %s failed to migrate" %
+            (old_code, old_position.position_serial))
+        return
 
     department = get_obj(old_position.department_id, Department)
     fek_posted_at = datetime.strptime(
