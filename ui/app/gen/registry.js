@@ -451,7 +451,7 @@ export default ApellaGen.extend({
       label: 'registry_set_decision_file',
       fields: [
       fileField('registry_set_decision_file', 'registry', 'registry_set_decision_file',
-        { label: null }, { replace: true })
+        { label: null }, { replace: true, preventDelete: true })
       ]
     }, {
       label: 'registry.members_section.title',
