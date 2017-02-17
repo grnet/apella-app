@@ -445,7 +445,7 @@ export default {
   'manager_institution_id.label': 'Manager institution ID',
   'migrated_at_format.label': 'Migrated at',
 
-  'registry_set_decision_file': 'Decision File',
+  'registry_set_decision_file': 'Decision to form registry',
   'is_secretary.label': 'Secretary',
   'secretaries.label': 'Secretaries',
   'institution_users.label': 'Institution Users',
