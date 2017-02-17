@@ -225,7 +225,7 @@ export default {
   're_new_password.label': 'Επιβεβαίωση νέου συνθηματικού',
   'user_id.label': 'Κωδικός χρήστη',
   'search.input.placeholder': 'Εισάγετε κριτήριο αναζήτησης',
-  'search.placeholder_members': 'Επώνυμο / Γνωστικό Αντικείμενο',
+  'search.placeholder_members': 'Επώνυμο / Όνομα / E-mail / Όνομα χρήστη / Γνωστικό Αντικείμενο',
   'table.is.empty': 'Δεν υπάρχουν καταχωρίσεις',
   'table.is.loading': 'Γίνεται αναζήτηση...',
   'value.not.set': 'Κενό πεδίο',

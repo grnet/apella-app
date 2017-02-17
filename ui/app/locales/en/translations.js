@@ -227,7 +227,7 @@ export default {
   're_new_password.label': 'Retype new password',
   'user_id.label': 'User ID',
   'search.input.placeholder': 'Insert search term',
-  'search.placeholder_members': 'Last Name / Discipline',
+  'search.placeholder_members': 'Last Name / First Name / E-mail / User name / Discipline',
   'table.is.empty': 'There are no items',
   'table.is.loading': 'Loading...',
   'value.not.set': 'Value not set',
