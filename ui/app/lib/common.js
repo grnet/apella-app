@@ -13,7 +13,8 @@ const {
   computed: { reads },
   computed,
   merge,
-  assign
+  assign,
+  assert
 } = Ember;
 
 const ApellaGen = CRUDGen.extend({
@@ -175,9 +176,68 @@ function get_registry_members(registry, store, params) {
   return store.query('professor', query);
 };
 
+// Helper to resolve model relations along with store query entries.
+//
+// Given a store.query result modify query promise in order to resolve 
+// after nested per per record relations are also resolved. After each 
+// nested relation is resolved the initial query result can be used in 
+// views, such as a list view, and be sure that all used nested relational 
+// data are preloaded and immediatelly accessible in templates.
+function preloadRelations(model, ...keys) {
+
+  let promise = model.then((arr) => {
+    let promises = {};
+    let nestedKeys = [];
+    let rootKeys = [];
+
+    keys.forEach((key) => {
+      let refs = [];
+      let isNested = key.indexOf('.') > -1;
+      let attr = key;
+      if (isNested) {
+        let parts = key.split('.');
+        attr = parts.slice(0, -1).join('.');
+        key = parts[parts.length - 1];
+        if (!nestedKeys[attr]) { nestedKeys[attr] = []; }
+        nestedKeys[attr].push(key);
+        return;
+      }
+      rootKeys.push(key);
+
+      arr.map((entry) => {
+        assert(`cannot preload '${key}' relationship. ${attr} not preloaded?`, entry);
+        assert(`${entry} is not a DS.Model`, entry.belongsTo);
+
+        let ref = entry.belongsTo(key).link();
+        if (refs.indexOf(ref) === -1) {
+          if (!promises[key]) { promises[key] = []; }
+          promises[key].push(get(entry, key));
+          refs.push(ref);
+        }
+      });
+    });
+
+    return Ember.RSVP.Promise.all(rootKeys.map((key) => {
+      if (!promises[key]) { return Ember.RSVP.Promise.resolve(); }
+      return Ember.RSVP.Promise.all(promises[key]).then((resolved) =>  {
+        if (nestedKeys[key] && nestedKeys[key].length) {
+          return preloadRelations(Ember.RSVP.Promise.resolve(resolved), ...nestedKeys[key]).then(() => {
+            return model;
+          });
+        } else {
+          return model;
+        }
+      });
+    })).then(() => { return arr });
+  });
+
+  return DS.PromiseArray.create({promise});
+};
+
 export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
-  VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members
+  VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
+  preloadRelations
 };
 

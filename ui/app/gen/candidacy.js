@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, preloadRelations} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import _ from 'lodash/lodash';
 import {disable_field} from 'ui/utils/common/fields';
@@ -207,7 +207,7 @@ export default ApellaGen.extend({
   },
 
   common: {
-    preloadModels: ['position', 'institution', 'department'],
+    preloadModels: [],
     fieldsets: FS.common,
     validators: {
     }
@@ -223,7 +223,8 @@ export default ApellaGen.extend({
         params = params || {};
         params.candidate = user_id;
       }
-      return this.store.query('candidacy', params);
+      let model = this.store.query('candidacy', params);
+      return preloadRelations(model, 'position', 'candidate', 'position.department', 'position.department.insitution');
     },
     sortBy: 'position.code:asc',
     page: {
