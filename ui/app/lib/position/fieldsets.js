@@ -104,7 +104,7 @@ const  position = {
     candidacies: {
       label: 'candidacy.menu_label',
       fields: computed('user.role','user.user_id', 'user.id', 'model.electors',
-        'model.committee', function() {
+        'model.committee', 'model.can_apply', function() {
         let user = get(this, 'user'),
           role = get(user, 'role'),
           position = get(this, 'model'),
@@ -124,18 +124,28 @@ const  position = {
          * A professor can see candidacies' details when:
          * - Is member in any related committee of the position
          * - The candidacy is his/hers
-         * - The candidacy has othersCanView true
+         * - The candidacy has othersCanView true and the professor is also
+         *   candidate for this position.
          *
          * The last 2 are calculated inside candidaciesField.
          *
          * A candidate can see candidacies' details when:
          * - The candidacy is his/hers
-         * - The candidacy has othersCanView true
+         * - The candidacy has othersCanView true and the candidate has also
+         *   sublmit candidacy for this position.
          *
          * These 2 are calculated inside candidaciesField.
          */
 
         else if (['professor', 'candidate'].indexOf(role) > -1) {
+          /*
+           * can_apply attribute is true when a professor/candidate hasn't
+           * applied candidacy for the position.
+           *
+           * Here we use this property to check if the logged in user is a
+           * candidate of the position.
+           */
+          let is_position_candidate = !get(position, 'can_apply');
           hidden = undefined;
           calculate = true;
           if (role === 'professor') {
@@ -143,11 +153,21 @@ const  position = {
               committee = position.hasMany('committee').ids(),
               related_profs = _.union(electors, committee),
               professor_id = user.id + '',
+              user_id = user.user_id,
               is_related_prof = related_profs.indexOf(professor_id) > -1;
             if(is_related_prof) {
               hidden = false;
               calculate = false;
             }
+          }
+          else if(is_position_candidate) {
+            // check if owns or othersCanView
+            hidden = undefined;
+            calculate = true;
+          }
+          else {
+            hidden = true;
+            calculate = false;
           }
         }
         return [candidaciesField(type, hidden, calculate)]

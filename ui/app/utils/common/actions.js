@@ -29,11 +29,12 @@ const {
 
 // Common
 
-function  goToDetails(type, hidden, calc) {
+function  goToDetails(type, hidden, calc, calc_params) {
   /*
    * type: 'candidacy' (only candidacies have separate handling)
    * hidden: should hide or not
    * calc: should have a step of permissions checks
+   * calc_params: extra data that are necessary for the permissions checks
    */
   return {
     label: 'details.label',
@@ -44,26 +45,33 @@ function  goToDetails(type, hidden, calc) {
          * calc === true when we want to calclulate the visibility of the btn
          * by checking:
          * - if the user owns the candidacy
-         * - if the candidate allows anyone to see the details of the candidacy
+         * - if the candidate allows his/hers fellow candidates  to see the
+         *   details of the candidacy.
+         *   calc_params === true if the user is candidate for the current
+         *   position.
          *
-         * Execute these calculations for professors n candidates.
+         * Execute these calculations for professors and candidates.
          */
+
+        // should perform permissions checks?
         if(calc) {
-          let others_can_view = get(this, 'model.othersCanView');
-          if(others_can_view) {
-            hidden = false;
-          }
-          else {
+          // is user candidate for position?
+          if(calc_params){
             let candidate_user_link = get(this, 'model').belongsTo('candidate').link(),
               candidate_user_id = candidate_user_link.split('/').slice(-2)[0],
               me_user_id = get(this, 'session.session.authenticated.user_id') + '',
-              owned = candidate_user_id === me_user_id;
-            if (owned) {
+              is_owned = candidate_user_id === me_user_id,
+              others_can_view = get(this, 'model.othersCanView');
+
+            if(others_can_view || is_owned) {
               hidden = false;
             }
             else {
               hidden = true;
             }
+          }
+          else {
+            hidden = false;
           }
         }
       }
