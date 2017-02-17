@@ -233,7 +233,7 @@ class FilesViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['get', 'head'])
     def download(self, request, pk=None):
-        response = HttpResponse(content_type='applciation/force-download')
+        response = HttpResponse(content_type='application/force-download')
         user = request.user
         file = get_object_or_404(ApellaFile, id=pk)
 
