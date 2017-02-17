@@ -13,7 +13,8 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
     Candidacy, OldApellaCandidacyMigrationData, \
     OldApellaCandidacyFileMigrationData, OldApellaInstitutionMigrationData, \
-    OldApellaCandidateAssistantProfessorMigrationData, generate_filename
+    OldApellaCandidateAssistantProfessorMigrationData, generate_filename, \
+    ApellaFileId
 
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
@@ -147,6 +148,15 @@ FILE_KINDS_MAPPING = {
 }
 
 
+def set_attr_files(obj, field_name, many, new_file):
+    if not many:
+        setattr(obj, field_name, new_file)
+    else:
+        many_attr = getattr(obj, field_name)
+        many_attr.add(new_file)
+    obj.save()
+
+
 @transaction.atomic
 def migrate_file(old_file, new_user, source, source_id):
     if old_file.file_type not in FILE_KINDS_MAPPING[source]:
@@ -155,18 +165,21 @@ def migrate_file(old_file, new_user, source, source_id):
             (old_file.file_type, source))
         return
     updated_at = old_file.updated_at if old_file.updated_at else datetime.now()
+    new_file_id = ApellaFileId.objects.create()
     new_file = ApellaFile(
         owner=new_user,
         description=old_file.file_description,
         file_kind=FILE_KINDS_MAPPING[source][old_file.file_type],
         source=source,
         source_id=source_id,
-        updated_at=updated_at)
+        updated_at=updated_at,
+        file_name=old_file.original_name,
+        file_id=new_file_id)
     new_file_path = os.path.join(
         settings.MEDIA_ROOT,
         generate_filename(new_file, old_file.original_name))
-    new_file.file_path = new_file_path
-    new_file.old_file_path = old_file.file_path
+    new_file.file_content = new_file_path
+    #new_file.old_file_path = old_file.file_path
     new_file.save()
 
     logger.info(
@@ -178,27 +191,12 @@ def migrate_file(old_file, new_user, source, source_id):
         values()
     if source == 'profile':
         if new_user.is_professor():
-            if not many:
-                setattr(new_user.professor, field_name, new_file)
-            else:
-                many_attr = getattr(new_user.professor, field_name)
-                many_attr.add(new_file)
-            new_user.professor.save()
+            set_attr_files(new_user.professor, field_name, many, new_file)
         elif new_user.is_candidate():
-            if not many:
-                setattr(new_user.candidate, field_name, new_file)
-            else:
-                many_attr = getattr(new_user.candidate, field_name)
-                many_attr.add(new_file)
-            new_user.candidate.save()
+            set_attr_files(new_user.candidate, field_name, many, new_file)
     elif source == 'candidacy':
         candidacy = Candidacy.objects.get(id=source_id)
-        if not many:
-            setattr(candidacy, field_name, new_file)
-        else:
-            many_attr = getattr(candidacy, field_name)
-            many_attr.add(new_file)
-        candidacy.save()
+        set_attr_files(candidacy, field_name, many, new_file)
 
 
 def link_migrated_files(apellafiles):
