@@ -497,5 +497,5 @@ export default {
   'passwords.do.not.match': 'Τα δύο συνθηματικά δεν ταιριάζουν',
   'search.placeholder_positions': 'Νέος κωδικός / Παλιός κωδικός / Τίτλος',
   'position_department.menu_label': 'Θέσεις Τμήματος',
-  'position_search.menu_label': 'Αναζήτηση νέων Θέσεων'
+  'position_search.menu_label': 'Αναζήτηση νέων θέσεων'
 };
