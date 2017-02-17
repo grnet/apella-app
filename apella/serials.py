@@ -11,14 +11,18 @@ class Serials(Model):
     serials = {}
 
     @classmethod
-    def get_serial(cls, serial_name):
+    def get_serial(cls, serial_name, nr=1):
+        if nr <= 0:
+            raise ValueError("Cannot get %s <= 0 serials" % nr)
+
         new_serial, max_serial = cls.serials.get(serial_name, (None, None))
-        if new_serial is None or new_serial >= max_serial:
+        if new_serial is None or new_serial + nr >= max_serial:
             increment = getattr(settings, 'SERIAL_ALLOCATION_INCREMENT', 1000)
+            increment += nr
             new_serial, max_serial = \
                     cls.allocate_serial(serial_name, increment)
 
-        cls.serials[serial_name] = (new_serial + 1, max_serial)
+        cls.serials[serial_name] = (new_serial + nr, max_serial)
         return new_serial
 
     @classmethod
@@ -26,6 +30,9 @@ class Serials(Model):
         # This must be run outside atomic blocks. If ATOMIC_REQUESTS is
         # enabled, you must run it in a middleware. Middleware run before
         # ATOMIC_REQUESTS takes effect.
+
+        if increment <= 0:
+            raise ValueError("Cannot allocate %s <= 0 serials" % increment)
 
         connection = transaction.get_connection()
         connection.validate_no_atomic_block()
