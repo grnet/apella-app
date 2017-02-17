@@ -1715,7 +1715,7 @@ spec:
                     apella.views.mixins.UploadFilesViewSet]
                 hook_class: apella.views.mixins.PositionHookMixin
                 filter_fields: [title, state, department, code, old_code, electors, committee]
-                ordering_fields: [title, state, department, code, old_code]
+                ordering_fields: [title, state, department, code, old_code, id]
                 search_fields: [title, state, code, old_code]
             .cli_commands: {}
             '*':

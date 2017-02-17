@@ -84,11 +84,12 @@ const pick_create_fs = function() {
 
 
 export default ApellaGen.extend({
-  order: 800,
+  order: 170,
+  name: 'positions-latest',
   modelName: 'position',
   resourceName: 'positions',
   auth: true,
-  path: 'positions',
+  path: 'positions-latest',
 
   abilityStates: {
     is_latest: computed('model.is_latest', function(){
@@ -173,11 +174,9 @@ export default ApellaGen.extend({
   list: {
     getModel: function(params) {
       params = params || {};
-      let user = get(this, 'session.session.authenticated'),
-        role = user.role;
-      if(role === 'professor') {
-        let department_id = user.department.split('/').slice(-2)[0];
-        params.department = department_id;
+      params.state = 'posted';
+      if(!params.ordering) {
+        params.ordering = '-id';
       }
       return this.store.query('position', params);
     },
@@ -207,23 +206,16 @@ export default ApellaGen.extend({
       title: 'position.menu_label',
     },
     menu: {
-      icon: 'event_available',
-      label: computed(function() {
-        let role = get(this, 'session.session.authenticated.role');
-        if (role === 'professor'){
-          return 'position_department.menu_label';
-        }
-        else {
-          return 'position.menu_label';
-        }
-    }),
+      icon: 'search',
+      label: 'position_search.menu_label',
       display: computed(function() {
         let role = get(this, 'session.session.authenticated.role');
-        if (role === 'candidate') {
-          return false;
+        console.log('???', role);
+        if (['professor', 'candidate'].indexOf(role) > -1) {
+          return true;
         }
         else {
-          return true;
+          return false;
         }
       })
     },

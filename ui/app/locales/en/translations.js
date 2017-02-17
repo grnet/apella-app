@@ -487,5 +487,7 @@ export default {
   'mobile_phone_number.field': 'mobile',
   'home_phone_number.field': 'home phone',
   'passwords.do.not.match': 'Τα δύο συνθηματικά δεν ταιριάζουν',
-
+  'search.placeholder_positions': 'New code / Old code / Title',
+  'position_department.menu_label': 'Department Positions',
+  'position_search.menu_label': 'Search new positions'
 };

@@ -495,4 +495,7 @@ export default {
   'mobile_phone_number.field': 'κινητό τηλέφωνο',
   'home_phone_number.field': 'σταθερό τηλέφωνο',
   'passwords.do.not.match': 'Τα δύο συνθηματικά δεν ταιριάζουν',
+  'search.placeholder_positions': 'Νέος κωδικός / Παλιός κωδικός / Τίτλος',
+  'position_department.menu_label': 'Θέσεις Τμήματος',
+  'position_search.menu_label': 'Αναζήτηση νέων Θέσεων'
 };
