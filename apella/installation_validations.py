@@ -1,6 +1,7 @@
 import os
 import logging
 from django.conf import settings
+from apella.util import safe_path_join
 
 
 logger = logging.getLogger()
@@ -22,7 +23,7 @@ def validate_old_file_permissions():
         dircount += 1
         for filename in filenames:
             filecount += 1
-            path = os.path.join(dirpath, filename)
+            path = safe_path_join(dirpath, filename)
             owner = os.stat(path).st_uid
             if owner != euid:
                 m = ("{path!r}: owner {owner!r} is not the same as "
@@ -45,7 +46,7 @@ def validate_new_file_permissions():
     filecount = 0
     for dirpath, dirnames, filenames in os.walk(newroot):
         dircount += 1
-        write_test_path = os.path.join(dirpath, '..write_test')
+        write_test_path = safe_path_join(dirpath, '..write_test')
         try:
             with open(write_test_path, "w") as f:
                 try:
@@ -60,7 +61,7 @@ def validate_new_file_permissions():
 
         for filename in filenames:
             filecount += 1
-            read_test_path = os.path.join(dirpath, filename)
+            read_test_path = safe_path_join(dirpath, filename)
             try:
                 with open(read_test_path, "r") as f:
                     pass

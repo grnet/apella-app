@@ -18,6 +18,8 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
 
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
+from apella.util import safe_path_join
+
 logger = logging.getLogger('apella')
 
 
@@ -208,7 +210,7 @@ def migrate_file(old_file, new_user, source, source_id):
         updated_at=updated_at,
         file_name=old_file.original_name,
         file_id=new_file_id)
-    new_file_path = os.path.join(
+    new_file_path = safe_path_join(
         settings.MEDIA_ROOT,
         generate_filename(new_file, old_file.original_name))
     new_file.file_content = new_file_path

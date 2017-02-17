@@ -7,6 +7,8 @@ from django.conf import settings
 
 from apimas.modeling.core.exceptions import ApimasException
 from collections import defaultdict
+from apella.util import safe_path_join
+
 
 VALIDATION_SCHEMA = {
     'root': {
@@ -52,13 +54,13 @@ def load_config():
 
 
 def load_resources():
-    with open(os.path.join(settings.RESOURCES_DIR, 'common.json')) \
+    with open(safe_path_join(settings.RESOURCES_DIR, 'common.json')) \
             as json_file:
         return json.load(json_file)
 
 
 def load_holidays():
-    with open(os.path.join(settings.RESOURCES_DIR, 'holidays.json')) \
+    with open(safe_path_join(settings.RESOURCES_DIR, 'holidays.json')) \
             as json_file:
         return json.load(json_file)
 

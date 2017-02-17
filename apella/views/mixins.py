@@ -28,7 +28,7 @@ from apella.serializers.position import copy_candidacy_files
 from apella.migration_functions import migrate_user_profile_files
 from apella.emails import send_user_email
 
-from apella.util import urljoin
+from apella.util import urljoin, safe_path_join
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -271,7 +271,7 @@ class FilesViewSet(viewsets.ModelViewSet):
     def destroy(self, request, pk=None):
         obj = self.get_object()
         try:
-            f = os.path.join(settings.MEDIA_ROOT, obj.file_content.name)
+            f = safe_path_join(settings.MEDIA_ROOT, obj.file_path.name)
             os.remove(f)
         except OSError:
             pass

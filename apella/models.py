@@ -15,6 +15,7 @@ from apella import common
 from apella.helpers import assistant_can_edit, professor_participates,\
     position_is_latest
 
+from apella.util import safe_path_join
 
 class MultiLangFields(models.Model):
     el = models.CharField(max_length=500, blank=True, null=True)
@@ -164,7 +165,7 @@ def generate_filename(apellafile, filename):
 class OverwriteStorage(FileSystemStorage):
     def get_available_name(self, name):
         if self.exists(name):
-            os.remove(os.path.join(settings.MEDIA_ROOT, name))
+            os.remove(safe_path_join(settings.MEDIA_ROOT, name))
         return name
 
 class ApellaFileId(models.Model):
