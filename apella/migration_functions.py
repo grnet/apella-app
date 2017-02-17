@@ -41,87 +41,100 @@ def get_obj(id_str, model):
 
 
 def migrate_candidate(old_user, new_user):
-    is_verified = True if old_user.role_status == 'ACTIVE' else False
-    candidate = Candidate.objects.create(
-        user=new_user,
-        is_verified=is_verified)
+    try:
+        candidate = new_user.candidate
+    except Candidate.DoesNotExist:
+        is_verified = True if old_user.role_status == 'ACTIVE' else False
+        candidate = Candidate.objects.create(
+            user=new_user,
+            is_verified=is_verified)
+        logger.info('created candidate %s' % candidate.id)
     return candidate
 
 
 @transaction.atomic
 def migrate_professor(old_user, new_user):
-    institution = get_obj(old_user.professor_institution_id, Institution)
-    department = get_obj(old_user.professor_department_id, Department)
+    try:
+        professor = new_user.professor
+    except Professor.DoesNotExist:
+        institution = get_obj(old_user.professor_institution_id, Institution)
+        department = get_obj(old_user.professor_department_id, Department)
 
-    discipline_in_fek = False
-    discipline_text = None
-    if old_user.professor_subject_from_appointment:
-        discipline_in_fek = True
-        discipline_text = old_user.professor_subject_from_appointment
-    else:
-        discipline_text = old_user.professor_subject_optional_freetext
+        discipline_in_fek = False
+        discipline_text = None
+        if old_user.professor_subject_from_appointment:
+            discipline_in_fek = True
+            discipline_text = old_user.professor_subject_from_appointment
+        else:
+            discipline_text = old_user.professor_subject_optional_freetext
 
-    is_verified = True if old_user.role_status == 'ACTIVE' else False
+        is_verified = True if old_user.role_status == 'ACTIVE' else False
 
-    professor = Professor.objects.create(
-        user=new_user,
-        institution=institution,
-        institution_freetext=old_user.professor_institution_freetext,
-        department=department,
-        rank=old_user.professor_rank,
-        is_foreign=bool(re.match('t', old_user.is_foreign, re.I)),
-        speaks_greek=bool(re.match('t', old_user.speaks_greek, re.I)),
-        cv_url=old_user.professor_institution_cv_url,
-        fek=old_user.professor_appointment_gazette_url,
-        discipline_in_fek=discipline_in_fek,
-        discipline_text=discipline_text,
-        is_verified=is_verified)
+        professor = Professor.objects.create(
+            user=new_user,
+            institution=institution,
+            institution_freetext=old_user.professor_institution_freetext,
+            department=department,
+            rank=old_user.professor_rank,
+            is_foreign=bool(re.match('t', old_user.is_foreign, re.I)),
+            speaks_greek=bool(re.match('t', old_user.speaks_greek, re.I)),
+            cv_url=old_user.professor_institution_cv_url,
+            fek=old_user.professor_appointment_gazette_url,
+            discipline_in_fek=discipline_in_fek,
+            discipline_text=discipline_text,
+            is_verified=is_verified)
 
-    if institution and institution.has_shibboleth:
-        new_user.can_set_academic = True
-        new_user.save()
+        if institution and institution.has_shibboleth:
+            new_user.can_set_academic = True
+            new_user.save()
+        logger.info('created professor %s' % professor.id)
     return professor
 
 
 @transaction.atomic
 def migrate_institutionmanager(old_user, new_user):
-    institution = get_obj(old_user.manager_institution_id, Institution)
-
-    sub_first_name = MultiLangFields.objects.create(
-        el=old_user.manager_deputy_name_el,
-        en=old_user.manager_deputy_name_en)
-    sub_last_name = MultiLangFields.objects.create(
-        el=old_user.manager_deputy_surname_el,
-        en=old_user.manager_deputy_surname_en)
-    sub_father_name = MultiLangFields.objects.create(
-        el=old_user.manager_deputy_fathername_el,
-        en=old_user.manager_deputy_fathername_en)
-
-    if old_user.manager_appointer_authority:
-        authority = [
-            authority for authority, value in AUTHORITIES
-            if authority == old_user.manager_appointer_authority.lower()][0]
-    else:
-        authority = None
-
     try:
-        manager = InstitutionManager.objects.create(
-            user=new_user,
-            institution=institution,
-            authority=authority,
-            authority_full_name=old_user.manager_appointer_fullname,
-            manager_role=new_user.role,
-            sub_first_name=sub_first_name,
-            sub_last_name=sub_last_name,
-            sub_father_name=sub_father_name,
-            sub_mobile_phone_number=old_user.manager_deputy_mobile,
-            sub_home_phone_number=old_user.manager_deputy_phone,
-            sub_email=old_user.manager_deputy_email,
-            is_verified=True)
-    except ValueError as e:
-        logger.error('failed to migrate user %s' % old_user.user_id)
-        logger.error(e)
-        raise
+        manager = new_user.institutionmanager
+    except InstitutionManager.DoesNotExist:
+        institution = get_obj(old_user.manager_institution_id, Institution)
+
+        sub_first_name = MultiLangFields.objects.create(
+            el=old_user.manager_deputy_name_el,
+            en=old_user.manager_deputy_name_en)
+        sub_last_name = MultiLangFields.objects.create(
+            el=old_user.manager_deputy_surname_el,
+            en=old_user.manager_deputy_surname_en)
+        sub_father_name = MultiLangFields.objects.create(
+            el=old_user.manager_deputy_fathername_el,
+            en=old_user.manager_deputy_fathername_en)
+
+        if old_user.manager_appointer_authority:
+            authority = [
+                authority for authority, value in AUTHORITIES
+                if authority == old_user.manager_appointer_authority.lower()][0]
+        else:
+            authority = None
+
+        try:
+            manager = InstitutionManager.objects.create(
+                user=new_user,
+                institution=institution,
+                authority=authority,
+                authority_full_name=old_user.manager_appointer_fullname,
+                manager_role=new_user.role,
+                sub_first_name=sub_first_name,
+                sub_last_name=sub_last_name,
+                sub_father_name=sub_father_name,
+                sub_mobile_phone_number=old_user.manager_deputy_mobile,
+                sub_home_phone_number=old_user.manager_deputy_phone,
+                sub_email=old_user.manager_deputy_email,
+                is_verified=True)
+            logger.info(
+                'created institution manager %s' % institutionmanager.id)
+        except ValueError as e:
+            logger.error('failed to migrate user %s' % old_user.user_id)
+            logger.error(e)
+            raise
 
     return manager
 
@@ -157,13 +170,33 @@ def set_attr_files(obj, field_name, many, new_file):
     obj.save()
 
 
+def remove_attr_files(obj):
+    setattr(obj, 'cv', None)
+    diplomas = getattr(obj, 'diplomas')
+    diplomas.all().delete()
+    publications = getattr(obj, 'publications')
+    publications.all().delete()
+
+    if isinstance(obj, Candidacy):
+        setattr(obj, 'self_evaluation_report', None)
+        attachment_files = getattr(obj, 'attachment_files')
+        attachment_files.all().delete()
+    if isinstance(obj, Professor):
+        setattr(obj, 'cv_professor', None)
+    if isinstance(obj, Candidate):
+        setattr(obj, 'id_passport_file', None)
+    obj.save()
+
+
 @transaction.atomic
 def migrate_file(old_file, new_user, source, source_id):
+
     if old_file.file_type not in FILE_KINDS_MAPPING[source]:
-        logger.error(
+        logger.info(
             'failed to migrate file, unknown file_type %s for %s' %
             (old_file.file_type, source))
         return
+
     updated_at = old_file.updated_at if old_file.updated_at else datetime.now()
     new_file_id = ApellaFileId.objects.create()
     new_file = ApellaFile(
@@ -263,14 +296,15 @@ def link_migrated_files(apellafiles):
 def migrate_user_profile_files(old_user, new_user):
     old_files = OldApellaFileMigrationData.objects.filter(
         user_id=old_user.user_id)
-    i = 0
+
+    if new_user.is_professor():
+        remove_attr_files(new_user.professor)
+    elif new_user.is_candidate():
+        remove_attr_files(new_user.candidate)
+
     for old_file in old_files:
         migrate_file(
             old_file, new_user, 'profile', new_user.id)
-        i += 1
-    logger.info(
-        'migrated %s profile files for user %s' %
-        (i, new_user.id))
 
 
 @transaction.atomic
@@ -304,8 +338,7 @@ def migrate_user(old_user, password=None, shibboleth_id=None, migration_key=None
     new_user = None
     if ApellaUser.objects.filter(email=old_user.email).exists():
         new_user = ApellaUser.objects.get(email=old_user.email)
-
-    if not new_user:
+    else:
         first_name = MultiLangFields.objects.create(
             el=old_user.name_el,
             en=old_user.name_en)
@@ -354,8 +387,7 @@ def migrate_user(old_user, password=None, shibboleth_id=None, migration_key=None
         new_user.login_method = 'academic'
     new_user.save()
 
-    if not old_user.migrated_at:
-        migrate_user_role(old_user, new_user)
+    migrate_user_role(old_user, new_user)
 
     old_user.migrated_at = datetime.now()
     old_user.save()
@@ -367,23 +399,16 @@ def migrate_user_role(old_user, new_user):
         if candidate_assistant_professor_exists(old_user.user_id):
             assistant_professor = \
                 migrate_candidate_to_assistant_professor(old_user, new_user)
-            logger.info(
-                'created assistant professor %s' % assistant_professor.id)
-            migrate_user_profile_files(old_user, new_user)
-            migrate_candidacies(candidate_user=new_user)
         elif not professor_exists(old_user.user_id):
             candidate = migrate_candidate(old_user, new_user)
-            logger.info('created candidate %s' % candidate.id)
-            migrate_user_profile_files(old_user, new_user)
-            migrate_candidacies(candidate_user=new_user)
+        migrate_user_profile_files(old_user, new_user)
+        migrate_candidacies(candidate_user=new_user)
     elif role == 'professor':
         professor = migrate_professor(old_user, new_user)
-        logger.info('created professor %s' % professor.id)
         migrate_user_profile_files(old_user, new_user)
         migrate_candidacies(candidate_user=new_user)
     elif role == 'institutionmanager':
         institutionmanager = migrate_institutionmanager(old_user, new_user)
-        logger.info('created institution manager %s' % institutionmanager.id)
         department_ids = Department.objects.filter(
             institution=institutionmanager.institution).values_list(
                 'id', flat=True)
@@ -403,68 +428,67 @@ STATE_MAPPING = {
 
 @transaction.atomic
 def migrate_position(old_position, author):
-    if Position.objects.filter(old_code=old_position.position_serial). \
-            exists():
+    try:
+        new_position = Position.objects.get(
+            old_code=old_position.position_serial)
+    except Position.DoesNotExist:
+
+        subject_area = get_obj(old_position.subject_area_code, SubjectArea)
+        old_code = str(subject_area.id) + '.' + old_position.subject_code
+        try:
+            subject = Subject.objects.get(old_code=old_code)
+        except Subject.DoesNotExist:
+            logger.error(
+                "subject %s does not exist; "
+                "position %s failed to migrate" %
+                (old_code, old_position.position_serial))
+            return
+
+        department = get_obj(old_position.department_id, Department)
+        fek_posted_at = datetime.strptime(
+            old_position.gazette_publication_date, '%Y-%m-%d')
+        starts_at = datetime.strptime(
+            old_position.opening_date, '%Y-%m-%d')
+        ends_at = datetime.strptime(
+            old_position.closing_date, '%Y-%m-%d')
+
+        state = 'posted'
+        if old_position.state in STATE_MAPPING:
+            state = STATE_MAPPING.get(old_position.state)
+        try:
+            new_position = Position.objects.create(
+                old_code=old_position.position_serial,
+                title=old_position.title,
+                description=old_position.description,
+                subject=subject,
+                subject_area=subject_area,
+                author=author,
+                discipline=old_position.subject_id,
+                department=department,
+                department_dep_number=0,
+                fek=old_position.gazette_publication_url,
+                fek_posted_at=fek_posted_at,
+                state=state,
+                starts_at=starts_at,
+                ends_at=ends_at
+            )
+        except IntegrityError as e:
+            logger.error(
+                'failed to migrate position %s' % old_position.position_serial)
+            logger.error(e)
+            return
+        except DataError as e:
+            logger.error(
+                'failed to migrate position %s' % old_position.position_serial)
+            logger.error(e)
+            return
+
+        new_position.code = settings.POSITION_CODE_PREFIX + str(new_position.id)
+        new_position.save()
+
         logger.info(
-            'position %s already exists' % old_position.position_serial)
-        return
-
-    subject_area = get_obj(old_position.subject_area_code, SubjectArea)
-    old_code = str(subject_area.id) + '.' + old_position.subject_code
-    try:
-        subject = Subject.objects.get(old_code=old_code)
-    except Subject.DoesNotExist:
-        logger.error(
-            "subject %s does not exist; "
-            "position %s failed to migrate" %
-            (old_code, old_position.position_serial))
-        return
-
-    department = get_obj(old_position.department_id, Department)
-    fek_posted_at = datetime.strptime(
-        old_position.gazette_publication_date, '%Y-%m-%d')
-    starts_at = datetime.strptime(
-        old_position.opening_date, '%Y-%m-%d')
-    ends_at = datetime.strptime(
-        old_position.closing_date, '%Y-%m-%d')
-
-    state = 'posted'
-    if old_position.state in STATE_MAPPING:
-        state = STATE_MAPPING.get(old_position.state)
-    try:
-        new_position = Position.objects.create(
-            old_code=old_position.position_serial,
-            title=old_position.title,
-            description=old_position.description,
-            subject=subject,
-            subject_area=subject_area,
-            author=author,
-            discipline=old_position.subject_id,
-            department=department,
-            department_dep_number=0,
-            fek=old_position.gazette_publication_url,
-            fek_posted_at=fek_posted_at,
-            state=state,
-            starts_at=starts_at,
-            ends_at=ends_at
-        )
-    except IntegrityError as e:
-        logger.error(
-            'failed to migrate position %s' % old_position.position_serial)
-        logger.error(e)
-        return
-    except DataError as e:
-        logger.error(
-            'failed to migrate position %s' % old_position.position_serial)
-        logger.error(e)
-        return
-
-    new_position.code = settings.POSITION_CODE_PREFIX + str(new_position.id)
-    new_position.save()
-
-    logger.info(
-        'migrated position %s, from old position %s' %
-        (new_position.id, old_position.position_serial))
+            'migrated position %s, from old position %s' %
+            (new_position.id, old_position.position_serial))
 
     migrate_candidacies(position=new_position)
     return new_position
@@ -479,12 +503,6 @@ def migrate_candidacies(position=None, candidate_user=None):
         old_candidacies = OldApellaCandidacyMigrationData.objects.filter(
             candidate_user_id=str(candidate_user.old_user_id))
     for old_candidacy in old_candidacies:
-        if Candidacy.objects.filter(
-                old_candidacy_id=int(old_candidacy.candidacy_serial)).exists():
-            logger.info(
-                'already migrated candidacy %s' %
-                old_candidacy.candidacy_serial)
-            continue
         try:
             new_candidate = ApellaUser.objects.get(
                 old_user_id=int(old_candidacy.candidate_user_id))
@@ -512,6 +530,8 @@ def migrate_candidacies(position=None, candidate_user=None):
 def migrate_candidacy_files(new_candidacy):
     old_candidacy_files = OldApellaCandidacyFileMigrationData. \
         objects.filter(candidacy_serial=str(new_candidacy.old_candidacy_id))
+
+    remove_attr_files(new_candidacy)
     for old_file in old_candidacy_files:
         migrate_file(
             old_file, new_candidacy.candidate, 'candidacy', new_candidacy.id)
@@ -519,25 +539,29 @@ def migrate_candidacy_files(new_candidacy):
 
 @transaction.atomic
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
-    state = 'cancelled' if old_candidacy.withdrawn_at else 'posted'
-    withdrawn_at = datetime.strptime(
-        old_candidacy.withdrawn_at, '%Y-%m-%d') \
-        if old_candidacy.withdrawn_at else datetime.now()
-    candidacy = Candidacy.objects.create(
-        candidate=new_candidate,
-        position=new_position,
-        state=state,
-        others_can_view=bool(
-            re.match('t', old_candidacy.open_to_other_candidates, re.I)),
-        old_candidacy_id=int(old_candidacy.candidacy_serial),
-        submitted_at=old_candidacy.submitted_at,
-        updated_at=withdrawn_at)
+    try:
+        candidacy = Candidacy.objects.get(
+            old_candidacy_id=int(old_candidacy.candidacy_serial))
+    except Candidacy.DoesNotExist:
+        state = 'cancelled' if old_candidacy.withdrawn_at else 'posted'
+        withdrawn_at = datetime.strptime(
+            old_candidacy.withdrawn_at, '%Y-%m-%d') \
+            if old_candidacy.withdrawn_at else datetime.now()
+        candidacy = Candidacy.objects.create(
+            candidate=new_candidate,
+            position=new_position,
+            state=state,
+            others_can_view=bool(
+                re.match('t', old_candidacy.open_to_other_candidates, re.I)),
+            old_candidacy_id=int(old_candidacy.candidacy_serial),
+            submitted_at=old_candidacy.submitted_at,
+            updated_at=withdrawn_at)
 
-    candidacy.code = str(candidacy.id)
-    candidacy.save()
-    logger.info(
-        'migrated candidacy %s, to %s' %
-        (old_candidacy.candidacy_serial, candidacy.id))
+        candidacy.code = str(candidacy.id)
+        candidacy.save()
+        logger.info(
+            'migrated candidacy %s, to %s' %
+            (old_candidacy.candidacy_serial, candidacy.id))
 
     migrate_candidacy_files(candidacy)
 
@@ -577,4 +601,7 @@ def migrate_candidate_to_assistant_professor(old_user, new_user):
     old_user.professor_subject_from_appointment = ap.discipline_from_fek
     new_user.role = 'professor'
     new_user.save()
-    return migrate_professor(old_user, new_user)
+    professor = migrate_professor(old_user, new_user)
+    logger.info(
+        'created assistant professor %s' % assistant_professor.id)
+    return professor
