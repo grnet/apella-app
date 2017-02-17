@@ -89,8 +89,8 @@ class PositionMixin(ValidatorMixin):
         ranks = data.pop('ranks', [])
 
         if not user.is_helpdeskadmin():
-            if 'starts_at' in data:
-                after_today_validator(data['starts_at'])
+            #if 'starts_at' in data:
+                #after_today_validator(data['starts_at'])
             if 'fek_posted_at' in data:
                 before_today_validator(data['fek_posted_at'])
 
