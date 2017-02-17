@@ -172,7 +172,7 @@ export default ApellaGen.extend({
   list: {
     sort: {
       active: true,
-      fields: ['code', 'title'],
+      fields: ['code', 'title', 'old_code'],
       serverSide: true
     },
     filter: {
@@ -184,7 +184,8 @@ export default ApellaGen.extend({
             type: 'model',
             displayAttr: 'title_current',
             modelName: 'department'
-          })
+          }),
+          'state'
         ]
       },
       serverSide: true,
