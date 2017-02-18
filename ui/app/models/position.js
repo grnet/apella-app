@@ -92,6 +92,10 @@ export default DS.Model.extend({
 
     return (now.isBetween(start, end) || now.isSame(start) || now.isSame(end));
   }),
+  // is_posted is true for the positions that are not yet open
+  is_posted: computed('state', 'is_closed', 'is_open', function(){
+    return get(this, 'state') == 'posted' && !(get(this, 'is_open') || get(this, 'is_closed'));
+  }),
   nomination_act: DS.belongsTo('apella-file'),
   nomination_act_fek: DS.attr({displayComponent: 'url-display'}),
   nomination_proceedings: DS.belongsTo('apella-file'),
