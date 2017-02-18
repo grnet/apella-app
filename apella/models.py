@@ -540,6 +540,15 @@ class Position(models.Model):
     def check_resource_state_open(self, row, request, view):
         return self.state == 'posted' and self.ends_at > timezone.now()
 
+    def check_resource_state_revoked(self, row, request, view):
+        user = request.user
+        revoked = self.state == 'revoked'
+        if user.is_institutionmanager():
+            return revoked
+        elif user.is_assistant():
+            return revoked and assistant_can_edit(self, user)
+        return False
+
     def check_resource_state_before_open(self, row, request, view):
         user = request.user
         before_open = self.starts_at > timezone.now()
@@ -547,6 +556,16 @@ class Position(models.Model):
             return before_open
         elif user.is_assistant():
             return before_open and assistant_can_edit(self, user)
+        return False
+
+    def check_resource_state_after_closed(self, row, request, view):
+        user = request.user
+        is_posted = self.state == 'posted'
+        after_closed = self.ends_at < timezone.now() and is_posted
+        if user.is_institutionmanager():
+            return after_closed
+        elif user.is_assistant():
+            return after_closed and assistant_can_edit(self, user)
         return False
 
     def check_resource_state_electing(self, row, request, view):
