@@ -3,7 +3,6 @@ from datetime import date, timedelta
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from django.utils import timezone
-from django.db.models import F
 
 
 def before_today_validator(value):
@@ -56,9 +55,13 @@ def validate_candidate_files(user):
 
 
 def validate_unique_candidacy(position, user):
-    if user.candidacy_set.filter(
-            state='posted', position=position, id=F('code')). \
-            exists():
+    c_ids = user.candidacy_set.filter(
+        state='posted', position=position).values_list('id', flat=True)
+    c_codes = user.candidacy_set.filter(
+        state='posted', position=position).values_list('code', flat=True)
+    c_codes = map(int, c_codes)
+
+    if filter(lambda x: x in c_ids, c_codes):
         raise ValidationError(
             _('You have already submitted a candidacy for this '
                 'position'))
