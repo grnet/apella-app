@@ -167,7 +167,8 @@ class CandidacyList(object):
             positions = Position.objects.filter(department__in=departments)
             queryset = queryset.filter(position__in=positions)
         elif user.is_assistant():
-            positions = Position.objects.filter(author_id=user.id)
+            departments = user.institutionmanager.departments.all()
+            positions = Position.objects.filter(department__in=departments)
             queryset = queryset.filter(position__in=positions)
         if 'pk' in self.kwargs:
             return queryset.filter(id=self.kwargs['pk'])
