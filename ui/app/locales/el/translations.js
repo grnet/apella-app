@@ -110,7 +110,6 @@ export default {
   'Posted': 'Ενταγμένη',
   'Submitted': 'Υποβεβλημένη',
   'Cancelled': 'Ακυρωθείσα',
-  'candidacy.Cancelled': 'Αποσυρθείσα',
   'Electing': 'Επιλογή',
   'Successful': 'Στελεχωμένη',
   'Failed': 'Άγονη',
