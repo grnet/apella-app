@@ -164,7 +164,6 @@ const setElecting = {
   }
 };
 
-
 const setRevoked = {
   label: 'setRevoked',
   icon: 'autorenew',
@@ -194,6 +193,37 @@ const setRevoked = {
     title: 'prompt.setRevoked.title',
   }
 };
+
+const setFailed = {
+  label: 'setFailed',
+  icon: 'warning',
+  accent: true,
+  action(route, model) {
+    model.set('state', 'failed');
+    let m = route.get('messageService')
+    model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason.errors;
+    });
+  },
+  permissions: [{action: 'edit'}],
+  hidden: computed('model.failed_election_decision', 'model.state', function(){
+    let file = get(this, 'model.failed_election_decision');
+    return !(file && file.content && get(this, 'model.state') == 'electing');
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'setFailed',
+    cancel: 'cancel',
+    message: 'prompt.setFailed.message',
+    title: 'prompt.setFailed.title',
+  }
+};
+
 
 
 
@@ -475,7 +505,8 @@ const change_password = {
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
-  setRevoked: setRevoked
+  setRevoked: setRevoked,
+  setFailed: setFailed
 }
 
 export { goToDetails, applyCandidacy,
