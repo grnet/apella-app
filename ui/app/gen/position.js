@@ -183,8 +183,18 @@ export default ApellaGen.extend({
         get(this, 'is_latest') &&
         get(this, 'can_create');
     }),
-    before_open: computed('model.starts_at', 'is_latest', 'can_create', function(){
-      return moment(new Date()).isBefore(moment(get(this, 'model.starts_at'))) &&
+    before_open: computed('model.is_posted', 'is_latest', 'can_create', function(){
+      return get(this, 'model.is_posted') &&
+        get(this, 'is_latest') &&
+        get(this, 'can_create');
+    }),
+    after_closed: computed('model.is_closed', 'is_latest', 'can_create', function(){
+      return get(this, 'model.is_closed') &&
+        get(this, 'is_latest') &&
+        get(this, 'can_create');
+    }),
+    revoked: computed('model.state', 'is_latest', 'can_create', function(){
+      return get(this, 'model.state') === 'revoked' &&
         get(this, 'is_latest') &&
         get(this, 'can_create');
     }),
