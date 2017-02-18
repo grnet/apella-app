@@ -165,6 +165,38 @@ const setElecting = {
 };
 
 
+const setRevoked = {
+  label: 'setRevoked',
+  icon: 'autorenew',
+  accent: true,
+  action(route, model) {
+    model.set('state', 'revoked');
+    let m = route.get('messageService')
+    model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason.errors;
+    });
+  },
+  permissions: [{action: 'edit'}],
+  hidden: computed('model.revocation_decision', 'model.state', function(){
+    let file = get(this, 'model.revocation_decision');
+    return !(file && file.content && get(this, 'model.state') == 'electing');
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'setRevoked',
+    cancel: 'cancel',
+    message: 'prompt.setRevoked.message',
+    title: 'prompt.setRevoked.title',
+  }
+};
+
+
+
 // Candidacy
 
 const cancelCandidacy = {
@@ -449,5 +481,6 @@ export { goToDetails, applyCandidacy, cancelPosition,
   change_password,
   isHelpdesk,
   setElecting,
+  setRevoked,
 };
 
