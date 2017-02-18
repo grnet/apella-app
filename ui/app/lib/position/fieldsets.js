@@ -503,18 +503,23 @@ const  position = {
         fileField('revocation_decision', 'position', 'revocation_decision', {
           hint: 'cannot.be.filled.if.nomination',
           disabled: computed('model.changeset.nomination_act_fek',
+                      'model.changeset.failed_election_decision',
                       'model.changeset.nomination_act', function(){
             let nomination = get(this, 'model.changeset.nomination_act');
             let fek = get(this, 'model.changeset.nomination_act_fek');
-            return fek || (nomination && nomination.content);
+            let failed = get(this, 'model.changeset.failed_election_decision');
+            return fek || (nomination && nomination.content) || (failed && failed.content);
           })
         }),
         fileField('failed_election_decision', 'position', 'failed_election_decision', {
+          hint: 'cannot.be.filled.if.nomination',
           disabled: computed('model.changeset.nomination_act_fek',
+                      'model.changeset.revocation_decision',
                       'model.changeset.nomination_act', function(){
             let nomination = get(this, 'model.changeset.nomination_act');
             let fek = get(this, 'model.changeset.nomination_act_fek');
-            return fek || (nomination && nomination.content);
+            let revocation = get(this, 'model.changeset.revocation_decision');
+            return fek || (nomination && nomination.content) || (revocation && revocation.content);
           })
         }),
       ],
