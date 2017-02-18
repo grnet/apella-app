@@ -356,13 +356,14 @@ export default ApellaGen.extend({
         return f;
       }),
 
-      actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition', 'setElecting', 'setRevoked', 'setFailed' ],
+      actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition', 'setElecting', 'setRevoked', 'setFailed', 'setSuccessful' ],
       actionsMap: {
         applyCandidacy: applyCandidacy,
         cancelPosition: positionActions.cancelPosition,
         setElecting: positionActions.setElecting,
         setRevoked: positionActions.setRevoked,
         setFailed: positionActions.setFailed,
+        setSuccessful: positionActions.setSuccessful,
       }
     }
   },

@@ -224,8 +224,36 @@ const setFailed = {
   }
 };
 
-
-
+const setSuccessful = {
+  label: 'setSuccessful',
+  icon: 'person',
+  accent: true,
+  action(route, model) {
+    model.set('state', 'successful');
+    let m = route.get('messageService')
+    model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason.errors;
+    });
+  },
+  permissions: [{action: 'edit'}],
+  hidden: computed('model.nomination_act', 'model.nomination_act_fek', 'model.state', function(){
+    let file = get(this, 'model.nomination_act');
+    let fek = get(this, 'model.nomination_act_fek');
+    return !(file && file.content && fek && get(this, 'model.state') == 'electing');
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'setSuccessful',
+    cancel: 'cancel',
+    message: 'prompt.setSuccessful.message',
+    title: 'prompt.setSuccessful.title',
+  }
+};
 
 // Candidacy
 
@@ -506,7 +534,8 @@ let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
   setRevoked: setRevoked,
-  setFailed: setFailed
+  setFailed: setFailed,
+  setSuccessful: setSuccessful
 }
 
 export { goToDetails, applyCandidacy,
