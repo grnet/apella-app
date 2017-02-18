@@ -192,15 +192,18 @@ function membersAllModelMeta(serverSide, hideQuickView) {
   };
 };
 
-function membersField(modelMetaSide, selectModelMetaSide, hideQuickView) {
+function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFields) {
+
   return field('members', {
+    formComponent: 'apella-members-edit-field',
     refreshValueQuery: modelMetaSide,
     valueQuery: function(store, params, model, value) {
 
       // If the model has no id we are in create view
-      if(model.get('id') && modelMetaSide) {
+      // if(model.get('id') && modelMetaSide) {
+      if (model.get('id')) {
         // Default ordering (if other is not set)
-        if(!params.ordering) {
+        if (!params.ordering) {
           let locale = model.get('i18n.locale');
           params.ordering = `user__last_name__${locale}`;
         }
@@ -429,6 +432,9 @@ export default ApellaGen.extend({
         })
       })
     },
+    onSubmit(model) {
+      this.refresh();
+    },
     fieldsets: [{
       label: 'registry.main_section.title',
       fields: [
@@ -455,7 +461,7 @@ export default ApellaGen.extend({
       ]
     }, {
       label: 'registry.members_section.title',
-      fields: [membersField(false, true, false)]
+      fields: [membersField(true, true, false)]
     }]
   }
 });

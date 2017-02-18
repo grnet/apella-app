@@ -1,0 +1,125 @@
+{{#if label}}
+<label class="md-label raised padded table-label">{{ label }}</label>
+{{/if}}
+
+<label class="md-label raised padded table-label">{{t 'members.to.add'}} ({{ addMembers.length }})</label>
+{{gen-table
+    model=(readonly addMembers)
+    modelMeta=(readonly gen.resource)
+    rowGenClass=(readonly gen.rowGen)
+    paginateServerSide=false
+    paginateActive=true
+    limits=(array 10 20 30)
+    sortActive=false
+    filterActive=false
+    searchActive=false
+    isLoading=false
+}}
+<paper-content class="table-actions layout-row">
+{{#paper-button disabled=(not canAdd) raised=true primary=true onClick=(action 'showOptions') }}
+{{t addLabel }}
+{{/paper-button}}
+</paper-content>
+
+{{#if removeMembers.length }}
+<label class="md-label raised padded table-label">{{t 'members.to.remove'}} ({{ removeMembers.length }})</label>
+{{gen-table
+    model=(readonly removeMembers)
+    modelMeta=(readonly gen.resource)
+    rowGenClass=(readonly removeRowGen)
+    paginateServerSide=false
+    paginateActive=true
+    limits=(array 10 20 30)
+    sortActive=false
+    filterActive=false
+    searchActive=false
+    isLoading=false
+}}
+{{/if}}
+
+{{#if object.id}}
+<br /><br />
+<label class="md-label raised padded table-label">Existing ({{existingMembers.meta.count}})</label>
+{{gen-table
+
+    model=model
+    modelMeta=(readonly gen.resource)
+    rowGenClass=(readonly gen.rowGen)
+
+    paginateServerSide=paginateServerSide
+    paginateActive=paginateActive
+    limits=limits
+    limit=limit
+    offset=offset
+    total=total
+
+    sortActive=sortActive
+    sortServerSide=sortServerSide
+    sortFields=sortFields
+    sortBy=sortBy
+    sortDir=sortDir
+
+    filterActive=filterActive
+    searchActive=searchActive
+    filterServerSide=filterServerSide
+    filterMeta=filterMeta
+    searchFields=searchFields
+    filters=filters
+    searchText=search
+    searchPlaceholder=searchPlaceholder
+    searchComponent=searchComponent
+    filtersComponent=filtersComponent
+
+    isLoading=isLoading
+
+    onChangeLimit=(action 'onChangeLimit')
+    onChangeOffset=(action 'onChangeOffset')
+    onChangeSortBy=(action 'onChangeSortBy')
+    onChangeFilters=(action 'onChangeFilters')
+    onChangeFilter=(action 'onChangeFilter')
+    onChangeSearch=(action 'onChangeSearch')
+}}
+{{/if}}
+
+{{#if errors.length }}
+<div class="md-input-messages-animation md-auto-hide" ng-messages>
+  {{#each errors as |error index|}}
+    <div
+      id="error-{{index}}"
+      class="md-input-error">
+      {{error}}
+    </div>
+  {{/each}}
+</div>
+{{/if}}
+
+{{#if showOptions }}
+{{#paper-dialog fullscreen=dialogFullscreen onClose=(action 'hideOptions') clickOutsideToClose=dialogClickOutsideToClose}}
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+    <h2>{{t dialogTitle }}</h2>
+    <span class="flex"></span>
+    {{#paper-button iconButton=true onClick=(action "hideOptions")}}{{paper-icon icon="close"}}{{/paper-button}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+{{#paper-dialog-content classNames="no-padding"}}
+  {{gen-display-field-table
+    field=(readonly field)
+    label=null
+    details=details
+    object=object
+    selectable=true
+    selected=addMembers
+    getModel=selectTableQuery
+  }}
+{{/paper-dialog-content}}
+
+{{#paper-dialog-actions class="layout-row"}}
+  <span class="flex"></span>
+  {{#paper-button onClick=(action "hideOptions")}}{{t dialogCancelLabel }}{{/paper-button}}
+  {{#paper-button onClick=(action "handleAddItems" addMembers)}}{{t dialogAddLabel }}{{/paper-button}}
+{{/paper-dialog-actions}}
+
+{{/paper-dialog}}
+{{/if}}
+
