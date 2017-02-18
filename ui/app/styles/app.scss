@@ -90,6 +90,9 @@ footer {
 md-toolbar .md-toolbar-tools .md-button:not(.md-icon-button) {
   padding: 0 0.5rem;
   margin-left: 0.5rem;
+
+table.md-table.md-row-select td.md-cell:nth-child(n+3):nth-last-child(n+2), table.md-table.md-row-select th.md-column:nth-child(n+3):nth-last-child(n+2) {
+  padding: 0 10px 0 0;
 }
 
 noscript {
