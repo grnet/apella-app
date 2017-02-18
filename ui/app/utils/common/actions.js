@@ -138,6 +138,36 @@ const cancelPosition = {
   }
 };
 
+const setElecting = {
+  label: 'setElecting',
+  icon: 'people_outline',
+  accent: true,
+  action(route, model) {
+    model.set('state', 'electing');
+    let m = route.get('messageService')
+    model.save().then((value) => {
+      m.setSuccess('form.saved');
+      return value;
+    }, (reason) => {
+      model.rollbackAttributes();
+      m.setError('reason.errors');
+      return reason.errors;
+    });
+  },
+  permissions: [{action: 'edit'}],
+  hidden: computed('model.is_closed', 'model.state', function(){
+    return !(get(this, 'model.is_closed') || get(this, 'model.state') == 'revoked');
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'setElecting',
+    cancel: 'cancel',
+    message: 'prompt.setElecting.message',
+    title: 'prompt.setElecting.title',
+  }
+};
+
+
 // Candidacy
 
 const cancelCandidacy = {
@@ -421,5 +451,6 @@ export { goToDetails, applyCandidacy, cancelPosition,
   deactivateUser, activateUser,
   change_password,
   isHelpdesk,
+  setElecting,
 };
 
