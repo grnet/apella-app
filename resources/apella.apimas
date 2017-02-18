@@ -200,7 +200,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .serial: {}
+                    .integer: {}
                     .readonly: {}
                 url:
                     .drf_field: {}
@@ -586,7 +586,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -618,7 +618,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -650,7 +650,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -682,7 +682,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -1014,7 +1014,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -1413,7 +1413,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -1445,7 +1445,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -1477,7 +1477,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -1509,7 +1509,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -2056,7 +2056,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -2088,7 +2088,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -2120,7 +2120,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -2153,7 +2153,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}
@@ -2185,7 +2185,7 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .serial: {}
+                            .integer: {}
                             .readonly: {}
                         file_kind:
                             .cli_option: {}

@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
-    Professor, ElectorParticipation, ApellaFile, ApellaFileId
+    Professor, ElectorParticipation, ApellaFile
 from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator
@@ -134,7 +134,6 @@ class PositionMixin(ValidatorMixin):
 
 
 def copy_single_file(existing_file, candidacy, source='candidacy'):
-    new_file_id = ApellaFileId.objects.create()
     new_file = ApellaFile(
         owner=existing_file.owner,
         source=source,
@@ -142,7 +141,6 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
         source_id=candidacy.id,
         description=existing_file.description,
         updated_at=timezone.now(),
-        file_id = new_file_id,
         file_name=existing_file.file_name)
     with open(existing_file.file_content.path, 'r') as f:
         new_file.file_content.save(existing_file.file_name, File(f))
@@ -159,17 +157,28 @@ def copy_candidacy_files(candidacy, user):
         diplomas = user.candidate.diplomas.all()
         publications = user.candidate.publications.all()
 
-    new_cv = copy_single_file(cv, candidacy)
-    candidacy.cv = new_cv
-    candidacy.diplomas.all().delete()
-    candidacy.publications.all().delete()
-    for diploma in diplomas:
-        new_diploma = copy_single_file(diploma, candidacy)
-        candidacy.diplomas.add(new_diploma)
-    for publication in publications:
-        new_publication = copy_single_file(publication, candidacy)
-        candidacy.publications.add(new_publication)
-    candidacy.save()
+    diplomas = list(diplomas)
+    publications = list(publications)
+    nr_idents = len(diplomas) + len(publications) + 1
+    ident = Serials.get_serial('request', nr_idents)
+
+    with transaction.atomic():
+        new_cv = copy_single_file(cv, candidacy, ident=ident)
+        candidacy.cv = new_cv
+        ident += 1
+
+        candidacy.diplomas.all().delete()
+        candidacy.publications.all().delete()
+
+        for diploma in diplomas:
+            new_diploma = copy_single_file(diploma, candidacy, ident=ident)
+            candidacy.diplomas.add(new_diploma)
+            ident += 1
+        for publication in publications:
+            new_publication = copy_single_file(publication, candidacy, ident=ident)
+            candidacy.publications.add(new_publication)
+            ident += 1
+        candidacy.save()
 
 
 class CandidacyMixin(object):

@@ -13,8 +13,7 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
     Candidacy, OldApellaCandidacyMigrationData, \
     OldApellaCandidacyFileMigrationData, OldApellaInstitutionMigrationData, \
-    OldApellaCandidateAssistantProfessorMigrationData, generate_filename, \
-    ApellaFileId
+    OldApellaCandidateAssistantProfessorMigrationData, generate_filename
 
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
@@ -200,7 +199,7 @@ def migrate_file(old_file, new_user, source, source_id):
         return
 
     updated_at = old_file.updated_at if old_file.updated_at else datetime.now()
-    new_file_id = ApellaFileId.objects.create()
+    #new_file_id = ApellaFileId.objects.create()
     new_file = ApellaFile(
         owner=new_user,
         description=old_file.file_description,
@@ -208,8 +207,7 @@ def migrate_file(old_file, new_user, source, source_id):
         source=source,
         source_id=source_id,
         updated_at=updated_at,
-        file_name=old_file.original_name,
-        file_id=new_file_id)
+        file_name=old_file.original_name)
     new_file_path = safe_path_join(
         settings.MEDIA_ROOT,
         generate_filename(new_file, old_file.original_name))

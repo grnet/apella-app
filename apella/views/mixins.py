@@ -20,7 +20,7 @@ from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, \
-    OldApellaUserMigrationData, generate_filename, ApellaFileId
+    OldApellaUserMigrationData, generate_filename
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
@@ -256,7 +256,7 @@ class FilesViewSet(viewsets.ModelViewSet):
             # return HttpResponseRedirect(ui_download_url)
 
         file_id = auth_hooks.consume_file_token(token)
-        if not file_id == pk:
+        if not file_id == int(pk):
             raise Http404
 
         file = get_object_or_404(ApellaFile, id=file_id)
@@ -271,7 +271,7 @@ class FilesViewSet(viewsets.ModelViewSet):
     def destroy(self, request, pk=None):
         obj = self.get_object()
         try:
-            f = safe_path_join(settings.MEDIA_ROOT, obj.file_path.name)
+            f = safe_path_join(settings.MEDIA_ROOT, obj.file_content.name)
             os.remove(f)
         except OSError:
             pass
@@ -306,8 +306,8 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
         if field_name not in obj._meta.get_all_field_names():
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        apella_file_id = ApellaFileId.objects.create()
         uploaded_file = ApellaFile.objects.create(
+                id=request.request_serial,
                 owner=request.user,
                 file_kind=file_kind,
                 source=self.FILE_SOURCE[obj.__class__.__name__],
@@ -315,8 +315,7 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
                 file_content=file_upload,
                 file_name=file_upload.name,
                 description=file_description,
-                updated_at=timezone.now(),
-                file_id=apella_file_id)
+                updated_at=timezone.now())
 
         if not many:
             setattr(obj, field_name, uploaded_file)
