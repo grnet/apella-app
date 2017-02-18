@@ -472,15 +472,19 @@ const change_password = {
   }
 }
 
+let positionActions = {
+  cancelPosition: cancelPosition,
+  setElecting: setElecting,
+  setRevoked: setRevoked
+}
 
-export { goToDetails, applyCandidacy, cancelPosition,
+export { goToDetails, applyCandidacy,
   cancelCandidacy, goToPosition,
   rejectUser, verifyUser,
   requestProfileChanges,
   deactivateUser, activateUser,
   change_password,
   isHelpdesk,
-  setElecting,
-  setRevoked,
+  positionActions
 };
 

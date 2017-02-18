@@ -6,7 +6,7 @@ import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
 import moment from 'moment';
 import {
-  goToDetails, applyCandidacy, cancelPosition, setElecting, setRevoked
+  goToDetails, applyCandidacy, positionActions
 } from 'ui/utils/common/actions';
 import {position} from 'ui/lib/position/fieldsets';
 
@@ -359,9 +359,9 @@ export default ApellaGen.extend({
       actions: ['gen:details','applyCandidacy', 'gen:edit', 'remove', 'cancelPosition', 'setElecting', 'setRevoked' ],
       actionsMap: {
         applyCandidacy: applyCandidacy,
-        cancelPosition: cancelPosition,
-        setElecting: setElecting,
-        setRevoked: setRevoked
+        cancelPosition: positionActions.cancelPosition,
+        setElecting: positionActions.setElecting,
+        setRevoked: positionActions.setRevoked
       }
     }
   },
