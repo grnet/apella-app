@@ -392,6 +392,13 @@ export default ApellaGen.extend({
   },
 
   details: {
+    getModel: function(params, model) {
+      return model.get('department').then(function(department) {
+        return department.get('institution').then(function(institution) {
+          return model;
+        })
+      })
+    },
     page: {
       title: computed('model.institution.title_current', function() {
         let institution_title = get(this, 'model.institution.title_current'),
@@ -428,7 +435,9 @@ export default ApellaGen.extend({
     getModel: function(params, model) {
       return model.get('department').then(function(department) {
         return department.get('institution').then(function(institution) {
-          return model;
+          return model.get('members').then(() => {
+            return model;
+          });
         })
       })
     },
