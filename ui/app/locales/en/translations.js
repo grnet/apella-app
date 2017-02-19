@@ -491,5 +491,6 @@ export default {
   'passwords.do.not.match': 'Τα δύο συνθηματικά δεν ταιριάζουν',
   'search.placeholder_positions': 'New code / Old code / Title',
   'position_department.menu_label': 'Department Positions',
-  'position_search.menu_label': 'Search new positions'
+  'position_search.menu_label': 'Search new positions',
+  'generic.error': 'Application Error; please press Refresh and if the problem persists contact the Helpdesk.',
 };
