@@ -132,7 +132,7 @@ def migrate_institutionmanager(old_user, new_user):
                 sub_email=old_user.manager_deputy_email,
                 is_verified=True)
             logger.info(
-                'created institution manager %s' % institutionmanager.id)
+                'created institution manager %s' % manager.id)
         except ValueError as e:
             logger.error('failed to migrate user %s' % old_user.user_id)
             logger.error(e)

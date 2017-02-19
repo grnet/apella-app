@@ -6,7 +6,7 @@ from django.db.utils import ProgrammingError
 from django.conf import settings
 ALLOCATION_INCREMENT = getattr(settings, 'SERIAL_ALLOCATION_INCREMENT', 1000)
 
-from django.db import connections
+from django.db import connections, transaction
 connection = connections['default']
 
 
