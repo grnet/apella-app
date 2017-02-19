@@ -29,6 +29,7 @@ from apella.migration_functions import migrate_user_profile_files
 from apella.emails import send_user_email
 
 from apella.util import urljoin, safe_path_join
+from apella.serials import get_serial
 
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
@@ -307,7 +308,7 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         uploaded_file = ApellaFile.objects.create(
-                id=request.request_serial,
+                id=get_serial('apella_file'),
                 owner=request.user,
                 file_kind=file_kind,
                 source=self.FILE_SOURCE[obj.__class__.__name__],

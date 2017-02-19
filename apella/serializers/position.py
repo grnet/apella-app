@@ -9,6 +9,7 @@ from apella.models import Position, InstitutionManager, Candidacy, \
 from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator
+from apella.serials import get_serial
 
 
 def get_electors_regular_internal(instance):
@@ -135,6 +136,7 @@ class PositionMixin(ValidatorMixin):
 
 def copy_single_file(existing_file, candidacy, source='candidacy'):
     new_file = ApellaFile(
+        id=get_serial('apella_file'),
         owner=existing_file.owner,
         source=source,
         file_kind=existing_file.file_kind,

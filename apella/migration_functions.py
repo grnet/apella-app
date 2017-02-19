@@ -18,6 +18,7 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
 from apella.util import safe_path_join
+from apella.serials import get_serial
 
 logger = logging.getLogger('apella')
 
@@ -201,6 +202,7 @@ def migrate_file(old_file, new_user, source, source_id):
     updated_at = old_file.updated_at if old_file.updated_at else datetime.now()
     #new_file_id = ApellaFileId.objects.create()
     new_file = ApellaFile(
+        id=get_serial('apella_file'),
         owner=new_user,
         description=old_file.file_description,
         file_kind=FILE_KINDS_MAPPING[source][old_file.file_type],
