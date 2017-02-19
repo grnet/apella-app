@@ -157,28 +157,19 @@ def copy_candidacy_files(candidacy, user):
         diplomas = user.candidate.diplomas.all()
         publications = user.candidate.publications.all()
 
-    diplomas = list(diplomas)
-    publications = list(publications)
-    nr_idents = len(diplomas) + len(publications) + 1
-    ident = Serials.get_serial('request', nr_idents)
+    new_cv = copy_single_file(cv, candidacy)
+    candidacy.cv = new_cv
 
-    with transaction.atomic():
-        new_cv = copy_single_file(cv, candidacy, ident=ident)
-        candidacy.cv = new_cv
-        ident += 1
+    candidacy.diplomas.all().delete()
+    candidacy.publications.all().delete()
 
-        candidacy.diplomas.all().delete()
-        candidacy.publications.all().delete()
-
-        for diploma in diplomas:
-            new_diploma = copy_single_file(diploma, candidacy, ident=ident)
-            candidacy.diplomas.add(new_diploma)
-            ident += 1
-        for publication in publications:
-            new_publication = copy_single_file(publication, candidacy, ident=ident)
-            candidacy.publications.add(new_publication)
-            ident += 1
-        candidacy.save()
+    for diploma in diplomas:
+        new_diploma = copy_single_file(diploma, candidacy)
+        candidacy.diplomas.add(new_diploma)
+    for publication in publications:
+        new_publication = copy_single_file(publication, candidacy)
+        candidacy.publications.add(new_publication)
+    candidacy.save()
 
 
 class CandidacyMixin(object):
