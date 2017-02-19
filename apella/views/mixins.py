@@ -118,8 +118,13 @@ class PositionMixin(object):
                 department__in=user.institutionmanager.
                 departments.all())
         elif user.is_professor():
-            position_ids = Candidacy.objects.filter(
-                candidate=user).values_list('position_id', flat=True)
+            position_ids = list(Candidacy.objects.filter(
+                candidate=user).values_list('position_id', flat=True))
+            if user.professor.department:
+                department_position_ids = list(Position.objects.filter(
+                    department=user.professor.department).
+                    values_list('id', flat=True))
+                position_ids += department_position_ids
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=datetime.now()) |
                 Q(id__in=position_ids) |
