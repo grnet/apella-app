@@ -133,7 +133,7 @@ export default ApellaGen.extend({
   common: {
     validators: {
       title: [validate.presence(true), validate.length({min:3, max:200})],
-      description: [validate.presence(true), validate.length({max:300})],
+      description: [validate.presence(true), validate.length({max:4000})],
 
       /*
        * Heldesk admin can modify starts_at, ends_at dates without any client
