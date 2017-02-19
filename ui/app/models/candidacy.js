@@ -8,6 +8,8 @@ const { computed, get } = Ember,
 let candidacy_states = CHOICES.CANDIDACY_STATES.map(function(el){
   if (el[1] == 'Posted') {
     return [el[0], 'Submitted']
+  } else if (el[1] == 'Cancelled') {
+    return [el[0], 'candidacy.Cancelled']
   } else {
     return el;
   }
