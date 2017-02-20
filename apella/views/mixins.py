@@ -144,11 +144,10 @@ class PositionMixin(object):
             now = datetime.now()
             if state_query in ('electing', 'successful',
                                'failed', 'cancelled', 'revoked'):
-                queryset = queryset.filter(Q(state=state_query) &
-                                           Q(starts_at__gte=now))
+                queryset = queryset.filter(Q(state=state_query))
 
             elif state_query == 'posted':
-                queryset = queryset.filter(state='posted' &
+                queryset = queryset.filter(Q(state='posted') &
                                            Q(starts_at__gte=now))
 
             elif state_query == 'open':
