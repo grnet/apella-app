@@ -4,18 +4,20 @@ from django.template.loader import render_to_string
 
 from apella.util import urljoin
 
+def get_login_url():
+    BASE_URL = settings.BASE_URL or '/'
+    return urljoin(
+        BASE_URL, settings.API_PREFIX, settings.TOKEN_LOGIN_URL)
+
 
 def send_new_credentials_to_old_users_email(old_users):
-    BASE_URL = settings.BASE_URL or '/'
-    login_url = urljoin(
-        BASE_URL, settings.API_PREFIX, settings.TOKEN_LOGIN_URL)
-    for old_user in old_users:
+   for old_user in old_users:
         subject = render_to_string(
             'apella/emails/old_user_new_credentials_subject.txt'). \
             replace('\n', ' ')
         body = render_to_string(
             'apella/emails/old_user_new_credentials_body.txt',
-            {'old_user': old_user, 'login_url': login_url}
+            {'old_user': old_user, 'login_url': get_login_url()}
         )
         sender = settings.DEFAULT_FROM_EMAIL
         send_mail(
@@ -29,7 +31,9 @@ def send_new_credentials_to_old_users_email(old_users):
 
 def send_user_email(user, template_subject, template_body, extra_context=()):
     subject = render_to_string(template_subject).replace('\n', ' ')
-    template_context = {}
+    template_context = {
+        'login_url': get_login_url()
+    }
     if extra_context:
         template_context.update(extra_context)
     template_context['user'] = user
