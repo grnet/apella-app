@@ -206,6 +206,7 @@ const PositionInterest = gen.GenRoutedObject.extend({
 });
 
 export default AuthGen.extend({
+  appIndex: true,
   order: 100,
   routeMixins: [{
       actions: {
