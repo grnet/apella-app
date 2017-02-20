@@ -102,11 +102,11 @@ def migrate_professor(old_user, new_user):
             discipline_in_fek=discipline_in_fek,
             discipline_text=discipline_text,
             is_verified=is_verified)
+        logger.info('created professor %s' % professor.id)
 
     if institution and institution.has_shibboleth:
         new_user.can_set_academic = True
         new_user.save()
-    logger.info('created professor %s' % professor.id)
     return professor
 
 
@@ -236,7 +236,6 @@ def migrate_file(old_file, new_user, source, source_id):
         return
 
     updated_at = old_file.updated_at if old_file.updated_at else datetime.now()
-    #new_file_id = ApellaFileId.objects.create()
     new_file = ApellaFile(
         id=get_serial('apella_file'),
         owner=new_user,
@@ -252,10 +251,6 @@ def migrate_file(old_file, new_user, source, source_id):
     new_file.file_content = new_file_path
     new_file.old_file_path = old_file.file_path
     new_file.save()
-
-    logger.info(
-        'migrated %s file %s to %s' %
-        (source, old_file.id, new_file.id))
 
     field_name, many = \
         FILE_KIND_TO_FIELD[FILE_KINDS_MAPPING[source][old_file.file_type]].\
