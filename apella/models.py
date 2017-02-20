@@ -179,7 +179,7 @@ class ApellaFile(models.Model):
     description = models.TextField(blank=True, null=True)
     updated_at = models.DateTimeField(default=timezone.now)
     file_name = models.CharField(max_length=1024)
-    old_file_path = models.CharField(max_length=1024)
+    old_file_path = models.CharField(max_length=1024, null=True)
 
     def save(self, *args, **kwargs):
         super(ApellaFile, self).save(*args, **kwargs)
