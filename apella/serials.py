@@ -1,5 +1,5 @@
 import logging
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 from django.db.models import Model, CharField, BigIntegerField
 from django.db.utils import ProgrammingError
@@ -35,26 +35,20 @@ class Serials(Model):
 
 if connection.vendor == 'postgresql':
 
+    import re
+    pattern = "^[a-zA-Z0-9_]+$"
+    matcher = re.compile(pattern)
+
     def validate_serial_name(serial_name):
-        import re
-        pattern = "^[a-zA-Z0-9_]+$"
-        return re.match(pattern, serial_name) is not None
+        return matcher.match(serial_name) is not None
 
-    def allocate_serial_postgresql(serial_name, increment):
-        if serial_name not in serials:
-            if not validate_serial_name(serial_name):
-                m = "%r is not an acceptable serial name according to %r"
-                m %= (serial_name, pattern)
-                raise ValueError(m)
-
-        cursor = connection.cursor()
+    def get_sequence_increment(cursor, serial_name):
         while True:
             error = None
             try:
                 q = "select increment_by from %s" % serial_name
                 cursor.execute(q)
-                sequence_increment = cursor.fetchone()[0]
-                break
+                return cursor.fetchone()[0]
 
             except ProgrammingError as e:
                 if error is not None:
@@ -64,6 +58,15 @@ if connection.vendor == 'postgresql':
                 cursor.execute(q)
                 error = e
 
+    def allocate_serial_postgresql(serial_name, increment):
+        if serial_name not in serials:
+            if not validate_serial_name(serial_name):
+                m = "%r is not an acceptable serial name according to %r"
+                m %= (serial_name, pattern)
+                raise ValueError(m)
+
+        cursor = connection.cursor()
+        sequence_increment = get_sequence_increment(cursor, serial_name)
         if increment > sequence_increment:
             m = ("%r: requested increment %d "
                  "is greater than sequence increment %d.")
