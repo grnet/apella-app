@@ -83,7 +83,7 @@ export default {
   'activateUser': 'Activate user',
   'prompt.withdrawal.title': 'Withdraw Candidacy',
   'prompt.withdrawal.message': 'Are you sure you want to withdraw your candidacy?',
-  'prompt.withdrawal_helpdesk.message': 'The candidacy cannot be withdrawn. Contact with helpdesk.',
+  'prompt.withdrawal_helpdesk.message': 'Position is closed.<br> Please contact the Helpdesk in order to withdraw your candidacy.',
   'prompt.removeInstitution.title': 'Delete regulatory framework',
   'prompt.removeInstitution.message': 'Are you sure you want to delete this regulatory framework?',
   'prompt.cancelPosition.title': 'Cancel Position',
@@ -282,12 +282,12 @@ export default {
   candidacy: {
     menu_label: 'Candidacies',
     position_section: {
-      title: 'Position Information',
+      title: 'Position Details',
       subtitle: 'Information concerning the position.'
     },
     candidate_section: {
-      title: 'Candidate Info',
-      subtitle: 'These fields can be modified by the candidate\'s profile.'
+      title: 'Candidate Details',
+      subtitle: 'These fields can be modified from the candidate\'s profile.'
     },
     candidacy_section: {
       title: 'Candidacy Fields'
@@ -403,7 +403,7 @@ export default {
   'user_id.label': 'ID',
   'active_elections.label': 'Election Committees',
   'contact': 'Contact Information',
-  'five_before_electors_meeting': 'Can be uploaded up to 5 days before electors meeting',
+  'five_before_electors_meeting': 'Can be uploaded up to 5 days before the electors meeting',
   'one_before_electors_meeting': 'Can be uploaded up to previous day of the electors meeting',
   'active': 'active',
   'inactive': 'inactive',
