@@ -24,6 +24,8 @@ def validate_dates_interval(start, end, interval):
 
 
 def validate_position_dates(start, end):
+    start = start.replace(hour=00, minute=00, second=00)
+    end = end.replace(hour=23, minute=59, second=59)
     if timezone.now() < start:
         raise ValidationError(_('Position opens at %s' % start))
     if timezone.now() > end:
