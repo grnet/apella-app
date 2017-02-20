@@ -24,7 +24,8 @@ from apella.util import urljoin
 BASE_URL = settings.BASE_URL or '/';
 API_PREFIX = settings.API_PREFIX
 
-LEGACY_URL = getattr(settings, 'APELLA_LEGACY_ACADEMIC_LOGIN_URL')
+LEGACY_URL = getattr(settings, 'APELLA_LEGACY_ACADEMIC_LOGIN_URL', None)
+LEGACY_PATH = urlparse.urlparse(LEGACY_URL).path
 MIGRATE_LEGACY = bool(LEGACY_URL)
 TOKEN_LOGIN_URL = urljoin(BASE_URL, API_PREFIX, settings.TOKEN_LOGIN_URL)
 TOKEN_REGISTER_URL = urljoin(BASE_URL, API_PREFIX, settings.TOKEN_REGISTER_URL)
@@ -277,8 +278,14 @@ def login(request):
             migration_key = make_migration_key(apella2_shibboleth_id)
             request.session['shibboleth_id'] = apella2_shibboleth_id
             request.session['migration_key'] = migration_key
-            url = LEGACY_URL + "?migrate=1&migration_key=%s" % migration_key
-            logger.info("redirect to legacy shibboleth login url")
+            params = {'migrate': 1, 'migration_key': migration_key}
+            params_string = urllib.urlencode(params)
+            target_path = LEGACY_PATH + "?" + params_string
+            user_idp = request.META['HTTP_SHIB_IDENTITY_PROVIDER']
+            params2 = {'SAMLDS': 1, 'target': target_path, 'entityID': user_idp}
+            target_path2 = "/Shibboleth.sso/Login?" + urllib.urlencode(params2)
+            url = urlparse.urljoin(LEGACY_URL, target_path2)
+            logger.info("redirect to legacy shibboleth login url: %r" % url)
             return HttpResponseRedirect(url)
 
         if force_login:
