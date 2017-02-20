@@ -189,13 +189,21 @@ export default ApellaGen.extend({
       active: true,
       meta: {
         fields: [
-          field('department', {
+          field('institution', {
             autocomplete: true,
             type: 'model',
             displayAttr: 'title_current',
-            modelName: 'department'
+            modelName: 'institution',
+            dataKey: 'department__institution',
+            query: function(select, store, field, params) {
+              let locale = get(select, 'i18n.locale'),
+                ordering_param = `title__${locale}`;
+              params = params || {};
+              params.category = 'Institution';
+              params.ordering = ordering_param;
+              return store.query('institution', params)
+            }
           }),
-          'state'
         ]
       },
       serverSide: true,
