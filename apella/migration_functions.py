@@ -104,9 +104,11 @@ def migrate_professor(old_user, new_user):
             is_verified=is_verified)
         logger.info('created professor %s' % professor.id)
 
-    if institution and institution.has_shibboleth:
+    if institution and institution.has_shibboleth and not new_user.shibboleth_id:
         new_user.can_set_academic = True
-        new_user.save()
+    else:
+        new_user.can_set_academic = False
+    new_user.save()
     return professor
 
 
@@ -396,6 +398,9 @@ def migrate_user(old_user, password=None, apella2_shibboleth_id=None):
 def create_or_update_user(
         old_user, password=None, apella2_shibboleth_id=None):
 
+    if not old_user.email:
+        return None
+
     if not old_user.name_el:
         old_user.name_el = old_user.name_en
     if not old_user.name_en:
@@ -456,7 +461,8 @@ def create_or_update_user(
                 email_verified=True,
                 old_user_id=int(old_user.user_id))
             logger.info(
-                'created user %s from user_id %s' % (new_user.id, old_user.user_id))
+                'created user %s from user_id %s' %
+                (new_user.id, old_user.user_id))
         except IntegrityError as e:
             logger.error(
                 'failed to create new user from %s' %  old_user.user_id)
