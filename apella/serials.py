@@ -43,14 +43,15 @@ if connection.vendor == 'postgresql':
         return matcher.match(serial_name) is not None
 
     def get_sequence_increment(cursor, serial_name):
-        q = "select to_regclass(%s)"
-        cursor.execute(q, [serial_name])
+        q = "select to_regclass('%s')" % serial_name
+        cursor.execute(q)
         r = cursor.fetchone()[0]
         if r is None:
-            q = "create sequence %s cache 1 increment %s"
-            cursor.execute(q, [serial_name, ALLOCATION_INCREMENT])
-        q = "select increment_by from %s"
-        cursor.execute(q, [serial_name])
+            q = "create sequence %s cache 1 increment %d"
+            q %= (serial_name, ALLOCATION_INCREMENT)
+            cursor.execute(q)
+        q = "select increment_by from %s" % serial_name
+        cursor.execute(q)
         return cursor.fetchone()[0]
 
     def allocate_serial_postgresql(serial_name, increment):
@@ -68,8 +69,8 @@ if connection.vendor == 'postgresql':
             m %= (serial_name, increment, sequence_increment)
             raise ValueError(m)
 
-        q = "select nextval(%s)"
-        cursor.execute(q, [serial_name])
+        q = "select nextval('%s')" % serial_name
+        cursor.execute(q)
         new_serial = cursor.fetchone()[0]
         return new_serial, new_serial + sequence_increment
 
