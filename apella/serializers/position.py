@@ -228,7 +228,7 @@ class CandidacyMixin(object):
         copy_candidacy_files(obj, validated_data.get('candidate'))
         obj.state = 'posted'
         obj.save()
-        send_create_emails(obj)
+        send_create_candidacy_emails(obj)
         return obj
 
 
@@ -248,7 +248,7 @@ class CandidacyMixin(object):
             curr_candidacy.save()
         return instance
 
-def send_create_emails(candidacy):
+def send_create_candidacy_emails(candidacy):
     # send to candidate
     send_user_email(
         candidacy.candidate,
