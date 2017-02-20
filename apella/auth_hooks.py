@@ -241,7 +241,7 @@ def migrate_legacy(migration_key, migrate_id, shibboleth_id):
     old_user = get_object_or_404(
         OldUser, id=migrate_id, migration_key=migration_key)
     user = migrate_shibboleth_id(
-        shibboleth_id=old_user.shibboleth_id, migration_key=migration_key)
+        shibboleth_id=shibboleth_id, migration_key=migration_key)
     if not user:
         old_user.migration_key = None
         old_user.save()
