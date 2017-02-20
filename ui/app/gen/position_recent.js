@@ -10,15 +10,6 @@ import {
 } from 'ui/utils/common/actions';
 import {position} from 'ui/lib/position/fieldsets';
 
-/*
- * This gen is used for displaying:
- * - Helpdesk admins, helpdesk users: all positions, in all states
- * - Institution managers: positions of their institution, in all states
- * - Assistants: positions of their departments, in all states
- * - Professors: positions of their department, in all states
- */
-
-
 const {
   computed,
   computed: { reads },
@@ -93,11 +84,12 @@ const pick_create_fs = function() {
 
 
 export default ApellaGen.extend({
-  order: 800,
+  order: 170,
+  name: 'positions-latest',
   modelName: 'position',
   resourceName: 'positions',
   auth: true,
-  path: 'positions',
+  path: 'positions-latest',
 
   abilityStates: {
     is_latest: computed('model.is_latest', function(){
@@ -142,7 +134,7 @@ export default ApellaGen.extend({
   common: {
     validators: {
       title: [validate.presence(true), validate.length({min:3, max:200})],
-      description: [validate.presence(true), validate.length({max:4000})],
+      description: [validate.presence(true), validate.length({max:300})],
 
       /*
        * Heldesk admin can modify starts_at, ends_at dates without any client
@@ -182,11 +174,9 @@ export default ApellaGen.extend({
   list: {
     getModel: function(params) {
       params = params || {};
-      let user = get(this, 'session.session.authenticated'),
-        role = user.role;
-      if(role === 'professor') {
-        let department_id = user.department.split('/').slice(-2)[0];
-        params.department = department_id;
+      params.state = 'posted';
+      if(!params.ordering) {
+        params.ordering = '-id';
       }
       return this.store.query('position', params);
     },
@@ -195,87 +185,45 @@ export default ApellaGen.extend({
       fields: ['code', 'title', 'old_code'],
       serverSide: true
     },
-    filter: computed('user.role', function() {
-      let user_role = get(this, 'user.role'),
-        roles_institution = ['helpdeskadmin', 'helpdeskuser'],
-        roles_department = ['institutionmanager', 'assistant'],
-        filter_model, dataKey, user_institution;
-
-      if (user_role === 'professor') {
-        return {
-          active: true,
-          meta: {
-            fields: ['state']
-          }
-        };
-      }
-      else if (roles_institution.indexOf(user_role) > -1) {
-        filter_model = 'institution';
-        dataKey = 'department__institution';
-      }
-      else if (roles_department.indexOf(user_role) > -1) {
-        filter_model = 'department';
-        dataKey = 'department';
-        user_institution = get(this, 'user.institution').split('/').slice(-2)[0];
-      }
-      else {
-        return {
-          active: false
-        };
-      }
-      return {
+    filter: {
       active: true,
       meta: {
         fields: [
-          field(filter_model, {
+          field('institution', {
             autocomplete: true,
             type: 'model',
-            modelName: filter_model,
             displayAttr: 'title_current',
-            dataKey: dataKey,
+            modelName: 'institution',
+            dataKey: 'department__institution',
             query: function(select, store, field, params) {
               let locale = get(select, 'i18n.locale'),
                 ordering_param = `title__${locale}`;
               params = params || {};
+              params.category = 'Institution';
               params.ordering = ordering_param;
-              if(filter_model === 'institution'){
-                params.category = 'Institution';
-              }
-              else if (filter_model === 'department') {
-                params.institution = user_institution;
-              }
-              return store.query(filter_model, params)
+              return store.query('institution', params)
             }
           }),
-          'state'
         ]
       },
       serverSide: true,
       search: true,
       searchPlaceholder: 'search.placeholder_positions'
-      };
-    }),
+    },
     page: {
       title: 'position.menu_label',
     },
     menu: {
-      icon: 'event_available',
-      label: computed(function() {
-        let role = get(this, 'session.session.authenticated.role');
-        if (role === 'professor'){
-          return 'position_department.menu_label';
-        }
-        else {
-          return 'position.menu_label';
-        }
-    }),
+      icon: 'search',
+      label: 'position_search.menu_label',
       display: computed(function() {
         let role = get(this, 'session.session.authenticated.role');
-        if (role === 'candidate') {
-          return false;
+        console.log('???', role);
+        if (['professor', 'candidate'].indexOf(role) > -1) {
+          return true;
         }
         else {
-          return true;
+          return false;
         }
       })
     },

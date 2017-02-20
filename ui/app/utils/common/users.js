@@ -191,8 +191,8 @@ const USER_VALIDATORS = {
   first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  mobile_phone_number: [validate.presence(true)],
-  home_phone_number: [validate.presence(true)],
+  mobile_phone_number: [validate.presence(true), validate.number({ integer: true }), validate.length({min:10, max:20})],
+  home_phone_number: [validate.presence(true), validate.number({ integer: true }), validate.length({min:10, max:20})],
   email: [validate.format({ type: 'email' })],
   id_passport: [validate.presence(true)],
 }

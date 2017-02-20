@@ -7,8 +7,7 @@ import {USER_FIELDSET,
         INST_MANAGER_FIELDSET_DETAILS_MAIN,
         INST_MANAGER_FIELDSET_DETAILS_SUB,
         INST_MANAGER_FIELDSET_MAIN,
-        INST_MANAGER_FIELDSET_SUB,
-        INSTITUTION_MANAGER_VALIDATORS} from 'ui/utils/common/users';
+        INST_MANAGER_FIELDSET_SUB} from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager'
 import {field} from 'ember-gen';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
@@ -18,7 +17,7 @@ const {
   get
 } = Ember;
 
-let all_validators = Object.assign({}, USER_VALIDATORS, INSTITUTION_MANAGER_VALIDATORS);
+let all_validators = Object.assign({}, USER_VALIDATORS, MANAGER.VALIDATORS);
 
 export default ApellaGen.extend({
   order: 300,
