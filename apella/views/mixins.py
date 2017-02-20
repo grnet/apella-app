@@ -139,7 +139,7 @@ class PositionMixin(object):
                 Q(state='posted', ends_at__gte=datetime.now()) |
                 Q(id__in=position_ids))
 
-        state_query = request.GET.get('state_expanded')
+        state_query = self.request.GET.get('state_expanded')
         if state_query:
             now = datetime.now()
             if state_query in ('electing', 'successful',
