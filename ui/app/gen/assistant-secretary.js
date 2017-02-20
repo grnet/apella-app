@@ -18,7 +18,7 @@ const {
 let fs = fs_viewed_by_others;
 
 export default ApellaGen.extend({
-  order: 400,
+  order: 350,
   name: 'secretaries',
   modelName: 'assistant',
   resourceName: 'assistants',
