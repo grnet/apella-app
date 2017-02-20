@@ -1,6 +1,6 @@
 import os
 import urlparse
-from datetime import datetime
+from datetime import datetime, date, time
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -32,6 +32,8 @@ from apella.emails import send_user_email
 from apella.util import urljoin, safe_path_join
 from apella.serials import get_serial
 
+
+today_min = datetime.combine(date.today(), time())
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
@@ -129,7 +131,7 @@ class PositionMixin(object):
                     values_list('id', flat=True))
                 position_ids += department_position_ids
             queryset = queryset.filter(
-                Q(state='posted', ends_at__gte=datetime.now()) |
+                Q(state='posted', ends_at__gte=today_min) |
                 Q(id__in=position_ids) |
                 Q(committee=user.professor.id) |
                 Q(electors=user.professor.id))
@@ -137,7 +139,7 @@ class PositionMixin(object):
             position_ids = Candidacy.objects.filter(
                 candidate=user).values_list('position_id', flat=True)
             queryset = queryset.filter(
-                Q(state='posted', ends_at__gte=datetime.now()) |
+                Q(state='posted', ends_at__gte=today_min) |
                 Q(id__in=position_ids))
 
         state_query = self.request.GET.get('state_expanded')
@@ -372,7 +374,7 @@ class SyncCandidacies(object):
             candidate=candidate_user.user,
             state='posted',
             position__state='posted',
-            position__ends_at__gt=datetime.now())
+            position__ends_at__gt=today_min)
         for candidacy in active_candidacies:
             copy_candidacy_files(candidacy, candidate_user.user)
         return Response(request.data, status=status.HTTP_200_OK)
