@@ -259,8 +259,8 @@ export default ApellaGen.extend({
           return 'position.menu_label';
         }
     }),
-      display: computed(function() {
-        let role = get(this, 'session.session.authenticated.role');
+      display: computed('role', function() {
+        let role = get(this, 'role');
         if (role === 'candidate') {
           return false;
         }

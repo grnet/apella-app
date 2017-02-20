@@ -216,9 +216,8 @@ export default ApellaGen.extend({
     menu: {
       icon: 'search',
       label: 'position_search.menu_label',
-      display: computed(function() {
-        let role = get(this, 'session.session.authenticated.role');
-        console.log('???', role);
+      display: computed('role', function() {
+        let role = get(this, 'role');
         if (['professor', 'candidate'].indexOf(role) > -1) {
           return true;
         }
