@@ -54,7 +54,7 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: ['code', 'title', 'state_verbose',
+      fields: ['code', 'title', 'state_calc_verbose',
               'discipline', 'participation_current',
               field('department.institution.title_current', {label: 'institution.label'}),
               field('department.title_current', {label: 'department.label'})],
