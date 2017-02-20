@@ -231,7 +231,6 @@ export default ApellaGen.extend({
   modelName: 'registry',
   auth: true,
   path: 'registries',
-  order: 450,
 
   abilityStates: {
     /*
