@@ -195,66 +195,56 @@ export default ApellaGen.extend({
       fields: ['code', 'title', 'old_code'],
       serverSide: true
     },
-    filter: computed('user.role', function() {
-      let user_role = get(this, 'user.role'),
-        roles_institution = ['helpdeskadmin', 'helpdeskuser'],
-        roles_department = ['institutionmanager', 'assistant'],
-        filter_model, dataKey, user_institution;
-
-      if (user_role === 'professor') {
-        return {
-          active: true,
-          meta: {
-            fields: ['state']
-          }
-        };
-      }
-      else if (roles_institution.indexOf(user_role) > -1) {
-        filter_model = 'institution';
-        dataKey = 'department__institution';
-      }
-      else if (roles_department.indexOf(user_role) > -1) {
-        filter_model = 'department';
-        dataKey = 'department';
-        user_institution = get(this, 'user.institution').split('/').slice(-2)[0];
-      }
-      else {
-        return {
-          active: false
-        };
-      }
-      return {
+    filter: {
       active: true,
-      meta: {
-        fields: [
-          field(filter_model, {
-            autocomplete: true,
-            type: 'model',
-            modelName: filter_model,
-            displayAttr: 'title_current',
-            dataKey: dataKey,
-            query: function(select, store, field, params) {
-              let locale = get(select, 'i18n.locale'),
-                ordering_param = `title__${locale}`;
-              params = params || {};
-              params.ordering = ordering_param;
-              if(filter_model === 'institution'){
-                params.category = 'Institution';
-              }
-              else if (filter_model === 'department') {
-                params.institution = user_institution;
-              }
-              return store.query(filter_model, params)
-            }
-          }),
-          'state'
-        ]
-      },
       serverSide: true,
       search: true,
-      searchPlaceholder: 'search.placeholder_positions'
-      };
-    }),
+      searchPlaceholder: 'search.placeholder_positions',
+      meta: {
+        fields: computed('user.role', function() {
+          let user_role = get(this, 'user.role'),
+            roles_institution = ['helpdeskadmin', 'helpdeskuser'],
+            roles_department = ['institutionmanager', 'assistant'],
+            filter_model, dataKey, user_institution;
+
+          if (user_role === 'professor') {
+            return ['state'];
+          }
+          else if (roles_institution.indexOf(user_role) > -1) {
+            filter_model = 'institution';
+            dataKey = 'department__institution';
+          }
+          else if (roles_department.indexOf(user_role) > -1) {
+            filter_model = 'department';
+            dataKey = 'department';
+            user_institution = get(this, 'user.institution').split('/').slice(-2)[0];
+          }
+          return [
+            field(filter_model, {
+              autocomplete: true,
+              type: 'model',
+              modelName: filter_model,
+              displayAttr: 'title_current',
+              dataKey: dataKey,
+              query: function(select, store, field, params) {
+                let locale = get(select, 'i18n.locale'),
+                  ordering_param = `title__${locale}`;
+                params = params || {};
+                params.ordering = ordering_param;
+                if(filter_model === 'institution'){
+                  params.category = 'Institution';
+                }
+                else if (filter_model === 'department') {
+                  params.institution = user_institution;
+                }
+                return store.query(filter_model, params)
+              }
+            }),
+            'state'
+          ]
+        })
+      }
+    },
     page: {
       title: 'position.menu_label',
     },
