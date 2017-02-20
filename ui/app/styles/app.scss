@@ -86,3 +86,8 @@ footer {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+md-toolbar .md-toolbar-tools .md-button:not(.md-icon-button) {
+  padding: 0 0.5rem;
+  margin-left: 0.5rem;
+}

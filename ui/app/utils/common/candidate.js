@@ -22,6 +22,7 @@ const FILES_FIELDS = [
 
 const FILES_FIELDSET = {
   label: 'fieldsets.labels.candidate_profile',
+  text: 'fieldsets.text.candidate_profile',
   fields: FILES_FIELDS,
   layout: {
     flex: [100, 100, 100, 100]

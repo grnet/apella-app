@@ -379,6 +379,7 @@ export default {
       electors_regular_big: '<p>Τα μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 7 από τα 15 τακτικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 8 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
       electors_substitute_small: '<p>Τα αναπληρωματικά μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 5 από τα 11 αναπληρωματικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 6 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
       electors_substitute_big: '<p>Τα αναπληρωματικά μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 7 από τα 15 αναπληρωματικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 8 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
+      candidate_profile: 'If you would like to update your active candidacies with your current "Cirriculum vitae", "Diplomas" and "Publications", you should select the "Update Candidacies" button, located at the top of the page.',
     }
   },
   institution: {
@@ -538,5 +539,11 @@ export default {
   'position_department.menu_label': 'Department Positions',
   'position_search.menu_label': 'Search new positions',
   'generic.error': 'Application Error; please press Refresh and if the problem persists contact the Helpdesk.',
-  'state_expanded.label': 'State'
+  'state_expanded.label': 'State',
+  'sync.candidacies': 'Sync candidacies',
+  'sync_candidacies.title': 'Sync candidacies',
+  'sync_candidacies.message': 'Are you sure you want to update your current active candidacies?',
+  'sync': 'sync',
+  'sync.candidacies.error': 'Sync candidacies error',
+  'sync.candidacies.success': 'Candidacies have been successfully synced',
 };

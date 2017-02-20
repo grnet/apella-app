@@ -144,12 +144,14 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   routeBaseClass: routes.DetailsRoute,
   fieldsets: PROFILE_FIELDSETS('details'),
   component: 'gen-details',
-  actions: ['change_password'],
+  actions: ['sync_candidacies', 'change_password'],
   partials: { top: 'profile-details-intro' },
   actionsMap: {
     'sync_candidacies': {
       label: 'sync.candidacies',
+      icon: 'refresh',
       raised: true,
+      primary: true,
       action: function(route, profile) {
         let messages = get(route, 'messageService');
         let [url, adapter] = [profile.roleURL(), profile.userAdapter()];
@@ -159,7 +161,6 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
           messages.setError('sync.candidacies.error');
         });
       },
-      primary: true,
       hidden: computed('model.is_verified', 'model.role', function() {
         let verified = get(this, 'model.is_verified');
         let role = get(this, 'model.role');
@@ -168,9 +169,9 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
       }),
       confirm: true,
       prompt: {
-        title: 'sync_candidacies',
-        message: 'sync_candidacies.confirm',
-        ok: 'ok',
+        title: 'sync_candidacies.title',
+        message: 'sync_candidacies.message',
+        ok: 'sync',
         cancel: 'cancel'
       }
     },
