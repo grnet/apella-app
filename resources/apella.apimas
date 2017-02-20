@@ -986,6 +986,7 @@ spec:
                     .required: {}
                     .ref:
                         to: professors
+                        many: True
                 file_upload:
                     .cli_option: {}
                     .field: {}
