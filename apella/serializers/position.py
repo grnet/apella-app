@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.core.files import File
 from rest_framework import serializers
 
+from django.db.models import Q
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     Professor, ElectorParticipation, ApellaFile
@@ -10,6 +11,7 @@ from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator
 from apella.serials import get_serial
+from apella.emails import send_user_email
 
 
 def get_electors_regular_internal(instance):
@@ -226,7 +228,10 @@ class CandidacyMixin(object):
         copy_candidacy_files(obj, validated_data.get('candidate'))
         obj.state = 'posted'
         obj.save()
+        send_create_emails(obj)
         return obj
+
+
 
     def update(self, instance, validated_data):
         curr_candidacy = Candidacy.objects.get(id=instance.id)
@@ -242,3 +247,26 @@ class CandidacyMixin(object):
             curr_candidacy.pk = None
             curr_candidacy.save()
         return instance
+
+def send_create_emails(candidacy):
+    # send to candidate
+    send_user_email(
+        candidacy.candidate,
+        'apella/emails/candidacy_create_subject.txt',
+        'apella/emails/candidacy_create_to_candidate_body.txt',
+        { 'position': candidacy.position })
+
+    # send to managers
+    managers = candidacy.position.department.institution.\
+            institutionmanager_set.all().filter(
+                Q(manager_role='institutionmanager') | Q(is_secretary=True ))
+    for manager in managers:
+        send_user_email(
+            manager.user,
+            'apella/emails/candidacy_create_subject.txt',
+            'apella/emails/candidacy_create_to_manager_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
