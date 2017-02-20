@@ -240,7 +240,7 @@ export default ApellaGen.extend({
                 return store.query(filter_model, params)
               }
             }),
-            'state'
+            'state_expanded'
           ]
         })
       }

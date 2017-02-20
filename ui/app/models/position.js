@@ -10,6 +10,11 @@ const {
 } = Ember,
       CHOICES = ENV.APP.resources;
 
+let extra_position_states = [["open", "Open"], ["closed", "Closed"]];
+let position_states_expanded = CHOICES.POSITION_STATES.concat(extra_position_states);
+// remove state "draft" from position states expanded array
+position_states_expanded.splice(0,1);
+
 
 export default DS.Model.extend({
   title: DS.attr(),
@@ -121,6 +126,7 @@ export default DS.Model.extend({
       return get(this, 'state_verbose');
     }
   }),
+  state_expanded: DS.attr({type: 'select', choices: position_states_expanded}),
 
   /*
    * Used to calculate if a user can apply for a position.
