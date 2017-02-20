@@ -138,6 +138,27 @@ class PositionMixin(object):
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=datetime.now()) |
                 Q(id__in=position_ids))
+
+        state_query = request.GET.get('state_expanded')
+        if state_query:
+            now = datetime.now()
+            if state_query in ('electing', 'successful',
+                               'failed', 'cancelled', 'revoked'):
+                queryset = queryset.filter(Q(state=state_query) &
+                                           Q(starts_at__gte=now))
+
+            elif state_query == 'posted':
+                queryset = queryset.filter(state='posted' &
+                                           Q(starts_at__gte=now))
+
+            elif state_query == 'open':
+                queryset = queryset.filter(Q(state='posted') &
+                                           Q(starts_at__lte=now) &
+                                           Q(ends_at__gt=now))
+            elif state_query == 'closed':
+                queryset = queryset.filter(Q(state='posted') &
+                                           Q(ends_at__lte=now))
+
         if 'pk' in self.kwargs:
             return queryset.filter(id=self.kwargs['pk'])
         else:
