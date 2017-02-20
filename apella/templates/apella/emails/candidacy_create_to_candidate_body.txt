@@ -1,0 +1,22 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Έχετε υποβάλει υποψηφιότητα για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+
+Μπορείτε να παρακολουθείτε την εξέλιξη της διαδικασίας επιλογής, πραγματοποιώντας <a href="{{ login_url }}">είσοδο</a> στο λογαριασμό σας και μεταβαίνοντας στην Καρτέλα "Υποψηφιότητες".
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+You have submitted a candidacy for the position:
+
+{% include "apella/emails/position_details_en.txt" %}
+
+You can keep track of the progress of the election procedure by <a href="{{ login_url }}">signing in</a> your account and selecting the tab "Candidacies".
+
+{% endblock content_en %}
