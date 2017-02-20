@@ -358,24 +358,32 @@ def migrate_username(username, password=None):
 
 
 @transaction.atomic
-def migrate_shibboleth_id(shibboleth_id, migration_key=None):
+def migrate_shibboleth_id(
+        apella2_shibboleth_id, old_apella_shibboleth_id, migration_key=None):
     old_users = OldApellaUserMigrationData.objects.filter(
-        shibboleth_id=shibboleth_id)
+        shibboleth_id=old_apella_shibboleth_id)
+    if migration_key is not None:
+        old_users = old_users.filter(migration_key=migration_key)
     for old_user in old_users:
         if professor_exists(old_user.user_id) and old_user.role == 'candidate':
+            old_user.migration_key = None
+            old_user.save()
             continue
         new_user = migrate_user(
-            old_user, shibboleth_id=shibboleth_id, migration_key=migration_key)
-        if new_user:
-            return new_user
+            old_user, apella2_shibboleth_id=apella2_shibboleth_id)
+        if not new_user:
+            old_user.migration_key = None
+            old_user.save()
+        return new_user
+    return None
 
 
 @transaction.atomic
-def migrate_user(old_user, password=None, shibboleth_id=None, migration_key=None):
+def migrate_user(old_user, password=None, apella2_shibboleth_id=None):
 
     new_user = create_or_update_user(
         old_user, password=password,
-        shibboleth_id=shibboleth_id, migration_key=migration_key)
+        apella2_shibboleth_id=apella2_shibboleth_id)
     new_user.save()
 
     migrate_user_role(old_user, new_user)
@@ -386,7 +394,7 @@ def migrate_user(old_user, password=None, shibboleth_id=None, migration_key=None
 
 
 def create_or_update_user(
-        old_user, password=None, shibboleth_id=None, migration_key=None):
+        old_user, password=None, apella2_shibboleth_id=None):
 
     if not old_user.name_el:
         old_user.name_el = old_user.name_en
@@ -460,9 +468,9 @@ def create_or_update_user(
     else:
         new_user.set_unusable_password()
 
-    if shibboleth_id and migration_key:
-        new_user.shibboleth_id = shibboleth_id
-        new_user.shibboleth_migration_key = migration_key
+    if apella2_shibboleth_id:
+        new_user.shibboleth_id = apella2_shibboleth_id
+        new_user.shibboleth_migration_key = old_user.migration_key
         new_user.login_method = 'academic'
     return new_user
 
@@ -700,5 +708,5 @@ def migrate_candidate_to_assistant_professor(old_user, new_user):
     new_user.save()
     professor = migrate_professor(old_user, new_user)
     logger.info(
-        'created assistant professor %s' % assistant_professor.id)
+        'created assistant professor %s' % professor.id)
     return professor

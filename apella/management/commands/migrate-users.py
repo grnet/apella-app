@@ -30,6 +30,8 @@ class Command(BaseCommand):
                 old_users = OldApellaUserMigrationData.objects.filter(
                     user_id=old_user_id)
                 if old_users[0].shibboleth_id:
-                    migrate_shibboleth_id(old_users[0].shibboleth_id)
+                    migrate_shibboleth_id(
+                        apella2_shibboleth_id=None,
+                        old_apella_shibboleth_id=old_users[0].shibboleth_id)
                 else:
                     migrate_username(old_users[0].username)

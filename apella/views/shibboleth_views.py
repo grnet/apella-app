@@ -155,7 +155,7 @@ def legacy_login(request):
         headers = debug_headers
 
     shibboleth_data = dict(zip(*zip(*shibboleth_headers(headers))))
-    identifier = shibboleth_data.get('remote_user', None)
+    old_apella_shibboleth_id = shibboleth_data.get('remote_user', None)
 
     try:
         is_eligible_shibboleth_user(shibboleth_data, legacy=True)
@@ -164,19 +164,20 @@ def legacy_login(request):
         return HttpResponseRedirect(TOKEN_LOGIN_URL+ "#error=%s" % e.message)
 
     key = request.GET.get('migration_key', None)
-    legacy_id = identifier
-    if not key or not legacy_id:
+    if not key or not old_apella_shibboleth_id:
         url = TOKEN_LOGIN_URL
         return HttpResponseRedirect(url + "#error=legacy.error")
 
-    id = auth_hooks.init_legacy_migration(legacy_id, key)
-    if id is None:
+    old_user_exists = \
+        auth_hooks.init_legacy_migration(old_apella_shibboleth_id, key)
+    if not old_user_exists:
         url = urljoin(BASE_URL, reverse('shibboleth_login'))
         return HttpResponseRedirect(url + "?login=1&migrate=0")
 
-    params = "?login=1&migrate=%s"
+    params = urllib.urlencode(
+        {'login': 1, 'migrate': str(old_apella_shibboleth_id)})
     url = urljoin(BASE_URL, reverse('shibboleth_login'))
-    return HttpResponseRedirect(url + params % str(id))
+    return HttpResponseRedirect(url + '?' + params)
 
 
 
@@ -186,7 +187,7 @@ def login(request):
     force_login = request.GET.get('login', False) or (not force_register)
     enable_login = request.GET.get('enable-user', False)
 
-    migrate_id = request.GET.get('migrate', None)
+    old_apella_shibboleth_id = request.GET.get('migrate', None)
 
     headers = request.META
     debug_headers = getattr(settings, 'DEBUG_SHIBBOLETH_HEADERS', {})
@@ -194,9 +195,9 @@ def login(request):
         headers = debug_headers
 
     shibboleth_data = dict(zip(*zip(*shibboleth_headers(headers))))
-    identifier = shibboleth_data.get('remote_user', None)
+    apella2_shibboleth_id = shibboleth_data.get('remote_user', None)
 
-    if not identifier:
+    if not apella2_shibboleth_id:
         return HttpResponseBadRequest("invalid identifier")
 
     try:
@@ -221,35 +222,36 @@ def login(request):
 
     if enable_login:
         enable_user = get_object_or_404(ApellaUser, pk=enable_login)
-        key = auth_hooks.init_enable_shibboleth(enable_user, identifier,
-                                                shibboleth_data)
+        key = auth_hooks.init_enable_shibboleth(
+            enable_user, apella2_shibboleth_id, shibboleth_data)
         redirect_url = TOKEN_LOGIN_URL + "#enable-academic=%s" % key
         return HttpResponseRedirect(redirect_url)
 
-    if migrate_id and migrate_id != "0":
+    if old_apella_shibboleth_id and old_apella_shibboleth_id != "0":
         s_identifier = request.session.pop('shibboleth_id', None)
-        migration_key = request.session.pop('migration_key', None)
-        if s_identifier != identifier:
+        if s_identifier != apella2_shibboleth_id:
             logger.error("forged migration")
             raise PermissionDenied("forged migration handshake")
 
         try:
+            migration_key = request.session.pop('migration_key', None)
             with transaction.atomic():
                 legacy = auth_hooks.migrate_legacy(
-                    migration_key, migrate_id, identifier)
+                    migration_key, old_apella_shibboleth_id, apella2_shibboleth_id)
                 if legacy is None:
                     raise ValueError
         except ValueError:
             msg = 'migration.error'
             return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
-        logger.info("legacy id %s migrated to %s", legacy, identifier)
+        logger.info("legacy id %s migrated to %s", legacy, apella2_shibboleth_id)
 
     request.session.pop('shibboleth_id', None)
     request.session.pop('migration_key', None)
 
     try:
-        user = UserModel.objects.get(user__shibboleth_id=identifier)
+        user = UserModel.objects.get(
+            user__shibboleth_id=apella2_shibboleth_id)
 
         if force_register:
             msg = "user.exists"
@@ -271,9 +273,9 @@ def login(request):
 
     except UserModel.DoesNotExist:
 
-        if force_login and MIGRATE_LEGACY and not migrate_id:
-            migration_key = make_migration_key(identifier)
-            request.session['shibboleth_id'] = identifier
+        if force_login and MIGRATE_LEGACY and not old_apella_shibboleth_id:
+            migration_key = make_migration_key(apella2_shibboleth_id)
+            request.session['shibboleth_id'] = apella2_shibboleth_id
             request.session['migration_key'] = migration_key
             url = LEGACY_URL + "?migrate=1&migration_key=%s" % migration_key
             logger.info("redirect to legacy shibboleth login url")
@@ -283,7 +285,8 @@ def login(request):
             msg = "user.not.found"
             return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
-        token = create_registration_token(identifier, user_data, shibboleth_data)
+        token = create_registration_token(
+            apella2_shibboleth_id, user_data, shibboleth_data)
         created = True
 
     if created:

@@ -207,46 +207,40 @@ def logout_user(user, request=None):
     return user
 
 
-def init_legacy_migration(legacy_id, migration_key):
+def init_legacy_migration(old_apella_shibboleth_id, migration_key):
     """
     User authenticated to the shibboleth endpoint of legacy SP. If a legacy
     user exists, tag the entry with the migration_key. If no legacy user
     is found return None to redirect user to the new service signup.
 
-    legacy_id: Legacy SP shibboleth identifier (targetedid or eppn or ...)
+    old_apella_shibboleth_id:
+        Legacy SP shibboleth identifier (targetedid or eppn or ...)
     migration_key: The migration session identifier
 
-    Should return an identifier which will be used to migrate the legacy
-    record.
     """
-    old_user = OldUser.objects.filter(shibboleth_id=legacy_id)
-    if old_user.exists():
-        old_user = old_user[0]
+    old_users = OldUser.objects.filter(shibboleth_id=old_apella_shibboleth_id)
+    if old_users.exists():
+        for old_user in old_users:
+            old_user.migration_key = migration_key
+            old_user.save()
     else:
-        return None
-    old_user.migration_key = migration_key
-    old_user.save()
-    return old_user.id
+        return False
+    return True
 
 
-def migrate_legacy(migration_key, migrate_id, shibboleth_id):
+def migrate_legacy(migration_key, old_apella_shibboleth_id, apella2_shibboleth_id):
     """
     A user which previously authenticated to the legacy SP endpoint is
     now rederected to re-authenticate to the new SP shibboleth endpoint.
 
     migration_key: The key stored to the user session
-    migrate_id: The legacy record identifier
-    shibboleth_id: The new SP shibboleth identifier (targetedid or ....)
+    old_apella_shibboleth_id: The legacy user identifier
+    apella2_shibboleth_id: The new SP shibboleth identifier (targetedid or ....)
     """
-    old_user = get_object_or_404(
-        OldUser, id=migrate_id, migration_key=migration_key)
-    user = migrate_shibboleth_id(
-        shibboleth_id=shibboleth_id, migration_key=migration_key)
-    if not user:
-        old_user.migration_key = None
-        old_user.save()
-        return None
-    return old_user.shibboleth_id
+    return migrate_shibboleth_id(
+        apella2_shibboleth_id=apella2_shibboleth_id,
+        old_apella_shibboleth_id=old_apella_shibboleth_id,
+        migration_key=migration_key)
 
 
 def validate_user_can_verify(user):
