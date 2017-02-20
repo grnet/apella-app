@@ -43,10 +43,12 @@ def get_obj(id_str, model):
 
 
 def migrate_candidate(old_user, new_user):
+    is_verified = True if old_user.role_status == 'ACTIVE' else False
     try:
         candidate = new_user.candidate
+        candidate.is_verified = is_verified
+        candidate.save()
     except Candidate.DoesNotExist:
-        is_verified = True if old_user.role_status == 'ACTIVE' else False
         candidate = Candidate.objects.create(
             user=new_user,
             is_verified=is_verified)
@@ -56,21 +58,35 @@ def migrate_candidate(old_user, new_user):
 
 @transaction.atomic
 def migrate_professor(old_user, new_user):
+    institution = get_obj(old_user.professor_institution_id, Institution)
+    department = get_obj(old_user.professor_department_id, Department)
+
+    discipline_in_fek = False
+    discipline_text = None
+    if old_user.professor_subject_from_appointment:
+        discipline_in_fek = True
+        discipline_text = old_user.professor_subject_from_appointment
+    else:
+        discipline_text = old_user.professor_subject_optional_freetext
+    is_verified = True if old_user.role_status == 'ACTIVE' else False
+
     try:
         professor = new_user.professor
+        professor.institution = institution
+        professor.institution_freetext = \
+            old_user.professor_institution_freetext
+        professor.department = department
+        professor.rank = old_user.professor_rank
+        professor.is_foreign = bool(re.match('t', old_user.is_foreign, re.I))
+        professor.speaks_greek = bool(re.match('t', old_user.speaks_greek, re.I))
+        professor.cv_url = old_user.professor_institution_cv_url
+        professor.fek = old_user.professor_appointment_gazette_url
+        professor.discipline_in_fek = discipline_in_fek
+        professor.discipline_text = discipline_text
+        professor.is_verified = is_verified
+        professor.save()
+
     except Professor.DoesNotExist:
-        institution = get_obj(old_user.professor_institution_id, Institution)
-        department = get_obj(old_user.professor_department_id, Department)
-
-        discipline_in_fek = False
-        discipline_text = None
-        if old_user.professor_subject_from_appointment:
-            discipline_in_fek = True
-            discipline_text = old_user.professor_subject_from_appointment
-        else:
-            discipline_text = old_user.professor_subject_optional_freetext
-
-        is_verified = True if old_user.role_status == 'ACTIVE' else False
 
         professor = Professor.objects.create(
             user=new_user,
@@ -86,19 +102,44 @@ def migrate_professor(old_user, new_user):
             discipline_text=discipline_text,
             is_verified=is_verified)
 
-        if institution and institution.has_shibboleth:
-            new_user.can_set_academic = True
-            new_user.save()
-        logger.info('created professor %s' % professor.id)
+    if institution and institution.has_shibboleth:
+        new_user.can_set_academic = True
+        new_user.save()
+    logger.info('created professor %s' % professor.id)
     return professor
 
 
 @transaction.atomic
 def migrate_institutionmanager(old_user, new_user):
+    institution = get_obj(old_user.manager_institution_id, Institution)
+    if old_user.manager_appointer_authority:
+        authority = [
+            authority for authority, value in AUTHORITIES
+            if authority == old_user.manager_appointer_authority.lower()][0]
+    else:
+        authority = None
+
     try:
         manager = new_user.institutionmanager
+        manager.institution = institution
+        manager.authority = authority
+        manager.authority_full_name = old_user.manager_appointer_fullname
+        manager.manager_role = new_user.role
+        manager.sub_first_name.el = old_user.manager_deputy_name_el
+        manager.sub_first_name.en = old_user.manager_deputy_name_en
+        manager.sub_first_name.save()
+        manager.sub_last_name.el = old_user.manager_deputy_surname_el
+        manager.sub_last_name.en = old_user.manager_deputy_surname_en
+        manager.sub_last_name.save()
+        manager.sub_father_name.el = old_user.manager_deputy_fathername_el
+        manager.sub_father_name.en = old_user.manager_deputy_fathername_en
+        manager.sub_father_name.save()
+        manager.sub_mobile_phone_number = old_user.manager_deputy_mobile
+        manager.sub_home_phone_number = old_user.manager_deputy_phone
+        manager.sub_email = old_user.manager_deputy_email
+        manager.save()
+
     except InstitutionManager.DoesNotExist:
-        institution = get_obj(old_user.manager_institution_id, Institution)
 
         sub_first_name = MultiLangFields.objects.create(
             el=old_user.manager_deputy_name_el,
@@ -110,12 +151,6 @@ def migrate_institutionmanager(old_user, new_user):
             el=old_user.manager_deputy_fathername_el,
             en=old_user.manager_deputy_fathername_en)
 
-        if old_user.manager_appointer_authority:
-            authority = [
-                authority for authority, value in AUTHORITIES
-                if authority == old_user.manager_appointer_authority.lower()][0]
-        else:
-            authority = None
 
         try:
             manager = InstitutionManager.objects.create(
@@ -341,9 +376,51 @@ def migrate_shibboleth_id(shibboleth_id, migration_key=None):
 
 @transaction.atomic
 def migrate_user(old_user, password=None, shibboleth_id=None, migration_key=None):
+
+    new_user = create_or_update_user(
+        old_user, password=password,
+        shibboleth_id=shibboleth_id, migration_key=migration_key)
+    new_user.save()
+
+    migrate_user_role(old_user, new_user)
+
+    old_user.migrated_at = datetime.now()
+    old_user.save()
+    return new_user
+
+
+def create_or_update_user(
+        old_user, password=None, shibboleth_id=None, migration_key=None):
+
+    if not old_user.name_el:
+        old_user.name_el = old_user.name_en
+    if not old_user.name_en:
+        old_user.name_en = old_user.name_el
+    if not old_user.surname_el:
+        old_user.surname_el = old_user.surname_en
+    if not old_user.surname_en:
+        old_user.surname_en = old_user.surname_el
+    if not old_user.fathername_el:
+        old_user.fathername_el = old_user.fathername_en
+    if not old_user.fathername_en:
+        old_user.fathername_en = old_user.fathername_el
+
     new_user = None
     if ApellaUser.objects.filter(email=old_user.email).exists():
         new_user = ApellaUser.objects.get(email=old_user.email)
+        new_user.first_name.el = old_user.name_el
+        new_user.first_name.en = old_user.name_en
+        new_user.first_name.save()
+        new_user.last_name.el = old_user.surname_el
+        new_user.last_name.en = old_user.surname_en
+        new_user.last_name.save()
+        new_user.father_name.el = old_user.fathername_el
+        new_user.father_name.en = old_user.fathername_en
+        new_user.father_name.save()
+        new_user.id_passport = old_user.person_id_number
+        new_user.mobile_phone_number=old_user.mobile
+        new_user.home_phone_number=old_user.phone
+        new_user.save()
     else:
         first_name = MultiLangFields.objects.create(
             el=old_user.name_el,
@@ -391,13 +468,8 @@ def migrate_user(old_user, password=None, shibboleth_id=None, migration_key=None
         new_user.shibboleth_id = shibboleth_id
         new_user.shibboleth_migration_key = migration_key
         new_user.login_method = 'academic'
-    new_user.save()
-
-    migrate_user_role(old_user, new_user)
-
-    old_user.migrated_at = datetime.now()
-    old_user.save()
     return new_user
+
 
 def migrate_user_role(old_user, new_user):
     role = old_user.role
@@ -434,33 +506,50 @@ STATE_MAPPING = {
 
 @transaction.atomic
 def migrate_position(old_position, author):
+    subject_area = get_obj(old_position.subject_area_code, SubjectArea)
+    old_code = str(subject_area.id) + '.' + old_position.subject_code
+    try:
+        subject = Subject.objects.get(old_code=old_code)
+    except Subject.DoesNotExist:
+        logger.error(
+            "subject %s does not exist; "
+            "position %s failed to migrate" %
+            (old_code, old_position.position_serial))
+        return
+
+    department = get_obj(old_position.department_id, Department)
+    fek_posted_at = datetime.strptime(
+        old_position.gazette_publication_date, '%Y-%m-%d')
+    starts_at = datetime.strptime(
+        old_position.opening_date, '%Y-%m-%d')
+    ends_at = datetime.strptime(
+        old_position.closing_date, '%Y-%m-%d')
+    position_dep_number = department.dep_number if department.dep_number \
+        else 0
+
+    state = 'posted'
+    if old_position.state in STATE_MAPPING:
+        state = STATE_MAPPING.get(old_position.state)
+
     try:
         new_position = Position.objects.get(
             old_code=old_position.position_serial)
+        new_position.title = old_position.title
+        new_position.description = old_position.description
+        new_position.subject = subject
+        new_position.subject_area = subject_area
+        new_position.author = author
+        new_position.discipline = old_position.subject_id
+        new_position.department = department
+        new_position.department_dep_number = position_dep_number
+        new_position.fek = old_position.gazette_publication_url
+        new_position.fek_posted_at = fek_posted_at
+        new_position.state = state
+        new_position.starts_at = starts_at
+        new_position.ends_at = ends_at
+        new_position.save()
+
     except Position.DoesNotExist:
-
-        subject_area = get_obj(old_position.subject_area_code, SubjectArea)
-        old_code = str(subject_area.id) + '.' + old_position.subject_code
-        try:
-            subject = Subject.objects.get(old_code=old_code)
-        except Subject.DoesNotExist:
-            logger.error(
-                "subject %s does not exist; "
-                "position %s failed to migrate" %
-                (old_code, old_position.position_serial))
-            return
-
-        department = get_obj(old_position.department_id, Department)
-        fek_posted_at = datetime.strptime(
-            old_position.gazette_publication_date, '%Y-%m-%d')
-        starts_at = datetime.strptime(
-            old_position.opening_date, '%Y-%m-%d')
-        ends_at = datetime.strptime(
-            old_position.closing_date, '%Y-%m-%d')
-
-        state = 'posted'
-        if old_position.state in STATE_MAPPING:
-            state = STATE_MAPPING.get(old_position.state)
         try:
             new_position = Position.objects.create(
                 old_code=old_position.position_serial,
@@ -471,7 +560,7 @@ def migrate_position(old_position, author):
                 author=author,
                 discipline=old_position.subject_id,
                 department=department,
-                department_dep_number=0,
+                department_dep_number=position_dep_number,
                 fek=old_position.gazette_publication_url,
                 fek_posted_at=fek_posted_at,
                 state=state,
@@ -545,14 +634,20 @@ def migrate_candidacy_files(new_candidacy):
 
 @transaction.atomic
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
+    state = 'cancelled' if old_candidacy.withdrawn_at else 'posted'
+    withdrawn_at = datetime.strptime(
+        old_candidacy.withdrawn_at, '%Y-%m-%d') \
+        if old_candidacy.withdrawn_at else datetime.now()
     try:
         candidacy = Candidacy.objects.get(
             old_candidacy_id=int(old_candidacy.candidacy_serial))
+        candidacy.state = state
+        candidacy.updated_at = withdrawn_at
+        candidacy.others_can_view = bool(
+            re.match('t', old_candidacy.open_to_other_candidates, re.I)),
+        candidacy.submitted_at = old_candidacy.submitted_at
+        candidacy.save()
     except Candidacy.DoesNotExist:
-        state = 'cancelled' if old_candidacy.withdrawn_at else 'posted'
-        withdrawn_at = datetime.strptime(
-            old_candidacy.withdrawn_at, '%Y-%m-%d') \
-            if old_candidacy.withdrawn_at else datetime.now()
         candidacy = Candidacy.objects.create(
             candidate=new_candidate,
             position=new_position,
