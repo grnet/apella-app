@@ -308,11 +308,11 @@ def send_remove_candidacy_emails(candidacy):
 
     # send to cocandidates
     candidacies = candidacy.position.candidacy_set.filter(state='posted').\
-        exclude(pk=candidacy.pk)
-    for candidacy in candidacies:
-        recipient = candidacy.candidate
+        exclude(candidate=candidacy.candidate)
+    candidates = list(set([c.candidate for c in candidacies]))
+    for candidate in candidates:
         send_user_email(
-            recipient,
+            candidate,
             'apella/emails/candidacy_remove_subject.txt',
             'apella/emails/candidacy_remove_to_cocandidate_body.txt',
             {
