@@ -111,7 +111,6 @@ class PositionMixin(ValidatorMixin):
         validated_data['ends_at'] = \
             validated_data['starts_at'].replace(hour=23, minute=59, second=00)
         validated_data['author'] = get_author(self.context.get('request'))
-        print validated_data
         obj = super(PositionMixin, self).create(validated_data)
         code = settings.POSITION_CODE_PREFIX + str(obj.id)
         obj.code = code
@@ -246,7 +245,11 @@ class CandidacyMixin(object):
         if instance.state is not curr_candidacy.state:
             curr_candidacy.pk = None
             curr_candidacy.save()
+        state = validated_data['state']
+        if state == 'cancelled':
+            send_remove_candidacy_emails(instance)
         return instance
+
 
 def send_create_candidacy_emails(candidacy):
     # send to candidate
@@ -257,12 +260,12 @@ def send_create_candidacy_emails(candidacy):
         { 'position': candidacy.position })
 
     # send to managers
-    managers = candidacy.position.department.institution.\
+    recipients = candidacy.position.department.institution.\
             institutionmanager_set.all().filter(
                 Q(manager_role='institutionmanager') | Q(is_secretary=True ))
-    for manager in managers:
+    for recipient in recipients:
         send_user_email(
-            manager.user,
+            recipient.user,
             'apella/emails/candidacy_create_subject.txt',
             'apella/emails/candidacy_create_to_manager_body.txt',
             {
@@ -270,3 +273,49 @@ def send_create_candidacy_emails(candidacy):
                 'candidate': candidacy.candidate
             })
 
+
+def send_remove_candidacy_emails(candidacy):
+    # send to candidate
+    send_user_email(
+        candidacy.candidate,
+        'apella/emails/candidacy_remove_subject.txt',
+        'apella/emails/candidacy_remove_to_candidate_body.txt',
+        { 'position': candidacy.position })
+
+    # send to electors
+    recipients = candidacy.position.electors.all()
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_elector_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+    # send to committee
+    recipients = candidacy.position.committee.all()
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_committee_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+    # send to cocandidates
+    candidacies = candidacy.position.candidacy_set.filter(state='posted').\
+        exclude(pk=candidacy.pk)
+    for candidacy in candidacies:
+        recipient = candidacy.candidate
+        send_user_email(
+            recipient,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_cocandidate_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
