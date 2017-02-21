@@ -58,11 +58,12 @@ def send_user_email(user, template_subject, template_body, extra_context=()):
                 'email': manager.email,
                 'username': ''
             }
-            body = render_to_string(template_body, template_context)
-            send_mail(
-                subject,
-                body,
-                sender,
-                [manager.sub_email],
-                fail_silently=False
-            )
+            if manager.sub_email:
+                body = render_to_string(template_body, template_context)
+                send_mail(
+                    subject,
+                    body,
+                    sender,
+                    [manager.sub_email],
+                    fail_silently=False
+                )
