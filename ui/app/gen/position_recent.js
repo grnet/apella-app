@@ -6,9 +6,15 @@ import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
 import moment from 'moment';
 import {
-  goToDetails, applyCandidacy, cancelPosition
+  goToDetails, applyCandidacy
 } from 'ui/utils/common/actions';
 import {position} from 'ui/lib/position/fieldsets';
+
+/*
+ * This gen is used for displaying:
+ * - Candidates: positions in state posted
+ * - Professors: positions in state posted
+ */
 
 const {
   computed,
@@ -240,10 +246,9 @@ export default ApellaGen.extend({
         return f;
       }),
 
-      actions: ['gen:details','applyCandidacy', 'remove', 'cancelPosition' ],
+      actions: ['gen:details','applyCandidacy', 'remove'],
       actionsMap: {
         applyCandidacy: applyCandidacy,
-        cancelPosition: cancelPosition
       }
     }
   },
