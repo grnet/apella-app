@@ -123,6 +123,7 @@ export default {
   'Posted': 'Posted',
   'Submitted': 'Submitted',
   'Cancelled': 'Cancelled',
+  'candidacy.Cancelled': 'Cancelled',
   'Electing': 'Electing',
   'Successful': 'Successful',
   'Failed': 'Failed',
