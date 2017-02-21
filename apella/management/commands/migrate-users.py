@@ -1,3 +1,6 @@
+import logging
+logger = logging.getLogger('apella')
+
 import csv
 
 from django.core.management import BaseCommand, CommandError
@@ -66,6 +69,10 @@ class Command(BaseCommand):
             line_no = 0
             for username, shibboleth_id in csv_iterator:
                 if start_line_no <= line_no < end_line_no:
+                    if line_no % 100 == 0:
+                        m = "migrating %d <= %d < %d"
+                        m %= (start_line_no, line_no, end_line_no)
+                        logger.info(m)
                     if shibboleth_id:
                         migrate_shibboleth_id(
                             apella2_shibboleth_id=None,
