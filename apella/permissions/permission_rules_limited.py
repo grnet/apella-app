@@ -402,6 +402,7 @@ PERMISSION_RULES = [
     ('registries', 'update', 'institutionmanager', 'type', 'owned', '4.3.6'),
     ('registries', 'update', 'institutionmanager', 'registry_set_decision_file', 'owned', '4.3.6'),
     ('registries', 'update', 'assistant', 'members', 'can_create_owned', ''),
+    ('registries', 'update', 'assistant', 'type', 'can_create_owned', '4.3.6'),
     ('registries', 'update', 'assistant', 'registry_set_decision_file', 'can_create_owned', ''),
     ('registries', 'partial_update', 'institutionmanager', 'members', 'owned', '4.3.6'),
     ('registries', 'partial_update', 'institutionmanager', 'registry_set_decision_file', 'owned', '4.3.6'),
