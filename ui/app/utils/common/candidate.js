@@ -3,6 +3,8 @@ import validate from 'ember-gen/validate';
 import {fileField} from 'ui/lib/common';
 
 const {
+  get,
+  computed,
   computed: { or }
 } = Ember;
 
@@ -22,7 +24,12 @@ const FILES_FIELDS = [
 
 const FILES_FIELDSET = {
   label: 'fieldsets.labels.candidate_profile',
-  text: 'fieldsets.text.candidate_profile',
+  text: computed('model.is_verified', function(){
+    if (get(this, 'model.is_verified')) {
+      return 'fieldsets.text.candidate_profile'
+    }
+    return ''
+  }),
   fields: FILES_FIELDS,
   layout: {
     flex: [100, 100, 100, 100]

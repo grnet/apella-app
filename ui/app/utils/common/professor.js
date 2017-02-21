@@ -17,7 +17,12 @@ const {
 
 const FILES_FIELDSET = {
   label: 'fieldsets.labels.candidate_files',
-  text: 'fieldsets.text.candidate_profile',
+  text: computed('model.is_verified', function(){
+    if (get(this, 'model.is_verified')) {
+      return 'fieldsets.text.candidate_profile'
+    }
+    return ''
+  }),
   fields: [
     fileField('cv', 'professor', 'cv', {
     }, {
