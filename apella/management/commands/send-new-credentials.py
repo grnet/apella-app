@@ -31,10 +31,6 @@ class Command(ApellaCommand):
 
         dry_run = options['dry_run']
         for email in emails:
-            if ApellaUser.objects.filter(email=email).exists():
-                self.stdout.write(
-                    'ApellaUser with email %s already exists.' % email)
-                continue
             if dry_run:
                 self.stdout.write('%s' % email)
             else:
