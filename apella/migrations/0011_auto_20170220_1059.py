@@ -34,9 +34,4 @@ class Migration(migrations.Migration):
             name='id',
             field=models.BigIntegerField(serialize=False, primary_key=True),
         ),
-        migrations.AlterField(
-            model_name='position',
-            name='electors_meeting_date',
-            field=models.DateTimeField(null=True, blank=True),
-        ),
     ]
