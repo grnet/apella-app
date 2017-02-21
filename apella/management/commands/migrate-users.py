@@ -11,9 +11,47 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('csv_file')
+        parser.add_argument('-p', '--parallel',
+                            dest='parallel', type=str, default='1/1',
+                            help="Execute (part of) user migrations. Default: 1/1")
 
     def handle(self, *args, **options):
         csv_file_path = options['csv_file']
+        parallel = options['parallel']
+        import re
+        parallel_pattern = '^[1-9][0-9]*/[1-9][0-9]*$'
+        if not re.match(parallel_pattern, parallel):
+            m = "Parallel specification must be in the form %r, not %r"
+            m %= (parallel_pattern, parallel)
+            raise CommandError(m)
+
+        this_part_no, nr_all_parts = parallel.split('/')
+        this_part_no = int(this_part_no)
+        nr_all_parts = int(nr_all_parts)
+        if this_part_no > nr_all_parts:
+            m = ("This part number %d cannot be greater "
+                 "than the number of all parts %d")
+            m %= (this_part_no, nr_all_parts)
+            raise CommandError(m)
+
+        with open(csv_file_path) as f:
+            csv_reader = csv.reader(f)
+            csv_iterator = iter(csv_reader)
+            for header in csv_iterator:
+                break
+            else:
+                m = "No csv data"
+                raise CommandError(m)
+
+            nr_lines = 0
+            for row in csv_iterator:
+                nr_lines += 1
+        
+        part_size = nr_lines / nr_all_parts
+        start_line_no = part_size * (this_part_no - 1)
+        end_line_no = nr_lines \
+            if this_part_no == nr_all_parts \
+            else (start_line_no + part_size)
 
         with open(csv_file_path) as f:
             csv_reader = csv.reader(f)
@@ -25,13 +63,16 @@ class Command(BaseCommand):
                 m = "No csv data"
                 raise CommandError(m)
 
+            line_no = 0
             for row in csv_iterator:
-                old_user_id = row[0]
-                old_users = OldApellaUserMigrationData.objects.filter(
-                    user_id=old_user_id)
-                if old_users[0].shibboleth_id:
-                    migrate_shibboleth_id(
-                        apella2_shibboleth_id=None,
-                        old_apella_shibboleth_id=old_users[0].shibboleth_id)
-                else:
-                    migrate_username(old_users[0].username)
+                if start_line_no <= line_no < end_line_no:
+                    old_user_id = row[0]
+                    old_users = OldApellaUserMigrationData.objects.filter(
+                        user_id=old_user_id)
+                    if old_users[0].shibboleth_id:
+                        migrate_shibboleth_id(
+                            apella2_shibboleth_id=None,
+                            old_apella_shibboleth_id=old_users[0].shibboleth_id)
+                    else:
+                        migrate_username(old_users[0].username)
+                line_no += 1
