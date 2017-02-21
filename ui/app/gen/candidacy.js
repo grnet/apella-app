@@ -231,7 +231,17 @@ export default ApellaGen.extend({
       let model = this.store.query('candidacy', params);
       return preloadRelations(model, 'position', 'candidate', 'position.department', 'position.department.insitution');
     },
-    sortBy: 'position.code:asc',
+    sort: {
+      active: true,
+      fields: ['position.code', 'position.title', 'candidate.id'],
+      serverSide: true
+    },
+    filter: {
+      active: false,
+      serverSide: true,
+      search: true,
+      searchFields: ['position.code', 'position.title', 'candidate.id'],
+    },
     page: {
       title: 'candidacy.menu_label',
     },
