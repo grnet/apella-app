@@ -386,6 +386,10 @@ def migrate_user(old_user, password=None, apella2_shibboleth_id=None):
     new_user = create_or_update_user(
         old_user, password=password,
         apella2_shibboleth_id=apella2_shibboleth_id)
+
+    if new_user is None:
+        return None
+
     new_user.save()
 
     migrate_user_role(old_user, new_user)
