@@ -133,9 +133,9 @@ def authenticate_user(**kwargs):
 
     try:
         user = ApellaUser.objects.get(username=username)
-        if user.has_usable_password():
+        if user.has_usable_password() or user.shibboleth_id:
             m = ("Not looking for old username {u!r}: it exists as "
-                 "ApellaUser with a usable password")
+                 "ApellaUser with a usable password/shibboleth id")
             m = m.format(u=username)
             logger.info(m)
             return None
@@ -383,11 +383,11 @@ def consume_enable_shibboleth_token(token, user):
     # TODO: validate user can enable academic account
     data = cache.get('enable-academic-%s' % token, None)
     if not data:
-        raise PermissionDenied
+        raise PermissionDenied()
 
     data = json.loads(data)
     if data.get('user', None) != user.pk:
-        raise PermissionDenied
+        raise PermissionDenied()
     return enable_shibboleth(
         user, data.get('identifier', None), data.get('data', None))
 
