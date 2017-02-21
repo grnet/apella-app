@@ -459,6 +459,8 @@ export default {
   'user.email_verification.error.message': 'E-mail verification error',
   'email.not.verified': 'Your e-mail has not been verified',
   'user.not.email_verified.error': 'Your e-mail has not been verified',
+  'old.user.info': '<p>If you have an <strong>account in the old application</strong>, you can login to your existing account, as follows:</p><ul><li class="md-padding">If you used local or academic credentials (username and password) to login to the old application, you should use the same credentials to log into the new application.</li><li class="md-padding">If you used a personal link to login to the old application, this link will not be used to login to the new application. You should use the local credentials (username and password) you received by e-mail, only for your first login to the application.<br>If you have not received the e-mail with your local credentials, please contact the <a href="https://apella.minedu.gov.gr/en/contact-en" target="_blank" title="Helpdesk">Helpdesk</a>.</li></ul><p>To access the faculty elections and promotions governed by the previous legal framework, you may visit the <a href="https://service.apella.grnet.gr/" target="_blank" title="old application">old application</a>.</p>',
+  'new.user.info': '<p>If you have an <strong>account in the old application</strong>, you should not register for a new account. You can login to your existing account from the <strong>"Login"</strong> tab.</p><p>Otherwise, you can register here:</p>',
 
   // server errors
   'The two password fields didn\'t match.': 'The two password fields didn\'t match.',
