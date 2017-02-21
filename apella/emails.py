@@ -1,8 +1,10 @@
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from apella.models import InstitutionManager
 
 from apella.util import urljoin
+
 
 def get_login_url():
     BASE_URL = settings.BASE_URL or '/'
@@ -11,7 +13,7 @@ def get_login_url():
 
 
 def send_new_credentials_to_old_users_email(old_users):
-   for old_user in old_users:
+    for old_user in old_users:
         subject = render_to_string(
             'apella/emails/old_user_new_credentials_subject.txt'). \
             replace('\n', ' ')
@@ -46,3 +48,21 @@ def send_user_email(user, template_subject, template_body, extra_context=()):
         [user.email],
         fail_silently=False
     )
+    if user.role == 'institutionmanager':
+        manager = InstitutionManager.objects.get(user=user)
+        if manager:
+            template_context['user'] = {
+                'first_name': manager.sub_first_name,
+                'last_name': manager.sub_last_name,
+                'father_name': manager.sub_father_name,
+                'email': manager.email,
+                'username': ''
+            }
+            body = render_to_string(template_body, template_context)
+            send_mail(
+                subject,
+                body,
+                sender,
+                [manager.sub_email],
+                fail_silently=False
+            )
