@@ -481,7 +481,7 @@ class Position(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     department_dep_number = models.IntegerField()
-    electors_meeting_to_set_committee_date = models.DateTimeField(
+    electors_meeting_to_set_committee_date = models.DateField(
         blank=True, null=True)
     electors_meeting_date = models.DateTimeField(blank=True, null=True)
     electors_set_file = models.ForeignKey(
