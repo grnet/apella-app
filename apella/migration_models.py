@@ -78,7 +78,7 @@ class OldApellaUserMigrationData(models.Model):
 
 
 class OldApellaFileMigrationData(models.Model):
-    user_id = models.TextField()
+    user_id = models.TextField(db_index=True)
     header_id = models.TextField()
     file_type = models.TextField()
     file_path = models.TextField()
@@ -104,7 +104,7 @@ class OldApellaPositionMigrationData(models.Model):
 
 
 class OldApellaCandidacyFileMigrationData(models.Model):
-    candidacy_serial = models.TextField()
+    candidacy_serial = models.TextField(db_index=True)
     position_serial = models.TextField()
     candidate_user_id = models.TextField()
     file_id = models.TextField()
@@ -117,8 +117,8 @@ class OldApellaCandidacyFileMigrationData(models.Model):
 
 class OldApellaCandidacyMigrationData(models.Model):
     candidacy_serial = models.TextField()
-    position_serial = models.TextField()
-    candidate_user_id = models.TextField()
+    position_serial = models.TextField(db_index=True)
+    candidate_user_id = models.TextField(db_index=True)
     open_to_other_candidates = models.TextField()
     submitted_at = models.DateTimeField(null=True)
     withdrawn_at = models.TextField(null=True)

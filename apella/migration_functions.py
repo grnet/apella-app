@@ -3,6 +3,7 @@ import re
 import os
 import errno
 from datetime import datetime
+from collections import defaultdict
 
 from django.db import transaction, DataError
 from django.conf import settings
@@ -22,6 +23,11 @@ from apella.util import safe_path_join
 from apella.serials import get_serial
 
 logger = logging.getLogger('apella')
+
+
+users_by_username = defaultdict(list)
+users_by_shibboleth_id = defaultdict(list)
+candidate_assistant_professors = {}
 
 
 def get_obj(id_str, model):
@@ -179,10 +185,6 @@ def migrate_institutionmanager(old_user, new_user):
     return manager
 
 
-def professor_exists(user_id):
-    return OldApellaUserMigrationData.objects.filter(
-        role='professor', user_id=user_id).exists()
-
 FILE_KINDS_MAPPING = {
     'profile': {
         'BIOGRAFIKO': 'cv',
@@ -211,20 +213,18 @@ def set_attr_files(obj, field_name, many, new_file):
 
 
 def remove_attr_files(obj):
-    setattr(obj, 'cv', None)
-    diplomas = getattr(obj, 'diplomas')
-    diplomas.all().delete()
-    publications = getattr(obj, 'publications')
-    publications.all().delete()
+    obj.cv = None
+    obj.diplomas.all().delete()
+    obj.publications.all().delete()
 
     if isinstance(obj, Candidacy):
-        setattr(obj, 'self_evaluation_report', None)
-        attachment_files = getattr(obj, 'attachment_files')
-        attachment_files.all().delete()
+        obj.self_evaluation_report = None
+        obj.attachment_files.all().delete()
     if isinstance(obj, Professor):
-        setattr(obj, 'cv_professor', None)
+        obj.cv_professor = None
     if isinstance(obj, Candidate):
-        setattr(obj, 'id_passport_file', None)
+        obj.id_passport_file = None
+
     obj.save()
 
 
@@ -342,42 +342,92 @@ def migrate_user_profile_files(old_user, new_user):
         remove_attr_files(new_user.candidate)
 
     for old_file in old_files:
-        migrate_file(
-            old_file, new_user, 'profile', new_user.id)
+        migrate_file(old_file, new_user, 'profile', new_user.id)
+
+
+def init_migration_cache():
+    for user in OldApellaUserMigrationData.objects.all():
+        username = user.username
+        shibboleth_id = user.shibboleth_id
+        if shibboleth_id:
+            users_by_shibboleth_id[shibboleth_id].append(user)
+        elif username:
+            users_by_username[username].append(user)
+        else:
+            m = "User %s %r has no username or shibboleth_id!"
+            m %= (user.id, user)
+            logger.error(m)
+
+    modelclass = OldApellaCandidateAssistantProfessorMigrationData
+    update_gen = ((x.user_id, x ) for x in modelclass.objects.all())
+    candidate_assistant_professors.update(update_gen)
+
+
+def get_old_users_by_username(username):
+    users = users_by_username.get(username)
+    if not users:
+        if not users_by_username:
+            init_migration_cache()
+            users = users_by_username.get(username)
+    return users
+
+
+def get_old_users_by_shibboleth_id(shibboleth_id):
+    users = users_by_shibboleth_id.get(shibboleth_id)
+    if users is None:
+        if not users_by_shibboleth_id:
+            init_migration_cache()
+            users = users_by_shibboleth_id.get(shibboleth_id)
+    return users
 
 
 @transaction.atomic
 def migrate_username(username, password=None):
-    old_users = OldApellaUserMigrationData.objects.filter(username=username)
+    old_users = get_old_users_by_username(username)
+    roles = {}
     for old_user in old_users:
-        if professor_exists(old_user.user_id) and old_user.role == 'candidate':
-            continue
-        if old_user.role == 'assistant':
-            return None
-        new_user = migrate_user(old_user, password=password)
-        if new_user:
-            return new_user
+        roles[old_user.role] = old_user
+
+    if 'professor' in roles:
+        return migrate_user(roles['professor'], password=password)
+
+    if 'candidate' in roles:
+        return migrate_user(roles['candidate'], password=password)
+
+    roles.pop('assistant', None)
+    if len(roles) > 1:
+        m = "username: %r" % username
+        raise AssertionError(m)
+
+    for role, old_user in roles.iteritems():
+        return migrate_user(old_user, password=password)
 
 
 @transaction.atomic
-def migrate_shibboleth_id(
-        apella2_shibboleth_id, old_apella_shibboleth_id, migration_key=None):
-    old_users = OldApellaUserMigrationData.objects.filter(
-        shibboleth_id=old_apella_shibboleth_id)
+def migrate_shibboleth_id(apella2_shibboleth_id,
+                          old_apella_shibboleth_id, migration_key=None):
+
+    old_users = get_old_users_by_shibboleth_id(old_apella_shibboleth_id)
+
     if migration_key is not None:
-        old_users = old_users.filter(migration_key=migration_key)
+        old_users = [x for x in old_users if x.migration_key == migration_key]
+
+    roles = {}
     for old_user in old_users:
-        if professor_exists(old_user.user_id) and old_user.role == 'candidate':
-            old_user.migration_key = None
-            old_user.save()
-            continue
-        new_user = migrate_user(
-            old_user, apella2_shibboleth_id=apella2_shibboleth_id)
-        if not new_user:
-            old_user.migration_key = None
-            old_user.save()
-        return new_user
-    return None
+        roles[old_user.role] = old_user
+
+    if 'professor' in roles and 'candidate' in roles:
+        old_candidate = roles.pop('candidate')
+        old_candidate.migration_key = None
+        old_candidate.save()
+
+    if len(roles) > 1:
+        m = "old_apella_shibboleth_id: %r" % old_apella_shibboleth_id
+        raise AssertionError(m)
+
+    for role, old_user in roles.iteritems():
+        return migrate_user(old_user,
+                            apella2_shibboleth_id=apella2_shibboleth_id)
 
 
 @transaction.atomic
@@ -396,6 +446,7 @@ def migrate_user(old_user, password=None, apella2_shibboleth_id=None):
 
     old_user.migrated_at = datetime.now()
     old_user.save()
+
     return new_user
 
 
@@ -418,8 +469,8 @@ def create_or_update_user(
     if not old_user.fathername_en:
         old_user.fathername_en = old_user.fathername_el
 
-    new_user = None
-    if ApellaUser.objects.filter(email=old_user.email).exists():
+    try:
+        new_user = ApellaUser.objects.get(old_user_id=old_user.id)
         new_user = ApellaUser.objects.get(email=old_user.email)
         new_user.first_name.el = old_user.name_el
         new_user.first_name.en = old_user.name_en
@@ -433,8 +484,9 @@ def create_or_update_user(
         new_user.id_passport = old_user.person_id_number
         new_user.mobile_phone_number=old_user.mobile
         new_user.home_phone_number=old_user.phone
-        new_user.save()
-    else:
+        new_user.email = old_user.email
+
+    except ApellaUser.DoesNotExist as e:
         first_name = MultiLangFields.objects.create(
             el=old_user.name_el,
             en=old_user.name_en)
@@ -482,21 +534,23 @@ def create_or_update_user(
         new_user.shibboleth_id = apella2_shibboleth_id
         new_user.shibboleth_migration_key = old_user.migration_key
         new_user.login_method = 'academic'
+
     return new_user
 
 
 def migrate_user_role(old_user, new_user):
     role = old_user.role
     if role == 'candidate':
-        if candidate_assistant_professor_exists(old_user.user_id):
-            assistant_professor = \
-                migrate_candidate_to_assistant_professor(old_user, new_user)
-        elif not professor_exists(old_user.user_id):
-            candidate = migrate_candidate(old_user, new_user)
+        assistant_professor = \
+            candidate_assistant_professors.get(old_user.user_id)
+        if assistant_professor is None:
+            migrate_candidate(old_user, new_user)
+        else:
+            migrate_candidate_to_assistant_professor(old_user, new_user)
         migrate_user_profile_files(old_user, new_user)
         migrate_candidacies(candidate_user=new_user)
     elif role == 'professor':
-        professor = migrate_professor(old_user, new_user)
+        migrate_professor(old_user, new_user)
         migrate_user_profile_files(old_user, new_user)
         migrate_candidacies(candidate_user=new_user)
     elif role == 'institutionmanager':
@@ -697,11 +751,6 @@ def migrate_institutions_metadata():
         new_institution.regulatory_framework = \
             old_institution.institution_bylaw_url
         new_institution.save()
-
-
-def candidate_assistant_professor_exists(old_user_id):
-    return OldApellaCandidateAssistantProfessorMigrationData.objects.filter(
-        user_id=old_user_id).exists()
 
 
 def migrate_candidate_to_assistant_professor(old_user, new_user):
