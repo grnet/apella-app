@@ -25,7 +25,9 @@ BASE_URL = settings.BASE_URL or '/';
 API_PREFIX = settings.API_PREFIX
 
 LEGACY_URL = getattr(settings, 'APELLA_LEGACY_ACADEMIC_LOGIN_URL', None)
-LEGACY_PATH = urlparse.urlparse(LEGACY_URL).path
+LEGACY_PATH = ''
+if LEGACY_URL:
+    LEGACY_PATH = urlparse.urlparse(LEGACY_URL).path
 MIGRATE_LEGACY = bool(LEGACY_URL)
 TOKEN_LOGIN_URL = urljoin(BASE_URL, API_PREFIX, settings.TOKEN_LOGIN_URL)
 TOKEN_REGISTER_URL = urljoin(BASE_URL, API_PREFIX, settings.TOKEN_REGISTER_URL)
