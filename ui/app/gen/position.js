@@ -208,7 +208,7 @@ export default ApellaGen.extend({
             filter_model, dataKey, user_institution;
 
           if (user_role === 'professor') {
-            return ['state'];
+            return ['state_expanded'];
           }
           else if (roles_institution.indexOf(user_role) > -1) {
             filter_model = 'institution';

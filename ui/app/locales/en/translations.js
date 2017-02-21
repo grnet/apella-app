@@ -495,4 +495,5 @@ export default {
   'position_department.menu_label': 'Department Positions',
   'position_search.menu_label': 'Search new positions',
   'generic.error': 'Application Error; please press Refresh and if the problem persists contact the Helpdesk.',
+  'state_expanded.label': 'State'
 };

@@ -2,7 +2,6 @@ import DS from 'ember-data';
 import ENV from 'ui/config/environment';
 import {computeI18N, computeI18NChoice, computeDateFormat, computeDateTimeFormat} from 'ui/lib/common';
 
-
 const {
   computed,
   computed: { readOnly },
@@ -11,7 +10,7 @@ const {
       CHOICES = ENV.APP.resources;
 
 let extra_position_states = [["open", "Open"], ["closed", "Closed"]];
-let position_states_expanded = CHOICES.POSITION_STATES.concat(extra_position_states);
+let position_states_expanded = CHOICES.POSITION_STATES.insertAt(2, extra_position_states[0]).insertAt(3, extra_position_states[1]);
 // remove state "draft" from position states expanded array
 position_states_expanded.splice(0,1);
 
