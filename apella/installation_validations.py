@@ -23,6 +23,9 @@ def validate_old_file_permissions():
         dircount += 1
         for filename in filenames:
             filecount += 1
+            if filecount & 1023 == 0:
+                m = "Validated %d old files so far" % filecount
+                logger.info(m)
             path = safe_path_join(dirpath, filename)
             owner = os.stat(path).st_uid
             if owner != euid:
@@ -61,6 +64,9 @@ def validate_new_file_permissions():
 
         for filename in filenames:
             filecount += 1
+            if filecount & 1023 == 0:
+                m = "Validated %d old files so far" % filecount
+                logger.info(m)
             read_test_path = safe_path_join(dirpath, filename)
             try:
                 with open(read_test_path, "r") as f:
