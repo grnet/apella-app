@@ -288,7 +288,11 @@ class FilesViewSet(viewsets.ModelViewSet):
             raise Http404
 
         file = get_object_or_404(ApellaFile, id=file_id)
-        disp = 'attachment; filename=%s' % file.file_name
+        filename = file.file_name
+        if isinstance(filename, unicode):
+            filename = filename.encode('utf-8')
+        filename = filename.replace('"', '')
+        disp = 'attachment; filename="%s"' % filename
         response['Content-Disposition'] = disp
         if USE_X_SEND_FILE:
             response['X-Sendfile'] = file.file_content.path
