@@ -13,18 +13,24 @@ const {
       } = Ember;
 
 let POSITION_FIELDS = [
-    'position',
-    'position.old_code',
-    'position.department.institution.title_current',
-    'position.department.title_current', 'position.discipline',
-    'position.fek', 'position.fek_posted_at_format',
-    'position.starts_at_format', 'position.ends_at_format',
-    'position.state_calc_verbose' ];
+    field('position', {
+      disabled: true,
+      displayAttr: 'title'
+    }),
+    field('position.old_code', { disabled: true}),
+    field('position.department.institution.title_current', { disabled: true }),
+    field('position.department.title_current', { disabled:true }),
+    field('position.discipline', { disabled: true }),
+    field('position.fek', {disabled: true}),
+    field('position.fek_posted_at_format', { disabled: true}),
+    field('position.starts_at_format', { disabled: true }),
+    field('position.ends_at_format', { disabled: true}),
+    field('position.state_calc_verbose', {disabled: true}) ];
 
 let POSITION_FIELDSET =  {
       label: 'candidacy.position_section.title',
       text: 'candidacy.position_section.subtitle',
-      fields: _.map(POSITION_FIELDS, disable_field),
+      fields: POSITION_FIELDS,
       layout: {
         flex: [60, 30, 30, 30, 30, 30, 30, 30, 30, 30 ]
       },
