@@ -310,9 +310,9 @@ def send_remove_candidacy_emails(candidacy):
     candidacies = candidacy.position.candidacy_set.filter(state='posted').\
         exclude(candidate=candidacy.candidate)
     candidates = list(set([c.candidate for c in candidacies]))
-    for candidate in candidates:
+    for recipient in candidates:
         send_user_email(
-            candidate,
+            recipient,
             'apella/emails/candidacy_remove_subject.txt',
             'apella/emails/candidacy_remove_to_cocandidate_body.txt',
             {
