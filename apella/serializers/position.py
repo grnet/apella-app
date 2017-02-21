@@ -109,7 +109,7 @@ class PositionMixin(ValidatorMixin):
         validated_data['starts_at'] = \
             validated_data['starts_at'].replace(hour=00, minute=00, second=00)
         validated_data['ends_at'] = \
-            validated_data['starts_at'].replace(hour=23, minute=59, second=59)
+            validated_data['ends_at'].replace(hour=23, minute=59, second=59)
         validated_data['author'] = get_author(self.context.get('request'))
         obj = super(PositionMixin, self).create(validated_data)
         code = settings.POSITION_CODE_PREFIX + str(obj.id)
