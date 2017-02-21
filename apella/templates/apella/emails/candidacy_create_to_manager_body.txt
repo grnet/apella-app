@@ -2,7 +2,7 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι ο χρήστης {{ candidate.first_name.el }} {{ candidate.last_name.el } έχει υποβάλει υποψηφιότητα για τη θέση:
+Σας ενημερώνουμε ότι ο χρήστης {{ candidate.first_name.el }} {{ candidate.last_name.el }} έχει υποβάλει υποψηφιότητα για τη θέση:
 
 {% include "apella/emails/position_details_el.txt" %}
 που έχετε καταχωρίσει στο Πληροφοριακό Σύστημα Απέλλα.
