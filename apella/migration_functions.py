@@ -470,7 +470,7 @@ def create_or_update_user(
         old_user.fathername_en = old_user.fathername_el
 
     try:
-        new_user = ApellaUser.objects.get(old_user_id=old_user.id)
+        new_user = ApellaUser.objects.get(old_user_id=old_user.user_id)
         new_user = ApellaUser.objects.get(email=old_user.email)
         new_user.first_name.el = old_user.name_el
         new_user.first_name.en = old_user.name_en

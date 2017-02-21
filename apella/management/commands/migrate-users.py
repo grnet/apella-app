@@ -64,15 +64,12 @@ class Command(BaseCommand):
                 raise CommandError(m)
 
             line_no = 0
-            for row in csv_iterator:
+            for username, shibboleth_id in csv_iterator:
                 if start_line_no <= line_no < end_line_no:
-                    old_user_id = row[0]
-                    old_users = OldApellaUserMigrationData.objects.filter(
-                        user_id=old_user_id)
-                    if old_users[0].shibboleth_id:
+                    if shibboleth_id:
                         migrate_shibboleth_id(
                             apella2_shibboleth_id=None,
-                            old_apella_shibboleth_id=old_users[0].shibboleth_id)
+                            old_apella_shibboleth_id=shibboleth_id)
                     else:
-                        migrate_username(old_users[0].username)
+                        migrate_username(username)
                 line_no += 1

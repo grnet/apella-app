@@ -9,19 +9,13 @@ class Command(BaseCommand):
     help = "List users to be migrated"
 
     def handle(self, *args, **options):
-        password_users = OldApellaUserMigrationData.objects.filter(
-            shibboleth_id='').exclude(email='').exclude(role='assistant')
-        shibboleth_users = OldApellaUserMigrationData.objects.exclude(
-            shibboleth_id='').exclude(email='')
+        old_users = OldApellaUserMigrationData.objects. \
+            exclude(email='').exclude(role='assistant'). \
+            values_list('username', 'shibboleth_id').distinct()
 
-        fields = [
-            'user_id', 'username', 'shibboleth_id',
-            'role', 'name_el', 'surname_el', 'role_status'
-        ]
+        fields = ['username', 'shibboleth_id']
         with open('migrate_users_list.csv', 'wb') as f:
             writer = csv.writer(f)
             writer.writerow(fields)
-            for user in password_users | shibboleth_users:
-                writer.writerow(
-                    [unicode(getattr(user, field)).encode('utf-8')
-                     for field in fields])
+            for user in old_users:
+                writer.writerow(user)
