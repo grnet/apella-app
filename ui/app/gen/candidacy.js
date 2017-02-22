@@ -187,26 +187,28 @@ export default ApellaGen.extend({
       return get(this, 'owned') && position_open && candidacy_not_cancelled;
     }),
 
-    five_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', function() {
+    five_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', 'owned', function() {
       let electors_at = get(this, 'model.position.electors_meeting_date');
       let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
       let position_open = get(this, 'position_open');
+      let owned = get(this, 'owned');
       let before_deadline = true;
       if (electors_at) {
         before_deadline =  moment().add(5, 'days').isBefore(electors_at);
       }
-      return candidacy_not_cancelled && (position_open || before_deadline);
+      return candidacy_not_cancelled && (position_open || before_deadline) && owned;
     }),
 
-    one_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', function() {
+    one_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', 'owned', function() {
       let electors_at = get(this, 'model.position.electors_meeting_date');
       let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
       let position_open = get(this, 'position_open');
       let before_deadline = true;
+      let owned = get(this, 'owned');
       if (electors_at) {
         before_deadline =  moment().add(1, 'days').isBefore(electors_at);
       }
-      return candidacy_not_cancelled && (position_open || before_deadline);
+      return candidacy_not_cancelled && (position_open || before_deadline) && owned;
     })
 
   },
