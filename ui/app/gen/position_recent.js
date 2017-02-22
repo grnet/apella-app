@@ -180,7 +180,7 @@ export default ApellaGen.extend({
   list: {
     getModel: function(params) {
       params = params || {};
-      params.state = 'posted';
+      params.state_expanded = 'before_closed';
       if(!params.ordering) {
         params.ordering = '-id';
       }
