@@ -247,13 +247,17 @@ class ApellaFile(models.Model):
             is_verified = user.institutionmanager.is_verified or \
                 user.institutionmanager.verification_pending
 
-        if (hasattr(self, 'id_passport_file') or
-                hasattr(self, 'professor_cv_file')) and \
+        if (self.file_kind == 'id_passport' or
+                self.file_kind == 'professor_cv') and \
                 is_owner and not is_verified:
             return True
         if self.is_profile_file and is_owner:
             return True
         return False
+
+    def check_resource_state_public_file(self, row, request, view):
+        if self.file_kind == 'registry_set_decision_file':
+            return True
 
     @property
     def is_candidacy_file(self):
