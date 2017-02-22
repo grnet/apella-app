@@ -377,6 +377,8 @@ PERMISSION_RULES = [
     ('professors', 'retrieve', 'helpdeskuser', '*', '*', '5.1.3'),
     ('professors', 'retrieve', 'institutionmanager', '*', '*', ''),
     ('professors', 'retrieve', 'professor', '*', 'owned', ''),
+    ('professors', 'retrieve', 'professor', '*', 'participates', ''),
+    ('professors', 'retrieve', 'candidate', '*', 'participates', ''),
     ('professors', 'upload', 'professor', '*', 'owned', ''),
     ('professors', 'sync_candidacies', 'professor', '*', 'owned', ''),
     ('professors', 'request_verification', 'professor', '*', 'owned', ''),

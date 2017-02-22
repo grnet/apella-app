@@ -372,6 +372,20 @@ class Professor(UserProfile, CandidateProfile):
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
 
+    def check_resource_state_participates(self, row, request, view):
+        user = request.user
+        self_positions_elector = self.electorparticipation_set.values_list(
+            'position_id', flat=True)
+        self_positions_committee = self.committee_duty.values_list(
+            'id', flat=True)
+        if user.is_candidate() or user.is_professor():
+            user_positions = user.candidacy_set.values_list(
+                'position_id', flat=True)
+            for pid in user_positions:
+                if pid in self_positions or pid in self_positions_committee:
+                    return True
+        return False
+
     @property
     def active_elections(self):
         return self.committee_duty.filter(
