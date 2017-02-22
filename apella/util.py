@@ -1,5 +1,29 @@
 from os import path
-import re
+from django.conf import settings
+from pytz import timezone
+from datetime import datetime
+
+
+otz = timezone(getattr(settings, 'OFFICIAL_TIMEZONE', 'EET'))
+utc = timezone('UTC')
+
+
+def strip_timezone(dt):
+    if dt.tzinfo is None:
+        return dt
+    return (dt - dt.utcoffset()).replace(tzinfo=None)
+
+
+def get_today_start():
+    start = datetime.now(otz)
+    start = start.replace(hour=0, minute=0, second=0, microsecond=0)
+    return strip_timezone(start)
+
+
+def get_today_end():
+    end = datetime.now(otz)
+    end = end.replace(hour=23, minute=59, second=59, microsecond=999999)
+    return strip_timezone(end)
 
 
 def urljoin(*args):

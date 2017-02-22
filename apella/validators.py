@@ -2,33 +2,43 @@ from datetime import date, timedelta
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
-from django.utils import timezone
+
+from apella.util import strip_timezone, get_today_start, get_today_end
 
 
 def before_today_validator(value):
-    now = timezone.now().date() if type(value) is date else timezone.now()
-    if value and value > now:
+    value = strip_timezone(value)
+    today_start = get_today_start()
+    if type(value) is date:
+        today_start = today_start.date()
+    if not value or value >= today_start:
         raise ValidationError(_('Date should be before today'))
 
 
 def after_today_validator(value):
-    now = timezone.now().date() if type(value) is date else timezone.now()
-    if value and value < now:
+    value = strip_timezone(value)
+    today_end = get_today_end()
+    if type(value) is date:
+        today_end = today_end.date()
+    if not value or value < today_end:
         raise ValidationError(_('Date should be after today'))
 
 
 def validate_dates_interval(start, end, interval):
+    start = strip_timezone(start)
+    end = strip_timezone(end)
     if end - start < timedelta(days=interval):
         raise ValidationError(
             _('End date should be %s days after start date' % interval))
 
 
 def validate_position_dates(start, end):
-    start = start.replace(hour=00, minute=00, second=00)
-    end = end.replace(hour=23, minute=59, second=59)
-    if timezone.now() < start:
+    start = strip_timezone(start)
+    end = strip_timezone(end)
+    today_start = get_today_start()
+    if today_start < start:
         raise ValidationError(_('Position opens at %s' % start))
-    if timezone.now() > end:
+    if today_start > end:
         raise ValidationError(_('Position closed at %s' % end))
 
 

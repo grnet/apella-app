@@ -21,6 +21,8 @@ SETTINGS_FILE = 'settings.conf'
 MEDIA_ROOT = os.path.join(DATA_DIR, 'files')
 OLD_APELLA_MEDIA_ROOT = os.path.join(DATA_DIR, 'old_files')
 
+OFFICIAL_TIMEZONE = 'EET'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
