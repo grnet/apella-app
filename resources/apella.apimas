@@ -2335,7 +2335,6 @@ spec:
                 filter_fields: [position, candidate, state]
                 ordering_fields: [position__code, candidate__id, position__title]
                 search_fields: [position__code, candidate__id, position__title]
-                filter_fields: [state]
                 mixins: [apella.views.mixins.CandidacyList,
                     apella.views.mixins.UploadFilesViewSet]
             .cli_commands: {}
