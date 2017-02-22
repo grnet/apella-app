@@ -21,7 +21,7 @@ let POSITION_FIELDS = [
     field('position.department.institution.title_current', { disabled: true }),
     field('position.department.title_current', { disabled:true }),
     field('position.discipline', { disabled: true }),
-    field('position.fek', {disabled: true}),
+    field('position.fek', {disabled: true, displayComponent: 'url-display'}),
     field('position.fek_posted_at_format', { disabled: true}),
     field('position.starts_at_format', { disabled: true }),
     field('position.ends_at_format', { disabled: true}),
