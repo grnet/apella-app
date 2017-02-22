@@ -8,7 +8,7 @@ A translation in English follows
     {% endif %}
 
 ΠΡΟΣΟΧΗ:
-Παρακαλούμε MHN απαντήσετε σε αυτό το e-mail. Για οποιαδήποτε απορία ή διευκρίνιση μπορείτε να επικοινωνήσετε με το <a href="https://apella.minedu.gov.gr/contact">Γραφείο Αρωγής Χρηστών</a>.
+Παρακαλούμε MHN απαντήσετε σε αυτό το e-mail. Για οποιαδήποτε απορία ή διευκρίνιση μπορείτε να επικοινωνήσετε με το Γραφείο Αρωγής Χρηστών (https://apella.minedu.gov.gr/contact).
 {% endblock more_el %}
 
 
@@ -20,7 +20,7 @@ To user {{ user.first_name.en }} {{ user.last_name.en }},
     {% endif %}
 
 NOTICE:
-Please do NOT reply to this e-mail. For any questions or clarification please contact the <a href="https://apella.minedu.gov.gr/en/contact-en">Helpdesk</a>.
+Please do NOT reply to this e-mail. For any questions or clarification please contact the Helpdesk (https://apella.minedu.gov.gr/en/contact-en).
 {% endblock more_en %}
 
 {% block note %}{% endblock note %}
