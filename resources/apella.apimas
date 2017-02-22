@@ -244,7 +244,7 @@ spec:
                 updated_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
             actions:
                 .list: {}
@@ -606,7 +606,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 cv:
                     .cli_option: {}
@@ -638,7 +638,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 diplomas:
                     .cli_option: {}
@@ -670,7 +670,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 publications:
                     .cli_option: {}
@@ -702,7 +702,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 institution:
                     .cli_option: {}
@@ -777,7 +777,7 @@ spec:
                 verified_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                     .readonly: {}
                 is_rejected:
@@ -794,7 +794,7 @@ spec:
                 changes_request:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                     .readonly: {}
                 user:
@@ -1035,7 +1035,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
             actions:
                 .list: {}
@@ -1366,7 +1366,7 @@ spec:
                 verified_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                     .readonly: {}
                 is_rejected:
@@ -1383,7 +1383,7 @@ spec:
                 changes_request:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                     .readonly: {}
                 file_upload:
@@ -1434,7 +1434,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 diplomas:
                     .cli_option: {}
@@ -1466,7 +1466,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 publications:
                     .cli_option: {}
@@ -1498,7 +1498,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 id_passport_file:
                     .cli_option: {}
@@ -1530,7 +1530,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 user:
                     .cli_option: {}
@@ -1795,8 +1795,8 @@ spec:
                 fek_posted_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .required: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 electors:
                     .cli_option: {}
@@ -1889,26 +1889,26 @@ spec:
                 starts_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .required: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 ends_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .required: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 created_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .readonly: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 updated_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .readonly: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 department_dep_number:
                     .cli_option: {}
@@ -1944,14 +1944,14 @@ spec:
                 electors_meeting_to_set_committee_date:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .nullable: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 electors_meeting_date:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .nullable: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 old_code:
                     .cli_option: {}
@@ -1994,7 +1994,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 committee_proposal:
                     .cli_option: {}
@@ -2026,7 +2026,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 committee_note:
                     .cli_option: {}
@@ -2058,7 +2058,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 electors_set_file:
                     .cli_option: {}
@@ -2090,7 +2090,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 nomination_act_fek:
                     .cli_option: {}
@@ -2127,7 +2127,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 nomination_proceedings:
                     .cli_option: {}
@@ -2159,7 +2159,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 proceedings_cover_letter:
                     .cli_option: {}
@@ -2191,7 +2191,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 nomination_act:
                     .cli_option: {}
@@ -2223,7 +2223,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 revocation_decision:
                     .cli_option: {}
@@ -2255,7 +2255,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 failed_election_decision:
                     .cli_option: {}
@@ -2287,7 +2287,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 assistant_files:
                     .cli_option: {}
@@ -2319,7 +2319,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
             actions:
                 .list: {}
@@ -2383,14 +2383,14 @@ spec:
                 submitted_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .readonly: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 updated_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
                     .readonly: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 file_upload:
                     .cli_option: {}
@@ -2441,7 +2441,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 diplomas:
                     .cli_option: {}
@@ -2473,7 +2473,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 publications:
                     .cli_option: {}
@@ -2505,7 +2505,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 self_evaluation_report:
                     .cli_option: {}
@@ -2538,7 +2538,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
                 attachment_files:
                     .cli_option: {}
@@ -2570,7 +2570,7 @@ spec:
                         updated_at:
                             .cli_option: {}
                             .field: {}
-                            .drf_field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
             actions:
                 .list: {}
@@ -2695,7 +2695,7 @@ spec:
                 verified_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                     .readonly: {}
                 is_rejected:
@@ -2712,7 +2712,7 @@ spec:
                 changes_request:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                     .readonly: {}
                 user:
@@ -3082,7 +3082,7 @@ spec:
                 migrated_at:
                     .cli_option: {}
                     .field: {}
-                    .drf_field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                     .readonly: {}
             actions:
