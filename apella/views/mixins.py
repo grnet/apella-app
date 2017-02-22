@@ -207,10 +207,13 @@ class CandidacyList(object):
             positions = Position.objects.filter(department__in=departments)
             queryset = queryset.filter(position__in=positions)
         if 'pk' in self.kwargs:
-            return queryset.filter(id=self.kwargs['pk'])
+            queryset = queryset.filter(id=self.kwargs['pk'])
         else:
             ids = queryset.values('code').annotate(Min('id')).values('id__min')
-            return queryset.filter(id__in=ids)
+            queryset = queryset.filter(id__in=ids)
+        if not user.is_helpdesk():
+            queryset = queryset.exclude(state='draft')
+        return queryset
 
     def update(self, request, pk=None):
         candidacy = self.get_object()
