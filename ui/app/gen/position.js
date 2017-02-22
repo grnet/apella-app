@@ -19,13 +19,14 @@ import {position} from 'ui/lib/position/fieldsets';
  */
 
 
+// TODO: DRY position and position_recent
+
 const {
   computed,
   computed: { reads },
   get,
   merge, assign
 } = Ember;
-
 
 const pick_edit_fs = function() {
   let role = get(this, 'role'),
@@ -59,22 +60,18 @@ const pick_edit_fs = function() {
   }
 };
 
-const pick_details_fs = function() {
-  let role = get(this, 'role'),
-    starts_at = get(this, 'model.starts_at'),
-    ends_at = get(this, 'model.ends_at'),
-    state = get(this, 'model.state'),
-    now = moment(),
-    before_open = now.isBefore(starts_at),
-    fs = position.details,
-    head = [fs.basic, fs.details];
-
+const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies) {
   if(state === 'posted') {
     if(before_open) {
       return head;
     }
     else {
-      return head.concat(fs.candidacies);
+      if (display_candidacies) {
+        return head.concat(fs.candidacies);
+      }
+      else {
+        return head;
+      }
     }
   }
   else if(state === 'cancelled') {
@@ -82,8 +79,63 @@ const pick_details_fs = function() {
   }
   // in all other states
   else {
-    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+    if (display_candidacies) {
+      return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+    }
+    else{
+      return head.concat(fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+    }
   }
+};
+
+const pick_details_fs = function() {
+  let role = get(this, 'role'),
+    user_id = get(this, 'user.user_id') + '',
+    role_id = get(this, 'user.id') + '',
+    starts_at = get(this, 'model.starts_at'),
+    // ends_at = get(this, 'model.ends_at'),
+    state = get(this, 'model.state'),
+    now = moment(),
+    before_open = now.isBefore(starts_at),
+    fs = position.details,
+    head = [fs.basic, fs.details],
+    position_model = get(this, 'model'),
+    store = get(position_model, 'store'),
+    /*
+     * Roles that require extra checks in order to decide if the
+     * candidacies fs should be rendered.
+     */
+    roles_conditional_candidacies = ['candidate', 'professor'],
+    committees_members_ids, electors_ids, participations_in_position,
+    display_candidacies = false;
+
+  if(roles_conditional_candidacies.indexOf(role) > -1) {
+    let candidacies = [];
+
+    store.peekAll('candidacy').forEach(function(candidacy) {
+      let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0];
+      if(candidacy_pos_id === position_model.id) {
+        candidacies.push(get(candidacy, 'id'));
+      }
+    });
+
+    if(candidacies.indexOf(user_id) > -1) {
+      display_candidacies = true;
+    }
+    else if (role === 'professor' && !display_candidacies) {
+      electors_ids = position_model.hasMany('electors').ids();
+      committees_members_ids = position_model.hasMany('committee').ids();
+      participations_in_position = electors_ids.concat(committees_members_ids);
+
+      if (participations_in_position.indexOf(role_id) > -1) {
+        display_candidacies = true;
+      }
+    }
+  }
+  else {
+    display_candidacies = true;
+  }
+ return pick_details_fs_by_state(fs, state, before_open, head, display_candidacies);
 };
 
 const pick_create_fs = function() {
@@ -294,9 +346,22 @@ export default ApellaGen.extend({
     fieldsets: computed('role', 'model.state', 'model.starts_at', 'model.ends_at', pick_edit_fs),
   },
   details: {
+    /*
+     * for details view should preload candidacies in order to run checks and
+     * decide if the candidacies fs should be rendered.
+     */
+    getModel(params, model) {
+      let position_id = get(model, 'id'),
+        store = get(model, 'store'),
+        query = { position_id: position_id };
+
+      return store.query('candidacy', query).then(function() {
+        return model;
+      });
+    },
     page: {
       title: computed.readOnly('model.code')
     },
-    fieldsets: computed('role', 'model.state', 'model.starts_at', 'model.ends_at', pick_details_fs),
+    fieldsets: computed('role', 'user.id', 'user.user_id', 'model.state', 'model.starts_at', 'model.ends_at', pick_details_fs),
   }
 });

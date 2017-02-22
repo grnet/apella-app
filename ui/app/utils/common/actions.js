@@ -35,6 +35,9 @@ function  goToDetails(type, hidden, calc, calc_params) {
    * hidden: should hide or not
    * calc: should have a step of permissions checks
    * calc_params: extra data that are necessary for the permissions checks
+   *
+   * TODO: Simplify logic now that candidcies fieldset is hidden fin certain
+   * conditions.
    */
   return {
     label: 'details.label',
