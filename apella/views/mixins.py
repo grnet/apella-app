@@ -266,21 +266,21 @@ USE_X_SEND_FILE = getattr(settings, 'USE_X_SEND_FILE', False)
 
 class FilesViewSet(viewsets.ModelViewSet):
 
-    @detail_route(methods=['get', 'head'])
-    def download(self, request, pk=None):
+    @detail_route(methods=['head'], url_path='download')
+    def download_head(self, request, pk=None):
         response = HttpResponse(content_type='application/force-download')
-        if request.method == 'HEAD':
-            user = request.user
-            file = get_object_or_404(ApellaFile, id=pk)
-            if not file.check_user_can_download(user):
-                raise Http404
+        assert request.method == 'HEAD':
+        user = request.user
+        file = get_object_or_404(ApellaFile, id=pk)
+        token = auth_hooks.generate_file_token(user, file)
+        url = urljoin(settings.BASE_URL or '/',
+                      reverse('apella-files-download', args=(pk,)))
+        response['X-File-Location'] = "%s?token=%s" % (url, token)
+        return response
 
-            token = auth_hooks.generate_file_token(user, file)
-            url = urljoin(settings.BASE_URL or '/',
-                          reverse('apella-files-download', args=(pk,)))
-            response['X-File-Location'] = "%s?token=%s" % (url, token)
-            return response
-
+    @detail_route(methods=['get'], url_path='download')
+    def download_get(self, request, pk=None):
+        response = HttpResponse(content_type='application/force-download')
         token = request.GET.get('token', None)
         if token is None:
             raise PermissionDenied("no.token")
