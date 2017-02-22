@@ -286,8 +286,6 @@ def send_create_candidacy_emails(candidacy):
             })
 
 
-
-
 def send_remove_candidacy_emails(candidacy):
     # send to candidate
     send_user_email(
@@ -295,6 +293,32 @@ def send_remove_candidacy_emails(candidacy):
         'apella/emails/candidacy_remove_subject.txt',
         'apella/emails/candidacy_remove_to_candidate_body.txt',
         { 'position': candidacy.position })
+
+    # send to managers
+    recipients = candidacy.position.department.institution.\
+        institutionmanager_set.all().filter(manager_role='institutionmanager')
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_manager_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+    # send to secretaries
+    recipients = candidacy.position.department.\
+        institutionmanager_set.all().filter(is_secretary=True)
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_manager_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
 
     # send to electors
     recipients = candidacy.position.electors.all()
