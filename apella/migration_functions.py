@@ -278,7 +278,7 @@ def link_migrated_files(apellafiles):
     for apellafile in apellafiles:
         nr_files += 1
         if nr_files & 1023 == 0:
-            m = "files: %d, missing: %d, errors: %d"
+            m = "files so far: %d, missing: %d, errors: %d"
             m %= (nr_files, missing_files, error_files)
             logger.info(m)
 
@@ -328,6 +328,9 @@ def link_migrated_files(apellafiles):
 
             retry -= 1
 
+    m = "total files: %d, missing: %d, errors: %d"
+    m %= (nr_files, missing_files, error_files)
+    logger.info(m)
     return nr_files, missing_files, error_files
 
 
