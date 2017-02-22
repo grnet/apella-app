@@ -269,16 +269,16 @@ class FilesViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['head'], url_path='download')
     def download_head(self, request, pk=None):
         response = HttpResponse(content_type='application/force-download')
-        assert request.method == 'HEAD':
+        assert request.method == 'HEAD'
         user = request.user
-        file = get_object_or_404(ApellaFile, id=pk)
+        file = self.get_object()
         token = auth_hooks.generate_file_token(user, file)
         url = urljoin(settings.BASE_URL or '/',
-                      reverse('apella-files-download', args=(pk,)))
+                      reverse('apella-files-downloadfile', args=(pk,)))
         response['X-File-Location'] = "%s?token=%s" % (url, token)
         return response
 
-    @detail_route(methods=['get'], url_path='download')
+    @detail_route(methods=['get'], url_path='downloadfile')
     def download_get(self, request, pk=None):
         response = HttpResponse(content_type='application/force-download')
         token = request.GET.get('token', None)
