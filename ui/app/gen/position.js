@@ -67,6 +67,10 @@ const pick_edit_fs = function() {
   return res.concat(fs.assistant_files);
 };
 
+/*
+ * pick_details_fs_by_state:  same as position_recent, but there is no need to
+ * have it separately then pick_details_fs
+ */
 const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies) {
   let res;
 
@@ -111,40 +115,9 @@ const pick_details_fs = function() {
     head = [fs.basic, fs.details],
     position_model = get(this, 'model'),
     store = get(position_model, 'store'),
-    /*
-     * Roles that require extra checks in order to decide if the
-     * candidacies fs should be rendered.
-     */
-    roles_conditional_candidacies = ['candidate', 'professor'],
     committees_members_ids, electors_ids, participations_in_position,
-    display_candidacies = false;
-
-  if(roles_conditional_candidacies.indexOf(role) > -1) {
-    let candidacies = [];
-
-    store.peekAll('candidacy').forEach(function(candidacy) {
-      let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0];
-      if(candidacy_pos_id === position_model.id) {
-        candidacies.push(get(candidacy, 'id'));
-      }
-    });
-
-    if(candidacies.indexOf(user_id) > -1) {
-      display_candidacies = true;
-    }
-    else if (role === 'professor' && !display_candidacies) {
-      electors_ids = position_model.hasMany('electors').ids();
-      committees_members_ids = position_model.hasMany('committee').ids();
-      participations_in_position = electors_ids.concat(committees_members_ids);
-
-      if (participations_in_position.indexOf(role_id) > -1) {
-        display_candidacies = true;
-      }
-    }
-  }
-  else {
     display_candidacies = true;
-  }
+
  return pick_details_fs_by_state(fs, state, before_open, head, display_candidacies);
 };
 

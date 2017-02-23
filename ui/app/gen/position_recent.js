@@ -34,56 +34,67 @@ const pick_edit_fs = function() {
     before_open = now.isBefore(starts_at),
     open = now.isBetween(starts_at, ends_at, null, []),
     fs = position.edit,
-    head = [fs.basic, fs.details];
+    head = [fs.basic, fs.details],
+    res;
 
   if(state === 'posted') {
     if(before_open) {
-      return head;
+      res = head;
     }
     else if (open) {
-      return head.concat(fs.candidacies);
+      res = head.concat(fs.candidacies);
     }
     // closed
     else {
-      return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
+      res = head.concat(fs.candidacies, fs.electors_regular, fs.electors_substitite);
     }
   }
   else if(state === 'cancelled') {
-      return head;
+      res = head;
   }
   // in all other states
   else {
-    return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite);
+    res = head.concat(fs.candidacies);
   }
+
+  if (state === 'electing') {
+    res = res.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election);
+  }
+
+  return res.concat(fs.assistant_files);
 };
 
 const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies) {
+  let res;
+
   if(state === 'posted') {
     if(before_open) {
-      return head;
+      res = head;
     }
     else {
       if (display_candidacies) {
-        return head.concat(fs.candidacies);
+        res =  head.concat(fs.candidacies);
       }
       else {
-        return head;
+        res = head;
       }
     }
   }
   else if(state === 'cancelled') {
-      return head/*.concat(fs.history)*/;
+      res =  head/*.concat(fs.history)*/;
   }
   // in all other states
   else {
     if (display_candidacies) {
-      return head.concat(fs.candidacies, fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+      res = head.concat(fs.candidacies, fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election/*, fs.history, */);
     }
-    else{
-      return head.concat(fs.committee, fs.electors_regular, fs.electors_substitite/*, fs.history, */);
+    else {
+      res = head.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election/*, fs.history, */);
     }
   }
+  return res.concat(fs.assistant_files);
 };
+
 const pick_details_fs = function() {
   let role = get(this, 'role'),
     user_id = get(this, 'user.user_id') + '',
@@ -170,8 +181,18 @@ export default ApellaGen.extend({
         get(this, 'is_latest') &&
         get(this, 'can_create');
     }),
-    before_open: computed('model.starts_at', 'is_latest', 'can_create', function(){
-      return moment(new Date()).isBefore(moment(get(this, 'model.starts_at'))) &&
+    before_open: computed('model.is_posted', 'is_latest', 'can_create', function(){
+      return get(this, 'model.is_posted') &&
+        get(this, 'is_latest') &&
+        get(this, 'can_create');
+    }),
+    after_closed: computed('model.is_closed', 'is_latest', 'can_create', function(){
+      return get(this, 'model.is_closed') &&
+        get(this, 'is_latest') &&
+        get(this, 'can_create');
+    }),
+    revoked: computed('model.state', 'is_latest', 'can_create', function(){
+      return get(this, 'model.state') === 'revoked' &&
         get(this, 'is_latest') &&
         get(this, 'can_create');
     }),
