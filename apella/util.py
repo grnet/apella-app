@@ -11,11 +11,13 @@ from pytz import timezone
 from datetime import datetime
 
 
+ATHENS = 'Europe/Athens'
+
 try:
-    OFFICIAL_TIMEZONE = getattr(settings, 'OFFICIAL_TIMEZONE', 'EET')
+    OFFICIAL_TIMEZONE = getattr(settings, 'OFFICIAL_TIMEZONE', ATHENS)
 except Exception as e:
     logger.error(e)
-    OFFICIAL_TIMEZONE = 'EET'
+    OFFICIAL_TIMEZONE = ATHENS
 
 
 otz = timezone(OFFICIAL_TIMEZONE)
