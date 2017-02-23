@@ -195,25 +195,25 @@ export default ApellaGen.extend({
        * side constrains.
        */
 
-      //starts_at: computed('role', function() {
-        //let role = get(this, 'role');
+      starts_at: computed('role', function() {
+        let role = get(this, 'role');
 
-        //if(role === 'helpdeskadmin') {
-          //return [];
-        //}
-        //else  {
-          //return [afterToday()];
-        //}
-      //}),
-      //ends_at:  computed('role', function() {
-        //let role = get(this, 'role');
-        //if(role === 'helpdeskadmin') {
-          //return [];
-        //}
-        //else  {
-          //return [afterDays({on:'starts_at', days:30})];
-        //}
-      //}),
+        if(role === 'helpdeskadmin') {
+          return [];
+        }
+        else  {
+          return [afterToday()];
+        }
+      }),
+      ends_at:  computed('role', function() {
+        let role = get(this, 'role');
+        if(role === 'helpdeskadmin') {
+          return [];
+        }
+        else  {
+          return [afterDays({on:'starts_at', days:30})];
+        }
+      }),
       fek_posted_at: [beforeToday()],
       fek: urlValidator,
       electors_meeting_to_set_committee_date: [afterToday()],

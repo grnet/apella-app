@@ -537,10 +537,10 @@ class Position(models.Model):
         ApellaFile, blank=True, related_name='position_assistant_files')
 
     def clean(self, *args, **kwargs):
-        #validate_dates_interval(
-            #self.starts_at,
-            #self.ends_at,
-            #settings.START_DATE_END_DATE_INTERVAL)
+        validate_dates_interval(
+            self.starts_at,
+            self.ends_at,
+            settings.START_DATE_END_DATE_INTERVAL)
         super(Position, self).clean(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
