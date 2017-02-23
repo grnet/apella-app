@@ -143,7 +143,7 @@ class PositionMixin(object):
 
         state_query = self.request.GET.get('state_expanded')
         if state_query:
-            now = datetime.now()
+            now = datetime.utcnow()
             if state_query in ('electing', 'successful',
                                'failed', 'cancelled', 'revoked'):
                 queryset = queryset.filter(Q(state=state_query))
