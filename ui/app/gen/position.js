@@ -352,7 +352,7 @@ export default ApellaGen.extend({
     getModel(params, model) {
       let position_id = get(model, 'id'),
         store = get(model, 'store'),
-        query = { position_id: position_id };
+        query = { position: position_id };
 
       return store.query('candidacy', query).then(function() {
         return model;
