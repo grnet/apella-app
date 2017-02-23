@@ -69,7 +69,7 @@ export default DS.Model.extend({
   electors_set_file: DS.belongsTo('apella-file'),
   electors_substitute_external: DS.hasMany('professor'),
   electors_substitute_internal: DS.hasMany('professor'),
-  ends_at: DS.attr('date'),
+  ends_at: DS.attr('date', {utc: true}),
   ends_at_format: computeDateFormat('ends_at'),
   failed_election_decision: DS.belongsTo('apella-file'),
   fek: DS.attr({label: 'position.fek.label', displayComponent: 'url-display'}),

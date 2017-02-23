@@ -13,7 +13,7 @@ from apella.validators import validate_position_dates, \
     after_today_validator, before_today_validator
 from apella.serials import get_serial
 from apella.emails import send_user_email
-from apella.util import move_to_timezone, strip_timezone, otz
+from apella.util import at_day_end, at_day_start, otz
 
 
 def get_electors_regular_internal(instance):
@@ -107,19 +107,11 @@ class PositionMixin(ValidatorMixin):
     def _normalize_dates(self, validated_data):
         starts_at = validated_data.get('starts_at', None)
         if starts_at is not None:
-            starts_at = move_to_timezone(starts_at, otz)
-            starts_at = starts_at.replace(
-                hour=0, minute=0, second=0, microsecond=0)
-            starts_at = strip_timezone(starts_at)
-            validated_data['starts_at'] = starts_at
+            validated_data['starts_at'] = at_day_start(starts_at, otz)
 
         ends_at = validated_data.get('ends_at', None)
         if ends_at is not None:
-            ends_at = move_to_timezone(ends_at, otz)
-            ends_at = ends_at.replace(
-                hour=23, minute=59, second=59, microsecond=59)
-            ends_at = strip_timezone(ends_at)
-            validated_data['ends_at'] = ends_at
+            validated_data['ends_at'] = at_day_end(ends_at, otz)
 
     def create(self, validated_data):
         validated_data['state'] = 'posted'
