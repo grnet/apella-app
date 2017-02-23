@@ -151,21 +151,8 @@ const setElecting = {
       return reason.errors;
     });
   },
-  hidden: computed('model.is_closed', 'model.state', 'model.is_latest', 'role', function(){
-    let role = get(this, 'role');
-    let can_create = get(this, 'session.session.authenticated.can_create_positions');
-    let is_latest = get(this, 'model.is_latest');
-    // hide if position is not latest
-    if (!is_latest) { return true; }
-    // hide if user is professor or candidate
-    if (['professor', 'candidate'].includes(role)) {
-      return true;
-    }
-    // hide if user is an assistant with non editing position permissions
-    if (role === 'assistant' && !can_create) {
-      return true;
-    }
-    // show if position is closed or revoked
+  permissions: [{action: 'edit'}],
+  hidden: computed('model.state', 'model.is_closed', function(){
     return !(get(this, 'model.is_closed') || get(this, 'model.state') == 'revoked');
   }),
   confirm: true,
