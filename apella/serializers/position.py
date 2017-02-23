@@ -65,13 +65,11 @@ def get_dep_number(data):
     if dep_number is None:
         raise serializers.ValidationError(
             {"dep_number":
-                "You should first set DEP number for Department: %s"
-                % data['department'].title.en})
+                "You should first set DEP number for the department"})
     elif int(dep_number) <= 0:
         raise serializers.ValidationError(
             {"dep_number":
-                "DEP number for Department should be a positive number: %s"
-                % data['department'].title.en})
+                "DEP number for the department should be a positive number"})
     return dep_number
 
 
