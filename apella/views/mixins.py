@@ -15,7 +15,6 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import MultipleObjectsReturned
-from django.utils import timezone
 
 from apimas.modeling.adapters.drf.mixins import HookMixin
 
@@ -358,7 +357,7 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
                 file_content=file_upload,
                 file_name=file_upload.name,
                 description=file_description,
-                updated_at=timezone.now())
+                updated_at=datetime.utcnow())
 
         if not many:
             setattr(obj, field_name, uploaded_file)

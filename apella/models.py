@@ -1,9 +1,8 @@
 import os
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from django.db import models
 from django.db.models import Q
-from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
     UserManager
 from django.conf import settings
@@ -63,7 +62,7 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     email_verified = models.BooleanField(default=False)
     email_verified_at = models.DateTimeField(null=True, default=None)
 
-    date_joined = models.DateTimeField(default=timezone.now)
+    date_joined = models.DateTimeField(default=datetime.utcnow)
     id_passport = models.CharField(max_length=255, blank=True)
     mobile_phone_number = models.CharField(max_length=255, blank=True)
     home_phone_number = models.CharField(max_length=255, blank=True)
@@ -177,7 +176,7 @@ class ApellaFile(models.Model):
     file_content = models.FileField(
         upload_to=generate_filename, max_length=1024)
     description = models.TextField(blank=True, null=True)
-    updated_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=datetime.utcnow)
     file_name = models.CharField(max_length=1024)
     old_file_path = models.CharField(max_length=1024, null=True)
 
@@ -492,8 +491,8 @@ class Position(models.Model):
         choices=common.POSITION_STATES, max_length=30, default='posted')
     starts_at = models.DateTimeField()
     ends_at = models.DateTimeField()
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=datetime.utcnow)
+    updated_at = models.DateTimeField(default=datetime.utcnow)
     department_dep_number = models.IntegerField()
     electors_meeting_to_set_committee_date = models.DateTimeField(
         blank=True, null=True)
@@ -552,7 +551,7 @@ class Position(models.Model):
             institution_id=self.department.institution.id).exists()
 
     def check_resource_state_open(self, row, request, view):
-        return self.state == 'posted' and self.ends_at > timezone.now()
+        return self.state == 'posted' and self.ends_at > datetime.utcnow()
 
     def check_resource_state_revoked(self, row, request, view):
         user = request.user
@@ -565,7 +564,7 @@ class Position(models.Model):
 
     def check_resource_state_before_open(self, row, request, view):
         user = request.user
-        before_open = self.starts_at > timezone.now()
+        before_open = self.starts_at > datetime.utcnow()
         if user.is_institutionmanager():
             return before_open
         elif user.is_assistant():
@@ -575,7 +574,7 @@ class Position(models.Model):
     def check_resource_state_after_closed(self, row, request, view):
         user = request.user
         is_posted = self.state == 'posted'
-        after_closed = self.ends_at < timezone.now() and is_posted
+        after_closed = self.ends_at < datetime.utcnow() and is_posted
         if user.is_institutionmanager():
             return after_closed
         elif user.is_assistant():
@@ -621,8 +620,8 @@ class Candidacy(CandidateProfile):
     state = models.CharField(
         choices=common.CANDIDACY_STATES, max_length=30, default='draft')
     others_can_view = models.BooleanField(default=False)
-    submitted_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    submitted_at = models.DateTimeField(default=datetime.utcnow)
+    updated_at = models.DateTimeField(default=datetime.utcnow)
     code = models.CharField(max_length=255)
     self_evaluation_report = models.ForeignKey(
         ApellaFile, blank=True, null=True,
@@ -666,7 +665,7 @@ class Candidacy(CandidateProfile):
             return True
         elif position_state == 'electing' and \
                 self.position.electors_meeting_date:
-            if self.position.electors_meeting_date - timezone.now() > \
+            if self.position.electors_meeting_date - datetime.utcnow() > \
                     timedelta(days=days):
                 return True
         return False
@@ -683,7 +682,7 @@ class Candidacy(CandidateProfile):
 
     def check_resource_state_after_closed_electors_meeting_open(
             self, row, request, view):
-        return self.position.ends_at < timezone.now() and \
+        return self.position.ends_at < datetime.utcnow() and \
             self.before_electors_meeting(0)
 
 

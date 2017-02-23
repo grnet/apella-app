@@ -19,8 +19,11 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
 
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
-from apella.util import safe_path_join
+from apella.util import safe_path_join, otz, at_day_start, \
+    at_day_end, strip_timezone, timezone
 from apella.serials import get_serial
+
+eet = timezone('EET')
 
 logger = logging.getLogger('apella')
 
@@ -237,7 +240,8 @@ def migrate_file(old_file, new_user, source, source_id):
             (old_file.file_type, source))
         return
 
-    updated_at = old_file.updated_at if old_file.updated_at else datetime.now()
+    updated_at = strip_timezone(old_file.updated_at.replace(tzinfo=eet)) \
+        if old_file.updated_at else datetime.utcnow()
     new_file = ApellaFile(
         id=get_serial('apella_file'),
         owner=new_user,
@@ -447,7 +451,7 @@ def migrate_user(old_user, password=None, apella2_shibboleth_id=None):
 
     migrate_user_role(old_user, new_user)
 
-    old_user.migrated_at = datetime.now()
+    old_user.migrated_at = datetime.utcnow()
     old_user.save()
 
     return new_user
@@ -591,10 +595,14 @@ def migrate_position(old_position, author):
     department = get_obj(old_position.department_id, Department)
     fek_posted_at = datetime.strptime(
         old_position.gazette_publication_date, '%Y-%m-%d')
+    fek_posted_at = at_day_start(fek_posted_at, otz)
     starts_at = datetime.strptime(
         old_position.opening_date, '%Y-%m-%d')
+    starts_at = at_day_start(starts_at, otz)
     ends_at = datetime.strptime(
         old_position.closing_date, '%Y-%m-%d')
+    ends_at = at_day_end(ends_at, otz)
+
     position_dep_number = department.dep_number if department.dep_number \
         else 0
 
@@ -706,9 +714,13 @@ def migrate_candidacy_files(new_candidacy):
 @transaction.atomic
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
     state = 'cancelled' if old_candidacy.withdrawn_at else 'posted'
-    withdrawn_at = datetime.strptime(
-        old_candidacy.withdrawn_at, '%Y-%m-%d') \
-        if old_candidacy.withdrawn_at else datetime.now()
+    if old_candidacy.withdrawn_at:
+        withdrawn_at = datetime.strptime(
+            old_candidacy.withdrawn_at, '%Y-%m-%d')
+        withdrawn_at = at_day_start(withdrawn_at, otz)
+    else:
+        withdrawn_at = datetime.utcnow()
+
     try:
         candidacy = Candidacy.objects.get(
             old_candidacy_id=int(old_candidacy.candidacy_serial))

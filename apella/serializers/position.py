@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.utils import timezone
 from django.core.files import File
 from rest_framework import serializers
 
@@ -12,6 +11,7 @@ from apella.validators import validate_position_dates, \
     after_today_validator, before_today_validator
 from apella.serials import get_serial
 from apella.emails import send_user_email
+from apella.util import move_to_timezone, strip_timezone, otz
 
 
 def get_electors_regular_internal(instance):
@@ -106,10 +106,19 @@ class PositionMixin(ValidatorMixin):
         validated_data['state'] = 'posted'
         validated_data['department_dep_number'] = \
             get_dep_number(validated_data)
-        validated_data['starts_at'] = \
-            validated_data['starts_at'].replace(hour=00, minute=00, second=00)
-        validated_data['ends_at'] = \
-            validated_data['ends_at'].replace(hour=23, minute=59, second=59)
+        starts_at = validated_data['starts_at']
+        starts_at = move_to_timezone(starts_at, otz)
+        starts_at = starts_at.replace(
+            hour=0, minute=0, second=0, microsecond=0)
+        starts_at = strip_timezone(starts_at)
+        validated_data['starts_at'] = starts_at
+        ends_at = validated_data['ends_at']
+        ends_at = move_to_timezone(ends_at, otz)
+        ends_at = ends_at.replace(
+            hour=23, minute=59, second=59, microsecond=59)
+        ends_at = strip_timezone(ends_at)
+        validated_data['ends_at'] = ends_at
+
         validated_data['author'] = get_author(self.context.get('request'))
         obj = super(PositionMixin, self).create(validated_data)
         code = settings.POSITION_CODE_PREFIX + str(obj.id)
@@ -122,7 +131,7 @@ class PositionMixin(ValidatorMixin):
         committee = curr_position.committee.all()
         ranks = curr_position.ranks.all()
 
-        validated_data['updated_at'] = timezone.now()
+        validated_data['updated_at'] = datetime.utcnow()
         eps = curr_position.electorparticipation_set.all()
 
         instance = super(PositionMixin, self).update(instance, validated_data)
@@ -148,7 +157,7 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
         file_kind=existing_file.file_kind,
         source_id=candidacy.id,
         description=existing_file.description,
-        updated_at=timezone.now(),
+        updated_at=datetime.utcnow(),
         file_name=existing_file.file_name)
     with open(existing_file.file_content.path, 'r') as f:
         new_file.file_content.save(existing_file.file_name, File(f))
@@ -234,7 +243,7 @@ class CandidacyMixin(object):
 
     def update(self, instance, validated_data):
         curr_candidacy = Candidacy.objects.get(id=instance.id)
-        validated_data['updated_at'] = timezone.now()
+        validated_data['updated_at'] = datetime.utcnow()
         attachment_files = validated_data.pop('attachment_files', [])
         self_evaluation_report = validated_data.pop(
             'self_evaluation_report', [])

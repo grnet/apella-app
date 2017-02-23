@@ -13,6 +13,24 @@ def strip_timezone(dt):
         return dt
     return (dt - dt.utcoffset()).replace(tzinfo=None)
 
+def move_to_timezone(dt, tzinfo):
+    dt = strip_timezone(dt)
+    dt = dt.replace(tzinfo=tzinfo)
+    dt += dt.utcoffset()
+    return dt
+
+def at_day_start(dt, tzinfo):
+    dt = strip_timezone(dt)
+    dt = dt.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=tzinfo)
+    dt = strip_timezone(dt)
+    return dt
+
+def at_day_end(dt, tzinfo):
+    dt = strip_timezone(dt)
+    dt = dt.replace(
+        hour=23, minute=59, second=59, microsecond=999999, tzinfo=tzinfo)
+    dt = strip_timezone(dt)
+    return dt
 
 def get_today_start():
     start = datetime.now(otz)
