@@ -239,8 +239,8 @@ const  position = {
         fileField('proceedings_cover_letter', 'position', 'proceedings_cover_letter', {
           readonly: true,
         }),
-        field('elected.full_name_current', {label: 'full_name_current.label'}),
-        field('second_best.full_name_current', {label: 'full_name_current.label'}),
+        field('elected.full_name_current', {label: 'elected.full_name.label'}),
+        field('second_best.full_name_current', {label: 'second_best.full_name.label'}),
         fileField('nomination_act', 'position', 'nomination_act', {
           readonly: true,
         }),

@@ -556,4 +556,6 @@ export default {
   'sync': 'ΕΝΗΜΕΡΩΣΗ',
   'sync.candidacies.error': 'Σφάλμα κατά την ενημέρωση υποψηφιοτήτων',
   'sync.candidacies.success': 'Επιτυχής ενημέρωση υποψηφιοτήτων',
+  'elected.full_name.label': 'Εκλεγείς',
+  'second_best.full_name.label': 'Αναπληρωματικός',
 };

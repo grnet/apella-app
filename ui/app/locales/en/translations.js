@@ -547,4 +547,6 @@ export default {
   'sync': 'update',
   'sync.candidacies.error': 'Sync candidacies error',
   'sync.candidacies.success': 'Candidacies have been successfully synced',
+  'elected.full_name.label': 'Elected',
+  'second_best.full_name.label': 'Second best',
 };
