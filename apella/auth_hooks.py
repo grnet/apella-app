@@ -107,7 +107,7 @@ def register_user(save, data, *args, **kwargs):
 def activate_user(user):
     if not user.activated_at:
         user.is_active = True
-        user.activated_at = datetime.now()
+        user.activated_at = datetime.utcnow()
 
 
 def verify_email(user, activate=True):
@@ -115,7 +115,7 @@ def verify_email(user, activate=True):
     Logic which gets executed when user visits the email verification url.
     """
     user.email_verified = True
-    user.email_verified_at = datetime.now()
+    user.email_verified_at = datetime.utcnow()
     if activate:
         activate_user(user)
 
@@ -286,12 +286,12 @@ def validate_user_can_verify(user):
 def request_user_verify(user):
     validate_user_can_verify(user)
     user.verification_pending = True
-    user.verification_request = datetime.now()
+    user.verification_request = datetime.utcnow()
 
 
 def verify_user(user):
     user.is_verified = True
-    user.verified_at = datetime.now()
+    user.verified_at = datetime.utcnow()
     user.verification_pending = False
     user.is_rejected = False
 
@@ -306,7 +306,7 @@ def reject_user(user, reason=None):
 
 def request_user_changes(user):
     user.verification_pending = False
-    user.changes_request = datetime.now()
+    user.changes_request = datetime.utcnow()
 
 
 FILE_TOKEN_TIMEOUT = getattr(settings, 'FILE_TOKEN_TIMEOUT', 60)
@@ -404,7 +404,7 @@ def enable_shibboleth(user, identifier, data):
     user.set_unusable_password()
     user.login_method = 'academic'
     user.shibboleth_id = identifier
-    user.shibboleth_enabled_at = datetime.now()
+    user.shibboleth_enabled_at = datetime.utcnow()
     user.remote_data = json.dumps(data)
     user.can_set_academic = False
     user.save()
