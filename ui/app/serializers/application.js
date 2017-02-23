@@ -62,7 +62,7 @@ export default DRFSerializer.extend({
    */
   extractRelationships(modelClass, resourceHash) {
     modelClass.eachRelationship((key, relationshipMeta) => {
-      if (relationshipMeta.kind === 'hasMany' && !this.isEmbedded(key)) {
+      if (relationshipMeta.kind === 'hasMany' && !this.isEmbedded(key) && resourceHash[key] instanceof Array) {
         let ids = (resourceHash[key] || []).map((url) => {
           // TODO: place this as a util method (idFromURL)
           return url.split('/').filter(Boolean).slice(-1)[0];

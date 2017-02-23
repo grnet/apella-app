@@ -195,14 +195,15 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView) {
   return field('members', {
     refreshValueQuery: modelMetaSide,
     valueQuery: function(store, params, model, value) {
+
       // If the model has no id we are in create view
-      if(model.get('id')) {
+      if(model.get('id') && modelMetaSide) {
         // Default ordering (if other is not set)
         if(!params.ordering) {
           let locale = model.get('i18n.locale');
           params.ordering = `user__last_name__${locale}`;
         }
-          return get_registry_members(model, store, params);
+        return get_registry_members(model, store, params);
       }
       else {
         return value ? value : [];

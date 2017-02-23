@@ -159,6 +159,12 @@ class PositionMixin(object):
                 queryset = queryset.filter(Q(state='posted') &
                                            Q(ends_at__lte=now))
 
+            elif state_query == 'before_closed':
+                queryset = queryset.filter(Q(state='posted') &
+                                           Q(ends_at__gt=now))
+
+
+
         if 'pk' in self.kwargs:
             return queryset.filter(id=self.kwargs['pk'])
         else:
