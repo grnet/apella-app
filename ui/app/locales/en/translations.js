@@ -541,10 +541,10 @@ export default {
   'position_search.menu_label': 'Search new positions',
   'generic.error': 'Application Error; please press Refresh and if the problem persists contact the Helpdesk.',
   'state_expanded.label': 'State',
-  'sync.candidacies': 'Sync candidacies',
-  'sync_candidacies.title': 'Sync candidacies',
+  'sync.candidacies': 'Update candidacies',
+  'sync_candidacies.title': 'Update candidacies',
   'sync_candidacies.message': 'Are you sure you want to update your current active candidacies?',
-  'sync': 'sync',
+  'sync': 'update',
   'sync.candidacies.error': 'Sync candidacies error',
   'sync.candidacies.success': 'Candidacies have been successfully synced',
 };
