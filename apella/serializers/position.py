@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.core.files import File
 from rest_framework import serializers
 
-from django.db.models import Q
+from django.db.models import Q, Max
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     Professor, ElectorParticipation, ApellaFile
@@ -345,10 +345,13 @@ def send_remove_candidacy_emails(candidacy):
             })
 
     # send to cocandidates
-    candidacies = candidacy.position.candidacy_set.filter(state='posted').\
-        exclude(candidate=candidacy.candidate)
-    candidates = list(set([c.candidate for c in candidacies]))
-    for recipient in candidates:
+    c_set = candidacy.position.candidacy_set.all()
+    updated = c_set.values('candidate').annotate(Max('updated_at')).\
+            values('updated_at__max')
+    candidacies = c_set.filter(Q(updated_at__in=updated) & Q(state='posted'))
+
+    for r in candidacies:
+        recipient = r.candidate
         send_user_email(
             recipient,
             'apella/emails/candidacy_remove_subject.txt',
