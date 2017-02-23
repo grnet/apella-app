@@ -381,7 +381,8 @@ class Professor(UserProfile, CandidateProfile):
             user_positions = user.candidacy_set.values_list(
                 'position_id', flat=True)
             for pid in user_positions:
-                if pid in self_positions or pid in self_positions_committee:
+                if pid in self_positions_elector \
+                        or pid in self_positions_committee:
                     return True
         return False
 
