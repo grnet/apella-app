@@ -257,6 +257,8 @@ class CandidacyMixin(object):
             curr_candidacy.pk = None
             curr_candidacy.updated_at = updated_at - timedelta(seconds=1)
             curr_candidacy.save()
+            instance.old_candidacy_id = None
+            instance.save()
         state = validated_data['state']
         if state == 'cancelled':
             send_remove_candidacy_emails(instance)

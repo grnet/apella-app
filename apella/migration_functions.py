@@ -8,6 +8,7 @@ from collections import defaultdict
 from django.db import transaction, DataError
 from django.conf import settings
 from django.db.utils import IntegrityError
+from django.db.models import Min
 
 from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \
@@ -719,16 +720,17 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
     else:
         withdrawn_at = datetime.utcnow()
 
-    try:
-        candidacy = Candidacy.objects.get(
-            old_candidacy_id=int(old_candidacy.candidacy_serial))
+    candidacies = Candidacy.objects.filter(
+        old_candidacy_id=int(old_candidacy.candidacy_serial))
+    if candidacies:
+        candidacy = candidacies.order_by('id').annotate(Min('id'))[0]
         candidacy.state = state
         candidacy.updated_at = withdrawn_at
         candidacy.others_can_view = bool(
             re.match('t', old_candidacy.open_to_other_candidates, re.I)),
         candidacy.submitted_at = old_candidacy.submitted_at
         candidacy.save()
-    except Candidacy.DoesNotExist:
+    else:
         candidacy = Candidacy.objects.create(
             candidate=new_candidate,
             position=new_position,
