@@ -517,6 +517,7 @@ export default {
   'The fields department, type must make a unique set.': 'Υπάρχει ήδη αυτό το είδος μητρώου για το τμήμα αυτό',
   'You have already submitted a candidacy for this position': 'Έχετε ήδη υποβάλει υποψηφιότητα για αυτή τη θέση',
   'Unable to login with provided credentials.': 'Ανεπιτυχής είσοδος',
+  'You should first set DEP number for the department': 'Πρέπει πρώτα να ορίσετε τον αριθμό μελών ΔΕΠ του Τμήματος',
   'enable.academic.login.prompt': 'Σύνδεση μέσω οικείου φορέα',
   'enable.academic.login.label': 'Συνδεση',
   'candidate.upgrade.academic.prompt': 'Σύνδεση μέσω οικείου φορέα',

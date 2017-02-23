@@ -511,6 +511,7 @@ export default {
   'The two password fields didn\'t match.': 'The two password fields didn\'t match.',
   'Unable to login with provided credentials.': 'Unable to login with provided credentials.',
   'You have already submitted a candidacy for this position': 'You have already submitted a candidacy for this position',
+  'You should first set DEP number for the department': 'You should first set faculty number for department',
   'enable.academic.login.prompt': 'Enable academic login',
   'enable.academic.login.label': 'Academic login',
   'candidate.upgrade.academic.prompt': 'Enable academic login',
