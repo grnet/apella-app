@@ -108,11 +108,12 @@ def get_display_data(shib_data):
 
 SHIBBOLETH_IDP_WHITELIST = getattr(settings, 'SHIBBOLETH_IDP_WHITELIST', [])
 def is_eligible_shibboleth_user(data, legacy=False):
-    affiliation = data.get('affiliation', None)
-    if not affiliation:
-        affiliation = data.get('primary_affiliation', None)
-    if not affiliation:
-        affiliation = data.get('unscoped_affiliation', None)
+    scoped_affiliation = data.get('affiliation', None)
+    primary_affiliation = data.get('primary_affiliation', None)
+    unscoped_affiliation = data.get('unscoped_affiliation', None)
+    affiliation = scoped_affiliation \
+            or primary_affiliation \
+            or unscoped_affiliation
 
     if not affiliation:
         raise ValidationError('no.affiliation')
@@ -121,7 +122,12 @@ def is_eligible_shibboleth_user(data, legacy=False):
     data['affiliation'] = affiliation
 
     if not faculty:
-        logger.info("no faculty affiliation %r", affiliation)
+        m = ("no faculty in "
+             "affiliation: %r, "
+             "primary_affiliation: %r, "
+             "unscoped_affiliation: %r")
+        m %= (scoped_affiliation, primary_affiliation, unscoped_affiliation)
+        logger.info(m)
         raise ValidationError('no.faculty')
 
     idp = data.get('identity_provider', None)
