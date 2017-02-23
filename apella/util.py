@@ -1,5 +1,12 @@
+import logging
+logger = logging.getLogger(__name__)
+
 from os import path
-from django.conf import settings
+try:
+    from django.conf import settings
+except Exception as e:
+    logger.error(e)
+
 from pytz import timezone
 from datetime import datetime
 
@@ -11,24 +18,22 @@ utc = timezone('UTC')
 def strip_timezone(dt):
     if dt.tzinfo is None:
         return dt
-    return (dt - dt.utcoffset()).replace(tzinfo=None)
+    return dt.astimezone(utc).replace(tzinfo=None)
 
-def move_to_timezone(dt, tzinfo):
-    dt = strip_timezone(dt)
-    dt = dt.replace(tzinfo=tzinfo)
-    dt += dt.utcoffset()
-    return dt
+def _move_to_timezone(dt, tzinfo):
+    if dt.tzinfo is None:
+        dt = utc.localize(dt)
+    return dt.astimezone(tzinfo)
 
 def at_day_start(dt, tzinfo):
-    dt = strip_timezone(dt)
-    dt = dt.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=tzinfo)
+    dt = _move_to_timezone(dt, tzinfo)
+    dt = dt.replace(hour=0, minute=0, second=0, microsecond=0)
     dt = strip_timezone(dt)
     return dt
 
 def at_day_end(dt, tzinfo):
-    dt = strip_timezone(dt)
-    dt = dt.replace(
-        hour=23, minute=59, second=59, microsecond=999999, tzinfo=tzinfo)
+    dt = _move_to_timezone(dt, tzinfo)
+    dt = dt.replace(hour=23, minute=59, second=59, microsecond=999999)
     dt = strip_timezone(dt)
     return dt
 
