@@ -17,18 +17,12 @@ const {
 // params used for view details of candidacy from position view
 const candidaciesField = function(type, hidden, calc, calc_params) {
   return field('candidacies', {
-    valueQuery: computed('model.is_open', function() {
-      let open = get(this, 'model.is_open');
-      return function(store, params, model, value) {
-        let position_id = model.get('id');
-        // no use of params for now
-        let query = {position: position_id};
-        if (open) {
-          query['state'] = 'posted';
-        }
-        return store.query('candidacy', query);
-      }
-    }),
+    valueQuery: function(store, params, model, value) {
+      let position_id = model.get('id');
+      // no use of params for now
+      let query = {position: position_id};
+      return store.query('candidacy', query);
+    },
     label: null,
     modelMeta: {
       row: {
