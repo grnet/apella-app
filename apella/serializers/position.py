@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.core.files import File
@@ -246,7 +246,8 @@ class CandidacyMixin(object):
 
     def update(self, instance, validated_data):
         curr_candidacy = Candidacy.objects.get(id=instance.id)
-        validated_data['updated_at'] = datetime.utcnow()
+        updated_at = datetime.utcnow()
+        validated_data['updated_at'] = updated_at
         attachment_files = validated_data.pop('attachment_files', [])
         self_evaluation_report = validated_data.pop(
             'self_evaluation_report', [])
@@ -256,6 +257,7 @@ class CandidacyMixin(object):
         instance = super(CandidacyMixin, self).update(instance, validated_data)
         if instance.state is not curr_candidacy.state:
             curr_candidacy.pk = None
+            curr_candidacy.updated_at = updated_at - timedelta(seconds=1)
             curr_candidacy.save()
         state = validated_data['state']
         if state == 'cancelled':
