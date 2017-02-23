@@ -11,7 +11,14 @@ from pytz import timezone
 from datetime import datetime
 
 
-otz = timezone(getattr(settings, 'OFFICIAL_TIMEZONE', 'EET'))
+try:
+    OFFICIAL_TIMEZONE = getattr(settings, 'OFFICIAL_TIMEZONE', 'EET')
+except Exception as e:
+    logger.error(e)
+    OFFICIAL_TIMEZONE = 'EET'
+
+
+otz = timezone(OFFICIAL_TIMEZONE)
 utc = timezone('UTC')
 
 
@@ -20,10 +27,12 @@ def strip_timezone(dt):
         return dt
     return dt.astimezone(utc).replace(tzinfo=None)
 
+
 def _move_to_timezone(dt, tzinfo):
     if dt.tzinfo is None:
         dt = utc.localize(dt)
     return dt.astimezone(tzinfo)
+
 
 def at_day_start(dt, tzinfo):
     dt = _move_to_timezone(dt, tzinfo)
@@ -31,22 +40,20 @@ def at_day_start(dt, tzinfo):
     dt = strip_timezone(dt)
     return dt
 
+
 def at_day_end(dt, tzinfo):
     dt = _move_to_timezone(dt, tzinfo)
     dt = dt.replace(hour=23, minute=59, second=59, microsecond=999999)
     dt = strip_timezone(dt)
     return dt
 
+
 def get_today_start():
-    start = datetime.now(otz)
-    start = start.replace(hour=0, minute=0, second=0, microsecond=0)
-    return strip_timezone(start)
+    return at_day_start(datetime.utcnow(), otz)
 
 
 def get_today_end():
-    end = datetime.now(otz)
-    end = end.replace(hour=23, minute=59, second=59, microsecond=999999)
-    return strip_timezone(end)
+    return at_day_end(datetime.utcnow(), otz)
 
 
 def urljoin(*args):
