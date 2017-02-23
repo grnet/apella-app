@@ -104,22 +104,29 @@ class PositionMixin(ValidatorMixin):
 
         return data
 
+    def _normalize_dates(self, validated_data):
+        starts_at = validated_data.get('starts_at', None)
+        if starts_at is not None:
+            starts_at = move_to_timezone(starts_at, otz)
+            starts_at = starts_at.replace(
+                hour=0, minute=0, second=0, microsecond=0)
+            starts_at = strip_timezone(starts_at)
+            validated_data['starts_at'] = starts_at
+
+        ends_at = validated_data.get('ends_at', None)
+        if ends_at is not None:
+            ends_at = move_to_timezone(ends_at, otz)
+            ends_at = ends_at.replace(
+                hour=23, minute=59, second=59, microsecond=59)
+            ends_at = strip_timezone(ends_at)
+            validated_data['ends_at'] = ends_at
+
     def create(self, validated_data):
         validated_data['state'] = 'posted'
         validated_data['department_dep_number'] = \
             get_dep_number(validated_data)
-        starts_at = validated_data['starts_at']
-        starts_at = move_to_timezone(starts_at, otz)
-        starts_at = starts_at.replace(
-            hour=0, minute=0, second=0, microsecond=0)
-        starts_at = strip_timezone(starts_at)
-        validated_data['starts_at'] = starts_at
-        ends_at = validated_data['ends_at']
-        ends_at = move_to_timezone(ends_at, otz)
-        ends_at = ends_at.replace(
-            hour=23, minute=59, second=59, microsecond=59)
-        ends_at = strip_timezone(ends_at)
-        validated_data['ends_at'] = ends_at
+
+        self._normalize_dates(validated_data)
 
         validated_data['author'] = get_author(self.context.get('request'))
         obj = super(PositionMixin, self).create(validated_data)
@@ -135,6 +142,8 @@ class PositionMixin(ValidatorMixin):
 
         validated_data['updated_at'] = datetime.utcnow()
         eps = curr_position.electorparticipation_set.all()
+
+        self._normalize_dates(validated_data)
 
         instance = super(PositionMixin, self).update(instance, validated_data)
         if instance.state != curr_position.state:
