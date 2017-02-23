@@ -478,7 +478,6 @@ def create_or_update_user(
 
     try:
         new_user = ApellaUser.objects.get(old_user_id=old_user.user_id)
-        new_user = ApellaUser.objects.get(email=old_user.email)
         new_user.first_name.el = old_user.name_el
         new_user.first_name.en = old_user.name_en
         new_user.first_name.save()
@@ -532,15 +531,14 @@ def create_or_update_user(
             logger.error(e)
             return
 
-    if password:
+    if password and not new_user.has_usable_password():
         new_user.set_password(password)
-    else:
-        new_user.set_unusable_password()
 
     if apella2_shibboleth_id:
         new_user.shibboleth_id = apella2_shibboleth_id
         new_user.shibboleth_migration_key = old_user.migration_key
         new_user.login_method = 'academic'
+        new_user.set_unusable_password()
 
     return new_user
 
