@@ -18,16 +18,19 @@ from
     candidacy c,
     (   select
             fb.id file_id,
-            cf.candidacy_id candidacy_id
+            cf.candidacy_id candidacy_id,
+            fh.deleted deleted
         from
             candidacyfile cf,
-            filebody fb
+            filebody fb,
+            fileheader fh
         where
-            fb.header_id = cf.id
+            fb.header_id = cf.id and fh.id = fb.header_id
         union
         select
             fb.id file_id,
-            cfb.candidacy_id candidacy_id
+            cfb.candidacy_id candidacy_id,
+            false deleted
         from
             candidacy_filebody cfb,
             filebody fb
@@ -42,6 +45,6 @@ where
     and cf.candidacy_id = c.id
     and cf.file_id = fb.id
     and fb.header_id = fh.id
-    and fh.deleted is false
+    and cf.deleted is false
     and p.id in :positions_to_migrate
 ) to '/tmp/OldApellaCandidacyFileMigrationData.csv' with csv header delimiter ',';
