@@ -1,8 +1,8 @@
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
-        USER_FIELDSET_DETAILS,
-        USER_FIELDSET_EDIT,
+        USER_FIELDSET_DETAILS_VERIFIABLE,
+        USER_FIELDSET_EDIT_VERIFIABLE,
         USER_VALIDATORS,
         INST_MANAGER_FIELDSET_DETAILS_MAIN,
         INST_MANAGER_FIELDSET_DETAILS_SUB,
@@ -83,7 +83,7 @@ export default ApellaGen.extend({
       title: computed.readOnly('model.full_name_current')
     },
     fieldsets: [
-      USER_FIELDSET_DETAILS,
+      USER_FIELDSET_DETAILS_VERIFIABLE,
       MANAGER.FIELDSET,
       MANAGER.SUB_FIELDSET_DETAILS
     ]
@@ -91,7 +91,7 @@ export default ApellaGen.extend({
   },
   edit: {
     fieldsets: [
-      USER_FIELDSET_EDIT,
+      USER_FIELDSET_EDIT_VERIFIABLE,
       MANAGER.FIELDSET,
       MANAGER.SUB_FIELDSET
     ]

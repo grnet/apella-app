@@ -1,8 +1,8 @@
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {USER_FIELDSET,
-        USER_FIELDSET_DETAILS,
-        USER_FIELDSET_EDIT,
+        USER_FIELDSET_DETAILS_VERIFIABLE,
+        USER_FIELDSET_EDIT_VERIFIABLE,
         USER_VALIDATORS} from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
@@ -80,7 +80,7 @@ export default ApellaGen.extend({
     fieldsets: computed('role', function(){
       let role = get(this, 'role');
       let f = [
-        USER_FIELDSET_DETAILS,
+        USER_FIELDSET_DETAILS_VERIFIABLE,
         PROFESSOR.FIELDSET,
       ]
       if (role === 'helpdeskadmin' || role === 'helpdeskuser' ) {
@@ -91,7 +91,7 @@ export default ApellaGen.extend({
   },
   edit: {
     fieldsets: [
-      USER_FIELDSET_EDIT,
+      USER_FIELDSET_EDIT_VERIFIABLE,
       PROFESSOR.FIELDSET,
     ]
   },

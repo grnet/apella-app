@@ -134,6 +134,24 @@ const USER_FIELDSET = {
   }
 }
 
+const USER_FIELDSET_EDIT_VERIFIABLE = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', { disabled: true }),
+    field('status_verbose', { disabled: true}),
+    field('email', { disabled: true }),
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
+  layout: {
+    flex: [100, 50, 50, 33, 33, 33, 33, 33, 33]
+  }
+}
+
 const USER_FIELDSET_EDIT = {
   label: 'fieldsets.labels.user_info',
   fields: USER_FIELDS_EDIT,
@@ -141,6 +159,7 @@ const USER_FIELDSET_EDIT = {
     flex: [50, 50, 33, 33, 33, 33, 33, 33]
   }
 }
+
 
 const USER_FIELDSET_EDIT_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
   fields: USER_FIELDS_EDIT_ACADEMIC,
@@ -180,6 +199,24 @@ const USER_FIELDSET_DETAILS = {
     flex: [50, 50, 50, 50, 50, 25, 25]
   }
 }
+
+const USER_FIELDSET_DETAILS_VERIFIABLE = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', {disabled: true}),
+    field('status_verbose', {disabled: true}),
+    'email',
+    'full_name_current',
+    'father_name_current',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number',
+  ],
+  layout: {
+    flex: [100, 50, 50, 50, 50, 50, 25, 25]
+  }
+}
+
 
 
 const USER_FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, USER_FIELDSET_DETAILS, {
@@ -254,6 +291,7 @@ const normalizeUserErrors = function(errors) {
 export {normalizeUser, serializeUser, normalizeUserErrors,
         USER_FIELDS, USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
         USER_FIELDSET_DETAILS,
+        USER_FIELDSET_DETAILS_VERIFIABLE, USER_FIELDSET_EDIT_VERIFIABLE,
         USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC,
         USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
         USER_FIELDS_ALL, FILE_FIELDS};
