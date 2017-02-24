@@ -120,11 +120,11 @@ const pick_details_fs = function() {
 
   if(roles_conditional_candidacies.indexOf(role) > -1) {
     let candidacies = [];
-
     store.peekAll('candidacy').forEach(function(candidacy) {
-      let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0];
+      let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0],
+        candidate_id = candidacy.belongsTo('candidate').link().split('/').slice(-2)[0];
       if(candidacy_pos_id === position_model.id) {
-        candidacies.push(get(candidacy, 'id'));
+        candidacies.push(candidate_id);
       }
     });
 
