@@ -311,7 +311,7 @@ export default ApellaGen.extend({
     }),
       display: computed('role', function() {
         let role = get(this, 'role');
-        if (role === 'candidate') {
+        if (role === 'candidate' || (role === 'professor' && is_foreign)) {
           return false;
         }
         else {
