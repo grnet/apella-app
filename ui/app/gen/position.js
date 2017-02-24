@@ -216,6 +216,9 @@ export default ApellaGen.extend({
       }),
       fek_posted_at: [beforeToday()],
       fek: urlValidator,
+      discipline: [validate.presence(true)],
+      subject: [validate.presence(true)],
+      subject_area: [validate.presence(true)],
       electors_meeting_to_set_committee_date: [afterToday()],
       department_dep_number: [validate.presence(true), validate.number({integer: true})]
     }
