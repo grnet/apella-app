@@ -3,6 +3,8 @@ import routes from 'ember-gen/lib/routes';
 import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
 import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_FIELDSET_EDIT_ACADEMIC,
+        USER_FIELDSET_DETAILS_VERIFIABLE,
+        USER_FIELDSET_EDIT_VERIFIABLE,
         USER_VALIDATORS,
         USER_FIELDSET_DETAILS
        } from 'ui/utils/common/users';
@@ -55,16 +57,16 @@ function extractToken(loc) {
 }
 
 
-let fields_with_user_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
+let fields_with_user_id = Ember.copy(USER_FIELDSET_DETAILS_VERIFIABLE.fields);
 let fields_with_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
 fields_with_user_id.unshiftObject(field('user_id', {disabled: true}));
 fields_with_id.unshiftObject(field('id', {disabled: true}));
 
 const USER_FIELDSET_USER_ID = {
-  label: USER_FIELDSET_DETAILS.label,
+  label: USER_FIELDSET_DETAILS_VERIFIABLE.label,
   fields: fields_with_user_id,
   layout: {
-    flex: [50, 50, 50, 50, 50, 50, 50, 50]
+    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 }
 
@@ -89,7 +91,7 @@ const PROFILE_FIELDSETS = function(view) {
     }
 
     if (view === 'edit') {
-      _USER_FIELDSET = USER_FIELDSET_EDIT;
+      _USER_FIELDSET = USER_FIELDSET_EDIT_VERIFIABLE;
       if (is_academic) {
         _USER_FIELDSET = USER_FIELDSET_EDIT_ACADEMIC;
       }
@@ -104,10 +106,7 @@ const PROFILE_FIELDSETS = function(view) {
       }
     }
 
-    if (role == 'helpdeskadmin') {
-      f.push(USER_FIELDSET_ID);
-    }
-    if (role == 'helpdeskuser') {
+    if (isHelpdesk(role)) {
       f.push(USER_FIELDSET_ID);
     }
 
