@@ -194,13 +194,14 @@ def remove_unreferenced_apella_files(force=False):
     validate_apella_files_related_names()
 
     nr_checked = 0
-    to_remove = []
+    nr_to_remove = 0
+    nr_removed = 0
 
     for af in ApellaFile.objects.all():
         nr_checked += 1
         if nr_checked & 1023 == 0:
-            m = "nr_checked %d, nr_to_remove: %d"
-            m %= (nr_checked, len(to_remove))
+            m = "nr_checked %d, nr_to_remove: %d, nr_removed: %d"
+            m %= (nr_checked, nr_to_remove, nr_removed)
             logger.info(m)
 
         for attr_name in (
@@ -211,15 +212,11 @@ def remove_unreferenced_apella_files(force=False):
             if getattr(af, attr_name).count() > 0:
                 break
         else:
-            to_remove.append(af)
+            nr_to_remove += 1
+            if force:
+                nr_removed += 1
+                af.delete()
 
-    m = "nr_checked %d, nr_to_remove: %d"
-    m %= (nr_checked, len(to_remove))
+    m = "nr_checked %d, nr_to_remove: %d, nr_removed: %d"
+    m %= (nr_checked, nr_to_remove, nr_removed)
     logger.info(m)
-
-    if force:
-        m = "Removing %d rows..." % len(to_remove)
-        logger.info(m)
-
-        for af in to_remove:
-            af.delete()
