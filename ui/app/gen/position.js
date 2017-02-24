@@ -311,8 +311,8 @@ export default ApellaGen.extend({
       display: computed('role', function() {
         let role = get(this, 'role'),
           is_foreign = get(this, 'session.session.authenticated.is_foreign'),
-          rank = get(this, 'session.session.authenticated.rank') || "",
-          is_researcher = rank.match(/researcher/i);
+          rank = get(this, 'session.session.authenticated.rank') || '',
+          is_researcher = rank.match(/research/i);
 
         if (role === 'candidate' || (role === 'professor' && is_foreign) || (role === 'professor' && is_researcher)) {
           return false;
