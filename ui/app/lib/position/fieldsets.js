@@ -181,8 +181,8 @@ const  position = {
         fileField('committee_set_file', 'position', 'committee_set_file', {
           readonly: true
         }),
-        committeeElectorsField('committee_internal', 'internal'),
-        committeeElectorsField('committee_external', 'external'),
+        committeeElectorsField('committee_internal', 'internal', false, true),
+        committeeElectorsField('committee_external', 'external', false, true),
         fileField('committee_proposal', 'position', 'committee_proposal', {
           readonly: true
         }),
@@ -209,8 +209,8 @@ const  position = {
     electors_regular: {
       label: 'electors_regular_members.label',
       fields: [
-        committeeElectorsField('electors_regular_internal', 'internal'),
-        committeeElectorsField('electors_regular_external', 'external')
+        committeeElectorsField('electors_regular_internal', 'internal', false, true),
+        committeeElectorsField('electors_regular_external', 'external', false, true)
       ],
       layout: {
         flex: [100, 100]
@@ -219,8 +219,8 @@ const  position = {
     electors_substitite: {
       label: 'electors_substitute_members.label',
       fields: [
-        committeeElectorsField('electors_substitute_internal', 'internal'),
-        committeeElectorsField('electors_substitute_external', 'external')
+        committeeElectorsField('electors_substitute_internal', 'internal', false, true),
+        committeeElectorsField('electors_substitute_external', 'external', false, true)
       ],
       layout: {
         flex: [100, 100]
@@ -372,8 +372,8 @@ const  position = {
           preventDelete: true,
           replace: true
         }),
-        committeeElectorsField('committee_internal', 'internal'),
-        committeeElectorsField('committee_external', 'external'),
+        committeeElectorsField('committee_internal', 'internal', false, true),
+        committeeElectorsField('committee_external', 'external', false, true),
         fileField('committee_proposal', 'position', 'committee_proposal', {
           disabled: computed('model.changeset.committee_note', function(){
             let file = get(this, 'model.changeset.committee_note');
@@ -416,8 +416,8 @@ const  position = {
       }),
       label: 'electors_regular_members.label',
       fields: [
-        committeeElectorsField('electors_regular_internal', 'internal'),
-        committeeElectorsField('electors_regular_external', 'external')
+        committeeElectorsField('electors_regular_internal', 'internal', false, true),
+        committeeElectorsField('electors_regular_external', 'external', false, true)
       ],
       layout: {
         flex: [100, 100]
@@ -434,8 +434,8 @@ const  position = {
       }),
       label: 'electors_substitute_members.label',
       fields: [
-        committeeElectorsField('electors_substitute_internal', 'internal'),
-        committeeElectorsField('electors_substitute_external', 'external')
+        committeeElectorsField('electors_substitute_internal', 'internal', false, true),
+        committeeElectorsField('electors_substitute_external', 'external', false, true)
       ],
       layout: {
         flex: [100, 100]

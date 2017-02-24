@@ -132,11 +132,86 @@ const contactField = field('institution-managers', {
  * These fields can get a value from the members of a registry.
  * The table with the members data have the same form
  */
-function committeeElectorsField(field_name, registry_type) {
+
+
+let rowCommiteeElectors = function(field_name, serverSide) {
+  let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
+    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'discipline_text']);
+
+
+   // For now, hide client side functionality
+  let display = serverSide;
+  return {
+    row: {
+      fields: computed('', function() {
+        // all electors tables have ena extra column
+        if(field_name.startsWith('electors')) {
+          return ['id',
+            i18nField('last_name', {label: 'last_name.label'}),
+            i18nField('first_name', {label: 'first_name.label'}),
+            i18nField('department.title', {label: 'department.label'}),
+            i18nField('department.institution.title'),
+            'is_foreign_descr',
+            field('email', {label: 'email.label'}),
+            'active_elections'
+          ];
+        }
+        else {
+          return ['id',
+            i18nField('last_name', {label: 'last_name.label'}),
+            i18nField('first_name', {label: 'first_name.label'}),
+            i18nField('department.title', {label: 'department.label'}),
+            i18nField('department.institution.title'),
+            'is_foreign_descr',
+            field('email', {label: 'email.label'}),
+          ];
+        }
+      }),
+      actions: ['goToDetails'],
+      actionsMap: {
+        goToDetails: goToDetails(undefined, false, false)
+      }
+    },
+    paginate: {
+      active: display,
+      serverSide: serverSide,
+      limits: [10, 20, 30]
+    },
+    filter: {
+      search: true,
+      searchPlaceholder: 'search.placeholder_members',
+      serverSide: serverSide,
+      active: display,
+      searchFields: searchFields,
+      meta: {
+        fields: [
+          field('user_id', {type: 'string'}),
+          field('institution', {
+            type: 'model',
+            autocomplete: true,
+            displayAttr: 'title_current',
+            modelName: 'institution',
+          }),
+          field('rank')
+        ]
+      }
+    },
+    sort: {
+      serverSide: serverSide,
+      active: display,
+      fields: sortFields
+    }
+  };
+};
+
+
+
+function committeeElectorsField(field_name, registry_type, modelMetaSide, selectModelMetaSide) {
   let label = `registry.type.${registry_type}`;
 
   return field(field_name, {
     label: label,
+    refreshValueQuery: modelMetaSide,
     disabled: computed('model.changeset.committee_set_file', 'model.changeset.electors_set_file', function(){
       let file1 = get(this, 'model.changeset.committee_set_file');
       let file2 = get(this, 'model.changeset.electors_set_file');
@@ -146,8 +221,9 @@ function committeeElectorsField(field_name, registry_type) {
         return !(file2 && file2.content);
       }
     }),
-    query: computed('position', function() {
+    query: computed('position', function(table, store, field, params) {
       return function(table, store, field, params) {
+        // TODO: Retrieve department id doesn't work
         let departmentID = table.get("form.changeset.department.id");
         return store.query('registry', {department: departmentID}).then(function (registries) {
           /*
@@ -160,37 +236,10 @@ function committeeElectorsField(field_name, registry_type) {
       };
     }),
     modelMeta: {
-      row: {
-        fields: computed('', function() {
-          // all electors tables have ena extra column
-          if(field_name.startsWith('electors')) {
-            return ['id',
-              i18nField('last_name', {label: 'last_name.label'}),
-              i18nField('first_name', {label: 'first_name.label'}),
-              i18nField('department.title', {label: 'department.label'}),
-              i18nField('department.institution.title'),
-              'is_foreign_descr',
-              field('email', {label: 'email.label'}),
-              'active_elections'
-            ];
-          }
-          else {
-            return ['id',
-              i18nField('last_name', {label: 'last_name.label'}),
-              i18nField('first_name', {label: 'first_name.label'}),
-              i18nField('department.title', {label: 'department.label'}),
-              i18nField('department.institution.title'),
-              'is_foreign_descr',
-              field('email', {label: 'email.label'}),
-            ];
-          }
-        }),
-        actions: ['goToDetails'],
-        actionsMap: {
-          goToDetails: goToDetails(undefined, false, false)
-        }
-      },
+      row: rowCommiteeElectors
     },
+    modelMeta: rowCommiteeElectors(field_name, modelMetaSide),
+    selectModelMeta: rowCommiteeElectors(field_name, selectModelMetaSide),
     displayComponent: 'gen-display-field-table'
 
   });
