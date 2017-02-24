@@ -32,6 +32,7 @@ logger = logging.getLogger('apella')
 users_by_username = defaultdict(list)
 users_by_shibboleth_id = defaultdict(list)
 candidate_assistant_professors = {}
+migrated_candidacies = defaultdict(list)
 
 
 def get_obj(id_str, model):
@@ -236,9 +237,6 @@ def remove_attr_files(obj):
 def migrate_file(old_file, new_user, source, source_id):
 
     if old_file.file_type not in FILE_KINDS_MAPPING[source]:
-        logger.info(
-            'failed to migrate file, unknown file_type %s for %s' %
-            (old_file.file_type, source))
         return
 
     updated_at = strip_timezone(old_file.updated_at.replace(tzinfo=eet)) \
@@ -713,6 +711,9 @@ def migrate_candidacy_files(new_candidacy):
 @transaction.atomic
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
 
+    if migrated_candidacies.get(old_candidacy.candidacy_serial):
+        return
+
     state = 'cancelled' if old_candidacy.withdrawn_at else 'posted'
     if old_candidacy.withdrawn_at:
         withdrawn_at = datetime.strptime(
@@ -731,6 +732,7 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
             re.match('t', old_candidacy.open_to_other_candidates, re.I))
         candidacy.submitted_at = old_candidacy.submitted_at
         candidacy.save()
+        migrated_candidacies[old_candidacy.candidacy_serial].append(candidacy)
     else:
         candidacy = Candidacy.objects.create(
             candidate=new_candidate,
@@ -744,6 +746,7 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
 
         candidacy.code = str(candidacy.id)
         candidacy.save()
+        migrated_candidacies[old_candidacy.candidacy_serial].append(candidacy)
         logger.info(
             'migrated candidacy %s, to %s' %
             (old_candidacy.candidacy_serial, candidacy.id))
