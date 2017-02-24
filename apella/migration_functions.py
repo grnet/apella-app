@@ -9,6 +9,7 @@ from django.db import transaction, DataError
 from django.conf import settings
 from django.db.utils import IntegrityError
 from django.db.models import Min
+from django.core.exceptions import MultipleObjectsReturned
 
 from apella.models import ApellaUser, MultiLangFields, Candidate, \
     Institution, Department, Professor, InstitutionManager, \
@@ -690,6 +691,12 @@ def migrate_candidacies(position=None, candidate_user=None):
         except Position.DoesNotExist:
             logger.info(
                 'cannot migrate candidacy %s: position %s does not exist' %
+                (old_candidacy.candidacy_serial,
+                    old_candidacy.position_serial))
+            continue
+        except MultipleObjectsReturned:
+            logger.error(
+                'MultipleObjectsReturned: cannot migrate candidacy %s: position %s' %
                 (old_candidacy.candidacy_serial,
                     old_candidacy.position_serial))
             continue
