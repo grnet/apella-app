@@ -30,5 +30,5 @@ where
     and p.phase_id = pp.id
     and p.permanent is true
     and p.subject_id = su.id
-    and p.id in :positions_to_migrate
+    -- and p.id in :positions_to_migrate
 ) to '/tmp/OldApellaPositionMigrationData.csv' with csv header delimiter ',';
