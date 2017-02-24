@@ -281,7 +281,31 @@ const  position = {
           title, department, description, discipline, subject_area, subject;
         if((role === 'helpdeskadmin' || role === 'helpdeskuser') && state === 'posted') {
           title = 'title';
-          department = 'department';
+          department = field('department', {
+            autocomplete: true,
+            required: true,
+            query: function(table, store, field, params) {
+              // on load sort by title
+              let locale = get(table, 'i18n.locale');
+              let ordering_param = {
+                ordering: `title__${locale}`
+              };
+              let query;
+
+              // If the field is editable, department field
+              // is a select list with all the deparments that belong to the
+              // position's institution
+
+              return field.get('model').get('department').then(function(dep){
+                return dep.get('institution').then(function(ins){
+                  let id = get(ins, 'id');
+                  query = assign({}, { institution: id }, ordering_param);
+                  return store.query('department', query);
+                })
+              })
+
+            }
+          });
           description = 'description';
           discipline = 'discipline';
           subject_area = 'subject_area';
