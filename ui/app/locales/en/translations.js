@@ -456,6 +456,7 @@ export default {
   'rejected': 'Rejected',
   'verified': 'Verified',
   'pending_verification': 'Pending verification',
+  'not_requested_verification': 'There is no verification request',
   // translations for professor rank dropdown
   'Professor': 'Professor',
   'Associate Professor': 'Associate Professor',

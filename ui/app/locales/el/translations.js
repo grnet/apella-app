@@ -459,6 +459,7 @@ export default {
   'rejected': 'Απορριφθείς',
   'verified': 'Πιστοποιημένος',
   'pending_verification': 'Αναμένεται πιστοποίηση',
+  'not_requested_verification': 'Δεν έχει γίνει αίτηση πιστοποίησης',
   // translations for professor rank dropdown
   'Professor': 'Καθηγητής',
   'Associate Professor': 'Αναπληρωτής Καθηγητής',

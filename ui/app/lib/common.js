@@ -155,7 +155,7 @@ const VerifiedUserMixin = Ember.Mixin.create({
     if (get(this, 'verification_pending')) {
       return get(this, 'i18n').t('pending_verification');
     }
-    return '-';
+    return get(this, 'i18n').t('not_requested_verification');
   }),
 });
 
@@ -178,10 +178,10 @@ function get_registry_members(registry, store, params) {
 
 // Helper to resolve model relations along with store query entries.
 //
-// Given a store.query result modify query promise in order to resolve 
-// after nested per per record relations are also resolved. After each 
-// nested relation is resolved the initial query result can be used in 
-// views, such as a list view, and be sure that all used nested relational 
+// Given a store.query result modify query promise in order to resolve
+// after nested per per record relations are also resolved. After each
+// nested relation is resolved the initial query result can be used in
+// views, such as a list view, and be sure that all used nested relational
 // data are preloaded and immediatelly accessible in templates.
 function preloadRelations(model, ...keys) {
 
