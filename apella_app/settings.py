@@ -198,9 +198,17 @@ if not LOGGING:
         'loggers': {
             '': {
                 'handlers': ['console', 'file'],
-                'level': 'INFO'
-            }
-        }
+                'level': 'INFO',
+            },
+            'django.security': {
+                'handlers': ['console', 'file'],
+                'level': 'INFO',
+            },
+            'django': {
+                'handlers': ['console', 'file'],
+                'level': 'INFO',
+            },
+        },
     }
 
 
