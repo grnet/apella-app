@@ -31,6 +31,7 @@ if LEGACY_URL:
 MIGRATE_LEGACY = bool(LEGACY_URL)
 TOKEN_LOGIN_URL = urljoin(BASE_URL, API_PREFIX, settings.TOKEN_LOGIN_URL)
 TOKEN_REGISTER_URL = urljoin(BASE_URL, API_PREFIX, settings.TOKEN_REGISTER_URL)
+LOG_SHIBBOLETH_DATA = getattr(settings, 'LOG_SHIBBOLETH_DATA', False)
 
 
 logger = logging.getLogger(__name__)
@@ -164,6 +165,11 @@ def legacy_login(request):
         headers = debug_headers
 
     shibboleth_data = dict(zip(*zip(*shibboleth_headers(headers))))
+    if LOG_SHIBBOLETH_DATA:
+        m = "shibboleth data for %r: %r %r"
+        m %= (request.path, shibboleth_data, headers.keys())
+        logger.info(m)
+
     old_apella_shibboleth_id = shibboleth_data.get('remote_user', None)
 
     try:
@@ -204,9 +210,15 @@ def login(request):
         headers = debug_headers
 
     shibboleth_data = dict(zip(*zip(*shibboleth_headers(headers))))
+    if LOG_SHIBBOLETH_DATA:
+        m = "shibboleth data for %r: %r %r"
+        m %= (request.path, shibboleth_data, headers.keys())
+        logger.info(m)
+
     apella2_shibboleth_id = shibboleth_data.get('remote_user', None)
 
     if not apella2_shibboleth_id:
+        logger.info("cannot find remote_user in headers: %r" % shibboleth_data)
         return HttpResponseBadRequest("invalid identifier")
 
     try:
@@ -219,11 +231,6 @@ def login(request):
     UserModel = model_from_data(shibboleth_data)
     user_data = get_user_data(shibboleth_data)
     display_data = get_display_data(shibboleth_data)
-
-    logger.debug('login %r', user_data)
-    if getattr(settings, 'LOG_SHIBBOLETH_DATA', False):
-        logger.info(shibboleth_data)
-        logger.info(headers.keys())
 
     user = None
     token = None
