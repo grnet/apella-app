@@ -140,16 +140,19 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
         if not self.is_professor() and not self.is_candidate():
             return False
         user = request.user
-        candidacy_set = user.candidacy_set.filter(
-            state='posted')
-        if not candidacy_set:
-            return False
-
-        position_ids = candidacy_set.values_list(
+        position_ids = user.candidacy_set.values_list(
             'position', flat=True)
-        user_candidacy_set = self.candidacy_set.filter(
-            state='posted')
-        return user_candidacy_set.filter(position__in=position_ids)
+        user_candidacy_set = self.candidacy_set.all()
+        return user_candidacy_set.filter(
+            position__in=position_ids).exists()
+
+    def check_resource_state_is_dep_candidate(self, row, request, view):
+        if not request.user.is_professor():
+            return False
+        departments = self.candidacy_set.values_list(
+            'position__department', flat=True)
+        return request.user.professor.department.id in \
+            departments
 
 
 def generate_filename(apellafile, filename):

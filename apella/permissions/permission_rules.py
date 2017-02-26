@@ -485,6 +485,7 @@ PERMISSION_RULES = [
     ('user-interests', 'partial_update', 'candidate', '*', 'owned', ''),
     ('users', 'retrieve', 'professor', '*', 'owned', ''),
     ('users', 'retrieve', 'professor', '*', 'is_cocandidate', ''),
+    ('users', 'retrieve', 'professor', '*', 'is_dep_candidate', ''),
     ('users', 'retrieve', 'candidate', '*', 'owned', ''),
     ('users', 'retrieve', 'candidate', '*', 'is_cocandidate', ''),
     ('users', 'retrieve', 'assistant', '*', 'owned', ''),
