@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import buildMessage from 'ember-changeset-validations/utils/validation-errors';
 import moment from 'moment';
 import ENV from 'ui/config/environment';
 import _ from 'lodash/lodash';
@@ -18,7 +17,7 @@ export function afterToday(options) {
     if (!value || moment(value).isAfter(TOMORROW)) {
       return true;
     } else {
-      return `${moment(value).format(DATE_FORMAT)} should be after today`;
+      return 'afterToday.message';
     }
   };
 }
@@ -28,7 +27,7 @@ export function beforeToday(options) {
     if (!value || moment(value).isBefore(TODAY)) {
       return true;
     } else {
-      return `${moment(value).format(DATE_FORMAT)}  should be before today`;
+      return 'beforeToday.message';
     }
   };
 }
@@ -58,7 +57,7 @@ export function afterDays(options) {
     if (moment(value).isAfter(nextDate)) {
       return true;
     } else {
-      return `End date should be ${days} days after start date`;
+      return `ends${days}After.message`;
     }
   };
 }

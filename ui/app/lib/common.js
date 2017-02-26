@@ -134,7 +134,7 @@ const urlValidator = [
   validate.format({type:'url'}),
   validate.format({
     regex: /^(https:\/\/|http:\/\/)/i,
-    message: 'It should start with http or https'})
+    message: 'urlStarts.message'})
 ]
 
 const VerifiedUserMixin = Ember.Mixin.create({
