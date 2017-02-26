@@ -16,6 +16,7 @@ from apella.helpers import assistant_can_edit, professor_participates,\
 
 from apella.util import safe_path_join
 
+
 class MultiLangFields(models.Model):
     el = models.CharField(max_length=500, blank=True, null=True)
     en = models.CharField(max_length=500, blank=True, null=True)
@@ -80,7 +81,8 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     shibboleth_id = models.CharField(
         max_length=255, unique=True, null=True, default=None)
     shibboleth_idp = models.CharField(max_length=255, blank=True)
-    shibboleth_schac_home_organization = models.CharField(max_length=255, blank=True)
+    shibboleth_schac_home_organization = models.CharField(
+        max_length=255, blank=True)
     shibboleth_registration_key = models.CharField(
         max_length=255, null=True, default=None)
     shibboleth_migration_key = models.CharField(
@@ -170,6 +172,7 @@ class OverwriteStorage(FileSystemStorage):
             os.remove(safe_path_join(settings.MEDIA_ROOT, name))
         return name
 
+
 class ApellaFile(models.Model):
     id = models.BigIntegerField(primary_key=True)
     owner = models.ForeignKey(ApellaUser)
@@ -255,6 +258,9 @@ class ApellaFile(models.Model):
             return True
         if self.is_profile_file and is_owner:
             return True
+        if self.file_kind == 'assistant_files' and user.is_manager():
+            position = self.position_assistant_files.all()[0]
+            return position.state in ['posted', 'electing', 'revoked']
         return False
 
     def check_resource_state_public_file(self, row, request, view):
