@@ -9,7 +9,7 @@ from rest_framework.decorators import detail_route
 from rest_framework.serializers import ValidationError
 from rest_framework.exceptions import PermissionDenied
 
-from django.db.models import ProtectedError, Min, Q
+from django.db.models import ProtectedError, Min, Q, Max
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
@@ -33,6 +33,7 @@ from apella.serials import get_serial
 
 
 today_min = datetime.combine(date.today(), time())
+
 
 class DestroyProtectedObject(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
@@ -164,8 +165,6 @@ class PositionMixin(object):
                 queryset = queryset.filter(Q(state='posted') &
                                            Q(ends_at__gt=now))
 
-
-
         if 'pk' in self.kwargs:
             return queryset.filter(id=self.kwargs['pk'])
         else:
@@ -208,10 +207,16 @@ class CandidacyList(object):
         if 'pk' in self.kwargs:
             queryset = queryset.filter(id=self.kwargs['pk'])
         else:
-            ids = queryset.values('code').annotate(Min('id')).values('id__min')
+            ids = queryset.values('code').annotate(Min('id')). \
+                values_list('id__min', flat=True)
             queryset = queryset.filter(id__in=ids)
+            if 'latest' in self.request.query_params:
+                q2 = queryset.values('candidate').annotate(Max('id')). \
+                    values_list('id__max', flat=True)
+                queryset = queryset.filter(id__in=q2)
         if not user.is_helpdesk():
             queryset = queryset.exclude(state='draft')
+
         return queryset
 
     def update(self, request, pk=None):
