@@ -689,6 +689,11 @@ class Candidacy(CandidateProfile):
         return self.position.ends_at < datetime.utcnow() and \
             self.before_electors_meeting(0)
 
+    def check_resource_state_is_dep_candidacy(self, row, request, view):
+        if not request.user.is_professor():
+            return False
+        return self.position.department == request.user.professor.department
+
 
 class Registry(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)

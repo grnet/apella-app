@@ -89,6 +89,7 @@ PERMISSION_RULES = [
     ('candidacies', 'retrieve', 'institutionmanager', '*', 'owned', '4.3.16'),
     ('candidacies', 'retrieve', 'professor', '*', 'others_can_view', '1.3.5'),
     ('candidacies', 'retrieve', 'professor', '*', 'owned', '1.3.5'),
+    ('candidacies', 'retrieve', 'professor', '*', 'is_dep_candidacy', ''),
     ('candidacies', 'retrieve', 'professor', '*', 'participates', '1.3.5'),
     ('candidacies', 'history', 'institutionmanager', '*', 'owned', '4.3.9'),
     ('candidacies', 'history', 'assistant', '*', 'owned_by_assistant', '4.3.9'),
