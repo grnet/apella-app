@@ -226,10 +226,10 @@ const  position = {
       }
     },
     electors_substitite: {
-      label: 'electors_substitute_members.label',
+      label: 'electors_sub_members.label',
       fields: [
-        committeeElectorsField('electors_substitute_internal', 'internal', false, true),
-        committeeElectorsField('electors_substitute_external', 'external', false, true)
+        committeeElectorsField('electors_sub_internal', 'internal', false, true),
+        committeeElectorsField('electors_sub_external', 'external', false, true)
       ],
       layout: {
         flex: [100, 100]
@@ -436,15 +436,15 @@ const  position = {
       text: computed('model.department_dep_number', function(){
         let num = get(this, 'model.department_dep_number');
         if (num > 40) {
-          return 'fieldsets.text.electors_substitute_big';
+          return 'fieldsets.text.electors_sub_big';
         } else {
-          return 'fieldsets.text.electors_substitute_small';
+          return 'fieldsets.text.electors_sub_small';
         }
       }),
-      label: 'electors_substitute_members.label',
+      label: 'electors_sub_members.label',
       fields: [
-        committeeElectorsField('electors_substitute_internal', 'internal', false, true),
-        committeeElectorsField('electors_substitute_external', 'external', false, true)
+        committeeElectorsField('electors_sub_internal', 'internal', false, true),
+        committeeElectorsField('electors_sub_external', 'external', false, true)
       ],
       layout: {
         flex: [100, 100]
