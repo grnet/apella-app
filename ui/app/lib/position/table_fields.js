@@ -20,7 +20,10 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
     valueQuery: function(store, params, model, value) {
       let position_id = model.get('id');
       // no use of params for now
-      let query = {position: position_id};
+      let query = {
+        position: position_id,
+        latest: true
+      };
       return store.query('candidacy', query);
     },
     label: null,
