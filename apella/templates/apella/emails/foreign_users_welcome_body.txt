@@ -1,0 +1,1 @@
+{{ user.name_el }} {{ user.name_en }}
