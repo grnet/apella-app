@@ -59,7 +59,7 @@ function  goToDetails(type, hidden, calc, calc_params) {
         // should perform permissions checks?
         if(calc) {
           // is user candidate for position?
-          if(calc_params){
+          if(calc_params) {
             let candidate_user_link = get(this, 'model').belongsTo('candidate').link(),
               candidate_user_id = candidate_user_link.split('/').slice(-2)[0],
               me_user_id = get(this, 'session.session.authenticated.user_id') + '',

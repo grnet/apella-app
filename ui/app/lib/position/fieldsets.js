@@ -107,12 +107,14 @@ const  position = {
       fields: computed('user.role','user.user_id', 'user.id', 'model.electors',
         'model.committee', 'model.can_apply', function() {
         let user = get(this, 'user'),
+          user_id = get(user, 'user_id') + '',
           role = get(user, 'role'),
           position = get(this, 'model'),
           type = 'candidacy',
           hidden = false,
           calculate = false,
-          is_position_candidate = false;
+          is_position_candidate = false,
+          store = get(position, 'store');
         /*
          * Helpdesk user and admin should see candidacies' details.
          * If an assistant or a manager is allowed to see a position should see
@@ -147,29 +149,36 @@ const  position = {
            * Here we use this property to check if the logged in user is a
            * candidate of the position.
            */
-          is_position_candidate = !get(position, 'can_apply');
-          hidden = undefined;
-          calculate = true;
+          let position_candidates = [];
+          store.peekAll('candidacy').forEach(function(candidacy) {
+            let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0],
+              candidate_id = candidacy.belongsTo('candidate').link().split('/').slice(-2)[0];
+            if(candidacy_pos_id === position.id) {
+              position_candidates.push(candidate_id);
+            }
+          });
+
+          if(position_candidates.indexOf(user_id) > -1) {
+            is_position_candidate = true;
+          }
           if (role === 'professor') {
             let electors = position.hasMany('electors').ids(),
               committee = position.hasMany('committee').ids(),
               related_profs = _.union(electors, committee),
               professor_id = user.id + '',
-              user_id = user.user_id,
               is_related_prof = related_profs.indexOf(professor_id) > -1;
             if(is_related_prof) {
               hidden = false;
               calculate = false;
             }
+            else {
+              hidden = undefined;
+              calculate = true;
+            }
           }
-          else if(is_position_candidate) {
-            // check if owns or othersCanView
+          else if (role === 'candidate') {
             hidden = undefined;
             calculate = true;
-          }
-          else {
-            hidden = true;
-            calculate = false;
           }
         }
         return [candidaciesField(type, hidden, calculate, is_position_candidate)]
