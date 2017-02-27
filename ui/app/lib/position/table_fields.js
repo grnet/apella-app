@@ -208,7 +208,7 @@ let rowCommiteeElectors = function(field_name, serverSide) {
 
 function committeeElectorsField(field_name, registry_type, modelMetaSide, selectModelMetaSide) {
   let label = `registry.type.${registry_type}`;
-
+  console.log(field_name)
   return field(field_name, {
     label: label,
     refreshValueQuery: modelMetaSide,
@@ -226,18 +226,19 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
         // TODO: Retrieve department id doesn't work
         let departmentID = table.get("form.changeset.department.id");
         return store.query('registry', {department: departmentID}).then(function (registries) {
-          /*
-           * There are max 2 registries per department
-           * Here we take the external (type 2) registry
-           */
+            /*
+             * There are max 2 registries per department
+             * Here we take the external (type 2) registry
+             */
           let registry = registries.findBy('type', registry_type);
-          return get_registry_members(registry, store, params);
-        });
+          if(!registry) {
+            return []
+          }
+          else
+            return get_registry_members(registry, store, params);
+          });
       };
     }),
-    modelMeta: {
-      row: rowCommiteeElectors
-    },
     modelMeta: rowCommiteeElectors(field_name, modelMetaSide),
     selectModelMeta: rowCommiteeElectors(field_name, selectModelMetaSide),
     displayComponent: 'gen-display-field-table'
