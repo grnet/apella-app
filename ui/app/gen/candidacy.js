@@ -239,7 +239,10 @@ export default ApellaGen.extend({
       serverSide: true
     },
     filter: {
-      active: false,
+      active: true,
+      meta: {
+        fields: ['state']
+      },
       serverSide: true,
       search: true,
       searchFields: ['position.code', 'position.title', 'candidate.id'],
