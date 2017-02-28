@@ -211,7 +211,7 @@ class CandidacyList(object):
                 values_list('id__min', flat=True)
             queryset = queryset.filter(id__in=ids)
             if 'latest' in self.request.query_params:
-                q2 = queryset.values('candidate').annotate(Max('id')). \
+                q2 = queryset.values('candidate', 'position').annotate(Max('id')). \
                     values_list('id__max', flat=True)
                 queryset = queryset.filter(id__in=q2)
         if not user.is_helpdesk():
