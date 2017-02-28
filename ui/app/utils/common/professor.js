@@ -41,7 +41,7 @@ const FILES_FIELDSET = {
 };
 
 
-const FIELDS = computed('model.is_foreign', 'model.changeset.cv_in_url', function(){
+const FIELDS = computed('model.is_foreign', function(){
   let f = [
     'rank',
     'discipline_text',
