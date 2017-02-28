@@ -14,7 +14,7 @@ let candidacy_states = [
 export default DS.Model.extend({
   candidate: DS.belongsTo('user', {label: 'candidacy.label.candidate', formAttrs: {optionLabelAttr: 'full_name_current'}}),
   position: DS.belongsTo('position', {label: 'candidacy.label.position', formAttrs: {optionLabelAttr: 'code_and_title'}}),
-  state: DS.attr({type: 'select', candidacy_states, defaultValue: 'posted'}),
+  state: DS.attr({type: 'select', choices: candidacy_states, defaultValue: 'posted'}),
   state_verbose: computeI18NChoice('state', candidacy_states),
   othersCanView: DS.attr({type: 'boolean', label: 'candidacy.label.others_can_view', displayComponent: 'boolean-display'}),
   submitted_at: DS.attr('date'),
