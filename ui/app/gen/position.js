@@ -132,8 +132,10 @@ export default ApellaGen.extend({
       let user = get(this, 'session.session.authenticated'),
         role = user.role;
       if(role === 'professor') {
-        let department_id = user.department.split('/').slice(-2)[0];
-        params.department = department_id;
+        if (user.department) {
+          let department_id = user.department.split('/').slice(-2)[0];
+          params.department = department_id;
+        }
       }
       return this.store.query('position', params);
     },
