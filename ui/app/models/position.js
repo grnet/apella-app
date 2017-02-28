@@ -46,7 +46,8 @@ export default DS.Model.extend({
     let promise = get(this, 'store').query('candidacy', {
       position: position_id,
       state: 'posted',
-      candidate: candidate_id
+      candidate: candidate_id,
+      latest: true
     });
     return DS.PromiseArray.create({promise})
   }),
