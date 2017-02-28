@@ -261,6 +261,15 @@ class ApellaFile(models.Model):
         if self.file_kind == 'assistant_files' and user.is_manager():
             position = self.position_assistant_files.all()[0]
             return position.state in ['posted', 'electing', 'revoked']
+        if self.file_kind == 'attachment_files':
+            candidacy = self.attachment_files.all()[0]
+            return candidacy.check_resource_state_one_before_electors_meeting(
+                row, request, view)
+        if self.file_kind == 'self_evaluation_report':
+            candidacy = self.self_evaluation_report.all()[0]
+            return candidacy.check_resource_state_five_before_electors_meeting(
+                row, request, view)
+
         return False
 
     def check_resource_state_public_file(self, row, request, view):
