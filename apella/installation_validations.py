@@ -68,7 +68,7 @@ def validate_new_file_permissions():
         for filename in filenames:
             filecount += 1
             if filecount & 1023 == 0:
-                m = "Validated %d old files so far" % filecount
+                m = "Validated %d new files so far" % filecount
                 logger.info(m)
             read_test_path = safe_path_join(dirpath, filename)
             try:
