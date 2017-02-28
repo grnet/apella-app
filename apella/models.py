@@ -151,6 +151,8 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     def check_resource_state_is_dep_candidate(self, row, request, view):
         if not request.user.is_professor():
             return False
+        if request.user.is_foreign_professor():
+            return False
         departments = self.candidacy_set.values_list(
             'position__department', flat=True)
         return request.user.professor.department.id in \
@@ -706,6 +708,8 @@ class Candidacy(CandidateProfile):
 
     def check_resource_state_is_dep_candidacy(self, row, request, view):
         if not request.user.is_professor():
+            return False
+        if request.user.is_foreign_professor():
             return False
         return self.position.department == request.user.professor.department
 
