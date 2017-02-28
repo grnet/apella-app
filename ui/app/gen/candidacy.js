@@ -213,7 +213,13 @@ export default ApellaGen.extend({
         before_deadline =  moment().add(1, 'days').isBefore(electors_at);
       }
       return candidacy_not_cancelled && (position_open || before_deadline) && owned;
-    })
+    }),
+
+    // temporarily set to true
+    // should return true is model.position.department == user.department
+    is_dep_candidacy: computed('model.position.department.id', 'user.department', function(){
+      return true;
+    }),
 
   },
 
