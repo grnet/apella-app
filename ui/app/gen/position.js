@@ -9,6 +9,7 @@ import {
   goToDetails, applyCandidacy, positionActions
 } from 'ui/utils/common/actions';
 import {position} from 'ui/lib/position/fieldsets';
+import {pick_edit_fs, pick_details_fs, pick_create_fs} from 'ui/lib/position/pick_fs_functions';
 
 /*
  * This gen is used for displaying:
@@ -18,114 +19,12 @@ import {position} from 'ui/lib/position/fieldsets';
  * - Professors: positions of their department, in all states
  */
 
-
-// TODO: DRY position and position_recent
-
 const {
   computed,
   computed: { reads },
   get,
   merge, assign
 } = Ember;
-
-const pick_edit_fs = function() {
-  let role = get(this, 'role'),
-    starts_at = get(this, 'model.starts_at'),
-    ends_at = get(this, 'model.ends_at'),
-    state = get(this, 'model.state'),
-    now = moment(),
-    before_open = now.isBefore(starts_at),
-    open = now.isBetween(starts_at, ends_at, null, []),
-    fs = position.edit,
-    head = [fs.basic, fs.details],
-    res;
-
-  if(state === 'posted') {
-    if(before_open) {
-      res = head;
-    }
-    else if (open) {
-      res = head.concat(fs.candidacies);
-    }
-    // closed
-    else {
-      res = head.concat(fs.candidacies, fs.electors_regular, fs.electors_substitite);
-    }
-  }
-  else if(state === 'cancelled') {
-      res = head;
-  }
-  // in all other states
-  else {
-    res = head.concat(fs.candidacies);
-  }
-
-  if (state === 'electing') {
-    res = res.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election);
-  }
-
-  return res.concat(fs.assistant_files);
-};
-
-/*
- * pick_details_fs_by_state:  same as position_recent, but there is no need to
- * have it separately then pick_details_fs
- */
-const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies) {
-  let res;
-
-  if(state === 'posted') {
-    if(before_open) {
-      res = head;
-    }
-    else {
-      if (display_candidacies) {
-        res =  head.concat(fs.candidacies);
-      }
-      else {
-        res = head;
-      }
-    }
-  }
-  else if(state === 'cancelled') {
-      res =  head/*.concat(fs.history)*/;
-  }
-  // in all other states
-  else {
-    if (display_candidacies) {
-      res = head.concat(fs.candidacies, fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election/*, fs.history, */);
-    }
-    else {
-      res = head.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election/*, fs.history, */);
-    }
-  }
-  return res.concat(fs.assistant_files);
-};
-
-const pick_details_fs = function() {
-  let role = get(this, 'role'),
-    user_id = get(this, 'user.user_id') + '',
-    role_id = get(this, 'user.id') + '',
-    starts_at = get(this, 'model.starts_at'),
-    // ends_at = get(this, 'model.ends_at'),
-    state = get(this, 'model.state'),
-    now = moment(),
-    before_open = now.isBefore(starts_at),
-    fs = position.details,
-    head = [fs.basic, fs.details],
-    position_model = get(this, 'model'),
-    store = get(position_model, 'store'),
-    committees_members_ids, electors_ids, participations_in_position,
-    display_candidacies = true;
-
- return pick_details_fs_by_state(fs, state, before_open, head, display_candidacies);
-};
-
-const pick_create_fs = function() {
-  let fs = position.create;
-  return [fs.basic].concat(fs.details);
-};
-
 
 export default ApellaGen.extend({
   order: 800,
