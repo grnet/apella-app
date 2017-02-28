@@ -177,6 +177,8 @@ export default {
   'assistants.label': 'Assistants',
   'elected.label': 'Elected',
   'state.label': 'State',
+  'status_verbose': 'State',
+  'status_verbose.label': 'State',
   'state_calc_verbose.label': 'State',
   'discipline.label': 'Discipline',
   'position.discipline.label': 'Discipline',
