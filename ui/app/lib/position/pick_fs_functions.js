@@ -49,7 +49,6 @@ const pick_edit_fs = function() {
 
 const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies) {
   let res;
-
   if(state === 'posted') {
     if(before_open) {
       res = head;
@@ -113,12 +112,19 @@ const pick_details_fs = function() {
       display_candidacies = true;
     }
     else if (role === 'professor' && !display_candidacies) {
-      electors_ids = position_model.hasMany('electors').ids();
-      committees_members_ids = position_model.hasMany('committee').ids();
-      participations_in_position = electors_ids.concat(committees_members_ids);
-
-      if (participations_in_position.indexOf(role_id) > -1) {
+      let user_department_id = get(this, 'user.department').split('/').slice(-2)[0],
+        position_department_id = position_model.belongsTo('department').link().split('/').slice(-2)[0];
+      if (user_department_id === position_department_id) {
         display_candidacies = true;
+      }
+      else {
+        electors_ids = position_model.hasMany('electors').ids();
+        committees_members_ids = position_model.hasMany('committee').ids();
+        participations_in_position = electors_ids.concat(committees_members_ids);
+
+        if (participations_in_position.indexOf(role_id) > -1) {
+          display_candidacies = true;
+        }
       }
     }
   }
