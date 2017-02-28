@@ -5,15 +5,11 @@ import {computeI18N, computeI18NChoice, computeDateFormat} from 'ui/lib/common';
 const { computed, get } = Ember,
       CHOICES = ENV.APP.resources;
 
-let candidacy_states = CHOICES.CANDIDACY_STATES.map(function(el){
-  if (el[1] == 'Posted') {
-    return [el[0], 'Submitted']
-  } else if (el[1] == 'Cancelled') {
-    return [el[0], 'Candidacy_cancelled']
-  } else {
-    return el;
-  }
-});
+
+let candidacy_states = [
+  ["posted", "Submitted"],
+  ["cancelled", "Candidacy_cancelled"]
+]
 
 export default DS.Model.extend({
   candidate: DS.belongsTo('user', {label: 'candidacy.label.candidate', formAttrs: {optionLabelAttr: 'full_name_current'}}),
