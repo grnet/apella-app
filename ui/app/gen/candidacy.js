@@ -77,7 +77,7 @@ let CANDIDACY_FIELDSET =  {
       }, {
         replace: true
       }),
-     fileField('attachment_files', 'candidacy', 'attachment_files', {
+      fileField('attachment_files', 'candidacy', 'attachment_files', {
         hint: 'one_before_electors_meeting',
         readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
           let electors_at = get(this, 'model.position.electors_meeting_date');
@@ -91,7 +91,11 @@ let CANDIDACY_FIELDSET =  {
       }, {
         multiple: true
       }),
-      'othersCanView'
+      field('othersCanView', {
+        disabled: computed('model.position.is_open', function(){
+          return !get(this, 'model.position.is_open');
+        })
+     })
     ],
     flex: 100,
 };
