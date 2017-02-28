@@ -1,1 +1,19 @@
-{{ user.name_el }} {{ user.name_en }}
+
+Legitimate recipient: {{ user.name_en }} {{ user.surname_en }}
+
+Dear Sir/Madam,
+
+We would like to inform you about the new APELLA web application that has been created to implement the new legal framework (relevant Ministerial Decision Φ.122.1/6/14241/Ζ2/31.1.2017). It provides for the compilation and maintenance of the registries of the internal and external evaluation members of the Greek Higher Educational Departments and, progressively, all faculty elections and promotions will be managed through it.
+
+Since you have an account in the old application, you do not need to create a new one, but to login to the new application using the same credentials (Username/Password) that you used in the old application, by clicking on the following link:
+
+https://service-apella.grnet.gr/apella/ui/auth/login
+
+All personal data and files from your account on the old APELLA web application have been migrated to the new application.
+
+Please note that if you are interested in submitting a candidacy for a position governed by the new legal framework, the relative functionality is already provided through the new web application.
+
+In order to access the faculty elections and promotions governed by the previous legal framework, you should continue to login to the old web application.
+
+We remain at your disposal for clarifications,
+Apella Helpdesk
