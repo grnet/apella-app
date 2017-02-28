@@ -8,7 +8,6 @@ import moment from 'moment';
 import {
   goToDetails, applyCandidacy, positionActions
 } from 'ui/utils/common/actions';
-import {position} from 'ui/lib/position/fieldsets';
 import {pick_edit_fs, pick_details_fs, pick_create_fs} from 'ui/lib/position/pick_fs_functions';
 
 /*
