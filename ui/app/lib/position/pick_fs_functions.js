@@ -112,7 +112,8 @@ const pick_details_fs = function() {
       display_candidacies = true;
     }
     else if (role === 'professor' && !display_candidacies) {
-      let user_department_id = get(this, 'user.department').split('/').slice(-2)[0],
+      let user_department = get(this, 'user.department') || "",
+        user_department_id = user_department.split('/').slice(-2)[0],
         position_department_id = position_model.belongsTo('department').link().split('/').slice(-2)[0];
       if (user_department_id === position_department_id) {
         display_candidacies = true;
