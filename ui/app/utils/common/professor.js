@@ -69,7 +69,10 @@ const FIELDS = computed('model.is_foreign', 'model.changeset.cv_in_url', functio
 
         let prompt =  this.container.lookup("service:prompt");
         if (check && cv && cv.content) { Ember.run.once(this, () => {
-          prompt.prompt('confirm.cv.professor.unset').then(() => {
+          prompt.prompt({
+            title: 'confirm.cv.professor.unset.title',
+            message: 'confirm.cv.professor.unset.message'
+          }).then(() => {
             let file = get(this, 'model.cv_professor');
             file && file.content && file.content.destroyRecord().then(() => {
               Ember.run.once(this, () => {

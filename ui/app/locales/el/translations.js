@@ -565,4 +565,6 @@ export default {
   'sync.candidacies.success': 'Επιτυχής ενημέρωση υποψηφιοτήτων',
   'elected.full_name.label': 'Εκλεγείς',
   'second_best.full_name.label': 'Αναπληρωματικός',
+  'confirm.cv.professor.unset.title': 'Διαγραφή αρχείου βιογραφικού σημειώματος',
+  'confirm.cv.professor.unset.message': 'Σε περίπτωση που επιλέξετε να συμπληρωσετε το πεδίο \'Υπάρχει url βιογραφικού\' <br>το αρχείο βιογραφικού  σημειώματος που καταχωρίσατε δεν θα ληφθεί υπόψιν.<br> Θέλετε να προχωρήσετε;'
 };
