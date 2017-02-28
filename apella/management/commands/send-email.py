@@ -30,6 +30,11 @@ class Command(ApellaCommand):
             help='Select foreign professors'
         )
         parser.add_argument(
+            '--candidate',
+            dest='candidate',
+            help='Select candidates'
+        )
+        parser.add_argument(
             '--list',
             dest='list',
             help='List emails'
@@ -38,6 +43,7 @@ class Command(ApellaCommand):
     def handle(self, *args, **options):
         template_body = options['template_body']
         shibboleth = options['shibboleth']
+        candidate = options['candidate']
         foreign = options['foreign']
         subject = options['template_subject']
         list_emails = options['list']
@@ -48,9 +54,7 @@ class Command(ApellaCommand):
         if not template_body:
             raise CommandError('no body')
 
-        if shibboleth and foreign or not shibboleth and not foreign:
-            raise CommandError('shibboleth OR foreign')
-
+        emails = []
         if shibboleth:
             emails = OldUsers.objects. \
                 filter(role_status='ACTIVE'). \
@@ -60,6 +64,16 @@ class Command(ApellaCommand):
             emails = OldUsers.objects. \
                 filter(role_status='ACTIVE', is_foreign='t'). \
                 values_list('email', flat=True).distinct()
+        elif candidate:
+            candidates = OldUsers.objects.filter(
+                role_status='ACTIVE', shibboleth_id='',
+                permanent_auth_token='', role='candidate')
+            for c in candidates:
+                if not OldUsers.objects.filter(
+                    email=c.email, role='professor').exists():
+                        emails.append(c.email)
+
+
 
         for email in emails:
             if list_emails:
