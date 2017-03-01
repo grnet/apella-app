@@ -29,11 +29,11 @@ const pick_edit_fs = function() {
     }
     // closed
     else {
-      res = head.concat(fs.candidacies/*, fs.electors_regular, fs.electors_substitite*/);
+      res = head.concat(fs.candidacies, fs.electors_regular, fs.electors_substitite);
     }
   }
   else if(state === 'cancelled') {
-    res = head;
+      res = head;
   }
   // in all other states
   else {
@@ -41,10 +41,10 @@ const pick_edit_fs = function() {
   }
 
   if (state === 'electing') {
-    res = head;
+    res = res.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election);
   }
 
-  return res;
+  return res.concat(fs.assistant_files);
 };
 
 const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies) {
