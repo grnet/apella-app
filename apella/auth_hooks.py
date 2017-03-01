@@ -165,7 +165,7 @@ def authenticate_user(**kwargs):
         logger.info(m)
         return None
 
-    user = migrate_username(username, password)
+    user = migrate_username(username, password, login=True)
     if not user:
         m = "Migration for old username {u!r} failed."
         m = m.format(u=username)
@@ -240,7 +240,8 @@ def migrate_legacy(migration_key, old_apella_shibboleth_id, apella2_shibboleth_i
     return migrate_shibboleth_id(
         apella2_shibboleth_id=apella2_shibboleth_id,
         old_apella_shibboleth_id=old_apella_shibboleth_id,
-        migration_key=migration_key)
+        migration_key=migration_key,
+        login=True)
 
 
 def validate_user_can_verify(user):

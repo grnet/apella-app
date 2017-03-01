@@ -389,7 +389,7 @@ def get_old_users_by_shibboleth_id(shibboleth_id):
 
 
 @transaction.atomic
-def migrate_username(username, password=None):
+def migrate_username(username, password=None, login=False):
     old_users = get_old_users_by_username(username)
     roles = {}
     for old_user in old_users:
@@ -407,12 +407,14 @@ def migrate_username(username, password=None):
         raise AssertionError(m)
 
     for role, old_user in roles.iteritems():
-        return migrate_user(old_user, password=password)
+        return migrate_user(old_user, password=password, login=login)
 
 
 @transaction.atomic
 def migrate_shibboleth_id(apella2_shibboleth_id,
-                          old_apella_shibboleth_id, migration_key=None):
+                          old_apella_shibboleth_id,
+                          migration_key=None,
+                          login=False):
 
     old_users = get_old_users_by_shibboleth_id(old_apella_shibboleth_id)
 
@@ -434,11 +436,13 @@ def migrate_shibboleth_id(apella2_shibboleth_id,
 
     for role, old_user in roles.iteritems():
         return migrate_user(old_user,
-                            apella2_shibboleth_id=apella2_shibboleth_id)
+                            apella2_shibboleth_id=apella2_shibboleth_id,
+                            login=login)
 
 
 @transaction.atomic
-def migrate_user(old_user, password=None, apella2_shibboleth_id=None):
+def migrate_user(
+    old_user, password=None, apella2_shibboleth_id=None, login=False):
 
     new_user = create_or_update_user(
         old_user, password=password,
@@ -448,8 +452,8 @@ def migrate_user(old_user, password=None, apella2_shibboleth_id=None):
         return None
 
     new_user.save()
-
-    migrate_user_role(old_user, new_user)
+    if not login:
+        migrate_user_role(old_user, new_user)
 
     old_user.migrated_at = datetime.utcnow()
     old_user.save()
