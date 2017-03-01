@@ -452,8 +452,7 @@ def migrate_user(
         return None
 
     new_user.save()
-    if not login:
-        migrate_user_role(old_user, new_user)
+    migrate_user_role(old_user, new_user, login=login)
 
     old_user.migrated_at = datetime.utcnow()
     old_user.save()
@@ -550,7 +549,7 @@ def create_or_update_user(
     return new_user
 
 
-def migrate_user_role(old_user, new_user):
+def migrate_user_role(old_user, new_user, login=False):
     role = old_user.role
     if role == 'candidate':
         assistant_professor = \
@@ -559,13 +558,15 @@ def migrate_user_role(old_user, new_user):
             migrate_candidate(old_user, new_user)
         else:
             migrate_candidate_to_assistant_professor(old_user, new_user)
-        migrate_user_profile_files(old_user, new_user)
-        migrate_candidacies(candidate_user=new_user)
+        if not login:
+            migrate_user_profile_files(old_user, new_user)
+            migrate_candidacies(candidate_user=new_user)
     elif role == 'professor':
         migrate_professor(old_user, new_user)
-        migrate_user_profile_files(old_user, new_user)
-        migrate_candidacies(candidate_user=new_user)
-    elif role == 'institutionmanager':
+        if not login:
+            migrate_user_profile_files(old_user, new_user)
+            migrate_candidacies(candidate_user=new_user)
+    elif role == 'institutionmanager' and not login:
         institutionmanager = migrate_institutionmanager(old_user, new_user)
         department_ids = Department.objects.filter(
             institution=institutionmanager.institution).values_list(
