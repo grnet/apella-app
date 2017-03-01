@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.db.models import Q, Max
 from apella.models import InstitutionManager
 
 from apella.util import urljoin
@@ -67,3 +68,114 @@ def send_user_email(user, template_subject, template_body, extra_context=()):
                     [manager.sub_email],
                     fail_silently=False
                 )
+
+
+def send_create_candidacy_emails(candidacy):
+    # send to candidate
+    send_user_email(
+        candidacy.candidate,
+        'apella/emails/candidacy_create_subject.txt',
+        'apella/emails/candidacy_create_to_candidate_body.txt',
+        {'position': candidacy.position})
+
+    # send to managers
+    recipients = candidacy.position.department.institution.\
+        institutionmanager_set.all().filter(manager_role='institutionmanager')
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_create_subject.txt',
+            'apella/emails/candidacy_create_to_manager_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+    # send to secretaries
+    recipients = candidacy.position.department.\
+        institutionmanager_set.all().filter(is_secretary=True)
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_create_subject.txt',
+            'apella/emails/candidacy_create_to_manager_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+
+def send_remove_candidacy_emails(candidacy):
+    # send to candidate
+    send_user_email(
+        candidacy.candidate,
+        'apella/emails/candidacy_remove_subject.txt',
+        'apella/emails/candidacy_remove_to_candidate_body.txt',
+        {'position': candidacy.position})
+
+    # send to managers
+    recipients = candidacy.position.department.institution.\
+        institutionmanager_set.all().filter(manager_role='institutionmanager')
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_manager_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+    # send to secretaries
+    recipients = candidacy.position.department.\
+        institutionmanager_set.all().filter(is_secretary=True)
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_manager_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+    # send to electors
+    recipients = candidacy.position.electors.all()
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_elector_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+    # send to committee
+    recipients = candidacy.position.committee.all()
+    for recipient in recipients:
+        send_user_email(
+            recipient.user,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_committee_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
+
+    # send to cocandidates
+    c_set = candidacy.position.candidacy_set.all()
+    updated = c_set.values('candidate').annotate(Max('updated_at')).\
+        values('updated_at__max')
+    candidacies = c_set.filter(Q(updated_at__in=updated) & Q(state='posted'))
+
+    for r in candidacies:
+        recipient = r.candidate
+        send_user_email(
+            recipient,
+            'apella/emails/candidacy_remove_subject.txt',
+            'apella/emails/candidacy_remove_to_cocandidate_body.txt',
+            {
+                'position': candidacy.position,
+                'candidate': candidacy.candidate
+            })
