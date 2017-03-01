@@ -182,7 +182,7 @@ class CustomPasswordResetView(djoser_views.PasswordResetView):
         if not len(active_users) and not len(active_old_users):
             raise PermissionDenied({"email": "password.user.not.found"})
 
-        new_user = migrate_username(active_old_users[0].username)
+        new_user = migrate_username(active_old_users[0].username, login=True)
         if new_user:
             return [new_user]
         else:
