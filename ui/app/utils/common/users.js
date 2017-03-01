@@ -148,7 +148,7 @@ const USER_FIELDSET_EDIT_VERIFIABLE = {
     'home_phone_number'
   ],
   layout: {
-    flex: [100, 50, 50, 33, 33, 33, 33, 33, 33]
+    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 }
 
@@ -156,7 +156,7 @@ const USER_FIELDSET_EDIT = {
   label: 'fieldsets.labels.user_info',
   fields: USER_FIELDS_EDIT,
   layout: {
-    flex: [50, 50, 33, 33, 33, 33, 33, 33]
+    flex: [50, 50, 50, 50, 50, 50, 50, 50]
   }
 }
 
@@ -164,7 +164,7 @@ const USER_FIELDSET_EDIT = {
 const USER_FIELDSET_EDIT_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
   fields: USER_FIELDS_EDIT_ACADEMIC,
   layout: {
-    flex: [100, 33, 33, 33, 33, 33, 33]
+    flex: [100, 50, 50, 50, 50, 50, 50]
   }
 });
 
@@ -172,7 +172,7 @@ const USER_FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
   fields: USER_FIELDS_REGISTER_ACADEMIC,
   required: USER_FIELDS_REGISTER_REQUIRED_ACADEMIC,
   layout: {
-    flex: [100, 33, 33, 33, 33, 33, 33, 33, 33]
+    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 });
 
@@ -180,7 +180,7 @@ const USER_FIELDSET_REGISTER = Ember.assign({}, USER_FIELDSET_EDIT, {
   fields: USER_FIELDS_REGISTER,
   required: USER_FIELDS_REGISTER_REQUIRED,
   layout: {
-    flex: [50, 50, 50, 50, 33, 33, 33, 33, 33, 33]
+    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 });
 
