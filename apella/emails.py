@@ -1,3 +1,4 @@
+from itertools import chain
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -179,3 +180,25 @@ def send_remove_candidacy_emails(candidacy):
                 'position': candidacy.position,
                 'candidate': candidacy.candidate
             })
+
+
+def send_emails_file(obj, file_kind, extra_context=()):
+
+    if file_kind == 'committee_note':
+        # send to committee, candidates
+        recipients = []
+        committee = [x.user for x in obj.committee.all()]
+        electors = [x.user for x in obj.electors.all()]
+        candidates = [x.candidate for x in obj.candidacy_set.all()]
+        recipients = chain(committee, candidates, electors)
+
+        subject = 'apella/emails/position_set_committee_note_subject.txt'
+        body = 'apella/emails/position_set_committee_note_body.txt'
+
+        for recipient in recipients:
+            send_user_email(
+                recipient,
+                subject,
+                body,
+                {'position': obj})
+    pass
