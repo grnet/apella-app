@@ -275,7 +275,7 @@ export default {
   'committee_set_file.label': 'Decision to form Committee',
   'committee_set_file.hint': 'Το πεδίο "Πρακτικό ορισμού της εισηγητικής επιτροπής" μπορεί να συμπληρωθεί μόνο εάν έχει συμπληρωθεί ημερομηνία σύγκλησης του εκλεκτορικού σώματος για τον ορισμό της επιτροπής.',
   'committee_proposal.label': 'Committee proposal',
-  'committee_note.label': 'Committee note',
+  'committee_note.label': 'Memorandum',
 
   // popup messages translations
   'message.close': 'close',
