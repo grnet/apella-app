@@ -371,20 +371,20 @@ def init_migration_cache():
 
 
 def get_old_users_by_username(username):
-    users = users_by_username.get(username)
+    users = users_by_username.get(username, [])
     if not users:
         if not users_by_username:
             init_migration_cache()
-            users = users_by_username.get(username)
+            users = users_by_username.get(username, [])
     return users
 
 
 def get_old_users_by_shibboleth_id(shibboleth_id):
-    users = users_by_shibboleth_id.get(shibboleth_id)
+    users = users_by_shibboleth_id.get(shibboleth_id, [])
     if not users:
         if not users_by_shibboleth_id:
             init_migration_cache()
-            users = users_by_shibboleth_id.get(shibboleth_id)
+            users = users_by_shibboleth_id.get(shibboleth_id, [])
     return users
 
 
