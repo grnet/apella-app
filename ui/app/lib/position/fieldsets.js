@@ -295,42 +295,37 @@ const  position = {
     basic: {
       label: 'fieldsets.labels.basic_info',
       fields: computed('role', 'state', function() {
+        /*
+         * For posted positions:
+         * - When they are open or closed helpdeskuser and heldeskadmin can
+         *   edit these fields.
+         * - Before they open assistant and manager can edit most of the fields
+         *
+         * In all the other states the fields of this fieldset are disabled.
+         */
+
         let role = get(this, 'role'),
           state = get(this, 'model.state'),
-          title, department, description, discipline, subject_area, subject;
-        if((role === 'helpdeskadmin' || role === 'helpdeskuser') && state === 'posted') {
-          title = 'title';
-          department = field('department', {
-            autocomplete: true,
-            required: true,
-            query: function(table, store, field, params) {
-              // on load sort by title
-              let locale = get(table, 'i18n.locale');
-              let ordering_param = {
-                ordering: `title__${locale}`
-              };
-              let query;
+          is_open = get(this, 'model.is_open'),
+          is_closed = get(this, 'model.is_closed'),
+          title, department, description, discipline, subject_area, subject,
+          disable_fields = true,
+          institution_roles = ['institutionmanager', 'assistant'],
+          helpdesk_roles = ['helpdeskadmin', 'helpdeskuser'];
 
-              // If the field is editable, department field
-              // is a select list with all the deparments that belong to the
-              // position's institution
-
-              return field.get('model').get('department').then(function(dep){
-                return dep.get('institution').then(function(ins){
-                  let id = get(ins, 'id');
-                  query = assign({}, { institution: id }, ordering_param);
-                  return store.query('department', query);
-                })
-              })
-
+        if(state === 'posted') {
+          if(is_open || is_closed) {
+            if(helpdesk_roles.indexOf(role) > -1) {
+              disable_fields = false;
             }
-          });
-          description = 'description';
-          discipline = 'discipline';
-          subject_area = 'subject_area';
-          subject = 'subject';
+          }
+          else {
+            if(institution_roles.indexOf(role) > -1) {
+              disable_fields = false;
+            }
+          }
         }
-        else {
+        if(disable_fields) {
           title = disable_field('title');
           department = disable_field('department');
           description = disable_field('description');
@@ -338,36 +333,114 @@ const  position = {
           subject_area =disable_field('subject_area');
           subject = disable_field('subject');
         }
+        else {
+          title = 'title';
+          department = field('department', {
+            autocomplete: true,
+            required: true,
+            query: function(select, store, field, params) {
+
+              // If the logged in user is an assistant, department field is a
+              // select list  with the assistant's departments
+              let role = get(field, 'session.session.authenticated.role');
+              if (role == 'assistant') {
+                let deps = get(field, 'session.session.authenticated.departments');
+                let promises = deps.map((url) => {
+                  let id = url.split('/').slice(-2)[0];
+                  return store.findRecord('department', id);
+                });
+
+                var promise = Ember.RSVP.all(promises).then((res) => {
+                  return res;
+                }, (error) => {
+                  return [];
+                });
+
+                return DS.PromiseArray.create({
+                  promise : promise
+                });
+              }
+
+              // on load sort by title
+              let locale = get(select, 'i18n.locale');
+              let ordering_param = {
+                ordering: `title__${locale}`
+              };
+              let query;
+              // If the logged in user is an institutionmanager, department field
+              // is a select list with all the deparments that belong to the
+              // institutionmanager's institution
+              if (role == 'institutionmanager') {
+                let user_institution = get(field, 'session.session.authenticated.institution');
+                let id = user_institution.split('/').slice(-2)[0];
+                query = assign({}, { institution: id }, ordering_param);
+              }
+              else {
+                // TODO: Get only the deparments of the institution of the
+                // position
+                query = ordering_param;
+              }
+              return store.query('department', query);
+            }
+          });
+          description = 'description';
+          discipline = 'discipline';
+          subject_area = 'subject_area';
+          subject = 'subject';
+        }
         return [disable_field('code'), disable_field('old_code'), disable_field('state_calc_verbose'),
-        title, department, description, discipline, subject_area, subject];
+        department, title, description, discipline, subject_area, subject];
       }),
       layout: {
-        flex: [50, 50, 50, 50, 100, 100, 50, 50]
+        flex: [50, 50, 50, 50, 100, 100, 100, 50, 50]
       }
     },
     details: {
       label: 'fieldsets.labels.details',
-      fields: computed('role', 'starts_at', 'state', function() {
-        let role = get(this, 'role');
-        // admin user can edit all these fields
-        if(role === 'helpdeskadmin') {
-          return ['fek', 'fek_posted_at', 'starts_at', 'ends_at'];
-        }
-        // other users can edit date fields until the position become open
-        else {
-          let starts_at = this.get('model').get('starts_at'),
-            before_open = moment().isBefore(starts_at),
-            start_field, end_field;
-          if(before_open) {
-            start_field = 'starts_at';
-            end_field = 'ends_at';
+      fields: computed('role', 'is_open', 'is_closed', 'state', function() {
+        /*
+         * For posted positions:
+         * - When they are open or closed, helpdeskuser and heldeskadmin can
+         *   edit these fields.
+         * - Before they open assistant and manager can edit most of the fields
+         *
+         * In all the other states the fields of this fieldset are disabled.
+         */
+
+        let role = get(this, 'role'),
+          state = get(this, 'model.state'),
+          is_open = get(this, 'model.is_open'),
+          is_closed = get(this, 'model.is_closed'),
+          disable_fields = true,
+          institution_roles = ['institutionmanager', 'assistant'],
+          helpdesk_roles = ['helpdeskadmin', 'helpdeskuser'],
+          fek, fek_posted_at, starts_at, ends_at;
+
+        if(state === 'posted') {
+          if(is_open || is_closed) {
+            if(helpdesk_roles.indexOf(role) > -1) {
+              disable_fields = false;
+            }
           }
           else {
-            start_field = disable_field('starts_at');
-            end_field = disable_field('ends_at')
+            if(institution_roles.indexOf(role) > -1) {
+              disable_fields = false;
+            }
           }
-          return [disable_field('fek'), disable_field('fek_posted_at'), start_field, end_field];
         }
+        if(disable_fields) {
+          fek = disable_field('fek');
+          fek_posted_at = disable_field('fek_posted_at');
+          starts_at = disable_field('starts_at');
+          ends_at = disable_field('ends_at');
+        }
+        else {
+          fek = 'fek';
+          fek_posted_at = 'fek_posted_at';
+          starts_at = 'starts_at';
+          ends_at = 'ends_at';
+        }
+        return [fek, fek_posted_at, starts_at, ends_at];
       }),
       layout: {
         flex: [50, 50, 50, 50]
