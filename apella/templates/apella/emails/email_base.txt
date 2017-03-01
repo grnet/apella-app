@@ -1,26 +1,17 @@
 A translation in English follows
 
 Προς χρήστη {{ user.first_name.el }} {{ user.last_name.el }},
-{% block content_el %}{% endblock content_el %}
-{% block more_el %}
-    {% if apella_url %}
-        Mπορείτε να δείτε περισσότερα πραγματοποιώντας <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στον <a href="{{ apella_url }}">σύνδεσμο.</a>
-    {% endif %}
+{% block content_el %}{% endblock content_el %}{% block more_el %}{% if apella_url %}Mπορείτε να δείτε περισσότερα πραγματοποιώντας <a href="{{ login_url }}">login</a> στο λογαριασμό σας και μεταβαίνοντας στον <a href="{{ apella_url }}">σύνδεσμο.</a>{% endif %}
 
 ΠΡΟΣΟΧΗ:
-Παρακαλούμε MHN απαντήσετε σε αυτό το e-mail. Για οποιαδήποτε απορία ή διευκρίνιση μπορείτε να επικοινωνήσετε με το Γραφείο Αρωγής Χρηστών (https://apella.minedu.gov.gr/contact).
-{% endblock more_el %}
+Παρακαλούμε MHN απαντήσετε σε αυτό το e-mail. Για οποιαδήποτε απορία ή διευκρίνιση μπορείτε να επικοινωνήσετε με το Γραφείο Αρωγής Χρηστών (https://apella.minedu.gov.gr/contact).{% endblock more_el %}
 
+---------
 
 To user {{ user.first_name.en }} {{ user.last_name.en }},
-{% block content_en %}{% endblock content_en %}
-{% block more_en %}
-    {% if apella_url %}
-        You can <a href="{{ login_url }}">sign in</a> your account and learn more, by visiting the <a href="{{ apella_url }}">link.</a>
-    {% endif %}
+{% block content_en %}{% endblock content_en %}{% block more_en %}{% if apella_url %}You can <a href="{{ login_url }}">sign in</a> your account and learn more, by visiting the <a href="{{ apella_url }}">link.</a>{% endif %}
 
 NOTICE:
-Please do NOT reply to this e-mail. For any questions or clarification please contact the Helpdesk (https://apella.minedu.gov.gr/en/contact-en).
-{% endblock more_en %}
+Please do NOT reply to this e-mail. For any questions or clarification please contact the Helpdesk (https://apella.minedu.gov.gr/en/contact-en).{% endblock more_en %}
 
 {% block note %}{% endblock note %}
