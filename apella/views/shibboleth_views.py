@@ -258,6 +258,10 @@ def login(request):
                     raise ValueError
         except ValueError:
             msg = 'migration.error'
+            logger.error(
+                "failed to migrate old_apella_shibboleth_id %s to "
+                "apella2_shibboleth_id %s" %
+                (old_apella_shibboleth_id, apella2_shibboleth_id))
             return HttpResponseRedirect(TOKEN_LOGIN_URL + "#error=%s" % msg)
 
         logger.info("legacy id %s migrated to %s", legacy, apella2_shibboleth_id)

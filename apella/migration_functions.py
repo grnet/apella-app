@@ -495,6 +495,9 @@ def create_or_update_user(
         new_user.mobile_phone_number=old_user.mobile
         new_user.home_phone_number=old_user.phone
         new_user.email = old_user.email
+        logger.info(
+            'updated user %s from user_id %s' %
+            (new_user.id, old_user.user_id))
 
     except ApellaUser.DoesNotExist as e:
         first_name = MultiLangFields.objects.create(
