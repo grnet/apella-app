@@ -27,7 +27,8 @@ from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 from apella.serializers.position import copy_candidacy_files
 from apella.migration_functions import migrate_user_profile_files
-from apella.emails import send_user_email
+from apella.emails import send_user_email, send_emails_file
+
 
 from apella.util import urljoin, safe_path_join
 from apella.serials import get_serial
@@ -378,6 +379,8 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
             many_attr = getattr(obj, field_name)
             many_attr.add(uploaded_file)
         obj.save()
+        send_emails_file(obj, file_kind)
+
         return Response(status=status.HTTP_200_OK)
 
 
