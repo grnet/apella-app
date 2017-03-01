@@ -282,7 +282,6 @@ const cancelCandidacy = {
     if (candidacy_cancelled) { return true; }
 
     let role = get(this, 'session.session.authenticated.role');
-    console.log(role, 'role sto hidden');
     let user_id = get(this, 'session.session.authenticated.user_id');
     let position_open = get(this, 'model.position.is_open');
     let position_closed = get(this, 'model.position.is_closed');

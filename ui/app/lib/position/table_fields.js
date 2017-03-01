@@ -211,7 +211,6 @@ let rowCommiteeElectors = function(field_name, serverSide) {
 
 function committeeElectorsField(field_name, registry_type, modelMetaSide, selectModelMetaSide) {
   let label = `registry.type.${registry_type}`;
-  console.log(field_name)
   return field(field_name, {
     label: label,
     refreshValueQuery: modelMetaSide,
