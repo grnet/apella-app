@@ -559,5 +559,5 @@ export default {
   'elected.full_name.label': 'Elected',
   'second_best.full_name.label': 'Second best',
   'confirm.cv.professor.unset.title': 'Unset CV file',
-  'confirm.cv.professor.unset.message': 'If you choose to register a cv url, the cv file you uploaded will be unset. <br>Are you sure you want to preceed?'
+  'confirm.cv.professor.unset.message': 'If you choose to register a cv url, the cv file you uploaded will be unset. <br>Are you sure you want to proceed?'
 };
