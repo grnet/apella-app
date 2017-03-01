@@ -300,7 +300,9 @@ def login(request):
             params = {'migrate': 1, 'migration_key': migration_key}
             params_string = urllib.urlencode(params)
             target_path = LEGACY_PATH + "?" + params_string
-            user_idp = request.META['HTTP_SHIB_IDENTITY_PROVIDER']
+            user_idp = request.META.get('HTTP_SHIB_IDENTITY_PROVIDER', '')
+            if not user_idp:
+                raise PermissionDenied("invalid idp")
             params2 = {'SAMLDS': 1, 'target': target_path, 'entityID': user_idp}
             target_path2 = "/Shibboleth.sso/Login?" + urllib.urlencode(params2)
             url = urlparse.urljoin(LEGACY_URL, target_path2)
