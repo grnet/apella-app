@@ -217,4 +217,19 @@ def send_emails_file(obj, file_kind, extra_context=()):
                 body,
                 {'position': obj})
 
+    if file_kind == 'nomination_proceedings':
+        # send to committee, candidates, electors
+        subject = 'apella/emails/position_set_nomination_proceedings_subject.txt'
+        body = 'apella/emails/position_set_nomination_proceedings_body.txt'
+        recipients = get_position_users(obj)
+
+        for recipient in recipients:
+            send_user_email(
+                recipient,
+                subject,
+                body,
+                {'position': obj})
+
+
+
     pass
