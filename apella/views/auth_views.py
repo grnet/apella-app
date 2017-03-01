@@ -4,6 +4,8 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils.crypto import get_random_string
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
 from djoser import views as djoser_views
 from djoser import serializers as djoser_serializers
 from djoser import signals as djoser_signals
@@ -125,6 +127,19 @@ class CustomActivationSerializer(djoser_serializers.ActivationSerializer):
         return attrs
 
 
+class CustomTokenGenerator(PasswordResetTokenGenerator):
+
+    # exclude user last_login from hash so that logged in users (e.g. academic)
+    # can validate their email using token generated during signup
+    def _make_token_with_timestamp(self, user, timestamp):
+        last_login = user.last_login
+        user.last_login = None
+        token = super(CustomTokenGenerator, self)._make_token_with_timestamp(
+            user, timestamp)
+        user.last_login = last_login
+        return token
+
+
 class CustomEmailVerificationView(djoser_views.ActivationView):
     """
     For djoser this view both verifies user email and activates user account.
@@ -134,6 +149,7 @@ class CustomEmailVerificationView(djoser_views.ActivationView):
     (profile edit), prior to email verification.
     """
 
+    token_generator = CustomTokenGenerator()
     serializer_class = CustomActivationSerializer
 
     @transaction.atomic
@@ -216,6 +232,8 @@ def make_registration_serializer(serializer):
 
 class CustomRegistrationView(djoser_views.RegistrationView,
                              mixins.UpdateModelMixin):
+
+    token_generator = CustomTokenGenerator()
 
     def get_serializer_class(self):
         role = self.request.data.get('user_role', None)
