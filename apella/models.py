@@ -255,7 +255,7 @@ class ApellaFile(models.Model):
                 user.institutionmanager.verification_pending
 
         if (self.file_kind == 'id_passport' or
-                self.file_kind == 'professor_cv') and \
+                self.file_kind == 'cv_professor') and \
                 is_owner and not is_verified:
             return True
         if self.is_profile_file and is_owner:
