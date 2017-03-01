@@ -290,8 +290,6 @@ PERMISSION_RULES = [
     ('positions', 'list', 'helpdeskuser', '*', '*', '5.13'),
     ('positions', 'list', 'institutionmanager', '*', '*', '4.3.9'),
     ('positions', 'list', 'professor', '*', '*', '3.3.2'),
-    ('positions', 'update', 'helpdeskadmin', 'ends_at', '*', '5.2.4'),
-    ('positions', 'update', 'helpdeskadmin', 'starts_at', '*', '5.2.4'),
     ('positions', 'update', 'institutionmanager', 'electors_regular_internal', 'electing', ''),
     ('positions', 'update', 'institutionmanager', 'electors_regular_external', 'electing', ''),
     ('positions', 'update', 'institutionmanager', 'electors_sub_internal', 'electing', ''),
