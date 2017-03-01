@@ -14,7 +14,8 @@ const {
 
 export function afterToday(options) {
   return (key, value) => {
-    if (!value || moment(value).isAfter(TOMORROW)) {
+    value = moment(value).startOf('day');
+    if (!value || moment(value).isAfter(TODAY)) {
       return true;
     } else {
       return 'afterToday.message';
@@ -24,6 +25,7 @@ export function afterToday(options) {
 
 export function beforeToday(options) {
   return (key, value) => {
+    value = moment(value).startOf('day');
     if (!value || moment(value).isBefore(TODAY)) {
       return true;
     } else {
