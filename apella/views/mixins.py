@@ -84,14 +84,11 @@ class PositionHookMixin(HookMixin):
         for elector_set_key, is_regular in elector_sets.items():
             if elector_set_key in obj.validated_data:
                 for elector in obj.validated_data[elector_set_key]:
-                    if not ElectorParticipation.objects.filter(
-                            professor=elector,
-                            position=position,
-                            is_regular=is_regular).exists():
-                        ElectorParticipation.objects.create(
-                            professor=elector,
-                            position=position,
-                            is_regular=is_regular)
+                    ElectorParticipation.objects.create(
+                        professor=elector,
+                        position=position,
+                        is_regular=is_regular,
+                        is_internal=elector_set_key.endswith('internal'))
 
         c = {'committee': []}
         for com_set in committee_sets:

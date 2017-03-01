@@ -17,35 +17,31 @@ from apella.util import at_day_end, at_day_start, otz
 
 
 def get_electors_regular_internal(instance):
-    return Professor.objects.filter(
-        electorparticipation__is_regular=True,
-        electorparticipation__position_id=instance.id,
-        registry__type='internal',
-        registry__department_id=instance.department.id).distinct()
+    eps = instance.electorparticipation_set.filter(
+        is_regular=True,
+        is_internal=True)
+    return [ep.professor for ep in eps]
 
 
 def get_electors_regular_external(instance):
-    return Professor.objects.filter(
-        electorparticipation__is_regular=True,
-        electorparticipation__position_id=instance.id,
-        registry__type='external',
-        registry__department_id=instance.department.id).distinct()
+    eps = instance.electorparticipation_set.filter(
+        is_regular=True,
+        is_internal=False)
+    return [ep.professor for ep in eps]
 
 
 def get_electors_sub_internal(instance):
-    return Professor.objects.filter(
-        electorparticipation__is_regular=False,
-        electorparticipation__position_id=instance.id,
-        registry__type='internal',
-        registry__department_id=instance.department.id).distinct()
+    eps = instance.electorparticipation_set.filter(
+        is_regular=False,
+        is_internal=True)
+    return [ep.professor for ep in eps]
 
 
 def get_electors_sub_external(instance):
-    return Professor.objects.filter(
-        electorparticipation__is_regular=False,
-        electorparticipation__position_id=instance.id,
-        registry__type='external',
-        registry__department_id=instance.department.id).distinct()
+    eps = instance.electorparticipation_set.filter(
+        is_regular=False,
+        is_internal=False)
+    return [ep.professor for ep in eps]
 
 
 def get_committee_internal(instance):

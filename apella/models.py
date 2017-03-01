@@ -633,6 +633,7 @@ class ElectorParticipation(models.Model):
     professor = models.ForeignKey(Professor)
     position = models.ForeignKey(Position)
     is_regular = models.BooleanField(default=True)
+    is_internal = models.BooleanField(default=True)
 
 
 class Candidacy(CandidateProfile):
