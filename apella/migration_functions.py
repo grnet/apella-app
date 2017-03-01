@@ -381,7 +381,7 @@ def get_old_users_by_username(username):
 
 def get_old_users_by_shibboleth_id(shibboleth_id):
     users = users_by_shibboleth_id.get(shibboleth_id)
-    if users is None:
+    if not users:
         if not users_by_shibboleth_id:
             init_migration_cache()
             users = users_by_shibboleth_id.get(shibboleth_id)
