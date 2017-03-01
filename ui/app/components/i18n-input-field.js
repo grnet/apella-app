@@ -19,8 +19,18 @@ export default Ember.Component.extend({
 
   errorsI18N: computed('errors.[]', function(){
     let errors = this.get('errors');
-    if (errors.length>0) {
-      return this.get('errors')[0];
+
+    if (errors.length > 0) {
+      // client side errors, list of strings
+      if (typeof errors[0] === 'string') {
+        let _errors = {};
+        this.get('i18n.locales').forEach((loc) => {
+          _errors[loc] = errors;
+        });
+        return _errors;
+      }
+      // server side errors, object with locale specific errors
+      return errors[0];
     }
     return [];
   }),
