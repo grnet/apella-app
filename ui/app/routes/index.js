@@ -5,7 +5,8 @@ const {
 } = Ember;
 
 const ROLE_ROUTE_MAP = {
-  'professor': 'position.index',
+  'professor': 'positions-latest.index',
+  'candidate': 'positions-latest.index',
 }
 
 const DEFAULT_ROUTE = 'auth.profile';
