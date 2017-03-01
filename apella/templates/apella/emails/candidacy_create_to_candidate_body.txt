@@ -17,6 +17,6 @@ You have submitted a candidacy for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
 
-You can keep track of the progress of the election procedure by <signing in ({{ login_url }} your account and selecting the tab "Candidacies".
+You can keep track of the progress of the election procedure by signing in ({{ login_url }}) your account and selecting the tab "Candidacies".
 
 {% endblock content_en %}
