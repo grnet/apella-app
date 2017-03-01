@@ -396,10 +396,10 @@ def migrate_username(username, password=None, login=False):
         roles[old_user.role] = old_user
 
     if 'professor' in roles:
-        return migrate_user(roles['professor'], password=password)
+        return migrate_user(roles['professor'], password=password, login=login)
 
     if 'candidate' in roles:
-        return migrate_user(roles['candidate'], password=password)
+        return migrate_user(roles['candidate'], password=password, login=login)
 
     roles.pop('assistant', None)
     if len(roles) > 1:
