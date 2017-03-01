@@ -181,19 +181,21 @@ def send_remove_candidacy_emails(candidacy):
                 'candidate': candidacy.candidate
             })
 
+def get_position_users(position):
+    recipients = []
+    committee = [x.user for x in position.committee.all()]
+    electors = [x.user for x in position.electors.all()]
+    candidates = [x.candidate for x in position.candidacy_set.all()]
+    recipients = chain(committee, candidates, electors)
+    return recipients
 
 def send_emails_file(obj, file_kind, extra_context=()):
 
     if file_kind == 'committee_note':
-        # send to committee, candidates
-        recipients = []
-        committee = [x.user for x in obj.committee.all()]
-        electors = [x.user for x in obj.electors.all()]
-        candidates = [x.candidate for x in obj.candidacy_set.all()]
-        recipients = chain(committee, candidates, electors)
-
+        # send to committee, candidates, electors
         subject = 'apella/emails/position_set_committee_note_subject.txt'
         body = 'apella/emails/position_set_committee_note_body.txt'
+        recipients = get_position_users(obj)
 
         for recipient in recipients:
             send_user_email(
@@ -201,4 +203,18 @@ def send_emails_file(obj, file_kind, extra_context=()):
                 subject,
                 body,
                 {'position': obj})
+
+    if file_kind == 'committee_proposal':
+        # send to committee, candidates, electors
+        subject = 'apella/emails/position_set_committee_proposal_subject.txt'
+        body = 'apella/emails/position_set_committee_proposal_body.txt'
+        recipients = get_position_users(obj)
+
+        for recipient in recipients:
+            send_user_email(
+                recipient,
+                subject,
+                body,
+                {'position': obj})
+
     pass
