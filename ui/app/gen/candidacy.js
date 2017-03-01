@@ -66,13 +66,14 @@ let CANDIDACY_FIELDSET =  {
       fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
         hint: 'five_before_electors_meeting',
         readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
-          let electors_at = get(this, 'model.position.electors_meeting_date');
-          let position_closed = !get(this, 'model.position.is_open');
+          let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
           let after_deadline = false;
           if (electors_at) {
-            after_deadline =  moment().add(5, 'days').isAfter(electors_at);
+            let limit_day = electors_at.subtract(5, 'days'),
+              today = moment().startOf('days');
+            after_deadline = today.isAfter(limit_day);
           }
-          return position_closed || after_deadline;
+          return after_deadline;
         })
       }, {
         replace: true
@@ -80,13 +81,14 @@ let CANDIDACY_FIELDSET =  {
       fileField('attachment_files', 'candidacy', 'attachment_files', {
         hint: 'one_before_electors_meeting',
         readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
-          let electors_at = get(this, 'model.position.electors_meeting_date');
-          let position_closed = !get(this, 'model.position.is_open');
+          let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
           let after_deadline = false;
           if (electors_at) {
-            after_deadline =  moment().add(1, 'days').isAfter(electors_at);
+            let today = moment().startOf('days'),
+              limit_day = electors_at.subtract(1, 'days');
+            after_deadline = today.isAfter(limit_day);
           }
-          return position_closed || after_deadline;
+          return after_deadline;
         })
       }, {
         multiple: true
@@ -212,15 +214,15 @@ export default ApellaGen.extend({
     }),
 
     one_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', 'owned', function() {
-      let electors_at = get(this, 'model.position.electors_meeting_date');
+      let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
       let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
-      let position_open = get(this, 'position_open');
       let before_deadline = true;
       let owned = get(this, 'owned');
+      let today = moment().startOf('days');
       if (electors_at) {
-        before_deadline =  moment().add(1, 'days').isBefore(electors_at);
+        before_deadline =  today.isBefore(electors_at);
       }
-      return candidacy_not_cancelled && (position_open || before_deadline) && owned;
+      return candidacy_not_cancelled && before_deadline && owned;
     }),
 
     // temporarily set to true
@@ -348,6 +350,12 @@ export default ApellaGen.extend({
     }
   },
   edit: {
+    getModel(params, model) {
+      // Preload position to use its data for calculations regarding files
+      return model.get('position').then(function() {
+        return model;
+      });
+    },
     fieldsets: [
       POSITION_FIELDSET,
       CANDIDATE_FIELDSET,
