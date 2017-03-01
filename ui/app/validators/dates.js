@@ -52,10 +52,13 @@ export function notHoliday() {
 
 export function afterDays(options) {
   let { on, days } = options;
-
+  /* We include first and last day and we check with function isAfter.
+   * So, we need to remove 1 day.
+   */
+  let count_days = days - 1;
   return (key, value, _o, changes) => {
-    let baseDate = get(changes, 'starts_at');
-    let nextDate = moment(baseDate).add(days, 'days');
+    let baseDate = moment(get(changes, 'starts_at')).startOf('days');
+    let nextDate = moment(baseDate).add(count_days, 'days');
     if (moment(value).isAfter(nextDate)) {
       return true;
     } else {

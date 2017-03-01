@@ -536,6 +536,7 @@ export default {
   'beforeToday.message': 'This date should be before today',
   'urlStarts.message': 'The url should start with http or https',
   'ends30After.message': 'End date should be at least 30 days after starting date',
+  'ends30After.message': 'The submission deadline should not be less then 30 days',
   'username.field': 'username',
   'email.field': 'email',
   'identification.field': 'username',
