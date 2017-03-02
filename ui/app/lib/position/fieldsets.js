@@ -308,21 +308,18 @@ const  position = {
           state = get(this, 'model.state'),
           is_open = get(this, 'model.is_open'),
           is_closed = get(this, 'model.is_closed'),
+          before_open = (!(is_open || is_closed) && (state === 'posted')),
           title, department, description, discipline, subject_area, subject,
           disable_fields = true,
           institution_roles = ['institutionmanager', 'assistant'],
           helpdesk_roles = ['helpdeskadmin', 'helpdeskuser'];
 
         if(state === 'posted') {
-          if(is_open || is_closed) {
-            if(helpdesk_roles.indexOf(role) > -1) {
-              disable_fields = false;
-            }
+          if(helpdesk_roles.indexOf(role) > -1) {
+            disable_fields = false;
           }
-          else {
-            if(institution_roles.indexOf(role) > -1) {
-              disable_fields = false;
-            }
+          else if((institution_roles.indexOf(role) > -1) && before_open) {
+            disable_fields = false;
           }
         }
         if(disable_fields) {
