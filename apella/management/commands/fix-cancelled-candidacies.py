@@ -29,4 +29,5 @@ class Command(BaseCommand):
                             'fixed cancelled candidacy %s, old %s',
                             c.id, old.candidacy_serial)
                     else:
-                        self.stdout.write('new %s, old %s', c.id, old.candidacy_serial)
+                        self.stdout.write(
+                            'new %s, old %s' % (str(c.id), old.candidacy_serial))
