@@ -6,7 +6,10 @@ select
     r.user_id candidate_user_id,
     c.opentoothercandidates open_to_other_candidates,
     c.date submitted_at,
-    c.withdrawndate as withdrawn_at
+    case
+        when c.withdrawn is true then c.withdrawndate
+        else null
+    end as withdrawn_at
 from
     position p,
     positionphase pp,
