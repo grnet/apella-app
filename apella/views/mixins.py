@@ -141,6 +141,12 @@ class PositionMixin(object):
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=today_min) |
                 Q(id__in=position_ids))
+        if 'pk' in self.kwargs:
+            queryset = queryset.filter(id=self.kwargs['pk'])
+        else:
+            ids = queryset.values('code').annotate(Min('id')). \
+                values('id__min')
+            queryset = queryset.filter(id__in=ids)
 
         state_query = self.request.GET.get('state_expanded')
         if state_query:
@@ -165,12 +171,7 @@ class PositionMixin(object):
                 queryset = queryset.filter(Q(state='posted') &
                                            Q(ends_at__gt=now))
 
-        if 'pk' in self.kwargs:
-            return queryset.filter(id=self.kwargs['pk'])
-        else:
-            ids = queryset.values('code').annotate(Min('id')). \
-                values('id__min')
-            return queryset.filter(id__in=ids)
+        return queryset
 
     def update(self, request, *args, **kwargs):
         position = self.get_object()
