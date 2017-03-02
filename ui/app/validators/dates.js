@@ -6,16 +6,15 @@ import _ from 'lodash/lodash';
 const {
         get
       } = Ember,
-      TODAY = new Date(),
-      TOMORROW = moment(TODAY).add(1, 'day'),
       HOLIDAYS = ENV.APP.resource_holidays,
       DATE_FORMAT = ENV.APP.date_format;
 
 
 export function afterToday(options) {
   return (key, value) => {
+    let today = moment().startOf('day');
     value = moment(value).startOf('day');
-    if (!value || moment(value).isAfter(TODAY)) {
+    if (!value || value.isAfter(today)) {
       return true;
     } else {
       return 'afterToday.message';
@@ -25,8 +24,9 @@ export function afterToday(options) {
 
 export function beforeToday(options) {
   return (key, value) => {
+    let today = moment().startOf('day');
     value = moment(value).startOf('day');
-    if (!value || moment(value).isBefore(TODAY)) {
+    if (!value || value.isBefore(today)) {
       return true;
     } else {
       return 'beforeToday.message';
@@ -36,6 +36,7 @@ export function beforeToday(options) {
 
 export function notHoliday() {
   return (key, value) => {
+    // TODO: use moment, startOf is necessary
     var inputDate = new Date(value);
     let day = moment(value).day();
     let formattedDate = moment(value).format('ddd, D/M/YYYY');
@@ -58,7 +59,7 @@ export function afterDays(options) {
   let count_days = days - 1;
   return (key, value, _o, changes) => {
     let baseDate = moment(get(changes, 'starts_at')).startOf('days');
-    let nextDate = moment(baseDate).add(count_days, 'days');
+    let nextDate = baseDate.add(count_days, 'days');
     if (moment(value).isAfter(nextDate)) {
       return true;
     } else {
