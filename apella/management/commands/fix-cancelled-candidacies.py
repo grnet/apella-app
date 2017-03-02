@@ -26,8 +26,8 @@ class Command(BaseCommand):
                         c.state = 'posted'
                         c.save()
                         self.stdout.write(
-                            'fixed cancelled candidacy %s, old %s',
-                            c.id, old.candidacy_serial)
+                            'fixed cancelled candidacy %s, old %s' %
+                            (c.id, old.candidacy_serial))
                     else:
                         self.stdout.write(
                             'new %s, old %s' % (str(c.id), old.candidacy_serial))
