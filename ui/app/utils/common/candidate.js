@@ -10,14 +10,55 @@ const {
 
 const FILES_FIELDS = [
   fileField('id_passport_file', 'candidate', 'id_passport', {
-    readonly: or('model.is_verified', 'model.verification_pending')
+    readonly: computed('role', 'model.is_verified', 'model.verification_pending', function() {
+      // NOTE: When the candidate is in his profile the role is undefined
+      let user_role = get(this, 'role');
+      if(user_role === 'helpdeskuser') {
+        return true;
+      }
+      else {
+        return get(this, 'model.is_verified') || get(this, 'model.verification_pending');
+      }
+    })
   }, { replace: true }),
   fileField('cv', 'candidate', 'cv', {
+    readonly: computed('role', function() {
+      // NOTE: When the candidate is in his profile the role is undefined
+      let user_role = get(this, 'role');
+      if(user_role === 'helpdeskuser') {
+        return true;
+      }
+      else {
+        return false;
+      }
+    })
   }, { replace: true }),
-  fileField('diplomas', 'candidate', 'diploma', {}, {
+  fileField('diplomas', 'candidate', 'diploma', {
+    readonly: computed('role', function() {
+      // NOTE: When the candidate is in his profile the role is undefined
+      let user_role = get(this, 'role');
+      if(user_role === 'helpdeskuser') {
+        return true;
+      }
+      else {
+        return false;
+      }
+    })
+  }, {
     multiple: true
   }),
-  fileField('publications', 'candidate', 'publication', {}, {
+  fileField('publications', 'candidate', 'publication', {
+    readonly: computed('role', function() {
+      // NOTE: When the candidate is in his profile the role is undefined
+      let user_role = get(this, 'role');
+      if(user_role === 'helpdeskuser') {
+        return true;
+      }
+      else {
+        return false;
+      }
+    })
+  }, {
     multiple: true
   }),
 ]
