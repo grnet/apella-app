@@ -110,17 +110,17 @@ def is_eligible_shibboleth_user(data, legacy=False):
     scoped_affiliation = data.get('affiliation', None)
     primary_affiliation = data.get('primary_affiliation', None)
     unscoped_affiliation = data.get('unscoped_affiliation', None)
-    affiliation = scoped_affiliation \
-            or primary_affiliation \
-            or unscoped_affiliation
+    accepted_affiliation = None
 
-    if not affiliation:
-        raise ValidationError('no.affiliation')
+    for affiliation in (scoped_affiliation,
+                        primary_affiliation,
+                        unscoped_affiliation):
 
-    faculty = affiliation and 'faculty' in affiliation.lower()
-    data['affiliation'] = affiliation
+        if 'faculty' in affiliation:
+            accepted_affiliation = affiliation
+            break
 
-    if not faculty:
+    if not accepted_affiliation:
         m = ("no faculty in "
              "affiliation: %r, "
              "primary_affiliation: %r, "
@@ -128,6 +128,8 @@ def is_eligible_shibboleth_user(data, legacy=False):
         m %= (scoped_affiliation, primary_affiliation, unscoped_affiliation)
         logger.info(m)
         raise ValidationError('no.faculty')
+
+    data['affiliation'] = accepted_affiliation
 
     idp = data.get('identity_provider', None)
     if not idp:
