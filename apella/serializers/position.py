@@ -84,7 +84,7 @@ class PositionNonModel(ValidatorMixin):
     def validate(self, data):
         committee_external = data['committee_external']
         committee_internal = data['committee_internal']
-        if committee_internal or committee_internal:
+        if committee_internal or committee_external:
             validate_position_committee(committee_internal, committee_external)
 
         r_i = data['electors_regular_internal']

@@ -84,11 +84,11 @@ def validate_unique_candidacy(position, user):
 def validate_position_committee(internal, external):
     if len(external) < 1:
         raise ValidationError(
-            _('At least one member of the committee should be '
+            _('At least one member of the committee must be '
                 'from the external registry'))
     if (len(external) + len(internal)) != 3:
         raise ValidationError(
-            _('The committee should contain at exactly 3 members'))
+            _('The committee must contain exactly 3 members'))
 
 
 def validate_position_electors(r_i, r_e, s_i, s_e, dep_number):
@@ -109,14 +109,14 @@ def validate_position_electors(r_i, r_e, s_i, s_e, dep_number):
     if dep_number > 40:
         if regular != 15:
             raise ValidationError(
-                _('Regular electors should be exactly 15'))
+                _('Regular electors must be exactly 15'))
         if sub != 15:
             raise ValidationError(
-                _('Substitute electors should be exactly 15'))
+                _('Substitute electors must be exactly 15'))
     else:
         if regular != 11:
             raise ValidationError(
-                _('Regular electors should be exactly 11'))
+                _('Regular electors must be exactly 11'))
         if sub != 11:
             raise ValidationError(
-                _('Substitute electors should be exactly 11'))
+                _('Substitute electors must be exactly 11'))
