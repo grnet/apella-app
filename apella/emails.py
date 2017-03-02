@@ -165,13 +165,8 @@ def send_remove_candidacy_emails(candidacy):
             })
 
     # send to cocandidates
-    c_set = candidacy.position.candidacy_set.all()
-    updated = c_set.values('candidate').annotate(Max('updated_at')).\
-        values('updated_at__max')
-    candidacies = c_set.filter(Q(updated_at__in=updated) & Q(state='posted'))
-
-    for r in candidacies:
-        recipient = r.candidate
+    recipients = get_position_candidates_posted(candidacy.position)
+    for recipient in recipients:
         send_user_email(
             recipient,
             'apella/emails/candidacy_remove_subject.txt',
@@ -182,11 +177,25 @@ def send_remove_candidacy_emails(candidacy):
             })
 
 
+def get_position_candidates_posted(position):
+    """
+    Returns a list with  all the candidates whose latest candidacy for the
+    position is in state 'posted'
+    """
+    c_set = position.candidacy_set.all()
+    updated = c_set.values('candidate').annotate(Max('updated_at')).\
+        values('updated_at__max')
+    candidacies = c_set.filter(Q(updated_at__in=updated) & Q(state='posted'))
+    candidates = [x.candidate for x in candidacies ]
+    return candidates
+
+
+
 def get_position_users(position):
     recipients = []
     committee = [x.user for x in position.committee.all()]
     electors = [x.user for x in position.electors.all()]
-    candidates = [x.candidate for x in position.candidacy_set.all()]
+    candidates = get_position_candidates_posted(position)
     recipients = chain(committee, candidates, electors)
     return recipients
 
@@ -251,7 +260,7 @@ def send_emails_field(obj, field, update=False):
 
     if field == 'electors_meeting_to_set_committee_date':
         electors = [x.user for x in obj.electors.all()]
-        candidates = [x.candidate for x in obj.candidacy_set.all()]
+        candidates = get_position_candidates_posted(position)
         recipients = chain(candidates, electors)
 
     if field == 'electors_meeting_date':
