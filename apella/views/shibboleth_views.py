@@ -6,16 +6,14 @@ import urllib
 import uuid
 import re
 
-from os import path
 from django.shortcuts import get_object_or_404
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError, PermissionDenied
 from django.db import transaction
 
-from apella.models import ApellaUser, Professor, MultiLangFields, \
-    RegistrationToken, Institution
+from apella.models import ApellaUser, Professor, RegistrationToken, Institution
 from apella.models import OldApellaUserMigrationData as OldUser
 from apella import auth_hooks
 from apella.util import urljoin
