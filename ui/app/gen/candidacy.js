@@ -191,6 +191,14 @@ export default ApellaGen.extend({
       return get(this, 'owned') && position_open && candidacy_not_cancelled;
     }),
 
+    owned_by_assistant: computed('role', 'user.departments', 'model.position_department', function() {
+      let is_assistant = get(this, 'role') === 'assistant';
+      let assistant_departments = get(this, 'user.departments') || [];
+      // TODO: Extract department using a better way
+      let position_department = this.get('model.position_department');
+      return assistant_departments.indexOf(position_department) > -1;
+    }),
+
     five_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', 'owned', function() {
       let electors_at = get(this, 'model.position.electors_meeting_date');
       let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
@@ -347,6 +355,13 @@ export default ApellaGen.extend({
     ]
   },
   details: {
+    getModel(params, model) {
+      return model.get('position').then(function(position) {
+        console.log('hi', position.belongsTo('department').link())
+        model.set('position_department', position.belongsTo('department').link());
+        return model;
+      });
+    },
     page: {
       title: computed.readOnly('model.position.code')
     },

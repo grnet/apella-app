@@ -29,6 +29,8 @@ export default DS.Model.extend({
 
   title: computed('position.code', 'candidate.username', function(){
     return `${get(this, 'position.code')} (${get(this, 'candidate.username')})`
-  })
+  }),
+  // TMP gets value on candidacy details
+  position_department: DS.attr()
 
 });
