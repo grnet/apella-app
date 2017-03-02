@@ -385,6 +385,10 @@ def get_old_users_by_shibboleth_id(shibboleth_id):
         if not users_by_shibboleth_id:
             init_migration_cache()
             users = users_by_shibboleth_id.get(shibboleth_id, [])
+    if not users:
+        m = 'could not find old shibboleth id %r'
+        m %= shibboleth_id
+        logger.info(m)
     return users
 
 
@@ -419,7 +423,14 @@ def migrate_shibboleth_id(apella2_shibboleth_id,
     old_users = get_old_users_by_shibboleth_id(old_apella_shibboleth_id)
 
     if migration_key is not None:
+        unfiltered_old_users = old_users
         old_users = [x for x in old_users if x.migration_key == migration_key]
+        if not old_users:
+            m = "could not match migration key for old %r / new %r, %r vs %r"
+            m %= (old_apella_shibboleth_id, apella2_shibboleth_id,
+                  migration_key,
+                  [x.migration_key for x in unfiltered_old_users])
+            logger.info(m)
 
     roles = {}
     for old_user in old_users:
