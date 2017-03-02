@@ -3,7 +3,6 @@ import re
 import os
 import errno
 from datetime import datetime
-from collections import defaultdict
 
 from django.db import transaction, DataError
 from django.conf import settings
@@ -28,12 +27,6 @@ from apella.serials import get_serial
 eet = timezone('EET')
 
 logger = logging.getLogger('apella')
-
-
-users_by_username = defaultdict(list)
-users_by_shibboleth_id = defaultdict(list)
-candidate_assistant_professors = {}
-migrated_candidacies = defaultdict(list)
 
 
 def get_obj(id_str, model):
@@ -352,44 +345,12 @@ def migrate_user_profile_files(old_user, new_user):
         migrate_file(old_file, new_user, 'profile', new_user.id)
 
 
-def init_migration_cache():
-    for user in OldApellaUserMigrationData.objects.all():
-        username = user.username
-        shibboleth_id = user.shibboleth_id
-        if shibboleth_id:
-            users_by_shibboleth_id[shibboleth_id].append(user)
-        elif username:
-            users_by_username[username].append(user)
-        else:
-            m = "User %s %r has no username or shibboleth_id!"
-            m %= (user.id, user)
-            logger.error(m)
-
-    modelclass = OldApellaCandidateAssistantProfessorMigrationData
-    update_gen = ((x.user_id, x ) for x in modelclass.objects.all())
-    candidate_assistant_professors.update(update_gen)
-
-
 def get_old_users_by_username(username):
-    users = users_by_username.get(username, [])
-    if not users:
-        if not users_by_username:
-            init_migration_cache()
-            users = users_by_username.get(username, [])
-    return users
+    return OldApellaUserMigrationData.objects.filter(username=username)
 
 
 def get_old_users_by_shibboleth_id(shibboleth_id):
-    users = users_by_shibboleth_id.get(shibboleth_id, [])
-    if not users:
-        if not users_by_shibboleth_id:
-            init_migration_cache()
-            users = users_by_shibboleth_id.get(shibboleth_id, [])
-    if not users:
-        m = 'could not find old shibboleth id %r'
-        m %= shibboleth_id
-        logger.info(m)
-    return users
+    return OldApellaUserMigrationData.objects.filter(shibboleth_id=shibboleth_id)
 
 
 @transaction.atomic
@@ -564,8 +525,9 @@ def migrate_user_role(old_user, new_user, login=False):
     role = old_user.role
     if role == 'candidate':
         assistant_professor = \
-            candidate_assistant_professors.get(old_user.user_id)
-        if assistant_professor is None:
+            OldApellaCandidateAssistantProfessorMigrationData.objects. \
+                filter(user_id=old_user.user_id)
+        if not assistant_professor:
             migrate_candidate(old_user, new_user)
         else:
             migrate_candidate_to_assistant_professor(old_user, new_user)
@@ -737,9 +699,6 @@ def migrate_candidacy_files(new_candidacy):
 @transaction.atomic
 def migrate_candidacy(old_candidacy, new_candidate, new_position):
 
-    if migrated_candidacies.get(old_candidacy.candidacy_serial):
-        return
-
     state = 'cancelled' if old_candidacy.withdrawn_at else 'posted'
     if old_candidacy.withdrawn_at:
         withdrawn_at = datetime.strptime(
@@ -758,7 +717,6 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
             re.match('t', old_candidacy.open_to_other_candidates, re.I))
         candidacy.submitted_at = old_candidacy.submitted_at
         candidacy.save()
-        migrated_candidacies[old_candidacy.candidacy_serial].append(candidacy)
     else:
         candidacy = Candidacy.objects.create(
             candidate=new_candidate,
@@ -772,7 +730,6 @@ def migrate_candidacy(old_candidacy, new_candidate, new_position):
 
         candidacy.code = str(candidacy.id)
         candidacy.save()
-        migrated_candidacies[old_candidacy.candidacy_serial].append(candidacy)
         logger.info(
             'migrated candidacy %s, to %s' %
             (old_candidacy.candidacy_serial, candidacy.id))
