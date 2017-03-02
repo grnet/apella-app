@@ -82,15 +82,15 @@ def get_author(request):
 class PositionNonModel(ValidatorMixin):
 
     def validate(self, data):
-        committee_external = data['committee_external']
-        committee_internal = data['committee_internal']
+        committee_external = data.get('committee_external', [])
+        committee_internal = data.get('committee_internal', [])
         if committee_internal or committee_external:
             validate_position_committee(committee_internal, committee_external)
 
-        r_i = data['electors_regular_internal']
-        r_e = data['electors_regular_external']
-        s_i = data['electors_sub_internal']
-        s_e = data['electors_sub_external']
+        r_i = data.get('electors_regular_internal', [])
+        r_e = data.get('electors_regular_external', [])
+        s_i = data.get('electors_sub_internal', [])
+        s_e = data.get('electors_sub_external', [])
         dep_number = self.instance.department_dep_number
 
         if r_i or r_e or s_i or s_e:
@@ -155,17 +155,17 @@ class PositionMixin(ValidatorMixin):
         instance = super(PositionMixin, self).update(instance, validated_data)
 
         # send email to elected
-        if validated_data['elected']:
+        if validated_data.get('elected', None):
             if curr_position.elected != validated_data['elected']:
                 send_email_elected(instance, 'elected')
 
         # send email to second_best
-        if validated_data['second_best']:
+        if validated_data.get('second_best', None):
             if curr_position.second_best != validated_data['second_best']:
                 send_email_elected(instance, 'second_best')
 
         # send emails when electors_meeting_date is set/updated
-        d1 = validated_data['electors_meeting_date']
+        d1 = validated_data.get('electors_meeting_date', None)
         if d1:
             if not curr_position.electors_meeting_date:
                 send_emails_field(instance, 'electors_meeting_date')
@@ -175,7 +175,7 @@ class PositionMixin(ValidatorMixin):
 
         # send emails when electors_meeting_to_set_committee_date is
         # set/updated
-        d2 = validated_data['electors_meeting_to_set_committee_date']
+        d2 = validated_data.get('electors_meeting_to_set_committee_date', None)
         if d2:
             if not curr_position.electors_meeting_to_set_committee_date:
                 send_emails_field(instance,
