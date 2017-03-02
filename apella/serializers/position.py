@@ -12,7 +12,7 @@ from apella.validators import validate_position_dates, \
     after_today_validator, before_today_validator
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
-    send_remove_candidacy_emails
+    send_remove_candidacy_emails, send_email_elected
 from apella.util import at_day_end, at_day_start, otz
 
 
@@ -132,6 +132,17 @@ class PositionMixin(ValidatorMixin):
         self._normalize_dates(validated_data)
 
         instance = super(PositionMixin, self).update(instance, validated_data)
+
+        # send email to elected
+        if validated_data['elected']:
+            if curr_position.elected != validated_data['elected']:
+                send_email_elected(instance, 'elected')
+
+        # send email to second_best
+        if validated_data['second_best']:
+            if curr_position.second_best != validated_data['second_best']:
+                send_email_elected(instance, 'second_best')
+
         if instance.state != curr_position.state:
             curr_position.pk = None
             curr_position.save()

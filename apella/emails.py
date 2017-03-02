@@ -211,3 +211,20 @@ def send_emails_file(obj, file_kind, extra_context=()):
                 {'position': obj})
 
     pass
+
+
+def send_email_elected(obj, elected='elected'):
+
+    if elected == 'elected':
+        recipient = obj.elected
+    if elected == 'second_best':
+        recipient = obj.second_best
+
+    subject = 'apella/emails/position_set_{}_subject.txt'.format(elected)
+    body = 'apella/emails/position_set_{}_body.txt'.format(elected)
+
+    send_user_email(
+        recipient,
+        subject,
+        body,
+        {'position': obj})
