@@ -20,7 +20,8 @@ from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, \
-    OldApellaUserMigrationData, generate_filename
+    OldApellaUserMigrationData, generate_filename, Candidate, \
+    Professor as ProfessorModel
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
@@ -354,9 +355,18 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
         if field_name not in obj._meta.get_all_field_names():
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+        owner = request.user
+        if request.user.is_helpdesk():
+            if isinstance(obj, ProfessorModel) or isinstance(obj, Candidate):
+                owner = obj.user
+            elif isinstance(obj, Candidacy):
+                owner = obj.candidate
+            elif isinstance(obj, Position):
+                owner = obj.author.user
+
         uploaded_file = ApellaFile.objects.create(
                 id=get_serial('apella_file'),
-                owner=request.user,
+                owner=owner,
                 file_kind=file_kind,
                 source=self.FILE_SOURCE[obj.__class__.__name__],
                 source_id=obj.id,
