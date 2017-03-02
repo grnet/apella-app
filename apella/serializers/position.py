@@ -9,7 +9,8 @@ from apella.models import Position, InstitutionManager, Candidacy, \
     Professor, ElectorParticipation, ApellaFile
 from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy, \
-    after_today_validator, before_today_validator
+    after_today_validator, before_today_validator, \
+    validate_position_committee, validate_position_electors
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field
@@ -76,6 +77,26 @@ def get_author(request):
         raise serializers.ValidationError(
             {"author": "Only Institution Managers can create new positions"})
     return manager
+
+
+class PositionNonModel(ValidatorMixin):
+
+    def validate(self, data):
+        committee_external = data['committee_external']
+        committee_internal = data['committee_internal']
+        if committee_internal or committee_internal:
+            validate_position_committee(committee_internal, committee_external)
+
+        r_i = data['electors_regular_internal']
+        r_e = data['electors_regular_external']
+        s_i = data['electors_sub_internal']
+        s_e = data['electors_sub_external']
+        dep_number = self.instance.department_dep_number
+
+        if r_i or r_e or s_i or s_e:
+            validate_position_electors(r_i, r_e, s_i, s_e, dep_number)
+
+        return data
 
 
 class PositionMixin(ValidatorMixin):

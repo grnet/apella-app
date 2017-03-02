@@ -1716,6 +1716,7 @@ spec:
             .drf_collection:
                 model: apella.models.Position
                 model_serializers: [apella.serializers.position.PositionMixin]
+                serializers: [apella.serializers.position.PositionNonModel]
                 mixins: [apella.views.mixins.PositionMixin,
                     apella.views.mixins.DestroyProtectedObject,
                     apella.views.mixins.UploadFilesViewSet]
