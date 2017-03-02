@@ -1,0 +1,18 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι ορίστηκε νέα ημερομηνία σύγκλησης του εκλεκτορικού σώματος για τον ορισμό της εισηγητικής επιτροπής για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that a new convocation date of the Electors meeting date to set committee date for the position:
+{% include "apella/emails/position_details_en.txt" %}
+has been announced.
+
+{% endblock content_en %}

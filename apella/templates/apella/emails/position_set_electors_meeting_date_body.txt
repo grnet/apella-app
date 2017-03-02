@@ -4,7 +4,7 @@
 
 Σας ενημερώνουμε ότι ορίστηκε η ημερομηνία σύγκλησης της Επιτροπής επιλογής, με σκοπό την ανάδειξη του καταλληλότερου υποψηφίου για τη θέση:
 
-{% include "apella/emails/position_details_el.txt %}
+{% include "apella/emails/position_details_el.txt" %}
 
 {% endblock content_el %}
 
@@ -12,7 +12,7 @@
 {% block content_en %}
 
 We inform you that the convocation date of the Election Committee, regarding the election of the most appropriate candidate for the position:
-{% include "apella/emails/position_details_en.txt %}
+{% include "apella/emails/position_details_en.txt" %}
 has been announced.
 
 {% endblock content_en %}

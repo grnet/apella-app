@@ -223,8 +223,47 @@ def send_email_elected(obj, elected='elected'):
     subject = 'apella/emails/position_set_{}_subject.txt'.format(elected)
     body = 'apella/emails/position_set_{}_body.txt'.format(elected)
 
+    # send to elected/second_best
     send_user_email(
         recipient,
         subject,
         body,
         {'position': obj})
+
+
+def send_emails_field(obj, field, update=False):
+    """
+    Sends email to appropriate recipients when a field is set or updated
+    """
+
+    recipients = []
+    context = dict()
+    verb = 'set'
+    if update:
+        verb = 'update'
+
+    position_fields = ['electors_meeting_date',
+            'electors_meeting_to_set_committee_date']
+
+    subject = 'apella/emails/position_{}_{}_subject.txt'.format(verb, field)
+    body = 'apella/emails/position_{}_{}_body.txt'.format(verb, field)
+
+
+    if field == 'electors_meeting_to_set_committee_date':
+        electors = [x.user for x in obj.electors.all()]
+        candidates = [x.candidate for x in obj.candidacy_set.all()]
+        recipients = chain(candidates, electors)
+
+    if field == 'electors_meeting_date':
+        recipients = get_position_users(obj)
+
+    if field in position_fields:
+        context = {'position': obj}
+
+
+    for recipient in recipients:
+        send_user_email(
+            recipient,
+            subject,
+            body,
+            context)

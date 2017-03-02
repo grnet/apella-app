@@ -12,7 +12,7 @@ from apella.validators import validate_position_dates, \
     after_today_validator, before_today_validator
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
-    send_remove_candidacy_emails, send_email_elected
+    send_remove_candidacy_emails, send_email_elected, send_emails_field
 from apella.util import at_day_end, at_day_start, otz
 
 
@@ -142,6 +142,27 @@ class PositionMixin(ValidatorMixin):
         if validated_data['second_best']:
             if curr_position.second_best != validated_data['second_best']:
                 send_email_elected(instance, 'second_best')
+
+        # send emails when electors_meeting_date is set/updated
+        d1 = validated_data['electors_meeting_date']
+        if d1:
+            if not curr_position.electors_meeting_date:
+                send_emails_field(instance, 'electors_meeting_date')
+            else:
+                if curr_position.electors_meeting_date != d1:
+                    send_emails_field(instance, 'electors_meeting_date', True)
+
+        # send emails when electors_meeting_to_set_committee_date is
+        # set/updated
+        d2 = validated_data['electors_meeting_to_set_committee_date']
+        if d2:
+            if not curr_position.electors_meeting_to_set_committee_date:
+                send_emails_field(instance,
+                        'electors_meeting_to_set_committee_date')
+            else:
+                if curr_position.electors_meeting_to_set_committee_date != d2:
+                    send_emails_field(instance,
+                            'electors_meeting_to_set_committee_date', True)
 
         if instance.state != curr_position.state:
             curr_position.pk = None
