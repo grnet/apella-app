@@ -3,7 +3,8 @@ from datetime import date, timedelta
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
-from apella.util import strip_timezone, get_today_start, get_today_end
+from apella.util import strip_timezone, get_today_start, get_today_end, \
+    at_day_start, at_day_end, otz
 
 
 def before_today_validator(value):
@@ -25,9 +26,10 @@ def after_today_validator(value):
 
 
 def validate_dates_interval(start, end, interval):
-    start = strip_timezone(start)
-    end = strip_timezone(end)
-    if end - start < timedelta(days=interval):
+    start = at_day_start(start, otz)
+    end = at_day_end(end, otz)
+    t = timedelta(days=interval) - timedelta(hours=1, seconds=1)
+    if end - start <= t:
         raise ValidationError(
             _('End date should be %s days after start date' % interval))
 
