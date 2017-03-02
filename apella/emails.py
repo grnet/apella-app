@@ -181,6 +181,7 @@ def send_remove_candidacy_emails(candidacy):
                 'candidate': candidacy.candidate
             })
 
+
 def get_position_users(position):
     recipients = []
     committee = [x.user for x in position.committee.all()]
@@ -189,12 +190,17 @@ def get_position_users(position):
     recipients = chain(committee, candidates, electors)
     return recipients
 
+
 def send_emails_file(obj, file_kind, extra_context=()):
 
-    if file_kind == 'committee_note':
+    position_file_names = ['committee_note', 'committee_proposal',
+        'nomination_proceedings', 'nomination_act', 'assistant_files',
+        'revocation_decision']
+
+    if file_kind in position_file_names:
         # send to committee, candidates, electors
-        subject = 'apella/emails/position_set_committee_note_subject.txt'
-        body = 'apella/emails/position_set_committee_note_body.txt'
+        subject = 'apella/emails/position_set_{}_subject.txt'.format(file_kind)
+        body = 'apella/emails/position_set_{}_body.txt'.format(file_kind)
         recipients = get_position_users(obj)
 
         for recipient in recipients:
@@ -203,33 +209,5 @@ def send_emails_file(obj, file_kind, extra_context=()):
                 subject,
                 body,
                 {'position': obj})
-
-    if file_kind == 'committee_proposal':
-        # send to committee, candidates, electors
-        subject = 'apella/emails/position_set_committee_proposal_subject.txt'
-        body = 'apella/emails/position_set_committee_proposal_body.txt'
-        recipients = get_position_users(obj)
-
-        for recipient in recipients:
-            send_user_email(
-                recipient,
-                subject,
-                body,
-                {'position': obj})
-
-    if file_kind == 'nomination_proceedings':
-        # send to committee, candidates, electors
-        subject = 'apella/emails/position_set_nomination_proceedings_subject.txt'
-        body = 'apella/emails/position_set_nomination_proceedings_body.txt'
-        recipients = get_position_users(obj)
-
-        for recipient in recipients:
-            send_user_email(
-                recipient,
-                subject,
-                body,
-                {'position': obj})
-
-
 
     pass
