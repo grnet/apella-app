@@ -577,7 +577,7 @@ class Position(models.Model):
     def check_resource_state_revoked(self, row, request, view):
         user = request.user
         revoked = self.state == 'revoked'
-        if user.is_institutionmanager():
+        if user.is_institutionmanager() or user.is_helpdeskadmin():
             return revoked
         elif user.is_assistant():
             return revoked and assistant_can_edit(self, user)
@@ -586,7 +586,7 @@ class Position(models.Model):
     def check_resource_state_before_open(self, row, request, view):
         user = request.user
         before_open = self.starts_at > datetime.utcnow()
-        if user.is_institutionmanager():
+        if user.is_institutionmanager() or user.is_helpdeskadmin():
             return before_open
         elif user.is_assistant():
             return before_open and assistant_can_edit(self, user)
@@ -596,7 +596,7 @@ class Position(models.Model):
         user = request.user
         is_posted = self.state == 'posted'
         after_closed = self.ends_at < datetime.utcnow() and is_posted
-        if user.is_institutionmanager():
+        if user.is_institutionmanager() or user.is_helpdeskadmin():
             return after_closed
         elif user.is_assistant():
             return after_closed and assistant_can_edit(self, user)
@@ -605,7 +605,7 @@ class Position(models.Model):
     def check_resource_state_electing(self, row, request, view):
         user = request.user
         is_electing = self.state == 'electing'
-        if user.is_institutionmanager():
+        if user.is_institutionmanager() or user.is_helpdeskadmin():
             return is_electing
         elif user.is_assistant():
             return is_electing and assistant_can_edit(self, user)
