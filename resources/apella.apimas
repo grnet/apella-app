@@ -184,6 +184,11 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                old_user_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .integer: {}
             actions:
                 .list: {}
                 .create: {}
@@ -943,6 +948,11 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .readonly: {}
+                        old_user_id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
             actions:
                 .list: {}
                 .create: {}
@@ -1678,6 +1688,11 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .readonly: {}
+                        old_user_id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
             actions:
                 .list: {}
                 .create: {}
