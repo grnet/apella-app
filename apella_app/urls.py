@@ -33,6 +33,8 @@ apipatterns = [
     url(r'^api/config.json$', views.config, name='config'),
     url(r'^api/shibboleth$', shibboleth_views.login, name='shibboleth_login'),
     url(r'^api/migrate$', shibboleth_views.legacy_login, name='shibboleth_legacy'),
+    url(r'^api/evaluators/(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/$',
+        views.evaluators, name='evaluators'),
     api_urls
 ]
 
