@@ -1,3 +1,4 @@
+import logging
 from itertools import chain
 
 from django.conf import settings
@@ -7,6 +8,7 @@ from apella.models import InstitutionManager
 
 from apella.util import urljoin
 
+logger = logging.getLogger(__name__)
 
 def get_login_url():
     BASE_URL = settings.BASE_URL or '/'
@@ -50,6 +52,8 @@ def send_user_email(user, template_subject, template_body, extra_context=()):
         [user.email],
         fail_silently=False
     )
+    logger.info('%s email sent to %s' % (template_body, str(user.id)))
+
     if user.role == 'institutionmanager':
         manager = InstitutionManager.objects.get(user=user)
         if manager:
