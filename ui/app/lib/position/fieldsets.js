@@ -645,12 +645,6 @@ const  position = {
       label: 'fieldsets.labels.assistant_files',
       fields: [
         fileField('assistant_files', 'position', 'assistant_files', {
-          readonly: computed('model.state', function(){
-            if (['cancelled', 'successful', 'failed'].includes(get(this, 'model.state'))) {
-              return true;
-            }
-            return false;
-          }),
         }, {
           multiple: true
         }),
