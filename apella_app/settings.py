@@ -167,6 +167,9 @@ if not os.path.isfile(SETTINGS_PATH):
 
 LOGGING = None
 
+EVALUATORS_AUTH_TOKEN_FILE = '/etc/apella/evaluators_auth_token'
+EVALUATORS_ALLOW_ADDR_FILE = '/etc/apella/evaluators_allow_addr'
+
 execfile(SETTINGS_PATH)
 
 # Logging configuration
