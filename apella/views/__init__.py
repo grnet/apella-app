@@ -82,19 +82,13 @@ def evaluators(request, email):
     if request.method.upper() != 'POST':
         m = "evaluators unauthorized method: %r"
         m %= request.method
-        body = json.dumps({'status': 405,
-                           'message': 'only POST method is allowed'},
-                          indent=2)
-        return HttpResponse(body, status=405)
+        return HttpResponse('only POST method is allowed\n', status=405)
 
     if request.META.get('HTTP_X_AUTH_TOKEN') != EVALUATORS_AUTH_TOKEN:
         m = "evaluators unauthorized x-auth-token: %r"
         m %= request.META.get('HTTP_X_AUTH_TOKEN')
         logger.warn(m)
-        body = json.dumps({'status': 405,
-                           'message': 'no x-auth-token header'},
-                          indent=2)
-        return HttpResponse(body, status=403)
+        return HttpResponse('no x-auth-token header\n', status=403)
 
     remote_addr = request.META.get('HTTP_X_FORWARDED_FOR')
     remote_addr = remote_addr.split(',')[0].strip()
@@ -104,10 +98,7 @@ def evaluators(request, email):
         m = "evaluators unauthorized address: %r"
         m %= remote_addr
         logger.warn(m)
-        body = json.dumps({'status': 405,
-                           'message': 'not from your IP address'},
-                          indent=2)
-        return HttpResponse(body, status=403)
+        return HttpResponse('not from your IP address\n', status=403)
 
     try:
 	p = Professor.objects.get(user__email=email, is_foreign=False,
