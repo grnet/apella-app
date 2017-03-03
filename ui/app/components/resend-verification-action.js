@@ -4,7 +4,9 @@ import ENV from 'ui/config/environment';
 
 const {
   computed,
-  get, set
+  get, set,
+  inject,
+  computed: { reads }
 } = Ember;
 
 const VerificationModel = Ember.Object.extend({
@@ -34,6 +36,8 @@ const VerificationModel = Ember.Object.extend({
 
 export default Ember.Component.extend({
   tagName: '',
+  session: inject.service('session'),
+  isAuthenticated: reads('session.isAuthenticated'),
   verificationModel: computed(function() {
     let model = get(this, 'model');
     let init = {};

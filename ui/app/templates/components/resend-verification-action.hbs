@@ -25,7 +25,7 @@
     labels=(hash submit=(t 'send.verification.email'))
     modelMeta=(gen-resource-meta (hash
       fields=(array
-        (array 'email' (hash type='string' required=true formAttrs=(hash type='email')))
+        (array 'email' (hash type='string' required=true disabled=isAuthenticated formAttrs=(hash type='email')))
       )
     ))
   }}
