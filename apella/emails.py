@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -234,7 +236,6 @@ def send_emails_field(obj, field, update=False):
     subject = 'apella/emails/position_{}_{}_subject.txt'.format(verb, field)
     body = 'apella/emails/position_{}_{}_body.txt'.format(verb, field)
 
-
     if field == 'electors_meeting_to_set_committee_date':
         electors = [x.user for x in obj.electors.all()]
         candidates = obj.get_candidates_posted()
@@ -252,3 +253,89 @@ def send_emails_field(obj, field, update=False):
             subject,
             body,
             context)
+
+
+def send_emails_members_change(position, type, old_members, new_members):
+    """
+    Sends emails to appropriate recipients when members of committee or
+    electors are set or updated
+
+    Args:
+        position: Position object
+        type(str): Members type ('committee' or 'electors')
+        old_members(dict): Members before the update
+        new_members(dict): Members after the update
+
+    {old, new}_members for committee are expected to be in the format:
+    {
+        c: committee,
+    }
+    {old, new}_members for electors are expected to be in the format:
+    {
+        e_r_e: electors_regular_external,
+        e_r_i: electors_regular_internal,
+        e_s_e: electors_sub_external,
+        e_s_i: electors_sub_internal,
+    }
+    """
+    if type == 'committee':
+        old_c = old_members.get('c', [])
+        new_c = new_members.get('c', [])
+
+        # new committee
+        if old_c == 0:
+            # send to committee
+            recipients = position.committee.all()
+            for recipient in recipients:
+                send_user_email(
+                    recipient.user,
+                    'apella/emails/position_set_committee_subject.txt',
+                    'apella/emails/position_set_committee_to_member_body.txt',
+                    {'position': position})
+
+            # send to electors, candidates
+            electors = [x.user for x in position.electors.all()]
+            candidates = position.get_candidates_posted()
+            recipients = chain(candidates, electors)
+
+            for recipient in recipients:
+                send_user_email(
+                    recipient,
+                    'apella/emails/position_set_committee_subject.txt',
+                    'apella/emails/position_set_committee_body.txt',
+                    {'position': position})
+
+        else:
+            added_committee = list(set(new_c) - set(old_c))
+            removed_committee = list(set(new_c) - set(old_c))
+            remaining_committee = list(set(new_c).intersection(set(old_c)))
+
+            # send to electors, candidates, remaining committee
+            electors = [x.user for x in position.electors.all()]
+            committee = [x.user for x in remaining_committee]
+            candidates = position.get_candidates_posted()
+            recipients = chain(candidates, electors, committee)
+
+            for recipient in recipients:
+                print recipient.first_name.el
+                send_user_email(
+                    recipient,
+                    'apella/emails/position_update_committee_subject.txt',
+                    'apella/emails/position_update_committee_body.txt',
+                    {'position': position})
+
+            for a in added_committee:
+                print a.user.first_name.el
+                send_user_email(
+                    a.user,
+                    'apella/emails/position_update_committee_subject.txt',
+                    'apella/emails/position_set_committee_to_member_body.txt',
+                    {'position': position})
+
+            for r in removed_committee:
+                print r.user.first_name.el
+                send_user_email(
+                    r.user,
+                    'apella/emails/position_update_committee_subject.txt',
+                    'apella/emails/position_remove_from_committee_body.txt',
+                    {'position': position})
