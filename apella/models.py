@@ -264,6 +264,9 @@ class ApellaFile(models.Model):
         if self.file_kind == 'assistant_files' and user.is_manager():
             position = self.position_assistant_files.all()[0]
             return position.state in ['posted', 'electing', 'revoked']
+        if (self.file_kind == 'committee_proposal' or
+                self.file_kind == 'committee_note') and user.is_manager():
+            return is_owner
         if self.file_kind == 'attachment_files':
             candidacy = self.attachment_files.all()[0]
             return candidacy.check_resource_state_one_before_electors_meeting(
