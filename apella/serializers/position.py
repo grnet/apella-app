@@ -1,5 +1,7 @@
 import logging
+import copy
 from datetime import datetime, timedelta
+from itertools import chain
 
 from django.conf import settings
 from django.core.files import File
@@ -14,7 +16,8 @@ from apella.validators import validate_position_dates, \
     validate_position_committee, validate_position_electors
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
-    send_remove_candidacy_emails, send_email_elected, send_emails_field
+    send_remove_candidacy_emails, send_email_elected, send_emails_field, \
+    send_emails_members_change
 from apella.util import at_day_end, at_day_start, otz
 
 logger = logging.getLogger(__name__)
@@ -147,6 +150,7 @@ class PositionMixin(ValidatorMixin):
     def update(self, instance, validated_data):
         curr_position = Position.objects.get(id=instance.id)
         committee = curr_position.committee.all()
+        old_committee = copy.deepcopy(instance.committee.all())
         ranks = curr_position.ranks.all()
 
         validated_data['updated_at'] = datetime.utcnow()
@@ -199,6 +203,16 @@ class PositionMixin(ValidatorMixin):
                     send_emails_field(instance,
                             'electors_meeting_to_set_committee_date', True)
 
+        # send emails when committee is set/updated
+        new_committee = chain(validated_data.get('committee_external', []),
+                validated_data.get('committee_internal', []))
+
+
+        print 'new commitee', [x.user.first_name.el for x in new_committee]
+        print 'old committte', [x.user.first_name.el for x in old_committee]
+        send_emails_members_change(instance, 'committee', {'c': old_committee},
+            {'c': new_committee})
+
         return instance
 
 
@@ -206,8 +220,7 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
     new_file = ApellaFile(
         id=get_serial('apella_file'),
         owner=existing_file.owner,
-        source=source,
-        file_kind=existing_file.file_kind,
+
         source_id=candidacy.id,
         description=existing_file.description,
         updated_at=datetime.utcnow(),
