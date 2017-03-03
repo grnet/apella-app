@@ -265,7 +265,15 @@ export default ApellaGen.extend({
       },
       serverSide: true,
       search: true,
-      searchFields: ['position.code', 'position.title', 'candidate.id'],
+      searchPlaceholder: computed('role', function() {
+        let role = get(this, 'role');
+        if(role === 'candidate') {
+          return 'search.placeholder_candidacies_candidate';
+        }
+        else {
+        return 'search.placeholder_candidacies_helpdesk';
+        }
+      })
     },
     page: {
       title: 'candidacy.menu_label',

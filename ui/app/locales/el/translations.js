@@ -241,6 +241,8 @@ export default {
   'user_id.label': 'Κωδικός χρήστη',
   'search.input.placeholder': 'Εισάγετε κριτήριο αναζήτησης',
   'search.placeholder_members': 'Επώνυμο / Όνομα / E-mail / Όνομα χρήστη / Γνωστικό Αντικείμενο',
+  'search.placeholder_candidacies_helpdesk': 'Κωδικός υποψηφίου / Κωδικός θέσης / Τίτλος θέσης',
+  'search.placeholder_candidacies_candidate': 'Κωδικός θέσης / Τίτλος θέσης',
   'table.is.empty': 'Δεν υπάρχουν καταχωρίσεις',
   'table.is.loading': 'Γίνεται αναζήτηση...',
   'value.not.set': 'Κενό πεδίο',
