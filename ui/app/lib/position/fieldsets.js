@@ -488,7 +488,17 @@ const  position = {
           preventDelete: true,
           replace: true
         }),
-        'electors_meeting_to_set_committee_date',
+        field('electors_meeting_to_set_committee_date', {
+          disabled: computed('model.electors', function() {
+            let electors = get(this, 'model').hasMany('electors').ids();
+            if(electors.length === 0) {
+              return true;
+            }
+            else {
+              return false;
+            }
+          })
+        })
       ],
       layout: {
         flex: [100, 100]
