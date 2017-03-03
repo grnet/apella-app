@@ -1,0 +1,20 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι ανανεώθηκε το εκλεκτορικό σώμα για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the electoral committee for the position:
+
+{% include "apella/emails/position_details_en.txt" %}
+has been altered.
+
+
+{% endblock content_en %}

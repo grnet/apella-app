@@ -1,0 +1,18 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι αφαιρεθήκατε από τακτικό μέλος του Εκλεκτορικό Σώμα για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that you have been removed from regular member of the election Committee for the position:
+
+{% include "apella/emails/position_details_en.txt" %}
+
+{% endblock content_en %}
