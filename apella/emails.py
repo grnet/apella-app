@@ -340,3 +340,89 @@ def send_emails_members_change(position, type, old_members, new_members):
                         'apella/emails/position_update_committee_subject.txt',
                         'apella/emails/position_remove_from_committee_body.txt',
                         {'position': position})
+
+    elif type == 'electors':
+        old_e = old_members.get('e', [])
+        new_e = new_members.get('e', [])
+
+        old_electors_regular = [old_reg.professor for old_reg in
+            old_e if old_reg.is_regular]
+        old_electors_irregular = [old_irreg.professor for old_irreg in
+            old_e if not old_irreg.is_regular]
+
+        new_electors_regular = [new_reg.professor for new_reg in
+            new_e if new_reg.is_regular]
+        new_electors_irregular = [new_irreg.professor for new_irreg in
+            new_e if not new_irreg.is_regular]
+
+        added_regular = [p for p in new_electors_regular
+            if p not in old_electors_regular]
+        added_irregular = [p for p in new_electors_irregular
+            if p not in old_electors_irregular]
+        removed_regular = [p for p in old_electors_regular
+            if p not in new_electors_regular]
+        removed_irregular = [p for p in old_electors_irregular
+            if p not in new_electors_irregular]
+
+        candidates = position.get_candidates_posted()
+        # new electors set
+        if len(old_e) == 0:
+            for c in candidates:
+                send_user_email(
+                    c,
+                    'apella/emails/position_set_electors_subject.txt',
+                    'apella/emails/position_set_electors_body.txt',
+                    {'position': position})
+            for reg in new_electors_regular:
+                send_user_email(
+                    reg.user,
+                    'apella/emails/position_set_electors_subject.txt',
+                    'apella/emails/position_set_elector_to_regular_body.txt',
+                    {'position': position})
+            for irreg in new_electors_irregular:
+                send_user_email(
+                    irreg.user,
+                    'apella/emails/position_set_electors_subject.txt',
+                    'apella/emails/position_set_elector_to_sub_body.txt',
+                    {'position': position})
+
+        # update electors set
+        elif added_regular or added_irregular \
+                or removed_regular or removed_irregular:
+            for c in candidates:
+                send_user_email(
+                    c,
+                    'apella/emails/position_set_electors_subject.txt',
+                    'apella/emails/position_update_electors_body.txt',
+                    {'position': position})
+            for added_reg in added_regular:
+                send_user_email(
+                    added_reg.user,
+                    'apella/emails/position_set_electors_subject.txt',
+                    'apella/emails/position_set_elector_to_regular_body.txt',
+                    {'position': position})
+            for added_irreg in added_irregular:
+                send_user_email(
+                    added_irreg.user,
+                    'apella/emails/position_set_electors_subject.txt',
+                    'apella/emails/position_set_elector_to_sub_body.txt',
+                    {'position': position})
+            for removed_reg in removed_regular:
+                send_user_email(
+                    removed_reg.user,
+                    'apella /emails/position_set_electors_subject.txt',
+                    'apella/emails/position_remove_elector_to_regular_body.txt',
+                    {'position': position})
+            for removed_irreg in removed_irregular:
+                send_user_email(
+                    removed_irreg.user,
+                    'apella/emails/position_set_electors_subject.txt',
+                    'apella/emails/position_remove_elector_to_sub_body.txt',
+                    {'position': position})
+
+            for professor in position.committee.all():
+                send_user_email(
+                    professor.user,
+                    'apella/emails/position_set_electors_subject.txt',
+                    'apella/emails/position_update_electors_body.txt',
+                    {'position': position})

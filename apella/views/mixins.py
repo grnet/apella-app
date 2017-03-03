@@ -27,7 +27,8 @@ from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 from apella.serializers.position import copy_candidacy_files
 from apella.migration_functions import migrate_user_profile_files
-from apella.emails import send_user_email, send_emails_file
+from apella.emails import send_user_email, send_emails_file, \
+    send_emails_members_change
 
 
 from apella.util import urljoin, safe_path_join
@@ -81,15 +82,25 @@ class PositionHookMixin(HookMixin):
     def preprocess_update(self):
         obj = self.unstash()
         position = obj.instance
-        ElectorParticipation.objects.filter(position=position).delete()
+
+        eps = ElectorParticipation.objects.filter(position=position)
+        old_participations = [old_el_pa for old_el_pa in eps.all()]
+        eps.all().delete()
+
+        new_participations = []
         for elector_set_key, is_regular in elector_sets.items():
             if elector_set_key in obj.validated_data:
                 for elector in obj.validated_data[elector_set_key]:
-                    ElectorParticipation.objects.create(
+                    ep = ElectorParticipation.objects.create(
                         professor=elector,
                         position=position,
                         is_regular=is_regular,
                         is_internal=elector_set_key.endswith('internal'))
+                    new_participations.append(ep)
+
+        send_emails_members_change(
+            position, 'electors', {'e': old_participations},
+            {'e': new_participations})
 
         c = {'committee': []}
         for com_set in committee_sets:
