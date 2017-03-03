@@ -6,8 +6,6 @@
 
 {% include "apella/emails/position_details_el.txt" %}
 
-Η ανάρτηση της εισήγησης της επιτροπής πραγματοποιείται στο σύστημα με ευθύνη του Διαχειριστή του Ιδρύματος
-
 {% endblock content_el %}
 
 
@@ -16,6 +14,5 @@
 We inform you that the committee has been appointed for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
-The upload of the committee's evaluation is a duty of the Institution's Administrator
 
 {% endblock content_en %}
