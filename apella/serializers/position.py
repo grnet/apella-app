@@ -150,7 +150,7 @@ class PositionMixin(ValidatorMixin):
     def update(self, instance, validated_data):
         curr_position = Position.objects.get(id=instance.id)
         committee = curr_position.committee.all()
-        old_committee = copy.deepcopy(instance.committee.all())
+        old_committee = [p for p in committee.all()]
         ranks = curr_position.ranks.all()
 
         validated_data['updated_at'] = datetime.utcnow()
@@ -203,13 +203,8 @@ class PositionMixin(ValidatorMixin):
                     send_emails_field(instance,
                             'electors_meeting_to_set_committee_date', True)
 
-        # send emails when committee is set/updated
-        new_committee = chain(validated_data.get('committee_external', []),
-                validated_data.get('committee_internal', []))
+        new_committee = [p for p in instance.committee.all()]
 
-
-        print 'new commitee', [x.user.first_name.el for x in new_committee]
-        print 'old committte', [x.user.first_name.el for x in old_committee]
         send_emails_members_change(instance, 'committee', {'c': old_committee},
             {'c': new_committee})
 
