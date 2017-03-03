@@ -156,6 +156,18 @@ class PositionMixin(ValidatorMixin):
 
         instance = super(PositionMixin, self).update(instance, validated_data)
 
+        if instance.state != curr_position.state:
+            curr_position.pk = None
+            curr_position.save()
+            curr_position.committee = committee
+            curr_position.ranks = ranks
+            curr_position.save()
+            for ep in eps:
+                ElectorParticipation.objects.create(
+                    position=curr_position,
+                    professor=ep.professor,
+                    is_regular=ep.is_regular)
+
         # send email to elected
         if validated_data.get('elected', None):
             if curr_position.elected != validated_data['elected']:
@@ -187,17 +199,6 @@ class PositionMixin(ValidatorMixin):
                     send_emails_field(instance,
                             'electors_meeting_to_set_committee_date', True)
 
-        if instance.state != curr_position.state:
-            curr_position.pk = None
-            curr_position.save()
-            curr_position.committee = committee
-            curr_position.ranks = ranks
-            curr_position.save()
-            for ep in eps:
-                ElectorParticipation.objects.create(
-                    position=curr_position,
-                    professor=ep.professor,
-                    is_regular=ep.is_regular)
         return instance
 
 
