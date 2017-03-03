@@ -1,8 +1,9 @@
 import os
 from datetime import timedelta, datetime
+from itertools import chain
 
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Max
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
     UserManager
 from django.conf import settings
@@ -620,6 +621,29 @@ class Position(models.Model):
     def check_resource_state_owned_by_assistant(self, row, request, view):
         return position_is_latest(self) and \
             assistant_can_edit(self, request.user)
+
+    def get_candidates_posted(self):
+        """
+        Returns a list with  all the candidates (users) whose latest candidacy
+        for the position is in state 'posted'
+        """
+        c_set = self.candidacy_set.all()
+        updated = c_set.values('candidate').annotate(Max('updated_at')).\
+            values('updated_at__max')
+        candidacies = c_set.filter(Q(updated_at__in=updated) &
+            Q(state='posted'))
+        return [x.candidate for x in candidacies]
+
+    def get_users(self):
+        """
+        Returns a list with all the users that belong to a committee of the
+        position, are electors or candidates whose latest candidacy for the
+        position is in stated 'posted'
+        """
+        committee = [x.user for x in self.committee.all()]
+        electors = [x.user for x in self.electors.all()]
+        candidates = self.get_candidates_posted()
+        return chain(committee, candidates, electors)
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):

@@ -1,8 +1,6 @@
-from itertools import chain
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.db.models import Q, Max
 from apella.models import InstitutionManager
 
 from apella.util import urljoin
@@ -165,7 +163,8 @@ def send_remove_candidacy_emails(candidacy):
             })
 
     # send to cocandidates
-    recipients = get_position_candidates_posted(candidacy.position)
+    pos = candidacy.position
+    recipients = pos.get_candidates_posted()
     for recipient in recipients:
         send_user_email(
             recipient,
@@ -176,28 +175,6 @@ def send_remove_candidacy_emails(candidacy):
                 'candidate': candidacy.candidate
             })
 
-
-def get_position_candidates_posted(position):
-    """
-    Returns a list with  all the candidates whose latest candidacy for the
-    position is in state 'posted'
-    """
-    c_set = position.candidacy_set.all()
-    updated = c_set.values('candidate').annotate(Max('updated_at')).\
-        values('updated_at__max')
-    candidacies = c_set.filter(Q(updated_at__in=updated) & Q(state='posted'))
-    candidates = [x.candidate for x in candidacies ]
-    return candidates
-
-
-
-def get_position_users(position):
-    recipients = []
-    committee = [x.user for x in position.committee.all()]
-    electors = [x.user for x in position.electors.all()]
-    candidates = get_position_candidates_posted(position)
-    recipients = chain(committee, candidates, electors)
-    return recipients
 
 
 def send_emails_file(obj, file_kind, extra_context=()):
@@ -210,7 +187,7 @@ def send_emails_file(obj, file_kind, extra_context=()):
         # send to committee, candidates, electors
         subject = 'apella/emails/position_set_{}_subject.txt'.format(file_kind)
         body = 'apella/emails/position_set_{}_body.txt'.format(file_kind)
-        recipients = get_position_users(obj)
+        recipients = obj.get_users()
 
         for recipient in recipients:
             send_user_email(
@@ -260,15 +237,14 @@ def send_emails_field(obj, field, update=False):
 
     if field == 'electors_meeting_to_set_committee_date':
         electors = [x.user for x in obj.electors.all()]
-        candidates = get_position_candidates_posted(position)
+        candidates = obj.get_candidates_posted()
         recipients = chain(candidates, electors)
 
     if field == 'electors_meeting_date':
-        recipients = get_position_users(obj)
+        recipients = obj.get_users()
 
     if field in position_fields:
         context = {'position': obj}
-
 
     for recipient in recipients:
         send_user_email(
