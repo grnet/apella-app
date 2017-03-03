@@ -150,6 +150,7 @@ let rowCommiteeElectors = function(field_name, serverSide) {
         // all electors tables have ena extra column
         if(field_name.startsWith('electors')) {
           return ['id',
+            'old_user_id',
             i18nField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
@@ -161,6 +162,7 @@ let rowCommiteeElectors = function(field_name, serverSide) {
         }
         else {
           return ['id',
+            'old_user_id',
             i18nField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),

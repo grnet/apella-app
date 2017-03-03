@@ -75,6 +75,7 @@ let fs_prof_foreign = {
 
 let fields_members_table = [
     field('user_id', {type: 'string', dataKey: 'user__id'}),
+    'old_user_id',
     i18nUserSortField('last_name', {label: 'last_name.label'}),
     i18nField('first_name', {label: 'first_name.label'}),
     field('institution_global', {label: 'institution.label'}),
