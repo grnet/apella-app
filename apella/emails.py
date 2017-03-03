@@ -282,8 +282,11 @@ def send_emails_members_change(position, type, old_members, new_members):
         old_c = old_members.get('c', [])
         new_c = new_members.get('c', [])
 
+        if set(old_c) == set(new_c):
+            return
+
         # new committee
-        if old_c == 0:
+        if len(old_c) == 0:
             # send to committee
             recipients = position.committee.all()
             for recipient in recipients:
