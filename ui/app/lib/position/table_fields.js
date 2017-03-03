@@ -17,6 +17,7 @@ const {
 // params used for view details of candidacy from position view
 const candidaciesField = function(type, hidden, calc, calc_params) {
   return field('candidacies', {
+    refreshValueQuery: true,
     valueQuery: function(store, params, model, value) {
       let position_id = model.get('id');
       // no use of params for now
