@@ -310,7 +310,7 @@ def send_emails_members_change(position, type, old_members, new_members):
 
         else:
             added_committee = list(set(new_c) - set(old_c))
-            removed_committee = list(set(new_c) - set(old_c))
+            removed_committee = list(set(old_c) - set(new_c))
             remaining_committee = list(set(new_c).intersection(set(old_c)))
 
             # send to electors, candidates, remaining committee
