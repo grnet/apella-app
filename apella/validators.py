@@ -82,6 +82,8 @@ def validate_unique_candidacy(position, user):
 
 
 def validate_position_committee(internal, external):
+    if len(external) + len(internal) == 0:
+        return
     if len(external) < 1:
         raise ValidationError(
             _('At least one member of the committee must be '
@@ -106,6 +108,8 @@ def validate_position_electors(r_i, r_e, s_i, s_e, dep_number):
 
     regular = len(r_i) + len(r_e)
     sub = len(s_i) + len(s_e)
+    if regular + sub == 0:
+        return
     if dep_number > 40:
         if regular != 15:
             raise ValidationError(
