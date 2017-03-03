@@ -14,7 +14,7 @@
 We inform you that the electoral committee for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
-has been altered.
+has been modified.
 
 
 {% endblock content_en %}
