@@ -1,0 +1,21 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι ορίστηκε το εκλεκτορικό σώμα για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+
+Η ανάρτηση της εισήγησης της επιτροπής πραγματοποιείται στο σύστημα με ευθύνη του Διαχειριστή του Ιδρύματος
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the committee has been appointed for the position:
+
+{% include "apella/emails/position_details_en.txt" %}
+The upload of the committee's evaluation is a duty of the Institution's Administrator
+
+{% endblock content_en %}
