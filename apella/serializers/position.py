@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 
 from django.conf import settings
@@ -16,6 +17,7 @@ from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field
 from apella.util import at_day_end, at_day_start, otz
 
+logger = logging.getLogger(__name__)
 
 def get_electors_regular_internal(instance):
     eps = instance.electorparticipation_set.filter(
@@ -209,8 +211,13 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
         description=existing_file.description,
         updated_at=datetime.utcnow(),
         file_name=existing_file.file_name)
-    with open(existing_file.file_content.path, 'r') as f:
-        new_file.file_content.save(existing_file.file_name, File(f))
+    try:
+        with open(existing_file.file_content.path, 'r') as f:
+            new_file.file_content.save(existing_file.file_name, File(f))
+    except IOError as e:
+        logger.error('failed to copy candidacy file %s',
+            existing_file.file_content.path)
+        raise
     return new_file
 
 
@@ -283,10 +290,17 @@ class CandidacyMixin(object):
         code = str(obj.id)
         obj.code = code
         obj.save()
-        copy_candidacy_files(obj, validated_data.get('candidate'))
+        try:
+            copy_candidacy_files(obj, validated_data.get('candidate'))
+        except IOError:
+            obj.delete()
+            raise serializers.ValidationError(
+                {"non_field_errors": "Failed to copy candidacy files"})
         obj.state = 'posted'
         obj.save()
         send_create_candidacy_emails(obj)
+        logger.info('successfully created candidacy %s for candidate %s' %
+            (str(obj.id), str(obj.candidate.id)))
         return obj
 
     def update(self, instance, validated_data):
