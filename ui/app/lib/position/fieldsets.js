@@ -12,6 +12,7 @@ const {
   computed,
   computed: { reads, or, bool, not, and },
   get,
+  set,
   merge, assign
 } = Ember;
 
@@ -488,17 +489,6 @@ const  position = {
           preventDelete: true,
           replace: true
         }),
-        field('electors_meeting_to_set_committee_date', {
-          disabled: computed('model.electors', function() {
-            let electors = get(this, 'model').hasMany('electors').ids();
-            if(electors.length === 0) {
-              return true;
-            }
-            else {
-              return false;
-            }
-          })
-        })
       ],
       layout: {
         flex: [100, 100]
@@ -534,10 +524,39 @@ const  position = {
       label: 'electors_sub_members.label',
       fields: [
         committeeElectorsField('electors_sub_internal', 'internal', false, true),
-        committeeElectorsField('electors_sub_external', 'external', false, true)
+        committeeElectorsField('electors_sub_external', 'external', false, true),
+        field('electors_meeting_to_set_committee_date', {
+          hint: 'electors_meeting_to_set_committee_date.hint',
+          disabled: computed('model.changeset.electors_regular_external',
+                             'model.changeset.electors_regular_internal',
+                             'model.changeset.electors_sub_external',
+                             'model.changeset.electors_sub_internal',
+                             'model.department_dep_number',
+                      function() {
+            let r_e = get(this, 'model.changeset.electors_regular_external').length;
+            let r_i = get(this, 'model.changeset.electors_regular_internal').length;
+            let s_e = get(this, 'model.changeset.electors_sub_external').length;
+            let s_i = get(this, 'model.changeset.electors_sub_internal').length;
+            let num = get(this, 'model.department_dep_number');
+            let regular = (parseInt(r_e) || 0)+ (parseInt(r_i) || 0);
+            let sub =  (parseInt(s_e) || 0) + (parseInt(s_i) || 0);
+
+            if (num>40) {
+              if (sub == 15 && regular == 15) {
+                return false
+              }
+            } else {
+              if (sub == 11 && regular == 11) {
+                return false
+              }
+            }
+            return true;
+          })
+        })
+
       ],
       layout: {
-        flex: [100, 100]
+        flex: [100, 100, 100]
       }
     },
     election: {
