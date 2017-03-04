@@ -274,13 +274,6 @@ def send_emails_members_change(position, type, old_members, new_members):
     {
         c: committee,
     }
-    {old, new}_members for electors are expected to be in the format:
-    {
-        e_r_e: electors_regular_external,
-        e_r_i: electors_regular_internal,
-        e_s_e: electors_sub_external,
-        e_s_i: electors_sub_internal,
-    }
     """
     if type == 'committee':
         old_c = old_members.get('c', [])
@@ -313,15 +306,15 @@ def send_emails_members_change(position, type, old_members, new_members):
                     {'position': position})
 
         else:
-            added_committee = list(set(new_c) - set(old_c))
-            removed_committee = list(set(old_c) - set(new_c))
-            remaining_committee = list(set(new_c).intersection(set(old_c)))
+            added_committee = [p.user for p in new_c if p not in old_c]
+            removed_committee = [p.user for p in old_c if p not in new_c]
+            remaining_committee = [
+                p.user for p in new_c if p.user not in added_committee]
 
             # send to electors, candidates, remaining committee
             electors = [x.user for x in position.electors.all()]
-            committee = [x.user for x in remaining_committee]
             candidates = position.get_candidates_posted()
-            recipients = chain(candidates, electors, committee)
+            recipients = chain(candidates, electors, remaining_committee)
 
             if added_committee or removed_committee:
                 for recipient in recipients:
@@ -333,14 +326,14 @@ def send_emails_members_change(position, type, old_members, new_members):
 
                 for a in added_committee:
                     send_user_email(
-                        a.user,
+                        a,
                         'apella/emails/position_update_committee_subject.txt',
                         'apella/emails/position_set_committee_to_member_body.txt',
                         {'position': position})
 
                 for r in removed_committee:
                     send_user_email(
-                        r.user,
+                        r,
                         'apella/emails/position_update_committee_subject.txt',
                         'apella/emails/position_remove_from_committee_body.txt',
                         {'position': position})
