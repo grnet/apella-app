@@ -407,7 +407,7 @@ def send_emails_members_change(position, type, old_members, new_members):
             for removed_reg in removed_regular:
                 send_user_email(
                     removed_reg.user,
-                    'apella /emails/position_set_electors_subject.txt',
+                    'apella/emails/position_set_electors_subject.txt',
                     'apella/emails/position_remove_elector_to_regular_body.txt',
                     {'position': position})
             for removed_irreg in removed_irregular:
