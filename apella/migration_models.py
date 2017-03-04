@@ -140,3 +140,14 @@ class OldApellaCandidateAssistantProfessorMigrationData(models.Model):
     department = models.TextField()
     fek = models.TextField()
     discipline_from_fek = models.TextField()
+
+
+class OldApellaAreaSubscriptions(models.Model):
+    user_id = models.TextField()
+    version = models.TextField()
+    sector_id = models.TextField()
+    area_id = models.TextField()
+    subject_id = models.TextField()
+    area_name = models.TextField()
+    subject_name = models.TextField()
+    locale = models.TextField()

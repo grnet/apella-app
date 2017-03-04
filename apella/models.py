@@ -764,7 +764,8 @@ from migration_models import (
     OldApellaCandidacyFileMigrationData,
     OldApellaCandidacyMigrationData,
     OldApellaInstitutionMigrationData,
-    OldApellaCandidateAssistantProfessorMigrationData
+    OldApellaCandidateAssistantProfessorMigrationData,
+    OldApellaAreaSubscriptions,
 )
 
 from serials import Serials

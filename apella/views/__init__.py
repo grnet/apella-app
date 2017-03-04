@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from apella.common import load_resources, load_permissions, load_holidays
-from apella.models import Professor
+from apella.models import Professor, OldApellaAreaSubscriptions
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -120,6 +120,15 @@ def evaluators(request, email):
     department = p.department.title.el if p.department \
         else ''
 
+    if not p.user.old_user_id:
+        interests = []
+    else:
+        subscriptions = OldApellaAreaSubscriptions.objects
+        subscriptions = subscriptions.filter(
+            user_id=p.user.old_user_id, locale='el')
+        interests_set = set(subscriptions.values_list('subject_name', flat=True))
+        interests = list(interests_set)
+
     professor_data = {
         'person': {
             'id': p.user.id,
@@ -132,7 +141,8 @@ def evaluators(request, email):
             'department': department,
             'government_gazette_no': p.fek,
             'discipline_text': p.discipline_text,
+            'interests': interests,
         }
     }
-    return HttpResponse(json.dumps(professor_data, indent=2) + '\n',
-                        content_type='application/json')
+    body = json.dumps(professor_data, ensure_ascii=False, indent=2) + '\n'
+    return HttpResponse(body, content_type='application/json')
