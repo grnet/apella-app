@@ -423,3 +423,10 @@ def send_emails_members_change(position, type, old_members, new_members):
                     'apella/emails/position_set_electors_subject.txt',
                     'apella/emails/position_update_electors_body.txt',
                     {'position': position})
+
+def send_position_create_emails(position):
+    send_user_email(
+        position.author.user,
+        'apella/emails/position_create_subject.txt',
+        'apella/emails/position_create_to_manager.txt',
+        {'position': position})

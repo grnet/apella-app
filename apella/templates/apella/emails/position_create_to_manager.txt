@@ -4,7 +4,7 @@
 
 Σας ενημερώνουμε ότι καταχωρίστηκε στο πληροφοριακό σύστημα ΑΠΕΛΛΑ μία νέα θέση:
 
-{% include "apella/emails/position_details_el.txt %}
+{% include "apella/emails/position_details_el.txt" %}
 
 
 {% endblock content_el %}
@@ -14,7 +14,7 @@
 
 We inform you that a new position has been entered in the Apella information system:
 
-{% include "apella/emails/position_details_en.txt %}
+{% include "apella/emails/position_details_en.txt" %}
 
 <a href="{{ url }}">Browse Positions.</a>
 

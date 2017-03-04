@@ -15,7 +15,7 @@ from apella.validators import validate_position_dates, \
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
-    send_emails_members_change
+    send_emails_members_change, send_position_create_emails
 from apella.util import at_day_end, at_day_start, otz
 
 logger = logging.getLogger(__name__)
@@ -143,6 +143,7 @@ class PositionMixin(ValidatorMixin):
         code = settings.POSITION_CODE_PREFIX + str(obj.id)
         obj.code = code
         obj.save()
+        send_position_create_emails(obj)
         return obj
 
     def update(self, instance, validated_data):
