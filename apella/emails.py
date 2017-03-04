@@ -386,12 +386,6 @@ def send_emails_members_change(position, type, old_members, new_members):
         # update electors set
         elif added_regular or added_irregular \
                 or removed_regular or removed_irregular:
-            for c in candidates:
-                send_user_email(
-                    c,
-                    'apella/emails/position_set_electors_subject.txt',
-                    'apella/emails/position_update_electors_body.txt',
-                    {'position': position})
             for added_reg in added_regular:
                 send_user_email(
                     added_reg.user,
@@ -417,9 +411,15 @@ def send_emails_members_change(position, type, old_members, new_members):
                     'apella/emails/position_remove_elector_to_sub_body.txt',
                     {'position': position})
 
-            for professor in position.committee.all():
+            electors = [p.user for p in position.electors.all()
+                if p not in added_irregular and p not in removed_irregular
+                and p not in added_regular and p not in removed_regular]
+            committee = [p.user for p in position.committee.all()]
+            recipients = chain(electors, committee, candidates)
+
+            for user in recipients:
                 send_user_email(
-                    professor.user,
+                    user,
                     'apella/emails/position_set_electors_subject.txt',
                     'apella/emails/position_update_electors_body.txt',
                     {'position': position})
