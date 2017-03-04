@@ -4,9 +4,11 @@ from itertools import chain
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from apella.models import InstitutionManager
+from django.db.models import Q
 
 from apella.util import urljoin, otz, _move_to_timezone
+from apella.models import InstitutionManager, UserInterest, \
+    ApellaUser
 
 logger = logging.getLogger(__name__)
 
@@ -508,12 +510,29 @@ def send_position_create_emails(position):
     ends_at = _move_to_timezone(position.ends_at, otz)
     ui_url = get_ui_url()
     position_url = urljoin(ui_url, 'positions/', str(position.pk))
+    extra_context = {
+        'position': position,
+        'starts_at': starts_at,
+        'ends_at': ends_at,
+        'apella_url': position_url
+    }
 
     send_user_email(
         position.author.user,
         'apella/emails/position_create_subject.txt',
         'apella/emails/position_create_to_manager.txt',
-        {'position': position,
-         'starts_at': starts_at,
-         'ends_at': ends_at,
-         'apella_url': position_url})
+        extra_context)
+
+    users_interested = UserInterest.objects.filter(
+        Q(area=position.subject_area) |
+        Q(subject=position.subject) |
+        Q(institution=position.department.institution) |
+        Q(department=position.department)). \
+        values_list('user', flat=True).distinct()
+
+    for user_id in users_interested:
+        send_user_email(
+            ApellaUser.objects.get(id=id),
+            'apella/emails/position_create_subject.txt',
+            'apella/emails/position_create_to_interested.txt',
+            extra_context)
