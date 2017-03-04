@@ -1,5 +1,4 @@
 import os
-import urlparse
 from datetime import datetime, date, time
 
 from rest_framework import viewsets, status
@@ -20,13 +19,12 @@ from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, \
-    OldApellaUserMigrationData, generate_filename, Candidate, \
+    OldApellaUserMigrationData, Candidate, \
     Professor as ProfessorModel
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
 from apella.serializers.position import copy_candidacy_files
-from apella.migration_functions import migrate_user_profile_files
 from apella.emails import send_user_email, send_emails_file, \
     send_emails_members_change
 
@@ -463,27 +461,4 @@ class CandidateProfile(object):
                 'apella/emails/user_rejected_profile_body.txt')
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
-        return Response(request.data, status=status.HTTP_200_OK)
-
-    @detail_route(methods=['post'])
-    def migrate_user_profile_files(self, request, pk=None):
-        candidate_user = self.get_object()
-        if 'old_user_id' not in request.data:
-            return Response(
-                {"old_user_id": "old_user_id.required.error"},
-                status=status.HTTP_400_BAD_REQUEST)
-        else:
-            try:
-                old_user = OldApellaUserMigrationData.objects.get(
-                    user_id=int(request.data['old_user_id']),
-                    role=candidate_user.user.role)
-            except OldApellaUserMigrationData.DoesNotExist as dne:
-                return Response(
-                    dne.message, status=status.HTTP_400_BAD_REQUEST)
-            except MultipleObjectsReturned as mor:
-                return Response(
-                    mor.message, status=status.HTTP_400_BAD_REQUEST)
-            # TODO remove current files, if exist
-            migrate_user_profile_files(old_user, candidate_user.user)
-
         return Response(request.data, status=status.HTTP_200_OK)

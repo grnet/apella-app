@@ -1,7 +1,5 @@
 import logging
-import copy
 from datetime import datetime, timedelta
-from itertools import chain
 
 from django.conf import settings
 from django.core.files import File
@@ -9,7 +7,7 @@ from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
-    Professor, ElectorParticipation, ApellaFile
+    ElectorParticipation, ApellaFile
 from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -224,8 +222,7 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
         with open(existing_file.file_content.path, 'r') as f:
             new_file.file_content.save(existing_file.file_name, File(f))
     except IOError as e:
-        logger.error('failed to copy candidacy file %s',
-            existing_file.file_content.path)
+        logger.error('failed to copy candidacy file: %s' % e)
         raise
     return new_file
 
