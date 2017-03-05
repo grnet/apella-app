@@ -363,7 +363,7 @@ def send_emails_members_change(position, type, old_members, new_members):
 
         candidates = position.get_candidates_posted()
         # new electors set
-        if len(old_e) == 0:
+        if len(old_e) == 0 and len(new_e) > 0:
             for c in candidates:
                 send_user_email(
                     c,
