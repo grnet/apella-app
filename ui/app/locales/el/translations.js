@@ -120,7 +120,7 @@ export default {
   'delete': 'Διαγραφη', //For top bar
   'Draft':'Πρόχειρο',
   'Posted': 'Ενταγμένη',
-  'Submitted': 'Υποβεβλημένη',
+  'Submitted': 'Υποβληθείσα',
   'Cancelled': 'Ακυρωθείσα',
   'Candidacy_cancelled': 'Αποσυρθείσα',
   'Electing': 'Επιλογή',
