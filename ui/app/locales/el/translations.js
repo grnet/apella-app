@@ -79,7 +79,7 @@ export default {
   'setSuccessful': 'Στελεχωμενη',
   'cancel': 'Ακυρο',
   'submit': 'Υποβολη',
-  'applyCandicacy': 'Υποβολή υποψηφιότητας',
+  'applyCandidacy': 'Υποβολή υποψηφιότητας',
   'deactivate': 'Απενεργοποιηση',
   'activate': 'ενεργοποιηση',
   'deactivateUser': 'Απενεργοποίηση χρήστη',
