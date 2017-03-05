@@ -607,6 +607,7 @@ PERMISSION_RULES = [
     ('apella-files', 'download_head', 'candidate', '*', 'others_can_view', ''),
     ('apella-files', 'download_head', 'professor', '*', 'owned', ''),
     ('apella-files', 'download_head', 'professor', '*', 'others_can_view', ''),
+    ('apella-files', 'download_head', 'professor', '*', 'participates', ''),
     ('apella-files', 'download_head', 'institutionmanager', '*', 'owned_by_manager', ''),
     ('apella-files', 'download_head', 'assistant', '*', 'owned_by_manager', ''),
     ('apella-files', 'download_head', 'candidate', '*', 'public_file', ''),

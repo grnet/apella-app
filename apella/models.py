@@ -154,7 +154,7 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
             return False
         departments = self.candidacy_set.values_list(
             'position__department', flat=True)
-        if not request.user.is_foreign_professor and \
+        if not request.user.is_foreign_professor() and \
                 request.user.professor.department.id in departments:
             return True
         positions = self.candidacy_set.values_list(
@@ -206,6 +206,28 @@ class ApellaFile(models.Model):
 
     def check_resource_state_owned(self, row, request, view):
         return request.user == self.owner
+
+    def check_resource_state_participates(self, row, request, view):
+        user = request.user
+        if not user.is_professor():
+            return False
+        if not user.is_foreign_professor():
+            user_pos_departments = self.owner.candidacy_set.values_list(
+                'position__department', flat=True)
+            if user.professor.department.id in user_pos_departments:
+                return True
+
+        user_positions = self.owner.candidacy_set.values_list(
+            'position_id', flat=True)
+        prof_positions_elector = user.professor.electorparticipation_set. \
+            values_list('position_id', flat=True)
+        prof_positions_committee = user.professor.committee_duty. \
+            values_list('id', flat=True)
+        for pid in user_positions:
+            if pid in prof_positions_committee or \
+                    pid in prof_positions_elector:
+                return True
+        return False
 
     def check_resource_state_others_can_view(self, row, request, view):
         user = request.user
