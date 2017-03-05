@@ -152,12 +152,24 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     def check_resource_state_is_dep_candidate(self, row, request, view):
         if not request.user.is_professor():
             return False
-        if request.user.is_foreign_professor():
-            return False
         departments = self.candidacy_set.values_list(
             'position__department', flat=True)
-        return request.user.professor.department.id in \
-            departments
+        if not request.user.is_foreign_professor and \
+                request.user.professor.department.id in departments:
+            return True
+        positions = self.candidacy_set.values_list(
+            'position_id', flat=True)
+        prof_positions_elector = \
+            request.user.professor.electorparticipation_set. \
+            values_list('position_id', flat=True)
+        prof_positions_committee = \
+            request.user.professor.committee_duty. \
+            values_list('id', flat=True)
+        for pid in positions:
+            if pid in prof_positions_committee or \
+                    pid in prof_positions_elector:
+                return True
+        return False
 
 
 def generate_filename(apellafile, filename):
@@ -407,6 +419,19 @@ class Professor(UserProfile, CandidateProfile):
             for pid in user_positions:
                 if pid in self_positions_elector \
                         or pid in self_positions_committee:
+                    return True
+        if user.is_professor():
+            prof_elector = user.professor.electorparticipation_set.values_list(
+                'position_id', flat=True)
+            prof_committee = user.professor.committee_duty.values_list(
+                'id', flat=True)
+            for pid in prof_committee:
+                if pid in self_positions_committee or \
+                        pid in self_positions_elector:
+                    return True
+            for pid in prof_elector:
+                if pid in self_positions_committee or \
+                        pid in self_positions_elector:
                     return True
         return False
 
