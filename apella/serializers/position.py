@@ -184,21 +184,26 @@ class PositionMixin(ValidatorMixin):
         # send emails when electors_meeting_date is set/updated
         d1 = validated_data.get('electors_meeting_date', None)
         if d1:
+            d1 = d1.date()
             if not curr_position.electors_meeting_date:
                 send_emails_field(instance, 'electors_meeting_date')
             else:
-                if curr_position.electors_meeting_date != d1:
+                curr_date = curr_position.electors_meeting_date.date()
+                if curr_date != d1:
                     send_emails_field(instance, 'electors_meeting_date', True)
 
         # send emails when electors_meeting_to_set_committee_date is
         # set/updated
         d2 = validated_data.get('electors_meeting_to_set_committee_date', None)
         if d2:
+            d2 = d2.date()
             if not curr_position.electors_meeting_to_set_committee_date:
                 send_emails_field(instance,
                         'electors_meeting_to_set_committee_date')
             else:
-                if curr_position.electors_meeting_to_set_committee_date != d2:
+                curr_date = \
+                    curr_position.electors_meeting_to_set_committee_date.date()
+                if curr_date != d2:
                     send_emails_field(instance,
                             'electors_meeting_to_set_committee_date', True)
 
