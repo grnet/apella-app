@@ -16,6 +16,4 @@ We inform you that a new position has been entered in the Apella information sys
 
 {% include "apella/emails/position_details_en.txt" %}
 
-<a href="{{ url }}">Browse Positions.</a>
-
 {% endblock content_en %}
