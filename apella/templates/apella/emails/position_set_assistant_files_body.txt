@@ -2,7 +2,7 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι αναρτήθηκε ένα νέο έγγραφο στην ενότητα ""Λοιπά διοικητικά έγγραφα"" για τη θέση:
+Σας ενημερώνουμε ότι αναρτήθηκε ένα νέο έγγραφο στην ενότητα "Λοιπά διοικητικά έγγραφα" για τη θέση:
 
 {% include "apella/emails/position_details_el.txt" %}
 
@@ -13,6 +13,6 @@
 
 We inform you that a new file for the position:
 {% include "apella/emails/position_details_en.txt" %}
-has been uploaded in the ""Other Administrative Files"" section.
+has been uploaded in the "Other Administrative Files" section.
 
 {% endblock content_en %}

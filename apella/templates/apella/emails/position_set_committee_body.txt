@@ -11,7 +11,7 @@
 
 {% block content_en %}
 
-We inform you that the committee has been appointed for the position:
+We inform you that the proposal committee has been appointed for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
 

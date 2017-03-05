@@ -2,7 +2,7 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι αφαιρεθήκατε από τακτικό μέλος του εκλεκτορικού σώματος για τη θέση:
+Σας ενημερώνουμε ότι αφαιρεθήκατε από το εκλεκτορικό σώμα για τη θέση:
 
 {% include "apella/emails/position_details_el.txt" %}
 
@@ -11,7 +11,7 @@
 
 {% block content_en %}
 
-We inform you that you have been removed from regular member of the electoral committee for the position:
+We inform you that you have been removed from the electoral committee for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
 

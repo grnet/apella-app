@@ -11,7 +11,7 @@
 
 {% block content_en %}
 
-We inform you that you have been appointed as substitute member of the electoral committee for the position:
+We inform you that you have been appointed as a substitute member of the electoral committee for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
 

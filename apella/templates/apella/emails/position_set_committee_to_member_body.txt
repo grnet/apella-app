@@ -6,16 +6,16 @@
 
 {% include "apella/emails/position_details_el.txt" %}
 
-Η ανάρτηση της εισήγησης της επιτροπής πραγματοποιείται στο σύστημα με ευθύνη του Διαχειριστή του Ιδρύματος
+Η ανάρτηση της εισήγησης της επιτροπής πραγματοποιείται στο σύστημα με ευθύνη της αρμόδιας υπηρεσίας του Ιδρύματος/Τμήματος.
 
 {% endblock content_el %}
 
 
 {% block content_en %}
 
-We inform you that the electors have appointed you as member of the committee for the position:
+We inform you that the electors have appointed you as a member of the proposal committee for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
-The upload of the committee's evaluation is a duty of the Institution's Administrator
+The upload of the committee's proposal is a duty of the Institution's/Department's competent authority.
 
 {% endblock content_en %}

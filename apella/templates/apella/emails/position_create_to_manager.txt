@@ -12,7 +12,7 @@
 
 {% block content_en %}
 
-We inform you that a new position has been entered in the Apella information system:
+We inform you that a new position has been announced in the Apella information system:
 
 {% include "apella/emails/position_details_en.txt" %}
 
