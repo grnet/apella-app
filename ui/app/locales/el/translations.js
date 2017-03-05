@@ -214,7 +214,7 @@ export default {
   'category.label': 'Κατηγορία',
   'discipline_in_fek.label': 'Γνωστικό αντικείμενο στο Φ.Ε.Κ. ',
   'discipline_in_fek.hint': 'Το γνωστικό αντικείμενο αναγράφεται στο ΦΕΚ διορισμού μου',
-  'dep_number.label': 'Αριθμός μελών Δ.Ε.Π.',
+  'dep_number.label': 'Αριθμός Καθηγητών και υπηρετούντων Λεκτόρων',
   'code.label': 'Κωδικός',
   'old_code.label': 'Παλιός κωδικός',
   'position.old_code.label': 'Παλιός κωδικός θέσης',
