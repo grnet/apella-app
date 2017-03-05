@@ -173,9 +173,19 @@ let rowCommiteeElectors = function(field_name, serverSide) {
           ];
         }
       }),
-      actions: ['goToDetails'],
+      actions: ['goToProfessorDetails'],
       actionsMap: {
-        goToDetails: goToDetails(undefined, false, false)
+        goToProfessorDetails: {
+            label: 'details.label',
+            icon: 'remove red eye',
+            permissions: [{resource: 'professors', action: 'view'}],
+            hidden: false,
+            action: function(route, model) {
+              let resource = model.get('_internalModel.modelName'),
+                dest_route = `${resource}.record.index`;
+              route.transitionTo(dest_route, model);
+            }
+        }
       }
     },
     paginate: {
