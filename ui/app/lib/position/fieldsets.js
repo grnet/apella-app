@@ -526,18 +526,40 @@ const  position = {
         committeeElectorsField('electors_sub_internal', 'internal', false, true),
         committeeElectorsField('electors_sub_external', 'external', false, true),
         field('electors_meeting_to_set_committee_date', {
-          hint: 'electors_meeting_to_set_committee_date.hint',
-          disabled: computed('model.changeset.electors_regular_external',
-                             'model.changeset.electors_regular_internal',
-                             'model.changeset.electors_sub_external',
-                             'model.changeset.electors_sub_internal',
-                             'model.department_dep_number',
+          //hint: 'electors_meeting_to_set_committee_date.hint',
+          disabled: computed(
+                 'model.changeset.electors_regular_external',
+                 'model.changeset.electors_regular_internal',
+                 'model.changeset.electors_sub_external',
+                 'model.changeset.electors_sub_internal',
+                 'model.electors_regular_external.[]',
+                 'model.electors_regular_internal.[]',
+                 'model.electors_sub_external.[]',
+                 'model.electors_sub_internal.[]',
+                 'model.department_dep_number',
                       function() {
-            let r_e = get(this, 'model.changeset.electors_regular_external').length;
-            let r_i = get(this, 'model.changeset.electors_regular_internal').length;
-            let s_e = get(this, 'model.changeset.electors_sub_external').length;
-            let s_i = get(this, 'model.changeset.electors_sub_internal').length;
+
+            let isInt = function(data) {
+              return data === parseInt(data, 10);
+            }
+
             let num = get(this, 'model.department_dep_number');
+
+            let c_r_e = get(this, 'model.changeset.electors_regular_external').length;
+            let c_r_i = get(this, 'model.changeset.electors_regular_internal').length;
+            let c_s_e = get(this, 'model.changeset.electors_sub_external').length;
+            let c_s_i = get(this, 'model.changeset.electors_sub_internal').length;
+
+            let m_r_e = get(this, 'model').hasMany('electors_regular_external').ids().length;
+            let m_r_i = get(this, 'model').hasMany('electors_regular_internal').ids().length;
+            let m_s_e = get(this, 'model').hasMany('electors_sub_external').ids().length;
+            let m_s_i = get(this, 'model').hasMany('electors_sub_internal').ids().length;
+
+            let r_e =  isInt(c_r_e)? c_r_e: m_r_e;
+            let r_i =  isInt(c_r_i)? c_r_i: m_r_i;
+            let s_e =  isInt(c_s_e)? c_s_e: m_s_e;
+            let s_i =  isInt(c_s_i)? c_s_i: m_s_i;
+
             let regular = (parseInt(r_e) || 0)+ (parseInt(r_i) || 0);
             let sub =  (parseInt(s_e) || 0) + (parseInt(s_i) || 0);
 
