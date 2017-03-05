@@ -80,7 +80,7 @@ export default {
   'setFailed': 'Failed',
   'setSuccessful': 'Successful',
   'submit': 'submit',
-  'applyCandicacy': 'Submit Candidacy',
+  'applyCandicacy': 'Submit candidacy',
   'deactivate': 'deactivate',
   'activate': 'activate',
   'deactivateUser': 'Deactivate user',
