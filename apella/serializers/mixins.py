@@ -3,7 +3,8 @@ from rest_framework import serializers
 from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
-from apella.models import ApellaUser, Institution
+from apella.models import ApellaUser, Institution, Department, \
+    Position
 from apella import auth_hooks
 from apella.emails import send_user_email
 
@@ -108,6 +109,14 @@ class NestedWritableObjectsMixin(object):
     def update(self, instance, validated_data):
         instance = update_objects(
             self.get_fields(), validated_data, instance=instance)
+        if isinstance(instance, Department):
+            empty_positions = Position.objects.filter(
+                department=instance.id, department_dep_number=0)
+            dep_number = validated_data.get('dep_number', 0)
+            for p in empty_positions:
+                if dep_number > 0:
+                    p.department_dep_number = dep_number
+                    p.save()
         return instance
 
 

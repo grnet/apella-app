@@ -148,6 +148,13 @@ class PositionMixin(ValidatorMixin):
 
     def update(self, instance, validated_data):
         curr_position = Position.objects.get(id=instance.id)
+        dep_number = curr_position.department.dep_number
+        if curr_position.department_dep_number == 0 and \
+                dep_number is None and curr_position.state == 'electing':
+            raise serializers.ValidationError(
+                {"non_field_errors":
+                    "You should first set DEP number for the department"})
+
         committee = curr_position.committee.all()
         old_committee = [p for p in committee.all()]
         ranks = curr_position.ranks.all()
