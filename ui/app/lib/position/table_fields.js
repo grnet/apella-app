@@ -147,30 +147,39 @@ let rowCommiteeElectors = function(field_name, serverSide) {
   let display = serverSide;
   return {
     row: {
-      fields: computed('', function() {
-        // all electors tables have ena extra column
+      fields: computed('role', function() {
+        // all electors tables have an extra column
+        let role = get(this, 'role');
+        let restricted = (role == 'candidate' || role == 'professor');
         if(field_name.startsWith('electors')) {
-          return ['id',
+          let res = [
+            'id',
             'old_user_id',
             i18nField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
             i18nField('department.institution.title'),
             'is_foreign_descr',
-            field('email', {label: 'email.label'}),
-            'active_elections'
           ];
+          if (!restricted) {
+            res.push(field('email', {label: 'email.label'}))
+            res.push('active_elections');
+          }
+          return res;
         }
         else {
-          return ['id',
+          let res = ['id',
             'old_user_id',
             i18nField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
             i18nField('department.institution.title'),
             'is_foreign_descr',
-            field('email', {label: 'email.label'}),
           ];
+          if (!restricted) {
+            res.push(field('email', {label: 'email.label'}))
+          }
+          return res;
         }
       }),
       actions: ['goToProfessorDetails'],
