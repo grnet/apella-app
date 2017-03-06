@@ -136,6 +136,7 @@ def validate_apella_files_related_names():
 
 def move_unreferenced_disk_files(dest_root, force=False):
     path_join = os.path.join
+    path_dirname = os.path.dirname
     isdir = os.path.isdir
     makedirs = os.makedirs
 
@@ -176,7 +177,7 @@ def move_unreferenced_disk_files(dest_root, force=False):
         logger.info(m)
         if force:
             try:
-                dest_dirname = dirname(dest_file_path)
+                dest_dirname = path_dirname(dest_file_path)
                 if not isdir(dest_dirname):
                     makedirs(dest_dirname)
                 move(disk_file_path, dest_file_path)
