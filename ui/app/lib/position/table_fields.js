@@ -241,12 +241,20 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
     label: label,
     refreshValueQuery: modelMetaSide,
     disabled: computed('model.changeset.committee_set_file', 'model.changeset.electors_set_file', function(){
-      let file1 = get(this, 'model.changeset.committee_set_file');
-      let file2 = get(this, 'model.changeset.electors_set_file');
+
+      // changeset.<field> value can be either a model or a model promise
+      function getFile(content, key) {
+        let value = get(content, `model.changeset.${key}`)
+        if (value && (value instanceof DS.Model)) { return value; }
+        return value && value.content;
+      }
+      let file1 = getFile(this, 'committee_set_file');
+      let file2 = getFile(this, 'electors_set_file');
+
       if(field_name.startsWith('committee')) {
-        return !(file1 && file1.content);
+        return !file1;
       } else {
-        return !(file2 && file2.content);
+        return !file2;
       }
     }),
     query: computed('position', function(table, store, field, params) {
