@@ -220,7 +220,9 @@ const  position = {
         fileField('electors_set_file', 'position', 'electors_set_file', {
           readonly: true
         }),
-        'electors_meeting_to_set_committee_date',
+        field('electors_meeting_to_set_committee_date_format', {
+          label: 'electors_meeting_to_set_committee_date.label'
+        }),
       ],
       layout: {
         flex: [100, 100]
