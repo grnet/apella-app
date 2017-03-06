@@ -290,6 +290,10 @@ const  position = {
     history: {
       label: 'position.history.title',
       fields: [historyField]
+    },
+    contact: {
+      label: 'contact',
+      fields: [contactField]
     }
   },
   edit: {

@@ -74,7 +74,7 @@ const pick_details_fs_by_state = function(fs, state, before_open, head, display_
       res = head.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee,  /* fs.election*//*, fs.history, */);
     }
   }
-  return res.concat(fs.assistant_files);
+  return res.concat(fs.assistant_files, fs.contact);
 };
 
 const pick_details_fs = function() {

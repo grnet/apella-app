@@ -54,7 +54,7 @@ const managers_columns = [
   i18nField('first_name', {label: 'first_name.label'}),
   'role_verbose',
   field('email', {label: 'email.label'}),
-  'mobile_phone_number'
+  'home_phone_number'
 ];
 
 const contactField = field('institution-managers', {
@@ -66,64 +66,68 @@ const contactField = field('institution-managers', {
     },
   },
   valueQuery: function(store, params, model, value) {
-    // find department, to get get its institution
+    // find department and its institution
+
     return model.get('department')
       .then(function(department) {
         return  department.get('institution')
           .then(function(institution) {
-            let institution_id = institution.get('id');
-            /*
-             * TODO: Check its functionality, what is going on with assistants
-             *
-             * get all managers of institution (assistants, institution manager,
-             * substitute institution manager)
-             */
-            return store.query('institution-manager', {institution: institution_id})
-              .then(function(managers) {
-                let institution_manager = managers.filterBy('role', 'institutionmanager').get('firstObject'),
-                  managers_ids = managers.getEach('id'),
-                  // every institution has one sub_institution_manager
-                  sub_institution_manager_id = `sub-${institution_id}`;
-                /*
-                 * The info of sub_institution_manager are on the model of
-                 * institution manager. We extract them and create a
-                 * institution-manager model with role sub_institution_manager.
-                 * We do this because we want to display his info in a table.
-                 */
-                if(!store.hasRecordForId('institution-manager', sub_institution_manager_id)) {
-                  let first_name = institution_manager.get('sub_first_name'),
-                    last_name = institution_manager.get('sub_last_name'),
-                    email = institution_manager.get('sub_email'),
-                    mobile = institution_manager.get('sub_mobile_phone_number'),
-                    sub;
+            let institution_id = institution.get('id'),
+              department_id = model.get('department').get('id'),
+              query_institution_manager = {
+                institution: institution_id,
+                is_verified: true,
+                manager_role: 'institutionmanager'
+              },
+              query_assistants = {
+                departments: department_id,
+                is_verified: true,
+                is_secretary: true,
+                can_create_positions: true
+              };
 
-                  sub = store.createRecord('institution-manager', {
-                    role: 'sub_institution_manager',
-                    id: sub_institution_manager_id,
-                    first_name: first_name,
-                    last_name: last_name,
-                    email: email,
-                    mobile_phone_number: mobile
+            return store.query('institution-manager', query_institution_manager)
+              .then(function(institution_managers) {
+
+                if(institution_managers.get('length') >= 1){
+                  let position_managers = [];
+
+                  institution_managers.forEach(function(institution_manager) {
+                    let institution_manager_id = institution_manager.get('id'),
+                     sub_institution_manager_id = `sub-${institution_manager_id}`,
+                     sub;
+
+                     /* The info of sub_institution_manager are on the model of
+                     * institution manager. We extract them and create a
+                     * institution-manager model with role sub_institution_manager.
+                     * We do this because we want to display his info in a table.
+                     */
+                    if(!store.hasRecordForId('institution-manager', sub_institution_manager_id)) {
+                      let first_name = institution_manager.get('sub_first_name'),
+                        last_name = institution_manager.get('sub_last_name'),
+                        email = institution_manager.get('sub_email'),
+                        mobile = institution_manager.get('sub_mobile_phone_number');
+
+                      sub = store.createRecord('institution-manager', {
+                        role: 'sub_institution_manager',
+                        id: sub_institution_manager_id,
+                        first_name: first_name,
+                        last_name: last_name,
+                        email: email,
+                        mobile_phone_number: mobile
+                      });
+                    }
+                    else {
+                      sub = store.peekRecord('institution-manager', sub_institution_manager_id);
+                    }
+                    position_managers.push(institution_manager, sub);
+                  });
+
+                  return store.query('assistant', query_assistants).then(function(assistants) {
+                    return assistants.toArray().concat(position_managers);
                   });
                 }
-                if(!managers_ids.includes(sub_institution_manager_id)) {
-                  managers_ids.push(sub_institution_manager_id);
-                }
-
-                /*
-                 * We have all the managers of the institution in store.
-                 * In the position details we display a table field with the
-                 * contact info of:
-                 * - institution manager (position's institution)
-                 * - substitute manager (position's institution)
-                 */
-                return store.peekAll('institution-manager').filter(function(manager) {
-                  let role = manager.get('role'),
-                    id = manager.get('id'),
-                    is_institution_manager = (role === 'institutionmanager' && managers_ids.includes(id)),
-                    is_sub_institution_manager = (role === 'sub_institution_manager' && managers_ids.includes(id));
-                  return (is_institution_manager || is_sub_institution_manager);
-                });
+                else return [];
               });
           });
       });
