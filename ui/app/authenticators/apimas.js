@@ -12,8 +12,10 @@ function mergeProfileData(sessionData, profileResponse) {
   user.user_id = user.id;
   delete user.id;
   delete profileResponse.user;
-  if (profileResponse.departments) { 
-    delete profileResponse.departments;
+  if (profileResponse.departments && profileResponse.departments.length) { 
+    profileResponse.departments.forEach((dep, i) => {
+      profileResponse.departments[i] = dep.split('/').slice(-2)[0];
+    });
   }
   merge(sessionData, user);
   merge(sessionData, profileResponse);

@@ -262,9 +262,7 @@ export default ApellaGen.extend({
      */
     can_create_owned: computed('can_create', 'model.department.id', 'user.departments', function() {
         let registry_department =  get(this, 'model.department.id'),
-          user_departments = get(this, 'user.departments').map(function(el){
-            return el.split('/').slice(-2)[0]
-          }),
+          user_departments = get(this, 'user.departments'),
           can_create  = get(this, 'can_create');
         let owns = user_departments.includes(registry_department);
         return owns && can_create;
@@ -287,8 +285,7 @@ export default ApellaGen.extend({
             let role = get(field, 'session.session.authenticated.role');
             if (role == 'assistant') {
               let deps = get(field, 'session.session.authenticated.departments');
-              let promises = deps.map((url) => {
-                let id = url.split('/').slice(-2)[0];
+              let promises = deps.map((id) => {
                 return store.findRecord('department', id);
               })
 

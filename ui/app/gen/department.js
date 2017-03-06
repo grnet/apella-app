@@ -90,9 +90,7 @@ export default ApellaGen.extend({
     owned_by_assistant: computed('role', 'user.can_create_positions', 'user.departments', 'model.id', function(){
       let is_assistant = get(this, 'role') == 'assistant';
       let can_create = get(this, 'user.can_create_positions');
-      let is_own = get(this, 'user.departments').map((url) => {
-        return url.split('/').slice(-2)[0]
-      }).includes(get(this, 'model.id'));
+      let is_own = (get(this, 'user.departments') || []).includes(get(this, 'model.id'));
       return is_assistant && can_create && is_own;
     })
   },
