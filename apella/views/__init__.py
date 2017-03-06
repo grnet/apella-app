@@ -1,5 +1,4 @@
 import json
-import ast
 import urlparse
 import logging
 logger = logging.getLogger(__name__)
@@ -63,8 +62,8 @@ def get_evaluators_auth_token():
 def get_evaluators_allow_addr():
     try:
         with open(settings.EVALUATORS_ALLOW_ADDR_FILE) as f:
-            allow_addr = ast.literal_eval(f.read().strip())
-        m = "read evaluators auth token from %r"
+            allow_addr = json.load(f)
+        m = "read evaluators allow address list from %r"
         m %= settings.EVALUATORS_ALLOW_ADDR_FILE
         logger.info(m)
     except Exception as e:
