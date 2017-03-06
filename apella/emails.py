@@ -208,8 +208,6 @@ def send_remove_candidacy_emails(candidacy):
 
 
 def send_emails_file(obj, file_kind, extra_context=()):
-    starts_at = _move_to_timezone(obj.starts_at, otz)
-    ends_at = _move_to_timezone(obj.ends_at, otz)
 
     position_file_names = ['committee_note', 'committee_proposal',
         'nomination_proceedings', 'nomination_act', 'assistant_files',
@@ -220,6 +218,8 @@ def send_emails_file(obj, file_kind, extra_context=()):
         subject = 'apella/emails/position_set_{}_subject.txt'.format(file_kind)
         body = 'apella/emails/position_set_{}_body.txt'.format(file_kind)
         recipients = obj.get_users()
+        starts_at = _move_to_timezone(obj.starts_at, otz)
+        ends_at = _move_to_timezone(obj.ends_at, otz)
 
         for recipient in recipients:
             send_user_email(
@@ -259,10 +259,6 @@ def send_emails_field(obj, field, update=False):
     """
     Sends email to appropriate recipients when a field is set or updated
     """
-
-    starts_at = _move_to_timezone(obj.starts_at, otz)
-    ends_at = _move_to_timezone(obj.ends_at, otz)
-
     recipients = []
     context = dict()
     verb = 'set'
@@ -284,6 +280,8 @@ def send_emails_field(obj, field, update=False):
         recipients = obj.get_users()
 
     if field in position_fields:
+        starts_at = _move_to_timezone(obj.starts_at, otz)
+        ends_at = _move_to_timezone(obj.ends_at, otz)
         context = {
             'position': obj,
             'starts_at': starts_at,
