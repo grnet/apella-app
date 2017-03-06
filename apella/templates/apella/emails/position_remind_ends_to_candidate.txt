@@ -6,7 +6,7 @@
 
 {% include "apella/emails/position_details_el.txt %}
 
-λήγει στις <strong>{{ position.ends_at }}</strong>. Μπορείτε να τροποποιείτε τα στοιχεία της υποψηφιότητάς σας μέχρι και την παραπάνω ημερομηνία.
+λήγει στις <strong>{{ ends_at|date: "d/m/Y" }}</strong>. Μπορείτε να τροποποιείτε τα στοιχεία της υποψηφιότητάς σας μέχρι και την παραπάνω ημερομηνία.
 
 {% endblock content_el %}
 
