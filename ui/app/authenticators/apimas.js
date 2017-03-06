@@ -12,6 +12,9 @@ function mergeProfileData(sessionData, profileResponse) {
   user.user_id = user.id;
   delete user.id;
   delete profileResponse.user;
+  if (profileResponse.departments) { 
+    delete profileResponse.departments;
+  }
   merge(sessionData, user);
   merge(sessionData, profileResponse);
   for (let key of FILE_FIELDS) {
