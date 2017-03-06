@@ -227,6 +227,18 @@ class ApellaFile(models.Model):
             if pid in prof_positions_committee or \
                     pid in prof_positions_elector:
                 return True
+
+        if self.source == 'position':
+            try:
+                pos = Position.objects.get(id=self.source_id)
+            except Position.DoesNotExist:
+                return False
+            if not user.is_foreign_professor():
+                if user.professor.department == pos.department:
+                    return True
+            if pos.id in prof_positions_elector or \
+                    pos.id in prof_positions_committee:
+                return True
         return False
 
     def check_resource_state_others_can_view(self, row, request, view):
