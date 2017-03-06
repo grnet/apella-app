@@ -173,11 +173,15 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
 
 
 def generate_filename(apellafile, filename):
+    ext = os.path.splitext(filename)[1]
+    if len(ext) >= 9:
+        ext = ''
+
     path = "%s/%s-%s%s" % (
             apellafile.owner.username,
             apellafile.file_kind,
             apellafile.id,
-            os.path.splitext(filename)[1])
+            ext)
     return path
 
 
