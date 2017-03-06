@@ -207,6 +207,18 @@ class ApellaFile(models.Model):
     def check_resource_state_owned(self, row, request, view):
         return request.user == self.owner
 
+    def check_resource_state_is_candidate(self, row, request, view):
+        user = request.user
+        if not user.is_candidate():
+            return False
+        if self.source == 'position':
+            candidacies = user.candidacy_set. \
+                filter(state='posted'). \
+                values_list('position_id', flat=True)
+            if self.source_id in candidacies:
+                return True
+        return False
+
     def check_resource_state_participates(self, row, request, view):
         user = request.user
         if not user.is_professor():
