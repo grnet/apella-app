@@ -86,6 +86,40 @@ def validate_new_file_permissions():
     logger.info(m)
 
 
+def validate_files():
+    fileroot = settings.MEDIA_ROOT
+    path_join = os.path.join
+    access = os.access
+    R_OK = os.R_OK
+    filecount = 0
+    errcount = 0
+
+    all_apella_files = ApellaFile.objects.all()
+    all_apella_files = all_apella_files.values_list('file_content', flat=True)
+    for filepath in all_apella_files:
+        filecount += 1
+        if filecount & 1023 == 0:
+            m = "{path!r}: checked {filecount!r} files: {errcount!r} errors."
+            m = m.format(path=fileroot, filecount=filecount, errcount=errcount)
+            logger.info(m)
+
+        full_filepath = path_join(fileroot, filepath)
+        if not access(full_filepath, R_OK):
+            errcount += 1
+            m = "{path!r}: cannot read file"
+            m = m.format(path=filepath)
+            logger.error(m)
+
+    if filecount & 1023 == 0:
+        m = "{path!r}: checked {filecount!r} files: {errcount!r} errors."
+        m = m.format(path=fileroot, filecount=filecount, errcount=errcount)
+        logger.info(m)
+
+    if errcount:
+        m = "Not all files can be accessed!"
+        raise RuntimeError(m)
+
+
 def validate_logger():
     if not logger.handlers:
         m = "No handlers found for root logger."
