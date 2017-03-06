@@ -3,5 +3,5 @@
 Ίδρυμα: {{ position.department.institution.title.el }}
 Σχολή: {{ position.department.school.title.el }}
 Τμήμα: {{ position.department.title.el }}
-Ημερομηνία Έναρξης Υποβολών: {{ position.starts_at|date:"d/m/Y"}}
-Ημερομηνία Λήξης Υποβολών: {{ position.ends_at|date:"d/m/Y" }}
+Ημερομηνία Έναρξης Υποβολών: {{ starts_at|date:"d/m/Y"}}
+Ημερομηνία Λήξης Υποβολών: {{ ends_at|date:"d/m/Y" }}
