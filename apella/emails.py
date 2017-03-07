@@ -10,10 +10,16 @@ from apella.util import urljoin, otz, _move_to_timezone
 
 logger = logging.getLogger(__name__)
 
+
 def get_login_url():
     BASE_URL = settings.BASE_URL or '/'
     return urljoin(
         BASE_URL, settings.API_PREFIX, settings.TOKEN_LOGIN_URL)
+
+
+def get_ui_url():
+    BASE_URL = settings.BASE_URL or '/'
+    return urljoin(BASE_URL, settings.UI_PREFIX)
 
 
 def send_new_credentials_to_old_users_email(old_users):
@@ -78,6 +84,9 @@ def send_user_email(user, template_subject, template_body, extra_context=()):
 def send_create_candidacy_emails(candidacy):
     starts_at = _move_to_timezone(candidacy.position.starts_at, otz)
     ends_at = _move_to_timezone(candidacy.position.ends_at, otz)
+    ui_url = get_ui_url()
+    candidacy_url = urljoin(ui_url, 'candidacies/', str(candidacy.pk))
+    position_url = urljoin(ui_url, 'positions/', str(candidacy.position.pk))
 
     # send to candidate
     send_user_email(
@@ -86,7 +95,8 @@ def send_create_candidacy_emails(candidacy):
         'apella/emails/candidacy_create_to_candidate_body.txt',
         {'position': candidacy.position,
          'starts_at': starts_at,
-         'ends_at': ends_at})
+         'ends_at': ends_at,
+         'apella_url': candidacy_url})
 
     # send to managers
     recipients = candidacy.position.department.institution.\
@@ -100,7 +110,8 @@ def send_create_candidacy_emails(candidacy):
                 'position': candidacy.position,
                 'starts_at': starts_at,
                 'ends_at': ends_at,
-                'candidate': candidacy.candidate
+                'candidate': candidacy.candidate,
+                'apella_url': position_url
             })
 
     # send to secretaries
@@ -115,13 +126,17 @@ def send_create_candidacy_emails(candidacy):
                 'position': candidacy.position,
                 'starts_at': starts_at,
                 'ends_at': ends_at,
-                'candidate': candidacy.candidate
+                'candidate': candidacy.candidate,
+                'apella_url': position_url
             })
 
 
 def send_remove_candidacy_emails(candidacy):
     starts_at = _move_to_timezone(candidacy.position.starts_at, otz)
     ends_at = _move_to_timezone(candidacy.position.ends_at, otz)
+    ui_url = get_ui_url()
+    candidacy_url = urljoin(ui_url, 'candidacies/', str(candidacy.pk))
+    position_url = urljoin(ui_url, 'positions/', str(candidacy.position.pk))
 
     # send to candidate
     send_user_email(
@@ -130,7 +145,8 @@ def send_remove_candidacy_emails(candidacy):
         'apella/emails/candidacy_remove_to_candidate_body.txt',
         {'position': candidacy.position,
          'starts_at': starts_at,
-         'ends_at': ends_at})
+         'ends_at': ends_at,
+         'apella_url': candidacy_url})
 
     # send to managers
     recipients = candidacy.position.department.institution.\
@@ -144,7 +160,8 @@ def send_remove_candidacy_emails(candidacy):
                 'position': candidacy.position,
                 'starts_at': starts_at,
                 'ends_at': ends_at,
-                'candidate': candidacy.candidate
+                'candidate': candidacy.candidate,
+                'apella_url': position_url
             })
 
     # send to secretaries
@@ -159,7 +176,8 @@ def send_remove_candidacy_emails(candidacy):
                 'position': candidacy.position,
                 'starts_at': starts_at,
                 'ends_at': ends_at,
-                'candidate': candidacy.candidate
+                'candidate': candidacy.candidate,
+                'apella_url': position_url
             })
 
     # send to electors
@@ -173,7 +191,8 @@ def send_remove_candidacy_emails(candidacy):
                 'position': candidacy.position,
                 'starts_at': starts_at,
                 'ends_at': ends_at,
-                'candidate': candidacy.candidate
+                'candidate': candidacy.candidate,
+                'apella_url': position_url
             })
 
     # send to committee
@@ -187,7 +206,8 @@ def send_remove_candidacy_emails(candidacy):
                 'position': candidacy.position,
                 'starts_at': starts_at,
                 'ends_at': ends_at,
-                'candidate': candidacy.candidate
+                'candidate': candidacy.candidate,
+                'apella_url': position_url
             })
 
     # send to cocandidates
@@ -202,9 +222,9 @@ def send_remove_candidacy_emails(candidacy):
                 'position': candidacy.position,
                 'starts_at': starts_at,
                 'ends_at': ends_at,
-                'candidate': candidacy.candidate
+                'candidate': candidacy.candidate,
+                'apella_url': position_url
             })
-
 
 
 def send_emails_file(obj, file_kind, extra_context=()):
@@ -220,6 +240,8 @@ def send_emails_file(obj, file_kind, extra_context=()):
         recipients = obj.get_users()
         starts_at = _move_to_timezone(obj.starts_at, otz)
         ends_at = _move_to_timezone(obj.ends_at, otz)
+        ui_url = get_ui_url()
+        position_url = urljoin(ui_url, 'positions/', str(obj.pk))
 
         for recipient in recipients:
             send_user_email(
@@ -228,7 +250,8 @@ def send_emails_file(obj, file_kind, extra_context=()):
                 body,
                 {'position': obj,
                 'starts_at': starts_at,
-                'ends_at': ends_at
+                'ends_at': ends_at,
+                'apella_url': position_url
                 })
 
 
@@ -243,6 +266,8 @@ def send_email_elected(obj, elected='elected'):
 
     subject = 'apella/emails/position_set_{}_subject.txt'.format(elected)
     body = 'apella/emails/position_set_{}_body.txt'.format(elected)
+    ui_url = get_ui_url()
+    position_url = urljoin(ui_url, 'positions/', str(obj.pk))
 
     # send to elected/second_best
     send_user_email(
@@ -251,7 +276,8 @@ def send_email_elected(obj, elected='elected'):
         body,
         {'position': obj,
         'starts_at': starts_at,
-        'ends_at': ends_at
+        'ends_at': ends_at,
+        'apella_url': position_url
         })
 
 
@@ -282,10 +308,14 @@ def send_emails_field(obj, field, update=False):
     if field in position_fields:
         starts_at = _move_to_timezone(obj.starts_at, otz)
         ends_at = _move_to_timezone(obj.ends_at, otz)
+        ui_url = get_ui_url()
+        position_url = urljoin(ui_url, 'positions/', str(obj.pk))
+
         context = {
             'position': obj,
             'starts_at': starts_at,
-            'ends_at': ends_at
+            'ends_at': ends_at,
+            'apella_url': position_url
         }
 
     for recipient in recipients:
@@ -314,6 +344,14 @@ def send_emails_members_change(position, type, old_members, new_members):
     """
     starts_at = _move_to_timezone(position.starts_at, otz)
     ends_at = _move_to_timezone(position.ends_at, otz)
+    ui_url = get_ui_url()
+    position_url = urljoin(ui_url, 'positions/', str(position.pk))
+    extra_context = {
+        'position': position,
+        'starts_at': starts_at,
+        'ends_at': ends_at,
+        'apella_url': position_url
+    }
 
     if type == 'committee':
         old_c = old_members.get('c', [])
@@ -331,9 +369,7 @@ def send_emails_members_change(position, type, old_members, new_members):
                     recipient.user,
                     'apella/emails/position_set_committee_subject.txt',
                     'apella/emails/position_set_committee_to_member_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
 
             # send to electors, candidates
             electors = [x.user for x in position.electors.all()]
@@ -345,9 +381,7 @@ def send_emails_members_change(position, type, old_members, new_members):
                     recipient,
                     'apella/emails/position_set_committee_subject.txt',
                     'apella/emails/position_set_committee_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                     extra_context)
 
         else:
             added_committee = [p.user for p in new_c if p not in old_c]
@@ -366,27 +400,21 @@ def send_emails_members_change(position, type, old_members, new_members):
                         recipient,
                         'apella/emails/position_update_committee_subject.txt',
                         'apella/emails/position_update_committee_body.txt',
-                        {'position': position,
-                         'starts_at': starts_at,
-                         'ends_at': ends_at})
+                        extra_context)
 
                 for a in added_committee:
                     send_user_email(
                         a,
                         'apella/emails/position_update_committee_subject.txt',
                         'apella/emails/position_set_committee_to_member_body.txt',
-                        {'position': position,
-                         'starts_at': starts_at,
-                         'ends_at': ends_at})
+                        extra_context)
 
                 for r in removed_committee:
                     send_user_email(
                         r,
                         'apella/emails/position_update_committee_subject.txt',
                         'apella/emails/position_remove_from_committee_body.txt',
-                        {'position': position,
-                         'starts_at': starts_at,
-                         'ends_at': ends_at})
+                        extra_context)
 
     elif type == 'electors':
         old_e = old_members.get('e', [])
@@ -419,25 +447,19 @@ def send_emails_members_change(position, type, old_members, new_members):
                     c,
                     'apella/emails/position_set_electors_subject.txt',
                     'apella/emails/position_set_electors_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
             for reg in new_electors_regular:
                 send_user_email(
                     reg.user,
                     'apella/emails/position_set_electors_subject.txt',
                     'apella/emails/position_set_elector_to_regular_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
             for irreg in new_electors_irregular:
                 send_user_email(
                     irreg.user,
                     'apella/emails/position_set_electors_subject.txt',
                     'apella/emails/position_set_elector_to_sub_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
 
         # update electors set
         elif added_regular or added_irregular \
@@ -447,33 +469,25 @@ def send_emails_members_change(position, type, old_members, new_members):
                     added_reg.user,
                     'apella/emails/position_set_electors_subject.txt',
                     'apella/emails/position_set_elector_to_regular_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
             for added_irreg in added_irregular:
                 send_user_email(
                     added_irreg.user,
                     'apella/emails/position_set_electors_subject.txt',
                     'apella/emails/position_set_elector_to_sub_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
             for removed_reg in removed_regular:
                 send_user_email(
                     removed_reg.user,
                     'apella/emails/position_update_electors_subject.txt',
                     'apella/emails/position_remove_elector_to_regular_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
             for removed_irreg in removed_irregular:
                 send_user_email(
                     removed_irreg.user,
                     'apella/emails/position_update_electors_subject.txt',
                     'apella/emails/position_remove_elector_to_sub_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
 
             electors = [p.user for p in position.electors.all()
                 if p not in added_irregular and p not in removed_irregular
@@ -486,13 +500,14 @@ def send_emails_members_change(position, type, old_members, new_members):
                     user,
                     'apella/emails/position_update_electors_subject.txt',
                     'apella/emails/position_update_electors_body.txt',
-                    {'position': position,
-                     'starts_at': starts_at,
-                     'ends_at': ends_at})
+                    extra_context)
+
 
 def send_position_create_emails(position):
     starts_at = _move_to_timezone(position.starts_at, otz)
     ends_at = _move_to_timezone(position.ends_at, otz)
+    ui_url = get_ui_url()
+    position_url = urljoin(ui_url, 'positions/', str(position.pk))
 
     send_user_email(
         position.author.user,
@@ -500,4 +515,5 @@ def send_position_create_emails(position):
         'apella/emails/position_create_to_manager.txt',
         {'position': position,
          'starts_at': starts_at,
-         'ends_at': ends_at})
+         'ends_at': ends_at,
+         'apella_url': position_url})
