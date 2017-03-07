@@ -2,6 +2,7 @@ import _ from 'lodash/lodash';
 import {field} from 'ember-gen';
 import {disable_field, i18nField} from 'ui/utils/common/fields';
 import {fileField} from 'ui/lib/common';
+import {getFile} from 'ui/files';
 import moment from 'moment';
 import {
   candidaciesField, committeeElectorsField, historyField,
@@ -472,14 +473,12 @@ const  position = {
         committeeElectorsField('committee_external', 'external', false, true),
         fileField('committee_proposal', 'position', 'committee_proposal', {
           disabled: computed('model.changeset.committee_note', function(){
-            let file = get(this, 'model.changeset.committee_note');
-            return file && file.content;
+            return getFile('committee_note')
           })
         }),
         fileField('committee_note', 'position', 'committee_note', {
           disabled: computed('model.changeset.committee_proposal', function(){
-            let file = get(this, 'model.changeset.committee_proposal');
-            return file && file.content;
+            return getFile('committee_proposal')
           })
         }),
       ],
@@ -600,9 +599,8 @@ const  position = {
           hint: 'nomination_proceedings.hint',
           disabled: computed('model.changeset.electors_meeting_proposal',
                       'model.changeset.electors_meeting_date', function(){
-            let proposal = get(this, 'model.changeset.electors_meeting_proposal');
             let date = get(this, 'model.changeset.electors_meeting_date');
-            return !(date && proposal && proposal.content);
+            return !(date && getFile('electors_meeting_proposal'));
           })
         }, {
           preventDelete: true,
@@ -611,8 +609,7 @@ const  position = {
         fileField('proceedings_cover_letter', 'position', 'proceedings_cover_letter', {
           hint: 'cover_letter.should.be.filled',
           disabled: computed('model.changeset.nomination_proceedings', function(){
-            let proceedings = get(this, 'model.changeset.nomination_proceedings');
-            return !(proceedings && proceedings.content);
+            return !getFile('nomination_proceedings');
           })
         }, {
           preventDelete: true,
@@ -621,8 +618,7 @@ const  position = {
         field('elected', {
           hint: 'cover_letter.should.be.filled',
           disabled: computed('model.changeset.nomination_proceedings', function(){
-            let proceedings = get(this, 'model.changeset.nomination_proceedings');
-            return !(proceedings && proceedings.content);
+            return !getFile('nomination_proceedings');
           }),
           query: function(table, store, field, params) {
             let position_id = get(field, 'model').get('id');
@@ -636,8 +632,7 @@ const  position = {
         field('second_best', {
           hint: 'cover_letter.should.be.filled',
           disabled: computed('model.changeset.nomination_proceedings', function(){
-            let proceedings = get(this, 'model.changeset.nomination_proceedings');
-            return !(proceedings && proceedings.content);
+            return !getFile('nomination_proceedings');
           }),
           query: function(table, store, field, params) {
             let position_id = get(field, 'model').get('id');
@@ -653,10 +648,10 @@ const  position = {
           disabled: computed('model.changeset.proceedings_cover_letter',
             'model.changeset.revocation_decision',
             'model.changeset.failed_election_decision', function(){
-            let cover = get(this, 'model.changeset.proceedings_cover_letter');
-            let revocation = get(this, 'model.changeset.revocation_decision');
-            let failed = get(this, 'model.changeset.failed_election_decision');
-            return !(cover && cover.content) || (revocation && revocation.content) || (failed && failed.content);
+            let cover = getFile('proceedings_cover_letter');
+            let revocation = getFile('revocation_decision');
+            let failed = getFile('failed_election_decision');
+            return !(cover || revocation || failed);
           })
         }),
         field('nomination_act_fek', {
@@ -664,10 +659,10 @@ const  position = {
           disabled: computed('model.changeset.proceedings_cover_letter',
             'model.changeset.revocation_decision',
             'model.changeset.failed_election_decision', function(){
-            let cover = get(this, 'model.changeset.proceedings_cover_letter');
-            let revocation = get(this, 'model.changeset.revocation_decision');
-            let failed = get(this, 'model.changeset.failed_election_decision');
-            return !(cover && cover.content) || (revocation && revocation.content) || (failed && failed.content);
+            let cover = getFile('proceedings_cover_letter');
+            let revocation = getFile('revocation_decision');
+            let failed = getFile('failed_election_decision');
+            return !(cover || revocation || failed);
           })
         }),
         fileField('revocation_decision', 'position', 'revocation_decision', {
@@ -675,10 +670,10 @@ const  position = {
           disabled: computed('model.changeset.nomination_act_fek',
                       'model.changeset.failed_election_decision',
                       'model.changeset.nomination_act', function(){
-            let nomination = get(this, 'model.changeset.nomination_act');
+            let nomination = getFile('nomination_act');
             let fek = get(this, 'model.changeset.nomination_act_fek');
-            let failed = get(this, 'model.changeset.failed_election_decision');
-            return fek || (nomination && nomination.content) || (failed && failed.content);
+            let failed = getFile('failed_election_decision');
+            return fek || nomination || failed;
           })
         }),
         fileField('failed_election_decision', 'position', 'failed_election_decision', {
@@ -686,10 +681,10 @@ const  position = {
           disabled: computed('model.changeset.nomination_act_fek',
                       'model.changeset.revocation_decision',
                       'model.changeset.nomination_act', function(){
-            let nomination = get(this, 'model.changeset.nomination_act');
+            let nomination = getFile('nomination_act');
             let fek = get(this, 'model.changeset.nomination_act_fek');
-            let revocation = get(this, 'model.changeset.revocation_decision');
-            return fek || (nomination && nomination.content) || (revocation && revocation.content);
+            let failed = getFile('failed_election_decision');
+            return fek || nomination || failed;
           })
         }),
       ],
