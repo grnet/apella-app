@@ -178,7 +178,7 @@ class PositionMixin(object):
             elif state_query == 'before_closed':
                 queryset = queryset.filter(Q(state='posted') &
                                            Q(ends_at__gt=now))
-
+        queryset = queryset.distinct()
         return queryset
 
     def update(self, request, *args, **kwargs):
@@ -226,6 +226,7 @@ class CandidacyList(object):
         if not user.is_helpdesk():
             queryset = queryset.exclude(state='draft')
 
+        queryset = queryset.distinct()
         return queryset
 
     def update(self, request, pk=None):
