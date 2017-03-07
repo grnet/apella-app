@@ -1,6 +1,7 @@
 import {field} from 'ember-gen';
 import {i18nField, get_registry_members} from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
+import {getFile} from 'ui/utils/files';
 import moment from 'moment';
 import {
   goToDetails, applyCandidacy, cancelPosition
@@ -241,12 +242,6 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
     refreshValueQuery: modelMetaSide,
     disabled: computed('model.changeset.committee_set_file', 'model.changeset.electors_set_file', function(){
 
-      // changeset.<field> value can be either a model or a model promise
-      function getFile(content, key) {
-        let value = get(content, `model.changeset.${key}`)
-        if (value && (value instanceof DS.Model)) { return value; }
-        return value && value.content;
-      }
       let file1 = getFile(this, 'committee_set_file');
       let file2 = getFile(this, 'electors_set_file');
 

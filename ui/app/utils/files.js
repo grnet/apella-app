@@ -2,6 +2,7 @@ import Ember from 'ember';
 import fetch from 'ember-network/fetch';
 
 const {
+  get,
   RSVP: { Promise }
 } = Ember;
 
@@ -39,4 +40,12 @@ function uploadFiles(files, url, token) {
   // TODO: support for multiple uploads?
 }
 
-export { uploadFile, uploadFiles };
+// changeset.<field> value can be either a model or a model promise
+function getFile(content, key) {
+  let value = get(content, `model.changeset.${key}`)
+  if (value && (value instanceof DS.Model)) { return value; }
+  return value && value.content;
+}
+
+
+export { uploadFile, uploadFiles, getFile };
