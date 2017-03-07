@@ -361,7 +361,7 @@ export default ApellaGen.extend({
     getModel(params, model) {
       // Preload position to use its data for calculations regarding files
       return model.get('position').then(function() {
-        return model;
+        return model.get('candidate').then(() => model);
       });
     },
     fieldsets: [
@@ -373,9 +373,8 @@ export default ApellaGen.extend({
   details: {
     getModel(params, model) {
       return model.get('position').then(function(position) {
-        console.log('hi', position.belongsTo('department').link())
         model.set('position_department', position.belongsTo('department').link());
-        return model;
+        return model.get('candidate').then(() => model);
       });
     },
     page: {
