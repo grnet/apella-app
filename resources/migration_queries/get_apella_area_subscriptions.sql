@@ -7,17 +7,20 @@ select
     s.subjectid subject_id,
     sn.area area_name,
     sn.subject subject_name,
-    sn.locale locale
+    sn.locale locale,
+    dep.id_list departments_id
 from
-    positionsearchcriteria c,
-    positionsearchcriteria_sector cs,
-    sector s,
-    sector_name sn,
     roles r
-where
-    r.id = c.candidate_id
-    and c.id = cs.positionsearchcriteria_id
-    and s.id = cs.sectors_id
-    and s.id = sn.sector_id
-    and c.candidate_id = r.id
+    inner join positionsearchcriteria c on (c.candidate_id = r.id)
+    left outer join positionsearchcriteria_sector cs on (cs.positionsearchcriteria_id = c.id)
+    left outer join (
+        select c.id id, cast(array_agg(cd.departments_id) as text) id_list
+        from
+            positionsearchcriteria c,
+            positionsearchcriteria_department cd
+        where cd.positionsearchcriteria_id = c.id
+        group by c.id
+    ) dep on (dep.id = c.id)
+    left outer join sector s on (s.id = cs.sectors_id)
+    left outer join sector_name sn on (s.id = sn.sector_id)
 ) to '/tmp/OldApellaAreaSubscriptions.csv' with csv header delimiter ',';
