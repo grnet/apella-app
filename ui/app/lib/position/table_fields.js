@@ -50,8 +50,7 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
 };
 
 const managers_columns = [
-  i18nField('last_name', {label: 'last_name.label'}),
-  i18nField('first_name', {label: 'first_name.label'}),
+  i18nField('full_name', {label: 'full_name_current.label'}),
   'role_verbose',
   field('email', {label: 'email.label'}),
   'home_phone_number'
@@ -106,7 +105,7 @@ const contactField = field('institution-managers', {
                       let first_name = institution_manager.get('sub_first_name'),
                         last_name = institution_manager.get('sub_last_name'),
                         email = institution_manager.get('sub_email'),
-                        mobile = institution_manager.get('sub_mobile_phone_number');
+                        home_phone = institution_manager.get('sub_home_phone_number');
 
                       sub = store.createRecord('institution-manager', {
                         role: 'sub_institution_manager',
@@ -114,7 +113,7 @@ const contactField = field('institution-managers', {
                         first_name: first_name,
                         last_name: last_name,
                         email: email,
-                        mobile_phone_number: mobile
+                        home_phone_number: home_phone
                       });
                     }
                     else {
