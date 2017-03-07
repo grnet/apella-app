@@ -2,7 +2,7 @@ import _ from 'lodash/lodash';
 import {field} from 'ember-gen';
 import {disable_field, i18nField} from 'ui/utils/common/fields';
 import {fileField} from 'ui/lib/common';
-import {getFile} from 'ui/files';
+import {getFile} from 'ui/utils/files';
 import moment from 'moment';
 import {
   candidaciesField, committeeElectorsField, historyField,
