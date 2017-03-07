@@ -136,6 +136,7 @@ LANGUAGES = {'el', 'en'}
 STATIC_URL = '/static/'
 BASE_URL = None  # The host the app is served from
 API_PREFIX = 'apella/'
+UI_PREFIX = 'apella/ui/'
 TOKEN_LOGIN_URL = '/ui/auth/login'
 TOKEN_REGISTER_URL = '/ui/auth/register/professor'
 AUTH_USER_MODEL = 'apella.ApellaUser'
