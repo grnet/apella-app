@@ -532,7 +532,7 @@ def send_position_create_emails(position):
 
     for user_id in users_interested:
         send_user_email(
-            ApellaUser.objects.get(id=id),
+            ApellaUser.objects.get(id=user_id),
             'apella/emails/position_create_subject.txt',
             'apella/emails/position_create_to_interested.txt',
             extra_context)
