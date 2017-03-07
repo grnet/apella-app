@@ -5,6 +5,7 @@ import gen from 'ember-gen/lib/gen';
 const {
   computed,
   get,
+  assign
 } = Ember;
 
 
@@ -13,6 +14,8 @@ export default ApellaGen.extend({
   name: 'participations',
   resourceName: 'positions',
   path: 'participations',
+
+
   page: {
     title: 'elections.menu_label',
   },
@@ -20,11 +23,23 @@ export default ApellaGen.extend({
     page: {
       title: 'elections.menu_label',
     },
-    getModel() {
+    getModel(params, model) {
+      params = params || {};
+      // Server side pagination and ordering cannot be applied in this view
+      delete params.limit;
+      delete params.offset;
+      delete params.ordering;
+
       let id = get(this, 'session.session.authenticated.id');
+      let query_electors = {};
+      let query_committee = {};
+
+      assign(query_electors, {electors: id}, params);
+      assign(query_committee, {committee: id}, params);
+
       let promises = [
-        get(this, 'store').query('position', {electors: id}),
-        get(this, 'store').query('position', {committee: id}),
+        get(this, 'store').query('position', query_electors),
+        get(this, 'store').query('position', query_committee),
       ]
       var promise = Ember.RSVP.all(promises).then(function(arrays) {
         var mergedArray = Ember.A();
@@ -44,6 +59,32 @@ export default ApellaGen.extend({
         promise: promise,
       });
     },
+    filter: {
+      active: true,
+      serverSide: true,
+      search: true,
+      searchPlaceholder: 'search.placeholder_positions',
+      meta: {
+        fields: [
+          field('institution', {
+            autocomplete: true,
+            type: 'model',
+            modelName: 'institution',
+            displayAttr: 'title_current',
+            dataKey: 'department__institution',
+            query: function(select, store, field, params) {
+              let locale = get(select, 'i18n.locale'),
+                ordering_param = `title__${locale}`;
+              params = params || {};
+              params.ordering = ordering_param;
+              params.category = 'Institution';
+
+              return store.query('institution', params)
+            }
+          }),
+        ]
+      }
+    },
     menu: {
       icon: 'assignment',
       label: 'elections.menu_label',
@@ -54,7 +95,7 @@ export default ApellaGen.extend({
     },
     layout: 'table',
     row: {
-      fields: ['code', 'title', 'state_calc_verbose',
+      fields: ['code', 'old_code', 'title', 'state_calc_verbose',
               'discipline', 'participation_current',
               field('department.institution.title_current', {label: 'institution.label'}),
               field('department.title_current', {label: 'department.label'})],
