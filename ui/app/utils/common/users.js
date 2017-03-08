@@ -13,6 +13,17 @@ const {
   computed: { or }
 } = Ember;
 
+function samePassword({field, checkLen}) {
+  return (key, value, old, changes, content) => {
+    if (changes.password && value && value.length > (checkLen || 3)) {
+      if (value != changes.password) {
+        return 'passwords.do.not.match'
+      }
+    }
+    return true;
+  }
+};
+
 const FILE_FIELDS = [
   'publications',
   'id_passport_file',
@@ -37,16 +48,6 @@ const FIELDS_ALL = [
   'shibboleth_schac_home_organization'
 ];
 
-function samePassword({field, checkLen}) {
-  return (key, value, old, changes, content) => {
-    if (changes.password && value && value.length > (checkLen || 3)) {
-      if (value != changes.password) {
-        return 'passwords.do.not.match'
-      }
-    }
-    return true;
-  }
-};
 
 const FIELDS_REGISTER = [
   field('username', {
@@ -102,7 +103,7 @@ const FIELDS_REGISTER_REQUIRED = [
 const FIELDS_REGISTER_REQUIRED_ACADEMIC = FIELDS_REGISTER_REQUIRED.slice(3);
 
 
-const FIELDSET = {
+const FIELDSET_CREATE = {
   label: 'fieldsets.labels.user_info',
   fields: [
     'username',
@@ -292,8 +293,9 @@ const normalizeUserErrors = function(errors) {
 }
 
 
+
 export {normalizeUser, serializeUser, normalizeUserErrors,
-        FIELDSET,
+        FIELDSET_CREATE,
         FIELDSET_EDIT,
         VALIDATORS,
         FIELDSET_DETAILS,

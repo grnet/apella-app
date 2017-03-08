@@ -112,7 +112,7 @@ export default ApellaGen.extend({
   },
   create: {
     fieldsets: [
-      USER.FIELDSET,
+      USER.FIELDSET_CREATE,
       MANAGER.FIELDSET,
       MANAGER.FIELDSET_SUB
     ]

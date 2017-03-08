@@ -141,7 +141,7 @@ export default ApellaGen.extend({
       this.transitionTo('institution-users.record.index', model)
     },
     fieldsets: [
-      USER.FIELDSET,
+      USER.FIELDSET_CREATE,
       fs.permissions_modifiable,
       fs.get_department_fieldset(false)
     ],
