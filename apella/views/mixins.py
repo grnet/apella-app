@@ -352,9 +352,9 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
         obj = self.get_object()
         if 'file_upload' not in request.FILES:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        file_upload = request.FILES['file_upload']
-        file_kind = request.data['file_kind']
-        file_description = request.data['file_description']
+        file_upload = request.FILES.get('file_upload', None)
+        file_kind = request.data.get('file_kind', None)
+        file_description = request.data.get('file_description', None)
 
         if file_kind not in FILE_KIND_TO_FIELD:
             return Response(status=status.HTTP_400_BAD_REQUEST)
