@@ -285,7 +285,9 @@ class CandidacyMixin(object):
             position = instance.position
             candidate = instance.candidate
             if not user.is_helpdeskadmin():
-                validate_position_dates(position.starts_at, position.ends_at)
+                if data:
+                    validate_position_dates(
+                        position.starts_at, position.ends_at)
             if creating:
                 validate_candidate_files(candidate)
                 validate_unique_candidacy(position, candidate)
@@ -333,13 +335,13 @@ class CandidacyMixin(object):
         diplomas = validated_data.pop('diplomas', [])
         publications = validated_data.pop('publications', [])
         instance = super(CandidacyMixin, self).update(instance, validated_data)
-        if instance.state is not curr_candidacy.state:
+        if instance.state != curr_candidacy.state:
             curr_candidacy.pk = None
             curr_candidacy.updated_at = updated_at - timedelta(seconds=1)
             curr_candidacy.save()
             instance.old_candidacy_id = None
             instance.save()
-        state = validated_data['state']
+        state = validated_data.get('state', None)
         if state == 'cancelled':
             send_remove_candidacy_emails(instance)
         return instance
