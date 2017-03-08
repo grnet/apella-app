@@ -2,8 +2,7 @@ import {ApellaGen, i18nField} from 'ui/lib/common';
 import {i18nValidate} from 'ui/validators/i18n';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
-import {USER_FIELDSET, USER_FIELDSET_DETAILS,
-        USER_VALIDATORS} from 'ui/utils/common/users';
+import USER from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
 import {rejectUser, verifyUser} from 'ui/utils/common/actions';
@@ -127,7 +126,7 @@ export default ApellaGen.extend({
       title: computed.readOnly('model.full_name_current')
     },
     fieldsets: [
-      USER_FIELDSET_DETAILS,
+      USER.FIELDSET_DETAILS,
       fs.permissions_details,
       fs.get_department_fieldset(true)
     ]
@@ -141,11 +140,11 @@ export default ApellaGen.extend({
       this.transitionTo('secretaries.record.index', model)
     },
     fieldsets: [
-      USER_FIELDSET,
+      USER.FIELDSET,
       fs.permissions_modifiable,
       fs.get_department_fieldset(false)
     ],
-    validators: USER_VALIDATORS
+    validators: USER.VALIDATORS
   },
   edit: {
     fieldsets: [

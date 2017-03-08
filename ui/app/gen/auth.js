@@ -2,12 +2,8 @@ import gen from 'ember-gen/lib/gen';
 import routes from 'ember-gen/lib/routes';
 import {field} from 'ember-gen';
 import AuthGen from 'ember-gen/lib/auth';
-import {USER_FIELDSET, USER_FIELDSET_EDIT, USER_FIELDSET_EDIT_ACADEMIC,
-        USER_FIELDSET_DETAILS_VERIFIABLE,
-        USER_FIELDSET_EDIT_VERIFIABLE,
-        USER_VALIDATORS,
-        USER_FIELDSET_DETAILS
-       } from 'ui/utils/common/users';
+
+import USER from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager';
 import ASSISTANT from 'ui/utils/common/assistant';
 import CANDIDATE from 'ui/utils/common/candidate';
@@ -57,13 +53,13 @@ function extractToken(loc) {
 }
 
 
-let fields_with_user_id = Ember.copy(USER_FIELDSET_DETAILS_VERIFIABLE.fields);
-let fields_with_id = Ember.copy(USER_FIELDSET_DETAILS.fields);
+let fields_with_user_id = Ember.copy(USER.FIELDSET_DETAILS_VERIFIABLE.fields);
+let fields_with_id = Ember.copy(USER.FIELDSET_DETAILS.fields);
 fields_with_user_id.unshiftObject(field('user_id', {disabled: true}));
 fields_with_id.unshiftObject(field('id', {disabled: true}));
 
 const USER_FIELDSET_USER_ID = {
-  label: USER_FIELDSET_DETAILS_VERIFIABLE.label,
+  label: USER.FIELDSET_DETAILS_VERIFIABLE.label,
   fields: fields_with_user_id,
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -71,7 +67,7 @@ const USER_FIELDSET_USER_ID = {
 }
 
 const USER_FIELDSET_ID = {
-  label: USER_FIELDSET_DETAILS.label,
+  label: USER.FIELDSET_DETAILS.label,
   fields: fields_with_id,
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 25, 25]
@@ -91,9 +87,9 @@ const PROFILE_FIELDSETS = function(view) {
     }
 
     if (view === 'edit') {
-      _USER_FIELDSET = USER_FIELDSET_EDIT_VERIFIABLE;
+      _USER_FIELDSET = USER.FIELDSET_EDIT_VERIFIABLE;
       if (is_academic) {
-        _USER_FIELDSET = USER_FIELDSET_EDIT_ACADEMIC;
+        _USER_FIELDSET = USER.FIELDSET_EDIT_ACADEMIC;
       }
     }
 
@@ -430,7 +426,7 @@ export default AuthGen.extend({
     },
     validators: computed('model.role', function(){
       let role = this.get('model').get('role');
-      let f = Object.assign({}, USER_VALIDATORS);
+      let f = Object.assign({}, USER.VALIDATORS);
       if (role === 'professor') {
         f = Object.assign(f, PROFESSOR.VALIDATORS);
       }

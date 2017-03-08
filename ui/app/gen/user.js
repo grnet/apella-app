@@ -2,9 +2,7 @@ import {field} from 'ember-gen';
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
-import {USER_FIELDSET, USER_FIELDSET_EDIT,
-        USER_FIELDSET_DETAILS,
-        USER_VALIDATORS} from 'ui/utils/common/users';
+import USER from 'ui/utils/common/users';
 import {deactivateUser, activateUser} from 'ui/utils/common/actions';
 
 const {
@@ -18,9 +16,9 @@ export default ApellaGen.extend({
   auth: true,
   path: 'users',
   common: {
-    validators: USER_VALIDATORS,
+    validators: USER.VALIDATORS,
     fieldsets: [
-      USER_FIELDSET
+      USER.FIELDSET
     ]
   },
   list: {
@@ -63,17 +61,17 @@ export default ApellaGen.extend({
 
     },
     fieldsets: [
-      USER_FIELDSET_DETAILS
+      USER.FIELDSET_DETAILS
     ]
   },
   edit: {
     fieldsets: [
-      USER_FIELDSET_EDIT,
+      USER.FIELDSET_EDIT,
     ]
   },
   create: {
     fieldsets: [
-      USER_FIELDSET,
+      USER.FIELDSET,
     ]
   }
 });

@@ -1,10 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import {
-  USER_FIELDS_ALL,
-  USER_FIELDSET_REGISTER,
-  USER_FIELDSET_REGISTER_ACADEMIC,
-} from 'ui/utils/common/users';
+import USER from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
@@ -28,7 +24,7 @@ const User = Ember.Object.extend({
         if (value instanceof DS.Model) {
           value = value.store.adapterFor(value.constructor.name).urlForModel(value);
         }
-        if (USER_FIELDS_ALL.includes(key)) {
+        if (USER.FIELDS_ALL.includes(key)) {
           data.user[key] = value;
         } else {
           data[key] = value;
@@ -212,16 +208,16 @@ const Register = gen.GenRoutedObject.extend({
     let FIELDSETS = [];
     if (type === 'professor') {
       if (get(model, 'is_academic')) {
-        FIELDSETS.push(USER_FIELDSET_REGISTER_ACADEMIC);
+        FIELDSETS.push(USER.FIELDSET_REGISTER_ACADEMIC);
       } else {
-        FIELDSETS.push(USER_FIELDSET_REGISTER);
+        FIELDSETS.push(USER.FIELDSET_REGISTER);
       }
     }
     if (type === 'candidate') {
-        FIELDSETS.push(USER_FIELDSET_REGISTER);
+        FIELDSETS.push(USER.FIELDSET_REGISTER);
     }
     if (type === 'manager') {
-        FIELDSETS.push(USER_FIELDSET_REGISTER);
+        FIELDSETS.push(USER.FIELDSET_REGISTER);
         FIELDSETS.push(MANAGER.FIELDSET_REGISTER);
         FIELDSETS.push(MANAGER.SUB_FIELDSET_REGISTER);
     }

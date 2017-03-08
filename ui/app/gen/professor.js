@@ -1,9 +1,6 @@
 import {ApellaGen, emptyArrayResult} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
-import {USER_FIELDSET,
-        USER_FIELDSET_DETAILS_VERIFIABLE,
-        USER_FIELDSET_EDIT_VERIFIABLE,
-        USER_VALIDATORS} from 'ui/utils/common/users';
+import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
@@ -13,7 +10,7 @@ const {
   get
 } = Ember;
 
-let all_validators = Object.assign(PROFESSOR.VALIDATORS, USER_VALIDATORS);
+let all_validators = Object.assign(PROFESSOR.VALIDATORS, USER.VALIDATORS);
 
 export default ApellaGen.extend({
   order: 600,
@@ -105,7 +102,7 @@ export default ApellaGen.extend({
     fieldsets: computed('role', function(){
       let role = get(this, 'role');
       let f = [
-        USER_FIELDSET_DETAILS_VERIFIABLE,
+        USER.FIELDSET_DETAILS_VERIFIABLE,
         PROFESSOR.FIELDSET,
       ]
       if (role === 'helpdeskadmin' || role === 'helpdeskuser' ) {
@@ -116,13 +113,13 @@ export default ApellaGen.extend({
   },
   edit: {
     fieldsets: [
-      USER_FIELDSET_EDIT_VERIFIABLE,
+      USER.FIELDSET_EDIT_VERIFIABLE,
       PROFESSOR.FIELDSET,
     ]
   },
   create: {
     fieldsets: [
-      USER_FIELDSET,
+      USER.FIELDSET,
       PROFESSOR.FIELDSET,
     ]
   }

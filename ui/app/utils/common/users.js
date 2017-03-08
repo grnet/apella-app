@@ -21,7 +21,7 @@ const FILE_FIELDS = [
   'cv_professor'
 ];
 
-const USER_FIELDS_ALL = [
+const FIELDS_ALL = [
   'user_id',
   'email',
   'username',
@@ -37,7 +37,7 @@ const USER_FIELDS_ALL = [
   'shibboleth_schac_home_organization'
 ]
 
-const USER_FIELDS = [
+const FIELDS = [
   'username',
   'email',
   'password',
@@ -49,7 +49,7 @@ const USER_FIELDS = [
   'home_phone_number'
 ]
 
-const USER_FIELDS_EDIT = [
+const FIELDS_EDIT = [
   field('username', { disabled: true }),
   field('email', { disabled: true }),
   'first_name',
@@ -59,7 +59,7 @@ const USER_FIELDS_EDIT = [
   'mobile_phone_number',
   'home_phone_number'
 ];
-const USER_FIELDS_EDIT_ACADEMIC = USER_FIELDS_EDIT.slice(1);
+const FIELDS_EDIT_ACADEMIC = FIELDS_EDIT.slice(1);
 
 function samePassword({field, checkLen}) {
   return (key, value, old, changes, content) => {
@@ -72,7 +72,7 @@ function samePassword({field, checkLen}) {
   }
 };
 
-const USER_FIELDS_REGISTER = [
+const FIELDS_REGISTER = [
   field('username', {
     disabled: false,
     validators: [validate.length({min: 4})]
@@ -101,7 +101,7 @@ const USER_FIELDS_REGISTER = [
   'home_phone_number'
 ];
 
-const USER_FIELDS_REGISTER_ACADEMIC = [
+const FIELDS_REGISTER_ACADEMIC = [
   field('email', { disabled: false }),
   'first_name',
   'last_name',
@@ -111,7 +111,7 @@ const USER_FIELDS_REGISTER_ACADEMIC = [
   'home_phone_number'
 ];
 
-const USER_FIELDS_REGISTER_REQUIRED = [
+const FIELDS_REGISTER_REQUIRED = [
   'username',
   'password',
   'password2',
@@ -123,18 +123,18 @@ const USER_FIELDS_REGISTER_REQUIRED = [
   'mobile_phone_number',
   'home_phone_number'
 ];
-const USER_FIELDS_REGISTER_REQUIRED_ACADEMIC = USER_FIELDS_REGISTER_REQUIRED.slice(3);
+const FIELDS_REGISTER_REQUIRED_ACADEMIC = FIELDS_REGISTER_REQUIRED.slice(3);
 
 
-const USER_FIELDSET = {
+const FIELDSET = {
   label: 'fieldsets.labels.user_info',
-  fields: USER_FIELDS,
+  fields: FIELDS,
   layout: {
         flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 }
 
-const USER_FIELDSET_EDIT_VERIFIABLE = {
+const FIELDSET_EDIT_VERIFIABLE = {
   label: 'fieldsets.labels.user_info',
   fields: [
     field('username', { disabled: true }),
@@ -152,39 +152,39 @@ const USER_FIELDSET_EDIT_VERIFIABLE = {
   }
 }
 
-const USER_FIELDSET_EDIT = {
+const FIELDSET_EDIT = {
   label: 'fieldsets.labels.user_info',
-  fields: USER_FIELDS_EDIT,
+  fields: FIELDS_EDIT,
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50]
   }
 }
 
 
-const USER_FIELDSET_EDIT_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
-  fields: USER_FIELDS_EDIT_ACADEMIC,
+const FIELDSET_EDIT_ACADEMIC = Ember.assign({}, FIELDSET_EDIT, {
+  fields: FIELDS_EDIT_ACADEMIC,
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50]
   }
 });
 
-const USER_FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, USER_FIELDSET_EDIT, {
-  fields: USER_FIELDS_REGISTER_ACADEMIC,
-  required: USER_FIELDS_REGISTER_REQUIRED_ACADEMIC,
+const FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, FIELDSET_EDIT, {
+  fields: FIELDS_REGISTER_ACADEMIC,
+  required: FIELDS_REGISTER_REQUIRED_ACADEMIC,
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 });
 
-const USER_FIELDSET_REGISTER = Ember.assign({}, USER_FIELDSET_EDIT, {
-  fields: USER_FIELDS_REGISTER,
-  required: USER_FIELDS_REGISTER_REQUIRED,
+const FIELDSET_REGISTER = Ember.assign({}, FIELDSET_EDIT, {
+  fields: FIELDS_REGISTER,
+  required: FIELDS_REGISTER_REQUIRED,
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 });
 
-const USER_FIELDSET_DETAILS = {
+const FIELDSET_DETAILS = {
   label: 'fieldsets.labels.user_info',
   fields: [
     field('username', {disabled: true}),
@@ -200,7 +200,7 @@ const USER_FIELDSET_DETAILS = {
   }
 }
 
-const USER_FIELDSET_DETAILS_VERIFIABLE = {
+const FIELDSET_DETAILS_VERIFIABLE = {
   label: 'fieldsets.labels.user_info',
   fields: [
     field('username', {disabled: true}),
@@ -219,11 +219,11 @@ const USER_FIELDSET_DETAILS_VERIFIABLE = {
 
 
 
-const USER_FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, USER_FIELDSET_DETAILS, {
-  fields: USER_FIELDSET_DETAILS.fields.slice(1)
+const FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, FIELDSET_DETAILS, {
+  fields: FIELDSET_DETAILS.fields.slice(1)
 });
 
-const USER_VALIDATORS = {
+const VALIDATORS = {
   username: [validate.presence(true), validate.length({min:3, max:50})],
   first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
   last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
@@ -263,7 +263,7 @@ const serializeUser = function(json) {
     }
   }
 
-  for (let field of USER_FIELDS_ALL) {
+  for (let field of FIELDS_ALL) {
     if (field in json) {
       if (field=='user_id') {
         user_info['id'] = json['user_id']
@@ -289,9 +289,17 @@ const normalizeUserErrors = function(errors) {
 
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
-        USER_FIELDS, USER_FIELDSET, USER_FIELDSET_EDIT, USER_VALIDATORS,
-        USER_FIELDSET_DETAILS,
-        USER_FIELDSET_DETAILS_VERIFIABLE, USER_FIELDSET_EDIT_VERIFIABLE,
-        USER_FIELDSET_REGISTER, USER_FIELDSET_REGISTER_ACADEMIC,
-        USER_FIELDSET_DETAILS, USER_FIELDSET_DETAILS_ACADEMIC, USER_FIELDSET_EDIT_ACADEMIC,
-        USER_FIELDS_ALL, FILE_FIELDS};
+        FIELDS,
+        FIELDSET,
+        FIELDSET_EDIT,
+        VALIDATORS,
+        FIELDSET_DETAILS,
+        FIELDSET_DETAILS_VERIFIABLE,
+        FIELDSET_EDIT_VERIFIABLE,
+        FIELDSET_REGISTER,
+        FIELDSET_REGISTER_ACADEMIC,
+        FIELDSET_DETAILS,
+        FIELDSET_DETAILS_ACADEMIC,
+        FIELDSET_EDIT_ACADEMIC,
+        FIELDS_ALL,
+        FILE_FIELDS};

@@ -1,13 +1,6 @@
 import {ApellaGen, emptyArrayResult} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
-import {USER_FIELDSET,
-        USER_FIELDSET_DETAILS_VERIFIABLE,
-        USER_FIELDSET_EDIT_VERIFIABLE,
-        USER_VALIDATORS,
-        INST_MANAGER_FIELDSET_DETAILS_MAIN,
-        INST_MANAGER_FIELDSET_DETAILS_SUB,
-        INST_MANAGER_FIELDSET_MAIN,
-        INST_MANAGER_FIELDSET_SUB} from 'ui/utils/common/users';
+import USER from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager'
 import {field} from 'ember-gen';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
@@ -17,7 +10,7 @@ const {
   get
 } = Ember;
 
-let all_validators = Object.assign({}, USER_VALIDATORS, MANAGER.VALIDATORS);
+let all_validators = Object.assign({}, USER.VALIDATORS, MANAGER.VALIDATORS);
 
 export default ApellaGen.extend({
   order: 300,
@@ -104,7 +97,7 @@ export default ApellaGen.extend({
       title: computed.readOnly('model.full_name_current')
     },
     fieldsets: [
-      USER_FIELDSET_DETAILS_VERIFIABLE,
+      USER.FIELDSET_DETAILS_VERIFIABLE,
       MANAGER.FIELDSET,
       MANAGER.SUB_FIELDSET_DETAILS
     ]
@@ -112,16 +105,16 @@ export default ApellaGen.extend({
   },
   edit: {
     fieldsets: [
-      USER_FIELDSET_EDIT_VERIFIABLE,
+      USER.FIELDSET_EDIT_VERIFIABLE,
       MANAGER.FIELDSET,
       MANAGER.SUB_FIELDSET
     ]
   },
   create: {
     fieldsets: [
-      USER_FIELDSET,
-      INST_MANAGER_FIELDSET_MAIN,
-      INST_MANAGER_FIELDSET_SUB
+      USER.FIELDSET,
+      MANAGER.FIELDSET,
+      MANAGER.FIELDSET_SUB
     ]
   }
 
