@@ -48,6 +48,71 @@ const FIELDS_ALL = [
   'shibboleth_schac_home_organization'
 ];
 
+const VALIDATORS = {
+  username: [validate.presence(true), validate.length({min:3, max:50})],
+  first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
+  mobile_phone_number: [validate.presence(true), validate.number({ integer: true }), validate.length({min:10, max:20})],
+  home_phone_number: [validate.presence(true), validate.number({ integer: true }), validate.length({min:10, max:20})],
+  email: [validate.format({ type: 'email' })],
+  id_passport: [validate.presence(true)],
+};
+
+const FIELDSET_CREATE = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    'username',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
+  layout: {
+        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+  }
+};
+
+const FIELDSET_EDIT_VERIFIABLE = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', { disabled: true }),
+    field('status_verbose', { disabled: true}),
+    field('user_id', {disabled: true}),
+    field('email', { disabled: true }),
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
+  layout: {
+    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+  }
+}
+
+const FIELDSET_DETAILS_VERIFIABLE = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', {disabled: true}),
+    field('status_verbose', {disabled: true}),
+    field('user_id', {disabled: true}),
+    'email',
+    'full_name_current',
+    'father_name_current',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number',
+  ],
+  layout: {
+    flex: [50, 50, 50, 50, 50, 50, 50, 25, 25]
+  }
+}
 
 const FIELDS_REGISTER = [
   field('username', {
@@ -102,42 +167,6 @@ const FIELDS_REGISTER_REQUIRED = [
 ];
 const FIELDS_REGISTER_REQUIRED_ACADEMIC = FIELDS_REGISTER_REQUIRED.slice(3);
 
-
-const FIELDSET_CREATE = {
-  label: 'fieldsets.labels.user_info',
-  fields: [
-    'username',
-    'email',
-    'password',
-    'first_name',
-    'last_name',
-    'father_name',
-    'id_passport',
-    'mobile_phone_number',
-    'home_phone_number'
-  ],
-  layout: {
-        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50]
-  }
-}
-
-const FIELDSET_EDIT_VERIFIABLE = {
-  label: 'fieldsets.labels.user_info',
-  fields: [
-    field('username', { disabled: true }),
-    field('status_verbose', { disabled: true}),
-    field('email', { disabled: true }),
-    'first_name',
-    'last_name',
-    'father_name',
-    'id_passport',
-    'mobile_phone_number',
-    'home_phone_number'
-  ],
-  layout: {
-    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
-  }
-}
 
 const FIELDSET_EDIT = {
   label: 'fieldsets.labels.user_info',
@@ -205,39 +234,12 @@ const FIELDSET_DETAILS = {
   }
 }
 
-const FIELDSET_DETAILS_VERIFIABLE = {
-  label: 'fieldsets.labels.user_info',
-  fields: [
-    field('username', {disabled: true}),
-    field('status_verbose', {disabled: true}),
-    'email',
-    'full_name_current',
-    'father_name_current',
-    'id_passport',
-    'mobile_phone_number',
-    'home_phone_number',
-  ],
-  layout: {
-    flex: [100, 50, 50, 50, 50, 50, 25, 25]
-  }
-}
-
 
 
 const FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, FIELDSET_DETAILS, {
   fields: FIELDSET_DETAILS.fields.slice(1)
 });
 
-const VALIDATORS = {
-  username: [validate.presence(true), validate.length({min:3, max:50})],
-  first_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  last_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  father_name: [i18nValidate([validate.presence(true), validate.length({min:3, max:200})])],
-  mobile_phone_number: [validate.presence(true), validate.number({ integer: true }), validate.length({min:10, max:20})],
-  home_phone_number: [validate.presence(true), validate.number({ integer: true }), validate.length({min:10, max:20})],
-  email: [validate.format({ type: 'email' })],
-  id_passport: [validate.presence(true)],
-}
 
 const normalizeUser = function(hash, serializer) {
   let user_info = hash['user'];
@@ -295,16 +297,18 @@ const normalizeUserErrors = function(errors) {
 
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
-        FIELDSET_CREATE,
-        FIELDSET_EDIT,
+        FILE_FIELDS,
+        FIELDS_ALL,
         VALIDATORS,
-        FIELDSET_DETAILS,
+        FIELDSET_CREATE,
         FIELDSET_DETAILS_VERIFIABLE,
         FIELDSET_EDIT_VERIFIABLE,
+
+        FIELDSET_EDIT,
+        FIELDSET_DETAILS,
         FIELDSET_REGISTER,
         FIELDSET_REGISTER_ACADEMIC,
         FIELDSET_DETAILS,
         FIELDSET_DETAILS_ACADEMIC,
         FIELDSET_EDIT_ACADEMIC,
-        FIELDS_ALL,
-        FILE_FIELDS};
+};

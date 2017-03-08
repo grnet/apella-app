@@ -126,7 +126,7 @@ export default ApellaGen.extend({
       title: computed.readOnly('model.full_name_current')
     },
     fieldsets: [
-      USER.FIELDSET_DETAILS,
+      USER.FIELDSET_DETAILS_VERIFIABLE,
       fs.permissions_details,
       fs.get_department_fieldset(true)
     ]

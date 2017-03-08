@@ -19,8 +19,9 @@ const FIELDSET = {
   label: 'fieldsets.labels.user_info',
   text: 'fieldsets.text.assistant_profile',
   fields: [
-    disable_field('user_id'),
     disable_field('username'),
+    disable_field('status_verbose'),
+    disable_field('user_id'),
     disable_field('email'),
     'mobile_phone_number',
     'home_phone_number',
@@ -62,8 +63,9 @@ const FIELDSET_PERMISSIONS_INFO = {
 const FIELDSET_DETAILS = {
   label: 'fieldsets.labels.user_info',
   fields: [
-    'user_id',
     'username',
+    'status_verbose',
+    'user_id',
     'email',
     'mobile_phone_number',
     'home_phone_number',
@@ -113,13 +115,15 @@ let fs_viewed_by_others = {
     text: 'fieldsets.text.manager_can_edit',
     fields: [
       disable_field('username'),
+      disable_field('user_id'),
+      disable_field('status_verbose'),
       'first_name',
       'last_name',
       'father_name',
       'id_passport',
     ],
     layout: {
-      flex: [100, 50, 50, 50, 50]
+      flex: [100, 50, 50, 50, 50, 50, 50]
     }
   },
   contact: {

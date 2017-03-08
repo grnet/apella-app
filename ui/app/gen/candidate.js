@@ -93,7 +93,6 @@ export default ApellaGen.extend({
       USER.FIELDSET_DETAILS_VERIFIABLE,
       CANDIDATE.FILES_FIELDSET
     ]
-
   },
   edit: {
     fieldsets: [

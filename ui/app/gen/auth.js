@@ -52,19 +52,8 @@ function extractToken(loc) {
   return token;
 }
 
-
-let fields_with_user_id = Ember.copy(USER.FIELDSET_DETAILS_VERIFIABLE.fields);
 let fields_with_id = Ember.copy(USER.FIELDSET_DETAILS.fields);
-fields_with_user_id.unshiftObject(field('user_id', {disabled: true}));
 fields_with_id.unshiftObject(field('id', {disabled: true}));
-
-const USER_FIELDSET_USER_ID = {
-  label: USER.FIELDSET_DETAILS_VERIFIABLE.label,
-  fields: fields_with_user_id,
-  layout: {
-    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
-  }
-}
 
 const USER_FIELDSET_ID = {
   label: USER.FIELDSET_DETAILS.label,
@@ -83,7 +72,7 @@ const PROFILE_FIELDSETS = function(view) {
     let _USER_FIELDSET;
 
     if (view === 'details') {
-      _USER_FIELDSET = USER_FIELDSET_USER_ID
+      _USER_FIELDSET = USER.FIELDSET_DETAILS_VERIFIABLE
     }
 
     if (view === 'edit') {
