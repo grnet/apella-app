@@ -37,18 +37,6 @@ const FIELDS_ALL = [
   'shibboleth_schac_home_organization'
 ];
 
-const FIELDS_EDIT = [
-  field('username', { disabled: true }),
-  field('email', { disabled: true }),
-  'first_name',
-  'last_name',
-  'father_name',
-  'id_passport',
-  'mobile_phone_number',
-  'home_phone_number'
-];
-const FIELDS_EDIT_ACADEMIC = FIELDS_EDIT.slice(1);
-
 function samePassword({field, checkLen}) {
   return (key, value, old, changes, content) => {
     if (changes.password && value && value.length > (checkLen || 3)) {
@@ -152,19 +140,37 @@ const FIELDSET_EDIT_VERIFIABLE = {
 
 const FIELDSET_EDIT = {
   label: 'fieldsets.labels.user_info',
-  fields: FIELDS_EDIT,
+  fields: [
+    field('username', { disabled: true }),
+    field('email', { disabled: true }),
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50]
   }
 }
 
 
-const FIELDSET_EDIT_ACADEMIC = Ember.assign({}, FIELDSET_EDIT, {
-  fields: FIELDS_EDIT_ACADEMIC,
+const FIELDSET_EDIT_ACADEMIC = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('email', { disabled: true }),
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50]
   }
-});
+};
 
 const FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, FIELDSET_EDIT, {
   fields: FIELDS_REGISTER_ACADEMIC,
