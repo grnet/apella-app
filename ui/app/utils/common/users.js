@@ -35,19 +35,7 @@ const FIELDS_ALL = [
   'home_phone_number',
   'shibboleth_idp',
   'shibboleth_schac_home_organization'
-]
-
-const FIELDS = [
-  'username',
-  'email',
-  'password',
-  'first_name',
-  'last_name',
-  'father_name',
-  'id_passport',
-  'mobile_phone_number',
-  'home_phone_number'
-]
+];
 
 const FIELDS_EDIT = [
   field('username', { disabled: true }),
@@ -128,7 +116,17 @@ const FIELDS_REGISTER_REQUIRED_ACADEMIC = FIELDS_REGISTER_REQUIRED.slice(3);
 
 const FIELDSET = {
   label: 'fieldsets.labels.user_info',
-  fields: FIELDS,
+  fields: [
+    'username',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
   layout: {
         flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50]
   }
@@ -289,7 +287,6 @@ const normalizeUserErrors = function(errors) {
 
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
-        FIELDS,
         FIELDSET,
         FIELDSET_EDIT,
         VALIDATORS,
