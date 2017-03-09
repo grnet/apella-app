@@ -200,7 +200,6 @@ const FIELDSET_DETAILS_USER = {
   }
 }
 
-
 const FIELDSET_EDIT_ACADEMIC = {
   label: 'fieldsets.labels.user_info',
   fields: [
@@ -265,7 +264,7 @@ const FIELDSET_REGISTER_ACADEMIC = {
 const normalizeUser = function(hash, serializer) {
   let user_info = hash['user'];
   // for users with nested user object, we need to flatten nested user object.
-  // All properties get flatten as they are, except from user.id that is 
+  // All properties get flatten as they are, except from user.id that is
   // flattened as user_id
   Object.keys(user_info).forEach(function(key){
     if (key == 'id') {
@@ -323,15 +322,31 @@ const normalizeUserErrors = function(errors) {
     return e;
   });
 }
-
+/*
+  FIELDSET_CREATE: Used for the creation of all types of users and the
+    registration of non academin users
+  FIELDSET_REGISTER_ACADEMIC: Used for the creation of an academin user .Does
+    not contains 'username' field.
+  FIELDSET_*_VERIFIABLE: Used for candidate, professor, institution-manager,
+    assistants. Appart from common user fields, contains 'user_id' and
+    'status_verbose' fields
+  FIELDSET_*_VERIFABLE: Used for helpdesk. Like VERIFIABLE fields, but it does
+    not contain 'status_verbose' field
+  FIELDSET_*_USER: For plain users. Contains 'id' field and does not contain
+  'status_verbose' field.
+  FIELDSET_*_ACADEMIC: For academin users. Verifiable users that do not have
+   'username' field.
+*/
 
 export {normalizeUser, serializeUser, normalizeUserErrors,
         FILE_FIELDS,
         FIELDS_ALL,
         VALIDATORS,
+
         FIELDSET_CREATE,
-        FIELDSET_DETAILS_VERIFIABLE,
+
         FIELDSET_EDIT_VERIFIABLE,
+        FIELDSET_DETAILS_VERIFIABLE,
 
         FIELDSET_EDIT_NON_VERIFIABLE,
         FIELDSET_DETAILS_NON_VERIFIABLE,
@@ -339,8 +354,8 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         FIELDSET_EDIT_USER,
         FIELDSET_DETAILS_USER,
 
-        FIELDSET_DETAILS_ACADEMIC,
         FIELDSET_EDIT_ACADEMIC,
+        FIELDSET_DETAILS_ACADEMIC,
 
         FIELDSET_REGISTER_ACADEMIC,
 };
