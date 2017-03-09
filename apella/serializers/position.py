@@ -319,7 +319,7 @@ class CandidacyMixin(object):
         obj.code = code
         obj.save()
         try:
-            copy_candidacy_files(obj, validated_data.get('candidate'))
+            link_candidacy_files(obj, validated_data.get('candidate'))
         except IOError:
             obj.delete()
             raise serializers.ValidationError(
