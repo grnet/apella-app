@@ -79,12 +79,13 @@ function  goToDetails(type, hidden, calc, calc_params) {
       }
       return hidden;
      }),
-    action(route, model) {
-      // TMP
-      let resource = model.get('_internalModel.modelName'),
-        dest_route = `${resource}.record.index`;
-      route.transitionTo(dest_route, model);
-    }
+
+     args: computed('model', function() {
+       let model = get(this, 'model');
+       let res = model.get('_internalModel.modelName');
+       return [`${res}.record.index`, model];
+     }),
+     action: 'goTo'
   }
 };
 
