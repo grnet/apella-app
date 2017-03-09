@@ -210,19 +210,20 @@ const Register = gen.GenRoutedObject.extend({
       if (get(model, 'is_academic')) {
         FIELDSETS.push(USER.FIELDSET_REGISTER_ACADEMIC);
       } else {
-        FIELDSETS.push(USER.FIELDSET_REGISTER);
+        FIELDSETS.push(USER.FIELDSET_CREATE);
       }
     }
     if (type === 'candidate') {
-        FIELDSETS.push(USER.FIELDSET_REGISTER);
+        FIELDSETS.push(USER.FIELDSET_CREATE);
     }
     if (type === 'manager') {
-        FIELDSETS.push(USER.FIELDSET_REGISTER);
+        FIELDSETS.push(USER.FIELDSET_CREATE);
         FIELDSETS.push(MANAGER.FIELDSET_REGISTER);
         FIELDSETS.push(MANAGER.SUB_FIELDSET_REGISTER);
     }
     return FIELDSETS;
   }),
+  validators: USER.VALIDATORS,
   menu: {
     display: false,
   },

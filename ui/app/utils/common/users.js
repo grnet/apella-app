@@ -64,7 +64,23 @@ const FIELDSET_CREATE = {
   fields: [
     'username',
     'email',
-    'password',
+    field('password', {
+      required: true,
+      validators: [
+        validate.length({min: 6}),
+      ],
+      type: 'string',
+      formAttrs: { type: 'password' }
+    }),
+    field('password2', {
+      required: true,
+      validators: [
+        validate.length({min: 6}),
+        samePassword({field: 'password', checkLen: 5})
+      ],
+      type: 'string',
+      formAttrs: { type: 'password' }
+    }),
     'first_name',
     'last_name',
     'father_name',
@@ -73,7 +89,7 @@ const FIELDSET_CREATE = {
     'home_phone_number'
   ],
   layout: {
-        flex: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
   }
 };
 
@@ -184,63 +200,12 @@ const FIELDSET_DETAILS_USER = {
   }
 }
 
-const FIELDS_REGISTER = [
-  field('username', {
-    disabled: false,
-    validators: [validate.length({min: 4})]
-  }),
-  field('email', { disabled: false }),
-  field('password', {
-    required: true,
-    type: 'string',
-    validators: [validate.length({min: 6})],
-    formAttrs: { type: 'password' }
-  }),
-  field('password2', {
-    required: true,
-    validators: [
-      validate.length({min: 6}),
-      samePassword({field: 'password', checkLen: 5})
-    ],
-    type: 'string',
-    formAttrs: { type: 'password' }
-  }),
-  'first_name',
-  'last_name',
-  'father_name',
-  'id_passport',
-  'mobile_phone_number',
-  'home_phone_number'
-];
-
-const FIELDS_REGISTER_ACADEMIC = [
-  field('email', { disabled: false }),
-  'first_name',
-  'last_name',
-  'father_name',
-  'id_passport',
-  'mobile_phone_number',
-  'home_phone_number'
-];
-
-const FIELDS_REGISTER_REQUIRED = [
-  'username',
-  'password',
-  'password2',
-  'email',
-  'first_name',
-  'last_name',
-  'father_name',
-  'id_passport',
-  'mobile_phone_number',
-  'home_phone_number'
-];
-const FIELDS_REGISTER_REQUIRED_ACADEMIC = FIELDS_REGISTER_REQUIRED.slice(3);
-
 
 const FIELDSET_EDIT_ACADEMIC = {
   label: 'fieldsets.labels.user_info',
   fields: [
+    field('status_verbose', { disabled: true}),
+    field('user_id', {disabled: true}),
     field('email', { disabled: true }),
     'first_name',
     'last_name',
@@ -250,32 +215,52 @@ const FIELDSET_EDIT_ACADEMIC = {
     'home_phone_number'
   ],
   layout: {
-    flex: [100, 50, 50, 50, 50, 50, 50]
+    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
   }
-};
+}
 
-const FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, FIELDSET_EDIT_NON_VERIFIABLE, {
-  fields: FIELDS_REGISTER_ACADEMIC,
-  required: FIELDS_REGISTER_REQUIRED_ACADEMIC,
+const FIELDSET_DETAILS_ACADEMIC = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('status_verbose', {disabled: true}),
+    field('user_id', {disabled: true}),
+    'email',
+    'full_name_current',
+    'father_name_current',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number',
+  ],
+  layout: {
+    flex: [50, 50, 50, 50, 50, 50, 50, 25, 25]
+  }
+}
+
+
+const FIELDSET_REGISTER_ACADEMIC = {
+  label: 'fieldsets.labels.user_info',
+  fields:  [
+    field('email', { disabled: false }),
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
+  required: [
+    field('email', { disabled: false }),
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
   }
-});
-
-const FIELDSET_REGISTER = Ember.assign({}, FIELDSET_EDIT_NON_VERIFIABLE, {
-  fields: FIELDS_REGISTER,
-  required: FIELDS_REGISTER_REQUIRED,
-  layout: {
-    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
-  }
-});
-
-
-
-const FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, FIELDSET_DETAILS_NON_VERIFIABLE, {
-  fields: FIELDSET_DETAILS_NON_VERIFIABLE.fields.slice(1)
-});
-
+};
 
 const normalizeUser = function(hash, serializer) {
   let user_info = hash['user'];
@@ -345,8 +330,8 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         FIELDSET_EDIT_USER,
         FIELDSET_DETAILS_USER,
 
-        FIELDSET_REGISTER,
-        FIELDSET_REGISTER_ACADEMIC,
         FIELDSET_DETAILS_ACADEMIC,
         FIELDSET_EDIT_ACADEMIC,
+
+        FIELDSET_REGISTER_ACADEMIC,
 };
