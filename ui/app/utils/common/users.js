@@ -264,11 +264,14 @@ const FIELDSET_REGISTER_ACADEMIC = {
 
 const normalizeUser = function(hash, serializer) {
   let user_info = hash['user'];
+  // for users with nested user object, we need to flatten nested user object.
+  // All properties get flatten as they are, except from user.id that is 
+  // flattened as user_id
   Object.keys(user_info).forEach(function(key){
-    if (key!= 'id' || !hash['id']) {
-      hash[key] = user_info[key];
+    if (key == 'id') {
+      hash['user_id'] = user_info['id']
     } else {
-      hash['user_id'] = user_info['id'];
+      hash[key] = user_info[key]
     }
   });
 
@@ -278,6 +281,12 @@ const normalizeUser = function(hash, serializer) {
     hash.cv_in_url = true;
   }
   delete hash['user'];
+  // if the flattened user properties do not contain id, then user_id is
+  // assigned to it.
+  // This is the case for helpdesk users
+  if (!hash.hasOwnProperty('id')){
+    hash['id'] = hash['user_id']
+  }
   return hash;
 }
 
