@@ -47,14 +47,14 @@ const pick_edit_fs = function() {
   return res.concat(fs.assistant_files);
 };
 
-const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies) {
+const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies, limited_permissions) {
   let res;
   if(state === 'posted') {
     if(before_open) {
       res = head;
     }
     else {
-      if (display_candidacies) {
+      if (display_candidacies && !limited_permissions) {
         res =  head.concat(fs.candidacies);
       }
       else {
@@ -62,7 +62,7 @@ const pick_details_fs_by_state = function(fs, state, before_open, head, display_
       }
     }
   }
-  else if(state === 'cancelled') {
+  else if(state === 'cancelled' || limited_permissions) {
       res =  head/*.concat(fs.history)*/;
   }
   // in all other states
@@ -96,28 +96,57 @@ const pick_details_fs = function() {
      */
     roles_conditional_candidacies = ['candidate', 'professor'],
     committees_members_ids, electors_ids, participations_in_position,
-    display_candidacies = false;
-
+    display_candidacies = false,
+    limited_permissions = false;
   if(roles_conditional_candidacies.indexOf(role) > -1) {
     let candidacies = [];
+
+    /*
+     * Check if the user is a candidate for this position.
+     * On getModel we fetch the candidacies, so here we use the peekAll function
+     * to check them.
+     */
     store.peekAll('candidacy').forEach(function(candidacy) {
       let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0],
-        candidate_id = candidacy.belongsTo('candidate').link().split('/').slice(-2)[0];
+        candidate_id = candidacy.belongsTo('candidate').link().split('/').slice(-2)[0],
+        candidacy_state = get(candidacy, 'state'),
+        candidacy_is_posted = (candidacy_state === 'posted');
+      // If the candidacy belongs to this position
       if(candidacy_pos_id === position_model.id) {
-        candidacies.push(candidate_id);
+        /*
+         * if the candidacy is posted and not cancelled keep the id of the
+         * candidate.
+         */
+        if(candidacy_is_posted) {
+          candidacies.push(candidate_id);
+        }
+        // if the candidacy is cancelled limit the view permissions of the user.
+        else if(user_id === candidate_id) {
+          limited_permissions = true;
+        }
       }
     });
-
+    // Show candidacies only in fellow candidates
     if(candidacies.indexOf(user_id) > -1) {
       display_candidacies = true;
     }
-    else if (role === 'professor' && !display_candidacies) {
+    else if (role === 'professor') {
       let user_department = get(this, 'user.department') || "",
         user_department_id = user_department.split('/').slice(-2)[0],
         position_department_id = position_model.belongsTo('department').link().split('/').slice(-2)[0];
+      /*
+       * If the professor belongs to the department of the position should be
+       * able to see candidacies and their details.
+       */
       if (user_department_id === position_department_id) {
         display_candidacies = true;
+        limited_permissions = false;
       }
+      /*
+       * If the professor doesn't belong to the department of the position
+       * should check if he/she is a elector or a member of the committee
+       * (regular or substitute).
+       */
       else {
         electors_ids = position_model.hasMany('electors').ids();
         committees_members_ids = position_model.hasMany('committee').ids();
@@ -125,14 +154,20 @@ const pick_details_fs = function() {
 
         if (participations_in_position.indexOf(role_id) > -1) {
           display_candidacies = true;
+          limited_permissions = false;
         }
       }
     }
   }
+  /*
+   * If the user is assistant, institutionmanager, helpdeskadmin, helpdeskuser
+   * and ia able to see the details of the position, can also see the
+   * candidacies.
+   */
   else {
     display_candidacies = true;
   }
- return pick_details_fs_by_state(fs, state, before_open, head, display_candidacies);
+  return pick_details_fs_by_state(fs, state, before_open, head, display_candidacies, limited_permissions);
 };
 
 const pick_create_fs = function() {
