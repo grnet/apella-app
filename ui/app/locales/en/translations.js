@@ -227,6 +227,7 @@ export default {
   'position.state_calc_verbose.label': 'Position State',
   'candidacy.edit.position.hint': 'You cannot change position when editing a candidacy.',
   'candidacy.state': 'Candidacy State',
+  'candidacy.id': 'Candidacy ID',
   'institution.title_current.label': 'Institution',
   'profile.label': 'Profile',
   'can_create_registries.label': 'Can create registries',
@@ -569,4 +570,5 @@ export default {
   'electors_meeting_to_set_committee_date.hint': 'The date can be edited when the members of the electoral committee are set',
   'position.history.entry.warning': 'This is a position history record created at {{date}}',
   'position.history.label': 'History record'
+  'candidate.user_id.label': 'User ID'
 };

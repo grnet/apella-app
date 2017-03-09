@@ -132,7 +132,7 @@ let FS = {
   list:  [field('position.code', {dataKey: 'position__id'}), 'position.title', 'position.department.institution.title_current',
           'position.department.title_current',
           'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
-  list_with_user_id:  [field('position.code', {dataKey: 'position__id'}), field('candidate.id', {label: 'candidate.user_id.label'}), 'position.title', 'position.department.institution.title_current',
+  list_with_user_id:  [field('position.code', {dataKey: 'position__id'}), field('id', {label: 'candidacy.id'}), field('candidate.id', {label: 'candidate.user_id.label'}), 'candidate.full_name_current', 'position.title', 'position.department.institution.title_current',
           'position.department.title_current',
           'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
 

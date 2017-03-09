@@ -226,6 +226,7 @@ export default {
   'position.state_calc_verbose.label': 'Κατάσταση Θέσης',
   'candidacy.edit.position.hint': 'Δεν μπορείτε να τροποιήσετε τη θέση για την οποία έχετε υποβάλει υποψηφιότητα',
   'candidacy.state': 'Κατάσταση Υποψηφιότητας',
+  'candidacy.id': 'Κωδικός Υποψηφιότητας',
   'institution.title_current.label': 'Ίδρυμα',
   'can_create_registries.label': 'Δημιουργία μητρώων',
   'can_create_registries_verbose.label': 'Δημιουργία μητρώων',
