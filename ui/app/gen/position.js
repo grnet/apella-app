@@ -220,8 +220,24 @@ export default ApellaGen.extend({
         return model;
       });
     },
+    actions: computed('model.is_latest', function() {
+      let is_latest = get(this, 'model.is_latest');
+      if (is_latest) { return ['gen:edit']; }
+      return [];
+    }),
     page: {
-      title: computed.readOnly('model.code')
+      title: computed('model.code', 'model.is_latest', function() {
+        let code = get(this, 'model.code');
+        let latest = get(this, 'model.is_latest');
+        if (!latest) {
+          let label = get(this, 'model.i18n').t('position.history.label');
+          code = code += ` (${label})`;
+        }
+        return code;
+      })
+    },
+    partials: {
+      top: 'position-top'
     },
     fieldsets: computed('role', 'user.id', 'user.user_id', 'model.state', 'model.starts_at', 'model.ends_at', pick_details_fs),
   }

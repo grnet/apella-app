@@ -85,7 +85,7 @@ export default DS.Model.extend({
     return end.isBefore() && posted;
   }),
   is_latest: computed('code', 'id', function() {
-    return get(this, 'code').replace('APP','') === get(this, 'id');
+    return get(this, 'code').replace('APP','') == get(this, 'id');
   }),
   is_open: computed('starts_at', 'ends_at', function() {
     let now = moment(),

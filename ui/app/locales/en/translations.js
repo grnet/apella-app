@@ -567,4 +567,6 @@ export default {
   'confirm.cv.professor.unset.message': 'If you choose to register a cv url, the cv file you uploaded will be unset. <br>Are you sure you want to proceed?',
   'old_user_id.label': 'Old code',
   'electors_meeting_to_set_committee_date.hint': 'The date can be edited when the members of the electoral committee are set',
+  'position.history.entry.warning': 'This is a position history record created at {{date}}',
+  'position.history.label': 'History record'
 };

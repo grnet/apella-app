@@ -1,0 +1,5 @@
+{{# if (not model.is_latest) }}
+<md-content class="md-padding md-soft-warn">
+{{ t 'position.history.entry.warning' date=(moment-format model.created_at)}}
+</md-content>
+{{/if}}
