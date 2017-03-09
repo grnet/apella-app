@@ -226,7 +226,8 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
     new_file = ApellaFile(
         id=get_serial('apella_file'),
         owner=existing_file.owner,
-
+        source=source,
+        file_kind=existing_file.file_kind,
         source_id=candidacy.id,
         description=existing_file.description,
         updated_at=datetime.utcnow(),
