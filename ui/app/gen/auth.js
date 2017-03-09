@@ -81,7 +81,13 @@ const PROFILE_FIELDSETS = function(view) {
     }
 
     if (isHelpdesk(role)) {
-      f.push(USER.FIELDSET_EDIT_NON_VERIFIABLE);
+      if (view === 'edit') {
+        f.push(USER.FIELDSET_EDIT_NON_VERIFIABLE);
+      }
+      if (view === 'details') {
+        f.push(USER.FIELDSET_DETAILS_NON_VERIFIABLE);
+      }
+
     }
 
     if (role === 'professor') {
