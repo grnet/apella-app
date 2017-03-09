@@ -247,15 +247,6 @@ const FIELDSET_REGISTER_ACADEMIC = {
     'mobile_phone_number',
     'home_phone_number'
   ],
-  required: [
-    field('email', { disabled: false }),
-    'first_name',
-    'last_name',
-    'father_name',
-    'id_passport',
-    'mobile_phone_number',
-    'home_phone_number'
-  ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
   }

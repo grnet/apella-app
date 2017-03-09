@@ -226,7 +226,7 @@ const Register = gen.GenRoutedObject.extend({
   validators: computed('model.is_academic', function(){
     let res = USER.VALIDATORS;
     if(get(this, 'model.is_academic')) {
-      return res.splice(1);
+      res['username'] = []
     }
     return res;
   }),
