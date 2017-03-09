@@ -223,7 +223,13 @@ const Register = gen.GenRoutedObject.extend({
     }
     return FIELDSETS;
   }),
-  validators: USER.VALIDATORS,
+  validators: computed('model.is_academic', function(){
+    let res = USER.VALIDATORS;
+    if(get(this, 'model.is_academic')) {
+      return res.splice(1);
+    }
+    return res;
+  }),
   menu: {
     display: false,
   },
