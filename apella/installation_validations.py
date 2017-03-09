@@ -224,7 +224,7 @@ def move_unreferenced_disk_files(dest_root, force=False):
     logger.info(m)
 
 
-def remove_unreferenced_apella_files(force=False):
+def remove_unreferenced_apella_files(files=(), force=False):
 
     validate_apella_files_related_names()
 
@@ -232,7 +232,10 @@ def remove_unreferenced_apella_files(force=False):
     nr_to_remove = 0
     nr_removed = 0
 
-    for af in ApellaFile.objects.all():
+    if not files:
+        files = ApellaFile.objects.all()
+
+    for af in files:
         nr_checked += 1
         if nr_checked & 1023 == 0:
             m = "nr_checked %d, nr_to_remove: %d, nr_removed: %d"
