@@ -114,6 +114,76 @@ const FIELDSET_DETAILS_VERIFIABLE = {
   }
 }
 
+const FIELDSET_EDIT_NON_VERIFIABLE = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', { disabled: true }),
+    field('user_id', {disabled: true}),
+    field('email', { disabled: true }),
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
+  layout: {
+    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
+  }
+}
+
+const FIELDSET_DETAILS_NON_VERIFIABLE = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', {disabled: true}),
+    field('user_id', {disabled: true}),
+    'email',
+    'full_name_current',
+    'father_name_current',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number',
+  ],
+  layout: {
+    flex: [100, 50, 50, 50, 50, 50, 25, 25]
+  }
+}
+
+const FIELDSET_EDIT_USER = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', { disabled: true }),
+    field('id', {disabled: true}),
+    field('email', { disabled: true }),
+    'first_name',
+    'last_name',
+    'father_name',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number'
+  ],
+  layout: {
+    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
+  }
+}
+
+const FIELDSET_DETAILS_USER = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', {disabled: true}),
+    field('id', {disabled: true}),
+    'email',
+    'full_name_current',
+    'father_name_current',
+    'id_passport',
+    'mobile_phone_number',
+    'home_phone_number',
+  ],
+  layout: {
+    flex: [100, 50, 50, 50, 50, 50, 25, 25]
+  }
+}
+
 const FIELDS_REGISTER = [
   field('username', {
     disabled: false,
@@ -168,24 +238,6 @@ const FIELDS_REGISTER_REQUIRED = [
 const FIELDS_REGISTER_REQUIRED_ACADEMIC = FIELDS_REGISTER_REQUIRED.slice(3);
 
 
-const FIELDSET_EDIT = {
-  label: 'fieldsets.labels.user_info',
-  fields: [
-    field('username', { disabled: true }),
-    field('email', { disabled: true }),
-    'first_name',
-    'last_name',
-    'father_name',
-    'id_passport',
-    'mobile_phone_number',
-    'home_phone_number'
-  ],
-  layout: {
-    flex: [50, 50, 50, 50, 50, 50, 50, 50]
-  }
-}
-
-
 const FIELDSET_EDIT_ACADEMIC = {
   label: 'fieldsets.labels.user_info',
   fields: [
@@ -202,7 +254,7 @@ const FIELDSET_EDIT_ACADEMIC = {
   }
 };
 
-const FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, FIELDSET_EDIT, {
+const FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, FIELDSET_EDIT_NON_VERIFIABLE, {
   fields: FIELDS_REGISTER_ACADEMIC,
   required: FIELDS_REGISTER_REQUIRED_ACADEMIC,
   layout: {
@@ -210,7 +262,7 @@ const FIELDSET_REGISTER_ACADEMIC = Ember.assign({}, FIELDSET_EDIT, {
   }
 });
 
-const FIELDSET_REGISTER = Ember.assign({}, FIELDSET_EDIT, {
+const FIELDSET_REGISTER = Ember.assign({}, FIELDSET_EDIT_NON_VERIFIABLE, {
   fields: FIELDS_REGISTER,
   required: FIELDS_REGISTER_REQUIRED,
   layout: {
@@ -218,26 +270,10 @@ const FIELDSET_REGISTER = Ember.assign({}, FIELDSET_EDIT, {
   }
 });
 
-const FIELDSET_DETAILS = {
-  label: 'fieldsets.labels.user_info',
-  fields: [
-    field('username', {disabled: true}),
-    'email',
-    'full_name_current',
-    'father_name_current',
-    'id_passport',
-    'mobile_phone_number',
-    'home_phone_number',
-  ],
-  layout: {
-    flex: [50, 50, 50, 50, 50, 25, 25]
-  }
-}
 
 
-
-const FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, FIELDSET_DETAILS, {
-  fields: FIELDSET_DETAILS.fields.slice(1)
+const FIELDSET_DETAILS_ACADEMIC = Ember.assign({}, FIELDSET_DETAILS_NON_VERIFIABLE, {
+  fields: FIELDSET_DETAILS_NON_VERIFIABLE.fields.slice(1)
 });
 
 
@@ -295,7 +331,6 @@ const normalizeUserErrors = function(errors) {
 }
 
 
-
 export {normalizeUser, serializeUser, normalizeUserErrors,
         FILE_FIELDS,
         FIELDS_ALL,
@@ -304,11 +339,14 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         FIELDSET_DETAILS_VERIFIABLE,
         FIELDSET_EDIT_VERIFIABLE,
 
-        FIELDSET_EDIT,
-        FIELDSET_DETAILS,
+        FIELDSET_EDIT_NON_VERIFIABLE,
+        FIELDSET_DETAILS_NON_VERIFIABLE,
+
+        FIELDSET_EDIT_USER,
+        FIELDSET_DETAILS_USER,
+
         FIELDSET_REGISTER,
         FIELDSET_REGISTER_ACADEMIC,
-        FIELDSET_DETAILS,
         FIELDSET_DETAILS_ACADEMIC,
         FIELDSET_EDIT_ACADEMIC,
 };

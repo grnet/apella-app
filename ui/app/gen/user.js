@@ -17,9 +17,6 @@ export default ApellaGen.extend({
   path: 'users',
   common: {
     validators: USER.VALIDATORS,
-    fieldsets: [
-      USER.FIELDSET
-    ]
   },
   list: {
     page: {
@@ -56,17 +53,15 @@ export default ApellaGen.extend({
   },
   details: {
     page: {
-
       title: computed.readOnly('model.full_name_current')
-
     },
     fieldsets: [
-      USER.FIELDSET_DETAILS
+      USER.FIELDSET_DETAILS_USER
     ]
   },
   edit: {
     fieldsets: [
-      USER.FIELDSET_EDIT,
+      USER.FIELDSET_EDIT_USER,
     ]
   },
   create: {

@@ -52,17 +52,6 @@ function extractToken(loc) {
   return token;
 }
 
-let fields_with_id = Ember.copy(USER.FIELDSET_DETAILS.fields);
-fields_with_id.unshiftObject(field('id', {disabled: true}));
-
-const USER_FIELDSET_ID = {
-  label: USER.FIELDSET_DETAILS.label,
-  fields: fields_with_id,
-  layout: {
-    flex: [50, 50, 50, 50, 50, 50, 25, 25]
-  }
-}
-
 
 const PROFILE_FIELDSETS = function(view) {
   return computed('model.role', function(){
@@ -92,7 +81,7 @@ const PROFILE_FIELDSETS = function(view) {
     }
 
     if (isHelpdesk(role)) {
-      f.push(USER_FIELDSET_ID);
+      f.push(USER.FIELDSET_EDIT_NON_VERIFIABLE);
     }
 
     if (role === 'professor') {
