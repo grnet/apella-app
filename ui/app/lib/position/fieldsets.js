@@ -655,7 +655,7 @@ const  position = {
           })
         }),
         field('nomination_act_fek', {
-          hint: 'cannot.be.filled.if.nomination',
+          hint: 'nomination_act.hint',
           disabled: computed('model.changeset.proceedings_cover_letter',
             'model.changeset.revocation_decision',
             'model.changeset.failed_election_decision', function(){

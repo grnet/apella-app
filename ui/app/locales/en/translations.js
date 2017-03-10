@@ -268,7 +268,7 @@ export default {
   'proceedings_cover_letter.label': 'Proceedings Cover Letter',
   'second_best.label': 'Second Most Appropriate Candidate',
   'nomination_act.label': 'Nomination act',
-  'nomination_act.hint': 'The field "Nomination act" can be filled only if the field "Proceedings Cover Letter" is filled',
+  'nomination_act.hint': 'The field can be filled only if the field "Proceedings Cover Letter" is filled',
   'nomination_act_fek.label': 'FEK (Government Gazette) of Nomination Act',
   'nomination_act_fek.hint': 'The field "FEK (Government Gazette) of Nomination Act" can be filled only if the field "Proceedings Cover Letter" is filled',
   'revocation_decision.label': 'Decision to Revoke',
