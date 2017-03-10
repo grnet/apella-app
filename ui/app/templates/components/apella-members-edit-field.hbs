@@ -2,44 +2,15 @@
 <label class="md-label raised padded table-label">{{ label }}</label>
 {{/if}}
 
-<label class="md-label raised padded table-label">{{t 'members.to.add'}} ({{ addMembers.length }})</label>
-{{gen-table
-    model=(readonly addMembers)
-    modelMeta=(readonly gen.resource)
-    rowGenClass=(readonly gen.rowGen)
-    paginateServerSide=false
-    paginateActive=true
-    limits=(array 10 20 30)
-    sortActive=false
-    filterActive=false
-    searchActive=false
-    isLoading=false
-}}
-<paper-content class="table-actions layout-row">
-{{#paper-button disabled=(not canAdd) raised=true primary=true onClick=(action 'showOptions') }}
-{{t addLabel }}
-{{/paper-button}}
-</paper-content>
-
-{{#if removeMembers.length }}
-<label class="md-label raised padded table-label">{{t 'members.to.remove'}} ({{ removeMembers.length }})</label>
-{{gen-table
-    model=(readonly removeMembers)
-    modelMeta=(readonly gen.resource)
-    rowGenClass=(readonly removeRowGen)
-    paginateServerSide=false
-    paginateActive=true
-    limits=(array 10 20 30)
-    sortActive=false
-    filterActive=false
-    searchActive=false
-    isLoading=false
-}}
-{{/if}}
 
 {{#if object.id}}
-<br /><br />
-<label class="md-label raised padded table-label">Existing ({{existingMembers.meta.count}})</label>
+<div class="layout-row">
+<label class="md-label raised table-label flex" style="flex-grow:3; padding-top: 2.2em">{{ t 'existing.entries' }} ({{existingMembers.meta.count}})</label>
+{{#paper-button class="flex table-action-right" disabled=(not canAdd) icon=true raised=true primary=true onClick=(action 'showOptions') }}
+{{paper-icon "add" }}{{t addLabel }}
+{{/paper-button}}
+</div>
+
 {{gen-table
 
     model=model
@@ -109,7 +80,7 @@
     details=details
     object=object
     selectable=true
-    selected=addMembers
+    selected=allMembers
     getModel=selectTableQuery
   }}
 {{/paper-dialog-content}}
@@ -117,9 +88,59 @@
 {{#paper-dialog-actions class="layout-row"}}
   <span class="flex"></span>
   {{#paper-button onClick=(action "hideOptions")}}{{t dialogCancelLabel }}{{/paper-button}}
-  {{#paper-button onClick=(action "handleAddItems" addMembers)}}{{t dialogAddLabel }}{{/paper-button}}
+  {{#paper-button onClick=(action "handleAddItems" allMembers)}}{{t dialogAddLabel }}{{/paper-button}}
 {{/paper-dialog-actions}}
 
 {{/paper-dialog}}
 {{/if}}
 
+{{#if (or addMembers.length removeMembers.length) }}
+<div class="add-remove-tables">
+<div class="layout-row">
+<label {{ action (action (mut activeSubTable) 'add') }}
+  class={{concat "clickable flex md-label md-success raised padded table-label flex-initial" (if (eq activeSubTable 'add') ' active' '')}}>
+  {{paper-icon 'add' size=13 }} {{t 'members.to.add'}} ({{ addMembers.length }})
+</label>
+<label {{ action (action (mut activeSubTable) 'remove') }}
+  class={{concat "clickable flex md-label md-success raised padded table-label flex-initial" (if (eq activeSubTable 'remove') ' active' '')}}>
+  {{paper-icon 'delete' size=13 }} {{t 'members.to.remove'}} ({{ removeMembers.length }})</label>
+</div>
+
+<div class="layout-row">
+{{# if (eq activeSubTable 'add') }}
+<div class="flex-100 subtable">
+{{gen-table
+    model=(readonly addMembers)
+    modelMeta=(readonly gen.resource)
+    rowGenClass=(readonly gen.rowGen)
+    paginateServerSide=false
+    paginateActive=true
+    limits=(array 5 10 20 30)
+    sortActive=false
+    filterActive=false
+    searchActive=false
+    isLoading=false
+}}
+</div>
+{{/if}}
+
+{{# if (eq activeSubTable 'remove') }}
+<div class="flex-100 subtable">
+{{gen-table
+    model=(readonly removeMembers)
+    modelMeta=(readonly gen.resource)
+    rowGenClass=(readonly removeRowGen)
+    paginateServerSide=false
+    paginateActive=true
+    limits=(array 5 10 20 30)
+    sortActive=false
+    filterActive=false
+    searchActive=false
+    isLoading=false
+}}
+</div>
+{{/if}}
+</div>
+
+</div>
+{{/if}}

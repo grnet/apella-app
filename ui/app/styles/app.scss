@@ -103,3 +103,29 @@ noscript {
     top: 40px;
 
 }
+
+button.table-action-right {
+  margin-bottom: 1em !important;
+}
+
+.model-form-field .add-remove-tables {
+  margin-top: 1em;
+  label.table-label {
+    padding: 1rem 1rem;
+    color: #444;
+  }
+
+  label.table-label.active {
+    background-color: #efefef;
+  }
+  margin-bottom: 1em;
+}
+
+label.table-label.active {
+  font-weight: bold;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
