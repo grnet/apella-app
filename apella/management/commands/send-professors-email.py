@@ -33,7 +33,7 @@ class Command(ApellaCommand):
         body = 'apella/emails/evaluators_body.txt'
 
         professors = Professor.objects.filter(
-            is_foreign=False, user__is_active=True)
+            is_foreign=False, user__is_active=True, is_verified=True)
         for p in professors:
             if not dry_run:
                 send_user_email_attachment(
