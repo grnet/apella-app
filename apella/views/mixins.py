@@ -24,7 +24,7 @@ from apella.models import InstitutionManager, Position, Department, \
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
-from apella.serializers.position import copy_candidacy_files
+from apella.serializers.position import link_candidacy_files
 from apella.emails import send_user_email, send_emails_file, \
     send_emails_members_change
 
@@ -404,7 +404,7 @@ class SyncCandidacies(object):
             position__state='posted',
             position__ends_at__gt=today_min)
         for candidacy in active_candidacies:
-            copy_candidacy_files(candidacy, candidate_user.user)
+            link_candidacy_files(candidacy, candidate_user.user)
         return Response(request.data, status=status.HTTP_200_OK)
 
 

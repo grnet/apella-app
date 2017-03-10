@@ -1,3 +1,4 @@
+import os
 import logging
 from datetime import datetime, timedelta
 
@@ -7,7 +8,7 @@ from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
-    ElectorParticipation, ApellaFile
+    ElectorParticipation, ApellaFile, generate_filename
 from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -16,7 +17,7 @@ from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
     send_emails_members_change, send_position_create_emails
-from apella.util import at_day_end, at_day_start, otz
+from apella.util import at_day_end, at_day_start, otz, safe_path_join
 
 logger = logging.getLogger(__name__)
 
@@ -222,7 +223,7 @@ class PositionMixin(ValidatorMixin):
         return instance
 
 
-def copy_single_file(existing_file, candidacy, source='candidacy'):
+def link_single_file(existing_file, candidacy, source='candidacy'):
     new_file = ApellaFile(
         id=get_serial('apella_file'),
         owner=existing_file.owner,
@@ -232,16 +233,21 @@ def copy_single_file(existing_file, candidacy, source='candidacy'):
         description=existing_file.description,
         updated_at=datetime.utcnow(),
         file_name=existing_file.file_name)
+
+    new_name = generate_filename(new_file, new_file.file_name)
+    new_path = safe_path_join(settings.MEDIA_ROOT, new_name)
+    existing_path = existing_file.file_content.path
     try:
-        with open(existing_file.file_content.path, 'r') as f:
-            new_file.file_content.save(existing_file.file_name, File(f))
-    except IOError as e:
-        logger.error('failed to copy candidacy file: %s' % e)
+        os.link(existing_path, new_path)
+    except OSError as e:
+        logger.error('failed to link candidacy file: %s' % e)
         raise
+    new_file.file_content = new_path
+    new_file.save()
     return new_file
 
 
-def copy_candidacy_files(candidacy, user):
+def link_candidacy_files(candidacy, user):
     if user.is_professor():
         cv = user.professor.cv
         diplomas = user.professor.diplomas.all()
@@ -251,17 +257,17 @@ def copy_candidacy_files(candidacy, user):
         diplomas = user.candidate.diplomas.all()
         publications = user.candidate.publications.all()
 
-    new_cv = copy_single_file(cv, candidacy)
+    new_cv = link_single_file(cv, candidacy)
     candidacy.cv = new_cv
 
     candidacy.diplomas.all().delete()
     candidacy.publications.all().delete()
 
     for diploma in diplomas:
-        new_diploma = copy_single_file(diploma, candidacy)
+        new_diploma = link_single_file(diploma, candidacy)
         candidacy.diplomas.add(new_diploma)
     for publication in publications:
-        new_publication = copy_single_file(publication, candidacy)
+        new_publication = link_single_file(publication, candidacy)
         candidacy.publications.add(new_publication)
     candidacy.save()
 
@@ -313,7 +319,7 @@ class CandidacyMixin(object):
         obj.code = code
         obj.save()
         try:
-            copy_candidacy_files(obj, validated_data.get('candidate'))
+            link_candidacy_files(obj, validated_data.get('candidate'))
         except IOError:
             obj.delete()
             raise serializers.ValidationError(
