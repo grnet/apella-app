@@ -1,5 +1,5 @@
 import {
-  ApellaGen, i18nField, i18nUserSortField, get_registry_members, fileField
+  ApellaGen, i18nField, i18nUserSortField, get_registry_members, fileField, preloadRelations
 } from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
 import gen from 'ember-gen/lib/gen';
@@ -393,11 +393,7 @@ export default ApellaGen.extend({
 
   details: {
     getModel: function(params, model) {
-      return model.get('department').then(function(department) {
-        return department.get('institution').then(function(institution) {
-          return model;
-        })
-      })
+      return preloadRelations(model, 'department', 'department.institution');
     },
     page: {
       title: computed('model.institution.title_current', function() {
@@ -433,13 +429,7 @@ export default ApellaGen.extend({
      * Use in the abilityState "owned".
      */
     getModel: function(params, model) {
-      return model.get('department').then(function(department) {
-        return department.get('institution').then(function(institution) {
-          return model.get('members').then(() => {
-            return model;
-          });
-        })
-      })
+      return preloadRelations(model, 'department', 'members', 'department.institution');
     },
     onSubmit(model) {
       this.refresh();

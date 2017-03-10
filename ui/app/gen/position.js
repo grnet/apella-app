@@ -1,6 +1,6 @@
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
-import {ApellaGen, urlValidator} from 'ui/lib/common';
+import {ApellaGen, urlValidator, preloadRelations} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
