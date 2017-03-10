@@ -16,7 +16,8 @@ from apella.models import ApellaUser, MultiLangFields, Candidate, \
     OldApellaPositionMigrationData, ApellaFile, OldApellaFileMigrationData, \
     Candidacy, OldApellaCandidacyMigrationData, \
     OldApellaCandidacyFileMigrationData, OldApellaInstitutionMigrationData, \
-    OldApellaCandidateAssistantProfessorMigrationData, generate_filename
+    OldApellaCandidateAssistantProfessorMigrationData, generate_filename, \
+    OldApellaAreaSubscriptions, UserInterest
 
 from apella.common import FILE_KIND_TO_FIELD, AUTHORITIES
 
@@ -771,3 +772,45 @@ def migrate_candidate_to_assistant_professor(old_user, new_user):
     logger.info(
         'created assistant professor %s' % professor.id)
     return professor
+
+def migrate_user_interests():
+    old_subs_user_ids = \
+        OldApellaAreaSubscriptions.objects.values_list(
+            'user_id', flat=True).distinct()
+
+    for old_user_id in old_subs_user_ids:
+        try:
+            new_user = ApellaUser.objects.get(old_user_id=old_user_id)
+        except ApellaUser.DoesNotExist:
+            logger.info('could not find ApellaUser with old user id %r' %
+                old_user_id)
+            continue
+        try:
+            new_ui = UserInterest.objects.get(user=new_user)
+        except UserInterest.DoesNotExist:
+            new_ui = UserInterest.objects.create(user=new_user)
+
+        user_subs = OldApellaAreaSubscriptions.objects.filter(
+            user_id=old_user_id)
+        departments_added = False
+        for user_sub in user_subs:
+            if user_sub.subject_id and user_sub.area_id:
+                subject_area = get_obj(
+                    user_sub.area_id, SubjectArea)
+                old_code = \
+                    str(subject_area.id) + '.' + user_sub.subject_id
+                try:
+                    subject = Subject.objects.get(old_code=old_code)
+                except Subject.DoesNotExist:
+                    logger.error(
+                        "subject %s does not exist", old_code)
+                    continue
+                new_ui.subject.add(subject)
+            if user_sub.departments_id and not departments_added:
+                departments_added = True
+                dep_ids = user_sub.departments_id[1:-1]
+                dep_ids = [int(x) for x in dep_ids.split(',')]
+                for dep_id in dep_ids:
+                    department = get_obj(dep_id, Department)
+                    new_ui.department.add(department)
+            new_ui.save()

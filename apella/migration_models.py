@@ -151,3 +151,4 @@ class OldApellaAreaSubscriptions(models.Model):
     area_name = models.TextField()
     subject_name = models.TextField()
     locale = models.TextField()
+    departments_id = models.TextField(null=True)
