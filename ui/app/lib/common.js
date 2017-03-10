@@ -184,7 +184,25 @@ function get_registry_members(registry, store, params) {
 // data are preloaded and immediatelly accessible in templates.
 function preloadRelations(model, ...keys) {
 
+  let PromiseFactory = DS.PromiseArray.create.bind(DS.PromiseArray);
+
+  if (!model.then) {
+    if (model instanceof Array) {
+      model = DS.PromiseArray.create({promise: Ember.RSVP.Promise.resolve(model)});
+    } else {
+      model = DS.PromiseObject.create({promise: Ember.RSVP.Promise.resolve(model)});
+    }
+  }
+
+  if (model instanceof DS.PromiseObject) {
+    PromiseFactory = DS.PromiseObject.create.bind(DS.PromiseObject);
+  }
+
   let promise = model.then((arr) => {
+    let resolved = arr;
+    if (!(arr instanceof Array) && !(arr instanceof DS.AdapterPopulatedRecordArray)) {
+      arr = [arr];
+    }
     let promises = {};
     let nestedKeys = [];
     let rootKeys = [];
@@ -207,9 +225,16 @@ function preloadRelations(model, ...keys) {
         assert(`cannot preload '${key}' relationship. ${attr} not preloaded?`, entry);
         assert(`${entry} is not a DS.Model`, entry.belongsTo);
 
-        let ref = entry.belongsTo(key).link();
-        if (refs.indexOf(ref) === -1) {
-          if (!promises[key]) { promises[key] = []; }
+        let rel = entry.relationshipFor(key);
+        let ref;
+        if (rel.kind === 'belongsTo') {
+          ref = entry.belongsTo(key).link();
+        } else {
+          ref = entry.hasMany(key).link();
+        }
+        if (!promises[key]) { promises[key] = []; }
+        if (!ref) { promises[key].push(get(entry, key)); }
+        if (ref && refs.indexOf(ref) === -1) {
           promises[key].push(get(entry, key));
           refs.push(ref);
         }
@@ -227,10 +252,10 @@ function preloadRelations(model, ...keys) {
           return model;
         }
       });
-    })).then(() => { return arr });
+    })).then(() => { return resolved });
   });
 
-  return DS.PromiseArray.create({promise});
+  return PromiseFactory({promise});
 };
 
 export {
