@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
+from email.header import Header
 
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -31,8 +32,13 @@ class Command(ApellaCommand):
 
         attachment1 = os.path.join(
             settings.RESOURCES_DIR, 'attachment1.pdf')
+        with open(attachment1, 'r') as f1:
+            content1 = f1.read()
         attachment2 = os.path.join(
             settings.RESOURCES_DIR, 'attachment2.pdf')
+        with open(attachment2, 'r') as f2:
+            content2 = f2.read()
+
         template_subject = 'apella/emails/evaluators_subject.txt'
         subject = render_to_string(template_subject).replace('\n', ' ')
         template_body = 'apella/emails/evaluators_body.txt'
@@ -46,14 +52,16 @@ class Command(ApellaCommand):
                     message = EmailMessage(
                         subject, body, settings.DEFAULT_FROM_EMAIL, [p.user.email])
                     message.attach(
-                        'ΠΡΟΣΚΛΗΣΗ ΓΙΑ ΕΓΓΡΑΦΗ ΣΤΟ ΜΗΤΡΩΟ ΑΞΙΟΛΟΓΗΤΩΝ.pdf'. \
-                            decode('utf-8'),
-                        attachment1,
+                        Header(
+                            u'ΠΡΟΣΚΛΗΣΗ ΓΙΑ ΕΓΓΡΑΦΗ ΣΤΟ ΜΗΤΡΩΟ ΑΞΙΟΛΟΓΗΤΩΝ.pdf',
+                            'utf-8').encode(),
+                        content1,
                         'application/pdf')
                     message.attach(
-                        'ΜΕΘΟΛΟΓΙΑ ΑΞΙΟΛΟΓΗΣΗΣ ΕΔΒΜ 34.pdf'. \
-                            decode('utf-8'),
-                        attachment2,
+                        Header(
+                            u'ΜΕΘΟΛΟΓΙΑ ΑΞΙΟΛΟΓΗΣΗΣ ΕΔΒΜ 34.pdf',
+                            'utf-8').encode(),
+                        content2,
                         'application/pdf')
                     message.send()
                     self.stdout.write('email sent to %s' % p.user.email)
@@ -63,11 +71,15 @@ class Command(ApellaCommand):
             message = EmailMessage(
                 subject, body, settings.DEFAULT_FROM_EMAIL, [test_email])
             message.attach(
-                'ΠΡΟΣΚΛΗΣΗ ΓΙΑ ΕΓΓΡΑΦΗ ΣΤΟ ΜΗΤΡΩΟ ΑΞΙΟΛΟΓΗΤΩΝ'.decode('utf-8'),
-                attachment1,
+                Header(
+                    u'ΠΡΟΣΚΛΗΣΗ ΓΙΑ ΕΓΓΡΑΦΗ ΣΤΟ ΜΗΤΡΩΟ ΑΞΙΟΛΟΓΗΤΩΝ',
+                    'utf-8').encode(),
+                content1,
                 'application/pdf')
             message.attach(
-                'ΜΕΘΟΛΟΓΙΑ ΑΞΙΟΛΟΓΗΣΗΣ ΕΔΒΜ 34'.decode('utf-8'),
-                attachment2,
+                Header(
+                    u'ΜΕΘΟΛΟΓΙΑ ΑΞΙΟΛΟΓΗΣΗΣ ΕΔΒΜ 34',
+                    'utf-8').encode(),
+                content2,
                 'application/pdf')
             message.send()
