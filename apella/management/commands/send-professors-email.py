@@ -28,7 +28,7 @@ class Command(ApellaCommand):
 
         if not attachment:
             attachment = os.path.join(
-                settings.RESOURCES_DIR, 'emails', 'attachment.pdf')
+                settings.RESOURCES_DIR, 'attachment.pdf')
         subject = 'apella/emails/evaluators_subject.txt'
         body = 'apella/emails/evaluators_body.txt'
 
