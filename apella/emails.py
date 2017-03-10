@@ -2,7 +2,7 @@ import logging
 from itertools import chain
 
 from django.conf import settings
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from apella.models import InstitutionManager
 
@@ -517,27 +517,3 @@ def send_position_create_emails(position):
          'starts_at': starts_at,
          'ends_at': ends_at,
          'apella_url': position_url})
-
-
-def send_user_email_attachment(
-        user, template_subject, template_body, attachment=None, extra_context=()):
-
-    template_context = {}
-    if extra_context:
-        template_context.update(extra_context)
-    template_context['user'] = user
-
-    subject = render_to_string(template_subject).replace('\n', ' ')
-    body = render_to_string(template_body, template_context)
-    sender = settings.DEFAULT_FROM_EMAIL
-
-    message = EmailMessage(
-            subject,
-            body,
-            sender,
-            [user.email]
-        )
-    message.attach_file(attachment)
-    message.send()
-
-    logger.info('%s email sent to %s' % (template_body, str(user.id)))
