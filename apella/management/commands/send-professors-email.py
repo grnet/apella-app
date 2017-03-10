@@ -19,9 +19,15 @@ class Command(ApellaCommand):
             dest='dry_run',
             help='Dry run'
         )
+        parser.add_argument(
+            '--test-email',
+            dest='test_email',
+            help='Email address to test'
+        )
 
     def handle(self, *args, **options):
         dry_run = options['dry_run']
+        test_email = options['test_email']
 
         attachment1 = os.path.join(
             settings.RESOURCES_DIR, 'attachment1.pdf')
@@ -32,21 +38,36 @@ class Command(ApellaCommand):
         template_body = 'apella/emails/evaluators_body.txt'
         body = render_to_string(template_body)
 
-        professors = Professor.objects.filter(
-            is_foreign=False, user__is_active=True, is_verified=True)
-        for p in professors:
-            if not dry_run:
-                message = EmailMessage(
-                    subject, body, settings.DEFAULT_FROM_EMAIL, [p.user.email])
-                message.attach(
-                    'ΠΡΟΣΚΛΗΣΗ ΓΙΑ ΕΓΓΡΑΦΗ ΣΤΟ ΜΗΤΡΩΟ ΑΞΙΟΛΟΓΗΤΩΝ'.decode('utf-8'),
-                    attachment1,
-                    'application/pdf')
-                message.attach(
-                    'ΜΕΘΟΛΟΓΙΑ ΑΞΙΟΛΟΓΗΣΗΣ ΕΔΒΜ 34'.decode('utf-8'),
-                    attachment2,
-                    'application/pdf')
-                message.send()
-                self.stdout.write('email sent to %s' % p.user.email)
-            else:
-                self.stdout.write(p.user.email)
+        if not test_email:
+            professors = Professor.objects.filter(
+                is_foreign=False, user__is_active=True, is_verified=True)
+            for p in professors:
+                if not dry_run:
+                    message = EmailMessage(
+                        subject, body, settings.DEFAULT_FROM_EMAIL, [p.user.email])
+                    message.attach(
+                        'ΠΡΟΣΚΛΗΣΗ ΓΙΑ ΕΓΓΡΑΦΗ ΣΤΟ ΜΗΤΡΩΟ ΑΞΙΟΛΟΓΗΤΩΝ.pdf'. \
+                            decode('utf-8'),
+                        attachment1,
+                        'application/pdf')
+                    message.attach(
+                        'ΜΕΘΟΛΟΓΙΑ ΑΞΙΟΛΟΓΗΣΗΣ ΕΔΒΜ 34.pdf'. \
+                            decode('utf-8'),
+                        attachment2,
+                        'application/pdf')
+                    message.send()
+                    self.stdout.write('email sent to %s' % p.user.email)
+                else:
+                    self.stdout.write(p.user.email)
+        else:
+            message = EmailMessage(
+                subject, body, settings.DEFAULT_FROM_EMAIL, [test_email])
+            message.attach(
+                'ΠΡΟΣΚΛΗΣΗ ΓΙΑ ΕΓΓΡΑΦΗ ΣΤΟ ΜΗΤΡΩΟ ΑΞΙΟΛΟΓΗΤΩΝ'.decode('utf-8'),
+                attachment1,
+                'application/pdf')
+            message.attach(
+                'ΜΕΘΟΛΟΓΙΑ ΑΞΙΟΛΟΓΗΣΗΣ ΕΔΒΜ 34'.decode('utf-8'),
+                attachment2,
+                'application/pdf')
+            message.send()
