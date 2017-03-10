@@ -569,6 +569,6 @@ export default {
   'old_user_id.label': 'Old code',
   'electors_meeting_to_set_committee_date.hint': 'The date can be edited when the members of the electoral committee are set',
   'position.history.entry.warning': 'This is a position history record created at {{date}}',
-  'position.history.label': 'History record'
+  'position.history.label': 'History record',
   'candidate.user_id.label': 'User ID'
 };
