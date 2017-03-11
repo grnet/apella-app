@@ -29,7 +29,7 @@ export default Ember.Component.extend({
   }),
 
   institutions: computed('', function() {
-    return get(this, 'store').query('institution', {ordering:'id'});
+    return get(this, 'store').query('institution', {ordering:'id', category: 'Institution'});
   }),
 
   partialArea: computed('userInterests.subject.[]', function() {
