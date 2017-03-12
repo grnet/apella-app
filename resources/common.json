@@ -43,6 +43,7 @@
         ["Professor", "Professor"],
         ["Associate Professor", "Associate Professor"],
         ["Assistant Professor", "Assistant Professor"],
+        ["Lecturer", "Lecturer"],
         ["Research Director", "Research Director"],
         ["Principal Researcher", "Principal Researcher"],
         ["Affiliated Researcher", "Affiliated Researcher"]

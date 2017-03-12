@@ -51,6 +51,10 @@ class Professor(object):
         queryset = self.queryset
         if 'ordering' not in self.request.query_params:
             queryset = self.queryset.order_by('user__last_name__el')
+        create_registry = self.request.query_params.get(
+            'create_registry', None)
+        if create_registry:
+            queryset = queryset.exclude(rank='Lecturer')
         return queryset
 
 
