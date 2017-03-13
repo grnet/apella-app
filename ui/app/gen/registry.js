@@ -217,6 +217,7 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView) {
         params.ordering = `user__last_name__${locale}`;
       }
       params.is_verified = true;
+      params.create_registry = true;
       return store.query('professor', params);
     },
     // a list-like gen config
