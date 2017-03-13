@@ -231,7 +231,7 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFie
     displayComponent: 'gen-display-field-table',
     dialog: {
       cancel: null,
-      add: 'submit'
+      add: 'add'
     }
   });
 }

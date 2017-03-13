@@ -29,7 +29,7 @@ export default TableSelectField.extend({
           action: function() { component.send('cancelRemove', ...arguments); },
           permissions: [],
           warn: true,
-          confirm: true
+          confirm: true,
         }
       }
     });

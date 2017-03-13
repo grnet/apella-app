@@ -590,4 +590,8 @@ export default {
   'members.to.add': 'Προσθήκες',
   'members.to.remove': 'Διαγραφές',
   'restore': 'Επαναφορά',
+  'confirm.title': 'Επαναφορά Μέλους',
+  'confirm.message': 'Θέλετε να επαναφέρετε τον χρήστη στο μητρώο;',
+  'confirm.ok': 'ΕΠΑΝΑΦΟΡΑ',
+  'confirm.cancel': 'ΑΚΥΡΩΣΗ'
 };

@@ -575,7 +575,10 @@ export default {
   'members.to.add': 'Additions',
   'members.to.remove': 'Deletions',
   'restore': 'Restore',
-
+  'confirm.title': 'Member Restore',
+  'confirm.message': 'Do you want to restore the user in the registry?',
+  'confirm.ok': 'RESTORE',
+  'confirm.cancel': 'CANCEL'
 
 
 };
