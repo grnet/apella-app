@@ -13,3 +13,11 @@ $gray-disabled-value: rgba(0,0,0,.5);
   top: 0;
   margin-bottom: 18px;
 }
+
+.add-remove-tables {
+    .table-label {
+        md-icon {
+            vertical-align: top;
+        }
+    }
+}

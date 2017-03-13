@@ -99,11 +99,12 @@
 <div class="layout-row">
 <label {{ action (action (mut activeSubTable) 'add') }}
   class={{concat "clickable flex md-label md-success raised padded table-label flex-initial" (if (eq activeSubTable 'add') ' active' '')}}>
-  {{paper-icon 'add' size=13 }} {{t 'members.to.add'}} ({{ addMembers.length }})
+  {{paper-icon 'add' size=15 }} {{t 'members.to.add'}} ({{ addMembers.length }})
 </label>
-<label {{ action (action (mut activeSubTable) 'remove') }}
-  class={{concat "clickable flex md-label md-success raised padded table-label flex-initial" (if (eq activeSubTable 'remove') ' active' '')}}>
-  {{paper-icon 'delete' size=13 }} {{t 'members.to.remove'}} ({{ removeMembers.length }})</label>
+<label {{ action (action (mut activeSubTable) 'remove')}}
+  class={{concat "clickable flex md-label md-success raised padded table-label
+  flex-initial" (if (eq activeSubTable 'remove') ' active' '')}}>
+  {{paper-icon 'delete' size=15 }} {{t 'members.to.remove'}} ({{ removeMembers.length }})</label>
 </div>
 
 <div class="layout-row">

@@ -24,7 +24,7 @@ export default TableSelectField.extend({
       actions: ['cancel'],
       actionsMap: {
         cancel: {
-          label: 'cancel',
+          label: 'restore',
           icon: 'undo',
           action: function() { component.send('cancelRemove', ...arguments); },
           permissions: [],

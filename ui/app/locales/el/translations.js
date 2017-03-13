@@ -583,5 +583,11 @@ export default {
   'old_user_id.label': 'Παλιός κωδικός',
   'electors_meeting_to_set_committee_date.hint': 'Η ημερομηνία μπορεί να συμπληρωθεί μόνο όταν συμπληρωθούν τα μέλη του εκλεκτορικού σώματος',
   'position.history.entry.warning': 'Η καταχώρηση αφορά ιστορικό της θέσης όπως αυτό δημιουργήθηκε στις {{date}}',
-  'position.history.label': 'Καταχώρηση ιστορικού'
+  'position.history.label': 'Καταχώρηση ιστορικού',
+  'position.history.entry.warning': 'Η καταχώρηση αφορά ιστορικό της θέσης όπως αυτό δημιουργήθγκε στις {{date}}',
+  'position.history.label': 'Καταχώρηση ιστορικού',
+  'existing.entries': 'Αποθηκευμένα Μέλη',
+  'members.to.add': 'Προσθήκες',
+  'members.to.remove': 'Διαγραφές',
+  'restore': 'Επαναφορά',
 };
