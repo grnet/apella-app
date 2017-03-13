@@ -43,6 +43,8 @@
 
     isLoading=isLoading
 
+    disabledItems=removeMembers
+
     onChangeLimit=(action 'onChangeLimit')
     onChangeOffset=(action 'onChangeOffset')
     onChangeSortBy=(action 'onChangeSortBy')
@@ -81,13 +83,16 @@
     object=object
     selectable=true
     selected=allMembers
+    disabledItems=selectedInitial
     getModel=selectTableQuery
   }}
 {{/paper-dialog-content}}
 
 {{#paper-dialog-actions class="layout-row"}}
   <span class="flex"></span>
-  {{#paper-button onClick=(action "hideOptions")}}{{t dialogCancelLabel }}{{/paper-button}}
+  {{#if dialogCancelLabel }}
+    {{#paper-button onClick=(action "hideOptions")}}{{t dialogCancelLabel }}{{/paper-button}}
+  {{/if}}
   {{#paper-button onClick=(action "handleAddItems" allMembers)}}{{t dialogAddLabel }}{{/paper-button}}
 {{/paper-dialog-actions}}
 
