@@ -46,6 +46,9 @@ cmd apella professor-rank-add \
     --rank-el 'Επίκουρος Καθηγητής' \
     --rank-en 'Assistant Professor' \
 
+cmd apella professor-rank-add \
+    --rank-el 'Λέκτορας' \
+    --rank-en 'Lecturer' \
 
 for f in "${DATADIR}"/migrate_data/*.csv; do
     cmd apella loadmigrationdata "${f}"
