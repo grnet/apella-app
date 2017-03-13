@@ -3,14 +3,14 @@
 {{/if}}
 
 
-{{#if object.id}}
 <div class="layout-row">
-<label class="md-label raised table-label flex" style="flex-grow:3; padding-top: 2.2em">{{ t 'existing.entries' }} {{#if (gte existingMembers.meta.count 0) }}({{existingMembers.meta.count}}){{/if}}</label>
+<label class="md-label raised table-label flex" style="flex-grow:3; padding-top: 2.2em">{{ t 'existing.entries' }} {{#if (gte existingMembers.meta.count 0) }}({{existingMembers.meta.count}}){{else}}(0){{/if}}</label>
 {{#paper-button class="flex table-action-right" disabled=(not canAdd) icon=true raised=true primary=true onClick=(action 'showOptions') }}
 {{paper-icon "add" }}{{t addLabel }}
 {{/paper-button}}
 </div>
 
+{{#if object.id}}
 {{gen-table
 
     model=model
@@ -106,11 +106,13 @@
   class={{concat "clickable flex md-label md-success raised padded table-label flex-initial" (if (eq activeSubTable 'add') ' active' '')}}>
   {{paper-icon 'add' size=15 }} {{t 'members.to.add'}} ({{ addMembers.length }})
 </label>
+{{#if (object.id)}}
 <label {{ action (action (mut activeSubTable) 'remove')}}
   class={{concat "clickable flex md-label md-success raised padded table-label
   flex-initial" (if (eq activeSubTable 'remove') ' active' '')}}>
   {{paper-icon 'delete' size=15 }} {{t 'members.to.remove'}} ({{ removeMembers.length }})</label>
 </div>
+{{/if}}
 
 <div class="layout-row">
 {{# if (eq activeSubTable 'add') }}
@@ -130,7 +132,7 @@
 </div>
 {{/if}}
 
-{{# if (eq activeSubTable 'remove') }}
+{{# if (and object.id (eq activeSubTable 'remove')) }}
 <div class="flex-100 subtable">
 {{gen-table
     model=(readonly removeMembers)
