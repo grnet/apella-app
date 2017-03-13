@@ -5,7 +5,7 @@
 
 {{#if object.id}}
 <div class="layout-row">
-<label class="md-label raised table-label flex" style="flex-grow:3; padding-top: 2.2em">{{ t 'existing.entries' }} ({{existingMembers.meta.count}})</label>
+<label class="md-label raised table-label flex" style="flex-grow:3; padding-top: 2.2em">{{ t 'existing.entries' }} {{#if (gte existingMembers.meta.count 0) }}({{existingMembers.meta.count}}){{/if}}</label>
 {{#paper-button class="flex table-action-right" disabled=(not canAdd) icon=true raised=true primary=true onClick=(action 'showOptions') }}
 {{paper-icon "add" }}{{t addLabel }}
 {{/paper-button}}
