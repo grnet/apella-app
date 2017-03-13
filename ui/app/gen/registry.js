@@ -228,7 +228,11 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFie
     modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView),
     selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView),
     modelName: 'professor',
-    displayComponent: 'gen-display-field-table'
+    displayComponent: 'gen-display-field-table',
+    dialog: {
+      cancel: null,
+      add: 'submit'
+    }
   });
 }
 
