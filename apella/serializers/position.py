@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.core.files import File
+from django.db import transaction
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
@@ -250,8 +251,6 @@ def link_single_file(existing_file, dest_obj, source='candidacy'):
 
 
 def link_files(dest_obj, user):
-    import pdb
-    pdb.set_trace()
     if user.is_professor():
         cv = user.professor.cv
         diplomas = user.professor.diplomas.all()
@@ -357,6 +356,7 @@ class CandidacyMixin(object):
             send_remove_candidacy_emails(instance)
         return instance
 
+@transaction.atomic
 def upgrade_candidate_to_professor(
         user, institution=None, department=None, rank=None,
         fek=None, discipline_text=None, discipline_in_fek=None):
