@@ -8,7 +8,8 @@ from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
-    ElectorParticipation, ApellaFile, generate_filename
+    ElectorParticipation, ApellaFile, generate_filename, Institution, \
+    Department, Professor
 from apella.validators import validate_position_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -18,6 +19,7 @@ from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
     send_emails_members_change, send_position_create_emails
 from apella.util import at_day_end, at_day_start, otz, safe_path_join
+from apella.common import RANKS
 
 logger = logging.getLogger(__name__)
 
@@ -223,13 +225,13 @@ class PositionMixin(ValidatorMixin):
         return instance
 
 
-def link_single_file(existing_file, candidacy, source='candidacy'):
+def link_single_file(existing_file, dest_obj, source='candidacy'):
     new_file = ApellaFile(
         id=get_serial('apella_file'),
         owner=existing_file.owner,
         source=source,
         file_kind=existing_file.file_kind,
-        source_id=candidacy.id,
+        source_id=dest_obj.id,
         description=existing_file.description,
         updated_at=datetime.utcnow(),
         file_name=existing_file.file_name)
@@ -240,14 +242,16 @@ def link_single_file(existing_file, candidacy, source='candidacy'):
     try:
         os.link(existing_path, new_path)
     except OSError as e:
-        logger.error('failed to link candidacy file: %s' % e)
+        logger.error('failed to link %s file: %s' % (e, source))
         raise
     new_file.file_content = new_path
     new_file.save()
     return new_file
 
 
-def link_candidacy_files(candidacy, user):
+def link_files(dest_obj, user):
+    import pdb
+    pdb.set_trace()
     if user.is_professor():
         cv = user.professor.cv
         diplomas = user.professor.diplomas.all()
@@ -257,19 +261,19 @@ def link_candidacy_files(candidacy, user):
         diplomas = user.candidate.diplomas.all()
         publications = user.candidate.publications.all()
 
-    new_cv = link_single_file(cv, candidacy)
-    candidacy.cv = new_cv
+    new_cv = link_single_file(cv, dest_obj)
+    dest_obj.cv = new_cv
 
-    candidacy.diplomas.all().delete()
-    candidacy.publications.all().delete()
+    dest_obj.diplomas.all().delete()
+    dest_obj.publications.all().delete()
 
     for diploma in diplomas:
-        new_diploma = link_single_file(diploma, candidacy)
-        candidacy.diplomas.add(new_diploma)
+        new_diploma = link_single_file(diploma, dest_obj)
+        dest_obj.diplomas.add(new_diploma)
     for publication in publications:
-        new_publication = link_single_file(publication, candidacy)
-        candidacy.publications.add(new_publication)
-    candidacy.save()
+        new_publication = link_single_file(publication, dest_obj)
+        dest_obj.publications.add(new_publication)
+    dest_obj.save()
 
 
 class CandidacyMixin(object):
@@ -319,7 +323,7 @@ class CandidacyMixin(object):
         obj.code = code
         obj.save()
         try:
-            link_candidacy_files(obj, validated_data.get('candidate'))
+            link_files(obj, validated_data.get('candidate'))
         except IOError:
             obj.delete()
             raise serializers.ValidationError(
@@ -352,3 +356,60 @@ class CandidacyMixin(object):
         if state == 'cancelled':
             send_remove_candidacy_emails(instance)
         return instance
+
+def upgrade_candidate_to_professor(
+        user, institution=None, department=None, rank=None,
+        fek=None, discipline_text=None, discipline_in_fek=None):
+
+    if not institution:
+        raise serializers.ValidationError(
+            {"institution": "institution.required.error"})
+    try:
+        institution = Institution.objects.get(id=institution)
+    except Institution.DoesNotExist:
+        raise serializers.ValidationError(
+            {"institution": "institution.required.error"})
+
+    if not department:
+        raise serializers.ValidationError(
+            {"department": "department.required.error"})
+    try:
+        department = Department.objects.get(id=department)
+    except Department.DoesNotExist:
+        raise serializers.ValidationError(
+            {"department": "department.required.error"})
+
+    ranks = [r for r, val in RANKS]
+    if not rank or rank not in ranks:
+        raise serializers.ValidationError(
+            {"rank": "rank.required.error"})
+    if not fek:
+        raise serializers.ValidationError(
+            {"fek": "fek.required.error"})
+    if not discipline_text:
+        raise serializers.ValidationError(
+            {"discipline_text": "discipline_text.required.error"})
+    if not discipline_in_fek:
+        raise serializers.ValidationError(
+            {"discipline_in_fek": "discipline_in_fek.required.error"})
+
+    if institution.has_shibboleth:
+        user.can_set_academic = True
+
+    professor = Professor.objects.create(
+        user=user,
+        institution=institution,
+        department=department,
+        rank=rank,
+        fek=fek,
+        discipline_text=discipline_text,
+        discipline_in_fek=discipline_in_fek,
+        is_verified=True,
+        verified_at=datetime.utcnow())
+    logger.info('created new professor object for user %r' % user.id)
+    user.role = 'candidate'
+    link_files(professor, user)
+    professor.user.role = 'professor'
+    professor.user.save()
+
+    return professor

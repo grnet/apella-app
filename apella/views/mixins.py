@@ -1,4 +1,5 @@
 import os
+import logging
 from datetime import datetime, date, time
 
 from rest_framework import viewsets, status
@@ -13,25 +14,23 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-from django.core.exceptions import MultipleObjectsReturned
 
 from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
-    Candidacy, ApellaFile, ElectorParticipation, \
-    OldApellaUserMigrationData, Candidate, \
+    Candidacy, ApellaFile, ElectorParticipation, Candidate, \
     Professor as ProfessorModel
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
-from apella.serializers.position import link_candidacy_files
+from apella.serializers.position import link_files, \
+    upgrade_candidate_to_professor
 from apella.emails import send_user_email, send_emails_file, \
     send_emails_members_change
-
-
 from apella.util import urljoin, safe_path_join
 from apella.serials import get_serial
 
+logger = logging.getLogger(__name__)
 
 today_min = datetime.combine(date.today(), time())
 
@@ -408,7 +407,7 @@ class SyncCandidacies(object):
             position__state='posted',
             position__ends_at__gt=today_min)
         for candidacy in active_candidacies:
-            link_candidacy_files(candidacy, candidate_user.user)
+            link_files(candidacy, candidate_user.user)
         return Response(request.data, status=status.HTTP_200_OK)
 
 
@@ -464,6 +463,33 @@ class CandidateProfile(object):
                 candidate_user.user,
                 'apella/emails/user_rejected_profile_subject.txt',
                 'apella/emails/user_rejected_profile_body.txt')
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def upgrade_to_professor(self, request, pk=None):
+        candidate_user = self.get_object()
+        if not candidate_user.is_candidate():
+            return Response(
+                'not.a.candidate', status=status.HTTP_400_BAD_REQUEST)
+
+        institution = request.data.get('institution', None)
+        department = request.data.get('department', None)
+        rank = request.data.get('rank', None)
+        fek = request.data.get('fek', None)
+        discipline_text = request.data.get('discipline_text', None)
+        discipline_in_fek = request.data.get('discipline_in_fek', None)
+
+        try:
+            upgrade_candidate_to_professor(
+                candidate_user.user,
+                institution=institution,
+                department=department,
+                rank=rank,
+                fek=fek,
+                discipline_text=discipline_text,
+                discipline_in_fek=discipline_in_fek)
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
