@@ -30,6 +30,12 @@ export default TableSelectField.extend({
           permissions: [],
           warn: true,
           confirm: true,
+          prompt: {
+            title: 'row.restore.confirm.title',
+            message: 'row.restore.confirm.message',
+            ok: 'row.restore.confirm.ok',
+            cancel: 'cancel'
+          }
         }
       }
     });
