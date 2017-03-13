@@ -106,13 +106,13 @@
   class={{concat "clickable flex md-label md-success raised padded table-label flex-initial" (if (eq activeSubTable 'add') ' active' '')}}>
   {{paper-icon 'add' size=15 }} {{t 'members.to.add'}} ({{ addMembers.length }})
 </label>
-{{#if (object.id)}}
+{{#if object.id}}
 <label {{ action (action (mut activeSubTable) 'remove')}}
   class={{concat "clickable flex md-label md-success raised padded table-label
   flex-initial" (if (eq activeSubTable 'remove') ' active' '')}}>
   {{paper-icon 'delete' size=15 }} {{t 'members.to.remove'}} ({{ removeMembers.length }})</label>
-</div>
 {{/if}}
+</div>
 
 <div class="layout-row">
 {{# if (eq activeSubTable 'add') }}
