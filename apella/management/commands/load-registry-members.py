@@ -7,6 +7,7 @@ from apella.models import Department, Registry, Professor, \
     ApellaUser
 from apella.management.utils import ApellaCommand
 from apella import common
+from apella.serializers.mixins import send_registry_emails
 
 
 class Command(ApellaCommand):
@@ -61,9 +62,12 @@ class Command(ApellaCommand):
             registry = Registry.objects.create(
                 department=department, type=registry_type)
 
+        new_members = []
         for u in users:
             if u not in registry.members.all():
                 registry.members.add(u)
+                new_members.append(u)
                 self.stdout.write('adding user %r to registry %r' %
                     (u.user.id, registry.id))
         registry.save()
+        send_registry_emails(new_members, department)
