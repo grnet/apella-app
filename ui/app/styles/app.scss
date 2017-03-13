@@ -101,7 +101,10 @@ noscript {
     width: 100%;
     position: absolute;
     top: 40px;
+}
 
+table tr.disabled td {
+  background-color: #efefef;
 }
 
 button.table-action-right {
