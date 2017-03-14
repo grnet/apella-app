@@ -1,0 +1,23 @@
+{{paper-input
+    label=label
+    value=(readonly customValue)
+    onChange=(action 'handleChange')
+    errors=(if displayErrors errors)
+    isTouched=(or isTouched displayErrors)
+    onBlur=onblur
+
+    classNames=fattrs.class
+    type=fattrs.type
+    textarea=fattrs.textarea
+    
+    autofocus=fattrs.autofocus
+    disabled=fattrs.disabled
+    readonly=fattrs.readonly
+    passThru=fattrs
+}}
+
+<div class="md-input-hint" style="position: relative; top: -50px; text-align: right; right: 7px;">
+  <div class="message">
+    {{modelValueHint}}
+  </div>
+</div>
