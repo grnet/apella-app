@@ -471,6 +471,8 @@ export default {
   'Research Director': 'Διευθυντής Ερευνών',
   'Principal Researcher': 'Κύριος Ερευνητής',
   'Affiliated Researcher': 'Εντεταλμένος Ερευνητής',
+  'Lecturer': 'Λέκτορας',
+  'Tenured Assistant Professor': 'Επί Θητεία Επίκουρος Καθηγητής',
   'type.label': 'Είδος',
   'list.filters.title': 'Φίλτρα',
   'list.filters.apply.label': 'ΕΦΑΡΜΟΓΗ',

@@ -468,6 +468,8 @@ export default {
   'Research Director': 'Research Director',
   'Principal Researcher': 'Principal Researcher',
   'Affiliated Researcher': 'Affiliated Researcher',
+  'Lecturer': 'Lecturer',
+  'Tenured Assistant Professor': 'Tenured Assistant Professor',
   'type.label': 'Type',
   'list.filters.title': 'Filters',
   'list.filters.apply.label': 'APPLY',
