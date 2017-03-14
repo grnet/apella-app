@@ -1,0 +1,18 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι αναρτήθηκε διαπιστωτική πράξη άγονης εκλογής για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that a failed election decision has been uploaded for the position:
+
+{% include "apella/emails/position_details_en.txt" %}
+
+{% endblock content_en %}

@@ -233,7 +233,7 @@ def send_emails_file(obj, file_kind, extra_context=()):
 
     position_file_names = ['committee_note', 'committee_proposal',
         'nomination_proceedings', 'nomination_act', 'assistant_files',
-        'revocation_decision']
+        'revocation_decision', 'failed_election_decision']
 
     if file_kind in position_file_names:
         # send to committee, candidates, electors
