@@ -89,8 +89,11 @@ export default ApellaGen.extend({
       icon: 'assignment',
       label: 'elections.menu_label',
       display: computed('role', function(){
-        let role = get(this, 'role')
-        return (role=== 'professor');
+        let role = get(this, 'role');
+        let rank = get(this, 'session.session.authenticated.rank');
+        let forbiddenRanks = ['Lecturer', 'Tenured Assistant Professor'];
+        let allowedRanks = !forbiddenRanks.includes(rank);
+        return (role == 'professor' && allowedRanks);
       }),
     },
     layout: 'table',
