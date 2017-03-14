@@ -202,8 +202,8 @@ const  position = {
         fileField('committee_set_file', 'position', 'committee_set_file', {
           readonly: true
         }),
-        committeeElectorsField('committee_internal', 'internal', false, true),
-        committeeElectorsField('committee_external', 'external', false, true),
+        committeeElectorsField('committee_internal', 'internal', false, false),
+        committeeElectorsField('committee_external', 'external', false, false),
         fileField('committee_proposal', 'position', 'committee_proposal', {
           readonly: true
         }),
@@ -232,8 +232,8 @@ const  position = {
     electors_regular: {
       label: 'electors_regular_members.label',
       fields: [
-        committeeElectorsField('electors_regular_internal', 'internal', false, true),
-        committeeElectorsField('electors_regular_external', 'external', false, true)
+        committeeElectorsField('electors_regular_internal', 'internal', false, false),
+        committeeElectorsField('electors_regular_external', 'external', false, false)
       ],
       layout: {
         flex: [100, 100]
@@ -242,8 +242,8 @@ const  position = {
     electors_substitite: {
       label: 'electors_sub_members.label',
       fields: [
-        committeeElectorsField('electors_sub_internal', 'internal', false, true),
-        committeeElectorsField('electors_sub_external', 'external', false, true)
+        committeeElectorsField('electors_sub_internal', 'internal', false, false),
+        committeeElectorsField('electors_sub_external', 'external', false, false)
       ],
       layout: {
         flex: [100, 100]
