@@ -250,7 +250,7 @@ def link_single_file(existing_file, dest_obj, source='candidacy'):
     return new_file
 
 
-def link_files(dest_obj, user):
+def link_files(dest_obj, user, source='candidacy'):
     if user.is_professor():
         cv = user.professor.cv
         diplomas = user.professor.diplomas.all()
@@ -260,17 +260,17 @@ def link_files(dest_obj, user):
         diplomas = user.candidate.diplomas.all()
         publications = user.candidate.publications.all()
 
-    new_cv = link_single_file(cv, dest_obj)
+    new_cv = link_single_file(cv, dest_obj, source=source)
     dest_obj.cv = new_cv
 
     dest_obj.diplomas.all().delete()
     dest_obj.publications.all().delete()
 
     for diploma in diplomas:
-        new_diploma = link_single_file(diploma, dest_obj)
+        new_diploma = link_single_file(diploma, dest_obj, source=source)
         dest_obj.diplomas.add(new_diploma)
     for publication in publications:
-        new_publication = link_single_file(publication, dest_obj)
+        new_publication = link_single_file(publication, dest_obj, source=source)
         dest_obj.publications.add(new_publication)
     dest_obj.save()
 
@@ -380,7 +380,7 @@ def upgrade_candidate_to_professor(
     if not discipline_text:
         raise serializers.ValidationError(
             {"discipline_text": "discipline_text.required.error"})
-    if not discipline_in_fek:
+    if discipline_in_fek is None:
         raise serializers.ValidationError(
             {"discipline_in_fek": "discipline_in_fek.required.error"})
 
@@ -399,7 +399,7 @@ def upgrade_candidate_to_professor(
         verified_at=datetime.utcnow())
     logger.info('created new professor object for user %r' % user.id)
     user.role = 'candidate'
-    link_files(professor, user)
+    link_files(professor, user, source='profile')
     professor.user.role = 'professor'
     professor.user.save()
 
