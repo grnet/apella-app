@@ -141,6 +141,7 @@ let FS = {
     {
       label: 'fieldsets.labels.candidate',
       fields: [field('candidate', {
+        formComponent: 'select-model-id-field',
         query: function(table, store, field, params) {
           let promises = [
             store.query('user', {role: 'professor'}),
