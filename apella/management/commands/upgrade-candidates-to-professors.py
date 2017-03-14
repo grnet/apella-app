@@ -42,8 +42,7 @@ class Command(ApellaCommand):
                 raise CommandError("No csv data")
 
             for user_id, last_name, first_name, father_name, department_id, \
-                    institution_id, email, rank, fek, fek_subject \
-                    in csv_iterator:
+                    email, rank, fek, fek_subject in csv_iterator:
                 try:
                     user = ApellaUser.objects.get(id=user_id)
                 except ApellaUser.DoesNotExist:
@@ -55,7 +54,6 @@ class Command(ApellaCommand):
                     try:
                         upgrade_candidate_to_professor(
                                 user,
-                                institution=institution_id,
                                 department=department_id,
                                 rank=rank[0],
                                 fek=fek,

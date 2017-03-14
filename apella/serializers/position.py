@@ -358,17 +358,8 @@ class CandidacyMixin(object):
 
 @transaction.atomic
 def upgrade_candidate_to_professor(
-        user, institution=None, department=None, rank=None,
+        user, department=None, rank=None,
         fek=None, discipline_text=None, discipline_in_fek=None):
-
-    if not institution:
-        raise serializers.ValidationError(
-            {"institution": "institution.required.error"})
-    try:
-        institution = Institution.objects.get(id=institution)
-    except Institution.DoesNotExist:
-        raise serializers.ValidationError(
-            {"institution": "institution.required.error"})
 
     if not department:
         raise serializers.ValidationError(
@@ -393,12 +384,12 @@ def upgrade_candidate_to_professor(
         raise serializers.ValidationError(
             {"discipline_in_fek": "discipline_in_fek.required.error"})
 
-    if institution.has_shibboleth:
+    if department.institution.has_shibboleth:
         user.can_set_academic = True
 
     professor = Professor.objects.create(
         user=user,
-        institution=institution,
+        institution=department.institution,
         department=department,
         rank=rank,
         fek=fek,

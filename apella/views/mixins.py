@@ -475,7 +475,6 @@ class CandidateProfile(object):
             return Response(
                 'not.a.candidate', status=status.HTTP_400_BAD_REQUEST)
 
-        institution = request.data.get('institution', None)
         department = request.data.get('department', None)
         rank = request.data.get('rank', None)
         fek = request.data.get('fek', None)
@@ -485,7 +484,6 @@ class CandidateProfile(object):
         try:
             upgrade_candidate_to_professor(
                 candidate_user.user,
-                institution=institution,
                 department=department,
                 rank=rank,
                 fek=fek,
