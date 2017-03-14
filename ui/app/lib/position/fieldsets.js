@@ -651,7 +651,7 @@ const  position = {
             let cover = getFile(this,'proceedings_cover_letter');
             let revocation = getFile(this,'revocation_decision');
             let failed = getFile(this,'failed_election_decision');
-            return !(cover || revocation || failed);
+            return !cover || revocation || failed;
           })
         }),
         field('nomination_act_fek', {
@@ -662,7 +662,7 @@ const  position = {
             let cover = getFile(this,'proceedings_cover_letter');
             let revocation = getFile(this,'revocation_decision');
             let failed = getFile(this,'failed_election_decision');
-            return !(cover || revocation || failed);
+            return !cover || revocation || failed;
           })
         }),
         fileField('revocation_decision', 'position', 'revocation_decision', {
