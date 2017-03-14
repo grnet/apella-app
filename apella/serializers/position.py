@@ -11,7 +11,7 @@ from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     ElectorParticipation, ApellaFile, generate_filename, Institution, \
     Department, Professor
-from apella.validators import validate_position_dates, \
+from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
     validate_position_committee, validate_position_electors
@@ -296,7 +296,7 @@ class CandidacyMixin(object):
             candidate = instance.candidate
             if not user.is_helpdeskadmin():
                 if data:
-                    validate_position_dates(
+                    validate_now_is_between_dates(
                         position.starts_at, position.ends_at)
             if creating:
                 validate_candidate_files(candidate)

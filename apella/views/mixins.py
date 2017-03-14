@@ -32,9 +32,6 @@ from apella.serials import get_serial
 
 logger = logging.getLogger(__name__)
 
-today_min = datetime.combine(date.today(), time())
-
-
 class DestroyProtectedObject(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         try:
@@ -124,6 +121,7 @@ class PositionMixin(object):
         return Response(serializer.data)
 
     def get_queryset(self):
+        now = datetime.utcnow()
         queryset = self.queryset
         user = self.request.user
         if user.is_institutionmanager():
@@ -143,7 +141,7 @@ class PositionMixin(object):
                     values_list('id', flat=True))
                 position_ids += department_position_ids
             queryset = queryset.filter(
-                Q(state='posted', ends_at__gte=today_min) |
+                Q(state='posted', ends_at__gte=now) |
                 Q(id__in=position_ids) |
                 Q(committee=user.professor.id) |
                 Q(electors=user.professor.id))
@@ -151,7 +149,7 @@ class PositionMixin(object):
             position_ids = Candidacy.objects.filter(
                 candidate=user).values_list('position_id', flat=True)
             queryset = queryset.filter(
-                Q(state='posted', ends_at__gte=today_min) |
+                Q(state='posted', ends_at__gte=now) |
                 Q(id__in=position_ids))
         if 'pk' in self.kwargs:
             queryset = queryset.filter(id=self.kwargs['pk'])
@@ -401,12 +399,13 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
 class SyncCandidacies(object):
     @detail_route(methods=['post'])
     def sync_candidacies(self, request, pk=None):
+        now = datetime.utcnow()
         candidate_user = self.get_object()
         active_candidacies = Candidacy.objects.filter(
             candidate=candidate_user.user,
             state='posted',
             position__state='posted',
-            position__ends_at__gt=today_min)
+            position__ends_at__gt=now)
         for candidacy in active_candidacies:
             link_files(candidacy, candidate_user.user)
         return Response(request.data, status=status.HTTP_200_OK)
