@@ -53,7 +53,8 @@ class Professor(object):
         create_registry = self.request.query_params.get(
             'create_registry', None)
         if create_registry:
-            queryset = queryset.exclude(rank='Lecturer')
+            queryset = queryset.exclude(rank='Lecturer'). \
+                exclude(rank='Tenured Assistant Professor')
         return queryset
 
 
