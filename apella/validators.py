@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
@@ -34,13 +34,13 @@ def validate_dates_interval(start, end, interval):
             _('End date should be %s days after start date' % interval))
 
 
-def validate_position_dates(start, end):
+def validate_now_is_between_dates(start, end):
     start = strip_timezone(start)
     end = strip_timezone(end)
-    today_start = get_today_start()
-    if today_start < start:
+    now = datetime.utcnow()
+    if not (start < now):
         raise ValidationError(_('Position opens at %s' % start))
-    if today_start > end:
+    if not (now < end):
         raise ValidationError(_('Position closed at %s' % end))
 
 
