@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import csv
 import logging
+import re
 
 from django.core.management.base import CommandError
 
@@ -42,7 +43,8 @@ class Command(ApellaCommand):
                 raise CommandError("No csv data")
 
             for user_id, last_name, first_name, father_name, department_id, \
-                    email, rank, fek, fek_subject in csv_iterator:
+                    email, rank, fek, fek_subject, subject_in_fek \
+                    in csv_iterator:
                 try:
                     user = ApellaUser.objects.get(id=user_id)
                 except ApellaUser.DoesNotExist:
@@ -58,7 +60,8 @@ class Command(ApellaCommand):
                                 rank=rank[0],
                                 fek=fek,
                                 discipline_text=fek_subject,
-                                discipline_in_fek=True)
+                                discipline_in_fek=bool(
+                                    re.match('true', subject_in_fek, re.I)))
                     except serializers.ValidationError as ve:
                         logger.error(
                             "failed to upgrade user %r: %s" % (user_id, ve))
