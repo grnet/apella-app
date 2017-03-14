@@ -13,7 +13,11 @@ from apella.serializers.position import upgrade_candidate_to_professor
 
 logger = logging.getLogger(__name__)
 
-RANKS = {'ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Assistant Professor'}
+RANKS = {
+    'ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Assistant Professor',
+    'ΛΕΚΤΟΡΑΣ': 'Lecturer',
+    'ΕΠΙ ΘΗΤΕΙΑ ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Tenured Assistant Professor'
+}
 
 
 class Command(ApellaCommand):
