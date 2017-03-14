@@ -144,10 +144,9 @@ const contactField = field('institution-managers', {
 
 let rowCommiteeElectors = function(field_name, serverSide) {
   let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
-    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'discipline_text']);
+    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'first_name.el','first_name.en', 'email', 'username', 'discipline_text']);
 
 
-   // For now, hide client side functionality
   let display = serverSide;
   return {
     row: {
@@ -208,7 +207,13 @@ let rowCommiteeElectors = function(field_name, serverSide) {
     },
     filter: {
       search: true,
-      searchPlaceholder: 'search.placeholder_members',
+      searchPlaceholder: computed('role', function() {
+        /*
+         * TODO: Separate the search fields and placeholder for each type of
+         * roles
+         */
+        return 'search.placeholder_members';
+      }),
       serverSide: serverSide,
       active: display,
       searchFields: searchFields,
