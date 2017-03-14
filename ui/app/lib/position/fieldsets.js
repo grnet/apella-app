@@ -683,8 +683,8 @@ const  position = {
                       'model.changeset.nomination_act', function(){
             let nomination = getFile(this,'nomination_act');
             let fek = get(this, 'model.changeset.nomination_act_fek');
-            let failed = getFile(this,'failed_election_decision');
-            return fek || nomination || failed;
+            let revocation = getFile(this,'revocation_decision');
+            return fek || nomination || revocation;
           })
         }),
       ],
