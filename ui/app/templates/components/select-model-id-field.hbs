@@ -16,8 +16,12 @@
     passThru=fattrs
 }}
 
-<div class="md-input-hint" style="position: relative; top: -50px; text-align: right; right: 7px;">
+<div class="md-input-hint" style="position: relative; top: -20px; text-align: left; left: 5px;">
   <div class="message">
-    {{modelValueHint}}
+    {{#if modelValue }}
+      {{modelValueHint}}
+    {{else}}
+      {{t modelValueHint}}
+    {{/if}}
   </div>
 </div>
