@@ -3,7 +3,7 @@ copy (
 select
     c.id candidacy_serial,
     p.id position_serial,
-    c.candidate_id candidate_user_id,
+    r.user_id candidate_user_id,
     fb.id file_id,
     fh.type as file_type,
     fb.storedfilepath file_path,
@@ -15,6 +15,7 @@ select
 from
     position p,
     positioncandidacies pc,
+    roles r,
     candidacy c,
     (   select
             fb.id file_id,
@@ -41,6 +42,7 @@ from
     filebody fb
 where
     pc.position_id = p.id
+    and c.candidate_id = r.id
     and pc.id = c.candidacies_id
     and cf.candidacy_id = c.id
     and cf.file_id = fb.id
