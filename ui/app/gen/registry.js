@@ -98,7 +98,7 @@ function peak_fs_professors() {
 // serverSide is a boolean value that is used for filtering, sorting, searching
 function membersAllModelMeta(serverSide, hideQuickView) {
    let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
-    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'discipline_text']);
+    searchFields = (serverSide ? ['last_name_current', 'discipline_text', 'old_user_id'] : ['last_name.el', 'last_name.en', 'discipline_text', 'old_user_id']);
 
 
    // For now, hide client side functionality
