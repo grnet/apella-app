@@ -617,6 +617,7 @@ PERMISSION_RULES = [
     ('apella-files', 'destroy', 'professor', '*', 'owned_free', ''),
     ('apella-files', 'destroy', 'candidate', '*', 'owned_free', ''),
     ('apella-files', 'destroy', 'institutionmanager', '*', 'owned_free', ''),
+    ('apella-files', 'destroy', 'assistant', '*', 'owned_free', ''),
     ('old-users', 'list', 'helpdeskadmin', '*', '*', ''),
     ('old-users', 'list', 'helpdeskuser', '*', '*', ''),
     ('old-users', 'retrieve', 'helpdeskadmin', '*', '*', ''),

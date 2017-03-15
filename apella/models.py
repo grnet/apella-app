@@ -1,3 +1,4 @@
+import logging
 import os
 from datetime import timedelta, datetime
 from itertools import chain
@@ -14,9 +15,9 @@ from apella.validators import validate_dates_interval
 from apella import common
 from apella.helpers import assistant_can_edit, professor_participates,\
     position_is_latest
-
 from apella.util import safe_path_join
 
+logger = logging.getLogger(__name__)
 
 class MultiLangFields(models.Model):
     el = models.CharField(max_length=500, blank=True, null=True)
@@ -287,6 +288,19 @@ class ApellaFile(models.Model):
             return True
         if self.owner.is_assistant() and user.is_manager():
             return True
+        if user.is_assistant() and self.file_kind in [
+                'committee_proposal', 'committee_note', 'nomination_act',
+                'revocation_decision', 'failed_election_decision',
+                'assistant_files']:
+            try:
+                position = Position.objects.get(id=self.source_id)
+            except Position.DoesNotExist:
+                logger.error('failed to get Position %r from ApellaFile %r' %
+                    (self.source_id, self.id))
+                return False
+            if assistant_can_edit(position, user):
+                return True
+
         if user.is_manager() and self.is_candidacy_file:
             user_department_ids = Department.objects.filter(
                 institution=user.institutionmanager.institution). \
@@ -301,6 +315,8 @@ class ApellaFile(models.Model):
                     position__department_id__in=user_department_ids,
                     state='posted'):
                 return True
+        if user.is_manager and self.file_kind == 'cv_professor':
+            return True
         return False
 
     def check_resource_state_owned_free(self, row, request, view):
@@ -323,16 +339,25 @@ class ApellaFile(models.Model):
             return True
         if self.is_profile_file and is_owner:
             return True
-        if self.file_kind == 'assistant_files' and user.is_manager():
-            position = self.position_assistant_files.all()[0]
-            return position.state in ['posted', 'electing', 'revoked']
-        if (self.file_kind == 'committee_proposal' or
-                self.file_kind == 'committee_note' or
-                self.file_kind == 'nomination_act' or
-                self.file_kind == 'revocation_decision' or
-                self.file_kind == 'failed_election_decision') \
+        if self.file_kind in [
+                'committee_proposal', 'committee_note', 'nomination_act',
+                'revocation_decision', 'failed_election_decision',
+                'assistant_files'] \
                 and user.is_manager():
-            return is_owner
+            if is_owner:
+                return True
+            try:
+                position = Position.objects.get(id=self.source_id)
+            except Position.DoesNotExist:
+                logger.error('failed to get Position %r from ApellaFile %r' %
+                    (self.source_id, self.id))
+                return False
+            if user.is_institutionmanager() and self.owner.is_assistant() \
+                    and user.institutionmanager.institution == \
+                    position.department.institution:
+                return True
+            if user.is_assistant() and assistant_can_edit(position, user):
+                return True
         if self.file_kind == 'attachment_files':
             candidacy = self.attachment_files.all()[0]
             return candidacy.check_resource_state_one_before_electors_meeting(
