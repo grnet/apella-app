@@ -593,5 +593,6 @@ export default {
   'row.restore.confirm.title': 'Επαναφορά Μέλους',
   'row.restore.confirm.message': 'Θέλετε να επαναφέρετε τον χρήστη στο μητρώο;',
   'row.restore.confirm.ok': 'ΕΠΑΝΑΦΟΡΑ',
-  'row.restore.confirm.cancel': 'ΑΚΥΡΩΣΗ'
+  'row.restore.confirm.cancel': 'ΑΚΥΡΩΣΗ',
+  'no_verification_request.label': 'Χωρίς αίτηση πιστοποίησης'
 };

@@ -1,4 +1,4 @@
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, emptyArrayResult} from 'ui/lib/common';
 import {USER_FIELDSET,
         USER_FIELDSET_DETAILS_VERIFIABLE,
         USER_FIELDSET_EDIT_VERIFIABLE, USER_VALIDATORS} from 'ui/utils/common/users';
@@ -20,6 +20,29 @@ export default ApellaGen.extend({
     validators: USER_VALIDATORS,
   },
   list: {
+    getModel(params) {
+      params = params || {};
+      /*
+       * "no_verification_request" changes the value of "is_verified",
+       * "is_rejected" and "verification_pending" parameters.
+       *
+       * These are also filters. So, if a user selects the
+       * "no_verification_request" and one of the other filters at the same
+       * time the list that he/she sees is empty.
+       */
+      if(params.no_verification_request) {
+        if(params.is_verified || params.verification_pending || params.is_rejected) {
+          let store = this.store;
+          return emptyArrayResult(store, 'candidate');
+        }
+        else {
+          params.is_verified = false;
+          params.verification_pending = false;
+          params.is_rejected = false;
+        }
+      }
+      return this.store.query('candidate', params);
+    },
     page: {
       title: 'candidate.menu_label',
     },
@@ -31,7 +54,8 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: ['is_verified', 'is_rejected', 'verification_pending']
+        fields: ['is_verified', 'is_rejected', 'verification_pending',
+          field('no_verification_request', { type: 'boolean' })]
       },
       serverSide: true,
       search: true,

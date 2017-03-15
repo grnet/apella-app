@@ -578,7 +578,6 @@ export default {
   'row.restore.confirm.title': 'Member Restore',
   'row.restore.confirm.message': 'Do you want to restore the user in the registry?',
   'row.restore.confirm.ok': 'RESTORE',
-  'row.restore.confirm.cancel': 'CANCEL'
-
-
+  'row.restore.confirm.cancel': 'CANCEL',
+  'no_verification_request.label': 'No verification request'
 };
