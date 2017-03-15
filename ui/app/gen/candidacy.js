@@ -197,7 +197,7 @@ export default ApellaGen.extend({
       let is_assistant = get(this, 'role') === 'assistant';
       let assistant_departments = get(this, 'user.departments') || [];
       // TODO: Extract department using a better way
-      let position_department = this.get('model.position_department');
+      let position_department = this.get('model.position_department').split('/').slice(-2)[0];
       return assistant_departments.indexOf(position_department) > -1;
     }),
 
