@@ -8,23 +8,22 @@ function isHelpdesk(role) {
 function call_utils(route, model) {
   let messages = get(route, 'messageService');
   let role = get(model, 'role');
-  if ( role == 'institutionmanager') {
+  if ( role === 'institutionmanager') {
     role = 'institution-manager';
   }
   let adapter = get(route, 'store').adapterFor(role);
   let url = adapter.buildURL(role, get(model, 'id'), 'findRecord');
   let token = get(route, 'user.auth_token');
-  return [url, token, messages]
+  return [url, token, messages];
 }
 
 function managerVerifies(role, model_role) {
-  return role == 'institutionmanager' && model_role == 'assistant'
+  return role === 'institutionmanager' && model_role === 'assistant';
 }
 
 const {
   computed,
   get,
-  merge, assign
 } = Ember;
 
 // Common
@@ -86,8 +85,8 @@ function  goToDetails(type, hidden, calc, calc_params) {
        return [`${res}.record.index`, model];
      }),
      action: 'goTo'
-  }
-};
+  };
+}
 
 // Position
 
@@ -96,10 +95,9 @@ const applyCandidacy = {
   icon: 'person_add',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
   hidden: computed('model.is_open', 'role', 'model.can_apply', function(){
-    let role = get(this, 'role');
-    let is_helpdeskadmin = get(this, 'role') == 'helpdeskadmin';
-    if (is_helpdeskadmin)  return false;
-    return !get(this, 'model.is_open') || !get(this, 'model.can_apply')
+    let is_helpdeskadmin = get(this, 'role') === 'helpdeskadmin';
+    if (is_helpdeskadmin)  { return false; }
+    return !get(this, 'model.is_open') || !get(this, 'model.can_apply');
   }),
   action(route, model){
     let id = get(model, 'id');
@@ -113,7 +111,7 @@ const cancelPosition = {
   accent: true,
   action(route, model) {
     model.set('state', 'cancelled');
-    let m = route.get('messageService')
+    let m = route.get('messageService');
     model.save().then((value) => {
       m.setSuccess('form.saved');
       return value;
@@ -142,7 +140,7 @@ const setElecting = {
   accent: true,
   action(route, model) {
     model.set('state', 'electing');
-    let m = route.get('messageService')
+    let m = route.get('messageService');
     model.save().then((value) => {
       m.setSuccess('form.saved');
       return value;
@@ -154,7 +152,7 @@ const setElecting = {
   },
   permissions: [{action: 'edit'}],
   hidden: computed('model.state', 'model.is_closed', function(){
-    return !(get(this, 'model.is_closed') || get(this, 'model.state') == 'revoked');
+    return !(get(this, 'model.is_closed') || get(this, 'model.state') === 'revoked');
   }),
   confirm: true,
   prompt: {
@@ -171,7 +169,7 @@ const setRevoked = {
   accent: true,
   action(route, model) {
     model.set('state', 'revoked');
-    let m = route.get('messageService')
+    let m = route.get('messageService');
     model.save().then((value) => {
       m.setSuccess('form.saved');
       return value;
@@ -184,7 +182,7 @@ const setRevoked = {
   permissions: [{action: 'edit'}],
   hidden: computed('model.revocation_decision', 'model.state', function(){
     let file = get(this, 'model.revocation_decision');
-    return !(file && file.content && get(this, 'model.state') == 'electing');
+    return !(file && file.content && get(this, 'model.state') === 'electing');
   }),
   confirm: true,
   prompt: {
@@ -201,7 +199,7 @@ const setFailed = {
   accent: true,
   action(route, model) {
     model.set('state', 'failed');
-    let m = route.get('messageService')
+    let m = route.get('messageService');
     model.save().then((value) => {
       m.setSuccess('form.saved');
       return value;
@@ -214,7 +212,7 @@ const setFailed = {
   permissions: [{action: 'edit'}],
   hidden: computed('model.failed_election_decision', 'model.state', function(){
     let file = get(this, 'model.failed_election_decision');
-    return !(file && file.content && get(this, 'model.state') == 'electing');
+    return !(file && file.content && get(this, 'model.state') === 'electing');
   }),
   confirm: true,
   prompt: {
@@ -231,7 +229,7 @@ const setSuccessful = {
   accent: true,
   action(route, model) {
     model.set('state', 'successful');
-    let m = route.get('messageService')
+    let m = route.get('messageService');
     model.save().then((value) => {
       m.setSuccess('form.saved');
       return value;
@@ -245,7 +243,7 @@ const setSuccessful = {
   hidden: computed('model.nomination_act', 'model.nomination_act_fek', 'model.state', function(){
     let file = get(this, 'model.nomination_act');
     let fek = get(this, 'model.nomination_act_fek');
-    return !(file && file.content && fek && get(this, 'model.state') == 'electing');
+    return !(file && file.content && fek && get(this, 'model.state') === 'electing');
   }),
   confirm: true,
   prompt: {
@@ -265,7 +263,7 @@ const cancelCandidacy = {
   action(route, model) {
     return model.get('candidate').then(() => {
       model.set('state', 'cancelled');
-      let m = route.get('messageService')
+      let m = route.get('messageService');
       return model.save().then((value) => {
         m.setSuccess('form.saved');
         return value;
@@ -274,21 +272,20 @@ const cancelCandidacy = {
         m.setError('reason.errors');
         return reason;
       });
-    })
+    });
   },
-  hidden: computed('model.state', 'model.position.is_open', 'model.position.is_closed', 'model.position.state', 'model.candidate.id', 'model.position.electors_meeting_date', 'model.position.code', function() {
+  hidden: computed('model.state', 'model.position.is_open', 'model.position.is_closed', 'model.position.state', 'model.candidate.id', 'model.position.electors_meeting_date', function() {
 
-    let candidacy_cancelled = get(this, 'model.state') == 'cancelled';
-    let code = get(this, 'model.position.code');
+    let candidacy_cancelled = get(this, 'model.state') === 'cancelled';
     if (candidacy_cancelled) { return true; }
 
     let role = get(this, 'session.session.authenticated.role');
     let user_id = get(this, 'session.session.authenticated.user_id');
     let position_open = get(this, 'model.position.is_open');
     let position_closed = get(this, 'model.position.is_closed');
-    let position_electing = get(this, 'model.position.state') == 'electing';
-    let is_helpdeskadmin = role == 'helpdeskadmin';
-    let is_candidate = user_id == get(this, 'model.candidate.id');
+    let position_electing = get(this, 'model.position.state') === 'electing';
+    let is_helpdeskadmin = role === 'helpdeskadmin';
+    let is_candidate = user_id === get(this, 'model.candidate.id');
     let electors_at = get(this, 'model.position_closed.electors_meeting_date');
     let before_deadline = true;
     if (electors_at) {
@@ -305,7 +302,7 @@ const cancelCandidacy = {
   prompt: computed('model.position.is_open', function(){
     let role = get(this, 'session.session.authenticated.role');
     let position_open = get(this, 'model.position.is_open');
-    let is_helpdeskadmin = role == 'helpdeskadmin';
+    let is_helpdeskadmin = role === 'helpdeskadmin';
     let message = 'prompt.withdrawal_helpdesk.message';
     let noControls = true;
 
@@ -330,7 +327,7 @@ const deactivateUser = {
   accent: true,
   action(route, model) {
     model.set('is_active', false);
-    let m = route.get('messageService')
+    let m = route.get('messageService');
     return model.save().then((value) => {
       m.setSuccess('form.saved');
       return value;
@@ -341,7 +338,7 @@ const deactivateUser = {
     });
   },
   hidden: computed('model.is_active', 'model.email_verified', 'role', function(){
-    if (!isHelpdesk(get(this, 'role')))  return true
+    if (!isHelpdesk(get(this, 'role'))) { return true; }
     return !get(this, 'model.is_active') || !get(this, 'model.email_verified');
   }),
   confirm: true,
@@ -358,7 +355,7 @@ const activateUser = {
   icon: 'check_circle',
   action(route, model) {
     model.set('is_active', true);
-    let m = route.get('messageService')
+    let m = route.get('messageService');
     return model.save().then((value) => {
       m.setSuccess('form.saved');
       return value;
@@ -369,7 +366,7 @@ const activateUser = {
     });
   },
   hidden: computed('model.is_active', 'model.email_verified', 'role', function(){
-    if (!isHelpdesk(get(this, 'role')))  return true
+    if (!isHelpdesk(get(this, 'role'))) { return true; }
     return get(this, 'model.is_active') || !get(this, 'model.email_verified');
   }),
   confirm: true,
@@ -398,7 +395,7 @@ const verifyUser = {
           messages.setSuccess('verify.user.success');
         });
       } else {
-        throw new Error(res);
+        throw new Error('error');
       }
     }).catch((err) => {
       messages.setError('verify.user.error');
@@ -417,7 +414,7 @@ const verifyUser = {
     let pending = get(this, 'model.verification_pending');
     let role = get(this, 'role');
     let model_role = get(this, 'model.role');
-    if (managerVerifies(role, model_role)) { return verified }
+    if (managerVerifies(role, model_role)) { return verified; }
     if (isHelpdesk(role)) { return !(rejected  || (!verified && pending)); }
     return true;
   }),
@@ -441,7 +438,7 @@ const rejectUser = {
           messages.setSuccess('reject.user.success');
         });
       } else {
-        throw new Error(res);
+        throw new Error('error');
       }
     }).catch((err) => {
       messages.setError('reject.user..error');
@@ -453,7 +450,7 @@ const rejectUser = {
     let pending = get(this, 'model.verification_pending');
     let role = get(this, 'role');
     let model_role = get(this, 'model.role');
-    if (managerVerifies(role, model_role)) { return rejected }
+    if (managerVerifies(role, model_role)) { return rejected; }
     if (isHelpdesk(role)) { return !(verified  || (!rejected && pending)); }
     return true;
   }),
@@ -483,7 +480,7 @@ const requestProfileChanges = {
           messages.setSuccess('request.changes.success');
         });
       } else {
-        throw new Error(res);
+        throw new Error('error');
       }
     }).catch((err) => {
       messages.setError('request.changes.error');
@@ -528,7 +525,7 @@ const change_password = {
     contentComponent: 'change-password',
     noControls: true
   }
-}
+};
 
 let positionActions = {
   cancelPosition: cancelPosition,
@@ -536,7 +533,7 @@ let positionActions = {
   setRevoked: setRevoked,
   setFailed: setFailed,
   setSuccessful: setSuccessful
-}
+};
 
 export { goToDetails, applyCandidacy,
   cancelCandidacy, goToPosition,
