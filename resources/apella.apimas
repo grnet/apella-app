@@ -545,7 +545,7 @@ spec:
                 mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.Professor, apella.views.mixins.SyncCandidacies, apella.views.mixins.CandidateProfile]
                 ordering_fields: [user_id, user__last_name__en, user__last_name__el, user__email, user__username]
                 filter_fields: [user_id, institution, is_verified, is_rejected, verification_pending, is_foreign, rank]
-                search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en, discipline_text]
+                search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en, discipline_text, user__old_user_id]
             .cli_commands: {}
             '*':
                 id:

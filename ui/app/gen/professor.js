@@ -59,6 +59,7 @@ export default ApellaGen.extend({
     row: {
       fields: [
         'user_id',
+        'old_user_id',
         field('status_verbose', {label: 'state.label'}),
         field('institution_global', {label: 'institution.label'}),
         field('username', {dataKey: 'user__username'}),
