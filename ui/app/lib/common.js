@@ -258,10 +258,19 @@ function preloadRelations(model, ...keys) {
   return PromiseFactory({promise});
 };
 
+
+function emptyArrayResult(store, modelName) {
+  let type = store.modelFor(modelName);
+  let emptyResult = DS.AdapterPopulatedRecordArray.create({type});
+  let promise = Ember.RSVP.resolve(emptyResult);
+
+  return DS.PromiseArray.create({promise});
+};
+
 export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
-  preloadRelations
+  preloadRelations, emptyArrayResult
 };
 
