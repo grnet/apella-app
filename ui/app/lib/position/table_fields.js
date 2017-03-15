@@ -144,7 +144,7 @@ const contactField = field('institution-managers', {
 
 let rowCommiteeElectors = function(field_name, serverSide) {
   let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
-    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'first_name.el','first_name.en', 'email', 'username', 'discipline_text']);
+    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'first_name.el','first_name.en', 'email', 'username', 'discipline_text', 'old_user_id']);
 
 
   let display = serverSide;
