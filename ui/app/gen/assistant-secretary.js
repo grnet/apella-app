@@ -55,7 +55,28 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: ['is_verified', 'is_rejected', 'verification_pending']
+        fields: computed('user.role', function() {
+          let role = get(this, 'user.role');
+          if (role === 'institutionmanager') {
+            return ['is_verified', 'is_rejected'];
+          }
+          else {
+            return [
+              field('institution', {
+                query: function(select, store, field, params) {
+                  let locale = get(select, 'i18n.locale'),
+                    ordering_param = `title__${locale}`;
+                  params = params || {};
+                  params.ordering = ordering_param;
+                  params.category = 'Institution';
+
+                  return store.query('institution', params);
+                }
+              }),
+              'is_verified', 'is_rejected'
+            ];
+          }
+        })
       },
       serverSide: true,
       search: true,
