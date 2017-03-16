@@ -18,11 +18,12 @@ export default SelectField.extend({
     }
   }),
 
-  modelValueHint: computed('field.label', 'isLoading', function() {
+  modelValueHint: computed('field.label', 'isLoading', 'modelValue', 'notFound', function() {
     let model = get(this, 'modelValue');
+    let notFound = get(this, 'notFound');
     let isLoading = get(this, 'isLoading');
 
-    if (!model && !isLoading) { return 'value.not.set'; }
+    if (notFound && !isLoading) { return 'user.not.found.error'; }
 
     let valueLabel = 'loading...';
     if (!isLoading && model) {
@@ -35,7 +36,8 @@ export default SelectField.extend({
     let model = get(this, 'field.modelName');
     let store = get(this, 'store');
     set(this, 'isLoading', true);
-    if (!val) { 
+    set(this, 'notFound', false);
+    if (!val) {
       set(this, 'isLoading', false);
       return this.sendAction('onChange', null);
     }
@@ -43,6 +45,7 @@ export default SelectField.extend({
       set(this, 'modelValue', record);
       this.sendAction('onChange', record);
     }).catch(() => {
+      set(this, 'notFound', true);
       set(this, 'modelValue', null);
       this.sendAction('onChange', null);
     }).finally(() => {
