@@ -535,6 +535,7 @@ export default {
   'enable.academic.login.prompt': 'Σύνδεση μέσω οικείου φορέα',
   'enable.academic.login.label': 'Συνδεση',
   'candidate.upgrade.academic.prompt': 'Σύνδεση μέσω οικείου φορέα',
+  'candidate.not.found.error': 'Δεν βρέθηκε υποψήφιος με αυτά τα στοιχεία',
   'user.register.legacy.warning': 'Υπάρχει ήδη χρήστης της εφαρμογής με το e-mail που επέστρεψε ο οικείος φορέας',
   'user.not.found.error': 'Δεν βρέθηκε χρήστης με αυτά τα στοιχεία',
   'user.exists.error': 'Υπάρχει ήδη χρήστης με αυτά τα στοιχεία',

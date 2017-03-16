@@ -23,7 +23,7 @@ export default SelectField.extend({
     let notFound = get(this, 'notFound');
     let isLoading = get(this, 'isLoading');
 
-    if (notFound && !isLoading) { return 'user.not.found.error'; }
+    if (notFound && !isLoading) { return 'candidate.not.found.error'; }
 
     let valueLabel = 'loading...';
     if (!isLoading && model) {
@@ -42,8 +42,15 @@ export default SelectField.extend({
       return this.sendAction('onChange', null);
     }
     store.findRecord(model, val).then((record) => {
-      set(this, 'modelValue', record);
-      this.sendAction('onChange', record);
+      let role = get(record, 'role');
+      if (['candidate', 'professor'].includes(role) ) {
+        set(this, 'modelValue', record);
+        this.sendAction('onChange', record);
+      } else {
+        set(this, 'notFound', true);
+        set(this, 'modelValue', null);
+        this.sendAction('onChange', null);
+      }
     }).catch(() => {
       set(this, 'notFound', true);
       set(this, 'modelValue', null);

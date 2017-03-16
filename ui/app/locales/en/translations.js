@@ -523,6 +523,7 @@ export default {
   'enable.academic.login.prompt': 'Enable academic login',
   'enable.academic.login.label': 'Academic login',
   'candidate.upgrade.academic.prompt': 'Enable academic login',
+  'candidate.not.found.error': 'Candidate not found',
   'user.register.legacy.warning': 'The email address released by your institution is already in use',
   'user.not.found.error': 'User not found',
   'user.exists.error': 'User exists',
