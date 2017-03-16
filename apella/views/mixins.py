@@ -116,7 +116,8 @@ class PositionMixin(object):
     @detail_route()
     def history(self, request, pk=None):
         position = self.get_object()
-        position_states = Position.objects.filter(code=position.code)
+        position_states = Position.objects.filter(code=position.code). \
+            order_by('-updated_at')
         serializer = self.get_serializer(position_states, many=True)
         return Response(serializer.data)
 
