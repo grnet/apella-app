@@ -255,7 +255,7 @@ const  position = {
         fileField('electors_meeting_proposal', 'position', 'electors_meeting_proposal', {
           readonly: true,
         }),
-        'electors_meeting_date',
+        'electors_meeting_date_format',
         fileField('nomination_proceedings', 'position', 'nomination_proceedings', {
           readonly: true,
         }),
