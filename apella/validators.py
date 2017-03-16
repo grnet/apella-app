@@ -45,6 +45,10 @@ def validate_now_is_between_dates(start, end):
 
 
 def validate_candidate_files(user):
+    if not user.is_candidate() and not user.is_professor():
+        raise ValidationError(
+                _('Submit candidacy error: Invalid role'))
+
     if user.is_candidate():
         cv = user.candidate.cv
         diplomas = user.candidate.diplomas.all()
