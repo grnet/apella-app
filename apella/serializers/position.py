@@ -398,6 +398,12 @@ def upgrade_candidate_to_professor(
         is_verified=True,
         verified_at=datetime.utcnow())
     logger.info('created new professor object for user %r' % user.id)
+    cv = user.candidate.cv
+    if cv:
+        cv.file_kind = 'cv_professor'
+        cv_professor = link_single_file(cv, professor, source='profile')
+        professor.cv_professor = cv_professor
+        professor.save()
     user.role = 'candidate'
     link_files(professor, user, source='profile')
     professor.user.role = 'professor'
