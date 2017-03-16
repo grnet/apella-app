@@ -156,7 +156,7 @@ let rowCommiteeElectors = function(field_name, serverSide) {
         let restricted = (role == 'candidate' || role == 'professor');
         if(field_name.startsWith('electors')) {
           let res = [
-            'id',
+            'user_id',
             'old_user_id',
             i18nField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
@@ -171,7 +171,8 @@ let rowCommiteeElectors = function(field_name, serverSide) {
           return res;
         }
         else {
-          let res = ['id',
+          let res = [
+            'user_id',
             'old_user_id',
             i18nField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
