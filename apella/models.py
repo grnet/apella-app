@@ -154,7 +154,7 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
             return False
         departments = self.candidacy_set.values_list(
             'position__department', flat=True)
-        if not request.user.is_foreign_professor() and \
+        if hasattr(request.user.professor, 'department') and \
                 request.user.professor.department.id in departments:
             return True
         positions = self.candidacy_set.values_list(
@@ -227,7 +227,7 @@ class ApellaFile(models.Model):
         user = request.user
         if not user.is_professor():
             return False
-        if not user.is_foreign_professor():
+        if hasattr(user.professor, 'department'):
             user_pos_departments = self.owner.candidacy_set.values_list(
                 'position__department', flat=True)
             if user.professor.department.id in user_pos_departments:
@@ -249,9 +249,9 @@ class ApellaFile(models.Model):
                 pos = Position.objects.get(id=self.source_id)
             except Position.DoesNotExist:
                 return False
-            if not user.is_foreign_professor():
-                if user.professor.department == pos.department:
-                    return True
+            if hasattr(user.professor, 'department') and \
+                    user.professor.department == pos.department:
+                return True
             if pos.id in prof_positions_elector or \
                     pos.id in prof_positions_committee:
                 return True
@@ -812,9 +812,8 @@ class Candidacy(CandidateProfile):
     def check_resource_state_is_dep_candidacy(self, row, request, view):
         if not request.user.is_professor():
             return False
-        if request.user.is_foreign_professor():
-            return False
-        return self.position.department == request.user.professor.department
+        return hasattr(request.user.professor, 'department') and \
+            self.position.department == request.user.professor.department
 
 
 class Registry(models.Model):
