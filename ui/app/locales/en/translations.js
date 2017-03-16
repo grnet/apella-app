@@ -350,7 +350,7 @@ export default {
       title: 'FEK',
     },
     history: {
-      title: 'Position history',
+      title: 'History of position states',
     }
   },
   fieldsets:{
@@ -569,7 +569,7 @@ export default {
   'confirm.cv.professor.unset.message': 'If you choose to register a cv url, the cv file you uploaded will be unset. <br>Are you sure you want to proceed?',
   'old_user_id.label': 'Old code',
   'electors_meeting_to_set_committee_date.hint': 'The date can be edited when the members of the electoral committee are set',
-  'position.history.entry.warning': 'This is a position history record created at {{date}}',
+  'position.history.entry.warning': 'The following data are related to a past position state last updated at {{date}}.',
   'position.history.label': 'History record',
   'candidate.user_id.label': 'User ID',
   'existing.entries': 'Current Members',
@@ -582,4 +582,5 @@ export default {
   'row.restore.confirm.cancel': 'CANCEL',
   'no_verification_request.label': 'No verification request',
   'candidate.select.id': 'Insert the id of the candidate for whom you wish to submit a candidacy.',
+  'position.state.id': 'State ID'
 };

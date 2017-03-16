@@ -290,7 +290,7 @@ const historyField = field('past_positions', {
   label: null,
   modelMeta: {
     row: {
-      fields: ['id', 'code', 'state_calc_verbose',
+      fields: [field('id', {label: 'position.state.id'}), 'state_calc_verbose',
         field('updated_at_format', {label: 'updated_at.label'})
       ],
       actions: ['goToDetails'],

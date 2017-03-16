@@ -226,15 +226,7 @@ export default ApellaGen.extend({
       return [];
     }),
     page: {
-      title: computed('model.code', 'model.is_latest', function() {
-        let code = get(this, 'model.code');
-        let latest = get(this, 'model.is_latest');
-        if (!latest) {
-          let label = get(this, 'model.i18n').t('position.history.label');
-          code = code += ` (${label})`;
-        }
-        return code;
-      })
+      title: computed.readOnly('model.code')
     },
     partials: {
       top: 'position-top'

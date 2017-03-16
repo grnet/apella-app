@@ -348,7 +348,7 @@ export default {
       title: 'ΦΕΚ',
     },
     history: {
-      title: 'Ιστορικό θέσης',
+      title: 'Ιστορικό καταστάσεων θέσης',
     }
   },
   assistant: {
@@ -583,9 +583,8 @@ export default {
   'confirm.cv.professor.unset.message': 'Σε περίπτωση που επιλέξετε να συμπληρωσετε το πεδίο \'Υπάρχει url βιογραφικού\' <br>το αρχείο βιογραφικού  σημειώματος που καταχωρίσατε δεν θα ληφθεί υπόψιν.<br> Θέλετε να προχωρήσετε;',
   'old_user_id.label': 'Παλιός κωδικός',
   'electors_meeting_to_set_committee_date.hint': 'Η ημερομηνία μπορεί να συμπληρωθεί μόνο όταν συμπληρωθούν τα μέλη του εκλεκτορικού σώματος',
-  'position.history.entry.warning': 'Η καταχώρηση αφορά ιστορικό της θέσης όπως αυτό δημιουργήθηκε στις {{date}}',
+  'position.history.entry.warning': 'Τα παρακάτω δεδομένα αφορούν παρελθοντική κατάσταση της θέσης με ημερομηνία τελευταίας ενημερώσης στις {{date}}.',
   'position.history.label': 'Καταχώρηση ιστορικού',
-  'position.history.entry.warning': 'Η καταχώρηση αφορά ιστορικό της θέσης όπως αυτό δημιουργήθγκε στις {{date}}',
   'position.history.label': 'Καταχώρηση ιστορικού',
   'existing.entries': 'Αποθηκευμένα Μέλη',
   'members.to.add': 'Προσθήκες',
@@ -597,4 +596,5 @@ export default {
   'row.restore.confirm.cancel': 'ΑΚΥΡΩΣΗ',
   'no_verification_request.label': 'Χωρίς αίτηση πιστοποίησης',
   'candidate.select.id': 'Εισάγετε τον κωδικό του υποψηφίου για τον οποίο γίνεται η υποβολή υποψηφιότητας.',
+  'position.state.id': 'Κωδικός Κατάστασης'
 };
