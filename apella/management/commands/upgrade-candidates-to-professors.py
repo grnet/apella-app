@@ -50,6 +50,7 @@ class Command(ApellaCommand):
                 except ApellaUser.DoesNotExist:
                     logger.error(
                         "User with id %r does not exist" % user_id)
+                    continue
 
                 rank = [v for k, v in RANKS.items() if k == rank]
                 if not dry_run:
