@@ -17,7 +17,9 @@ logger = logging.getLogger(__name__)
 RANKS = {
     'ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Assistant Professor',
     'ΛΕΚΤΟΡΑΣ': 'Lecturer',
-    'ΕΠΙ ΘΗΤΕΙΑ ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Tenured Assistant Professor'
+    'ΕΠΙ ΘΗΤΕΙΑ ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Tenured Assistant Professor',
+    'ΑΝΑΠΛΗΡΩΤΗΣ ΚΑΘΗΓΗΤΗΣ': 'Associate Professor',
+    'ΚΑΘΗΓΗΤΗΣ': 'Professor'
 }
 
 
