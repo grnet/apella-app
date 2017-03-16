@@ -594,5 +594,6 @@ export default {
   'row.restore.confirm.message': 'Θέλετε να επαναφέρετε τον χρήστη στο μητρώο;',
   'row.restore.confirm.ok': 'ΕΠΑΝΑΦΟΡΑ',
   'row.restore.confirm.cancel': 'ΑΚΥΡΩΣΗ',
-  'no_verification_request.label': 'Χωρίς αίτηση πιστοποίησης'
+  'no_verification_request.label': 'Χωρίς αίτηση πιστοποίησης',
+  'candidate.select.id': 'Εισάγετε τον κωδικό του υποψηφίου για τον οποίο γίνεται η υποβολή υποψηφιότητας.',
 };

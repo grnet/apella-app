@@ -579,5 +579,6 @@ export default {
   'row.restore.confirm.message': 'Do you want to restore the user in the registry?',
   'row.restore.confirm.ok': 'RESTORE',
   'row.restore.confirm.cancel': 'CANCEL',
-  'no_verification_request.label': 'No verification request'
+  'no_verification_request.label': 'No verification request',
+  'candidate.select.id': 'Insert the id of the candidate for whom you wish to submit a candidacy.',
 };

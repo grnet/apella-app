@@ -140,6 +140,7 @@ let FS = {
     POSITION_FIELDSET,
     {
       label: 'fieldsets.labels.candidate',
+      text: 'candidate.select.id',
       fields: [field('candidate', {
         formComponent: 'select-model-id-field',
         query: function(table, store, field, params) {
@@ -161,6 +162,9 @@ let FS = {
           })
         }
       })],
+      layout: {
+        flex: [50]
+      }
     },
   ],
 };
