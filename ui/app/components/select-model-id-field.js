@@ -56,6 +56,9 @@ export default SelectField.extend({
   actions: {
     handleChange(value) {
       set(this, 'customValue', value);
+      if (!value) {
+        set(this, 'modelValue', null);
+      }
       Ember.run.debounce(this, 'setValue', value, 1000);
     }
   }
