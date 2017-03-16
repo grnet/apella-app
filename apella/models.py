@@ -291,7 +291,7 @@ class ApellaFile(models.Model):
         if user.is_assistant() and self.file_kind in [
                 'committee_proposal', 'committee_note', 'nomination_act',
                 'revocation_decision', 'failed_election_decision',
-                'assistant_files']:
+                'assistant_files', 'electors_set_file', 'committee_set_file']:
             try:
                 position = Position.objects.get(id=self.source_id)
             except Position.DoesNotExist:
@@ -302,20 +302,18 @@ class ApellaFile(models.Model):
                 return True
 
         if user.is_manager() and self.is_candidacy_file:
-            user_department_ids = Department.objects.filter(
-                institution=user.institutionmanager.institution). \
-                    values_list('id', flat=True)
-            if self.apella_candidacy_cv_files.filter(
-                    position__department_id__in=user_department_ids,
-                    state='posted') or \
-                self.apella_candidacy_diploma_files.filter(
-                    position__department_id__in=user_department_ids,
-                    state='posted') or \
-                self.apella_candidacy_publication_files.filter(
-                    position__department_id__in=user_department_ids,
-                    state='posted'):
+            user_departments = Department.objects.filter(
+                institution=user.institutionmanager.institution)
+            try:
+                candidacy = Candidacy.objects.get(id=self.source_id)
+            except Candidacy.DoesNotExist:
+                logger.error('failed to get Candidacy %r from file %r' %
+                    (self.source_id, self.id))
+                return False
+            if candidacy.state == 'posted' and \
+                    candidacy.position.department in user_departments:
                 return True
-        if user.is_manager and self.file_kind == 'cv_professor':
+        if user.is_manager() and self.file_kind == 'cv_professor':
             return True
         return False
 
@@ -377,7 +375,8 @@ class ApellaFile(models.Model):
     def is_candidacy_file(self):
         return self.apella_candidacy_cv_files.exists() or \
             self.apella_candidacy_diploma_files.exists() or \
-            self.apella_candidacy_publication_files.exists()
+            self.apella_candidacy_publication_files.exists() or \
+            self.file_kind in ['attachment_files', 'self_evaluation_report']
 
     @property
     def is_profile_file(self):
