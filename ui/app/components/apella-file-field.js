@@ -27,6 +27,7 @@ export default Ember.Component.extend(BaseFieldMixin, {
   messages: inject.service('messages'),
   inProgress: false,
   attributeBindings: ['disabled'],
+  sortBy: reads('fattrs.sortBy'),
 
   inputAttrs: {
     readonly: true
@@ -52,6 +53,21 @@ export default Ember.Component.extend(BaseFieldMixin, {
     }
     if (value) { return [value]; }
     return [];
+  }),
+
+  filesSorted: computed('files.[]', 'fattrs.sortKey', function() {
+    let sortBy = get(this, 'sortBy');
+    let files = get(this, 'files');
+
+    if (sortBy && files && files.sortBy) {
+      if (typeof sortBy === "string") {
+        return files.sortBy(sortBy)
+      } else {
+        // hasManyArray type does not provide the sort method (???)
+        return files.toArray().sort(sortBy);
+      }
+    }
+    return files;
   }),
 
   canDelete: computed('readonly', 'disabled', 'preventDelete', function() {

@@ -15,7 +15,7 @@
 <md-input-container class={{concat 'fullwidth ' (if disabled 'field-disabled')}} style="margin-top: 0; padding: 0;">
 {{#paper-data-table as |table|}}
 {{#table.body as |body|}}
-  {{#each files as |file|}}
+  {{#each filesSorted as |file|}}
     {{#body.row as |row|}}
       {{#row.cell class="fullwidth"}}{{ file.filename }}{{/row.cell}}
       {{#row.cell class="nowrap"}}{{ moment-format file.updated_at }}{{/row.cell}}
