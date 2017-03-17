@@ -142,7 +142,7 @@ const contactField = field('institution-managers', {
  */
 
 
-let rowCommiteeElectors = function(field_name, serverSide) {
+let rowCommitteeElectors = function(field_name, serverSide) {
   let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'first_name.el','first_name.en', 'email', 'username', 'discipline_text', 'old_user_id']);
 
@@ -275,8 +275,8 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
           });
       };
     }),
-    modelMeta: rowCommiteeElectors(field_name, modelMetaSide),
-    selectModelMeta: rowCommiteeElectors(field_name, selectModelMetaSide),
+    modelMeta: rowCommitteeElectors(field_name, modelMetaSide),
+    selectModelMeta: rowCommitteeElectors(field_name, selectModelMetaSide),
     displayComponent: 'gen-display-field-table'
 
   });

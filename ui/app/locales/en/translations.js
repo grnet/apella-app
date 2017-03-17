@@ -133,7 +133,7 @@ export default {
   'Assistant': 'Assistant',
   'Manager': 'Manager',
   'Candidate': 'Candidate',
-  'Committee': 'Commitee',
+  'Committee': 'Committee',
   'Institution Manager': 'Institution Manager',
   'Elector': 'Elector',
   'Elector, Committee': 'Elector, Committee',
