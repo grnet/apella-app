@@ -241,7 +241,7 @@ export default {
   're_new_password.label': 'Επιβεβαίωση νέου συνθηματικού',
   'user_id.label': 'Κωδικός χρήστη',
   'search.input.placeholder': 'Εισάγετε κριτήριο αναζήτησης',
-  'search.placeholder_members': 'Επώνυμο / Όνομα / E-mail / Όνομα χρήστη / Γνωστικό Αντικείμενο',
+  'search.placeholder_members': 'Επώνυμο / Όνομα / E-mail / Γνωστικό Αντικείμενο',
   'search.placeholder_candidacies_helpdesk': 'Κωδικός υποψηφίου / Κωδικός θέσης / Τίτλος θέσης',
   'search.placeholder_candidacies_candidate': 'Κωδικός θέσης / Τίτλος θέσης',
   'table.is.empty': 'Δεν υπάρχουν καταχωρίσεις',

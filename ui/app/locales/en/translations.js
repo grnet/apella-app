@@ -243,7 +243,7 @@ export default {
   're_new_password.label': 'Retype new password',
   'user_id.label': 'User ID',
   'search.input.placeholder': 'Insert search term',
-  'search.placeholder_members': 'Last Name / First Name / E-mail / User name / Discipline',
+  'search.placeholder_members': 'Last Name / First Name / E-mail / Discipline',
   'search.placeholder_candidacies_helpdesk': 'Candidate ID / Position ID / Position title',
   'search.placeholder_candidacies_candidate': 'Position ID / Position title',
   'table.is.empty': 'There are no items',
