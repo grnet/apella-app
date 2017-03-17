@@ -320,7 +320,12 @@ export default ApellaGen.extend({
       }
     }),
     onSubmit(model) {
-      this.transitionTo('candidacy.record.edit', model)
+      let role = get(this, 'session.session.authenticated.role');
+      if (role === 'helpdeskadmin') {
+        this.transitionTo('candidacy.record.index', model);
+      } else {
+        this.transitionTo('candidacy.record.edit', model);
+      }
     },
     getModel(params) {
       var self = this;
