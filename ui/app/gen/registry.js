@@ -389,7 +389,8 @@ export default ApellaGen.extend({
         'id',
         i18nField('institution.title', {label: 'institution.label'}),
         i18nField('department.title', {label: 'department.label', type: 'text'}),
-        field('type_verbose', {label: 'type.label', type: 'text', dataKey: 'type'})
+        field('type_verbose', {label: 'type.label', type: 'text', dataKey: 'type'}),
+        'members_count'
       ],
       actions: ['gen:details', 'gen:edit', 'remove']
     }

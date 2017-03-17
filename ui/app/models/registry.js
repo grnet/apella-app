@@ -25,5 +25,6 @@ export default DS.Model.extend({
   members: DS.hasMany('professor', { async: true }),
   type_verbose: computeI18NChoice('type', CHOICES.REGISTRY_TYPES),
   institution: readOnly('department.institution'),
-  registry_set_decision_file: DS.belongsTo('apella-file')
+  registry_set_decision_file: DS.belongsTo('apella-file'),
+  members_count: DS.attr('number')
 });

@@ -596,5 +596,6 @@ export default {
   'row.restore.confirm.cancel': 'ΑΚΥΡΩΣΗ',
   'no_verification_request.label': 'Χωρίς αίτηση πιστοποίησης',
   'candidate.select.id': 'Εισάγετε τον κωδικό του υποψηφίου για τον οποίο γίνεται η υποβολή υποψηφιότητας.',
-  'position.state.id': 'Κωδικός Κατάστασης'
+  'position.state.id': 'Κωδικός Κατάστασης',
+  'members_count.label': 'Αρ. Μελών'
 };
