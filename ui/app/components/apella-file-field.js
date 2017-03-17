@@ -27,7 +27,7 @@ export default Ember.Component.extend(BaseFieldMixin, {
   messages: inject.service('messages'),
   inProgress: false,
   attributeBindings: ['disabled'],
-  sortBy: reads('fattrs.sortBy'),
+  sortBy: reads('field.meta.sortBy'),
 
   inputAttrs: {
     readonly: true
@@ -55,7 +55,7 @@ export default Ember.Component.extend(BaseFieldMixin, {
     return [];
   }),
 
-  filesSorted: computed('files.[]', 'fattrs.sortKey', function() {
+  filesSorted: computed('files.[]', 'sortBy', function() {
     let sortBy = get(this, 'sortBy');
     let files = get(this, 'files');
 

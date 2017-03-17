@@ -80,9 +80,7 @@ let CANDIDACY_FIELDSET =  {
       }),
       fileField('attachment_files', 'candidacy', 'attachment_files', {
         hint: 'one_before_electors_meeting',
-        formAttrs: {
-          sortBy: 'filename'
-        },
+        sortBy: 'filename',
         readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
           let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
           let after_deadline = false;
@@ -114,6 +112,7 @@ let CANDIDACY_FIELDSET_DETAILS =  {
       }, { replace: true}),
      fileField('attachment_files', 'candidacy', 'attachment_files', {
         readonly: true,
+        sortBy: 'filename',
         hint: 'one_before_electors_meeting',
       }, { replace: true, multiple: true}),
       'othersCanView'
