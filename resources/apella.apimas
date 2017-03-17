@@ -1047,6 +1047,12 @@ spec:
                             .field: {}
                             .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
+                members_count:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .integer: {}
             actions:
                 .list: {}
                 .create: {}

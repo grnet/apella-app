@@ -868,6 +868,10 @@ class Registry(models.Model):
             institution_id=self.department.institution.id,
             can_create_registries=True).exists()
 
+    @property
+    def members_count(self):
+        return self.members.count()
+
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
         return InstitutionManager.objects.filter(
