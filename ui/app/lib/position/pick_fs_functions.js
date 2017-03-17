@@ -29,11 +29,11 @@ const pick_edit_fs = function() {
     }
     // closed
     else {
-      res = head.concat(fs.candidacies, fs.electors_regular, fs.electors_substitite);
+      res = head.concat(fs.candidacies);
     }
   }
   else if(state === 'cancelled') {
-      res = head;
+    res = head;
   }
   // in all other states
   else {
