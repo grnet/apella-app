@@ -24,6 +24,7 @@ from apella.common import RANKS
 
 logger = logging.getLogger(__name__)
 
+
 def get_electors_regular_internal(instance):
     eps = instance.electorparticipation_set.filter(
         is_regular=True,
@@ -160,6 +161,7 @@ class PositionMixin(ValidatorMixin):
                     "You should first set DEP number for the department"})
 
         committee = curr_position.committee.all()
+        assistant_files = curr_position.assistant_files.all()
         old_committee = [p for p in committee.all()]
         ranks = curr_position.ranks.all()
 
@@ -175,6 +177,7 @@ class PositionMixin(ValidatorMixin):
             curr_position.save()
             curr_position.committee = committee
             curr_position.ranks = ranks
+            curr_position.assistant_files = assistant_files
             curr_position.save()
             for ep in eps:
                 ElectorParticipation.objects.create(
