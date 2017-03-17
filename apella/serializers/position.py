@@ -183,6 +183,7 @@ class PositionMixin(ValidatorMixin):
                 ElectorParticipation.objects.create(
                     position=curr_position,
                     professor=ep.professor,
+                    is_internal=ep.is_internal,
                     is_regular=ep.is_regular)
 
         # send email to elected
