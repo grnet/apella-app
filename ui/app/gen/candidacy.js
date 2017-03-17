@@ -49,7 +49,7 @@ let CANDIDATE_FIELDSET =  {
           readonly: true,
         }),
         fileField('diplomas', 'candidate', 'diplomas', {
-          readonly: true,
+          readonly: true
         }),
         fileField('publications', 'candidate', 'publications', {
           readonly: true
@@ -80,7 +80,6 @@ let CANDIDACY_FIELDSET =  {
       }),
       fileField('attachment_files', 'candidacy', 'attachment_files', {
         hint: 'one_before_electors_meeting',
-        sortBy: 'filename',
         readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
           let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
           let after_deadline = false;
