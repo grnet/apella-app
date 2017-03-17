@@ -616,6 +616,7 @@ const  position = {
           replace: true
         }),
         field('elected', {
+          autocomplete: true,
           hint: 'cover_letter.should.be.filled',
           disabled: computed('model.changeset.nomination_proceedings', function(){
             return !getFile(this,'nomination_proceedings');
@@ -630,6 +631,7 @@ const  position = {
           },
         }),
         field('second_best', {
+          autocomplete: true,
           hint: 'cover_letter.should.be.filled',
           disabled: computed('model.changeset.nomination_proceedings', function(){
             return !getFile(this,'nomination_proceedings');
