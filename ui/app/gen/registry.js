@@ -412,10 +412,11 @@ export default ApellaGen.extend({
       fields: [
         i18nField('institution.title'),
         i18nField('department.title'),
-        'type'
+        'type',
+        'members_count'
       ],
       layout: {
-        flex: [100, 50, 50]
+        flex: [50, 50, 50, 50]
       }
     }, {
       label: 'registry_set_decision_file',
@@ -452,10 +453,11 @@ export default ApellaGen.extend({
               disabled: true
             }),
         disable_field('department', { displayAttr: 'title_current' }),
-        disable_field('type')
+        disable_field('type'),
+        disable_field('members_count')
       ],
       layout: {
-        flex: [50, 50, 50]
+        flex: [50, 50, 50, 50]
       }
     }, {
       label: 'registry_set_decision_file',
