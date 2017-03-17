@@ -443,7 +443,7 @@ PERMISSION_RULES = [
     ('positions', 'retrieve', 'professor', '*', 'open', '1.3'),
     ('positions', 'retrieve', 'professor', '*', '*', '1.3'),
     ('positions', 'history', 'institutionmanager', '*', 'owned', '4.3.9'),
-    ('positions', 'history', 'assistant', '*', 'owned_by_assistant', '4.3.9'),
+    ('positions', 'history', 'assistant', '*', '*', '4.3.9'),
     ('positions', 'history', 'professor', '*', '*', '4.3.9'),
     ('positions', 'history', 'candidate', '*', '*', '4.3.9'),
     ('positions', 'history', 'helpdeskadmin', '*', '*', '4.3.9'),
