@@ -161,7 +161,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
             i18nField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
-            i18nField('department.institution.title'),
+            field('institution_global', {label: 'institution.label'}),
             'is_foreign_descr',
           ];
           if (!restricted) {
@@ -177,7 +177,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
             i18nField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
-            i18nField('department.institution.title'),
+            field('institution_global', {label: 'institution.label'}),
             'is_foreign_descr',
           ];
           if (!restricted) {
