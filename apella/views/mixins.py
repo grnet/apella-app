@@ -267,7 +267,10 @@ class RegistriesList(viewsets.GenericViewSet):
             search = query_params['search']
             members = members.filter(
                 Q(user__last_name__en__icontains=search) |
+                Q(user__first_name__en__icontains=search) |
                 Q(user__last_name__el__icontains=search) |
+                Q(user__first_name__el__icontains=search) |
+                Q(user__email__icontains=search) |
                 Q(user__old_user_id__icontains=search) |
                 Q(discipline_text__icontains=search))
         if 'ordering' not in query_params:
