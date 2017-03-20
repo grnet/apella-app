@@ -32,6 +32,7 @@ from apella.serials import get_serial
 
 logger = logging.getLogger(__name__)
 
+
 class DestroyProtectedObject(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         try:
@@ -134,24 +135,24 @@ class PositionMixin(object):
                 department__in=user.institutionmanager.
                 departments.all())
         elif user.is_professor():
-            position_ids = list(Candidacy.objects.filter(
-                candidate=user).values_list('position_id', flat=True))
+            position_codes = list(Candidacy.objects.filter(
+                candidate=user).values_list('position__code', flat=True))
             if user.professor.department:
-                department_position_ids = list(Position.objects.filter(
+                department_position_codes = list(Position.objects.filter(
                     department=user.professor.department).
-                    values_list('id', flat=True))
-                position_ids += department_position_ids
+                    values_list('code', flat=True))
+                position_codes += department_position_codes
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=now) |
-                Q(id__in=position_ids) |
+                Q(id__in=position_codes) |
                 Q(committee=user.professor.id) |
                 Q(electors=user.professor.id))
         elif user.is_candidate():
-            position_ids = Candidacy.objects.filter(
-                candidate=user).values_list('position_id', flat=True)
+            position_codes = Candidacy.objects.filter(
+                candidate=user).values_list('position__codes', flat=True)
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=now) |
-                Q(id__in=position_ids))
+                Q(code__in=position_codes))
         if 'pk' in self.kwargs:
             queryset = queryset.filter(id=self.kwargs['pk'])
         else:
@@ -223,8 +224,8 @@ class CandidacyList(object):
                 values_list('id__min', flat=True)
             queryset = queryset.filter(id__in=ids)
             if 'latest' in self.request.query_params:
-                q2 = queryset.values('candidate', 'position').annotate(Max('id')). \
-                    values_list('id__max', flat=True)
+                q2 = queryset.values('candidate', 'position'). \
+                    annotate(Max('id')).values_list('id__max', flat=True)
                 queryset = queryset.filter(id__in=q2)
         if not user.is_helpdesk():
             queryset = queryset.exclude(state='draft')
