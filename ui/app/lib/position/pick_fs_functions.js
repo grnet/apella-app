@@ -49,7 +49,7 @@ const pick_edit_fs = function() {
 
 const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies, limited_permissions) {
   let res,
-    tail = [fs.contact];
+    tail = [fs.contact, fs.history];
 
   if(state === 'posted') {
     if(before_open) {
@@ -65,12 +65,10 @@ const pick_details_fs_by_state = function(fs, state, before_open, head, display_
     }
   }
   else if(state === 'cancelled' || limited_permissions) {
-    tail = tail.concat(fs.history);
     res =  head;
   }
   // in all other states
   else {
-    tail = tail.concat(fs.history);
     if (display_candidacies) {
       res = head.concat(fs.candidacies, fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election);
     }
