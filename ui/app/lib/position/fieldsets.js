@@ -291,9 +291,12 @@ const  position = {
       ]
     },
     history: {
-      label: 'position.history.title',
-      fields: [historyField]
-    },
+        label: 'position.history.title',
+        fields: computed('model.id', function() {
+          let position_id = get(this, 'model.id')
+          return [historyField(position_id)];
+        })
+      },
     contact: {
       label: 'contact',
       fields: [contactField]

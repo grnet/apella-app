@@ -35,7 +35,7 @@ function  goToDetails(type, hidden, calc, calc_params) {
    * calc: should have a step of permissions checks
    * calc_params: extra data that are necessary for the permissions checks
    *
-   * TODO: Simplify logic now that candidcies fieldset is hidden fin certain
+   * TODO: Simplify logic now that candidcies fieldset is hidden in certain
    * conditions.
    */
   return {
@@ -74,6 +74,16 @@ function  goToDetails(type, hidden, calc, calc_params) {
           else {
             hidden = false;
           }
+        }
+      }
+      else if(type === 'position_history' && calc) {
+        let row_id = get(this, 'model.id'),
+          position_id = calc_params;
+        if(row_id === position_id) {
+          hidden = true;
+        }
+        else {
+          hidden = false;
         }
       }
       return hidden;

@@ -282,26 +282,28 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
   });
 };
 
-const historyField = field('past_positions', {
-  valueQuery: function(store, params, model, value) {
-    let id = model.get('id');
-    let query = {id: id, history: true};
-    return store.query('position', query);
-  },
-  label: null,
-  modelMeta: {
-    row: {
-      fields: [field('id', {label: 'position.state.id'}), 'state_calc_verbose',
-        field('updated_at_format', {label: 'updated_at.label'})
-      ],
-      actions: ['goToDetails'],
-      actionsMap: {
-        goToDetails: goToDetails(undefined, false, false)
-      }
+const historyField = function(position_id) {
+  return field('past_positions', {
+    valueQuery: function(store, params, model, value) {
+      let id = model.get('id');
+      let query = {id: id, history: true};
+      return store.query('position', query);
     },
-  },
-  displayComponent: 'gen-display-field-table'
-});
+    label: null,
+    modelMeta: {
+      row: {
+        fields: [field('id', {label: 'position.state.id'}), 'state_calc_verbose',
+          field('updated_at_format', {label: 'updated_at.label'})
+        ],
+        actions: ['goToDetails'],
+        actionsMap: {
+          goToDetails: goToDetails('position_history', undefined, true, position_id)
+        }
+      },
+    },
+    displayComponent: 'gen-display-field-table'
+  });
+};
 
 export {
   contactField, candidaciesField, committeeElectorsField,
