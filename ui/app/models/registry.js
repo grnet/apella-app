@@ -3,7 +3,9 @@ import ENV from 'ui/config/environment';
 import {computeI18NChoice} from 'ui/lib/common';
 
 const {
+  computed,
   computed: { readOnly },
+  get
 } = Ember;
 
 const  CHOICES = ENV.APP.resources;
@@ -14,7 +16,7 @@ export default DS.Model.extend({
       delete hash.members;
       hash.links = {
         members: ENV.APP.backend_host + '/registries/' + hash.id + '/members/?ordering=user__last_name__en'
-      };
+      }
       return hash;
     }
   },

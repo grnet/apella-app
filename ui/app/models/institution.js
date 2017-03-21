@@ -2,7 +2,8 @@ import DS from 'ember-data';
 import ENV from 'ui/config/environment';
 import {computeI18N, computeI18NChoice} from 'ui/lib/common';
 
-const CHOICES = ENV.APP.resources;
+const { computed, get } = Ember,
+      CHOICES = ENV.APP.resources;
 
 
 export default DS.Model.extend({

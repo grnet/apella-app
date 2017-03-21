@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import {computeI18NChoice, computeDateFormat, computeDateTimeFormat} from 'ui/lib/common';
+import {computeI18N, computeI18NChoice, computeDateFormat, computeDateTimeFormat} from 'ui/lib/common';
 
 const {
   computed,
@@ -49,7 +49,7 @@ export default DS.Model.extend({
       candidate: candidate_id,
       latest: true
     });
-    return DS.PromiseArray.create({promise});
+    return DS.PromiseArray.create({promise})
   }),
   department: DS.belongsTo('department', {
     formAttrs: {
@@ -79,12 +79,13 @@ export default DS.Model.extend({
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
   institution: readOnly('department.institution'),
   is_closed: computed('ends_at', 'state', function() {
-    let now = posted = get(this, 'state') === 'posted',
+    let now = moment().startOf('day').toDate(),
+      posted = get(this, 'state') == 'posted',
       end = moment(get(this, 'ends_at')).endOf('day');
     return end.isBefore() && posted;
   }),
   is_latest: computed('code', 'id', function() {
-    return get(this, 'code').replace('APP','') === get(this, 'id');
+    return get(this, 'code').replace('APP','') == get(this, 'id');
   }),
   is_open: computed('starts_at', 'ends_at', function() {
     let now = moment(),
@@ -94,7 +95,7 @@ export default DS.Model.extend({
   }),
   // is_posted is true for the positions that are not yet open
   is_posted: computed('state', 'is_closed', 'is_open', function(){
-    return get(this, 'state') === 'posted' && !(get(this, 'is_open') || get(this, 'is_closed'));
+    return get(this, 'state') == 'posted' && !(get(this, 'is_open') || get(this, 'is_closed'));
   }),
   nomination_act: DS.belongsTo('apella-file'),
   nomination_act_fek: DS.attr({displayComponent: 'url-display'}),
@@ -144,7 +145,7 @@ export default DS.Model.extend({
     formAttrs: {
       lookupModel: 'subject_area',
       changedChoices: function(store, value) {
-        return store.query('subject', {area: get(value, 'id')});
+        return store.query('subject', {area: get(value, 'id')})
       },
       optionLabelAttr: 'title_current',
     }

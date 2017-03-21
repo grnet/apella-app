@@ -1,3 +1,4 @@
+import DS from 'ember-data';
 import User from 'ui/models/user';
 import {normalizeUser, serializeUser, normalizeUserErrors} from 'ui/utils/common/users';
 
