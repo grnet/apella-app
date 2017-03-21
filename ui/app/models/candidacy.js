@@ -1,15 +1,12 @@
 import DS from 'ember-data';
-import ENV from 'ui/config/environment';
-import {computeI18N, computeI18NChoice, computeDateFormat} from 'ui/lib/common';
+import {computeI18NChoice, computeDateFormat} from 'ui/lib/common';
 
-const { computed, get } = Ember,
-      CHOICES = ENV.APP.resources;
-
+const { computed, get } = Ember;
 
 let candidacy_states = [
   ["posted", "Submitted"],
   ["cancelled", "Candidacy_cancelled"]
-]
+];
 
 export default DS.Model.extend({
   candidate: DS.belongsTo('user', {label: 'candidacy.label.candidate', formAttrs: {optionLabelAttr: 'full_name_current'}}),
@@ -28,7 +25,7 @@ export default DS.Model.extend({
   attachment_files: DS.hasMany('apella-file', {label: 'candidacy.label.attachment_files'}),
 
   title: computed('position.code', 'candidate.username', function(){
-    return `${get(this, 'position.code')} (${get(this, 'candidate.username')})`
+    return `${get(this, 'position.code')} (${get(this, 'candidate.username')})`;
   }),
   // TMP gets value on candidacy details
   position_department: DS.attr()

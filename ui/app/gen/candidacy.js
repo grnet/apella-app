@@ -1,16 +1,14 @@
 import {field} from 'ember-gen';
 import {ApellaGen, preloadRelations} from 'ui/lib/common';
-import validate from 'ember-gen/validate';
 import _ from 'lodash/lodash';
-import {disable_field} from 'ui/utils/common/fields';
 import {cancelCandidacy, goToPosition} from 'ui/utils/common/actions';
 import {fileField} from 'ui/lib/common';
 import moment from 'moment';
 
 const {
-        set, get, computed, computed: { alias },
-        getOwner
-      } = Ember;
+  set, get, computed, computed: { alias },
+  getOwner
+} = Ember;
 
 let POSITION_FIELDS = [
     field('position', {
@@ -152,19 +150,19 @@ let FS = {
           let promises = [
             store.query('user', {role: 'professor'}),
             store.query('user', {role: 'candidate'}),
-          ]
+          ];
 
           var promise = Ember.RSVP.all(promises).then(function(arrays) {
             var mergedArray = Ember.A();
             arrays.forEach(function (records) {
               mergedArray.pushObjects(records.toArray());
             });
-            return mergedArray.uniqBy('id')
-          })
+            return mergedArray.uniqBy('id');
+          });
 
           return DS.PromiseArray.create({
             promise: promise,
-          })
+          });
         }
       })],
       layout: {
@@ -184,7 +182,7 @@ export default ApellaGen.extend({
   abilityStates: {
     // resolve ability for position model
     positionAbility: computed('model.position.id', 'role', 'user', 'model', function() {
-      let ability = getOwner(this).lookup('ability:positions')
+      let ability = getOwner(this).lookup('ability:positions');
       let props = this.getProperties('role', 'user');
       props.model = get(this, 'model.position');
       ability.setProperties(props);
@@ -195,18 +193,17 @@ export default ApellaGen.extend({
 
     owned: computed('role', 'user.user_id', 'model.candidate.id', function() {
       let is_institutionmanager = get(this, 'role') === 'institutionmanager';
-      let is_candidate_owning = get(this, 'user.user_id') == get(this, 'model.candidate.id')
+      let is_candidate_owning = get(this, 'user.user_id') === get(this, 'model.candidate.id');
       return is_institutionmanager || is_candidate_owning;
     }),
 
     owned_open: computed('owned', 'position_open', 'model.state', function() {
       let position_open = get(this, 'position_open');
-      let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
+      let candidacy_not_cancelled = get(this, 'model.state') !== 'cancelled';
       return get(this, 'owned') && position_open && candidacy_not_cancelled;
     }),
 
-    owned_by_assistant: computed('role', 'user.departments', 'model.position_department', function() {
-      let is_assistant = get(this, 'role') === 'assistant';
+    owned_by_assistant: computed('user.departments', 'model.position_department', function() {
       let assistant_departments = get(this, 'user.departments') || [];
       // TODO: Extract department using a better way
       let position_department = this.get('model.position_department').split('/').slice(-2)[0];
@@ -215,7 +212,7 @@ export default ApellaGen.extend({
 
     five_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', 'owned', function() {
       let electors_at = get(this, 'model.position.electors_meeting_date');
-      let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
+      let candidacy_not_cancelled = get(this, 'model.state') !== 'cancelled';
       let position_open = get(this, 'position_open');
       let owned = get(this, 'owned');
       let before_deadline = true;
@@ -227,7 +224,7 @@ export default ApellaGen.extend({
 
     one_before_electors_meeting: computed('model.state', 'position_open', 'model.position.electors_meeting_date', 'owned', function() {
       let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
-      let candidacy_not_cancelled = get(this, 'model.state') != 'cancelled';
+      let candidacy_not_cancelled = get(this, 'model.state') !== 'cancelled';
       let before_deadline = true;
       let owned = get(this, 'owned');
       let today = moment().startOf('days');
@@ -257,7 +254,7 @@ export default ApellaGen.extend({
 
     getModel: function(params) {
       let role = get(this, 'session.session.authenticated.role');
-      if (role == 'candidate' || role == 'professor') {
+      if (role === 'candidate' || role === 'professor') {
         let user_id = get(this, 'session.session.authenticated.user_id');
         params = params || {};
         params.candidate = user_id;
@@ -304,7 +301,7 @@ export default ApellaGen.extend({
         let role = get(this, 'role');
         let fs = FS.list_with_user_id;
         if (role === 'candidate' || role === 'professor' ) {
-          fs = FS.list
+          fs = FS.list;
         }
         return fs;
       }),
@@ -318,10 +315,10 @@ export default ApellaGen.extend({
   },
   create: {
     fieldsets: computed('model.position', 'role', function(){
-      if (get(this, 'role') == 'helpdeskadmin') {
-        return FS.create_helpdeskadmin
+      if (get(this, 'role') === 'helpdeskadmin') {
+        return FS.create_helpdeskadmin;
       } else {
-        return FS.common
+        return FS.common;
       }
     }),
     onSubmit(model) {
@@ -333,7 +330,6 @@ export default ApellaGen.extend({
       }
     },
     getModel(params) {
-      var self = this;
       var store = get(this, 'store');
       if (params.position) {
         let position = store.findRecord('position', params.position);
@@ -346,7 +342,7 @@ export default ApellaGen.extend({
           let c = store.createRecord('candidacy', {
             position: position,
           });
-          if (role == 'helpdeskadmin') {
+          if (role === 'helpdeskadmin') {
             return c;
           }
           return me.then(function(me) {
@@ -362,13 +358,13 @@ export default ApellaGen.extend({
                 set(c, 'cv', res[1]);
                 set(c, 'diplomas', res[2]);
                 set(c, 'publications', res[3]);
-                return c
+                return c;
             });
 
-          })
-        })
+          });
+        });
       }
-      this.transitionTo('candidacy.index')
+      this.transitionTo('candidacy.index');
     },
     routeMixins: {
       queryParams: {'position': { refreshModel: true }},
