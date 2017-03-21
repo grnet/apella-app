@@ -144,7 +144,7 @@ class PositionMixin(object):
                 position_codes += department_position_codes
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=now) |
-                Q(id__in=position_codes) |
+                Q(code__in=position_codes) |
                 Q(committee=user.professor.id) |
                 Q(electors=user.professor.id))
         elif user.is_candidate():
