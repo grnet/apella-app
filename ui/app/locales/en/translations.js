@@ -584,5 +584,6 @@ export default {
   'no_verification_request.label': 'No verification request',
   'candidate.select.id': 'Insert the id of the candidate for whom you wish to submit a candidacy.',
   'position.state.id': 'State ID',
-  'members_count.label': 'Number of members'
+  'members_count.label': 'Number of members',
+  'view.professor.details': 'Professor\'s Details'
 };

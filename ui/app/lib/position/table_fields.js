@@ -6,6 +6,9 @@ import moment from 'moment';
 import {
   goToDetails, applyCandidacy, cancelPosition
 } from 'ui/utils/common/actions';
+import {
+  fs_user, fs_contact, fs_prof_domestic, fs_prof_foreign, peak_fs_professors
+} from 'ui/lib/professors_quick_details';
 
 
 const {
@@ -186,18 +189,25 @@ let rowCommitteeElectors = function(field_name, serverSide) {
           return res;
         }
       }),
-      actions: ['goToProfessorDetails'],
+      actions: ['view_details'],
       actionsMap: {
-        goToProfessorDetails: {
-            label: 'details.label',
-            icon: 'remove red eye',
-            permissions: [{resource: 'professors', action: 'view'}],
-            hidden: false,
-            action: function(route, model) {
-              let resource = model.get('_internalModel.modelName'),
-                dest_route = `${resource}.record.index`;
-              route.transitionTo(dest_route, model);
-            }
+        view_details: {
+          icon: 'open_in_new',
+          detailsMeta: {
+            fieldsets: computed('model', peak_fs_professors)
+          },
+          action: function() {},
+          permissions: [{resource: 'professors', action: 'view'}],
+          hidden: false,
+          label: 'view.professor.details',
+          confirm: true,
+          prompt: {
+            title: computed('model.user_id', function() {
+              return get(this, 'model.full_name_current');
+            }),
+            cancel: 'close',
+            contentComponent: 'member-quick-view'
+          }
         }
       }
     },
