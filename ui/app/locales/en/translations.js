@@ -327,7 +327,8 @@ export default {
     },
     candidate_section: {
       title: 'Candidate Details',
-      subtitle: 'These fields can be modified from the candidate\'s profile.'
+      subtitle: 'These fields can be modified from the candidate\'s profile.',
+      subtitle_candidate: 'These fields can be modified from your profile.'
     },
     candidacy_section: {
       title: 'Candidacy Fields'

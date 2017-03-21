@@ -39,7 +39,13 @@ let POSITION_FIELDSET =  {
 
 let CANDIDATE_FIELDSET =  {
       label: 'candidacy.candidate_section.title',
-      text: 'candidacy.candidate_section.subtitle',
+      text: computed('role', function(){
+        let role = get(this, 'role');
+        if (role === 'professor' || role === 'candidate') {
+          return 'candidacy.candidate_section.subtitle_candidate';
+        }
+        return 'candidacy.candidate_section.subtitle';
+      }),
       fields: [
         field('candidate', {
           disabled: true,
