@@ -3,9 +3,9 @@ import SelectField from 'ember-gen/components/gen-form-field-select/component';
 
 const { set, get, computed, observer } = Ember;
 
-// Once user writes down an id value, resolve the model from the store and 
-// send the record using onChange action in order for underlying form object 
-// to be updated with the record field (as the field is probably a belongsTo 
+// Once user writes down an id value, resolve the model from the store and
+// send the record using onChange action in order for underlying form object
+// to be updated with the record field (as the field is probably a belongsTo
 // property).
 export default SelectField.extend({
   modelValue: null,
@@ -43,9 +43,23 @@ export default SelectField.extend({
     }
     store.findRecord(model, val).then((record) => {
       let role = get(record, 'role');
-      if (['candidate', 'professor'].includes(role) ) {
-        set(this, 'modelValue', record);
-        this.sendAction('onChange', record);
+      let self = this;
+      if (['candidate', 'professor'].includes(role)) {
+        store.queryRecord(get(record, 'role'), {user_id: get(record, 'id')}).then((candidate) => {
+          let is_verified = get(candidate, 'is_verified');
+          if (is_verified) {
+            set(self, 'modelValue', record);
+            self.sendAction('onChange', record);
+          } else {
+            set(this, 'notFound', true);
+            set(this, 'modelValue', null);
+            this.sendAction('onChange', null);
+          }
+        }).catch(() => {
+          set(this, 'notFound', true);
+          set(this, 'modelValue', null);
+          this.sendAction('onChange', null);
+        });
       } else {
         set(this, 'notFound', true);
         set(this, 'modelValue', null);
@@ -65,6 +79,7 @@ export default SelectField.extend({
       set(this, 'customValue', value);
       if (!value) {
         set(this, 'modelValue', null);
+        set(this, 'notFound', null);
       }
       Ember.run.debounce(this, 'setValue', value, 1000);
     }
