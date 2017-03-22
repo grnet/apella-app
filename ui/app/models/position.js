@@ -79,7 +79,7 @@ export default DS.Model.extend({
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
   institution: readOnly('department.institution'),
   is_closed: computed('ends_at', 'state', function() {
-    let now = posted = get(this, 'state') === 'posted',
+    let posted = get(this, 'state') === 'posted',
       end = moment(get(this, 'ends_at')).endOf('day');
     return end.isBefore() && posted;
   }),
