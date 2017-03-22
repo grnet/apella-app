@@ -3,7 +3,7 @@ import DS from 'ember-data';
 import fetch from 'ember-network/fetch';
 
 const {
-  get, set, 
+  get, set,
   computed,
   computed: { reads },
   inject
@@ -27,7 +27,6 @@ export default DS.Model.extend({
   downloadURL: computed(function() {
     let modelName = this.constructor.modelName;
     let adapter = this.store.adapterFor(modelName);
-    let token = get(this, 'token');
     let url = adapter.urlForModel(this) + 'download/';
     return url;
   }),

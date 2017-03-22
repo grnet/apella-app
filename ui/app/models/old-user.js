@@ -1,5 +1,4 @@
 import DS from 'ember-data';
-import ENV from 'ui/config/environment';
 import {computeDateFormat} from 'ui/lib/common';
 
 const { computed, get } = Ember;
@@ -49,14 +48,14 @@ export default DS.Model.extend({
 
   speaks_greek_verbose: computed('speaks_greek', function(){
     let f = get(this, 'speaks_greek');
-    if (f == 'f') return '-';
-    if (f == 't') return '✓';
+    if (f === 'f') { return '-'; }
+    if (f === 't') { return '✓'; }
     return '-';
   }),
   is_foreign_verbose: computed('is_foreign', function(){
     let f = get(this, 'is_foreign');
-    if (f == 'f') return '-';
-    if (f == 't') return '✓';
+    if (f === 'f') { return '-'; }
+    if (f === 't') { return '✓'; }
     return '-';
   })
 });

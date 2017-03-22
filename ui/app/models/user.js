@@ -36,7 +36,7 @@ export default DS.Model.extend({
   shibboleth_schac_home_organization: DS.attr(),
 
   full_name_current: computed('first_name_current', 'last_name_current', function(){
-    return `${this.get('first_name_current')} ${this.get('last_name_current')}`
+    return `${this.get('first_name_current')} ${this.get('last_name_current')}`;
   }),
 
   status_verbose: computed('is_active', 'email_verified', 'i18n.locale', function() {
