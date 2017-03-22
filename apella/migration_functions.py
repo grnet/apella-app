@@ -573,6 +573,11 @@ def migrate_position(old_position, author):
         return
 
     department = get_obj(old_position.department_id, Department)
+    if not author:
+        author = InstitutionManager.objects.get(
+            institution=department.institution,
+            user__role='institutionmanager')
+
     fek_posted_at = datetime.strptime(
         old_position.gazette_publication_date, '%Y-%m-%d')
     fek_posted_at = at_day_start(fek_posted_at, otz)
