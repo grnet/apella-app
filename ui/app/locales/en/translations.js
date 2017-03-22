@@ -1,6 +1,5 @@
 export default {
   'logout': 'logout',
-  // login
   'login': 'login',
   'Login': 'Login',
   'login.username.title': 'Login',
@@ -9,8 +8,6 @@ export default {
   'login.domestic.description': '',
   'login.domestic.label': 'Home organization Login',
   'shibboleth.remote.data': 'Home organization data',
-
-   // register
   'register': 'Register',
   'register.title': 'Register',
   'register.description': 'Select user type',
@@ -66,7 +63,6 @@ export default {
   'reject.user.error': 'Reject user error',
   'reject.user.success': 'Reject user success',
   'registration.success.email.pending': 'Your account has been successfully created.<br> You have received a verification e-mail.',
-
   'Auth': 'User',
   'login.label': 'Login',
   'form.save.label': 'Save',
@@ -279,170 +275,97 @@ export default {
   'committee_set_file.hint': 'Το πεδίο "Πρακτικό ορισμού της εισηγητικής επιτροπής" μπορεί να συμπληρωθεί μόνο εάν έχει συμπληρωθεί ημερομηνία σύγκλησης του εκλεκτορικού σώματος για τον ορισμό της επιτροπής.',
   'committee_proposal.label': 'Committee proposal',
   'committee_note.label': 'Memorandum',
-
-  // popup messages translations
   'message.close': 'close',
   'login.success': 'Successful login',
   'form.saved': 'Form saved',
   'form.invalid': 'Invalid form',
   'form.error': 'Error in form',
   'user.interests.saved': 'Your interests have been saved',
-
-  // files
   'file.field.add.file': 'Add file',
   'field.no.files': 'No files',
   'file.upload.success': 'File upload success',
   'file.upload.error': 'File upload error',
   'delete.file.error': 'Delete file error',
   'delete.file.success': 'Delete file success',
-
-  userInterest: {
-    info: 'By pressing "Save" the search criteria will be saved, so that if a new position matches them you will be notified by the system.',
-    headers: {
-      subject_area: 'Subject areas/ Subjects',
-      institution: 'Institutions/ Departments'
-    },
-    menu_label: 'User interests',
-  },
-
-  manager: {
-    menu_label: 'Institution Managers',
-    label: {
-      authority_type: 'Verification Authority',
-      authority_full_name: 'Authority Full name',
-      role: 'Role',
-    }
-  },
-  professor: {
-    menu_label: 'Professors',
-  },
-  candidate: {
-    menu_label: 'Candidates',
-  },
-  candidacy: {
-    menu_label: 'Candidacies',
-    position_section: {
-      title: 'Position Details',
-      subtitle: 'Information concerning the position.'
-    },
-    candidate_section: {
-      title: 'Candidate Details',
-      subtitle: 'These fields can be modified from the candidate\'s profile.',
-      subtitle_candidate: 'These fields can be modified from your profile.'
-    },
-    candidacy_section: {
-      title: 'Candidacy Fields'
-    },
-    label: {
-      position: 'Position',
-      state: 'State',
-      others_can_view: 'Other Candidates are allowed to access the data of my candidacy',
-      cv: 'Curriculum Vitae',
-      diploma: 'Diplomas',
-      publication: 'Publications',
-      self_evaluation: 'Self Evaluation Report',
-      attachment_files: 'Complementary documents',
-      candidate: 'Candidate'
-    }
-  },
-  position: {
-    menu_label: 'Positions',
-    fek_section: {
-      title: 'FEK',
-    },
-    history: {
-      title: 'History of position states',
-    }
-  },
-  fieldsets:{
-    labels: {
-      basic_info: 'Basic info',
-      details: 'Details',
-      user_info: 'User',
-      profile_info: 'Profile',
-      more_info: 'More info',
-      user_interest: 'User interest',
-      position_details: 'Position details',
-      candidacy_details: 'Candidacy info',
-      candidate: 'Candidate',
-      files: 'Files',
-      candidate_files: 'Candidacy files',
-      professor_profile: 'Professor\'s profile',
-      candidate_profile: 'Candidate\'s profile',
-      manager_info: 'Manager info',
-      sub_info: 'Substitute Institution Manager',
-      committee: 'Committee',
-      election: 'Election',
-      assistant_files: 'Other administrative documents',
-      electors: 'Electors',
-    },
-    text: {
-      user_interest: 'Choose your interests',
-      manager_can_edit: 'The following fields can only be edited by the institution manager.',
-      assistant_can_edit: 'The following fields can only be edited by the assistant.',
-      assistant_profile: 'The disabled fields can only be edited by the institition manager.',
-      committee: '<p>Τα μέλη της εισηγητικής επιτροπής μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Πρακτικό ορισμού της εισηγητικής επιτροπής".</p><ul><li>Τα μέλη της επιτροπής πρέπει να είναι ακριβώς 3.</li><li>Τουλάχιστον ένα μέλος της επιτροπής πρέπει να προέρχεται από το μητρώο εξωτερικών μελών του Τμήματος.</li></ul>',
-      electors_regular_small: '<p>Τα μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 5 από τα 11 τακτικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 6 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
-      electors_regular_big: '<p>Τα μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 7 από τα 15 τακτικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 8 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
-      electors_sub_small: '<p>Τα αναπληρωματικά μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 5 από τα 11 αναπληρωματικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 6 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
-      electors_sub_big: '<p>Τα αναπληρωματικά μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 7 από τα 15 αναπληρωματικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 8 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
-      candidate_profile: 'If you would like to update your active candidacies with your current "Cirriculum vitae", "Diplomas" and "Publications", you should select the "Update Candidacies" button, located at the top of the page.',
-    }
-  },
-  institution: {
-    menu_label: 'Regulatory Frameworks',
-  },
-  user: {
-    menu_label: 'Users',
-  },
-  school: {
-    menu_label: 'Schools',
-  },
-  department: {
-    menu_label: 'Departments',
-  },
-  subject_area : {
-    menu_label: 'Thematic Areas',
-  },
-  subject: {
-    menu_label: 'Themes',
-  },
-  registry: {
-    menu_label: 'Registries',
-    main_section: {
-      title: 'Registry Information'
-    },
-    members_section: {
-      title: 'Registry Members'
-    }
-  },
-  profile: {
-    menu_label: 'Profile',
-  },
-  elections: {
-    menu_label: 'Elections',
-  },
-  old_user: {
-    menu_label: 'Old users',
-  },
-  common: {
-    create_label: 'New',
-    id_label: 'ID',
-    edit_label: 'Edit',
-    button: {
-      create_label: 'Create',
-      edit_label: 'Edit',
-      details_label: 'View',
-      save_label: 'Save',
-    }
-  },
-  item: {
-    actions: {
-      label: 'Actions'
-    }
-  },
-  'assistants_on_position_explain': 'Assistants that are able to handle the\
-  positions will be able to handle this position, too.',
+  'userInterest.info': 'By pressing "Save" the search criteria will be saved, so that if a new position matches them you will be notified by the system.',
+  'headers.subject_area': 'Subject areas/ Subjects',
+  'headers.institution': 'Institutions/ Departments',
+  'userInterest.menu_label': 'User interests',
+  'manager.menu_label': 'Institution Managers',
+  'manager.label.authority_type': 'Verification Authority',
+  'manager.label.authority_full_name': 'Authority Full name',
+  'manager.label.role': 'Role',
+  'professor.menu_label': 'Professors',
+  'candidate.menu_label': 'Candidates',
+  'candidacy.menu_label': 'Candidacies',
+  'candidacy.position_section.title': 'Position Details',
+  'candidacy.position_section.subtitle': 'Information concerning the position.',
+  'candidacy.candidate_section.title': 'Candidate Details',
+  'candidacy.candidate_section.subtitle': 'These fields can be modified from the candidate\'s profile.',
+  'candidacy.candidate_section.subtitle_candidate': 'These fields can be modified from your profile.',
+  'candidacy.candidacy_section.title': 'Candidacy Fields',
+  'candidacy.label.position': 'Position',
+  'candidacy.label.state': 'State',
+  'candidacy.label.others_can_view': 'Other Candidates are allowed to access the data of my candidacy',
+  'candidacy.label.cv': 'Curriculum Vitae',
+  'candidacy.label.diploma': 'Diplomas',
+  'candidacy.label.publication': 'Publications',
+  'candidacy.label.self_evaluation': 'Self Evaluation Report',
+  'candidacy.label.attachment_files': 'Complementary documents',
+  'candidacy.label.candidate': 'Candidate',
+  'position.menu_label': 'Positions',
+  'position.fek_section.title': 'FEK',
+  'position.history.title': 'History of position states',
+  'fieldsets.labels.basic_info': 'Basic info',
+  'fieldsets.labels.details': 'Details',
+  'fieldsets.labels.user_info': 'User',
+  'fieldsets.labels.profile_info': 'Profile',
+  'fieldsets.labels.more_info': 'More info',
+  'fieldsets.labels.user_interest': 'User interest',
+  'fieldsets.labels.position_details': 'Position details',
+  'fieldsets.labels.candidacy_details': 'Candidacy info',
+  'fieldsets.labels.candidate': 'Candidate',
+  'fieldsets.labels.files': 'Files',
+  'fieldsets.labels.candidate_files': 'Candidacy files',
+  'fieldsets.labels.professor_profile': 'Professor\'s profile',
+  'fieldsets.labels.candidate_profile': 'Candidate\'s profile',
+  'fieldsets.labels.manager_info': 'Manager info',
+  'fieldsets.labels.sub_info': 'Substitute Institution Manager',
+  'fieldsets.labels.committee': 'Committee',
+  'fieldsets.labels.election': 'Election',
+  'fieldsets.labels.assistant_files': 'Other administrative documents',
+  'fieldsets.labels.electors': 'Electors',
+  'fieldsets.text.user_interest': 'Choose your interests',
+  'fieldsets.text.manager_can_edit': 'The following fields can only be edited by the institution manager.',
+  'fieldsets.text.assistant_can_edit': 'The following fields can only be edited by the assistant.',
+  'fieldsets.text.assistant_profile': 'The disabled fields can only be edited by the institition manager.',
+  'fieldsets.text.committee': '<p>Τα μέλη της εισηγητικής επιτροπής μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Πρακτικό ορισμού της εισηγητικής επιτροπής".</p><ul><li>Τα μέλη της επιτροπής πρέπει να είναι ακριβώς 3.</li><li>Τουλάχιστον ένα μέλος της επιτροπής πρέπει να προέρχεται από το μητρώο εξωτερικών μελών του Τμήματος.</li></ul>',
+  'fieldsets.text.electors_regular_small': '<p>Τα μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 5 από τα 11 τακτικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 6 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
+  'fieldsets.text.electors_regular_big': '<p>Τα μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 7 από τα 15 τακτικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 8 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
+  'fieldsets.text.electors_sub_small': '<p>Τα αναπληρωματικά μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 5 από τα 11 αναπληρωματικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 6 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
+  'fieldsets.text.electors_sub_big': '<p>Τα αναπληρωματικά μέλη του εκλεκτορικού σώματος μπορούν να προστεθούν μόνο εάν είναι συμπληρωμένο το πεδίο "Απόφαση σύστασης εκλεκτορικού σώματος".</p><p>Τα 7 από τα 15 αναπληρωματικά μέλη πρέπει να προέρχονται από το μητρώο εσωτερικών μελών του Τμήματος της θέσης και τα υπόλοιπα 8 από το μητρώο εξωτερικών μελών του Τμήματος.</p>',
+  'fieldsets.text.candidate_profile': 'If you would like to update your active candidacies with your current "Cirriculum vitae", "Diplomas" and "Publications", you should select the "Update Candidacies" button, located at the top of the page.',
+  'institution.menu_label': 'Regulatory Frameworks',
+  'user.menu_label': 'Users',
+  'school.menu_label': 'Schools',
+  'department.menu_label': 'Departments',
+  'subject_area.menu_label': 'Thematic Areas',
+  'subject.menu_label': 'Themes',
+  'registry.menu_label': 'Registries',
+  'registry.main_section.title': 'Registry Information',
+  'registry.members_section.title': 'Registry Members',
+  'profile.menu_label': 'Profile',
+  'elections.menu_label': 'Elections',
+  'old_user.menu_label': 'Old users',
+  'common.create_label': 'New',
+  'common.id_label': 'ID',
+  'common.edit_label': 'Edit',
+  'common.button.create_label': 'Create',
+  'common.button.edit_label': 'Edit',
+  'common.button.details_label': 'View',
+  'common.button.save_label': 'Save',
+  'item.actions.label': 'Actions',
+  'assistants_on_position_explain': 'Assistants that are able to handle the positions will be able to handle this position, too.',
   'open': 'Open',
   'closed': 'Closed',
   'registry.type.internal': 'Internal Registry',
@@ -463,7 +386,6 @@ export default {
   'verified': 'Verified',
   'pending_verification': 'Pending verification',
   'not_requested_verification': 'There is no verification request',
-  // translations for professor rank dropdown
   'Professor': 'Professor',
   'Associate Professor': 'Associate Professor',
   'Assistant Professor': 'Assistant Professor',
@@ -483,8 +405,6 @@ export default {
   'verification_pending.label': 'Pending verification',
   'is_active.label': 'Active',
   'login_method.label': 'Login method',
-
-  // old_user fields
   'name_el.label': 'Name (el)',
   'surname_el.label': 'Surname (el)',
   'fathername_el.label': 'Father name (el)',
@@ -498,7 +418,6 @@ export default {
   'professor_subject_optional_freetext.label': 'Subject (free text)',
   'manager_institution_id.label': 'Manager institution ID',
   'migrated_at_format.label': 'Migrated at',
-
   'registry_set_decision_file': 'Decision to form registry',
   'is_secretary.label': 'Secretary',
   'secretaries.label': 'Secretaries',
@@ -515,8 +434,6 @@ export default {
   'user.not.email_verified.error': 'Your e-mail has not been verified',
   'old.user.info': '<p>If you have an <strong>account in the old application</strong>, you can login to your existing account, as follows:</p><ul><li class="md-padding">If you used local or academic credentials (username and password) to login to the old application, you should use the same credentials to log into the new application.</li><li class="md-padding">If you used a personal link to login to the old application, this link will not be used to login to the new application. You should use the local credentials (username and password) you received by e-mail, only for your first login to the application.<br>If you have not received the e-mail with your local credentials, please contact the <a href="https://apella.minedu.gov.gr/en/contact-en" target="_blank" title="Helpdesk">Helpdesk</a>.</li></ul><p>To access the faculty elections and promotions governed by the previous legal framework, you may visit the <a href="https://service.apella.grnet.gr/" target="_blank" title="old application">old application</a>.</p>',
   'new.user.info': '<p>If you have an <strong>account in the old application</strong>, you should not register for a new account. You can login to your existing account from the <strong>"Login"</strong> tab.</p><p>Otherwise, you can register here:</p>',
-
-  // server errors
   'The two password fields didn\'t match.': 'The two password fields didn\'t match.',
   'Unable to login with provided credentials.': 'Unable to login with provided credentials.',
   'You have already submitted a candidacy for this position': 'You have already submitted a candidacy for this position',
