@@ -109,7 +109,6 @@ export default {
   'common.button.create_label': 'Δημιουργία',
   'common.button.details_label': 'Προβολή',
   'common.button.edit_label': 'Τροποποίηση',
-  'common.button.save_label': 'Αποθήκευση',
   'common.create_label': 'Δημιουργία',
   'common.edit_label': 'Τροποποίηση',
   'common.id_label': 'Κωδικός',

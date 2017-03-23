@@ -96,7 +96,6 @@ export default {
   'common.button.create_label': 'Create',
   'common.button.details_label': 'View',
   'common.button.edit_label': 'Edit',
-  'common.button.save_label': 'Save',
   'common.create_label': 'New',
   'common.edit_label': 'Edit',
   'common.id_label': 'ID',

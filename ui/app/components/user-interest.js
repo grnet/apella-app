@@ -13,7 +13,6 @@ const {
 } = Ember;
 
 export default Ember.Component.extend({
-  classNames: 'interest',
   store: inject.service(),
   session: inject.service(),
   messageService: inject.service('messages'),

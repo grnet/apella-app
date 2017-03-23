@@ -15,7 +15,8 @@ const {
 
 
 export default Ember.Component.extend({
-  tagName: 'li',
+  tagName: 'div',
+  classNames: ['md-no-style', 'md-list-item-inner'],
   classNameBindings: ['partiallySelected:partial'],
 
   store: Ember.inject.service(),

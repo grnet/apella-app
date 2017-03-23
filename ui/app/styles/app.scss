@@ -6,7 +6,6 @@
 
 @import 'ember-gen';
 @import 'settings';
-@import 'interest';
 @import 'forms';
 
 .site-header {
@@ -132,3 +131,8 @@ label.table-label.active {
   cursor: pointer;
 }
 
+.partial {
+  &>.md-checkbox .md-label {
+    font-weight: bold;
+  }
+}
