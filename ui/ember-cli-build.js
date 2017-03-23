@@ -6,7 +6,7 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     sourcemaps: { enabled: false },
     fingerprint: {
-      exclude: ['**/flag_*.png', '**/logo_*.png'],
+      exclude: ['**/flag_*.png', '**/logo_*.png', '**/favicon.ico'],
     }
     // Add options here
   });
