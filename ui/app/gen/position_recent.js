@@ -32,7 +32,7 @@ export default ApellaGen.extend({
   auth: true,
   path: 'positions-latest',
 
-  abilityStates: abilityStates, 
+  abilityStates: abilityStates,
 
   common: {
     validators: {

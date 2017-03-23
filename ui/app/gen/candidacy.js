@@ -288,7 +288,15 @@ export default ApellaGen.extend({
       title: 'candidacy.menu_label',
     },
     menu: {
-      label: 'candidacy.menu_label',
+      label: computed('role', function() {
+        let role = get(this, 'role');
+        if (role === 'professor' || role === 'candidate'){
+          return 'my_candidacy.menu_label';
+        }
+        else {
+          return 'candidacy.menu_label';
+        }
+      }),
       icon: 'event_note',
       display: computed('role', function() {
         let role = get(this, 'role');
