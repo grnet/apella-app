@@ -132,12 +132,25 @@ let FS = {
     POSITION_FIELDSET,
     CANDIDATE_FIELDSET,
   ],
-  list:  [field('position.code', {dataKey: 'position__id'}), 'position.title', 'position.department.institution.title_current',
-          'position.department.title_current',
-          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
-  list_with_user_id:  [field('position.code', {dataKey: 'position__id'}), field('id', {label: 'candidacy.id'}), field('candidate.id', {label: 'candidate.user_id.label'}), 'candidate.full_name_current', 'position.title', 'position.department.institution.title_current',
-          'position.department.title_current',
-          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
+  list: [
+    field('position.code', {dataKey: 'position__id'}),
+    'position.title',
+    'position.department.institution.title_current',
+    'position.department.title_current',
+    'position.state_calc_verbose',
+    field('state_verbose', {label: 'candidacy.state'})
+  ],
+  list_with_user_id: [
+    field('position.code', {dataKey: 'position__id'}),
+    field('id', {label: 'candidacy.id'}),
+    field('candidate.id', {label: 'candidate.user_id.label'}),
+    field('candidate.full_name_current', {label: 'full_name'}),
+    'position.title',
+    'position.department.institution.title_current',
+    'position.department.title_current',
+    'position.state_calc_verbose',
+    field('state_verbose', {label: 'candidacy.state'})
+  ],
 
   create_helpdeskadmin: [
     POSITION_FIELDSET,
@@ -234,10 +247,12 @@ export default ApellaGen.extend({
       return candidacy_not_cancelled && before_deadline && owned;
     }),
 
-    // temporarily set to true
-    // should return true is model.position.department == user.department
-    is_dep_candidacy: computed('model.position.department.id', 'user.department', function(){
-      return true;
+    is_dep_candidacy: computed('model.position_department', 'user.role', 'user.department', function(){
+      let is_professor = (get(this, 'user.role') === 'professor'),
+        user_department = get(this, 'user.department') || '',
+        position_department = get(this, 'model.position_department');
+
+      return is_professor && (user_department === position_department);
     }),
 
   },

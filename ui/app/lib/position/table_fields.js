@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {i18nField, get_registry_members} from 'ui/lib/common';
+import {i18nField, get_registry_members, fileField} from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
 import {getFile} from 'ui/utils/files';
 import moment from 'moment';
@@ -18,34 +18,87 @@ const {
   merge, assign
 } = Ember;
 
+let candidacy_quick_details_fs =  {
+    fields: [
+      field('id', {label: 'candidacy.id'}),
+      'candidate.id',
+      'candidate.old_user_id',
+      i18nField('candidate.full_name', {label: 'full_name'}),
+      i18nField('candidate.father_name', {label: 'father_name.label'}),
+      'othersCanView',
+      fileField('cv', 'candidate', 'cv', {
+        readonly: true,
+      }),
+      fileField('diplomas', 'candidate', 'diplomas', {
+        readonly: true
+      }),
+      fileField('publications', 'candidate', 'publications', {
+        readonly: true
+      }),
+      fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+        readonly: true,
+      }, {replace: true}),
+      fileField('attachment_files', 'candidacy', 'attachment_files', {
+        readonly: true,
+        sortBy: 'filename',
+      }, {multiple: true} ),
+    ],
+    layout: {
+      flex: [33, 33, 33, 33, 33, 33, 100, 100, 100, 100, 100]
+    }
+};
+
+let candidacies_colums = [
+    field('id', {label: 'candidacy.id'}),
+    i18nField('candidate.full_name'),
+    field('submitted_at_format', {label: 'submitted_at.label'}),
+    field('updated_at_format', {label: 'updated_at.label'}),
+    field('state_verbose', {label: 'candidacy.state'})
+  ];
+
 // params used for view details of candidacy from position view
 const candidaciesField = function(type, hidden, calc, calc_params) {
   return field('candidacies', {
     refreshValueQuery: true,
     valueQuery: function(store, params, model, value) {
-      let position_id = model.get('id');
+      let position_id = model.get('id'),
+        position_department = model.belongsTo('department').link();
       // no use of params for now
       let query = {
         position: position_id,
         latest: true
       };
-      return store.query('candidacy', query);
+      return store.query('candidacy', query).then(function(candidacies) {
+        return candidacies.setEach('position_department', position_department)
+      });
     },
     label: null,
     modelMeta: {
       row: {
-        fields: [
-          'id',
-          i18nField('candidate.full_name', {label: 'last_name.label'}),
-          field('submitted_at_format', {label: 'submitted_at.label'}),
-          field('updated_at_format', {label: 'updated_at.label'}),
-          field('state_verbose', {label: 'candidacy.state'})
-        ],
-        actions: ['goToDetails', 'remove'],
+        fields: candidacies_colums,
+        actions: ['view_details'],
         actionsMap: {
-          goToDetails: goToDetails(type, hidden, calc, calc_params),
-          remove: { hidden: true }
-        },
+          view_details: {
+            icon: 'open_in_new',
+            detailsMeta: {
+              fieldsets: computed('model', function() {
+                let candidate = get(this, 'model').get('candidate').get('full_name_current');
+                return [candidacy_quick_details_fs];
+              })
+            },
+            action: function() {},
+            permissions: [{resource: 'candidacies', action: 'view'}],
+            label: 'view.professor.details',
+            confirm: true,
+            prompt: {
+              title: computed('model.candidate.full_name_current', function() {
+                return this.get('model').get('candidate.full_name_current')
+              }),
+              cancel: 'close',
+              contentComponent: 'member-quick-view'
+            }
+          }
+        }
       },
     },
     displayComponent: 'gen-display-field-table',
