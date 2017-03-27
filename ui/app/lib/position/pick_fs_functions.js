@@ -81,8 +81,8 @@ const pick_details_fs_by_state = function(fs, state, before_open, head, display_
 
 const pick_details_fs = function() {
   let role = get(this, 'role'),
-    user_id = get(this, 'user.user_id') + '',
-    role_id = get(this, 'user.id') + '',
+    user_id = get(this, 'user.user_id'),
+    role_id = get(this, 'user.id'),
     starts_at = get(this, 'model.starts_at'),
     // ends_at = get(this, 'model.ends_at'),
     state = get(this, 'model.state'),

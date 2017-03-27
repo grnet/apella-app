@@ -109,7 +109,7 @@ const  position = {
       fields: computed('user.role','user.user_id', 'user.id', 'model.electors',
         'model.committee', 'model.can_apply', function() {
         let user = get(this, 'user'),
-          user_id = get(user, 'user_id') + '',
+          user_id = get(user, 'user_id'),
           role = get(user, 'role'),
           position = get(this, 'model'),
           type = 'candidacy',
@@ -176,7 +176,7 @@ const  position = {
               let electors = position.hasMany('electors').ids(),
                 committee = position.hasMany('committee').ids(),
                 related_profs = _.union(electors, committee),
-                professor_id = user.id + '',
+                professor_id = user.id,
                 is_related_prof = related_profs.indexOf(professor_id) > -1;
               if(is_related_prof) {
                 hidden = false;
