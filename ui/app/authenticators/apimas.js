@@ -9,7 +9,7 @@ const {
 
 function mergeProfileData(sessionData, profileResponse) {
   let user = profileResponse.user;
-  user.user_id = user.id;
+  user.user_id = user.id.toString();
   delete user.id;
   delete profileResponse.user;
   if (profileResponse.departments && profileResponse.departments.length) { 
