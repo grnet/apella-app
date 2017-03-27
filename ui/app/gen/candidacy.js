@@ -246,15 +246,6 @@ export default ApellaGen.extend({
       }
       return candidacy_not_cancelled && before_deadline && owned;
     }),
-
-    is_dep_candidacy: computed('model.position_department', 'user.role', 'user.department', function(){
-      let is_professor = (get(this, 'user.role') === 'professor'),
-        user_department = get(this, 'user.department') || '',
-        position_department = get(this, 'model.position_department');
-
-      return is_professor && (user_department === position_department);
-    }),
-
   },
 
   common: {
