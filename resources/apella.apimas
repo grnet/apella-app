@@ -3115,6 +3115,7 @@ spec:
             .drf_collection:
                 model: apella.models.UserApplication
                 mixins: [apella.views.mixins.UserApplicationMixin]
+                filter_fields: [state, app_type]
             .cli_commands: {}
             '*':
                 id:
