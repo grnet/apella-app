@@ -255,7 +255,6 @@ export default ApellaGen.extend({
     }
   },
   list: {
-    layout: 'table',
     actions: [],
 
     getModel: function(params) {

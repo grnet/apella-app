@@ -48,7 +48,6 @@ export default ApellaGen.extend({
       label: 'candidate.menu_label',
       icon: 'people_outline'
     },
-    layout: 'table',
     filter: {
       active: true,
       meta: {

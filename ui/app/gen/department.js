@@ -139,7 +139,6 @@ export default ApellaGen.extend({
     page: {
       title: 'department.menu_label',
     },
-    layout: 'table',
     filter: {
       active: true,
       serverSide: true,

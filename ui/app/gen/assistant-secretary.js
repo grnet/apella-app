@@ -50,7 +50,6 @@ export default ApellaGen.extend({
       params.is_secretary = true;
       return this.store.query('assistant', params);
     },
-    layout: 'table',
     filter: {
       active: true,
       meta: {

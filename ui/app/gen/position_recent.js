@@ -130,7 +130,6 @@ export default ApellaGen.extend({
         }
       })
     },
-    layout: 'table',
     row: {
       fields: computed('role', function(){
         let role = get(this, 'role');

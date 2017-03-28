@@ -60,7 +60,6 @@ export default ApellaGen.extend({
         return (permittedRoles.includes(role) ? true : false);
       })
     },
-    layout: 'table',
     filter: {
       active: true,
       serverSide: true,

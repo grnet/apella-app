@@ -54,7 +54,6 @@ export default ApellaGen.extend({
       search: true,
       searchFields: ['title']
     },
-    layout: 'table',
     row: {
       fields: FIELDS,
       actions: ['gen:details', 'gen:edit', 'remove']

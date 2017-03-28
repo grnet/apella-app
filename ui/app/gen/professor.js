@@ -56,7 +56,6 @@ export default ApellaGen.extend({
         return (forbiddenRoles.includes(role) ? false : true);
       })
     },
-    layout: 'table',
     filter: {
       active: true,
       meta: {

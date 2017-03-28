@@ -25,6 +25,7 @@ const ApellaGen = CRUDGen.extend({
   },
   resourceName: reads('path'),
   list: {
+    layout: 'table',
     sort: {
       serverSide: true,
       active: true

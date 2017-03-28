@@ -276,7 +276,6 @@ export default ApellaGen.extend({
     page: {
       title: 'registry.menu_label'
     },
-    layout: 'table',
     paginate: {
       active: true,
       serverSide: true,
