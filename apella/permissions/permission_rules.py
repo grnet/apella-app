@@ -634,4 +634,8 @@ PERMISSION_RULES = [
     ('user-applications', 'retrieve', 'professor', '*', 'owned', ''),
     ('user-applications', 'retrieve', 'institutionmanager', '*', 'owned', ''),
     ('user-applications', 'retrieve', 'assistant', '*', 'owned', ''),
+    ('user-applications', 'accept_application', 'institutionmanager', '*', 'owned', ''),
+    ('user-applications', 'accept_application', 'assistant', '*', 'owned', ''),
+    ('user-applications', 'reject_application', 'institutionmanager', '*', 'owned', ''),
+    ('user-applications', 'reject_application', 'assistant', '*', 'owned', ''),
 ]

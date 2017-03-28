@@ -507,3 +507,24 @@ class CandidateProfile(object):
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
+
+class UserApplicationActions(object):
+    @detail_route(methods=['post'])
+    def accept_application(self, request, pk=None):
+        application = self.get_object()
+        try:
+            application.state = 'approved'
+            application.save()
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def reject_application(self, request, pk=None):
+        application = self.get_object()
+        try:
+            application.state = 'rejected'
+            application.save()
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_200_OK)
