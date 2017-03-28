@@ -82,5 +82,16 @@
         ["candidacy", "Candidacy"],
         ["position", "Position"],
         ["other", "Other"]
+    ],
+
+    "APPLICATION_TYPES": [
+        ["tenure", "Tenure"],
+        ["renewal", "Renewal"]
+    ],
+
+    "APPLICATION_STATES": [
+        ["pending", "Pending"],
+        ["approved", "Approved"],
+        ["rejected", "Rejected"]
     ]
 }

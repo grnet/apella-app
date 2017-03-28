@@ -3110,3 +3110,53 @@ spec:
                 .list: {}
                 .update: {}
                 .retrieve: {}
+        applications:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.UserApplication
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: users
+                app_type:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                state:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                created_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                    .datetime: {}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                    .datetime: {}
+            actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
