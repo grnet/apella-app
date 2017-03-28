@@ -3110,7 +3110,7 @@ spec:
                 .list: {}
                 .update: {}
                 .retrieve: {}
-        applications:
+        user-applications:
             .collection: {}
             .drf_collection:
                 model: apella.models.UserApplication
