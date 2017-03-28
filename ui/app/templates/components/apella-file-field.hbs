@@ -18,9 +18,6 @@
   {{#each filesSorted as |file|}}
     {{#body.row as |row|}}
       {{#row.cell class="fullwidth"}}{{ file.filename }}{{/row.cell}}
-      {{#if file.description}}
-      {{#row.cell class="fullwidth"}}({{file.description}}){{/row.cell}}
-      {{/if}}
       {{#row.cell class="nowrap"}}{{ moment-format file.updated_at }}{{/row.cell}}
 
       {{#row.cell class="nowrap"}}
