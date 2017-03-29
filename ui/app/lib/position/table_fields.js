@@ -79,6 +79,9 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
         fields: candidacies_colums,
         actions: ['view_details'],
         actionsMap: {
+          remove: {
+            hidden: true
+          },
           view_details: {
             icon: 'open_in_new',
             detailsMeta: {
