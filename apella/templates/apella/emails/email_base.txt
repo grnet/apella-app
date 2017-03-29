@@ -1,7 +1,7 @@
 A translation in English follows
 
 Προς χρήστη {{ user.first_name.el }} {{ user.last_name.el }},
-{% block content_el %}{% endblock content_el %}{% block more_el %}{% if apella_url %}Mπορείτε να δείτε περισσότερα πραγματοποιώντας είσοδο στον λογαριασμό σας ({{ login_url }}) και μεταβαίνοντας στον σύνδεσμο: {{ apella_url }}.{% endif %}
+{% block content_el %}{% endblock content_el %}{% block more_el %}{% if apella_url %}Mπορείτε να δείτε περισσότερα πραγματοποιώντας είσοδο στον λογαριασμό σας ({{ login_url }}) και μεταβαίνοντας στον σύνδεσμο: {{ apella_url }} {% endif %}
 
 ΠΡΟΣΟΧΗ:
 Παρακαλούμε MHN απαντήσετε σε αυτό το e-mail. Για οποιαδήποτε απορία ή διευκρίνιση μπορείτε να επικοινωνήσετε με το Γραφείο Αρωγής Χρηστών (https://apella.minedu.gov.gr/contact).{% endblock more_el %}
