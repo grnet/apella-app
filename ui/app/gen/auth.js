@@ -222,7 +222,7 @@ export default AuthGen.extend({
       }
     ],
     config: {
-      authenticator: 'apimas'
+      authenticator: 'apella'
     },
     templateName: 'apella-login',
     routeMixins: [{
