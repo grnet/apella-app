@@ -61,6 +61,7 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
   return field('candidacies', {
     refreshValueQuery: true,
     valueQuery: function(store, params, model, value) {
+      model = model._content ? model._content : model;
       let position_id = model.get('id'),
         position_department = model.belongsTo('department').link();
       // no use of params for now
