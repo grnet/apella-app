@@ -1,6 +1,6 @@
 import {ApellaGen} from 'ui/lib/common';
 import {field} from 'ember-gen';
-import {acceptApplication, rejectApplication} from 'ui/utils/common/actions';
+import {acceptApplication, rejectApplication, goToProfessor} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -67,10 +67,11 @@ export default ApellaGen.extend({
         }
         return fields;
       }),
-      actions: ['gen:details', 'acceptApplication', 'rejectApplication'],
+      actions: ['gen:details', 'acceptApplication', 'rejectApplication', 'goToProfessor'],
       actionsMap: {
         acceptApplication: acceptApplication,
         rejectApplication: rejectApplication,
+        goToProfessor: goToProfessor,
       }
     }
   },

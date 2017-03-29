@@ -590,7 +590,20 @@ const rejectApplication = {
   }),
 };
 
-
+const  goToProfessor = {
+  label: 'professor.label',
+  icon: 'portrait',
+  action(route, model) {
+    let id = get(this, 'model.user.id');
+    route.store.queryRecord('professor', {user_id: id}).then((professor) => {
+      route.transitionTo('professor.record.index', professor.id);
+    });
+  },
+  hidden: computed('role', function(){
+    let professor = get(this, 'role') === 'professor';
+    if (professor) { return true; }
+  })
+};
 
 let positionActions = {
   cancelPosition: cancelPosition,
@@ -609,6 +622,7 @@ export { goToDetails, applyCandidacy,
   isHelpdesk,
   acceptApplication,
   rejectApplication,
+  goToProfessor,
   positionActions
 };
 
