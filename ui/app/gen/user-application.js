@@ -22,6 +22,9 @@ export default ApellaGen.extend({
           tenured = rank === 'Tenured Assistant Professor';
       return professor && domestic && tenured;
     }),
+    owned: computed('', function(){
+      return true;
+    })
   },
 
   list: {
@@ -49,13 +52,39 @@ export default ApellaGen.extend({
           field('state_verbose', {label: 'state.label'}),
           field('app_type_verbose', {label: 'app_type.label'}),
           field('created_at_format', {label: 'created_at.label'}),
-          field('updated_at_format', {label: 'updated_at.label'})
         ];
         if (role === 'professor' || role === 'candidate') {
           fields.splice(0, 2);
         }
         return fields;
-      })
+      }),
+      actions: ['gen:details'],
     }
   },
+  details: {
+    page: {
+      title: computed.readOnly('model.app_type_verbose')
+    },
+    fieldsets: [{
+      label: 'fieldsets.labels.user_application',
+      fields: computed('role', function(){
+        let role = get(this, 'role');
+        let fields = [
+          field('user.id', {label: 'user_id.label'}),
+          field('user.full_name_current', {label: 'full_name_current.label'}),
+          field('state_verbose', {label: 'state.label'}),
+          field('app_type_verbose', {label: 'app_type.label'}),
+          field('created_at_format', {label: 'created_at.label'}),
+          field('updated_at_format', {label: 'created_at.label'}),
+        ];
+        if (role === 'professor' || role === 'candidate') {
+          fields.splice(0, 2);
+        }
+        return fields;
+      }),
+      layout: {
+        flex: [50, 50, 50, 50, 50, 50]
+      }
+    }]
+  }
 });
