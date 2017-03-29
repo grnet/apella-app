@@ -508,7 +508,8 @@ class CandidateProfile(object):
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
 
-class UserApplicationActions(object):
+
+class UserApplicationMixin(object):
     @detail_route(methods=['post'])
     def accept_application(self, request, pk=None):
         application = self.get_object()
@@ -528,3 +529,17 @@ class UserApplicationActions(object):
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
+
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        if user.is_institutionmanager():
+            queryset = queryset.filter(
+                user__professor__institution=user.institutionmanager.institution)
+        elif user.is_assistant():
+            queryset = queryset.filter(
+                user__professor__department__in=\
+                    user.institutionmanager.departments.all())
+        elif user.is_professor():
+            queryset = queryset.filter(user=user)
+        return queryset
