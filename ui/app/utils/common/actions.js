@@ -17,6 +17,14 @@ function call_utils(route, model) {
   return [url, token, messages];
 }
 
+function application_utils(route, model) {
+  let messages = get(route, 'messageService');
+  let token = get(route, 'user.auth_token');
+  let adapter = route.store.adapterFor('user-application');
+  let url = adapter.buildURL('user-application', get(model, 'id'), 'findRecord');
+  return [url, token, messages];
+}
+
 function managerVerifies(role, model_role) {
   return role === 'institutionmanager' && model_role === 'assistant';
 }
@@ -500,6 +508,90 @@ const change_password = {
   }
 };
 
+// Applications
+
+const acceptApplication = {
+  label: 'accept_application',
+  icon: 'check_circle',
+  action: function(route, model) {
+    let [url, token, messages] = application_utils(route, model);
+    return fetch(url + 'accept_application/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('user_application.accept.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('user_application.accept.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'user_application.accept_application.message',
+    title: 'user_application.prompt.title',
+  },
+  hidden: computed('role', 'model.state', function(){
+    let role = get(this, 'role'),
+        state = get(this, 'model.state');
+    let manager_or_assistant = (role === 'institutionmanager' || role === 'assistant');
+    if (!manager_or_assistant) { return true; }
+    if (state === 'approved')  { return true; }
+  }),
+
+};
+
+const rejectApplication = {
+  label: 'reject_application',
+  icon: 'cancel',
+  accent: true,
+  action: function(route, model) {
+    let [url, token, messages] = application_utils(route, model);
+    return fetch(url + 'reject_application/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('user_application.reject.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('user_application.reject.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'user_application.reject_application.message',
+    title: 'user_application.prompt.title',
+  },
+  hidden: computed('role', 'model.state', function(){
+    let role = get(this, 'role'),
+        state = get(this, 'model.state');
+    let manager_or_assistant = (role === 'institutionmanager' || role === 'assistant');
+    if (!manager_or_assistant) { return true; }
+    if (state === 'rejected')  { return true; }
+  }),
+};
+
+
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
@@ -515,6 +607,8 @@ export { goToDetails, applyCandidacy,
   deactivateUser, activateUser,
   change_password,
   isHelpdesk,
+  acceptApplication,
+  rejectApplication,
   positionActions
 };
 

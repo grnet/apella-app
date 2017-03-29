@@ -1,5 +1,6 @@
 import {ApellaGen} from 'ui/lib/common';
 import {field} from 'ember-gen';
+import {acceptApplication, rejectApplication} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -58,7 +59,11 @@ export default ApellaGen.extend({
         }
         return fields;
       }),
-      actions: ['gen:details'],
+      actions: ['gen:details', 'acceptApplication', 'rejectApplication'],
+      actionsMap: {
+        acceptApplication: acceptApplication,
+        rejectApplication: rejectApplication,
+      }
     }
   },
   details: {
@@ -75,7 +80,7 @@ export default ApellaGen.extend({
           field('state_verbose', {label: 'state.label'}),
           field('app_type_verbose', {label: 'app_type.label'}),
           field('created_at_format', {label: 'created_at.label'}),
-          field('updated_at_format', {label: 'created_at.label'}),
+          field('updated_at_format', {label: 'updated_at.label'}),
         ];
         if (role === 'professor' || role === 'candidate') {
           fields.splice(0, 2);
