@@ -203,6 +203,7 @@ export default {
   'fieldsets.labels.profile_info': 'Στοιχεία προφίλ',
   'fieldsets.labels.sub_info': 'Αναπληρωτής Διαχειριστής Ιδρύματος',
   'fieldsets.labels.user_application': 'Στοιχεία αίτησης',
+  'fieldsets.labels.user_application_create': 'Αίτηση μονιμοποίησης',
   'fieldsets.labels.user_info': 'Στοιχεία λογαριασμού',
   'fieldsets.labels.user_interest': 'Εκδήλωση ενδιαφέροντος',
   'fieldsets.text.assistant_can_edit': 'Τα ακόλουθα πεδία μπορούν να επεξεργαστούν από τον βοηθό.',

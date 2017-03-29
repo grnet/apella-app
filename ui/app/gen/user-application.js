@@ -1,6 +1,6 @@
 import {ApellaGen} from 'ui/lib/common';
 import {field} from 'ember-gen';
-import {acceptApplication, rejectApplication, goToProfessor} from 'ui/utils/common/actions';
+import {applicationActions} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -69,11 +69,33 @@ export default ApellaGen.extend({
       }),
       actions: ['gen:details', 'acceptApplication', 'rejectApplication', 'goToProfessor'],
       actionsMap: {
-        acceptApplication: acceptApplication,
-        rejectApplication: rejectApplication,
-        goToProfessor: goToProfessor,
+        acceptApplication: applicationActions.acceptApplication,
+        rejectApplication: applicationActions.rejectApplication,
+        goToProfessor: applicationActions.goToProfessor,
       }
     }
+  },
+  create: {
+    fieldsets: computed('role', function(){
+      let fields = [
+        field('user', {
+          label: 'user_id.label',
+          formComponent: 'select-model-id-field'
+        }),
+        'app_type'
+      ];
+      if (get(this, 'role') === 'professor') {
+        fields.splice(0,1);
+      }
+      return [{
+        label: 'fieldsets.labels.user_application_create',
+        text: 'fieldsets.text.user_application_create',
+        fields: fields
+      }]
+    }),
+    onSubmit(model) {
+      this.transitionTo('user-application.index');
+    },
   },
   details: {
     page: {

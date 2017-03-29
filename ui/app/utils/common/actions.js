@@ -613,6 +613,12 @@ let positionActions = {
   setSuccessful: setSuccessful
 };
 
+let applicationActions = {
+  rejectApplication: rejectApplication,
+  acceptApplication: acceptApplication,
+  goToProfessor: goToProfessor
+};
+
 export { goToDetails, applyCandidacy,
   cancelCandidacy, goToPosition,
   rejectUser, verifyUser,
@@ -620,9 +626,7 @@ export { goToDetails, applyCandidacy,
   deactivateUser, activateUser,
   change_password,
   isHelpdesk,
-  acceptApplication,
-  rejectApplication,
-  goToProfessor,
-  positionActions
+  positionActions,
+  applicationActions
 };
 

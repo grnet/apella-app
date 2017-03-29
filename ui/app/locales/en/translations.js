@@ -190,6 +190,7 @@ export default {
   'fieldsets.labels.profile_info': 'Profile',
   'fieldsets.labels.sub_info': 'Substitute Institution Manager',
   'fieldsets.labels.user_application': 'Application details',
+  'fieldsets.labels.user_application_create': 'Create application',
   'fieldsets.labels.user_info': 'User',
   'fieldsets.labels.user_interest': 'User interest',
   'fieldsets.text.assistant_can_edit': 'The following fields can only be edited by the assistant.',
