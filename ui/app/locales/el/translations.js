@@ -278,6 +278,7 @@ export default {
   'mobile_phone_number.field': 'κινητό τηλέφωνο',
   'mobile_phone_number.label': 'Κινητό τηλέφωνο',
   'my_candidacy.menu_label': 'Οι Υποψηφιότητές μου',
+  'my_user_application.menu_label': 'Οι Αιτήσεις μου',
   'name_el.label': 'Όνομα (el)',
   'name_en.label': 'Όνομα (en)',
   'new.user.info': 'Εάν διατηρείτε λογαριασμό <strong>χρήστη στην παλιά εφαρμογή</strong>, δε χρειάζεται να δημιουργήσετε νέο λογαριασμό. Μπορείτε να συνδεθείτε στον υφιστάμενο λογαριασμό σας, από την καρτέλα <strong>«Είσοδος»</strong><br><br> Σε διαφορετική περίπτωση, μπορείτε να εγγραφείτε εδώ:',

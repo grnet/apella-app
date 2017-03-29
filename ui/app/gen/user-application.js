@@ -34,7 +34,15 @@ export default ApellaGen.extend({
     },
     menu: {
       icon: 'trending_up',
-       label: 'user_application.menu_label'
+      label: computed('role', function() {
+        let role = get(this, 'role');
+        if (role === 'professor'){
+          return 'my_user_application.menu_label';
+        }
+        else {
+          return 'user_application.menu_label';
+        }
+      }),
     },
     filter: {
       active: true,

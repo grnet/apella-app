@@ -267,6 +267,7 @@ export default {
   'mobile_phone_number.field': 'mobile',
   'mobile_phone_number.label': 'Mobile',
   'my_candidacy.menu_label': 'My Candidacies',
+  'my_user_application.menu_label': 'My Applications',
   'name_el.label': 'Name (el)',
   'name_en.label': 'Name (en)',
   'new.user.info': '<p>If you have an <strong>account in the old application</strong>, you should not register for a new account. You can login to your existing account from the <strong>"Login"</strong> tab.</p><p>Otherwise, you can register here:</p>',
