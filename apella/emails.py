@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.db.models import Q
 
-from apella.util import urljoin, otz, _move_to_timezone
+from apella.util import urljoin, otz, move_to_timezone
 from apella.models import InstitutionManager, UserInterest, \
     ApellaUser
 
@@ -84,8 +84,8 @@ def send_user_email(user, template_subject, template_body, extra_context=()):
 
 
 def send_create_candidacy_emails(candidacy):
-    starts_at = _move_to_timezone(candidacy.position.starts_at, otz)
-    ends_at = _move_to_timezone(candidacy.position.ends_at, otz)
+    starts_at = move_to_timezone(candidacy.position.starts_at, otz)
+    ends_at = move_to_timezone(candidacy.position.ends_at, otz)
     ui_url = get_ui_url()
     candidacy_url = urljoin(ui_url, 'candidacies/', str(candidacy.pk))
     position_url = urljoin(ui_url, 'positions/', str(candidacy.position.pk))
@@ -134,8 +134,8 @@ def send_create_candidacy_emails(candidacy):
 
 
 def send_remove_candidacy_emails(candidacy):
-    starts_at = _move_to_timezone(candidacy.position.starts_at, otz)
-    ends_at = _move_to_timezone(candidacy.position.ends_at, otz)
+    starts_at = move_to_timezone(candidacy.position.starts_at, otz)
+    ends_at = move_to_timezone(candidacy.position.ends_at, otz)
     ui_url = get_ui_url()
     candidacy_url = urljoin(ui_url, 'candidacies/', str(candidacy.pk))
     position_url = urljoin(ui_url, 'positions/', str(candidacy.position.pk))
@@ -240,8 +240,8 @@ def send_emails_file(obj, file_kind, extra_context=()):
         subject = 'apella/emails/position_set_{}_subject.txt'.format(file_kind)
         body = 'apella/emails/position_set_{}_body.txt'.format(file_kind)
         recipients = obj.get_users()
-        starts_at = _move_to_timezone(obj.starts_at, otz)
-        ends_at = _move_to_timezone(obj.ends_at, otz)
+        starts_at = move_to_timezone(obj.starts_at, otz)
+        ends_at = move_to_timezone(obj.ends_at, otz)
         ui_url = get_ui_url()
         position_url = urljoin(ui_url, 'positions/', str(obj.pk))
 
@@ -258,8 +258,8 @@ def send_emails_file(obj, file_kind, extra_context=()):
 
 
 def send_email_elected(obj, elected='elected'):
-    starts_at = _move_to_timezone(obj.starts_at, otz)
-    ends_at = _move_to_timezone(obj.ends_at, otz)
+    starts_at = move_to_timezone(obj.starts_at, otz)
+    ends_at = move_to_timezone(obj.ends_at, otz)
 
     if elected == 'elected':
         recipient = obj.elected
@@ -309,8 +309,8 @@ def send_emails_field(obj, field, update=False):
         recipients = obj.get_users()
 
     if field in position_fields:
-        starts_at = _move_to_timezone(obj.starts_at, otz)
-        ends_at = _move_to_timezone(obj.ends_at, otz)
+        starts_at = move_to_timezone(obj.starts_at, otz)
+        ends_at = move_to_timezone(obj.ends_at, otz)
         ui_url = get_ui_url()
         position_url = urljoin(ui_url, 'positions/', str(obj.pk))
 
@@ -346,8 +346,8 @@ def send_emails_members_change(position, type, old_members, new_members):
         c: committee,
     }
     """
-    starts_at = _move_to_timezone(position.starts_at, otz)
-    ends_at = _move_to_timezone(position.ends_at, otz)
+    starts_at = move_to_timezone(position.starts_at, otz)
+    ends_at = move_to_timezone(position.ends_at, otz)
     ui_url = get_ui_url()
     position_url = urljoin(ui_url, 'positions/', str(position.pk))
     extra_context = {
@@ -521,8 +521,8 @@ def send_emails_members_change(position, type, old_members, new_members):
 
 
 def send_position_create_emails(position):
-    starts_at = _move_to_timezone(position.starts_at, otz)
-    ends_at = _move_to_timezone(position.ends_at, otz)
+    starts_at = move_to_timezone(position.starts_at, otz)
+    ends_at = move_to_timezone(position.ends_at, otz)
     ui_url = get_ui_url()
     position_url = urljoin(ui_url, 'positions/', str(position.pk))
     extra_context = {

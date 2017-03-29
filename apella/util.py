@@ -30,21 +30,21 @@ def strip_timezone(dt):
     return dt.astimezone(utc).replace(tzinfo=None)
 
 
-def _move_to_timezone(dt, tzinfo):
+def move_to_timezone(dt, tzinfo):
     if dt.tzinfo is None:
         dt = utc.localize(dt)
     return dt.astimezone(tzinfo)
 
 
 def at_day_start(dt, tzinfo):
-    dt = _move_to_timezone(dt, tzinfo)
+    dt = move_to_timezone(dt, tzinfo)
     dt = dt.replace(hour=0, minute=0, second=0, microsecond=0)
     dt = strip_timezone(dt)
     return dt
 
 
 def at_day_end(dt, tzinfo):
-    dt = _move_to_timezone(dt, tzinfo)
+    dt = move_to_timezone(dt, tzinfo)
     dt = dt.replace(hour=23, minute=59, second=59, microsecond=999999)
     dt = strip_timezone(dt)
     return dt
