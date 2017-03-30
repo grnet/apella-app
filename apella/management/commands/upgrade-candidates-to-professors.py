@@ -19,7 +19,10 @@ RANKS = {
     'ΛΕΚΤΟΡΑΣ': 'Lecturer',
     'ΕΠΙ ΘΗΤΕΙΑ ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Tenured Assistant Professor',
     'ΑΝΑΠΛΗΡΩΤΗΣ ΚΑΘΗΓΗΤΗΣ': 'Associate Professor',
-    'ΚΑΘΗΓΗΤΗΣ': 'Professor'
+    'ΚΑΘΗΓΗΤΗΣ': 'Professor',
+    'ΚΥΡΙΟΣ ΕΡΕΥΝΗΤΗΣ': 'Principal Researcher',
+    'ΕΝΤΕΤΑΛΜΕΝΟΣ ΕΡΕΥΝΗΤΗΣ': 'Affiliated Researcher',
+    'ΔΙΕΥΘΥΝΤΗΣ ΕΡΕΥΝΩΝ': 'Principal Researcher'
 }
 
 
