@@ -176,7 +176,7 @@ const  position = {
               let electors = position.hasMany('electors').ids(),
                 committee = position.hasMany('committee').ids(),
                 related_profs = _.union(electors, committee),
-                professor_id = user.id,
+                professor_id = user.id + '',
                 is_related_prof = related_profs.indexOf(professor_id) > -1;
               if(is_related_prof) {
                 hidden = false;
