@@ -258,7 +258,11 @@ class RegistriesList(viewsets.GenericViewSet):
         query_params = self.request.query_params
         members = registry.members
         if 'user_id' in query_params:
-            members = members.filter(user_id=query_params['user_id'])
+            try:
+                user_id = int(query_params['user_id'])
+            except ValueError:
+                user_id = 0
+            members = members.filter(user_id=user_id)
         if 'institution' in query_params:
             members = members.filter(institution=query_params['institution'])
         if 'rank' in query_params:
