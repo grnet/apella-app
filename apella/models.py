@@ -604,8 +604,8 @@ class Position(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     subject_area = models.ForeignKey(SubjectArea, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    fek = models.URLField(max_length=255)
-    fek_posted_at = models.DateTimeField()
+    fek = models.URLField(max_length=255, null=True)
+    fek_posted_at = models.DateTimeField(null=True)
 
     electors = models.ManyToManyField(
             Professor, blank=True, through='ElectorParticipation')
@@ -620,8 +620,8 @@ class Position(models.Model):
 
     state = models.CharField(
         choices=common.POSITION_STATES, max_length=30, default='posted')
-    starts_at = models.DateTimeField()
-    ends_at = models.DateTimeField()
+    starts_at = models.DateTimeField(null=True)
+    ends_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(default=datetime.utcnow)
     updated_at = models.DateTimeField(default=datetime.utcnow)
     department_dep_number = models.IntegerField()
@@ -665,6 +665,7 @@ class Position(models.Model):
         on_delete=models.SET_NULL)
     assistant_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='position_assistant_files')
+
 
     def clean(self, *args, **kwargs):
         validate_dates_interval(
@@ -930,6 +931,7 @@ class UserApplication(models.Model):
             return self.user.professor.department in \
                 request.user.institutionmanager.departments.all()
         return False
+
 
 from migration_models import (
     OldApellaUserMigrationData,
