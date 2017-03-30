@@ -67,6 +67,7 @@ function  goToDetails(type, hidden, calc, calc_params) {
 const applyCandidacy = {
   label: 'applyCandidacy',
   icon: 'person_add',
+  classNames: 'md-icon-success',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
   hidden: computed('model.is_open', 'role', 'model.can_apply', function(){
     let is_helpdeskadmin = get(this, 'role') === 'helpdeskadmin';
@@ -334,6 +335,7 @@ const deactivateUser = {
 const activateUser = {
   label: 'activateUser',
   icon: 'check_circle',
+  classNames: 'md-icon-success',
   action(route, model) {
     model.set('is_active', true);
     let m = route.get('messageService');
@@ -362,6 +364,7 @@ const activateUser = {
 const verifyUser = {
   label: 'verify.user',
   icon: 'check_circle',
+  classNames: 'md-icon-success',
   action: function(route, model) {
     let [url, token, messages] = call_utils(route, model);
     return fetch(url + 'verify_user/', {
@@ -513,6 +516,7 @@ const change_password = {
 const acceptApplication = {
   label: 'accept_application',
   icon: 'check_circle',
+  classNames: 'md-icon-success',
   action: function(route, model) {
     let [url, token, messages] = application_utils(route, model);
     return fetch(url + 'accept_application/', {
