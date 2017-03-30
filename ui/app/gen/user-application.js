@@ -33,7 +33,7 @@ export default ApellaGen.extend({
       title: 'user_application.menu_label'
     },
     menu: {
-      icon: 'trending_up',
+      icon: 'send',
       label: computed('role', function() {
         let role = get(this, 'role');
         if (role === 'professor'){
