@@ -1,6 +1,6 @@
 Title: {{ position.title }}
 Code: {{ position.code }}
-Instituion: {{ position.department.institution.title.en }}
+Institution: {{ position.department.institution.title.en }}
 School: {{ position.department.school.title.en }}
 Department: {{ position.department.title.en }}
 Submission Opening Date: {{ starts_at|date:"d/m/Y" }}
