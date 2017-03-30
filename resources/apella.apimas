@@ -3115,6 +3115,7 @@ spec:
             .drf_collection:
                 model: apella.models.UserApplication
                 mixins: [apella.views.mixins.UserApplicationMixin]
+                model_serializers: [apella.serializers.mixins.UserApplications]
                 filter_fields: [state, app_type]
             .cli_commands: {}
             '*':
@@ -3131,6 +3132,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .nullable: {}
                     .ref:
                         to: users
                 app_type:

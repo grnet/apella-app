@@ -206,8 +206,16 @@ class Registries(object):
         department = validated_data.get('department', instance.department)
         members_before = instance.members.all()
         members_after = validated_data.get('members', [])
-        members_to_send = [member for member in members_after
-                if member not in members_before]
+        members_to_send = [
+            member for member in members_after if member not in members_before]
         instance = super(Registries, self).update(instance, validated_data)
         send_registry_emails(members_to_send, department)
         return instance
+
+
+class UserApplications(object):
+    def create(self, validated_data):
+        user = validated_data.get('user', None)
+        if not user:
+            validated_data['user'] = self.context.get('request').user
+        return super(UserApplications, self).create(validated_data)
