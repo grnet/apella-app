@@ -734,9 +734,13 @@ class Position(models.Model):
     def get_candidates_posted(self):
         """
         Returns a list with  all the candidates (users) whose latest candidacy
-        for the position is in state 'posted'
+        for the position is in state 'posted' and are verified and active.
         """
         c_set = self.candidacy_set.all()
+        c_set = c_set.filter(candidate__is_active=True)
+        c_set = c_set.filter(
+            Q(candidate__candidate__is_verified=True) |
+            Q(candidate__professor__is_verified=True))
         updated = c_set.values('candidate').annotate(Max('updated_at')).\
             values('updated_at__max')
         candidacies = c_set.filter(Q(updated_at__in=updated) &
@@ -747,11 +751,15 @@ class Position(models.Model):
         """
         Returns a list with all the users that belong to a committee of the
         position, are electors or candidates whose latest candidacy for the
-        position is in stated 'posted'
+        position is in stated 'posted'.
+        All users are verified and active.
         """
-        committee = [x.user for x in self.committee.all()]
-        electors = [x.user for x in self.electors.all()]
+        committee = [x.user for x in self.committee.filter(is_verified=True).\
+            filter(user__is_active=True)]
+        electors = [x.user for x in self.electors.filter(is_verified=True).\
+            filter(user__is_active=True)]
         candidates = self.get_candidates_posted()
+
         return chain(committee, candidates, electors)
 
     @classmethod
