@@ -300,7 +300,8 @@ def send_emails_field(obj, field, update=False):
     body = 'apella/emails/position_{}_{}_body.txt'.format(verb, field)
 
     if field == 'electors_meeting_to_set_committee_date':
-        electors = [x.user for x in obj.electors.all()]
+        electors = [x.user for x in obj.electors.filter(is_verified=True).\
+            filter(user__is_active=True)]
         candidates = obj.get_candidates_posted()
         recipients = chain(candidates, electors)
 
@@ -366,7 +367,8 @@ def send_emails_members_change(position, type, old_members, new_members):
         # new committee
         if len(old_c) == 0:
             # send to committee
-            recipients = position.committee.all()
+            recipients = position.committee.filter(is_verified=True).\
+                filter(user__is_active=True)
             for recipient in recipients:
                 send_user_email(
                     recipient.user,
@@ -375,7 +377,10 @@ def send_emails_members_change(position, type, old_members, new_members):
                     extra_context)
 
             # send to electors, candidates
-            electors = [x.user for x in position.electors.all()]
+            electors = [x.user for x in position.electors.\
+                filter(is_verified=True).\
+                filter(user__is_active=True)]
+
             candidates = position.get_candidates_posted()
             recipients = chain(candidates, electors)
 
@@ -393,7 +398,9 @@ def send_emails_members_change(position, type, old_members, new_members):
                 p.user for p in new_c if p.user not in added_committee]
 
             # send to electors, candidates, remaining committee
-            electors = [x.user for x in position.electors.all()]
+            electors = [x.user for x in position.electors.\
+                filter(is_verified=True).\
+                filter(user__is_active=True)]
             candidates = position.get_candidates_posted()
             recipients = chain(candidates, electors, remaining_committee)
 
@@ -492,10 +499,17 @@ def send_emails_members_change(position, type, old_members, new_members):
                     'apella/emails/position_remove_elector_to_sub_body.txt',
                     extra_context)
 
-            electors = [p.user for p in position.electors.all()
+
+
+            # send to electors, candidates
+            electors = [p.user for p in position.electors.\
+                filter(is_verified=True).\
+                filter(user__is_active=True)
                 if p not in added_irregular and p not in removed_irregular
                 and p not in added_regular and p not in removed_regular]
-            committee = [p.user for p in position.committee.all()]
+            committee = [p.user for p in position.committee.\
+                filter(is_verified=True).\
+                filter(user__is_active=True)]
             recipients = chain(electors, committee, candidates)
 
             for user in recipients:
