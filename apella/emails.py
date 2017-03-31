@@ -333,6 +333,7 @@ def send_emails_members_change(position, type, old_members, new_members):
     Sends emails to appropriate recipients when members of committee or
     electors are set or updated
 
+
     Args:
         position: Position object
         type(str): Members type ('committee' or 'electors')
@@ -530,9 +531,13 @@ def send_position_create_emails(position):
         Q(department=position.department)). \
         values_list('user', flat=True).distinct()
 
-    for user_id in users_interested:
+    users_to_email = ApellaUser.objects.filter(is_active=True).filter(
+        Q(professor__is_verified=True) |
+        Q(candidate__is_verified=True)).filter(id__in=users_interested)
+
+    for user in users_to_email:
         send_user_email(
-            ApellaUser.objects.get(id=user_id),
+            user,
             'apella/emails/position_create_subject.txt',
             'apella/emails/position_create_to_interested.txt',
             extra_context)
