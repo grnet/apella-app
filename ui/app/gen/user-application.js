@@ -34,6 +34,14 @@ export default ApellaGen.extend({
     },
     menu: {
       icon: 'send',
+      display: computed('role', function(){
+        let role = get(this, 'role'),
+            rank = get(this, 'session.session.authenticated.rank'),
+            domestic = !get(this, 'session.session.authenticated.is_foreign');
+        let professor = role === 'professor',
+            tenured = rank === 'Tenured Assistant Professor';
+        return !(professor && (!domestic || !tenured));
+      }),
       label: computed('role', function() {
         let role = get(this, 'role');
         if (role === 'professor'){
@@ -91,7 +99,7 @@ export default ApellaGen.extend({
         label: 'fieldsets.labels.user_application_create',
         text: 'fieldsets.text.user_application_create',
         fields: fields
-      }]
+      }];
     }),
     onSubmit(model) {
       this.transitionTo('user-application.index');
