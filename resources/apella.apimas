@@ -1812,12 +1812,10 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .string: {}
                 fek_posted_at:
                     .cli_option: {}
                     .field: {}
-                    .required: {}
                     .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 electors:
@@ -1911,13 +1909,11 @@ spec:
                 starts_at:
                     .cli_option: {}
                     .field: {}
-                    .required: {}
                     .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 ends_at:
                     .cli_option: {}
                     .field: {}
-                    .required: {}
                     .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
                 created_at:
