@@ -2339,6 +2339,17 @@ spec:
                             .field: {}
                             .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                             .datetime: {}
+                position_type:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                user_application:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: user-applications
             actions:
                 .list: {}
                 .create: {}

@@ -93,5 +93,11 @@
         ["pending", "Pending"],
         ["approved", "Approved"],
         ["rejected", "Rejected"]
+    ],
+
+    "POSITION_TYPES": [
+        ["election", "Election"],
+        ["tenure", "Tenure"],
+        ["renewal", "Renewal"]
     ]
 }

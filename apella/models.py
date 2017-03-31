@@ -591,6 +591,36 @@ class ProfessorRank(models.Model):
     rank = models.ForeignKey(MultiLangFields)
 
 
+class UserApplication(models.Model):
+    user = models.ForeignKey(ApellaUser)
+    app_type = models.CharField(
+        choices=common.APPLICATION_TYPES, max_length=30, default='tenure')
+    state = models.CharField(
+        choices=common.APPLICATION_STATES, max_length=30, default='pending')
+    created_at = models.DateTimeField(default=datetime.utcnow)
+    updated_at = models.DateTimeField(default=datetime.utcnow)
+
+
+    @classmethod
+    def check_collection_state_can_create(cls, row, request, view):
+        return request.user.is_academic_professor() and \
+            request.user.professor.rank == 'Tenured Assistant Professor'
+
+    def check_resource_state_owned(self, row, request, view):
+        if not self.user.is_academic_professor() or \
+                not self.user.professor.is_verified:
+            return False
+        if self.user == request.user:
+            return True
+        if request.user.is_institutionmanager():
+            return self.user.professor.institution == \
+                request.user.institutionmanager.institution
+        elif request.user.is_assistant():
+            return self.user.professor.department in \
+                request.user.institutionmanager.departments.all()
+        return False
+
+
 class Position(models.Model):
     code = models.CharField(max_length=255)
     old_code = models.CharField(max_length=255)
@@ -665,6 +695,11 @@ class Position(models.Model):
         on_delete=models.SET_NULL)
     assistant_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='position_assistant_files')
+
+    position_type = models.CharField(
+        choices=common.POSITION_TYPES, max_length=30, default='election')
+    user_application = models.ForeignKey(
+        UserApplication, null=True, on_delete=models.SET_NULL)
 
 
     def clean(self, *args, **kwargs):
@@ -901,36 +936,6 @@ class UserInterest(models.Model):
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
-
-
-class UserApplication(models.Model):
-    user = models.ForeignKey(ApellaUser)
-    app_type = models.CharField(
-        choices=common.APPLICATION_TYPES, max_length=30, default='tenure')
-    state = models.CharField(
-        choices=common.APPLICATION_STATES, max_length=30, default='pending')
-    created_at = models.DateTimeField(default=datetime.utcnow)
-    updated_at = models.DateTimeField(default=datetime.utcnow)
-
-
-    @classmethod
-    def check_collection_state_can_create(cls, row, request, view):
-        return request.user.is_academic_professor() and \
-            request.user.professor.rank == 'Tenured Assistant Professor'
-
-    def check_resource_state_owned(self, row, request, view):
-        if not self.user.is_academic_professor() or \
-                not self.user.professor.is_verified:
-            return False
-        if self.user == request.user:
-            return True
-        if request.user.is_institutionmanager():
-            return self.user.professor.institution == \
-                request.user.institutionmanager.institution
-        elif request.user.is_assistant():
-            return self.user.professor.department in \
-                request.user.institutionmanager.departments.all()
-        return False
 
 
 from migration_models import (
