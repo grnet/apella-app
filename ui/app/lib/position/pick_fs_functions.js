@@ -174,6 +174,10 @@ const pick_details_fs = function() {
 
 const pick_create_fs = function() {
   let fs = position.create;
+  let user_application = get(this, 'model.user_application');
+  if (user_application) {
+    return [fs.basic];
+  }
   return [fs.basic].concat(fs.details);
 };
 export { pick_edit_fs, pick_details_fs, pick_create_fs };

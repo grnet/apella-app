@@ -105,6 +105,7 @@ export default DS.Model.extend({
     return this.get('i18n').t(this.get('participation'));
   }),
   past_positions: DS.hasMany('position'),
+  position_type: DS.attr({type: 'select', choices: CHOICES.POSITION_TYPES, defaultValue: 'election'}),
   proceedings_cover_letter: DS.belongsTo('apella-file'),
   revocation_decision: DS.belongsTo('apella-file'),
   second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
@@ -157,6 +158,7 @@ export default DS.Model.extend({
   title: DS.attr(),
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
+  user_application: DS.belongsTo('user_application'),
   // Use in currentUserCandidacy
   user_id: computed.alias('session.session.authenticated.user_id'),
 });

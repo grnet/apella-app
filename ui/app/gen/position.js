@@ -77,7 +77,25 @@ export default ApellaGen.extend({
     onSubmit(model) {
       this.transitionTo('position.record.index', model);
     },
-    fieldsets: pick_create_fs(),
+    getModel(params) {
+      var store = get(this, 'store');
+      if (params.application) {
+        let application = store.findRecord('user-application', params.application);
+
+        return application.then(function(application) {
+          let p = store.createRecord('position', {
+            user_application: application,
+          });
+          return p;
+        });
+      }
+      this.transitionTo('position.index');
+    },
+
+    fieldsets: computed('model.user_application', pick_create_fs),
+    routeMixins: {
+      queryParams: {'application': { refreshModel: true }},
+    }
   },
   list: {
     getModel: function(params) {

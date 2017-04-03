@@ -609,6 +609,21 @@ const  goToProfessor = {
   })
 };
 
+const createPosition = {
+  label: 'createPosition',
+  icon: 'add',
+  permissions: [{'resource': 'positions', 'action': 'create'}],
+  hidden: computed('model.state', function(){
+    let state = get(this, 'model.state');
+    return !(state === 'approved');
+  }),
+  action(route, model){
+    let id = get(model, 'id');
+    route.transitionTo('position.create', { queryParams: { application: id }});
+  }
+};
+
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
@@ -620,7 +635,8 @@ let positionActions = {
 let applicationActions = {
   rejectApplication: rejectApplication,
   acceptApplication: acceptApplication,
-  goToProfessor: goToProfessor
+  goToProfessor: goToProfessor,
+  createPosition: createPosition
 };
 
 export { goToDetails, applyCandidacy,

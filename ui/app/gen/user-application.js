@@ -75,11 +75,12 @@ export default ApellaGen.extend({
         }
         return fields;
       }),
-      actions: ['gen:details', 'acceptApplication', 'rejectApplication', 'goToProfessor'],
+      actions: ['gen:details', 'goToProfessor', 'acceptApplication', 'rejectApplication', 'createPosition'],
       actionsMap: {
         acceptApplication: applicationActions.acceptApplication,
         rejectApplication: applicationActions.rejectApplication,
         goToProfessor: applicationActions.goToProfessor,
+        createPosition: applicationActions.createPosition,
       }
     }
   },
