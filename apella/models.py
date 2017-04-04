@@ -112,6 +112,9 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     def is_helpdesk(self):
         return self.is_helpdeskadmin() or self.is_helpdeskuser()
 
+    def is_ministry(self):
+        return self.role == 'ministry'
+
     def is_institutionmanager(self):
         return self.role == 'institutionmanager'
 

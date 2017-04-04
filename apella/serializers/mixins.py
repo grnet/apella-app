@@ -124,14 +124,14 @@ class HelpdeskUsers(object):
 
     def to_representation(self, obj):
         data = super(HelpdeskUsers, self).to_representation(obj)
-        if obj.is_helpdesk() and \
+        if (obj.is_helpdesk() or obj.is_ministry()) and \
                 self.context['view'].get_view_name() == 'Custom User':
             data = {'user': data}
         return data
 
     def to_internal_value(self, data):
         user = self.context.get('request').user
-        if user.is_helpdesk() and \
+        if (user.is_helpdesk() or user.is_ministry()) and \
                 self.context['view'].get_view_name() == 'Custom User':
             return self.context.get('request').data.get('user')
         return super(HelpdeskUsers, self).to_internal_value(data)
