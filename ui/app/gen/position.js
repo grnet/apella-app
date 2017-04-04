@@ -89,7 +89,7 @@ export default ApellaGen.extend({
           return p;
         });
       }
-      this.transitionTo('position.index');
+      return store.createRecord(get(this, 'modelName'));
     },
 
     fieldsets: computed('model.user_application', pick_create_fs),

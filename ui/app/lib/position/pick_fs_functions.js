@@ -175,7 +175,7 @@ const pick_details_fs = function() {
 const pick_create_fs = function() {
   let fs = position.create;
   let user_application = get(this, 'model.user_application');
-  if (user_application) {
+  if (user_application && user_application.content) {
     return [fs.basic];
   }
   return [fs.basic].concat(fs.details);
