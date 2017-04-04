@@ -695,7 +695,6 @@ class Position(models.Model):
         on_delete=models.SET_NULL)
     assistant_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='position_assistant_files')
-
     position_type = models.CharField(
         choices=common.POSITION_TYPES, max_length=30, default='election')
     user_application = models.ForeignKey(
@@ -703,10 +702,11 @@ class Position(models.Model):
 
 
     def clean(self, *args, **kwargs):
-        validate_dates_interval(
-            self.starts_at,
-            self.ends_at,
-            settings.START_DATE_END_DATE_INTERVAL)
+        if self.is_election_type:
+            validate_dates_interval(
+                self.starts_at,
+                self.ends_at,
+                settings.START_DATE_END_DATE_INTERVAL)
         super(Position, self).clean(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
@@ -718,7 +718,10 @@ class Position(models.Model):
             institution_id=self.department.institution.id).exists()
 
     def check_resource_state_open(self, row, request, view):
-        return self.state == 'posted' and self.ends_at > datetime.utcnow()
+        if self.is_election_type:
+            return self.state == 'posted' and self.ends_at > datetime.utcnow()
+        else:
+            return True
 
     def check_resource_state_revoked(self, row, request, view):
         user = request.user
@@ -731,7 +734,10 @@ class Position(models.Model):
 
     def check_resource_state_before_open(self, row, request, view):
         user = request.user
-        before_open = self.starts_at > datetime.utcnow()
+        if self.is_election_type:
+            before_open = True
+        else:
+            before_open = self.starts_at > datetime.utcnow()
         if user.is_institutionmanager() or user.is_helpdeskadmin():
             return before_open
         elif user.is_assistant():
@@ -741,7 +747,10 @@ class Position(models.Model):
     def check_resource_state_after_closed(self, row, request, view):
         user = request.user
         is_posted = self.state == 'posted'
-        after_closed = self.ends_at < datetime.utcnow() and is_posted
+        if self.is_election_type:
+            after_closed = True
+        else:
+            after_closed = self.ends_at < datetime.utcnow() and is_posted
         if user.is_institutionmanager() or user.is_helpdeskadmin():
             return after_closed
         elif user.is_assistant():
@@ -804,6 +813,14 @@ class Position(models.Model):
             user_id=request.user.id,
             manager_role='assistant',
             can_create_positions=True).exists()
+
+    @property
+    def is_election_type(self):
+        return self.position_type == 'election'
+
+    @property
+    def is_tenure_type(self):
+        return self.position_type == 'tenure'
 
 
 class ElectorParticipation(models.Model):

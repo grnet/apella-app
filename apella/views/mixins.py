@@ -150,6 +150,10 @@ class PositionMixin(object):
                     department=user.professor.department).
                     values_list('code', flat=True))
                 position_codes += department_position_codes
+
+            position_codes += list(
+                user.userapplication_set.values_list(
+                'position__code', flat=True))
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=now) |
                 Q(code__in=position_codes) |
@@ -182,8 +186,8 @@ class PositionMixin(object):
                                            Q(ends_at__lte=now))
 
             elif state_query == 'before_closed':
-                queryset = queryset.filter(Q(state='posted') &
-                                           Q(ends_at__gt=now))
+                queryset = queryset.filter((Q(state='posted') &
+                                           Q(ends_at__gt=now)) | Q(ends_at=None))
         queryset = queryset.distinct()
         return queryset
 

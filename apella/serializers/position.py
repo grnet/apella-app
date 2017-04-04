@@ -15,7 +15,7 @@ from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
     validate_position_committee, validate_position_electors, \
-    validate_position_state
+    validate_position_state, validate_tenure_candidacy
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
@@ -116,7 +116,23 @@ class PositionMixin(ValidatorMixin):
         committee = data.pop('committee', [])
         ranks = data.pop('ranks', [])
 
-        if not user.is_helpdeskadmin():
+        user_application = data.get('user_application', None)
+        instance = getattr(self, 'instance')
+        creating = False
+        if not instance:
+            creating = True
+
+        if user_application is not None:
+            if creating and \
+                    Position.objects.filter(user_application=user_application). \
+                    exists():
+                raise serializers.ValidationError(
+                    'A position already exists for this application')
+
+            position_type = user_application.app_type
+            data['position_type'] = position_type
+
+        if not user.is_helpdeskadmin() and position_type == 'election':
             if 'starts_at' in data:
                 after_today_validator(data['starts_at'])
             if 'fek_posted_at' in data:
@@ -130,8 +146,10 @@ class PositionMixin(ValidatorMixin):
 
     def _normalize_dates(self, validated_data):
         starts_at = validated_data.get('starts_at', None)
-        if starts_at is not None:
-            validated_data['starts_at'] = at_day_start(starts_at, otz)
+        if starts_at is None:
+            starts_at = datetime.utcnow()
+        validated_data['starts_at'] = \
+            at_day_start(starts_at, otz) - timedelta(days=1)
 
         ends_at = validated_data.get('ends_at', None)
         if ends_at is not None:
@@ -300,13 +318,15 @@ class CandidacyMixin(object):
             position = instance.position
             candidate = instance.candidate
             if not user.is_helpdeskadmin():
-                if data:
+                if data and position.is_election_type:
                     validate_now_is_between_dates(
                         position.starts_at, position.ends_at)
             if creating:
                 validate_candidate_files(candidate)
                 validate_unique_candidacy(position, candidate)
                 validate_position_state(position)
+                if position.is_tenure_type:
+                    validate_tenure_candidacy(position, candidate)
 
         data = super(CandidacyMixin, self).validate(data)
         data['attachment_files'] = attachment_files
