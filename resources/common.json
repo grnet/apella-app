@@ -5,7 +5,8 @@
         ["professor", "Professor"],
         ["helpdeskadmin", "Helpdesk Admin"],
         ["helpdeskuser", "Helpdesk User"],
-        ["assistant", "Assistant"]
+        ["assistant", "Assistant"],
+        ["ministry", "Ministry Administrator"]
     ],
 
     "POSITION_STATES": [
