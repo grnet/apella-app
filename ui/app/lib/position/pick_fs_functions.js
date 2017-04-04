@@ -15,10 +15,15 @@ const pick_edit_fs = function() {
     state = get(this, 'model.state'),
     now = moment(),
     before_open = now.isBefore(starts_at),
+    position_type = get(this, 'model.position_type'),
     open = now.isBetween(starts_at, ends_at, null, []),
     fs = position.edit,
-    head = [fs.basic, fs.details, fs.assistant_files],
     res;
+
+  let head = [fs.basic, fs.details, fs.assistant_files];
+  if (position_type === 'tenure') {
+    head = [fs.basic, fs.assistant_files];
+  }
 
   if(state === 'posted') {
     if(before_open) {
@@ -89,7 +94,7 @@ const pick_details_fs = function() {
     now = moment(),
     before_open = now.isBefore(starts_at),
     fs = position.details,
-    head = [fs.basic, fs.details, fs.assistant_files],
+    position_type = get(this, 'model.position_type'),
     position_model = get(this, 'model'),
     store = get(position_model, 'store'),
     /*
@@ -100,6 +105,12 @@ const pick_details_fs = function() {
     committees_members_ids, electors_ids, participations_in_position,
     display_candidacies = false,
     limited_permissions = false;
+
+  let head = [fs.basic, fs.details, fs.assistant_files];
+  if (position_type === 'tenure') {
+    head = [fs.basic, fs.assistant_files];
+  }
+
   if(roles_conditional_candidacies.indexOf(role) > -1) {
     let candidacies = [];
 

@@ -218,7 +218,7 @@ export default ApellaGen.extend({
     }
   },
   edit: {
-    fieldsets: computed('role', 'model.state', 'model.starts_at', 'model.ends_at', pick_edit_fs),
+    fieldsets: computed('role', 'model.state', 'model.starts_at', 'model.ends_at', 'model.position_type', pick_edit_fs),
   },
   details: {
     /*
@@ -248,6 +248,6 @@ export default ApellaGen.extend({
     partials: {
       top: 'position-top'
     },
-    fieldsets: computed('role', 'user.id', 'user.user_id', 'model.state', 'model.starts_at', 'model.ends_at', pick_details_fs),
+    fieldsets: computed('role', 'user.id', 'user.user_id', 'model.state', 'model.starts_at', 'model.ends_at', 'model.position_type', pick_details_fs),
   }
 });

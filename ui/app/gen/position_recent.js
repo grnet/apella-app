@@ -173,6 +173,6 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.code')
     },
-    fieldsets: computed('role', 'user.id', 'user.user_id', 'model.state', 'model.starts_at', 'model.ends_at', pick_details_fs),
+    fieldsets: computed('role', 'user.id', 'user.user_id', 'model.state', 'model.starts_at', 'model.ends_at', 'model.position_type',  pick_details_fs),
   }
 });
