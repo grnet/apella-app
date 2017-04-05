@@ -1,6 +1,6 @@
 import {ApellaGen} from 'ui/lib/common';
 import {field} from 'ember-gen';
-import {applicationActions} from 'ui/utils/common/actions';
+import {applicationActions, goToPosition} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -75,12 +75,14 @@ export default ApellaGen.extend({
         }
         return fields;
       }),
-      actions: ['gen:details', 'goToProfessor', 'acceptApplication', 'rejectApplication', 'createPosition'],
+      actions: ['gen:details', 'goToProfessor', 'goToPosition', 'acceptApplication', 'rejectApplication', 'createPosition', 'applyApplicationCandidacy'],
       actionsMap: {
         acceptApplication: applicationActions.acceptApplication,
         rejectApplication: applicationActions.rejectApplication,
         goToProfessor: applicationActions.goToProfessor,
         createPosition: applicationActions.createPosition,
+        applyApplicationCandidacy: applicationActions.applyApplicationCandidacy,
+        goToPosition: goToPosition,
       }
     }
   },
