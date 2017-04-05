@@ -3165,6 +3165,14 @@ spec:
                     .readonly: {}
                     .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
                     .datetime: {}
+                position_id:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .integer: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_position_from_application
             actions:
                 .list: {}
                 .create: {}

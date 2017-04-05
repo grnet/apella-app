@@ -26,6 +26,13 @@ from apella.common import RANKS
 logger = logging.getLogger(__name__)
 
 
+def get_position_from_application(instance):
+    positions = instance.position_set.order_by('-id')
+    if len(positions) > 0:
+        return positions[0].id
+    else:
+        return 0
+
 def get_electors_regular_internal(instance):
     eps = instance.electorparticipation_set.filter(
         is_regular=True,
