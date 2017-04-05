@@ -93,8 +93,8 @@ export default DS.Model.extend({
       start = moment(get(this, 'starts_at')).startOf('day'),
       ends_at = get(this, 'ends_at'),
       end = moment(get(this, 'ends_at')).endOf('day'),
-      tenure = get(this, 'position_type') === 'tenure';
-    return now.isBetween(start, end) || (tenure && !ends_at);
+      election = get(this, 'position_type') === 'election';
+    return now.isBetween(start, end) || (!election && !ends_at);
   }),
   // is_posted is true for the positions that are not yet open
   is_posted: computed('state', 'is_closed', 'is_open', function(){
