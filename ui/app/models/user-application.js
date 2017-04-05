@@ -1,14 +1,8 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import {computeDateTimeFormat, computeI18NChoice} from 'ui/lib/common';
+import {computeDateTimeFormat, computeI18NChoice, prefixSelect} from 'ui/lib/common';
 
 const CHOICES = ENV.APP.resources;
-function prefixSelect(arr, prefix) {
-  arr.map(function(el) {
-    return el[1] = `${prefix}${el[1]}`;
-  });
-  return arr;
-}
 
 let application_types = prefixSelect(CHOICES.APPLICATION_TYPES, 'user_application.');
 let application_states = prefixSelect(CHOICES.APPLICATION_STATES, 'user_application.');

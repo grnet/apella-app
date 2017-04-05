@@ -267,12 +267,20 @@ function emptyArrayResult(store, modelName) {
   let promise = Ember.RSVP.resolve(emptyResult);
 
   return DS.PromiseArray.create({promise});
-};
+}
+
+function prefixSelect(arr, prefix) {
+  arr.map(function(el) {
+    return el[1] = `${prefix}${el[1]}`;
+  });
+  return arr;
+}
 
 export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
-  preloadRelations, emptyArrayResult
+  preloadRelations, emptyArrayResult,
+  prefixSelect
 };
 
