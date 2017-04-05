@@ -491,9 +491,15 @@ const  goToPosition = {
   label: 'position_details.label',
   icon: 'event_available',
   action(route, model) {
-    let position_id = get(this, 'model.position.id');
+    let position_id = get(this, 'model.position.id') || get(this, 'model.position_id');
     route.transitionTo('position.record.index', position_id);
-  }
+  },
+  hidden: computed('model.position_id', 'model.position.id', function(){
+    if (get(this, 'model.position_id') > 0 || get(this, 'model.position.id')) {
+      return false;
+    }
+    return true;
+  })
 };
 
 const change_password = {
