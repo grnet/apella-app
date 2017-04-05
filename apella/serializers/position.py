@@ -365,6 +365,12 @@ class CandidacyMixin(object):
         send_create_candidacy_emails(obj)
         logger.info('successfully created candidacy %s for candidate %s' %
             (str(obj.id), str(obj.candidate.id)))
+
+        position = validated_data.get('position', None)
+        ends_at = validated_data.get('ends_at', None)
+        if not position.is_election_type and ends_at is None:
+            position.ends_at = at_day_start(datetime.utcnow(), otz)
+            position.save()
         return obj
 
     def update(self, instance, validated_data):
