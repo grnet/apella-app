@@ -86,13 +86,19 @@ const  position = {
   details: {
     basic: {
       label: 'fieldsets.labels.basic_info',
-      fields: ['code', 'old_code', 'state_calc_verbose', 'title',
+      fields: computed('model.position_type', function(){
+        let fields = ['code', 'old_code', 'state_calc_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
         'department.institution.title_current',
         'discipline', 'description', field('subject_area.title_current',{label: 'subject_area.label'}),
-        field('subject.title_current', {label: 'subject.label'})],
+        field('subject.title_current', {label: 'subject.label'})];
+        if (get(this, 'model.position_type') !== 'election') {
+          fields.push(field('position_type_verbose', {label: 'position_type.label'}));
+        }
+        return fields;
+      }),
       layout: {
-        flex: [25, 25, 50, 50, 50, 50, 50, 100, 50, 50]
+        flex: [25, 25, 50, 50, 50, 50, 50, 100, 50, 50, 100]
       }
     },
     details: {
@@ -321,6 +327,7 @@ const  position = {
           is_closed = get(this, 'model.is_closed'),
           before_open = (!(is_open || is_closed) && (state === 'posted')),
           title, department, description, discipline, subject_area, subject,
+          is_not_type_election = get(this, 'model.position_type') !== 'election',
           disable_fields = true,
           institution_roles = ['institutionmanager', 'assistant'],
           helpdesk_roles = ['helpdeskadmin', 'helpdeskuser'];
@@ -396,11 +403,15 @@ const  position = {
           subject_area = 'subject_area';
           subject = 'subject';
         }
-        return [disable_field('code'), disable_field('old_code'), disable_field('state_calc_verbose'),
+        let fields = [disable_field('code'), disable_field('old_code'), disable_field('state_calc_verbose'),
         department, title, description, discipline, subject_area, subject];
+        if (is_not_type_election) {
+          fields.push(disable_field('position_type'));
+        }
+        return fields;
       }),
       layout: {
-        flex: [50, 50, 50, 50, 100, 100, 100, 50, 50]
+        flex: [50, 50, 50, 50, 100, 100, 100, 50, 50, 100]
       }
     },
     details: {

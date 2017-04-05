@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import {computeI18NChoice, computeDateFormat, computeDateTimeFormat} from 'ui/lib/common';
+import {computeI18NChoice, computeDateFormat, computeDateTimeFormat, prefixSelect} from 'ui/lib/common';
 
 const {
   computed,
@@ -13,6 +13,8 @@ let extra_position_states = [["open", "Open"], ["closed", "Closed"]];
 let position_states_expanded = CHOICES.POSITION_STATES.insertAt(2, extra_position_states[0]).insertAt(3, extra_position_states[1]);
 // remove state "draft" from position states expanded array
 position_states_expanded.splice(0,1);
+
+let position_types = prefixSelect(CHOICES.POSITION_TYPES, 'position_type.');
 
 
 export default DS.Model.extend({
@@ -107,7 +109,8 @@ export default DS.Model.extend({
     return this.get('i18n').t(this.get('participation'));
   }),
   past_positions: DS.hasMany('position'),
-  position_type: DS.attr({type: 'select', choices: CHOICES.POSITION_TYPES, defaultValue: 'election'}),
+  position_type: DS.attr({type: 'select', choices: position_types, defaultValue: 'election'}),
+  position_type_verbose: computeI18NChoice('position_type', position_types),
   proceedings_cover_letter: DS.belongsTo('apella-file'),
   revocation_decision: DS.belongsTo('apella-file'),
   second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
