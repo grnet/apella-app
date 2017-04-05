@@ -25,13 +25,45 @@ const FILES_FIELDSET = {
   }),
   fields: [
     fileField('cv', 'professor', 'cv', {
+      readonly: computed('role', function() {
+        let user_role = get(this, 'role'),
+          forbid_edit_roles = ['helpdeskuser', 'ministry'];
+        if(forbid_edit_roles.indexOf(user_role) > -1) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
     }, {
       replace: true
     }),
-    fileField('diplomas', 'professor', 'diploma', {}, {
+    fileField('diplomas', 'professor', 'diploma', {
+      readonly: computed('role', function() {
+        let user_role = get(this, 'role'),
+          forbid_edit_roles = ['helpdeskuser', 'ministry'];
+        if(forbid_edit_roles.indexOf(user_role) > -1) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+    }, {
       multiple: true
     }),
-    fileField('publications', 'professor', 'publication', {}, {
+    fileField('publications', 'professor', 'publication', {
+      readonly: computed('role', function() {
+        let user_role = get(this, 'role'),
+          forbid_edit_roles = ['helpdeskuser', 'ministry'];
+        if(forbid_edit_roles.indexOf(user_role) > -1) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+    }, {
       multiple: true
     }),
   ],
@@ -59,7 +91,18 @@ const FIELDS = computed('model.is_foreign', function(){
       })
     }),
     fileField('cv_professor', 'professor', 'cv_professor', {
-      readonly: or('user.is_verified', 'user.verification_pending'),
+      readonly: computed('role', 'user.is_verified', 'user.verification_pending', function() {
+        let user_role = get(this, 'role'),
+          forbid_edit_roles = ['helpdeskuser', 'ministry'],
+          is_verified = get(this, 'user.is_verified'),
+          verification_pending = get(this, 'user.verification_pending');
+        if(forbid_edit_roles.indexOf(user_role) > -1 || is_verified || verification_pending) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }),
       required: not('model.changeset.cv_in_url'),
       disabled: computed('model.changeset.cv_in_url', function() {
         let check = get(this, 'model.changeset.cv_in_url');

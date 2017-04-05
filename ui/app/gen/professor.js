@@ -104,7 +104,7 @@ export default ApellaGen.extend({
         USER.FIELDSET_DETAILS_VERIFIABLE,
         PROFESSOR.FIELDSET,
       ]
-      if (role === 'helpdeskadmin' || role === 'helpdeskuser' ) {
+      if (role === 'helpdeskadmin' || role === 'helpdeskuser' || role === 'ministry') {
         f.push(PROFESSOR.FILES_FIELDSET);
       }
       return f;
