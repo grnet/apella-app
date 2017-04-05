@@ -30,7 +30,7 @@ def position_can_accept_candidacies(instance):
     positions = instance.position_set.order_by('-id')
     if len(positions) > 0:
         position = positions[0]
-        if position.ends_at:
+        if position.ends_at is None:
             return True
     return False
 
