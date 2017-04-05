@@ -26,6 +26,15 @@ from apella.common import RANKS
 logger = logging.getLogger(__name__)
 
 
+def position_can_accept_candidacies(instance):
+    positions = instance.position_set.order_by('-id')
+    if len(positions) > 0:
+        position = positions[0]
+        if position.ends_at:
+            return True
+    return False
+
+
 def get_position_from_application(instance):
     positions = instance.position_set.order_by('-id')
     if len(positions) > 0:
