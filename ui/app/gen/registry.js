@@ -75,6 +75,9 @@ function membersAllModelMeta(serverSide, hideQuickView) {
                   hidden = false;
                 }
               }
+              else if (role === 'ministry') {
+                hidden = false;
+              }
               return hidden;
             }
           }),
