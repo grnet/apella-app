@@ -123,7 +123,7 @@ export default ApellaGen.extend({
       meta: {
         fields: computed('user.role', function() {
           let user_role = get(this, 'user.role'),
-            roles_institution = ['helpdeskadmin', 'helpdeskuser'],
+            roles_institution = ['helpdeskadmin', 'helpdeskuser', 'ministry'],
             roles_department = ['institutionmanager', 'assistant'],
             filter_model, dataKey, user_institution;
 
@@ -138,6 +138,11 @@ export default ApellaGen.extend({
             filter_model = 'department';
             dataKey = 'department';
             user_institution = get(this, 'user.institution').split('/').slice(-2)[0];
+          }
+          // Default filters
+          else {
+            filter_model = 'institution';
+            dataKey = 'department__institution';
           }
           return [
             field(filter_model, {
