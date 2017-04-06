@@ -222,4 +222,4 @@ class UserApplications(object):
 
     def update(self, instance, validated_data):
         validated_data['updated_at'] = datetime.utcnow()
-    return super(UserApplications, self).update(instance, validated_data)
+        return super(UserApplications, self).update(instance, validated_data)
