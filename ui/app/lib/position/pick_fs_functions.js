@@ -20,9 +20,9 @@ const pick_edit_fs = function() {
     fs = position.edit,
     res;
 
-  let head = [fs.basic, fs.details, fs.assistant_files];
-  if (position_type === 'tenure') {
-    head = [fs.basic, fs.assistant_files];
+  let head = [fs.basic, fs.assistant_files];
+  if (position_type === 'election') {
+    head = [fs.basic, fs.details, fs.assistant_files];
   }
 
   if(state === 'posted') {
@@ -106,9 +106,9 @@ const pick_details_fs = function() {
     display_candidacies = false,
     limited_permissions = false;
 
-  let head = [fs.basic, fs.details, fs.assistant_files];
-  if (position_type === 'tenure') {
-    head = [fs.basic, fs.assistant_files];
+  let head = [fs.basic, fs.assistant_files];
+  if (position_type === 'election') {
+    head = [fs.basic, fs.details, fs.assistant_files];
   }
 
   if(roles_conditional_candidacies.indexOf(role) > -1) {
