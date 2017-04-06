@@ -149,7 +149,7 @@ export default ApellaGen.extend({
           if (role == 'institutionmanager' || role == 'assistant') {
             return ['school']
           }
-          return ['school', 'institution']
+          return ['institution']
         })
       },
     },
