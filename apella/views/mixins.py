@@ -126,6 +126,14 @@ class PositionMixin(object):
         now = datetime.utcnow()
         queryset = self.queryset
         user = self.request.user
+
+        if 'pk' in self.kwargs:
+            queryset = queryset.filter(id=self.kwargs['pk'])
+        else:
+            ids = queryset.values('code').annotate(Min('id')). \
+                values('id__min')
+            queryset = queryset.filter(id__in=ids)
+
         if user.is_institutionmanager():
             queryset = queryset.filter(
                 department__in=user.institutionmanager.
@@ -153,12 +161,6 @@ class PositionMixin(object):
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=now) |
                 Q(code__in=position_codes))
-        if 'pk' in self.kwargs:
-            queryset = queryset.filter(id=self.kwargs['pk'])
-        else:
-            ids = queryset.values('code').annotate(Min('id')). \
-                values('id__min')
-            queryset = queryset.filter(id__in=ids)
 
         state_query = self.request.GET.get('state_expanded')
         if state_query:
