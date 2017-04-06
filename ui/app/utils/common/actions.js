@@ -623,9 +623,10 @@ const createPosition = {
   label: 'createPosition',
   icon: 'add',
   permissions: [{'resource': 'positions', 'action': 'create'}],
-  hidden: computed('model.state', function(){
+  hidden: computed('model.state', 'model.position_id', function(){
     let state = get(this, 'model.state');
-    return !(state === 'approved');
+    let has_position = get(this, 'model.position_id') > 0;
+    return !(state === 'approved') || has_position;
   }),
   action(route, model){
     let id = get(model, 'id');
