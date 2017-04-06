@@ -30,7 +30,15 @@ export default ApellaGen.extend({
 
   list: {
     page: {
-      title: 'user_application.menu_label'
+      title: computed('role', function() {
+        let role = get(this, 'role');
+        if (role === 'professor'){
+          return 'my_user_application.menu_label';
+        }
+        else {
+          return 'user_application.menu_label';
+        }
+      }),
     },
     menu: {
       icon: 'send',
