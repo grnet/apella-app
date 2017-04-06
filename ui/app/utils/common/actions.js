@@ -122,13 +122,19 @@ const cancelPosition = {
   action(route, model) {
     model.set('state', 'cancelled');
     let m = route.get('messageService');
-    model.save().then((value) => {
-      m.setSuccess('form.saved');
-      return value;
-    }, (reason) => {
-      model.rollbackAttributes();
-      m.setError('reason.errors');
-      return reason.errors;
+    let promises = [
+      get(model, 'subject'),
+      get(model, 'subject_area')
+    ];
+    return Ember.RSVP.all(promises).then((res) => {
+      model.save().then((value) => {
+        m.setSuccess('form.saved');
+        return value;
+      }, (reason) => {
+        model.rollbackAttributes();
+        m.setError('reason.errors');
+        return reason.errors;
+      });
     });
   },
   permissions: [{action: 'edit'}],
