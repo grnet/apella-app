@@ -219,3 +219,7 @@ class UserApplications(object):
         if not user:
             validated_data['user'] = self.context.get('request').user
         return super(UserApplications, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        validated_data['updated_at'] = datetime.utcnow()
+    return super(UserApplications, self).update(instance, validated_data)
