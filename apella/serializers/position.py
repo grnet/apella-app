@@ -138,6 +138,7 @@ class PositionMixin(ValidatorMixin):
         if not instance:
             creating = True
 
+        position_type = 'election'
         if user_application is not None:
             if creating and \
                     Position.objects.filter(user_application=user_application). \
@@ -378,7 +379,8 @@ class CandidacyMixin(object):
         position = validated_data.get('position', None)
         ends_at = validated_data.get('ends_at', None)
         if not position.is_election_type and ends_at is None:
-            position.ends_at = at_day_start(datetime.utcnow(), otz)
+            position.ends_at = \
+                at_day_start(datetime.utcnow(), otz) - timedelta(hours=1)
             position.save()
         return obj
 
