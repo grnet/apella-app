@@ -509,6 +509,7 @@ export default {
   'user_application.accept.error': 'Σφάλμα κατά την έγκριση της αίτησης',
   'user_application.accept.success': 'Επιτυχής έγκριση αίτησης',
   'user_application.accept_application.message': 'Είστε σίγουρος/η ότι θέλετε να αποδεχτείτε την αίτηση;',
+  'user_application.id.label': 'Κωδικός αίτησης',
   'user_application.menu_label': 'Διαχείριση αιτήσεων',
   'user_application.prompt.title': 'Αξιολόγηση αίτησης',
   'user_application.reject.error': 'Σφάλμα κατά την απόρριψη της αίτησης',

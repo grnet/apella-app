@@ -72,6 +72,7 @@ export default ApellaGen.extend({
       fields: computed('role', function(){
         let role = get(this, 'role');
         let fields = [
+          field('id', {label: 'user_application.id.label'}),
           field('user.id', {label: 'user_id.label'}),
           field('user.full_name_current', {label: 'full_name_current.label'}),
           field('state_verbose', {label: 'state.label'}),
@@ -79,7 +80,7 @@ export default ApellaGen.extend({
           field('created_at_format', {label: 'created_at.label'}),
         ];
         if (role === 'professor' || role === 'candidate') {
-          fields.splice(0, 2);
+          fields.splice(1, 2);
         }
         return fields;
       }),

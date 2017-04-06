@@ -495,6 +495,7 @@ export default {
   'user_application.accept.error': 'Error in accepting application',
   'user_application.accept.success': 'Successfully accepted application',
   'user_application.accept_application.message': 'Are you sure you want to accept the application?',
+  'user_application.id.label': 'Application ID',
   'user_application.menu_label': 'Applications',
   'user_application.prompt.title': 'Evaluate application',
   'user_application.reject.error': 'Error in rejecting application',
