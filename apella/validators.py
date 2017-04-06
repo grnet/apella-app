@@ -128,3 +128,8 @@ def validate_position_electors(r_i, r_e, s_i, s_e, dep_number):
         if sub != 11:
             raise ValidationError(
                 _('Substitute electors must be exactly 11'))
+
+
+def validate_position_state(position):
+        if position.state == 'cancelled':
+            raise ValidationError(_('Cancelled position'))

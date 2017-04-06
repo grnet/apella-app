@@ -14,7 +14,8 @@ from apella.models import Position, InstitutionManager, Candidacy, \
 from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
-    validate_position_committee, validate_position_electors
+    validate_position_committee, validate_position_electors, \
+    validate_position_state
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
@@ -305,6 +306,7 @@ class CandidacyMixin(object):
             if creating:
                 validate_candidate_files(candidate)
                 validate_unique_candidacy(position, candidate)
+                validate_position_state(position)
 
         data = super(CandidacyMixin, self).validate(data)
         data['attachment_files'] = attachment_files
