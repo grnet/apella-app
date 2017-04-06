@@ -138,7 +138,8 @@ const cancelPosition = {
     });
   },
   permissions: [{action: 'edit'}],
-  hidden: computed('model.is_posted', function(){
+  hidden: computed('model.is_posted', 'role', function(){
+    if (get(this, 'role') === 'helpdeskadmin') { return false;}
     return !get(this, 'model.is_posted');
   }),
   confirm: true,
