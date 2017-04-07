@@ -1,6 +1,7 @@
 import {ApellaGen} from 'ui/lib/common';
 import {field} from 'ember-gen';
 import {applicationActions, goToPosition} from 'ui/utils/common/actions';
+import {can_create_application} from 'ui/lib/common';
 
 const {
   computed,
@@ -15,13 +16,23 @@ export default ApellaGen.extend({
   session: Ember.inject.service(),
 
   abilityStates: {
-    can_create: computed('role', 'user.rank', 'user.is_foreign', function() {
+    can_create: computed('role', 'user.rank', 'user.is_foreign', 'model.@each', function() {
       let role = get(this, 'role'),
           rank = get(this, 'user.rank'),
           domestic = !get(this, 'user.is_foreign');
       let professor = role === 'professor',
           tenured = rank === 'Tenured Assistant Professor';
-      return professor && domestic && tenured;
+      let apps = get(this, 'model');
+      if(apps && apps.content) {
+        let {
+          can_create_tenure: can_tenure,
+          can_create_renewal: can_renewal
+        } = can_create_application(apps.content);
+
+        return professor && domestic && tenured && (can_tenure || can_renewal);
+      } else {
+        return professor && domestic && tenured
+      }
     }),
     owned: computed('', function(){
       return true;
@@ -39,6 +50,9 @@ export default ApellaGen.extend({
           return 'user_application.menu_label';
         }
       }),
+    },
+    getModel() {
+      return this.store.findAll('user_application');
     },
     menu: {
       icon: 'send',
@@ -96,13 +110,43 @@ export default ApellaGen.extend({
     }
   },
   create: {
+    getModel(params) {
+      var store = get(this, 'store');
+      let apps = store.findAll('user_application');
+      return apps.then(function(apps){
+        let app_type, disable=false;
+
+        let {
+          can_create_tenure: can_tenure,
+          can_create_renewal: can_renewal
+        } = can_create_application(apps.content);
+
+        if (!(can_tenure || can_renewal)) {
+          this.transitionTo('user_application.index');
+        }
+
+        if (!can_tenure) { app_type = 'renewal'; }
+        if (!can_renewal) { app_type = 'tenure'; }
+        if (app_type) { disable = true }
+
+        return store.createRecord('user-application', {
+          disable: disable,
+          app_type: app_type
+        });
+      });
+    },
     fieldsets: computed('role', function(){
       let fields = [
         field('user', {
           label: 'user_id.label',
           formComponent: 'select-model-id-field'
         }),
-        'app_type'
+        field('app_type', {
+          disabled: computed('model.disable', function(){
+            return get(this, 'model.disable');
+          })
+
+        })
       ];
       if (get(this, 'role') === 'professor') {
         fields.splice(0,1);
