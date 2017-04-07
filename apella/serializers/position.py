@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.core.files import File
 from django.db import transaction
+from django.db.models import Min
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
@@ -37,9 +38,11 @@ def position_can_accept_candidacies(instance):
 
 
 def get_position_from_application(instance):
-    positions = instance.position_set.order_by('-id')
-    if len(positions) > 0:
-        return positions[0].id
+    positions = instance.position_set.all()
+    ids = positions.values('code').annotate(Min('id')). \
+        values_list('id__min', flat=True)
+    if positions:
+        return max(ids)
     else:
         return 0
 
