@@ -640,19 +640,18 @@ const applyApplicationCandidacy = {
   icon: 'person_add',
   classNames: 'md-icon-success',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
-  hidden: computed('model.can_accept_candidacies', 'role', function(){
+  hidden: computed('model.can_accept_candidacies', 'role', 'model.position_state', function(){
     let role = get(this, 'role');
     let candidate = role === 'professor' || role === 'candidate';
     let can_apply = get(this, 'model.can_accept_candidacies');
-    return !(candidate && can_apply);
+    let position_state = get(this, 'model.position_state');
+    return !(candidate && can_apply) || position_state === 'cancelled';
   }),
   action(route, model){
     let id = get(model, 'position_id');
     route.transitionTo('candidacy.create', { queryParams: { position: id }});
   }
 };
-
-
 
 let positionActions = {
   cancelPosition: cancelPosition,
