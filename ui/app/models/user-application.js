@@ -24,6 +24,7 @@ export default DS.Model.extend({
     let position_id = get(this, 'position_id');
     return position_id > 0 ? position_id: '-';
   }),
+  position_state: DS.attr(),
   state: DS.attr({type: 'select', choices: application_states, defaultValue: 'pending'}),
   state_verbose: computeI18NChoice('state', application_states),
   updated_at: DS.attr('date'),
