@@ -36,6 +36,14 @@ def position_can_accept_candidacies(instance):
             return True
     return False
 
+def get_position_state_from_application(instance):
+    positions = instance.position_set.all()
+    ids = positions.values('code').annotate(Min('id')). \
+        values_list('id__min', flat=True)
+    if positions:
+        return positions.filter(id=max(ids))[0].state
+    else:
+        return None
 
 def get_position_from_application(instance):
     positions = instance.position_set.all()
