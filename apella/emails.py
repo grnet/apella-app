@@ -538,20 +538,28 @@ def send_position_create_emails(position):
         'apella/emails/position_create_to_manager.txt',
         extra_context)
 
-    users_interested = UserInterest.objects.filter(
-        Q(area=position.subject_area) |
-        Q(subject=position.subject) |
-        Q(institution=position.department.institution) |
-        Q(department=position.department)). \
-        values_list('user', flat=True).distinct()
+    if position.is_election_type:
+        users_interested = UserInterest.objects.filter(
+            Q(area=position.subject_area) |
+            Q(subject=position.subject) |
+            Q(institution=position.department.institution) |
+            Q(department=position.department)). \
+            values_list('user', flat=True).distinct()
+        users_to_email = ApellaUser.objects.filter(is_active=True).filter(
+            Q(professor__is_verified=True) |
+            Q(candidate__is_verified=True)).filter(id__in=users_interested)
 
-    users_to_email = ApellaUser.objects.filter(is_active=True).filter(
-        Q(professor__is_verified=True) |
-        Q(candidate__is_verified=True)).filter(id__in=users_interested)
-
-    for user in users_to_email:
+        for user in users_to_email:
+            send_user_email(
+                user,
+                'apella/emails/position_create_subject.txt',
+                'apella/emails/position_create_to_interested.txt',
+                extra_context)
+    elif position.user_application:
+        user = position.user_application.user
+        extra_context['user_application'] = position.user_application
         send_user_email(
             user,
             'apella/emails/position_create_subject.txt',
-            'apella/emails/position_create_to_interested.txt',
+            'apella/emails/position_create_to_professor.txt',
             extra_context)
