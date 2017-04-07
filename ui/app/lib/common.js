@@ -276,11 +276,89 @@ function prefixSelect(arr, prefix) {
   return arr;
 }
 
+// Helper to resolve if a professor can create a new application
+//
+// Given an application list (apps_list) where the elements are expected to
+// be objects with al least the following keys:
+// {
+//  'status': <pending | accepted | rejected>,
+//  'app_type': <tenure | renewal>,
+//  'position_status': <null | posted | electing | successful | failed | cancelled>
+// }
+// can_create_application() will return an object:
+// {
+//  'can_create_tenure': <True | False>,
+//  'can_create_renewal': <True | False>
+// }
+function can_create_application(apps_list) {
+  let res = {
+    'can_create_tenure': true,
+    'can_create_renewal': true
+  };
+
+  if (apps_list && apps_list.length > 0) {
+    // for tenure application
+    // filter only tenure applications
+    let apps_tenure = _.filter(apps_list, function(o) {
+      if (o && get(o.getRecord(), 'app_type') === 'tenure') {
+        return o.getRecord();
+      };
+    });
+    // sort by id
+    apps_tenure = _.sortBy(apps_tenure, ['id']);
+    // get latest tenure application
+    let latest_tenure = _.last(apps_tenure);
+    if (latest_tenure) {
+      let {
+        state: tenure_as,
+        position_state: tenure_ps
+      } = latest_tenure.getRecord().getProperties(['state', 'position_state']);
+
+      // logic for latest tenure application
+      // cannot apply for tenure application if
+      // state = pending or the application position is in an ongoing or
+      // successful status
+      if (tenure_as === 'pending' ||
+          ['posted', 'electing', 'successful'].includes(tenure_ps) ||
+          (tenure_as === 'approved' && !tenure_ps)) {
+        res['can_create_tenure'] = false;
+      }
+    }
+
+    // for renewal application
+    let apps_renewal = _.filter(apps_list, function(o) {
+      if (o && get(o.getRecord(), 'app_type') === 'renewal') {
+        return o.getRecord();
+      };
+    });
+    apps_renewal = _.sortBy(apps_renewal, ['id']);
+    let latest_renewal = _.last(apps_renewal);
+    if (latest_renewal) {
+
+      let {
+        state: renewal_as,
+        position_state: renewal_ps
+      } = latest_renewal.getRecord().getProperties(['state', 'position_state']);
+
+      if (renewal_as === 'pending' ||
+          ['posted', 'electing', 'successful'].includes(renewal_ps) ||
+          (renewal_as === 'approved' && !renewal_ps)) {
+        res['can_create_renewal'] = false;
+      }
+    }
+
+  }
+  return res;
+
+
+}
+
 export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
   preloadRelations, emptyArrayResult,
-  prefixSelect
+  prefixSelect,
+  can_create_application
 };
 
