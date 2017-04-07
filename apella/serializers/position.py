@@ -15,7 +15,8 @@ from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
     validate_position_committee, validate_position_electors, \
-    validate_position_state, validate_tenure_candidacy
+    validate_position_state, validate_tenure_candidacy, \
+    validate_create_position_from_application
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
@@ -140,12 +141,8 @@ class PositionMixin(ValidatorMixin):
 
         position_type = 'election'
         if user_application is not None:
-            if creating and \
-                    Position.objects.filter(user_application=user_application). \
-                    exists():
-                raise serializers.ValidationError(
-                    'A position already exists for this application')
-
+            if creating:
+                validate_create_position_from_application(user_application)
             position_type = user_application.app_type
             data['position_type'] = position_type
 
