@@ -747,8 +747,8 @@ class Position(models.Model):
     def check_resource_state_after_closed(self, row, request, view):
         user = request.user
         is_posted = self.state == 'posted'
-        if self.is_election_type:
-            after_closed = True
+        if not self.ends_at:
+            after_closed = False
         else:
             after_closed = self.ends_at < datetime.utcnow() and is_posted
         if user.is_institutionmanager() or user.is_helpdeskadmin():
