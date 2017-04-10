@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {i18nField, get_registry_members, fileField} from 'ui/lib/common';
+import {i18nField, get_registry_members, fileField, filterSelectSortTitles} from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
 import {getFile} from 'ui/utils/files';
 import moment from 'moment';
@@ -288,12 +288,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
       meta: {
         fields: [
           field('user_id', {type: 'string'}),
-          field('institution', {
-            type: 'model',
-            autocomplete: true,
-            displayAttr: 'title_current',
-            modelName: 'institution',
-          }),
+          filterSelectSortTitles('institution'),
           field('rank')
         ]
       }

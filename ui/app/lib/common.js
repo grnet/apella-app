@@ -277,11 +277,30 @@ function prefixSelect(arr, prefix) {
 }
 
 
+/*
+ * Select filter with the items in the list sorted by title in
+ * current language.
+ */
+
+function filterSelectSortTitles(modelName) {
+  return field(modelName, {
+    query: function(select, store, field, params) {
+      let locale = get(select, 'i18n.locale'),
+        ordering_param = `title__${locale}`;
+      params = params || {};
+      params.ordering = ordering_param;
+
+      return store.query(modelName, params);
+    },
+    autocomplete: true
+  })
+};
+
 export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
   preloadRelations, emptyArrayResult,
-  prefixSelect,
+  prefixSelect, filterSelectSortTitles
 };
 

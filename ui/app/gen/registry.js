@@ -1,5 +1,6 @@
 import {
-  ApellaGen, i18nField, i18nUserSortField, get_registry_members, fileField, preloadRelations
+  ApellaGen, i18nField, i18nUserSortField, get_registry_members,
+  fileField, preloadRelations, filterSelectSortTitles
 } from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
 import gen from 'ember-gen/lib/gen';
@@ -107,12 +108,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
       meta: {
         fields: [
           field('user_id', {type: 'string'}),
-          field('institution', {
-            type: 'model',
-            autocomplete: true,
-            displayAttr: 'title_current',
-            modelName: 'institution',
-          }),
+          filterSelectSortTitles('institution'),
           field('rank')
         ]
       }

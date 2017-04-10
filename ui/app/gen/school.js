@@ -1,4 +1,4 @@
-import {ApellaGen, i18nField} from 'ui/lib/common';
+import {ApellaGen, i18nField, filterSelectSortTitles} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import validate from 'ember-gen/validate';
@@ -48,7 +48,7 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: ['institution']
+        fields: [filterSelectSortTitles('institution')]
       },
       serverSide: true,
       search: true,

@@ -1,4 +1,4 @@
-import {ApellaGen, emptyArrayResult} from 'ui/lib/common';
+import {ApellaGen, emptyArrayResult, filterSelectSortTitles} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
@@ -60,17 +60,7 @@ export default ApellaGen.extend({
       active: true,
       meta: {
         fields: [
-          field('institution', {
-            query: function(select, store, field, params) {
-              let locale = get(select, 'i18n.locale'),
-                ordering_param = `title__${locale}`;
-              params = params || {};
-              params.ordering = ordering_param;
-
-              return store.query('institution', params);
-            },
-            autocomplete: true
-          }),
+          filterSelectSortTitles('institution'),
           'rank',
           'is_foreign',
           'is_verified',

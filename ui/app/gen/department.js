@@ -1,4 +1,4 @@
-import {ApellaGen, i18nField} from 'ui/lib/common';
+import {ApellaGen, i18nField, filterSelectSortTitles} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import validate from 'ember-gen/validate';
@@ -147,31 +147,9 @@ export default ApellaGen.extend({
         fields: computed('user.role', function() {
           let role = get(this, 'user.role');
           if (role == 'institutionmanager' || role == 'assistant') {
-            return [
-              field('school', {
-                query: function(select, store, field, params) {
-                  let locale = get(select, 'i18n.locale'),
-                    ordering_param = `title__${locale}`;
-                  params = params || {};
-                  params.ordering = ordering_param;
-                  return store.query('school', params)
-                },
-                autocomplete : true
-              })
-            ]
+            return [filterSelectSortTitles('school')]
           }
-          return [
-            field('institution', {
-              query: function(select, store, field, params) {
-                let locale = get(select, 'i18n.locale'),
-                  ordering_param = `title__${locale}`;
-                params = params || {};
-                params.ordering = ordering_param;
-                return store.query('institution', params)
-              },
-              autocomplete : true
-            })
-          ];
+          return [filterSelectSortTitles('institution')];
         })
       },
     },
