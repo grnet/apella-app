@@ -276,81 +276,58 @@ function prefixSelect(arr, prefix) {
   return arr;
 }
 
+function can_create_app_for_type(app_list, app_type) {
+    let apps = _.filter(app_list, function(o) {
+      return o && get(o.getRecord(), 'app_type') === app_type;
+    });
+    // sort by id
+    apps = _.sortBy(apps, ['id']);
+    // get latest application for given app_type
+    let latest = _.last(apps);
+    if (latest) {
+      let {
+        state: as,
+        position_state: ps
+      } = latest.getRecord().getProperties(['state', 'position_state']);
+
+      // logic for latest application
+      // cannot apply for an application if
+      // state = pending or the application position is in an ongoing or
+      // successful status
+      if (as === 'pending' ||
+          ['posted', 'electing', 'successful'].includes(ps) ||
+          (as === 'approved' && !ps)) {
+        return false;
+      }
+    }
+    return true;
+}
+
 // Helper to resolve if a professor can create a new application
 //
-// Given an application list (apps_list) where the elements are expected to
-// be objects with al least the following keys:
+// Given an application list (app_list) where the elements are expected to
+// be objects with at least the following keys:
 // {
-//  'status': <pending | accepted | rejected>,
+//  'state': <pending | accepted | rejected>,
 //  'app_type': <tenure | renewal>,
-//  'position_status': <null | posted | electing | successful | failed | cancelled>
+//  'position_state': <null | posted | electing | successful | failed | cancelled>
 // }
 // can_create_application() will return an object:
 // {
 //  'can_create_tenure': <True | False>,
 //  'can_create_renewal': <True | False>
 // }
-function can_create_application(apps_list) {
+function can_create_application(app_list) {
   let res = {
     'can_create_tenure': true,
     'can_create_renewal': true
   };
 
-  if (apps_list && apps_list.length > 0) {
-    // for tenure application
-    // filter only tenure applications
-    let apps_tenure = _.filter(apps_list, function(o) {
-      if (o && get(o.getRecord(), 'app_type') === 'tenure') {
-        return o.getRecord();
-      };
-    });
-    // sort by id
-    apps_tenure = _.sortBy(apps_tenure, ['id']);
-    // get latest tenure application
-    let latest_tenure = _.last(apps_tenure);
-    if (latest_tenure) {
-      let {
-        state: tenure_as,
-        position_state: tenure_ps
-      } = latest_tenure.getRecord().getProperties(['state', 'position_state']);
-
-      // logic for latest tenure application
-      // cannot apply for tenure application if
-      // state = pending or the application position is in an ongoing or
-      // successful status
-      if (tenure_as === 'pending' ||
-          ['posted', 'electing', 'successful'].includes(tenure_ps) ||
-          (tenure_as === 'approved' && !tenure_ps)) {
-        res['can_create_tenure'] = false;
-      }
-    }
-
-    // for renewal application
-    let apps_renewal = _.filter(apps_list, function(o) {
-      if (o && get(o.getRecord(), 'app_type') === 'renewal') {
-        return o.getRecord();
-      };
-    });
-    apps_renewal = _.sortBy(apps_renewal, ['id']);
-    let latest_renewal = _.last(apps_renewal);
-    if (latest_renewal) {
-
-      let {
-        state: renewal_as,
-        position_state: renewal_ps
-      } = latest_renewal.getRecord().getProperties(['state', 'position_state']);
-
-      if (renewal_as === 'pending' ||
-          ['posted', 'electing', 'successful'].includes(renewal_ps) ||
-          (renewal_as === 'approved' && !renewal_ps)) {
-        res['can_create_renewal'] = false;
-      }
-    }
-
+  if (app_list && app_list.length > 0) {
+    res['can_create_tenure'] = can_create_app_for_type(app_list, 'tenure');
+    res['can_create_renewal'] = can_create_app_for_type(app_list, 'renewal');
   }
   return res;
-
-
 }
 
 export {
