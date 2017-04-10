@@ -147,9 +147,31 @@ export default ApellaGen.extend({
         fields: computed('user.role', function() {
           let role = get(this, 'user.role');
           if (role == 'institutionmanager' || role == 'assistant') {
-            return ['school']
+            return [
+              field('school', {
+                query: function(select, store, field, params) {
+                  let locale = get(select, 'i18n.locale'),
+                    ordering_param = `title__${locale}`;
+                  params = params || {};
+                  params.ordering = ordering_param;
+                  return store.query('school', params)
+                },
+                autocomplete : true
+              })
+            ]
           }
-          return ['institution']
+          return [
+            field('institution', {
+              query: function(select, store, field, params) {
+                let locale = get(select, 'i18n.locale'),
+                  ordering_param = `title__${locale}`;
+                params = params || {};
+                params.ordering = ordering_param;
+                return store.query('institution', params)
+              },
+              autocomplete : true
+            })
+          ];
         })
       },
     },
