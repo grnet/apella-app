@@ -280,7 +280,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
          * TODO: Separate the search fields and placeholder for each type of
          * roles
          */
-        return 'search.placeholder_members';
+        return 'search.placeholder.members';
       }),
       serverSide: serverSide,
       active: display,

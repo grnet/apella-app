@@ -282,10 +282,10 @@ export default ApellaGen.extend({
       searchPlaceholder: computed('role', function() {
         let role = get(this, 'role');
         if(role === 'candidate') {
-          return 'search.placeholder_candidacies_candidate';
+          return 'search.placeholder.candidacies_by_candidate';
         }
         else {
-        return 'search.placeholder_candidacies_helpdesk';
+          return 'search.placeholder.candidacies_by_helpdesk';
         }
       })
     },

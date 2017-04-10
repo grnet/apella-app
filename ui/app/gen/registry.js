@@ -101,7 +101,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
     },
     filter: {
       search: true,
-      searchPlaceholder: 'search.placeholder_members',
+      searchPlaceholder: 'search.placeholder.members',
       serverSide: serverSide,
       active: display,
       searchFields: searchFields,

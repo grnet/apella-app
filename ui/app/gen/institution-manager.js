@@ -84,7 +84,7 @@ export default ApellaGen.extend({
         ]
       },
       search: true,
-      searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
+      searchPlaceholder: 'search.placeholder.institution_managers'
     },
     sort: {
       active: true,

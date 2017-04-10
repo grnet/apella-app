@@ -119,7 +119,7 @@ export default ApellaGen.extend({
       active: true,
       serverSide: true,
       search: true,
-      searchPlaceholder: 'search.placeholder_positions',
+      searchPlaceholder: 'search.placeholder.positions',
       meta: {
         fields: computed('user.role', function() {
           let user_role = get(this, 'user.role'),

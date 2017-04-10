@@ -143,6 +143,7 @@ export default ApellaGen.extend({
       active: true,
       serverSide: true,
       search: true,
+      searchPlaceholder: 'search.placeholder.departments',
       meta: {
         fields: computed('user.role', function() {
           let role = get(this, 'user.role');

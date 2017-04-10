@@ -71,6 +71,7 @@ export default ApellaGen.extend({
       },
       serverSide: true,
       search: true,
+      searchPlaceholder: 'search.placeholder.professors',
       searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
     },
     sort: {

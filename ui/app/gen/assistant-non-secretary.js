@@ -79,7 +79,7 @@ export default ApellaGen.extend({
       },
       serverSide: true,
       search: true,
-      searchFields: ['id', 'email', 'username', 'first_name', 'last_name']
+      searchPlaceholder: 'search.placeholder.assistants'
     },
     sort: {
       active: true,
