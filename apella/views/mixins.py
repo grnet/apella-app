@@ -282,6 +282,7 @@ class RegistriesList(viewsets.GenericViewSet):
                 Q(user__first_name__el__icontains=search) |
                 Q(user__email__icontains=search) |
                 Q(user__old_user_id__icontains=search) |
+                Q(user__id__icontains=search) |
                 Q(discipline_text__icontains=search))
         if 'ordering' not in query_params:
             ordering = 'user__last_name__el'
