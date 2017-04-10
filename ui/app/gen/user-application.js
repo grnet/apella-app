@@ -1,7 +1,7 @@
 import {ApellaGen} from 'ui/lib/common';
 import {field} from 'ember-gen';
 import {applicationActions, goToPosition} from 'ui/utils/common/actions';
-import {can_create_application} from 'ui/lib/common';
+import USERAPP from 'ui/utils/common/user-application';
 
 const {
   computed,
@@ -27,7 +27,7 @@ export default ApellaGen.extend({
         let {
           can_create_tenure: can_tenure,
           can_create_renewal: can_renewal
-        } = can_create_application(apps.content);
+        } = USERAPP.can_create(apps.content);
 
         return professor && domestic && tenured && (can_tenure || can_renewal);
       } else {
@@ -119,7 +119,7 @@ export default ApellaGen.extend({
         let {
           can_create_tenure: can_tenure,
           can_create_renewal: can_renewal
-        } = can_create_application(apps.content);
+        } = USERAPP.can_create(apps.content);
 
         if (!(can_tenure || can_renewal)) {
           this.transitionTo('user_application.index');
