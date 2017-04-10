@@ -113,6 +113,7 @@ export default ApellaGen.extend({
     getModel(params) {
       var store = get(this, 'store');
       let apps = store.findAll('user_application');
+      var self = this;
       return apps.then(function(apps){
         let app_type, disable=false;
 
@@ -122,7 +123,7 @@ export default ApellaGen.extend({
         } = USERAPP.can_create(apps.content);
 
         if (!(can_tenure || can_renewal)) {
-          this.transitionTo('user_application.index');
+          self.transitionTo('user-application.index');
         }
 
         if (!can_tenure) { app_type = 'renewal'; }
