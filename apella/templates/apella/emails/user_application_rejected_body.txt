@@ -1,0 +1,13 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι η αίτησή σας με αριθμό {{ application.id }} αππορρίφθηκε.
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We would like to inform you that your application {{ application.id }} has been rejected.
+
+{% endblock content_en %}

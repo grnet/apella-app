@@ -522,6 +522,11 @@ class UserApplicationMixin(object):
             application.save()
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        send_user_email(
+            application.user,
+            'apella/emails/user_application_accepted_subject.txt',
+            'apella/emails/user_application_accepted_body.txt',
+            {'application': application})
         return Response(request.data, status=status.HTTP_200_OK)
 
     @detail_route(methods=['post'])
@@ -532,6 +537,11 @@ class UserApplicationMixin(object):
             application.save()
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        send_user_email(
+            application.user,
+            'apella/emails/user_application_accepted_subject.txt',
+            'apella/emails/user_application_rejected_body.txt',
+            {'application': application})
         return Response(request.data, status=status.HTTP_200_OK)
 
     def get_queryset(self):
