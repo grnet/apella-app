@@ -6,31 +6,25 @@ const {
   get,
 } = Ember;
 
-function can_create_for_type(app_list, app_type) {
+const sort_by_id = _.partial(_.sortBy, _, ['id']);
+const latest = _.compose(_.last, sort_by_id);
+const APP_TYPES = ['renewal', 'tenure'];
+
+
+function latest_for_type(app_list, app_type) {
+
     let apps = _.filter(app_list, function(o) {
       return o && get(o.getRecord(), 'app_type') === app_type;
     });
-    // sort by id
-    apps = _.sortBy(apps, ['id']);
-    // get latest application for given app_type
-    let latest = _.last(apps);
-    if (latest) {
-      let {
-        state: as,
-        position_state: ps
-      } = latest.getRecord().getProperties(['state', 'position_state']);
 
-      // logic for latest application
-      // cannot apply for an application if
-      // state = pending or the application position is in an ongoing or
-      // successful status
-      if (as === 'pending' ||
-          ['posted', 'electing', 'successful'].includes(ps) ||
-          (as === 'approved' && !ps)) {
-        return false;
+    if (apps.length >0 ) {
+      return latest(apps).getRecord().getProperties(['state', 'position_state']);
+    } else {
+      return {
+        state: null,
+        position_state: null
       }
     }
-    return true;
 }
 
 // Helper to resolve if a professor can create a new application
@@ -42,22 +36,24 @@ function can_create_for_type(app_list, app_type) {
 //  'app_type': <tenure | renewal>,
 //  'position_state': <null | posted | electing | successful | failed | cancelled>
 // }
-// can_create_application() will return an object:
-// {
-//  'can_create_tenure': <True | False>,
-//  'can_create_renewal': <True | False>
-// }
+// can_create() will return an object with keys `can_create_${app_type}` and
+// boolean values
 function can_create(app_list) {
-  let res = {
-    'can_create_tenure': true,
-    'can_create_renewal': true
-  };
 
-  if (app_list && app_list.length > 0) {
-    res['can_create_tenure'] = can_create_for_type(app_list, 'tenure');
-    res['can_create_renewal'] = can_create_for_type(app_list, 'renewal');
-  }
-  return res;
+  // Cannot apply for an application if state = pending or the
+  // application position is in an ongoing or successful status
+  return  _.reduce(APP_TYPES, function(memo, app_type ){
+    if (app_list && app_list.length > 0) {
+      let {state: as, position_state: ps} = latest_for_type(app_list, app_type);
+      memo[`can_create_${app_type}`] = !( (as === 'pending' ||
+          ['posted', 'electing', 'successful'].includes(ps) ||
+          (as === 'approved' && !ps)) )
+    } else {
+      memo[`can_create_${app_type}`] = true;
+    }
+    return memo;
+  }, {});
+
 }
 
 export {
