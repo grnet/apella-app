@@ -80,21 +80,40 @@ export default DS.Model.extend({
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
   institution: readOnly('department.institution'),
-  is_closed: computed('ends_at', 'state', function() {
-    let posted = get(this, 'state') === 'posted',
-      end = moment(get(this, 'ends_at')).endOf('day');
-    return end.isBefore() && posted;
+  /*
+   * If the position is not the latest we should check the if the position was
+   * closed the day that was last updated. That day was the day that its state
+   * changed and a new instance of the position was created.
+   */
+  is_closed: computed('ends_at', 'state', 'is_latest', function() {
+    let is_posted = get(this, 'state') === 'posted',
+      end = moment(get(this, 'ends_at')).endOf('day'),
+      updated_at = moment(get(this, 'updated_at')).endOf('day'),
+      is_latest = get(this, 'is_latest'),
+      now = moment(),
+      date_to_compare = is_latest ? now : updated_at;
+
+    return end.isBefore() && is_posted;
   }),
   is_latest: computed('code', 'id', function() {
     return get(this, 'code').replace('APP','') === get(this, 'id');
   }),
-  is_open: computed('starts_at', 'ends_at', 'position_type', function() {
+  /*
+   * If the position is not the latest we should check the if the position was
+   * open the day that was last updated. That day was the day that its state
+   * changed and a new instance of the position was created.
+   */
+  is_open: computed('starts_at', 'ends_at', 'is_latest', 'position_type', function() {
     let now = moment(),
       start = moment(get(this, 'starts_at')).startOf('day'),
-      ends_at = get(this, 'ends_at'),
       end = moment(get(this, 'ends_at')).endOf('day'),
+      ends_at = get(this, 'ends_at'),
+      is_latest = get(this, 'is_latest'),
+      updated_at = moment(get(this, 'updated_at')).endOf('day'),
       election = get(this, 'position_type') === 'election';
-    return now.isBetween(start, end) || (!election && !ends_at);
+      date_to_compare = is_latest ? now : updated_at;
+
+    return date_to_compare.isBetween(start, end) || (!election && !ends_at);
   }),
   // is_posted is true for the positions that are not yet open
   is_posted: computed('state', 'is_closed', 'is_open', function(){
