@@ -42,8 +42,8 @@ const FIELDS_ALL = [
   'father_name',
   'role',
   'id_passport',
-  'mobile_phone_number',
   'home_phone_number',
+  'mobile_phone_number',
   'shibboleth_idp',
   'shibboleth_schac_home_organization'
 ];
@@ -85,8 +85,8 @@ const FIELDSET_CREATE = {
     'last_name',
     'father_name',
     'id_passport',
+    'home_phone_number',
     'mobile_phone_number',
-    'home_phone_number'
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -104,8 +104,8 @@ const FIELDSET_EDIT_VERIFIABLE = {
     'last_name',
     'father_name',
     'id_passport',
+    'home_phone_number',
     'mobile_phone_number',
-    'home_phone_number'
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -122,13 +122,13 @@ const FIELDSET_DETAILS_VERIFIABLE = {
     'full_name_current',
     'father_name_current',
     'id_passport',
-    'mobile_phone_number',
     'home_phone_number',
+    'mobile_phone_number',
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 25, 25]
   }
-}
+};
 
 const FIELDSET_EDIT_NON_VERIFIABLE = {
   label: 'fieldsets.labels.user_info',
@@ -140,13 +140,13 @@ const FIELDSET_EDIT_NON_VERIFIABLE = {
     'last_name',
     'father_name',
     'id_passport',
+    'home_phone_number',
     'mobile_phone_number',
-    'home_phone_number'
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
   }
-}
+};
 
 const FIELDSET_DETAILS_NON_VERIFIABLE = {
   label: 'fieldsets.labels.user_info',
@@ -175,8 +175,8 @@ const FIELDSET_EDIT_USER = {
     'last_name',
     'father_name',
     'id_passport',
+    'home_phone_number',
     'mobile_phone_number',
-    'home_phone_number'
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -192,8 +192,8 @@ const FIELDSET_DETAILS_USER = {
     'full_name_current',
     'father_name_current',
     'id_passport',
-    'mobile_phone_number',
     'home_phone_number',
+    'mobile_phone_number',
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 25, 25]
@@ -210,8 +210,8 @@ const FIELDSET_EDIT_ACADEMIC = {
     'last_name',
     'father_name',
     'id_passport',
-    'mobile_phone_number',
-    'home_phone_number'
+    'home_phone_number',
+    'mobile_phone_number'
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -227,8 +227,8 @@ const FIELDSET_DETAILS_ACADEMIC = {
     'full_name_current',
     'father_name_current',
     'id_passport',
-    'mobile_phone_number',
     'home_phone_number',
+    'mobile_phone_number',
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 25, 25]
@@ -244,8 +244,8 @@ const FIELDSET_REGISTER_ACADEMIC = {
     'last_name',
     'father_name',
     'id_passport',
-    'mobile_phone_number',
-    'home_phone_number'
+    'home_phone_number',
+    'mobile_phone_number'
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
