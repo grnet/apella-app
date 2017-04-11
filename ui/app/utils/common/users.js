@@ -157,13 +157,29 @@ const FIELDSET_DETAILS_NON_VERIFIABLE = {
     'full_name_current',
     'father_name_current',
     'id_passport',
-    'mobile_phone_number',
     'home_phone_number',
+    'mobile_phone_number',
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 25, 25]
   }
-}
+};
+
+const FIELDSET_DETAILS_NON_VERIFIABLE_LESS_FIELDS = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', {disabled: true}),
+    field('user_id', {disabled: true}),
+    'email',
+    'full_name_current',
+    'father_name_current',
+    'home_phone_number',
+    'mobile_phone_number',
+  ],
+  layout: {
+    flex: [100, 50, 50, 50, 50, 50, 50, 50]
+  }
+};
 
 const FIELDSET_EDIT_USER = {
   label: 'fieldsets.labels.user_info',
@@ -323,6 +339,7 @@ const normalizeUserErrors = function(errors) {
     'status_verbose' fields
   FIELDSET_*_VERIFABLE: Used for helpdesk. Like VERIFIABLE fields, but it does
     not contain 'status_verbose' field
+  FIELDSET_DETAILS_NON_VERIFIABLE_LESS_FIELDS: Used for users with role ministry
   FIELDSET_*_USER: For plain users. Contains 'id' field and does not contain
   'status_verbose' field.
   FIELDSET_*_ACADEMIC: For academin users. Verifiable users that do not have
@@ -341,6 +358,7 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
 
         FIELDSET_EDIT_NON_VERIFIABLE,
         FIELDSET_DETAILS_NON_VERIFIABLE,
+        FIELDSET_DETAILS_NON_VERIFIABLE_LESS_FIELDS,
 
         FIELDSET_EDIT_USER,
         FIELDSET_DETAILS_USER,
