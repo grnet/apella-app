@@ -51,8 +51,14 @@ export default ApellaGen.extend({
         }
       }),
     },
-    getModel() {
-      return this.store.findAll('user_application');
+    getModel(params) {
+      let role = get(this, 'session.session.authenticated.role');
+      let prof = role === 'professor';
+
+      if (params.limit && prof) {
+        delete params.limit;
+      }
+      return this.store.query('user_application', params);
     },
     menu: {
       icon: 'send',
