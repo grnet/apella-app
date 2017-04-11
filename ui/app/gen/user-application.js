@@ -113,6 +113,10 @@ export default ApellaGen.extend({
     getModel(params) {
       var store = get(this, 'store');
       let apps = store.findAll('user_application');
+      let role = get(this, 'session.session.authenticated.role');
+      if (role === 'helpdeskadmin') {
+        return store.createRecord('user-application');
+      }
       var self = this;
       return apps.then(function(apps){
         let app_type, disable=false;
