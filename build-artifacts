@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cmd() {
+    echo --- "$@"
+    "$@"
+}
+
+{
+    cmd cd ui/
+    cmd exec ./build_ui.sh production
+}

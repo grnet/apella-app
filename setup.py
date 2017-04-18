@@ -53,7 +53,6 @@ MIGRATION_QUERY_FILES = get_all_data_files(
 
 setup(
     name=PACKAGE_NAME,
-    provides=[PACKAGE_NAME + ' (' + COMPATIBLE_VERSION + ')'],
     version=VERSION,
     license='GPLv3',
     description=SHORT_DESCRIPTION,
