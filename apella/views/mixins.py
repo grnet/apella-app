@@ -402,6 +402,8 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
         else:
             many_attr = getattr(obj, field_name)
             many_attr.add(uploaded_file)
+        if isinstance(obj, Candidacy):
+            obj.updated_at = datetime.utcnow()
         obj.save()
         send_emails_file(obj, file_kind)
 
