@@ -222,7 +222,7 @@ export default {
   'home_phone_number.label': 'Home phone',
   'id.label': 'ID',
   'id_passport.field': 'ID or passport number',
-  'id_passport.label': 'ID or password number',
+  'id_passport.label': 'ID or passport number',
   'id_passport_file.label': 'ID or passport file',
   'identification.field': 'username',
   'inactive': 'inactive',
