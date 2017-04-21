@@ -256,6 +256,9 @@ class ApellaFile(models.Model):
             if pos.id in prof_positions_elector or \
                     pos.id in prof_positions_committee:
                 return True
+            if user.id in pos.candidacy_set.values_list(
+                    'candidate_id', flat=True):
+                return True
         return False
 
     def check_resource_state_others_can_view(self, row, request, view):
