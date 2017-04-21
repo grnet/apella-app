@@ -420,6 +420,8 @@ class SyncCandidacies(object):
             position__ends_at__gt=now)
         for candidacy in active_candidacies:
             link_files(candidacy, candidate_user.user)
+            candidacy.updated_at = now
+            candidacy.save()
         return Response(request.data, status=status.HTTP_200_OK)
 
 
