@@ -110,7 +110,7 @@ export default DS.Model.extend({
       ends_at = get(this, 'ends_at'),
       is_latest = get(this, 'is_latest'),
       updated_at = moment(get(this, 'updated_at')).endOf('day'),
-      election = get(this, 'position_type') === 'election';
+      election = get(this, 'position_type') === 'election',
       date_to_compare = is_latest ? now : updated_at;
 
     return date_to_compare.isBetween(start, end) || (!election && !ends_at);
