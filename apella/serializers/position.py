@@ -173,8 +173,10 @@ class PositionMixin(ValidatorMixin):
         starts_at = validated_data.get('starts_at', None)
         if starts_at is None:
             starts_at = datetime.utcnow()
-        validated_data['starts_at'] = \
-            at_day_start(starts_at, otz) - timedelta(days=1)
+            validated_data['starts_at'] = \
+                at_day_start(starts_at, otz) - timedelta(days=1)
+        else:
+            validated_data['starts_at'] = at_day_start(starts_at, otz)
 
         ends_at = validated_data.get('ends_at', None)
         if ends_at is not None:
