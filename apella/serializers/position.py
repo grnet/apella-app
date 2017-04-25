@@ -157,11 +157,11 @@ class PositionMixin(ValidatorMixin):
             position_type = user_application.app_type
             data['position_type'] = position_type
 
-        if not user.is_helpdeskadmin() and position_type == 'election':
-            if 'starts_at' in data:
-                after_today_validator(data['starts_at'])
-            if 'fek_posted_at' in data:
-                before_today_validator(data['fek_posted_at'])
+            if not user.is_helpdeskadmin() and position_type == 'election':
+                if 'starts_at' in data:
+                    after_today_validator(data['starts_at'])
+                if 'fek_posted_at' in data:
+                    before_today_validator(data['fek_posted_at'])
 
         data = super(PositionMixin, self).validate(data)
         data['committee'] = committee
