@@ -66,60 +66,75 @@ let CANDIDATE_FIELDSET =  {
 
 let CANDIDACY_FIELDSET =  {
     label: 'candidacy.candidacy_section.title',
-    fields: [
-      fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
-        hint: 'five_before_electors_meeting',
-        readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
-          let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
-          let after_deadline = false;
-          if (electors_at) {
-            let limit_day = electors_at.subtract(5, 'days'),
-              today = moment().startOf('days');
-            after_deadline = today.isAfter(limit_day);
-          }
-          return after_deadline;
+    fields: computed('model.position.position_type', function(){
+      let election = get(this, 'model.position.position_type') === 'election';
+
+      let res = [
+        fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+          hint: 'five_before_electors_meeting',
+          readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
+            let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
+            let after_deadline = false;
+            if (electors_at) {
+              let limit_day = electors_at.subtract(5, 'days'),
+                today = moment().startOf('days');
+              after_deadline = today.isAfter(limit_day);
+            }
+            return after_deadline;
+          })
+        }, {
+          replace: true
+        }),
+        fileField('attachment_files', 'candidacy', 'attachment_files', {
+          hint: 'one_before_electors_meeting',
+          readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
+            let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
+            let after_deadline = false;
+            if (electors_at) {
+              let today = moment().startOf('days'),
+                limit_day = electors_at.subtract(1, 'days');
+              after_deadline = today.isAfter(limit_day);
+            }
+            return after_deadline;
+          })
+        }, {
+          multiple: true
         })
-      }, {
-        replace: true
-      }),
-      fileField('attachment_files', 'candidacy', 'attachment_files', {
-        hint: 'one_before_electors_meeting',
-        readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
-          let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
-          let after_deadline = false;
-          if (electors_at) {
-            let today = moment().startOf('days'),
-              limit_day = electors_at.subtract(1, 'days');
-            after_deadline = today.isAfter(limit_day);
-          }
-          return after_deadline;
-        })
-      }, {
-        multiple: true
-      }),
-      field('othersCanView', {
-        disabled: computed('model.position.is_open', function(){
-          return !get(this, 'model.position.is_open');
-        })
-     })
-    ],
+      ];
+      if (election) {
+        res.pushObject(
+          field('othersCanView', {
+            disabled: computed('model.position.is_open', function(){
+              return !get(this, 'model.position.is_open');
+            })
+          })
+        )
+      }
+      return res;
+    }),
     flex: 100,
 };
 
 let CANDIDACY_FIELDSET_DETAILS =  {
     label: 'candidacy.candidacy_section.title',
-    fields: [
-      fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
-        readonly: true,
-        hint: 'five_before_electors_meeting',
-      }, { replace: true}),
-     fileField('attachment_files', 'candidacy', 'attachment_files', {
-        readonly: true,
-        sortBy: 'filename',
-        hint: 'one_before_electors_meeting',
-      }, { replace: true, multiple: true}),
-      'othersCanView'
-    ],
+    fields: computed('model.position.position_type', function(){
+      let election = get(this, 'model.position.position_type') === 'election';
+      let res = [
+        fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+          readonly: true,
+          hint: 'five_before_electors_meeting',
+        }, { replace: true}),
+       fileField('attachment_files', 'candidacy', 'attachment_files', {
+          readonly: true,
+          sortBy: 'filename',
+          hint: 'one_before_electors_meeting',
+        }, { replace: true, multiple: true})
+      ];
+      if (election) {
+        res.pushObject('othersCanView');
+      }
+      return res;
+    }),
     flex: 100,
     layout: {
       flex: [100, 100, 100]
