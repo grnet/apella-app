@@ -563,3 +563,17 @@ def send_position_create_emails(position):
             'apella/emails/position_create_subject.txt',
             'apella/emails/position_create_to_professor.txt',
             extra_context)
+
+def send_create_application_emails(user_application):
+    managers = InstitutionManager.objects.filter(
+        institution=user_application.user.professor.department.institution)
+    for manager in managers:
+        send_user_email(
+            manager.user,
+            'apella/emails/user_application_create_subject.txt',
+            'apella/emails/user_application_create_body.txt')
+
+    send_user_email(
+        user_application.user,
+        'apella/emails/user_application_create_subject.txt',
+        'apella/emails/user_application_create_body.txt')

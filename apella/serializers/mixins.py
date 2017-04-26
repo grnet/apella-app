@@ -6,7 +6,7 @@ from rest_framework.serializers import ValidationError
 from apella.models import ApellaUser, Institution, Department, \
     Position
 from apella import auth_hooks
-from apella.emails import send_user_email
+from apella.emails import send_user_email, send_create_application_emails
 
 
 class ValidatorMixin(object):
@@ -218,7 +218,9 @@ class UserApplications(object):
         user = validated_data.get('user', None)
         if not user:
             validated_data['user'] = self.context.get('request').user
-        return super(UserApplications, self).create(validated_data)
+        obj = super(UserApplications, self).create(validated_data)
+        send_create_application_emails(obj)
+        return obj
 
     def update(self, instance, validated_data):
         validated_data['updated_at'] = datetime.utcnow()
