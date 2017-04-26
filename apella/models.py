@@ -737,7 +737,7 @@ class Position(models.Model):
 
     def check_resource_state_before_open(self, row, request, view):
         user = request.user
-        if self.is_election_type:
+        if not self.is_election_type:
             before_open = True
         else:
             before_open = self.starts_at > datetime.utcnow()
