@@ -19,7 +19,7 @@ from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
-    Professor as ProfessorModel
+    Professor as ProfessorModel, UserApplication
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
@@ -515,9 +515,21 @@ class CandidateProfile(object):
 
 
 class UserApplicationMixin(object):
+    def _can_accept_application(self):
+        application = self.get_object()
+        if UserApplication.objects.filter(
+                user=application.user,
+                app_type=application.app_type,
+                state='approved').exists():
+            return False
+        return True
+
     @detail_route(methods=['post'])
     def accept_application(self, request, pk=None):
         application = self.get_object()
+        if not self._can_accept_application():
+            return Response(
+                'cannot.accept.application', status=status.HTTP_400_BAD_REQUEST)
         try:
             application.state = 'approved'
             application.save()
