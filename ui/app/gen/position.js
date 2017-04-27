@@ -95,7 +95,8 @@ export default ApellaGen.extend({
         .then(function(department) {
           let p = store.createRecord('position', {
             user_application: application,
-            department: department
+            department: department,
+            position_type: get(application, 'app_type')
           });
           return p;
         })

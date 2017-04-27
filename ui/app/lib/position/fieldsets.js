@@ -24,11 +24,9 @@ const  position = {
       fields: ['title',
         field('department', {
           autocomplete: true,
-          disabled: computed('position_type', function(){
-            let election = get(this, 'position_type') === 'election';
-            if (!election) {
-              return true;
-            }
+          disabled: computed('model.position_type', function(){
+            let pt = get(this, 'model.position_type');
+            return pt === 'renewal' || pt === 'tenure';
           }),
           query: function(table, store, field, params) {
 
@@ -358,11 +356,9 @@ const  position = {
           department = field('department', {
             autocomplete: true,
             required: true,
-            disabled: computed('position_type', function(){
-              let election = get(this, 'position_type') === 'election';
-              if (!election) {
-                return true;
-              }
+            disabled: computed('model.position_type', function(){
+              let pt = get(this, 'model.position_type');
+              return pt === 'renewal' || pt === 'tenure';
             }),
             query: function(select, store, field, params) {
 
