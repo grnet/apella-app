@@ -12,7 +12,7 @@ export default ApimasAuthenticator.extend({
     user.user_id = user.id.toString();
     delete user.id;
     delete profile.user;
-    if (profile.departments && profile.departments.length) { 
+    if (profile.departments && profile.departments.length) {
       profile.departments.forEach((dep, i) => {
         profile.departments[i] = dep.split('/').slice(-2)[0];
       });
@@ -22,6 +22,7 @@ export default ApimasAuthenticator.extend({
     for (let key of FILE_FIELDS) {
       delete data[key];
     }
+    data.id = data.id.toString();
 
     // process unverified users as no-role users
     if (data.hasOwnProperty('is_verified') && data.is_verified === false) {

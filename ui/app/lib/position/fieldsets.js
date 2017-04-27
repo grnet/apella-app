@@ -154,7 +154,6 @@ const  position = {
          *
          * These 2 are calculated inside candidaciesField.
          */
-
         else if (['professor', 'candidate'].indexOf(role) > -1) {
           /*
            * can_apply attribute is true when a professor/candidate hasn't
@@ -188,7 +187,7 @@ const  position = {
               let electors = position.hasMany('electors').ids(),
                 committee = position.hasMany('committee').ids(),
                 related_profs = _.union(electors, committee),
-                professor_id = user.id + '',
+                professor_id = user.id,
                 is_related_prof = related_profs.indexOf(professor_id) > -1;
               if(is_related_prof) {
                 hidden = false;
