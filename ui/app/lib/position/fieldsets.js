@@ -24,6 +24,12 @@ const  position = {
       fields: ['title',
         field('department', {
           autocomplete: true,
+          disabled: computed('position_type', function(){
+            let election = get(this, 'position_type') === 'election';
+            if (!election) {
+              return true;
+            }
+          }),
           query: function(table, store, field, params) {
 
             // If the logged in user is an assistant, department field is a
@@ -353,6 +359,12 @@ const  position = {
           department = field('department', {
             autocomplete: true,
             required: true,
+            disabled: computed('position_type', function(){
+              let election = get(this, 'position_type') === 'election';
+              if (!election) {
+                return true;
+              }
+            }),
             query: function(select, store, field, params) {
 
               // If the logged in user is an assistant, department field is a

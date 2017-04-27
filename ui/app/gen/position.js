@@ -79,14 +79,27 @@ export default ApellaGen.extend({
     },
     getModel(params) {
       var store = get(this, 'store');
+      var self = this;
       if (params.application) {
         let application = store.findRecord('user-application', params.application);
-
         return application.then(function(application) {
+          return application.get('user');
+        })
+        .then(function(user){
+          return store.queryRecord('professor', {user_id: get(user, 'id')});
+        })
+        .then(function(professor) {
+          return professor.get('department');
+        })
+        .then(function(department) {
           let p = store.createRecord('position', {
             user_application: application,
+            department: department
           });
           return p;
+        })
+        .catch(function(error) {
+          self.transitionTo('position.index');
         });
       }
       return store.createRecord(get(this, 'modelName'));
