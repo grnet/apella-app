@@ -23,6 +23,7 @@ const {
   computed,
   computed: { reads },
   get,
+  set,
   merge, assign
 } = Ember;
 
@@ -108,6 +109,9 @@ export default ApellaGen.extend({
     fieldsets: computed('model.user_application', pick_create_fs),
     routeMixins: {
       queryParams: {'application': { refreshModel: true }},
+      resetController(controller) {
+        set(controller, 'application', undefined);
+      },
     }
   },
   list: {
