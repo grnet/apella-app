@@ -261,6 +261,26 @@ export default ApellaGen.extend({
       }
       return candidacy_not_cancelled && before_deadline && owned;
     }),
+
+    participates: computed('user.id', 'model.position.electors', 'model.position.committee', function() {
+      let professor_id = get(this, 'user.id'),
+        position = get(this, 'model.position'),
+        electors, committee, participations;
+
+      if(get(position, 'electors')) {
+        electors = position.get('electors').getEach('id'),
+        committee = position.get('committee').getEach('id');
+        participations = _.union(electors, committee);
+
+        if(participations.includes(professor_id)) {
+          return true;
+        }
+      }
+      return false;
+    }),
+    is_dep_candidacy: computed('', function() {
+      return false;
+    })
   },
 
   common: {
