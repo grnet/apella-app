@@ -85,7 +85,7 @@ export default DS.Model.extend({
    * closed the day that was last updated. That day was the day that its state
    * changed and a new instance of the position was created.
    */
-  is_closed: computed('ends_at', 'state', 'is_latest', function() {
+  is_closed: computed('ends_at', 'state', 'is_latest', 'position_type', function() {
     let is_posted = get(this, 'state') === 'posted',
       end = moment(get(this, 'ends_at')).endOf('day'),
       updated_at = moment(get(this, 'updated_at')).endOf('day'),
