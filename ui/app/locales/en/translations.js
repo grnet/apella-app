@@ -44,6 +44,8 @@ export default {
   'add.label': 'Add',
   'afterToday.message': 'This date should be after today',
   'applyCandidacy': 'Submit candidacy',
+  'applicant.user_id.label': 'Applicant ID',
+  'applicant.full_name.label': 'Applicant full name',
   'app_type.label': 'Application type',
   'area.label': 'Thematic area',
   'area.title_current.label': 'Thematic area',

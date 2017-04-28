@@ -54,6 +54,8 @@ export default {
   'active_elections.label': 'Εκλεκτορικά Σώματα',
   'add': 'Προσθηκη',
   'afterToday.message': 'H ημερομηνία θα πρέπει να είναι μεταγενέστερη της σημερινής',
+  'applicant.user_id.label': 'Κωδικός υποψηφίου',
+  'applicant.full_name.label': 'Ονοματεπώνυμο υποψηφίου',
   'applyCandidacy': 'Υποβολή υποψηφιότητας',
   'app_type.label': 'Είδος αίτησης',
   'area.label': 'Θεματική περιοχή',

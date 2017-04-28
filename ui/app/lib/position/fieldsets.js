@@ -81,7 +81,29 @@ const  position = {
     },
     details: {
       label: 'fieldsets.labels.details',
-      fields: ['fek', 'fek_posted_at', 'starts_at', 'ends_at'],
+      fields: computed('model.position_type', function(){
+        let pt = get(this, 'model.position_type');
+        let f1 = ['fek', 'fek_posted_at', 'starts_at', 'ends_at'];
+        let f2 = [
+          field('applicant', {
+            type: 'model',
+            displayAttr: 'id',
+            modelName: 'user',
+            dataKey: 'applicant',
+            disabled: true,
+            label: 'applicant.user_id.label',
+          }),
+          field('applicant', {
+            type: 'model',
+            displayAttr: 'full_name_current',
+            modelName: 'user',
+            dataKey: 'applicant',
+            disabled: true,
+            label: 'applicant.full_name.label',
+          }),
+        ];
+        return pt === 'election'? f1: f2;
+      }),
       layout: {
         flex: [50, 50, 50, 50]
       },
@@ -107,12 +129,24 @@ const  position = {
     },
     details: {
       label: 'fieldsets.labels.details',
-      fields: ['fek', field('fek_posted_at_format', {label: 'fek_posted_at.label'}),
+      fields: computed('model.position_type', function(){
+        let pt = get(this, 'model.position_type');
+        let f1 = ['fek', field('fek_posted_at_format', {label: 'fek_posted_at.label'}),
         field('starts_at_format', {label: 'starts_at.label'}),
-        field('ends_at_format', {label: 'ends_at.label'})],
+        field('ends_at_format', {label: 'ends_at.label'})];
+        let f2 = [
+          field('user_application.user.id', {
+            label: 'applicant.user_id.label',
+          }),
+          field('user_application.user.full_name_current', {
+            label: 'applicant.full_name.label',
+          }),
+        ];
+        return pt === 'election'? f1: f2;
+      }),
       layout: {
         flex: [50, 50, 50, 50]
-      }
+      },
     },
     candidacies: {
       label: 'candidacy.menu_label',
@@ -440,6 +474,7 @@ const  position = {
           disable_fields = true,
           institution_roles = ['institutionmanager', 'assistant'],
           helpdesk_roles = ['helpdeskadmin', 'helpdeskuser'],
+          pt = get(this, 'model.position_type'),
           fek, fek_posted_at, starts_at, ends_at;
 
         if(state === 'posted') {
@@ -466,7 +501,26 @@ const  position = {
           starts_at = 'starts_at';
           ends_at = 'ends_at';
         }
-        return [fek, fek_posted_at, starts_at, ends_at];
+        let f1 = [fek, fek_posted_at, starts_at, ends_at];
+        let f2 = [
+          field('applicant', {
+            type: 'model',
+            displayAttr: 'id',
+            modelName: 'user',
+            dataKey: 'applicant',
+            disabled: true,
+            label: 'applicant.user_id.label',
+          }),
+          field('applicant', {
+            type: 'model',
+            displayAttr: 'full_name_current',
+            modelName: 'user',
+            dataKey: 'applicant',
+            disabled: true,
+            label: 'applicant.full_name.label',
+          }),
+        ];
+        return pt === 'election'? f1: f2;
       }),
       layout: {
         flex: [50, 50, 50, 50]

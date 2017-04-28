@@ -248,17 +248,23 @@ export default ApellaGen.extend({
      * for details view should preload candidacies in order to run checks and
      * decide if the candidacies fs should be rendered.
      */
-    getModel(params, model) {
+    getModel: function(params, model) {
       let position_id = get(model, 'id'),
         store = get(model, 'store'),
         query = {
           position: position_id,
           latest: true
         };
+      let election = get(model, 'position_type') === 'election';
 
       return store.query('candidacy', query).then(function() {
-        return model;
+        if (election) {
+          return model;
+        } else {
+          return preloadRelations(model, 'user_application', 'user_application.user');
+        }
       });
+
     },
     actions: computed('model.is_latest', function() {
       let is_latest = get(this, 'model.is_latest');

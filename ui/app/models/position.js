@@ -21,6 +21,7 @@ export default DS.Model.extend({
 
   // All keys have been sorted alphabetically
 
+  applicant: readOnly('user_application.user'),
   assistant_files: DS.hasMany('apella-file'),
   author: DS.belongsTo('institution-manager'),
   can_apply: computed.equal('currentUserCandidacy.length', 0),
