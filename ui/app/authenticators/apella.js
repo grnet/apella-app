@@ -22,7 +22,9 @@ export default ApimasAuthenticator.extend({
     for (let key of FILE_FIELDS) {
       delete data[key];
     }
-    data.id = data.id.toString();
+    if(data.id) {
+      data.id = data.id.toString();
+    }
 
     // process unverified users as no-role users
     if (data.hasOwnProperty('is_verified') && data.is_verified === false) {
