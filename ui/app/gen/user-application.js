@@ -187,6 +187,7 @@ export default ApellaGen.extend({
           field('app_type_verbose', {label: 'app_type.label'}),
           field('created_at_format', {label: 'created_at.label'}),
           field('updated_at_format', {label: 'updated_at.label'}),
+          'department.title_current',
         ];
         if (role === 'professor' || role === 'candidate') {
           fields.splice(0, 2);
@@ -194,7 +195,7 @@ export default ApellaGen.extend({
         return fields;
       }),
       layout: {
-        flex: [50, 50, 50, 50, 50, 50]
+        flex: [50, 50, 50, 50, 50, 50, 100]
       }
     }]
   }
