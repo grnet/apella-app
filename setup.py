@@ -1,6 +1,7 @@
 import distutils.log
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py as _build_py
+from setuptools.command.install import install as _install
 import os
 import subprocess
 
@@ -80,6 +81,28 @@ class BuildUiCommand(_build_py):
       _build_py.run(self)
 
 
+class InstallCommand(_install):
+    """ Extend install command with --no-build-ui option. """
+
+    user_options = _install.user_options + [
+        ('no-build-ui', None, 'skip Apella UI build'),
+    ]
+
+    boolean_options = _install.boolean_options + ['no-build-ui']
+
+    def initialize_options(self):
+        """ Set default values for options. """
+
+        _install.initialize_options(self)
+        self.no_build_ui = None
+
+    def run(self):
+        if self.no_build_ui:
+            self.reinitialize_command('build_py', no_ui=True)
+
+        _install.run(self)
+
+
 setup(
     name=PACKAGE_NAME,
     version=VERSION,
@@ -108,5 +131,6 @@ setup(
             'apella = apella.management:main',
         ],
     },
-    cmdclass={'build_py': BuildUiCommand},
+    cmdclass={'install': InstallCommand,
+              'build_py': BuildUiCommand},
 )
