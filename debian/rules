@@ -34,4 +34,8 @@ override_dh_auto_install:
 		cd $(TOPDIR); \
 	done; \
 	\
+	for py in $(shell pyversions -vr debian/control); do \
+		rm -f $(BUILDDIR)/*/usr/lib/python$$py/*-packages/*-nspkg.pth; \
+	done; \
+	\
 	dh_install --list-missing
