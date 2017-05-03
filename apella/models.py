@@ -596,6 +596,7 @@ class ProfessorRank(models.Model):
 
 class UserApplication(models.Model):
     user = models.ForeignKey(ApellaUser)
+    department = models.ForeignKey(Department)
     app_type = models.CharField(
         choices=common.APPLICATION_TYPES, max_length=30, default='tenure')
     state = models.CharField(
@@ -616,10 +617,11 @@ class UserApplication(models.Model):
         if self.user == request.user:
             return True
         if request.user.is_institutionmanager():
-            return self.user.professor.institution == \
-                request.user.institutionmanager.institution
+            departments = Department.objects.filter(
+                institution=request.user.institutionmanager.institution)
+            return self.department in departments
         elif request.user.is_assistant():
-            return self.user.professor.department in \
+            return self.department in \
                 request.user.institutionmanager.departments.all()
         return False
 
@@ -737,7 +739,7 @@ class Position(models.Model):
 
     def check_resource_state_before_open(self, row, request, view):
         user = request.user
-        if not self.is_election_type:
+        if not self.is_election_type and not self.starts_at:
             before_open = True
         else:
             before_open = self.starts_at > datetime.utcnow()

@@ -89,8 +89,8 @@ export default ApellaGen.extend({
         .then(function(user){
           return store.queryRecord('professor', {user_id: get(user, 'id')});
         })
-        .then(function(professor) {
-          return professor.get('department');
+        .then(function(user){
+          return application.get('department');
         })
         .then(function(department) {
           let p = store.createRecord('position', {

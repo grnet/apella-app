@@ -561,12 +561,13 @@ class UserApplicationMixin(object):
         queryset = self.queryset
         user = self.request.user
         if user.is_institutionmanager():
+            departments = Department.objects.filter(
+                institution=user.institutionmanager.institution)
             queryset = queryset.filter(
-                user__professor__institution=user.institutionmanager.institution)
+                department__in=departments)
         elif user.is_assistant():
             queryset = queryset.filter(
-                user__professor__department__in=\
-                    user.institutionmanager.departments.all())
+                department__in=user.institutionmanager.departments.all())
         elif user.is_professor():
             queryset = queryset.filter(user=user)
         return queryset

@@ -19,6 +19,7 @@ export default DS.Model.extend({
   can_accept_candidacies: DS.attr(),
   created_at: DS.attr('date'),
   created_at_format: computeDateTimeFormat('created_at'),
+  department: DS.belongsTo('department', {formAttrs: {optionLabelAttr: 'title_current'}}),
   position_id: DS.attr(),
   position_id_format: computed('position_id', function(){
     let position_id = get(this, 'position_id');

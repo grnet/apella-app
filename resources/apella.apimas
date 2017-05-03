@@ -3142,6 +3142,12 @@ spec:
                     .nullable: {}
                     .ref:
                         to: users
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: departments
                 app_type:
                     .cli_option: {}
                     .field: {}
