@@ -3146,6 +3146,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
+                    .nullable: {}
                     .ref:
                         to: departments
                 app_type:
