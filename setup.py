@@ -1,5 +1,8 @@
+import distutils.log
 from setuptools import setup, find_packages
+from setuptools.command.build_py import build_py as _build_py
 import os
+import subprocess
 
 with open("version.txt") as f:
     PACKAGE_NAME, VERSION, COMPATIBLE_VERSION = \
@@ -51,6 +54,32 @@ MIGRATION_QUERY_FILES = get_all_data_files(
     'resources/migration_queries')
 
 
+class BuildUiCommand(_build_py):
+    """ Extend build_py to build Apella UI. """
+
+    description = 'build Apella UI'
+    user_options = _build_py.user_options + [
+        ('no-ui', None, 'skip Apella UI build'),
+    ]
+
+    boolean_options = _build_py.boolean_options + ['no-ui']
+
+    def initialize_options(self):
+        """ Set default values for options. """
+
+        _build_py.initialize_options(self)
+        self.no_ui = None
+
+    def run(self):
+      if not self.no_ui:
+        command = ['./build_ui.sh', 'production']
+        self.announce('building ui: %s' % ' '.join(command),
+                      level=distutils.log.INFO)
+        subprocess.call(command, cwd='./ui/')
+
+      _build_py.run(self)
+
+
 setup(
     name=PACKAGE_NAME,
     version=VERSION,
@@ -79,4 +108,5 @@ setup(
             'apella = apella.management:main',
         ],
     },
+    cmdclass={'build_py': BuildUiCommand},
 )

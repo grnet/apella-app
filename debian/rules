@@ -15,10 +15,6 @@ TOPDIR = $(CURDIR)
 %:
 	dh $@ --with python2 --with-systemd
 
-override_dh_auto_build:
-	[ -x ./build-artifacts ] && ./build-artifacts
-	dh_auto_build
-
 override_dh_auto_install:
 	echo PACKAGES $(PACKAGES) $(PYTHON_PACKAGES); \
 	for package in $(PACKAGES); do \
