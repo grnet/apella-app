@@ -532,6 +532,7 @@ class UserApplicationMixin(object):
                 'cannot.accept.application', status=status.HTTP_400_BAD_REQUEST)
         try:
             application.state = 'approved'
+            application.updated_at = datetime.utcnow()
             application.save()
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
@@ -547,6 +548,7 @@ class UserApplicationMixin(object):
         application = self.get_object()
         try:
             application.state = 'rejected'
+            application.updated_at = datetime.utcnow()
             application.save()
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
