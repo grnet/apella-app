@@ -25,7 +25,6 @@ from apella.common import RANKS
 
 logger = logging.getLogger(__name__)
 
-
 def get_electors_regular_internal(instance):
     eps = instance.electorparticipation_set.filter(
         is_regular=True,

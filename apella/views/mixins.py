@@ -507,3 +507,9 @@ class CandidateProfile(object):
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
         return Response(request.data, status=status.HTTP_200_OK)
+
+
+class PositionsPortal(object):
+    def get_queryset(self):
+        now = datetime.utcnow()
+        return self.queryset.filter(state='posted', ends_at__gte=now)
