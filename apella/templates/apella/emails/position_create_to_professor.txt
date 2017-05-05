@@ -2,9 +2,11 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι καταχωρίστηκε στο πληροφοριακό σύστημα ΑΠΕΛΛΑ μία νέα θέση:
+Σας ενημερώνουμε ότι έχει δημιουργηθεί στο πληροφορικό σύστημα ΑΠΕΛΛΑ η θέση που αντιστοιχεί στην αίτησή σας με κωδικό {{position.user_application.id}}.
 
 {% include "apella/emails/position_details_el.txt" %}
+
+Θα πρέπει να συνδεθείτε στο λογαριασμό σας προκειμένου να υποβάλετε την υποψηφιότητά σας.
 
 
 {% endblock content_el %}
@@ -12,8 +14,10 @@
 
 {% block content_en %}
 
-We inform you that a new position has been announced in the Apella information system:
+We inform you that the position which corresponds to your application with ID {{position.user_application.id}}, has been created in the APELLA information system.
 
 {% include "apella/emails/position_details_en.txt" %}
+
+You should log in to your account in order to submit your candidacy.
 
 {% endblock content_en %}

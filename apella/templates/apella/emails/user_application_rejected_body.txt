@@ -2,12 +2,12 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι η αίτησή σας με αριθμό {{ application.id }} αππορρίφθηκε.
+Σας ενημερώνουμε ότι η αίτησή σας με κωδικό {{ application.id }} έχει απορριφθεί από το Τμήμα σας.
 
 {% endblock content_el %}
 
 {% block content_en %}
 
-We would like to inform you that your application {{ application.id }} has been rejected.
+We inform you that your application with ID {{application.id}} has been rejected by your Department.
 
 {% endblock content_en %}

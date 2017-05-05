@@ -2,12 +2,14 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι η αίτησή σας με αριθμό {{ application.id }} έγινε δεκτή.
+Σας ενημερώνουμε ότι η αίτησή σας με κωδικό {{ application.id }} έχει εγκριθεί από το Τμήμα σας.
+Όταν δημιουργηθεί στο πληροφοριακό σύστημα η θέση που αντιστοιχεί στην αίτησή σας, θα ειδοποιηθείτε με νέο e-mail, προκειμένου να υποβάλετε την υποψηφιότητά σας.
 
 {% endblock content_el %}
 
 {% block content_en %}
 
-We would like to inform you that your application {{ application.id }} has been accepted.
+We inform you that your application with ID {{application.id}} has been approved by your Department.
+Once the position corresponding to your application is created in the information system, you will be notified by new e-mail in order to submit your candidacy.
 
 {% endblock content_en %}
