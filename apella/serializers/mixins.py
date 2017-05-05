@@ -11,6 +11,7 @@ from apella.models import ApellaUser, Institution, Department, \
     Position
 from apella import auth_hooks
 from apella.emails import send_user_email
+from apella.util import move_to_timezone, otz
 
 
 class ValidatorMixin(object):
@@ -219,11 +220,18 @@ class Registries(object):
 
 class PositionsPortal(object):
     def to_representation(self, obj):
-        now = datetime.utcnow()
+        now = move_to_timezone(datetime.utcnow(), otz)
+        starts_at = None
+        if obj.starts_at:
+            starts_at = move_to_timezone(obj.starts_at, otz)
+        ends_at = None
+        if obj.ends_at:
+            ends_at = move_to_timezone(obj.ends_at, otz)
+
         state_el = ''
-        if obj.state == 'posted' and obj.starts_at < now:
+        if obj.state == 'posted' and starts_at < now:
             state_el = u'Ανοιχτή'
-        elif obj.state == 'posted' and obj.starts_at >= now:
+        elif obj.state == 'posted' and starts_at >= now:
             state_el = u'Ενταγμένη'
 
         data = {
@@ -277,8 +285,8 @@ class PositionsPortal(object):
                     'clientStatusInGreek': state_el,
                     'clientStatus': obj.state,
                     'candidacies': {
-                        'openingDate': obj.starts_at and obj.starts_at.date(),
-                        'closingDate': obj.ends_at and obj.ends_at.date(),
+                        'openingDate': starts_at and starts_at.date(),
+                        'closingDate': ends_at and ends_at.date(),
                         'createdAt': obj.created_at and obj.created_at.date(),
                         'updatedAt': obj.updated_at and obj.updated_at.date()
                     },
