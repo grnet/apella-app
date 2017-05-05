@@ -170,7 +170,7 @@ const FIELDSET_EDIT_USER = {
   fields: [
     field('username', { disabled: true }),
     field('id', {disabled: true}),
-    field('email', { disabled: true }),
+    'email',
     'first_name',
     'last_name',
     'father_name',

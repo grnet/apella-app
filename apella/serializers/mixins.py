@@ -100,8 +100,6 @@ class NestedWritableObjectsMixin(object):
         if request and \
                 request.method in ['GET', 'PUT', 'PATCH'] and \
                 self.NESTED_USER_KEY in self.fields:
-            self.fields[self.NESTED_USER_KEY].fields['email'].read_only = \
-                True
             self.fields[self.NESTED_USER_KEY].fields['username'].read_only = \
                 True
             del self.fields[self.NESTED_USER_KEY].fields['password']

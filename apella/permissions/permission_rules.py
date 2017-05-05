@@ -594,6 +594,7 @@ PERMISSION_RULES = [
     ('users', 'update', 'helpdeskadmin', 'id_passport', '*', ''),
     ('users', 'update', 'helpdeskadmin', 'mobile_phone_number', '*', ''),
     ('users', 'update', 'helpdeskadmin', 'home_phone_number', '*', ''),
+    ('users', 'update', 'helpdeskadmin', 'email', '*', ''),
     ('apella-files', 'list', 'helpdeskadmin', '*', '*', ''),
     ('apella-files', 'list', 'helpdeskuser', '*', '*', ''),
     ('apella-files', 'list', 'candidate', '*', '*', ''),
