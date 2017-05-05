@@ -171,12 +171,13 @@ class PositionMixin(ValidatorMixin):
 
     def _normalize_dates(self, validated_data):
         starts_at = validated_data.get('starts_at', None)
-        if starts_at is None:
+        if starts_at is not None:
+            validated_data['starts_at'] = at_day_start(starts_at, otz)
+        elif self.instance and not self.instance.is_election_type \
+                and self.instance.starts_at is None:
             starts_at = datetime.utcnow()
             validated_data['starts_at'] = \
                 at_day_start(starts_at, otz) - timedelta(days=1)
-        else:
-            validated_data['starts_at'] = at_day_start(starts_at, otz)
 
         ends_at = validated_data.get('ends_at', None)
         if ends_at is not None:
