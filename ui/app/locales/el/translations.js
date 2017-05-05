@@ -15,6 +15,7 @@ export default {
   'Electing': 'Επιλογή',
   'Elector': 'Εκλέκτορας',
   'Elector, Committee': 'Eκλέκτορας, Μέλος επιτροπής',
+  'End date should be 30 days after start date': 'Η προθεσμία υποβολής δεν μπορεί να είναι μικρότερη των 30 ημερών',
   'External': 'Εξωτερικό',
   'Failed': 'Άγονη',
   'Helpdesk Admin': 'Υπεύθυνος helpdesk',
