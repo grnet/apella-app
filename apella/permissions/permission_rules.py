@@ -623,4 +623,6 @@ PERMISSION_RULES = [
     ('old-users', 'list', 'helpdeskuser', '*', '*', ''),
     ('old-users', 'retrieve', 'helpdeskadmin', '*', '*', ''),
     ('old-users', 'retrieve', 'helpdeskuser', '*', '*', ''),
+    ('positions-portal', 'list', 'anonymous', '*', '*', ''),
+    ('positions-portal', 'retrieve', 'anonymous', '*', '*', ''),
 ]

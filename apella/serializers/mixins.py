@@ -1,3 +1,7 @@
+#! /usr/bin/python
+# -*- encoding: utf-8 -*-
+from datetime import datetime
+
 from django.conf import settings
 from rest_framework import serializers
 from rest_framework.utils import model_meta
@@ -211,3 +215,76 @@ class Registries(object):
         instance = super(Registries, self).update(instance, validated_data)
         send_registry_emails(members_to_send, department)
         return instance
+
+
+class PositionsPortal(object):
+    def to_representation(self, obj):
+        now = datetime.utcnow()
+        state_el = ''
+        if obj.state == 'posted' and obj.starts_at < now:
+            state_el = u'Ανοιχτή'
+        elif obj.state == 'posted' and obj.starts_at >= now:
+            state_el = u'Ενταγμένη'
+
+        data = {
+                'id': obj.code,
+                'name': obj.title,
+                'description': obj.description,
+                'department': {
+                    'id': obj.department.id,
+                    'name': {
+                        'el': obj.department.title.el,
+                        'en': obj.department.title.en
+                    },
+                    'school': {
+                        'id': obj.department.school.id,
+                        'name': {
+                            'el': obj.department.school.title.el,
+                            'en': obj.department.school.title.en
+                        },
+                        'institution': {
+                            'id': obj.department.institution.id,
+                            'name': {
+                                'el': obj.department.institution.title.el,
+                                'en': obj.department.institution.title.en
+                            },
+                            'schacHomeOrganization':
+                                obj.department.institution.schac_home_organization,
+                            'category': obj.department.institution.category
+                        }
+                    }
+                },
+                'subject': {
+                    'name': obj.discipline
+                },
+                'sector': {
+                    'areaId': obj.subject_area.id,
+                    'subjectId': obj.subject.id,
+                    'name': {
+                        'el': {
+                            'area': obj.subject_area.title.el,
+                            'subject': obj.subject.title.el
+                        },
+                        'en': {
+                            'area': obj.subject_area.title.en,
+                            'subject': obj.subject.title.en
+                        }
+                    }
+                },
+                'fek': obj.fek,
+                'phase': {
+                    'status': obj.state,
+                    'clientStatusInGreek': state_el,
+                    'clientStatus': obj.state,
+                    'candidacies': {
+                        'openingDate': obj.starts_at and obj.starts_at.date(),
+                        'closingDate': obj.ends_at and obj.ends_at.date(),
+                        'createdAt': obj.created_at and obj.created_at.date(),
+                        'updatedAt': obj.updated_at and obj.updated_at.date()
+                    },
+                    'createdAt': obj.created_at and obj.created_at.date(),
+                    'updatedAt': obj.updated_at and obj.updated_at.date()
+                },
+                'fekSentDate': obj.fek_posted_at and obj.fek_posted_at.date()
+        }
+        return data

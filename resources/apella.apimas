@@ -3110,3 +3110,23 @@ spec:
                 .list: {}
                 .update: {}
                 .retrieve: {}
+        positions-portal:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Position
+                model_serializers: [apella.serializers.mixins.PositionsPortal]
+                mixins: [apella.views.mixins.PositionsPortal]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+            actions:
+                .list: {}
+                .retrieve: {}
