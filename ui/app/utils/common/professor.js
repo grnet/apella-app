@@ -93,7 +93,7 @@ const FIELDS = computed('model.is_foreign', function(){
     fileField('cv_professor', 'professor', 'cv_professor', {
       readonly: computed('role', 'user.is_verified', 'user.verification_pending', function() {
         let user_role = get(this, 'role'),
-          forbid_edit_roles = ['helpdeskuser', 'ministry'],
+          forbid_edit_roles = ['ministry'],
           is_verified = get(this, 'user.is_verified'),
           verification_pending = get(this, 'user.verification_pending');
         if(forbid_edit_roles.indexOf(user_role) > -1 || is_verified || verification_pending) {
