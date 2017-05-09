@@ -48,7 +48,6 @@ export default ApellaGen.extend({
       label: 'candidate.menu_label',
       icon: 'people_outline'
     },
-    layout: 'table',
     filter: {
       active: true,
       meta: {
@@ -57,7 +56,7 @@ export default ApellaGen.extend({
       },
       serverSide: true,
       search: true,
-      searchFields: ['id', 'email', 'username', 'first_name', 'last_name']
+      searchPlaceholder: 'search.placeholder.candidates'
     },
     sort: {
       active: true,

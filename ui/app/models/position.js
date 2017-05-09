@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import {computeI18NChoice, computeDateFormat, computeDateTimeFormat} from 'ui/lib/common';
+import {computeI18NChoice, computeDateFormat, computeDateTimeFormat, prefixSelect} from 'ui/lib/common';
 
 const {
   computed,
@@ -14,11 +14,14 @@ let position_states_expanded = CHOICES.POSITION_STATES.insertAt(2, extra_positio
 // remove state "draft" from position states expanded array
 position_states_expanded.splice(0,1);
 
+let position_types = prefixSelect(CHOICES.POSITION_TYPES, 'position_type.');
+
 
 export default DS.Model.extend({
 
   // All keys have been sorted alphabetically
 
+  applicant: readOnly('user_application.user'),
   assistant_files: DS.hasMany('apella-file'),
   author: DS.belongsTo('institution-manager'),
   can_apply: computed.equal('currentUserCandidacy.length', 0),
@@ -78,19 +81,40 @@ export default DS.Model.extend({
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
   institution: readOnly('department.institution'),
-  is_closed: computed('ends_at', 'state', function() {
-    let posted = get(this, 'state') === 'posted',
-      end = moment(get(this, 'ends_at')).endOf('day');
-    return end.isBefore() && posted;
+  /*
+   * If the position is not the latest we should check the if the position was
+   * closed the day that was last updated. That day was the day that its state
+   * changed and a new instance of the position was created.
+   */
+  is_closed: computed('ends_at', 'state', 'is_latest', 'position_type', function() {
+    let is_posted = get(this, 'state') === 'posted',
+      end = moment(get(this, 'ends_at')).endOf('day'),
+      updated_at = moment(get(this, 'updated_at')).endOf('day'),
+      is_latest = get(this, 'is_latest'),
+      now = moment(),
+      date_to_compare = is_latest ? now : updated_at;
+
+    return end.isBefore() && is_posted;
   }),
   is_latest: computed('code', 'id', function() {
     return get(this, 'code').replace('APP','') === get(this, 'id');
   }),
-  is_open: computed('starts_at', 'ends_at', function() {
+  /*
+   * If the position is not the latest we should check the if the position was
+   * open the day that was last updated. That day was the day that its state
+   * changed and a new instance of the position was created.
+   */
+  is_open: computed('starts_at', 'ends_at', 'is_latest', 'position_type', function() {
     let now = moment(),
       start = moment(get(this, 'starts_at')).startOf('day'),
-      end = moment(get(this, 'ends_at')).endOf('day');
-    return now.isBetween(start, end);
+      end = moment(get(this, 'ends_at')).endOf('day'),
+      ends_at = get(this, 'ends_at'),
+      is_latest = get(this, 'is_latest'),
+      updated_at = moment(get(this, 'updated_at')).endOf('day'),
+      election = get(this, 'position_type') === 'election',
+      date_to_compare = is_latest ? now : updated_at;
+
+    return date_to_compare.isBetween(start, end) || (!election && !ends_at);
   }),
   // is_posted is true for the positions that are not yet open
   is_posted: computed('state', 'is_closed', 'is_open', function(){
@@ -105,6 +129,8 @@ export default DS.Model.extend({
     return this.get('i18n').t(this.get('participation'));
   }),
   past_positions: DS.hasMany('position'),
+  position_type: DS.attr({type: 'select', choices: position_types, defaultValue: 'election'}),
+  position_type_verbose: computeI18NChoice('position_type', position_types),
   proceedings_cover_letter: DS.belongsTo('apella-file'),
   revocation_decision: DS.belongsTo('apella-file'),
   second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
@@ -157,6 +183,7 @@ export default DS.Model.extend({
   title: DS.attr(),
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
+  user_application: DS.belongsTo('user_application'),
   // Use in currentUserCandidacy
   user_id: computed.alias('session.session.authenticated.user_id'),
 });

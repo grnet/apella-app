@@ -46,8 +46,7 @@ export default ApellaGen.extend({
       fields: ['title'],
       serverSide: true
     },
-    layout: 'table',
-     row: {
+    row: {
       fields: [i18nField('title')],
       actions: ['gen:edit', 'remove']
     },

@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.core.files import File
 from django.db import transaction
+from django.db.models import Min
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
@@ -15,7 +16,8 @@ from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
     validate_position_committee, validate_position_electors, \
-    validate_position_state
+    validate_position_state, validate_tenure_candidacy, \
+    validate_create_position_from_application
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
@@ -24,6 +26,33 @@ from apella.util import at_day_end, at_day_start, otz, safe_path_join
 from apella.common import RANKS
 
 logger = logging.getLogger(__name__)
+
+
+def position_can_accept_candidacies(instance):
+    positions = instance.position_set.order_by('-id')
+    if len(positions) > 0:
+        position = positions[0]
+        if position.ends_at is None:
+            return True
+    return False
+
+def get_position_state_from_application(instance):
+    positions = instance.position_set.all()
+    ids = positions.values('code').annotate(Min('id')). \
+        values_list('id__min', flat=True)
+    if positions:
+        return positions.filter(id=max(ids))[0].state
+    else:
+        return None
+
+def get_position_from_application(instance):
+    positions = instance.position_set.all()
+    ids = positions.values('code').annotate(Min('id')). \
+        values_list('id__min', flat=True)
+    if positions:
+        return max(ids)
+    else:
+        return 0
 
 def get_electors_regular_internal(instance):
     eps = instance.electorparticipation_set.filter(
@@ -115,11 +144,24 @@ class PositionMixin(ValidatorMixin):
         committee = data.pop('committee', [])
         ranks = data.pop('ranks', [])
 
-        if not user.is_helpdeskadmin():
-            if 'starts_at' in data:
-                after_today_validator(data['starts_at'])
-            if 'fek_posted_at' in data:
-                before_today_validator(data['fek_posted_at'])
+        user_application = data.get('user_application', None)
+        instance = getattr(self, 'instance')
+        creating = False
+        if not instance:
+            creating = True
+
+        position_type = 'election'
+        if user_application is not None:
+            if creating:
+                validate_create_position_from_application(user_application)
+            position_type = user_application.app_type
+            data['position_type'] = position_type
+
+            if not user.is_helpdeskadmin() and position_type == 'election':
+                if 'starts_at' in data:
+                    after_today_validator(data['starts_at'])
+                if 'fek_posted_at' in data:
+                    before_today_validator(data['fek_posted_at'])
 
         data = super(PositionMixin, self).validate(data)
         data['committee'] = committee
@@ -131,6 +173,11 @@ class PositionMixin(ValidatorMixin):
         starts_at = validated_data.get('starts_at', None)
         if starts_at is not None:
             validated_data['starts_at'] = at_day_start(starts_at, otz)
+        elif self.instance and not self.instance.is_election_type \
+                and self.instance.starts_at is None:
+            starts_at = datetime.utcnow()
+            validated_data['starts_at'] = \
+                at_day_start(starts_at, otz) - timedelta(days=1)
 
         ends_at = validated_data.get('ends_at', None)
         if ends_at is not None:
@@ -299,13 +346,15 @@ class CandidacyMixin(object):
             position = instance.position
             candidate = instance.candidate
             if not user.is_helpdeskadmin():
-                if data:
+                if data and position.is_election_type:
                     validate_now_is_between_dates(
                         position.starts_at, position.ends_at)
             if creating:
                 validate_candidate_files(candidate)
                 validate_unique_candidacy(position, candidate)
                 validate_position_state(position)
+                if position.is_tenure_type:
+                    validate_tenure_candidacy(position, candidate)
 
         data = super(CandidacyMixin, self).validate(data)
         data['attachment_files'] = attachment_files
@@ -337,6 +386,13 @@ class CandidacyMixin(object):
         send_create_candidacy_emails(obj)
         logger.info('successfully created candidacy %s for candidate %s' %
             (str(obj.id), str(obj.candidate.id)))
+
+        position = validated_data.get('position', None)
+        ends_at = validated_data.get('ends_at', None)
+        if not position.is_election_type and ends_at is None:
+            position.ends_at = \
+                at_day_start(datetime.utcnow(), otz) - timedelta(hours=1)
+            position.save()
         return obj
 
     def update(self, instance, validated_data):

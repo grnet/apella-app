@@ -96,7 +96,6 @@ export default ApellaGen.extend({
         return (role == 'professor' && allowedRanks);
       }),
     },
-    layout: 'table',
     row: {
       fields: ['code', 'old_code', 'title', 'state_calc_verbose',
               'discipline', 'participation_current',

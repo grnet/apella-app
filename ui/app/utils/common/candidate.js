@@ -12,8 +12,9 @@ const FILES_FIELDS = [
   fileField('id_passport_file', 'candidate', 'id_passport', {
     readonly: computed('role', 'model.is_verified', 'model.verification_pending', function() {
       // NOTE: When the candidate is in his profile the role is undefined
-      let user_role = get(this, 'role');
-      if(user_role === 'helpdeskuser') {
+      let user_role = get(this, 'role'),
+        forbid_edit_roles = ['helpdeskuser', 'ministry'];
+      if(forbid_edit_roles.indexOf(user_role) > -1) {
         return true;
       }
       else {
@@ -24,8 +25,9 @@ const FILES_FIELDS = [
   fileField('cv', 'candidate', 'cv', {
     readonly: computed('role', function() {
       // NOTE: When the candidate is in his profile the role is undefined
-      let user_role = get(this, 'role');
-      if(user_role === 'helpdeskuser') {
+      let user_role = get(this, 'role'),
+        forbid_edit_roles = ['helpdeskuser', 'ministry'];
+      if(forbid_edit_roles.indexOf(user_role) > -1) {
         return true;
       }
       else {
@@ -36,8 +38,9 @@ const FILES_FIELDS = [
   fileField('diplomas', 'candidate', 'diploma', {
     readonly: computed('role', function() {
       // NOTE: When the candidate is in his profile the role is undefined
-      let user_role = get(this, 'role');
-      if(user_role === 'helpdeskuser') {
+      let user_role = get(this, 'role'),
+        forbid_edit_roles = ['helpdeskuser', 'ministry'];
+      if(forbid_edit_roles.indexOf(user_role) > -1) {
         return true;
       }
       else {
@@ -50,8 +53,9 @@ const FILES_FIELDS = [
   fileField('publications', 'candidate', 'publication', {
     readonly: computed('role', function() {
       // NOTE: When the candidate is in his profile the role is undefined
-      let user_role = get(this, 'role');
-      if(user_role === 'helpdeskuser') {
+      let user_role = get(this, 'role'),
+        forbid_edit_roles = ['helpdeskuser', 'ministry'];
+      if(forbid_edit_roles.indexOf(user_role) > -1) {
         return true;
       }
       else {

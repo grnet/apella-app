@@ -5,7 +5,8 @@
         ["professor", "Professor"],
         ["helpdeskadmin", "Helpdesk Admin"],
         ["helpdeskuser", "Helpdesk User"],
-        ["assistant", "Assistant"]
+        ["assistant", "Assistant"],
+        ["ministry", "Ministry Administrator"]
     ],
 
     "POSITION_STATES": [
@@ -82,5 +83,22 @@
         ["candidacy", "Candidacy"],
         ["position", "Position"],
         ["other", "Other"]
+    ],
+
+    "APPLICATION_TYPES": [
+        ["tenure", "Tenure"],
+        ["renewal", "Renewal"]
+    ],
+
+    "APPLICATION_STATES": [
+        ["pending", "Pending"],
+        ["approved", "Approved"],
+        ["rejected", "Rejected"]
+    ],
+
+    "POSITION_TYPES": [
+        ["election", "Election"],
+        ["tenure", "Tenure"],
+        ["renewal", "Renewal"]
     ]
 }

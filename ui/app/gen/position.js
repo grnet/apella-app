@@ -23,6 +23,7 @@ const {
   computed,
   computed: { reads },
   get,
+  set,
   merge, assign
 } = Ember;
 
@@ -77,7 +78,42 @@ export default ApellaGen.extend({
     onSubmit(model) {
       this.transitionTo('position.record.index', model);
     },
-    fieldsets: pick_create_fs(),
+    getModel(params) {
+      var store = get(this, 'store');
+      var self = this;
+      if (params.application) {
+        let application = store.findRecord('user-application', params.application);
+        return application.then(function(application) {
+          return application.get('user');
+        })
+        .then(function(user){
+          return store.queryRecord('professor', {user_id: get(user, 'id')});
+        })
+        .then(function(user){
+          return application.get('department');
+        })
+        .then(function(department) {
+          let p = store.createRecord('position', {
+            user_application: application,
+            department: department,
+            position_type: get(application, 'app_type')
+          });
+          return p;
+        })
+        .catch(function(error) {
+          self.transitionTo('position.index');
+        });
+      }
+      return store.createRecord(get(this, 'modelName'));
+    },
+
+    fieldsets: computed('model.user_application', pick_create_fs),
+    routeMixins: {
+      queryParams: {'application': { refreshModel: true }},
+      resetController(controller) {
+        set(controller, 'application', undefined);
+      },
+    }
   },
   list: {
     getModel: function(params) {
@@ -101,11 +137,11 @@ export default ApellaGen.extend({
       active: true,
       serverSide: true,
       search: true,
-      searchPlaceholder: 'search.placeholder_positions',
+      searchPlaceholder: 'search.placeholder.positions',
       meta: {
         fields: computed('user.role', function() {
           let user_role = get(this, 'user.role'),
-            roles_institution = ['helpdeskadmin', 'helpdeskuser'],
+            roles_institution = ['helpdeskadmin', 'helpdeskuser', 'ministry'],
             roles_department = ['institutionmanager', 'assistant'],
             filter_model, dataKey, user_institution;
 
@@ -120,6 +156,11 @@ export default ApellaGen.extend({
             filter_model = 'department';
             dataKey = 'department';
             user_institution = get(this, 'user.institution').split('/').slice(-2)[0];
+          }
+          // Default filters
+          else {
+            filter_model = 'institution';
+            dataKey = 'department__institution';
           }
           return [
             field(filter_model, {
@@ -175,7 +216,6 @@ export default ApellaGen.extend({
         }
       })
     },
-    layout: 'table',
     row: {
       fields: computed('role', function(){
         let role = get(this, 'role');
@@ -201,24 +241,30 @@ export default ApellaGen.extend({
     }
   },
   edit: {
-    fieldsets: computed('role', 'model.state', 'model.starts_at', 'model.ends_at', pick_edit_fs),
+    fieldsets: computed('role', 'model.state', 'model.starts_at', 'model.ends_at', 'model.position_type', pick_edit_fs),
   },
   details: {
     /*
      * for details view should preload candidacies in order to run checks and
      * decide if the candidacies fs should be rendered.
      */
-    getModel(params, model) {
+    getModel: function(params, model) {
       let position_id = get(model, 'id'),
         store = get(model, 'store'),
         query = {
           position: position_id,
           latest: true
         };
+      let election = get(model, 'position_type') === 'election';
 
       return store.query('candidacy', query).then(function() {
-        return model;
+        if (election) {
+          return model;
+        } else {
+          return preloadRelations(model, 'user_application', 'user_application.user');
+        }
       });
+
     },
     actions: computed('model.is_latest', function() {
       let is_latest = get(this, 'model.is_latest');
@@ -231,6 +277,6 @@ export default ApellaGen.extend({
     partials: {
       top: 'position-top'
     },
-    fieldsets: computed('role', 'user.id', 'user.user_id', 'model.state', 'model.starts_at', 'model.ends_at', pick_details_fs),
+    fieldsets: computed('role', 'user.id', 'user.user_id', 'model.state', 'model.starts_at', 'model.ends_at', 'model.position_type', pick_details_fs),
   }
 });

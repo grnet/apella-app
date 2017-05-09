@@ -300,7 +300,8 @@ def send_emails_field(obj, field, update=False):
     body = 'apella/emails/position_{}_{}_body.txt'.format(verb, field)
 
     if field == 'electors_meeting_to_set_committee_date':
-        electors = [x.user for x in obj.electors.all()]
+        electors = [x.user for x in obj.electors.filter(is_verified=True).\
+            filter(user__is_active=True)]
         candidates = obj.get_candidates_posted()
         recipients = chain(candidates, electors)
 
@@ -332,6 +333,7 @@ def send_emails_members_change(position, type, old_members, new_members):
     """
     Sends emails to appropriate recipients when members of committee or
     electors are set or updated
+
 
     Args:
         position: Position object
@@ -365,7 +367,8 @@ def send_emails_members_change(position, type, old_members, new_members):
         # new committee
         if len(old_c) == 0:
             # send to committee
-            recipients = position.committee.all()
+            recipients = position.committee.filter(is_verified=True).\
+                filter(user__is_active=True)
             for recipient in recipients:
                 send_user_email(
                     recipient.user,
@@ -374,7 +377,10 @@ def send_emails_members_change(position, type, old_members, new_members):
                     extra_context)
 
             # send to electors, candidates
-            electors = [x.user for x in position.electors.all()]
+            electors = [x.user for x in position.electors.\
+                filter(is_verified=True).\
+                filter(user__is_active=True)]
+
             candidates = position.get_candidates_posted()
             recipients = chain(candidates, electors)
 
@@ -392,7 +398,9 @@ def send_emails_members_change(position, type, old_members, new_members):
                 p.user for p in new_c if p.user not in added_committee]
 
             # send to electors, candidates, remaining committee
-            electors = [x.user for x in position.electors.all()]
+            electors = [x.user for x in position.electors.\
+                filter(is_verified=True).\
+                filter(user__is_active=True)]
             candidates = position.get_candidates_posted()
             recipients = chain(candidates, electors, remaining_committee)
 
@@ -491,10 +499,17 @@ def send_emails_members_change(position, type, old_members, new_members):
                     'apella/emails/position_remove_elector_to_sub_body.txt',
                     extra_context)
 
-            electors = [p.user for p in position.electors.all()
+
+
+            # send to electors, candidates
+            electors = [p.user for p in position.electors.\
+                filter(is_verified=True).\
+                filter(user__is_active=True)
                 if p not in added_irregular and p not in removed_irregular
                 and p not in added_regular and p not in removed_regular]
-            committee = [p.user for p in position.committee.all()]
+            committee = [p.user for p in position.committee.\
+                filter(is_verified=True).\
+                filter(user__is_active=True)]
             recipients = chain(electors, committee, candidates)
 
             for user in recipients:
@@ -523,16 +538,42 @@ def send_position_create_emails(position):
         'apella/emails/position_create_to_manager.txt',
         extra_context)
 
-    users_interested = UserInterest.objects.filter(
-        Q(area=position.subject_area) |
-        Q(subject=position.subject) |
-        Q(institution=position.department.institution) |
-        Q(department=position.department)). \
-        values_list('user', flat=True).distinct()
+    if position.is_election_type:
+        users_interested = UserInterest.objects.filter(
+            Q(area=position.subject_area) |
+            Q(subject=position.subject) |
+            Q(institution=position.department.institution) |
+            Q(department=position.department)). \
+            values_list('user', flat=True).distinct()
+        users_to_email = ApellaUser.objects.filter(is_active=True).filter(
+            Q(professor__is_verified=True) |
+            Q(candidate__is_verified=True)).filter(id__in=users_interested)
 
-    for user_id in users_interested:
+        for user in users_to_email:
+            send_user_email(
+                user,
+                'apella/emails/position_create_subject.txt',
+                'apella/emails/position_create_to_interested.txt',
+                extra_context)
+    elif position.user_application:
+        user = position.user_application.user
+        extra_context['user_application'] = position.user_application
         send_user_email(
-            ApellaUser.objects.get(id=user_id),
+            user,
             'apella/emails/position_create_subject.txt',
-            'apella/emails/position_create_to_interested.txt',
+            'apella/emails/position_create_to_professor.txt',
             extra_context)
+
+def send_create_application_emails(user_application):
+    managers = InstitutionManager.objects.filter(
+        institution=user_application.user.professor.department.institution)
+    for manager in managers:
+        send_user_email(
+            manager.user,
+            'apella/emails/user_application_create_subject.txt',
+            'apella/emails/user_application_create_body.txt')
+
+    send_user_email(
+        user_application.user,
+        'apella/emails/user_application_create_subject.txt',
+        'apella/emails/user_application_create_body.txt')

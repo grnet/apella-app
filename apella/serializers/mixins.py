@@ -8,10 +8,10 @@ from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
 from apella.models import ApellaUser, Institution, Department, \
-    Position
+    Position, Professor
 from apella import auth_hooks
-from apella.emails import send_user_email
 from apella.util import move_to_timezone, otz
+from apella.emails import send_user_email, send_create_application_emails
 
 
 class ValidatorMixin(object):
@@ -129,14 +129,14 @@ class HelpdeskUsers(object):
 
     def to_representation(self, obj):
         data = super(HelpdeskUsers, self).to_representation(obj)
-        if obj.is_helpdesk() and \
+        if (obj.is_helpdesk() or obj.is_ministry()) and \
                 self.context['view'].get_view_name() == 'Custom User':
             data = {'user': data}
         return data
 
     def to_internal_value(self, data):
         user = self.context.get('request').user
-        if user.is_helpdesk() and \
+        if (user.is_helpdesk() or user.is_ministry()) and \
                 self.context['view'].get_view_name() == 'Custom User':
             return self.context.get('request').data.get('user')
         return super(HelpdeskUsers, self).to_internal_value(data)
@@ -211,8 +211,8 @@ class Registries(object):
         department = validated_data.get('department', instance.department)
         members_before = instance.members.all()
         members_after = validated_data.get('members', [])
-        members_to_send = [member for member in members_after
-                if member not in members_before]
+        members_to_send = [
+            member for member in members_after if member not in members_before]
         instance = super(Registries, self).update(instance, validated_data)
         send_registry_emails(members_to_send, department)
         return instance
@@ -296,3 +296,26 @@ class PositionsPortal(object):
                 'fekSentDate': obj.fek_posted_at and obj.fek_posted_at.date()
         }
         return data
+
+
+class UserApplications(object):
+    def create(self, validated_data):
+        user = validated_data.get('user', None)
+        if not user:
+            user = self.context.get('request').user
+            validated_data['user'] = user
+        try:
+            department = user.professor.department
+            validated_data['department'] = department
+        except Professor.DoesNotExist:
+            raise ValidationError("user.not.a.professor")
+        except Department.DoesNotExist:
+            raise ValidationError("invalid.department")
+
+        obj = super(UserApplications, self).create(validated_data)
+        send_create_application_emails(obj)
+        return obj
+
+    def update(self, instance, validated_data):
+        validated_data['updated_at'] = datetime.utcnow()
+        return super(UserApplications, self).update(instance, validated_data)

@@ -1,5 +1,6 @@
 import {
-  ApellaGen, i18nField, i18nUserSortField, get_registry_members, fileField, preloadRelations
+  ApellaGen, i18nField, i18nUserSortField, get_registry_members,
+  fileField, preloadRelations, filterSelectSortTitles
 } from 'ui/lib/common';
 import {disable_field} from 'ui/utils/common/fields';
 import gen from 'ember-gen/lib/gen';
@@ -75,6 +76,9 @@ function membersAllModelMeta(serverSide, hideQuickView) {
                   hidden = false;
                 }
               }
+              else if (role === 'ministry') {
+                hidden = false;
+              }
               return hidden;
             }
           }),
@@ -97,19 +101,14 @@ function membersAllModelMeta(serverSide, hideQuickView) {
     },
     filter: {
       search: true,
-      searchPlaceholder: 'search.placeholder_members',
+      searchPlaceholder: 'search.placeholder.members',
       serverSide: serverSide,
       active: display,
       searchFields: searchFields,
       meta: {
         fields: [
           field('user_id', {type: 'string'}),
-          field('institution', {
-            type: 'model',
-            autocomplete: true,
-            displayAttr: 'title_current',
-            modelName: 'institution',
-          }),
+          filterSelectSortTitles('institution'),
           field('rank')
         ]
       }
@@ -276,7 +275,6 @@ export default ApellaGen.extend({
     page: {
       title: 'registry.menu_label'
     },
-    layout: 'table',
     paginate: {
       active: true,
       serverSide: true,

@@ -15,10 +15,12 @@ const pick_edit_fs = function() {
     state = get(this, 'model.state'),
     now = moment(),
     before_open = now.isBefore(starts_at),
+    position_type = get(this, 'model.position_type'),
     open = now.isBetween(starts_at, ends_at, null, []),
     fs = position.edit,
-    head = [fs.basic, fs.details, fs.assistant_files],
     res;
+
+  let head = [fs.basic, fs.details, fs.assistant_files];
 
   if(state === 'posted') {
     if(before_open) {
@@ -41,7 +43,7 @@ const pick_edit_fs = function() {
   }
 
   if (state === 'electing') {
-    res = res.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee/*, fs.election*/);
+    res = res.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election);
   }
 
   return res;
@@ -70,10 +72,10 @@ const pick_details_fs_by_state = function(fs, state, before_open, head, display_
   // in all other states
   else {
     if (display_candidacies) {
-      res = head.concat(fs.candidacies, fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee/*, fs.election*/);
+      res = head.concat(fs.candidacies, fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election);
     }
     else {
-      res = head.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee/*, fs.election*/);
+      res = head.concat(fs.electors, fs.electors_regular, fs.electors_substitite, fs.committee, fs.election);
     }
   }
   return res.concat(tail);
@@ -81,15 +83,15 @@ const pick_details_fs_by_state = function(fs, state, before_open, head, display_
 
 const pick_details_fs = function() {
   let role = get(this, 'role'),
-    user_id = get(this, 'user.user_id') + '',
-    role_id = get(this, 'user.id') + '',
+    user_id = get(this, 'user.user_id'),
+    role_id = get(this, 'user.id'),
     starts_at = get(this, 'model.starts_at'),
     // ends_at = get(this, 'model.ends_at'),
     state = get(this, 'model.state'),
     now = moment(),
     before_open = now.isBefore(starts_at),
     fs = position.details,
-    head = [fs.basic, fs.details, fs.assistant_files],
+    position_type = get(this, 'model.position_type'),
     position_model = get(this, 'model'),
     store = get(position_model, 'store'),
     /*
@@ -100,6 +102,9 @@ const pick_details_fs = function() {
     committees_members_ids, electors_ids, participations_in_position,
     display_candidacies = false,
     limited_permissions = false;
+
+  let head = [fs.basic, fs.details,  fs.assistant_files];
+
   if(roles_conditional_candidacies.indexOf(role) > -1) {
     let candidacies = [];
 

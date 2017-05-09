@@ -24,6 +24,10 @@ const  position = {
       fields: ['title',
         field('department', {
           autocomplete: true,
+          disabled: computed('model.position_type', function(){
+            let pt = get(this, 'model.position_type');
+            return pt === 'renewal' || pt === 'tenure';
+          }),
           query: function(table, store, field, params) {
 
             // If the logged in user is an assistant, department field is a
@@ -77,7 +81,29 @@ const  position = {
     },
     details: {
       label: 'fieldsets.labels.details',
-      fields: ['fek', 'fek_posted_at', 'starts_at', 'ends_at'],
+      fields: computed('model.position_type', function(){
+        let pt = get(this, 'model.position_type');
+        let f1 = ['fek', 'fek_posted_at', 'starts_at', 'ends_at'];
+        let f2 = [
+          field('applicant', {
+            type: 'model',
+            displayAttr: 'id',
+            modelName: 'user',
+            dataKey: 'applicant',
+            disabled: true,
+            label: 'applicant.user_id.label',
+          }),
+          field('applicant', {
+            type: 'model',
+            displayAttr: 'full_name_current',
+            modelName: 'user',
+            dataKey: 'applicant',
+            disabled: true,
+            label: 'applicant.full_name.label',
+          }),
+        ];
+        return pt === 'election'? f1: f2;
+      }),
       layout: {
         flex: [50, 50, 50, 50]
       },
@@ -86,30 +112,48 @@ const  position = {
   details: {
     basic: {
       label: 'fieldsets.labels.basic_info',
-      fields: ['code', 'old_code', 'state_calc_verbose', 'title',
+      fields: computed('model.position_type', function(){
+        let fields = ['code', 'old_code', 'state_calc_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
         'department.institution.title_current',
         'discipline', 'description', field('subject_area.title_current',{label: 'subject_area.label'}),
-        field('subject.title_current', {label: 'subject.label'})],
+        field('subject.title_current', {label: 'subject.label'})];
+        if (get(this, 'model.position_type') !== 'election') {
+          fields.push(field('position_type_verbose', {label: 'position_type.label'}));
+        }
+        return fields;
+      }),
       layout: {
-        flex: [25, 25, 50, 50, 50, 50, 50, 100, 50, 50]
+        flex: [25, 25, 50, 50, 50, 50, 50, 100, 50, 50, 100]
       }
     },
     details: {
       label: 'fieldsets.labels.details',
-      fields: ['fek', field('fek_posted_at_format', {label: 'fek_posted_at.label'}),
+      fields: computed('model.position_type', function(){
+        let pt = get(this, 'model.position_type');
+        let f1 = ['fek', field('fek_posted_at_format', {label: 'fek_posted_at.label'}),
         field('starts_at_format', {label: 'starts_at.label'}),
-        field('ends_at_format', {label: 'ends_at.label'})],
+        field('ends_at_format', {label: 'ends_at.label'})];
+        let f2 = [
+          field('user_application.user.id', {
+            label: 'applicant.user_id.label',
+          }),
+          field('user_application.user.full_name_current', {
+            label: 'applicant.full_name.label',
+          }),
+        ];
+        return pt === 'election'? f1: f2;
+      }),
       layout: {
         flex: [50, 50, 50, 50]
-      }
+      },
     },
     candidacies: {
       label: 'candidacy.menu_label',
       fields: computed('user.role','user.user_id', 'user.id', 'model.electors',
         'model.committee', 'model.can_apply', function() {
         let user = get(this, 'user'),
-          user_id = get(user, 'user_id') + '',
+          user_id = get(user, 'user_id'),
           role = get(user, 'role'),
           position = get(this, 'model'),
           type = 'candidacy',
@@ -142,7 +186,6 @@ const  position = {
          *
          * These 2 are calculated inside candidaciesField.
          */
-
         else if (['professor', 'candidate'].indexOf(role) > -1) {
           /*
            * can_apply attribute is true when a professor/candidate hasn't
@@ -176,7 +219,7 @@ const  position = {
               let electors = position.hasMany('electors').ids(),
                 committee = position.hasMany('committee').ids(),
                 related_profs = _.union(electors, committee),
-                professor_id = user.id + '',
+                professor_id = user.id,
                 is_related_prof = related_profs.indexOf(professor_id) > -1;
               if(is_related_prof) {
                 hidden = false;
@@ -321,6 +364,7 @@ const  position = {
           is_closed = get(this, 'model.is_closed'),
           before_open = (!(is_open || is_closed) && (state === 'posted')),
           title, department, description, discipline, subject_area, subject,
+          is_not_type_election = get(this, 'model.position_type') !== 'election',
           disable_fields = true,
           institution_roles = ['institutionmanager', 'assistant'],
           helpdesk_roles = ['helpdeskadmin', 'helpdeskuser'];
@@ -346,6 +390,10 @@ const  position = {
           department = field('department', {
             autocomplete: true,
             required: true,
+            disabled: computed('model.position_type', function(){
+              let pt = get(this, 'model.position_type');
+              return pt === 'renewal' || pt === 'tenure';
+            }),
             query: function(select, store, field, params) {
 
               // If the logged in user is an assistant, department field is a
@@ -396,11 +444,15 @@ const  position = {
           subject_area = 'subject_area';
           subject = 'subject';
         }
-        return [disable_field('code'), disable_field('old_code'), disable_field('state_calc_verbose'),
+        let fields = [disable_field('code'), disable_field('old_code'), disable_field('state_calc_verbose'),
         department, title, description, discipline, subject_area, subject];
+        if (is_not_type_election) {
+          fields.push(disable_field('position_type'));
+        }
+        return fields;
       }),
       layout: {
-        flex: [50, 50, 50, 50, 100, 100, 100, 50, 50]
+        flex: [50, 50, 50, 50, 100, 100, 100, 50, 50, 100]
       }
     },
     details: {
@@ -422,6 +474,7 @@ const  position = {
           disable_fields = true,
           institution_roles = ['institutionmanager', 'assistant'],
           helpdesk_roles = ['helpdeskadmin', 'helpdeskuser'],
+          pt = get(this, 'model.position_type'),
           fek, fek_posted_at, starts_at, ends_at;
 
         if(state === 'posted') {
@@ -448,7 +501,26 @@ const  position = {
           starts_at = 'starts_at';
           ends_at = 'ends_at';
         }
-        return [fek, fek_posted_at, starts_at, ends_at];
+        let f1 = [fek, fek_posted_at, starts_at, ends_at];
+        let f2 = [
+          field('applicant', {
+            type: 'model',
+            displayAttr: 'id',
+            modelName: 'user',
+            dataKey: 'applicant',
+            disabled: true,
+            label: 'applicant.user_id.label',
+          }),
+          field('applicant', {
+            type: 'model',
+            displayAttr: 'full_name_current',
+            modelName: 'user',
+            dataKey: 'applicant',
+            disabled: true,
+            label: 'applicant.full_name.label',
+          }),
+        ];
+        return pt === 'election'? f1: f2;
       }),
       layout: {
         flex: [50, 50, 50, 50]

@@ -1,0 +1,13 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι έχει υποβληθεί μια νέα αίτηση μονιμοποίησης/ανανέωσης θητείας στο πληροφοριακό σύστημα ΑΠΕΛΛΑ.
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We inform you that a new user application regarding establishment/renewal of service has been submitted in the Apella information system.
+
+{% endblock content_en %}

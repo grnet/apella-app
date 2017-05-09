@@ -112,6 +112,9 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     def is_helpdesk(self):
         return self.is_helpdeskadmin() or self.is_helpdeskuser()
 
+    def is_ministry(self):
+        return self.role == 'ministry'
+
     def is_institutionmanager(self):
         return self.role == 'institutionmanager'
 
@@ -591,6 +594,38 @@ class ProfessorRank(models.Model):
     rank = models.ForeignKey(MultiLangFields)
 
 
+class UserApplication(models.Model):
+    user = models.ForeignKey(ApellaUser)
+    department = models.ForeignKey(Department)
+    app_type = models.CharField(
+        choices=common.APPLICATION_TYPES, max_length=30, default='tenure')
+    state = models.CharField(
+        choices=common.APPLICATION_STATES, max_length=30, default='pending')
+    created_at = models.DateTimeField(default=datetime.utcnow)
+    updated_at = models.DateTimeField(default=datetime.utcnow)
+
+
+    @classmethod
+    def check_collection_state_can_create(cls, row, request, view):
+        return request.user.is_academic_professor() and \
+            request.user.professor.rank == 'Tenured Assistant Professor'
+
+    def check_resource_state_owned(self, row, request, view):
+        if not self.user.is_academic_professor() or \
+                not self.user.professor.is_verified:
+            return False
+        if self.user == request.user:
+            return True
+        if request.user.is_institutionmanager():
+            departments = Department.objects.filter(
+                institution=request.user.institutionmanager.institution)
+            return self.department in departments
+        elif request.user.is_assistant():
+            return self.department in \
+                request.user.institutionmanager.departments.all()
+        return False
+
+
 class Position(models.Model):
     code = models.CharField(max_length=255)
     old_code = models.CharField(max_length=255)
@@ -604,8 +639,8 @@ class Position(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     subject_area = models.ForeignKey(SubjectArea, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    fek = models.URLField(max_length=255)
-    fek_posted_at = models.DateTimeField()
+    fek = models.URLField(max_length=255, null=True)
+    fek_posted_at = models.DateTimeField(null=True)
 
     electors = models.ManyToManyField(
             Professor, blank=True, through='ElectorParticipation')
@@ -620,8 +655,8 @@ class Position(models.Model):
 
     state = models.CharField(
         choices=common.POSITION_STATES, max_length=30, default='posted')
-    starts_at = models.DateTimeField()
-    ends_at = models.DateTimeField()
+    starts_at = models.DateTimeField(null=True)
+    ends_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(default=datetime.utcnow)
     updated_at = models.DateTimeField(default=datetime.utcnow)
     department_dep_number = models.IntegerField()
@@ -665,12 +700,18 @@ class Position(models.Model):
         on_delete=models.SET_NULL)
     assistant_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='position_assistant_files')
+    position_type = models.CharField(
+        choices=common.POSITION_TYPES, max_length=30, default='election')
+    user_application = models.ForeignKey(
+        UserApplication, null=True, on_delete=models.SET_NULL)
+
 
     def clean(self, *args, **kwargs):
-        validate_dates_interval(
-            self.starts_at,
-            self.ends_at,
-            settings.START_DATE_END_DATE_INTERVAL)
+        if self.is_election_type:
+            validate_dates_interval(
+                self.starts_at,
+                self.ends_at,
+                settings.START_DATE_END_DATE_INTERVAL)
         super(Position, self).clean(*args, **kwargs)
 
     def check_resource_state_owned(self, row, request, view):
@@ -682,7 +723,10 @@ class Position(models.Model):
             institution_id=self.department.institution.id).exists()
 
     def check_resource_state_open(self, row, request, view):
-        return self.state == 'posted' and self.ends_at > datetime.utcnow()
+        if self.is_election_type:
+            return self.state == 'posted' and self.ends_at > datetime.utcnow()
+        else:
+            return True
 
     def check_resource_state_revoked(self, row, request, view):
         user = request.user
@@ -695,7 +739,10 @@ class Position(models.Model):
 
     def check_resource_state_before_open(self, row, request, view):
         user = request.user
-        before_open = self.starts_at > datetime.utcnow()
+        if not self.is_election_type and not self.starts_at:
+            before_open = True
+        else:
+            before_open = self.starts_at > datetime.utcnow()
         if user.is_institutionmanager() or user.is_helpdeskadmin():
             return before_open
         elif user.is_assistant():
@@ -705,7 +752,10 @@ class Position(models.Model):
     def check_resource_state_after_closed(self, row, request, view):
         user = request.user
         is_posted = self.state == 'posted'
-        after_closed = self.ends_at < datetime.utcnow() and is_posted
+        if not self.ends_at:
+            after_closed = False
+        else:
+            after_closed = self.ends_at < datetime.utcnow() and is_posted
         if user.is_institutionmanager() or user.is_helpdeskadmin():
             return after_closed
         elif user.is_assistant():
@@ -734,9 +784,13 @@ class Position(models.Model):
     def get_candidates_posted(self):
         """
         Returns a list with  all the candidates (users) whose latest candidacy
-        for the position is in state 'posted'
+        for the position is in state 'posted' and are verified and active.
         """
         c_set = self.candidacy_set.all()
+        c_set = c_set.filter(candidate__is_active=True)
+        c_set = c_set.filter(
+            Q(candidate__candidate__is_verified=True) |
+            Q(candidate__professor__is_verified=True))
         updated = c_set.values('candidate').annotate(Max('updated_at')).\
             values('updated_at__max')
         candidacies = c_set.filter(Q(updated_at__in=updated) &
@@ -747,11 +801,15 @@ class Position(models.Model):
         """
         Returns a list with all the users that belong to a committee of the
         position, are electors or candidates whose latest candidacy for the
-        position is in stated 'posted'
+        position is in stated 'posted'.
+        All users are verified and active.
         """
-        committee = [x.user for x in self.committee.all()]
-        electors = [x.user for x in self.electors.all()]
+        committee = [x.user for x in self.committee.filter(is_verified=True).\
+            filter(user__is_active=True)]
+        electors = [x.user for x in self.electors.filter(is_verified=True).\
+            filter(user__is_active=True)]
         candidates = self.get_candidates_posted()
+
         return chain(committee, candidates, electors)
 
     @classmethod
@@ -760,6 +818,14 @@ class Position(models.Model):
             user_id=request.user.id,
             manager_role='assistant',
             can_create_positions=True).exists()
+
+    @property
+    def is_election_type(self):
+        return self.position_type == 'election'
+
+    @property
+    def is_tenure_type(self):
+        return self.position_type == 'tenure'
 
 
 class ElectorParticipation(models.Model):

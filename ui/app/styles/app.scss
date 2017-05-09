@@ -8,6 +8,8 @@
 @import 'settings';
 @import 'forms';
 
+$success-color: color($color-light-green, '600');
+
 .site-header {
   text-align: center;
   img.logo {
@@ -44,6 +46,17 @@
 .md-soft-warn {
   background-color: color($color-yellow, '800') !important;
 }
+
+.md-soft-success {
+  background-color: $success-color !important;
+}
+
+.md-icon-success {
+  md-icon {
+    color: $success-color !important;
+  }
+}
+
 
 .button-padding {
   padding: 0 10px !important;

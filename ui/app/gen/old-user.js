@@ -17,7 +17,6 @@ export default ApellaGen.extend({
       label: 'old_user.menu_label',
       icon: 'contacts',
     },
-    layout: 'table',
     row: {
       fields: ['user_id',
         field('migrated_at_format', {dataKey: 'migrated_at'}),

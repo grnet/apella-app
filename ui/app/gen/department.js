@@ -1,4 +1,4 @@
-import {ApellaGen, i18nField} from 'ui/lib/common';
+import {ApellaGen, i18nField, filterSelectSortTitles} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import validate from 'ember-gen/validate';
@@ -139,18 +139,18 @@ export default ApellaGen.extend({
     page: {
       title: 'department.menu_label',
     },
-    layout: 'table',
     filter: {
       active: true,
       serverSide: true,
       search: true,
+      searchPlaceholder: 'search.placeholder.departments',
       meta: {
         fields: computed('user.role', function() {
           let role = get(this, 'user.role');
           if (role == 'institutionmanager' || role == 'assistant') {
-            return ['school']
+            return [filterSelectSortTitles('school')]
           }
-          return ['school', 'institution']
+          return [filterSelectSortTitles('institution')];
         })
       },
     },

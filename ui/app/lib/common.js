@@ -25,6 +25,7 @@ const ApellaGen = CRUDGen.extend({
   },
   resourceName: reads('path'),
   list: {
+    layout: 'table',
     sort: {
       serverSide: true,
       active: true
@@ -266,12 +267,40 @@ function emptyArrayResult(store, modelName) {
   let promise = Ember.RSVP.resolve(emptyResult);
 
   return DS.PromiseArray.create({promise});
+}
+
+function prefixSelect(arr, prefix) {
+  arr.map(function(el) {
+    return el[1] = `${prefix}${el[1]}`;
+  });
+  return arr;
+}
+
+
+/*
+ * Select filter with the items in the list sorted by title in
+ * current language.
+ */
+
+function filterSelectSortTitles(modelName) {
+  return field(modelName, {
+    query: function(select, store, field, params) {
+      let locale = get(select, 'i18n.locale'),
+        ordering_param = `title__${locale}`;
+      params = params || {};
+      params.ordering = ordering_param;
+
+      return store.query(modelName, params);
+    },
+    autocomplete: true
+  })
 };
 
 export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
-  preloadRelations, emptyArrayResult
+  preloadRelations, emptyArrayResult,
+  prefixSelect, filterSelectSortTitles
 };
 

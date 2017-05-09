@@ -52,7 +52,6 @@ export default ApellaGen.extend({
         return (permittedRoles.includes(role) ? true : false);
       })
     },
-    layout: 'table',
     row: {
       fields: FIELDS,
       actions: ['gen:edit', 'remove']

@@ -2,6 +2,7 @@ from datetime import datetime, date, timedelta
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
+from django.db.models import Min
 
 from apella.util import strip_timezone, get_today_start, get_today_end, \
     at_day_start, at_day_end, otz
@@ -129,6 +130,18 @@ def validate_position_electors(r_i, r_e, s_i, s_e, dep_number):
             raise ValidationError(
                 _('Substitute electors must be exactly 11'))
 
+def validate_tenure_candidacy(position, candidate):
+    if position.user_application.user != candidate:
+        raise ValidationError(
+            _('Tenure position; cannot apply candidacy'))
+
+def validate_create_position_from_application(user_application):
+    positions = user_application.position_set.all()
+    ids = positions.values('code').annotate(Min('id')). \
+        values_list('id__min', flat=True)
+    if positions and positions.filter(id=max(ids))[0].state != 'cancelled':
+        raise ValidationError(
+            _('A position already exists for this application'))
 
 def validate_position_state(position):
         if position.state == 'cancelled':

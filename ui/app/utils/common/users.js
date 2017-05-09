@@ -42,8 +42,8 @@ const FIELDS_ALL = [
   'father_name',
   'role',
   'id_passport',
-  'mobile_phone_number',
   'home_phone_number',
+  'mobile_phone_number',
   'shibboleth_idp',
   'shibboleth_schac_home_organization'
 ];
@@ -85,8 +85,8 @@ const FIELDSET_CREATE = {
     'last_name',
     'father_name',
     'id_passport',
+    'home_phone_number',
     'mobile_phone_number',
-    'home_phone_number'
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -104,8 +104,8 @@ const FIELDSET_EDIT_VERIFIABLE = {
     'last_name',
     'father_name',
     'id_passport',
+    'home_phone_number',
     'mobile_phone_number',
-    'home_phone_number'
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -122,13 +122,13 @@ const FIELDSET_DETAILS_VERIFIABLE = {
     'full_name_current',
     'father_name_current',
     'id_passport',
-    'mobile_phone_number',
     'home_phone_number',
+    'mobile_phone_number',
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 25, 25]
   }
-}
+};
 
 const FIELDSET_EDIT_NON_VERIFIABLE = {
   label: 'fieldsets.labels.user_info',
@@ -140,13 +140,13 @@ const FIELDSET_EDIT_NON_VERIFIABLE = {
     'last_name',
     'father_name',
     'id_passport',
+    'home_phone_number',
     'mobile_phone_number',
-    'home_phone_number'
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
   }
-}
+};
 
 const FIELDSET_DETAILS_NON_VERIFIABLE = {
   label: 'fieldsets.labels.user_info',
@@ -157,13 +157,29 @@ const FIELDSET_DETAILS_NON_VERIFIABLE = {
     'full_name_current',
     'father_name_current',
     'id_passport',
-    'mobile_phone_number',
     'home_phone_number',
+    'mobile_phone_number',
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 25, 25]
   }
-}
+};
+
+const FIELDSET_DETAILS_NON_VERIFIABLE_LESS_FIELDS = {
+  label: 'fieldsets.labels.user_info',
+  fields: [
+    field('username', {disabled: true}),
+    field('user_id', {disabled: true}),
+    'email',
+    'full_name_current',
+    'father_name_current',
+    'home_phone_number',
+    'mobile_phone_number',
+  ],
+  layout: {
+    flex: [100, 50, 50, 50, 50, 50, 50, 50]
+  }
+};
 
 const FIELDSET_EDIT_USER = {
   label: 'fieldsets.labels.user_info',
@@ -175,8 +191,8 @@ const FIELDSET_EDIT_USER = {
     'last_name',
     'father_name',
     'id_passport',
+    'home_phone_number',
     'mobile_phone_number',
-    'home_phone_number'
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -192,8 +208,8 @@ const FIELDSET_DETAILS_USER = {
     'full_name_current',
     'father_name_current',
     'id_passport',
-    'mobile_phone_number',
     'home_phone_number',
+    'mobile_phone_number',
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 25, 25]
@@ -210,8 +226,8 @@ const FIELDSET_EDIT_ACADEMIC = {
     'last_name',
     'father_name',
     'id_passport',
-    'mobile_phone_number',
-    'home_phone_number'
+    'home_phone_number',
+    'mobile_phone_number'
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -227,8 +243,8 @@ const FIELDSET_DETAILS_ACADEMIC = {
     'full_name_current',
     'father_name_current',
     'id_passport',
-    'mobile_phone_number',
     'home_phone_number',
+    'mobile_phone_number',
   ],
   layout: {
     flex: [50, 50, 50, 50, 50, 50, 50, 25, 25]
@@ -244,8 +260,8 @@ const FIELDSET_REGISTER_ACADEMIC = {
     'last_name',
     'father_name',
     'id_passport',
-    'mobile_phone_number',
-    'home_phone_number'
+    'home_phone_number',
+    'mobile_phone_number'
   ],
   layout: {
     flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
@@ -323,6 +339,7 @@ const normalizeUserErrors = function(errors) {
     'status_verbose' fields
   FIELDSET_*_VERIFABLE: Used for helpdesk. Like VERIFIABLE fields, but it does
     not contain 'status_verbose' field
+  FIELDSET_DETAILS_NON_VERIFIABLE_LESS_FIELDS: Used for users with role ministry
   FIELDSET_*_USER: For plain users. Contains 'id' field and does not contain
   'status_verbose' field.
   FIELDSET_*_ACADEMIC: For academin users. Verifiable users that do not have
@@ -341,6 +358,7 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
 
         FIELDSET_EDIT_NON_VERIFIABLE,
         FIELDSET_DETAILS_NON_VERIFIABLE,
+        FIELDSET_DETAILS_NON_VERIFIABLE_LESS_FIELDS,
 
         FIELDSET_EDIT_USER,
         FIELDSET_DETAILS_USER,

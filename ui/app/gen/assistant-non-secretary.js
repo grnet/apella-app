@@ -51,7 +51,6 @@ export default ApellaGen.extend({
       params.is_secretary = false;
       return this.store.query('assistant', params);
     },
-    layout: 'table',
     filter: {
       active: true,
       meta: {
@@ -80,7 +79,7 @@ export default ApellaGen.extend({
       },
       serverSide: true,
       search: true,
-      searchFields: ['id', 'email', 'username', 'first_name', 'last_name']
+      searchPlaceholder: 'search.placeholder.assistants'
     },
     sort: {
       active: true,

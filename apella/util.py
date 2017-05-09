@@ -31,6 +31,8 @@ def strip_timezone(dt):
 
 
 def move_to_timezone(dt, tzinfo):
+    if dt is None:
+        return dt
     if dt.tzinfo is None:
         dt = utc.localize(dt)
     return dt.astimezone(tzinfo)

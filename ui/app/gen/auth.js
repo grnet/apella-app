@@ -24,33 +24,37 @@ const {
 // user can apply for position
 function canApply(role) {
   return role === 'candidate' || role === 'professor';
-}
+};
 
 function isVerifiable(role) {
   return role === 'candidate' || role === 'professor' || role === 'institutionmanager';
-}
+};
 
 function extractError(loc) {
   return loc.hash && loc.hash.split("error=")[1];
-}
+};
 
 function extractActivate(loc) {
   return loc.hash && loc.hash.split("activate=")[1];
-}
+};
 
 function extractAcademic(loc) {
   return loc.hash && loc.hash.split("enable-academic=")[1];
-}
+};
 
 function extractReset(loc) {
   return loc.hash && loc.hash.split("reset=")[1];
-}
+};
 
 function extractToken(loc) {
   let token = loc.hash && loc.hash.split("token=")[1];
   if (token) { resetHash(window) };
   return token;
-}
+};
+
+function isReadOnly(role) {
+  return (role === 'ministry');
+};
 
 
 const PROFILE_FIELDSETS = function(view) {
@@ -87,7 +91,10 @@ const PROFILE_FIELDSETS = function(view) {
       if (view === 'details') {
         f.push(USER.FIELDSET_DETAILS_NON_VERIFIABLE);
       }
+    }
 
+    if (role === 'ministry') {
+      f.push(USER.FIELDSET_DETAILS_NON_VERIFIABLE_LESS_FIELDS);
     }
 
     if (role === 'professor') {
@@ -222,7 +229,7 @@ export default AuthGen.extend({
       }
     ],
     config: {
-      authenticator: 'apimas'
+      authenticator: 'apella'
     },
     templateName: 'apella-login',
     routeMixins: [{
@@ -496,7 +503,7 @@ export default AuthGen.extend({
         let isVerified = get(user, 'is_verified');
         let role = get(user, 'role');
         let verificationPending = get(user, 'verification_pending');
-        if (isVerifiable(role) && (verificationPending || isVerified)) {
+        if ((isVerifiable(role) && (verificationPending || isVerified) || isReadOnly(role))) {
           this.transitionTo('auth.profile.details');
         }
         return user;

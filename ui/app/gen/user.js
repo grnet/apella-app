@@ -26,7 +26,6 @@ export default ApellaGen.extend({
       icon: 'account_box',
       label: 'user.menu_label'
     },
-    layout: 'table',
     filter: {
       active: true,
       meta: {

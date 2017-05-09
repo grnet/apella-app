@@ -17,6 +17,14 @@ function call_utils(route, model) {
   return [url, token, messages];
 }
 
+function application_utils(route, model) {
+  let messages = get(route, 'messageService');
+  let token = get(route, 'user.auth_token');
+  let adapter = route.store.adapterFor('user-application');
+  let url = adapter.buildURL('user-application', get(model, 'id'), 'findRecord');
+  return [url, token, messages];
+}
+
 function managerVerifies(role, model_role) {
   return role === 'institutionmanager' && model_role === 'assistant';
 }
@@ -27,56 +35,12 @@ const {
 } = Ember;
 
 // Common
-
 function  goToDetails(type, hidden, calc, calc_params) {
-  /*
-   * type: 'candidacy' (only candidacies have separate handling)
-   * hidden: should hide or not
-   * calc: should have a step of permissions checks
-   * calc_params: extra data that are necessary for the permissions checks
-   *
-   * TODO: Simplify logic now that candidcies fieldset is hidden in certain
-   * conditions.
-   */
   return {
     label: 'details.label',
     icon: 'remove red eye',
      hidden: computed('model.othersCanView', function() {
-      if (type === 'candidacy') {
-        /*
-         * calc === true when we want to calclulate the visibility of the btn
-         * by checking:
-         * - if the user owns the candidacy
-         * - if the candidate allows his/hers fellow candidates  to see the
-         *   details of the candidacy.
-         *   calc_params === true if the user is candidate for the current
-         *   position.
-         *
-         * Execute these calculations for professors and candidates.
-         */
-
-        // should perform permissions checks?
-        if(calc) {
-          // is user candidate for position?
-          if(calc_params) {
-            let candidate_user_link = get(this, 'model').belongsTo('candidate').link(),
-              candidate_user_id = candidate_user_link.split('/').slice(-2)[0],
-              me_user_id = get(this, 'session.session.authenticated.user_id') + '',
-              is_owned = candidate_user_id === me_user_id,
-              others_can_view = get(this, 'model.othersCanView');
-            if(others_can_view || is_owned) {
-              hidden = false;
-            }
-            else {
-              hidden = true;
-            }
-          }
-          else {
-            hidden = false;
-          }
-        }
-      }
-      else if(type === 'position_history' && calc) {
+      if(type === 'position_history' && calc) {
         let row_id = get(this, 'model.id'),
           position_id = calc_params;
         if(row_id === position_id) {
@@ -103,6 +67,7 @@ function  goToDetails(type, hidden, calc, calc_params) {
 const applyCandidacy = {
   label: 'applyCandidacy',
   icon: 'person_add',
+  classNames: 'md-icon-success',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
   hidden: computed('model.is_open', 'role', 'model.can_apply', function(){
     let is_helpdeskadmin = get(this, 'role') === 'helpdeskadmin';
@@ -370,6 +335,7 @@ const deactivateUser = {
 const activateUser = {
   label: 'activateUser',
   icon: 'check_circle',
+  classNames: 'md-icon-success',
   action(route, model) {
     model.set('is_active', true);
     let m = route.get('messageService');
@@ -398,6 +364,7 @@ const activateUser = {
 const verifyUser = {
   label: 'verify.user',
   icon: 'check_circle',
+  classNames: 'md-icon-success',
   action: function(route, model) {
     let [url, token, messages] = call_utils(route, model);
     return fetch(url + 'verify_user/', {
@@ -524,9 +491,15 @@ const  goToPosition = {
   label: 'position_details.label',
   icon: 'event_available',
   action(route, model) {
-    let position_id = get(this, 'model.position.id');
+    let position_id = get(this, 'model.position.id') || get(this, 'model.position_id');
     route.transitionTo('position.record.index', position_id);
-  }
+  },
+  hidden: computed('model.position_id', 'model.position.id', function(){
+    if (get(this, 'model.position_id') > 0 || get(this, 'model.position.id')) {
+      return false;
+    }
+    return true;
+  })
 };
 
 const change_password = {
@@ -544,12 +517,156 @@ const change_password = {
   }
 };
 
+// Applications
+
+const acceptApplication = {
+  label: 'accept_application',
+  icon: 'check_circle',
+  classNames: 'md-icon-success',
+  action: function(route, model) {
+    let [url, token, messages] = application_utils(route, model);
+    return fetch(url + 'accept_application/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('user_application.accept.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('user_application.accept.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'user_application.accept_application.message',
+    title: 'user_application.prompt.title',
+  },
+  hidden: computed('role', 'model.state', 'model.position_id', function(){
+    let role = get(this, 'role'),
+        state = get(this, 'model.state'),
+        has_position = get(this, 'model.position_id') > 0;
+    let manager_or_assistant = (role === 'institutionmanager' || role === 'assistant');
+    if (!manager_or_assistant) { return true; }
+    if (state === 'approved')  { return true; }
+    if (has_position) { return true; }
+  }),
+
+};
+
+const rejectApplication = {
+  label: 'reject_application',
+  icon: 'cancel',
+  accent: true,
+  action: function(route, model) {
+    let [url, token, messages] = application_utils(route, model);
+    return fetch(url + 'reject_application/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('user_application.reject.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('user_application.reject.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'user_application.reject_application.message',
+    title: 'user_application.prompt.title',
+  },
+  hidden: computed('role', 'model.state', 'model.position_id', function(){
+    let role = get(this, 'role'),
+        state = get(this, 'model.state'),
+        has_position = get(this, 'model.position_id') > 0;
+    let manager_or_assistant = (role === 'institutionmanager' || role === 'assistant');
+    if (!manager_or_assistant) { return true; }
+    if (state === 'rejected')  { return true; }
+    if (has_position) { return true; }
+  }),
+};
+
+const  goToProfessor = {
+  label: 'professor.label',
+  icon: 'portrait',
+  action(route, model) {
+    let id = get(this, 'model.user.id');
+    route.store.queryRecord('professor', {user_id: id}).then((professor) => {
+      route.transitionTo('professor.record.index', professor.id);
+    });
+  },
+  hidden: computed('role', function(){
+    let professor = get(this, 'role') === 'professor';
+    if (professor) { return true; }
+  })
+};
+
+const createPosition = {
+  label: 'createPosition',
+  icon: 'add',
+  permissions: [{'resource': 'positions', 'action': 'create'}],
+  hidden: computed('model.state', 'model.position_id', 'model.position_state', function(){
+    let state = get(this, 'model.state'),
+      position_state = get(this, 'model.position_state'),
+      has_position = get(this, 'model.position_id') > 0;
+    return !(state === 'approved') || (has_position && position_state !== 'cancelled');
+  }),
+  action(route, model){
+    let id = get(model, 'id');
+    route.transitionTo('position.create', { queryParams: { application: id }});
+  }
+};
+
+const applyApplicationCandidacy = {
+  label: 'applyCandidacy',
+  icon: 'person_add',
+  classNames: 'md-icon-success',
+  permissions: [{'resource': 'candidacies', 'action': 'create'}],
+  hidden: computed('model.can_accept_candidacies', 'role', 'model.position_state', function(){
+    let role = get(this, 'role');
+    let candidate = role === 'professor' || role === 'candidate';
+    let can_apply = get(this, 'model.can_accept_candidacies');
+    let position_state = get(this, 'model.position_state');
+    return !(candidate && can_apply) || position_state === 'cancelled';
+  }),
+  action(route, model){
+    let id = get(model, 'position_id');
+    route.transitionTo('candidacy.create', { queryParams: { position: id }});
+  }
+};
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
   setRevoked: setRevoked,
   setFailed: setFailed,
   setSuccessful: setSuccessful
+};
+
+let applicationActions = {
+  rejectApplication: rejectApplication,
+  acceptApplication: acceptApplication,
+  goToProfessor: goToProfessor,
+  createPosition: createPosition,
+  applyApplicationCandidacy: applyApplicationCandidacy
 };
 
 export { goToDetails, applyCandidacy,
@@ -559,6 +676,7 @@ export { goToDetails, applyCandidacy,
   deactivateUser, activateUser,
   change_password,
   isHelpdesk,
-  positionActions
+  positionActions,
+  applicationActions
 };
 

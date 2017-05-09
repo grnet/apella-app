@@ -56,19 +56,35 @@ export default ApellaGen.extend({
       icon: 'supervisor_account',
       display: computed('role', function() {
         let role = get(this, 'role');
-        let permittedRoles = ['helpdeskadmin', 'helpdeskuser'];
+        let permittedRoles = ['helpdeskadmin', 'helpdeskuser', 'ministry'];
         return (permittedRoles.includes(role) ? true : false);
       })
     },
-    layout: 'table',
     filter: {
       active: true,
       serverSide: true,
       meta: {
-        fields: [field('institution', {autocomplete: true}), 'is_verified', 'is_rejected', 'verification_pending', field('no_verification_request', { type: 'boolean' })]
+        fields: [
+          field('institution', {
+            query: function(select, store, field, params) {
+              let locale = get(select, 'i18n.locale'),
+                ordering_param = `title__${locale}`;
+              params = params || {};
+              params.ordering = ordering_param;
+              params.category = 'Institution';
+
+              return store.query('institution', params);
+            },
+            autocomplete: true
+          }),
+          'is_verified',
+          'is_rejected',
+          'verification_pending',
+          field('no_verification_request', { type: 'boolean' })
+        ]
       },
       search: true,
-      searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
+      searchPlaceholder: 'search.placeholder.institution_managers'
     },
     sort: {
       active: true,

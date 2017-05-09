@@ -1,4 +1,4 @@
-import {ApellaGen, emptyArrayResult} from 'ui/lib/common';
+import {ApellaGen, emptyArrayResult, filterSelectSortTitles} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
@@ -56,15 +56,22 @@ export default ApellaGen.extend({
         return (forbiddenRoles.includes(role) ? false : true);
       })
     },
-    layout: 'table',
     filter: {
       active: true,
       meta: {
-        fields: ['institution', 'rank', 'is_foreign', 'is_verified', 'is_rejected',
-          'verification_pending', field('no_verification_request', { type: 'boolean' })]
+        fields: [
+          filterSelectSortTitles('institution'),
+          'rank',
+          'is_foreign',
+          'is_verified',
+          'is_rejected',
+          'verification_pending',
+          field('no_verification_request', { type: 'boolean' })
+        ]
       },
       serverSide: true,
       search: true,
+      searchPlaceholder: 'search.placeholder.professors',
       searchFields: ['user_id', 'email', 'username', 'first_name', 'last_name']
     },
     sort: {
@@ -105,7 +112,7 @@ export default ApellaGen.extend({
         USER.FIELDSET_DETAILS_VERIFIABLE,
         PROFESSOR.FIELDSET,
       ]
-      if (role === 'helpdeskadmin' || role === 'helpdeskuser' ) {
+      if (role === 'helpdeskadmin' || role === 'helpdeskuser' || role === 'ministry') {
         f.push(PROFESSOR.FILES_FIELDSET);
       }
       return f;

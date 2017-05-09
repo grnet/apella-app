@@ -66,60 +66,75 @@ let CANDIDATE_FIELDSET =  {
 
 let CANDIDACY_FIELDSET =  {
     label: 'candidacy.candidacy_section.title',
-    fields: [
-      fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
-        hint: 'five_before_electors_meeting',
-        readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
-          let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
-          let after_deadline = false;
-          if (electors_at) {
-            let limit_day = electors_at.subtract(5, 'days'),
-              today = moment().startOf('days');
-            after_deadline = today.isAfter(limit_day);
-          }
-          return after_deadline;
+    fields: computed('model.position.position_type', function(){
+      let election = get(this, 'model.position.position_type') === 'election';
+
+      let res = [
+        fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+          hint: 'five_before_electors_meeting',
+          readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
+            let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
+            let after_deadline = false;
+            if (electors_at) {
+              let limit_day = electors_at.subtract(5, 'days'),
+                today = moment().startOf('days');
+              after_deadline = today.isAfter(limit_day);
+            }
+            return after_deadline;
+          })
+        }, {
+          replace: true
+        }),
+        fileField('attachment_files', 'candidacy', 'attachment_files', {
+          hint: 'one_before_electors_meeting',
+          readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
+            let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
+            let after_deadline = false;
+            if (electors_at) {
+              let today = moment().startOf('days'),
+                limit_day = electors_at.subtract(1, 'days');
+              after_deadline = today.isAfter(limit_day);
+            }
+            return after_deadline;
+          })
+        }, {
+          multiple: true
         })
-      }, {
-        replace: true
-      }),
-      fileField('attachment_files', 'candidacy', 'attachment_files', {
-        hint: 'one_before_electors_meeting',
-        readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
-          let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
-          let after_deadline = false;
-          if (electors_at) {
-            let today = moment().startOf('days'),
-              limit_day = electors_at.subtract(1, 'days');
-            after_deadline = today.isAfter(limit_day);
-          }
-          return after_deadline;
-        })
-      }, {
-        multiple: true
-      }),
-      field('othersCanView', {
-        disabled: computed('model.position.is_open', function(){
-          return !get(this, 'model.position.is_open');
-        })
-     })
-    ],
+      ];
+      if (election) {
+        res.pushObject(
+          field('othersCanView', {
+            disabled: computed('model.position.is_open', function(){
+              return !get(this, 'model.position.is_open');
+            })
+          })
+        )
+      }
+      return res;
+    }),
     flex: 100,
 };
 
 let CANDIDACY_FIELDSET_DETAILS =  {
     label: 'candidacy.candidacy_section.title',
-    fields: [
-      fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
-        readonly: true,
-        hint: 'five_before_electors_meeting',
-      }, { replace: true}),
-     fileField('attachment_files', 'candidacy', 'attachment_files', {
-        readonly: true,
-        sortBy: 'filename',
-        hint: 'one_before_electors_meeting',
-      }, { replace: true, multiple: true}),
-      'othersCanView'
-    ],
+    fields: computed('model.position.position_type', function(){
+      let election = get(this, 'model.position.position_type') === 'election';
+      let res = [
+        fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+          readonly: true,
+          hint: 'five_before_electors_meeting',
+        }, { replace: true}),
+       fileField('attachment_files', 'candidacy', 'attachment_files', {
+          readonly: true,
+          sortBy: 'filename',
+          hint: 'one_before_electors_meeting',
+        }, { replace: true, multiple: true})
+      ];
+      if (election) {
+        res.pushObject('othersCanView');
+      }
+      return res;
+    }),
     flex: 100,
     layout: {
       flex: [100, 100, 100]
@@ -132,12 +147,25 @@ let FS = {
     POSITION_FIELDSET,
     CANDIDATE_FIELDSET,
   ],
-  list:  [field('position.code', {dataKey: 'position__id'}), 'position.title', 'position.department.institution.title_current',
-          'position.department.title_current',
-          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
-  list_with_user_id:  [field('position.code', {dataKey: 'position__id'}), field('id', {label: 'candidacy.id'}), field('candidate.id', {label: 'candidate.user_id.label'}), 'candidate.full_name_current', 'position.title', 'position.department.institution.title_current',
-          'position.department.title_current',
-          'position.state_calc_verbose', field('state_verbose', {label: 'candidacy.state'})],
+  list: [
+    field('position.code', {dataKey: 'position__id'}),
+    'position.title',
+    'position.department.institution.title_current',
+    'position.department.title_current',
+    'position.state_calc_verbose',
+    field('state_verbose', {label: 'candidacy.state'})
+  ],
+  list_with_user_id: [
+    field('position.code', {dataKey: 'position__id'}),
+    field('id', {label: 'candidacy.id'}),
+    field('candidate.id', {label: 'candidate.user_id.label'}),
+    field('candidate.full_name_current', {label: 'full_name'}),
+    'position.title',
+    'position.department.institution.title_current',
+    'position.department.title_current',
+    'position.state_calc_verbose',
+    field('state_verbose', {label: 'candidacy.state'})
+  ],
 
   create_helpdeskadmin: [
     POSITION_FIELDSET,
@@ -234,12 +262,25 @@ export default ApellaGen.extend({
       return candidacy_not_cancelled && before_deadline && owned;
     }),
 
-    // temporarily set to true
-    // should return true is model.position.department == user.department
-    is_dep_candidacy: computed('model.position.department.id', 'user.department', function(){
-      return true;
-    }),
+    participates: computed('user.id', 'model.position.electors', 'model.position.committee', function() {
+      let professor_id = get(this, 'user.id'),
+        position = get(this, 'model.position'),
+        electors, committee, participations;
 
+      if(get(position, 'electors')) {
+        electors = position.get('electors').getEach('id'),
+        committee = position.get('committee').getEach('id');
+        participations = _.union(electors, committee);
+
+        if(participations.includes(professor_id)) {
+          return true;
+        }
+      }
+      return false;
+    }),
+    is_dep_candidacy: computed('', function() {
+      return false;
+    })
   },
 
   common: {
@@ -249,7 +290,6 @@ export default ApellaGen.extend({
     }
   },
   list: {
-    layout: 'table',
     actions: [],
 
     getModel: function(params) {
@@ -277,10 +317,10 @@ export default ApellaGen.extend({
       searchPlaceholder: computed('role', function() {
         let role = get(this, 'role');
         if(role === 'candidate') {
-          return 'search.placeholder_candidacies_candidate';
+          return 'search.placeholder.candidacies_by_candidate';
         }
         else {
-        return 'search.placeholder_candidacies_helpdesk';
+          return 'search.placeholder.candidacies_by_helpdesk';
         }
       })
     },

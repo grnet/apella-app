@@ -19,7 +19,7 @@ from apimas.modeling.adapters.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
-    Professor as ProfessorModel
+    Professor as ProfessorModel, UserApplication
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD
 from apella import auth_hooks
@@ -150,6 +150,10 @@ class PositionMixin(object):
                     department=user.professor.department).
                     values_list('code', flat=True))
                 position_codes += department_position_codes
+
+            position_codes += list(
+                user.userapplication_set.values_list(
+                'position__code', flat=True))
             queryset = queryset.filter(
                 Q(state='posted', ends_at__gte=now) |
                 Q(code__in=position_codes) |
@@ -182,8 +186,8 @@ class PositionMixin(object):
                                            Q(ends_at__lte=now))
 
             elif state_query == 'before_closed':
-                queryset = queryset.filter(Q(state='posted') &
-                                           Q(ends_at__gt=now))
+                queryset = queryset.filter((Q(state='posted') &
+                                           Q(ends_at__gt=now)) | Q(ends_at=None))
         queryset = queryset.distinct()
         return queryset
 
@@ -278,6 +282,7 @@ class RegistriesList(viewsets.GenericViewSet):
                 Q(user__first_name__el__icontains=search) |
                 Q(user__email__icontains=search) |
                 Q(user__old_user_id__icontains=search) |
+                Q(user__id__icontains=search) |
                 Q(discipline_text__icontains=search))
         if 'ordering' not in query_params:
             ordering = 'user__last_name__el'
@@ -513,3 +518,64 @@ class PositionsPortal(object):
     def get_queryset(self):
         now = datetime.utcnow()
         return self.queryset.filter(state='posted', ends_at__gte=now)
+
+
+class UserApplicationMixin(object):
+    def _can_accept_application(self):
+        application = self.get_object()
+        if UserApplication.objects.filter(
+                user=application.user,
+                app_type=application.app_type,
+                state='approved').exists():
+            return False
+        return True
+
+    @detail_route(methods=['post'])
+    def accept_application(self, request, pk=None):
+        application = self.get_object()
+        if not self._can_accept_application():
+            return Response(
+                'cannot.accept.application', status=status.HTTP_400_BAD_REQUEST)
+        try:
+            application.state = 'approved'
+            application.updated_at = datetime.utcnow()
+            application.save()
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        send_user_email(
+            application.user,
+            'apella/emails/user_application_accepted_subject.txt',
+            'apella/emails/user_application_accepted_body.txt',
+            {'application': application})
+        return Response(request.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def reject_application(self, request, pk=None):
+        application = self.get_object()
+        try:
+            application.state = 'rejected'
+            application.updated_at = datetime.utcnow()
+            application.save()
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        send_user_email(
+            application.user,
+            'apella/emails/user_application_accepted_subject.txt',
+            'apella/emails/user_application_rejected_body.txt',
+            {'application': application})
+        return Response(request.data, status=status.HTTP_200_OK)
+
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        if user.is_institutionmanager():
+            departments = Department.objects.filter(
+                institution=user.institutionmanager.institution)
+            queryset = queryset.filter(
+                department__in=departments)
+        elif user.is_assistant():
+            queryset = queryset.filter(
+                department__in=user.institutionmanager.departments.all())
+        elif user.is_professor():
+            queryset = queryset.filter(user=user)
+        return queryset

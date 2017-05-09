@@ -47,6 +47,10 @@ USER_ROLE_MODEL_RESOURCES = {
     'helpdeskadmin': {
         "model": ApellaUser,
         "resource": "users"
+    },
+    'ministry': {
+        "model": ApellaUser,
+        "resource": "users"
     }
 }
 

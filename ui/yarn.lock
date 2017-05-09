@@ -1465,6 +1465,12 @@ ember-ajax@^2.4.1:
   dependencies:
     ember-cli-babel "^5.1.5"
 
+ember-array-contains-helper@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/ember-array-contains-helper/-/ember-array-contains-helper-1.3.0.tgz#31d4a484d602515192848d4345915597bc2945e9"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+
 ember-basic-dropdown@^0.16.0:
   version "0.16.4"
   resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.16.4.tgz#6bf84654e4bbcf375c2a35cd341432d901c02ab5"
@@ -1479,22 +1485,16 @@ ember-can@^0.8.1, ember-can@0.8.1:
   dependencies:
     ember-cli-babel "^5.1.5"
 
-ember-changeset-validations@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/ember-changeset-validations/-/ember-changeset-validations-1.2.0.tgz#c8ba2d953deddd71d143c82607f6f6a189086927"
+ember-changeset-validations@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/ember-changeset-validations/-/ember-changeset-validations-1.2.4.tgz#2832f4c5daeebd139a8713ed30f8e902b360f286"
   dependencies:
-    ember-changeset "^1.1.1"
+    ember-changeset "^1.2.0"
     ember-cli-babel "^5.1.6"
 
-ember-changeset@^1.1.1:
+ember-changeset@^1.2.0, ember-changeset@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-1.2.0.tgz#db06a8f3321f280dc6f156fa837a947bdd3c562a"
-  dependencies:
-    ember-cli-babel "^5.1.6"
-
-ember-changeset@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/ember-changeset/-/ember-changeset-1.1.2.tgz#810bb7ce602645c0408b4cfe4285be96d254ae2a"
   dependencies:
     ember-cli-babel "^5.1.6"
 
@@ -1551,18 +1551,28 @@ ember-cli-dependency-checker@^1.3.0:
     is-git-url "0.2.0"
     semver "^4.1.0"
 
-"ember-cli-gen@git+ssh://phab-vcs-user@phab.dev.grnet.gr:222/diffusion/EMBERGEN/ember-gen.git#feature-refactor":
-  version "0.0.3-0"
-  resolved "git+ssh://phab-vcs-user@phab.dev.grnet.gr:222/diffusion/EMBERGEN/ember-gen.git#d3a849520f14799677c7ac0c81d79a3c0c9407f0"
+ember-cli-gen-apimas@~0.0.1:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/ember-cli-gen-apimas/-/ember-cli-gen-apimas-0.0.5.tgz#b86b98229bbabe4fa45944fca361bef7e0245bd3"
   dependencies:
+    ember-cli-babel "^5.1.7"
+    ember-django-adapter "1.1.3"
+    ember-lodash "0.0.10"
+
+ember-cli-gen@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-gen/-/ember-cli-gen-1.0.0.tgz#0a0d229c9f846786d491a6a671ee839abfca8c4e"
+  dependencies:
+    ember-array-contains-helper "1.3.0"
     ember-can "0.8.1"
-    ember-changeset "1.1.2"
-    ember-changeset-validations "1.2.0"
+    ember-changeset "1.2.0"
+    ember-changeset-validations "1.2.4"
     ember-cli-babel "^5.1.7"
     ember-cli-htmlbars "^1.0.10"
     ember-composable-helpers "1.1.2"
     ember-i18n "4.3.2"
     ember-lodash "0.0.10"
+    ember-network "0.3.1"
     ember-route-action-helper "2.0.0"
     ember-simple-auth "1.1.0"
     ember-transition-helper "0.0.6"
@@ -2020,7 +2030,7 @@ ember-moment@7.2.0:
     ember-cli-babel "^5.1.6"
     ember-macro-helpers "^0.4.0"
 
-ember-network@^0.3.1:
+ember-network@^0.3.1, ember-network@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/ember-network/-/ember-network-0.3.1.tgz#4187988fc817d194a722039806518409d2dd72ab"
   dependencies:
