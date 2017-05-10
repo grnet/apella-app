@@ -138,7 +138,7 @@ const setElecting = {
   }),
   confirm: true,
   prompt: {
-    ok: 'setElecting',
+    ok: 'ok',
     cancel: 'cancel',
     message: 'prompt.setElecting.message',
     title: 'prompt.setElecting.title',
@@ -168,7 +168,7 @@ const setRevoked = {
   }),
   confirm: true,
   prompt: {
-    ok: 'setRevoked',
+    ok: 'ok',
     cancel: 'cancel',
     message: 'prompt.setRevoked.message',
     title: 'prompt.setRevoked.title',
@@ -198,7 +198,7 @@ const setFailed = {
   }),
   confirm: true,
   prompt: {
-    ok: 'setFailed',
+    ok: 'ok',
     cancel: 'cancel',
     message: 'prompt.setFailed.message',
     title: 'prompt.setFailed.title',
@@ -229,7 +229,7 @@ const setSuccessful = {
   }),
   confirm: true,
   prompt: {
-    ok: 'setSuccessful',
+    ok: 'ok',
     cancel: 'cancel',
     message: 'prompt.setSuccessful.message',
     title: 'prompt.setSuccessful.title',
