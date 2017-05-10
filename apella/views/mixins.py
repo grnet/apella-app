@@ -83,33 +83,36 @@ class PositionHookMixin(HookMixin):
         obj = self.unstash()
         position = obj.instance
 
-        eps = ElectorParticipation.objects.filter(position=position)
-        old_participations = [old_el_pa for old_el_pa in eps.all()]
-        eps.all().delete()
+        curr_position = Position.objects.get(id=position.id)
+        if position.state != 'revoked' and \
+                (position.state == 'electing' and curr_position.state != 'revoked'):
+            eps = ElectorParticipation.objects.filter(position=position)
+            old_participations = [old_el_pa for old_el_pa in eps.all()]
+            eps.all().delete()
 
-        new_participations = []
-        for elector_set_key, is_regular in elector_sets.items():
-            if elector_set_key in obj.validated_data:
-                for elector in obj.validated_data[elector_set_key]:
-                    ep = ElectorParticipation.objects.create(
-                        professor=elector,
-                        position=position,
-                        is_regular=is_regular,
-                        is_internal=elector_set_key.endswith('internal'))
-                    new_participations.append(ep)
+            new_participations = []
+            for elector_set_key, is_regular in elector_sets.items():
+                if elector_set_key in obj.validated_data:
+                    for elector in obj.validated_data[elector_set_key]:
+                        ep = ElectorParticipation.objects.create(
+                            professor=elector,
+                            position=position,
+                            is_regular=is_regular,
+                            is_internal=elector_set_key.endswith('internal'))
+                        new_participations.append(ep)
 
-        send_emails_members_change(
-            position, 'electors', {'e': old_participations},
-            {'e': new_participations})
+            send_emails_members_change(
+                position, 'electors', {'e': old_participations},
+                {'e': new_participations})
 
-        c = {'committee': []}
-        for com_set in committee_sets:
-            if com_set in obj.validated_data:
-                committee = obj.validated_data[com_set]
-                if committee:
-                    for professor in committee:
-                        c['committee'].append(professor)
-        self.stash(extra=c)
+            c = {'committee': []}
+            for com_set in committee_sets:
+                if com_set in obj.validated_data:
+                    committee = obj.validated_data[com_set]
+                    if committee:
+                        for professor in committee:
+                            c['committee'].append(professor)
+            self.stash(extra=c)
 
 
 class PositionMixin(object):
