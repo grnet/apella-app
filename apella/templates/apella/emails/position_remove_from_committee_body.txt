@@ -11,7 +11,7 @@
 
 {% block content_en %}
 
-We inform you that the electors have removed you from the proposal committee for the position:
+We inform you that the electors have removed you from the evaluation committee for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
 

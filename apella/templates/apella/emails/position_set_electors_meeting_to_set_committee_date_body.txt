@@ -11,7 +11,7 @@
 
 {% block content_en %}
 
-We inform you that the convocation date of the electoral committee meeting to form the proposal committee for the position:
+We inform you that the convocation date of the electoral committee meeting to form the evaluation committee for the position:
 {% include "apella/emails/position_details_en.txt" %}
 has been announced.
 

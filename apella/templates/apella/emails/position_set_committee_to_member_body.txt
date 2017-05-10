@@ -13,7 +13,7 @@
 
 {% block content_en %}
 
-We inform you that the electors have appointed you as a member of the proposal committee for the position:
+We inform you that the electors have appointed you as a member of the evaluation committee for the position:
 
 {% include "apella/emails/position_details_en.txt" %}
 The upload of the committee's proposal is a duty of the Institution's/Department's competent authority.
