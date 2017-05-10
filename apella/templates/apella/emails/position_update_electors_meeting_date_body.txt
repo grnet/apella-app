@@ -2,7 +2,7 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι ορίστηκε νέα ημερομηνία σύγκλησης της Επιτροπής επιλογής, με σκοπό την ανάδειξη του καταλληλότερου υποψηφίου για τη θέση:
+Σας ενημερώνουμε ότι ορίστηκε νέα ημερομηνία σύγκλησης του εκλεκτορικού σώματος, με σκοπό την ανάδειξη του καταλληλότερου υποψηφίου για τη θέση:
 
 {% include "apella/emails/position_details_el.txt" %}
 
@@ -11,7 +11,7 @@
 
 {% block content_en %}
 
-We inform you that a new convocation date of the Election Committee, regarding the election of the most appropriate candidate for the position:
+We inform you that a new convocation date of the electoral committee, regarding the election of the most appropriate candidate for the position:
 {% include "apella/emails/position_details_en.txt" %}
 has been announced.
 
