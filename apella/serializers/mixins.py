@@ -102,6 +102,8 @@ class NestedWritableObjectsMixin(object):
                 self.NESTED_USER_KEY in self.fields:
             self.fields[self.NESTED_USER_KEY].fields['username'].read_only = \
                 True
+            self.fields[self.NESTED_USER_KEY].fields['email'].read_only = \
+                True
             del self.fields[self.NESTED_USER_KEY].fields['password']
 
     def create(self, validated_data):
