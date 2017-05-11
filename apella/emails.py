@@ -540,7 +540,8 @@ def send_position_create_emails(position):
 
     assistants = InstitutionManager.objects.filter(
         manager_role='assistant',
-        institution=position.department.institution)
+        institution=position.department.institution,
+        is_secretary=True)
     for assistant in assistants:
         if position.department in assistant.departments.all():
             send_user_email(
@@ -595,7 +596,8 @@ def send_create_application_emails(user_application):
 
     assistants = InstitutionManager.objects.filter(
         institution=user_application.user.professor.department.institution,
-        manager_role='assistant')
+        manager_role='assistant',
+        is_secretary=True)
     for assistant in assistants:
         if user_application.user.professor.department in \
                 assistant.departments.all():
