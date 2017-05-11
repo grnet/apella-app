@@ -538,6 +538,17 @@ def send_position_create_emails(position):
         'apella/emails/position_create_to_manager.txt',
         extra_context)
 
+    assistants = InstitutionManager.objects.filter(
+        manager_role='assistant',
+        institution=position.department.institution)
+    for assistant in assistants:
+        if position.department in assistant.departments.all():
+            send_user_email(
+                assistant.user,
+                'apella/emails/position_create_subject.txt',
+                'apella/emails/position_create_to_manager.txt',
+                extra_context)
+
     if position.is_election_type:
         users_interested = UserInterest.objects.filter(
             Q(area=position.subject_area) |
