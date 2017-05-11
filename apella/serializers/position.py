@@ -222,8 +222,8 @@ class PositionMixin(ValidatorMixin):
         if instance.state != curr_position.state:
             curr_position.pk = None
             curr_position.save()
-            curr_position.committee = committee
             curr_position.ranks = ranks
+            curr_position.committee = committee
             curr_position.assistant_files = assistant_files
             curr_position.save()
             for ep in eps:
@@ -232,6 +232,22 @@ class PositionMixin(ValidatorMixin):
                     professor=ep.professor,
                     is_internal=ep.is_internal,
                     is_regular=ep.is_regular)
+
+            if curr_position.state == 'revoked' and \
+                    instance.state == 'electing':
+                ElectorParticipation.objects.filter(
+                    position=instance).delete()
+                instance.committee.all().delete()
+                instance.committee_note = None
+                instance.committee_proposal = None
+                instance.committee_set_file = None
+                instance.electors_meeting_date = None
+                instance.electors_meeting_proposal = None
+                instance.electors_meeting_to_set_committee_date = None
+                instance.electors_set_file = None
+                instance.revocation_decision = None
+                instance.save()
+
 
         # send email to elected
         if validated_data.get('elected', None):
