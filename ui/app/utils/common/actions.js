@@ -605,7 +605,7 @@ const rejectApplication = {
 };
 
 const  goToProfessor = {
-  label: 'professor.label',
+  label: 'professor.profile.label',
   icon: 'portrait',
   action(route, model) {
     let id = get(this, 'model.user.id');
