@@ -567,7 +567,8 @@ def send_position_create_emails(position):
 
 def send_create_application_emails(user_application):
     managers = InstitutionManager.objects.filter(
-        institution=user_application.user.professor.department.institution)
+        institution=user_application.user.professor.department.institution,
+        manager_role='institutionmanager')
 
     ui_url = get_ui_url()
     app_url = urljoin(ui_url, 'user-applications/', str(user_application.pk))
@@ -580,6 +581,21 @@ def send_create_application_emails(user_application):
                 'app': user_application,
                 'apella_url': app_url
             })
+
+    assistants = InstitutionManager.objects.filter(
+        institution=user_application.user.professor.department.institution,
+        manager_role='assistant')
+    for assistant in assistants:
+        if user_application.user.professor.department in \
+                assistant.departments.all():
+            send_user_email(
+                assistant.user,
+                'apella/emails/user_application_create_to_manager_subject.txt',
+                'apella/emails/user_application_create_to_manager_body.txt',
+                {
+                    'app': user_application,
+                    'apella_url': app_url
+                })
 
     send_user_email(
         user_application.user,
