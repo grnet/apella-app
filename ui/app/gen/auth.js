@@ -325,7 +325,7 @@ export default AuthGen.extend({
             user.auth_token = token;
             resetHash(window);
             this.get('messageService').setSuccess('login.success');
-            return session.authenticate('authenticator:apimas', user);
+            return session.authenticate('authenticator:apella', user);
           });
         })
       },
