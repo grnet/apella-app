@@ -128,7 +128,6 @@ export default ApellaGen.extend({
               'rank_verbose'
             ];
           }
-          console.log('fields', fields)
           return fields;
         }),
       actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
