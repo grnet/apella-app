@@ -278,8 +278,15 @@ export default ApellaGen.extend({
       }
       return false;
     }),
-    is_dep_candidacy: computed('', function() {
-      return false;
+    is_dep_candidacy: computed('user.department', 'model.position_department', function() {
+      let user_department = get(this, 'user.department'),
+        position_department = get(this, 'model.position_department');
+      if(user_department === position_department) {
+        return true;
+      }
+      else {
+        return false;
+      }
     })
   },
 
