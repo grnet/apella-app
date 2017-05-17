@@ -98,37 +98,27 @@ def validate_position_committee(internal, external):
             _('The committee must contain exactly 3 members'))
 
 
-def validate_position_electors(r_i, r_e, s_i, s_e, dep_number):
+def validate_position_electors(r_i, r_e, dep_number):
     """
-    If dep_number is more than 40, electors should be exactly 15 regular and
-    15 substitute members.
+    If dep_number is more than 40, electors should be exactly 15 members.
     If dep_number is less than or equal to 40, electors should be exactly 11
-    regular and 11 substitute members
+    members.
 
     r_i: electors_regular_internal
     r_e: electors_regular_external
-    s_i: electors_sub_internal
-    s_e: electors_sub_external
     """
 
     regular = len(r_i) + len(r_e)
-    sub = len(s_i) + len(s_e)
-    if regular + sub == 0:
+    if regular == 0:
         return
     if dep_number > 40:
         if regular != 15:
             raise ValidationError(
                 _('Regular electors must be exactly 15'))
-        if sub != 15:
-            raise ValidationError(
-                _('Substitute electors must be exactly 15'))
     else:
         if regular != 11:
             raise ValidationError(
                 _('Regular electors must be exactly 11'))
-        if sub != 11:
-            raise ValidationError(
-                _('Substitute electors must be exactly 11'))
 
 def validate_tenure_candidacy(position, candidate):
     if position.user_application.user != candidate:
