@@ -338,6 +338,7 @@ export default {
   'position_type.Tenure': 'Establishment',
   'proceedings_cover_letter.label': 'Proceedings Cover Letter',
   'professor.menu_label': 'Professors',
+  'professor.menu_label_alt': 'Generic Registry',
   'professor_department_id.label': 'Department ID',
   'professor_domestic': 'Domestic Professor/Researcher',
   'professor_foreign': 'Foreign Professor/Researcher',

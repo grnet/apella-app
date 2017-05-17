@@ -352,6 +352,7 @@ export default {
   'position_type.Tenure': 'Θέση μονιμοποίησης',
   'proceedings_cover_letter.label': 'Διαβιβαστικό πρακτικού επιλογής προς τον Πρύτανη',
   'professor.menu_label': 'Καθηγητές',
+  'professor.menu_label_alt': 'Γενικό Μητρώο',
   'professor_department_id.label': 'ID τμήματος',
   'professor_domestic': 'Καθηγητής/Ερευνητής Ημεδαπής',
   'professor_foreign': 'Καθηγητής/Ερευνητής Αλλοδαπής',

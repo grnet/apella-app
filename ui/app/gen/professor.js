@@ -52,10 +52,30 @@ export default ApellaGen.extend({
       return this.store.query('professor', params);
     },
     page: {
-      title: 'professor.menu_label'
+      title: computed('role', function() {
+        let role = get(this, 'role'),
+          roles_see_only_verified = ['institutionmanager', 'assistant'];
+
+        if(roles_see_only_verified.includes(role)) {
+          return 'professor.menu_label_alt'
+        }
+        else {
+          return 'professor.menu_label';
+        }
+      })
     },
     menu: {
-      label: 'professor.menu_label',
+      label: computed('role', function() {
+        let role = get(this, 'role'),
+          roles_see_only_verified = ['institutionmanager', 'assistant'];
+
+        if(roles_see_only_verified.includes(role)) {
+          return 'professor.menu_label_alt'
+        }
+        else {
+          return 'professor.menu_label';
+        }
+      }),
       icon: 'people'
     },
     filter: {
