@@ -23,51 +23,68 @@ export default ApellaGen.extend({
   list: {
     getModel(params) {
       params = params || {};
-      /*
-       * "no_verification_request" changes the value of "is_verified",
-       * "is_rejected" and "verification_pending" parameters.
-       *
-       * These are also filters. So, if a user selects the
-       * "no_verification_request" and one of the other filters at the same
-       * time the list that he/she sees is empty.
-       */
-      if(params.no_verification_request) {
-        if(params.is_verified || params.verification_pending || params.is_rejected) {
-          let store = this.store;
-          return emptyArrayResult(store, 'professor');
-        }
-        else {
-          params.is_verified = false;
-          params.verification_pending = false;
-          params.is_rejected = false;
+      let role = get(this, 'user.role'),
+        roles_see_only_verified = ['institutionmanager', 'assistant'];
+      if(roles_see_only_verified.includes(role)) {
+        params.is_verified = true;
+      }
+      else {
+        /*
+         * "no_verification_request" changes the value of "is_verified",
+         * "is_rejected" and "verification_pending" parameters.
+         *
+         * These are also filters. So, if a user selects the
+         * "no_verification_request" and one of the other filters at the same
+         * time the list that he/she sees is empty.
+         */
+        if(params.no_verification_request) {
+          if(params.is_verified || params.verification_pending || params.is_rejected) {
+            let store = this.store;
+            return emptyArrayResult(store, 'professor');
+          }
+          else {
+            params.is_verified = false;
+            params.verification_pending = false;
+            params.is_rejected = false;
+          }
         }
       }
       return this.store.query('professor', params);
     },
     page: {
-      title: 'professor.menu_label',
+      title: 'professor.menu_label'
     },
     menu: {
       label: 'professor.menu_label',
-      icon: 'people',
-      display: computed('role', function() {
-        let role = get(this, 'role');
-        let forbiddenRoles = ['institutionmanager', 'assistant'];
-        return (forbiddenRoles.includes(role) ? false : true);
-      })
+      icon: 'people'
     },
     filter: {
       active: true,
       meta: {
-        fields: [
-          filterSelectSortTitles('institution'),
-          'rank',
-          'is_foreign',
-          'is_verified',
-          'is_rejected',
-          'verification_pending',
-          field('no_verification_request', { type: 'boolean' })
-        ]
+        fields: computed('role', function() {
+          let role = get(this, 'user.role'),
+            roles_see_only_verified = ['institutionmanager', 'assistant'],
+            fields = undefined;
+          if(roles_see_only_verified.includes(role)) {
+            fields = [
+              filterSelectSortTitles('institution'),
+              'rank',
+              'is_foreign',
+            ];
+          }
+          else {
+            fields = [
+              filterSelectSortTitles('institution'),
+              'rank',
+              'is_foreign',
+              'is_verified',
+              'is_rejected',
+              'verification_pending',
+              field('no_verification_request', { type: 'boolean' })
+            ];
+          }
+          return fields;
+        })
       },
       serverSide: true,
       search: true,
@@ -85,15 +102,35 @@ export default ApellaGen.extend({
       ]
     },
     row: {
-      fields: [
-        'user_id',
-        'old_user_id',
-        field('status_verbose', {label: 'state.label'}),
-        field('institution_global', {label: 'institution.label'}),
-        field('username', {dataKey: 'user__username'}),
-        field('email', {dataKey: 'user__email'}),
-        'full_name_current', 'rank_verbose'
-      ],
+        fields: computed('role', function() {
+          let role = get(this, 'role'),
+            roles_see_only_verified = ['institutionmanager', 'assistant'],
+            fields = undefined;
+          if(roles_see_only_verified.includes(role)) {
+            fields = [
+              'user_id',
+              'old_user_id',
+              'full_name_current',
+              field('email', {dataKey: 'user__email'}),
+              field('institution_global', {label: 'institution.label'}),
+              'rank_verbose',
+            ];
+          }
+          else {
+            fields = [
+              'user_id',
+              'old_user_id',
+              field('username', {dataKey: 'user__username'}),
+              'full_name_current',
+              field('email', {dataKey: 'user__email'}),
+              field('status_verbose', {label: 'state.label'}),
+              field('institution_global', {label: 'institution.label'}),
+              'rank_verbose'
+            ];
+          }
+          console.log('fields', fields)
+          return fields;
+        }),
       actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
       actionsMap: {
         verifyUser: verifyUser,
