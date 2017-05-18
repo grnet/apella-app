@@ -189,6 +189,16 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .integer: {}
+                has_accepted_terms:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                accepted_terms_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                    .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -953,6 +963,16 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .integer: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -1341,6 +1361,16 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .readonly: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -1699,6 +1729,16 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .integer: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -2887,6 +2927,16 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
