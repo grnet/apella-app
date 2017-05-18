@@ -147,7 +147,7 @@ export default {
   'edit.page.title': 'Edit',
   'elected.full_name.label': 'Elected',
   'elected.label': 'Elected',
-  'elections.menu_label': 'Elections',
+  'elections.menu_label': 'My evaluations',
   'electors_meeting_date.label': 'Electors convocation date',
   'electors_meeting_date_format.label': 'Electors convocation date',
   'electors_meeting_proposal.label': 'Invitation for convocation of the electors',

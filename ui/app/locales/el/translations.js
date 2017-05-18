@@ -161,7 +161,7 @@ export default {
   'edit.page.title': 'Τροποποίηση',
   'elected.full_name.label': 'Εκλεγείς',
   'elected.label': 'Εκλεγείς',
-  'elections.menu_label': 'Εκλογές',
+  'elections.menu_label': 'Οι θέσεις που αξιολογώ',
   'electors_meeting_date.label': 'Ημερομηνία σύγκλησης του εκλεκτορικού σώματος',
   'electors_meeting_date_format.label': 'Ημερομηνία σύγκλησης του εκλεκτορικού σώματος',
   'electors_meeting_proposal.label': 'Πρόσκληση για σύγκληση του εκλεκτορικού σώματος για επιλογή',
