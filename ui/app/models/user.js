@@ -32,6 +32,8 @@ export default DS.Model.extend({
   father_name_current: computeI18N('father_name'),
   login_method: DS.attr('string'),
 
+  has_accepted_terms: DS.attr({type: 'boolean', defaultValue: false }),
+
   shibboleth_idp: DS.attr(),
   shibboleth_schac_home_organization: DS.attr(),
 

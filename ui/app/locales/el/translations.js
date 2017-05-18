@@ -235,6 +235,7 @@ export default {
   'full_name': 'Ονοματεπώνυμο',
   'full_name_current.label': 'Ονοματεπώνυμο',
   'generic.error': 'Σφάλμα Εφαρμογής, παρακαλώ πατήστε ανανέωση και αν το πρόβλημα επιμείνει επικοινωνήστε με το Γραφείο Αρωγής.',
+  'has_accepted_terms.label': 'Έχω διαβάσει και αποδέχομαι τους <a href="https://apella.minedu.gov.gr/terms" target="_blank">όρους συμμετοχής</a> στην ηλεκτρονική υπηρεσία ΑΠΕΛΛΑ',
   'home_phone_number.field': 'σταθερό τηλέφωνο',
   'home_phone_number.label': 'Σταθερό τηλέφωνο',
   'id.label': 'Κωδικός',

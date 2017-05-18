@@ -221,6 +221,7 @@ export default {
   'full_name': 'Full Name',
   'full_name_current.label': 'Full name',
   'generic.error': 'Application Error; please press Refresh and if the problem persists contact the Helpdesk.',
+  'has_accepted_terms.label': 'Ι have read and accepted the <a href="https://apella.minedu.gov.gr/en/terms-en" target="_blank">terms of use</a> of the electronic service APELLA',
   'headers.institution': 'Institutions/ Departments',
   'headers.subject_area': 'Subject areas/ Subjects',
   'home_phone_number.field': 'home phone',

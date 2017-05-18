@@ -45,7 +45,8 @@ const FIELDS_ALL = [
   'home_phone_number',
   'mobile_phone_number',
   'shibboleth_idp',
-  'shibboleth_schac_home_organization'
+  'shibboleth_schac_home_organization',
+  'has_accepted_terms',
 ];
 
 const VALIDATORS = {
@@ -87,9 +88,10 @@ const FIELDSET_CREATE = {
     'id_passport',
     'home_phone_number',
     'mobile_phone_number',
+    'has_accepted_terms'
   ],
   layout: {
-    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 100]
   }
 };
 
@@ -261,10 +263,11 @@ const FIELDSET_REGISTER_ACADEMIC = {
     'father_name',
     'id_passport',
     'home_phone_number',
-    'mobile_phone_number'
+    'mobile_phone_number',
+    'has_accepted_terms'
   ],
   layout: {
-    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
+    flex: [100, 50, 50, 50, 50, 50, 50, 100]
   }
 };
 
