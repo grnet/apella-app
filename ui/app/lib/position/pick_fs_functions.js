@@ -49,16 +49,20 @@ const pick_edit_fs = function() {
   return res;
 };
 
-const pick_details_fs_by_state = function(fs, state, before_open, head, display_candidacies, limited_permissions) {
+const pick_details_fs_by_state = function(fs, state, before_open, display_candidacies, limited_permissions) {
   let res,
+    head = [fs.basic, fs.details, fs.assistant_files],
     tail = [fs.contact, fs.history];
 
-  if(state === 'posted') {
+  if(limited_permissions) {
+    return res = [fs.basic, fs.details, fs.contact];
+  }
+  else if(state === 'posted') {
     if(before_open) {
       res = head;
     }
     else {
-      if (display_candidacies && !limited_permissions) {
+      if (display_candidacies) {
         res =  head.concat(fs.candidacies);
       }
       else {
@@ -66,7 +70,7 @@ const pick_details_fs_by_state = function(fs, state, before_open, head, display_
       }
     }
   }
-  else if(state === 'cancelled' || limited_permissions) {
+  else if(state === 'cancelled') {
     res =  head;
   }
   // in all other states
@@ -103,7 +107,6 @@ const pick_details_fs = function() {
     display_candidacies = false,
     limited_permissions = false;
 
-  let head = [fs.basic, fs.details,  fs.assistant_files];
 
   if(roles_conditional_candidacies.indexOf(role) > -1) {
     let candidacies = [];
@@ -133,10 +136,11 @@ const pick_details_fs = function() {
         }
       }
     });
-    // Show candidacies only in fellow candidates
+    // Show candidacies fieldset only in fellow candidates
     if(candidacies.indexOf(user_id) > -1) {
       display_candidacies = true;
     }
+    // If the user is not an *active* candidate and he is a professor
     else if (role === 'professor') {
       let user_department = get(this, 'user.department') || "",
         user_department_id = user_department.split('/').slice(-2)[0],
@@ -147,6 +151,11 @@ const pick_details_fs = function() {
        */
       if (user_department_id === position_department_id) {
         display_candidacies = true;
+        /*
+         * If the user is a professor of the department of the position and an
+         * ex candidate, should see what the other professors see not what other
+         * ex candidates see.
+         */
         limited_permissions = false;
       }
       /*
@@ -174,7 +183,7 @@ const pick_details_fs = function() {
   else {
     display_candidacies = true;
   }
-  return pick_details_fs_by_state(fs, state, before_open, head, display_candidacies, limited_permissions);
+  return pick_details_fs_by_state(fs, state, before_open, display_candidacies, limited_permissions);
 };
 
 const pick_create_fs = function() {

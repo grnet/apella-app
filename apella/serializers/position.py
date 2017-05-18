@@ -126,12 +126,10 @@ class PositionNonModel(ValidatorMixin):
 
         r_i = data.get('electors_regular_internal', [])
         r_e = data.get('electors_regular_external', [])
-        s_i = data.get('electors_sub_internal', [])
-        s_e = data.get('electors_sub_external', [])
 
-        if r_i or r_e or s_i or s_e:
+        if r_i or r_e:
             dep_number = self.instance.department_dep_number
-            validate_position_electors(r_i, r_e, s_i, s_e, dep_number)
+            validate_position_electors(r_i, r_e, dep_number)
 
         return data
 
