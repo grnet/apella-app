@@ -140,6 +140,7 @@ export default ApellaGen.extend({
             fields = [
               'user_id',
               'old_user_id',
+              field('active_elections', {label: 'active_elections_num.label'}),
               field('username', {dataKey: 'user__username'}),
               'full_name_current',
               field('email', {dataKey: 'user__email'}),

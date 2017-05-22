@@ -54,6 +54,7 @@ export default {
   'activateUser': 'Ενεργοποίηση χρήστη',
   'active': 'Ενεργός',
   'active_elections.label': 'Εκλεκτορικά Σώματα',
+  'active_elections_num.label': 'Συμμετοχές',
   'add': 'Προσθηκη',
   'afterToday.message': 'H ημερομηνία θα πρέπει να είναι μεταγενέστερη της σημερινής',
   'applicant.user_id.label': 'Κωδικός υποψηφίου',

@@ -42,6 +42,7 @@ export default {
   'activateUser': 'Activate user',
   'active': 'active',
   'active_elections.label': 'Election Committees',
+  'active_elections_num.label': 'Participations',
   'add.label': 'Add',
   'afterToday.message': 'This date should be after today',
   'applyCandidacy': 'Submit candidacy',
