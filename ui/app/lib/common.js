@@ -14,8 +14,29 @@ const {
   computed,
   merge,
   assign,
-  assert
+  assert,
+  inject
 } = Ember;
+
+// A route mixin which should apply for all authenticated routes. Handles 
+// cross app things such as non accepted terms.
+const UserConstraintsRouteMixin = {
+  messageService: inject.service('messages'),
+  beforeModel(transition) {
+    let session = get(this, 'session');
+    if (get(session, 'isAuthenticated')) {
+      let profile = get(session, 'session.authenticated');
+      let set_academic = get(profile, 'can_set_academic');
+      let has_accepted_terms = get(profile, 'has_accepted_terms');
+      let isProfile = get(transition, 'targetName') === 'auth.profile';
+      if ((set_academic || !has_accepted_terms) && !isProfile) {
+        transition.abort();
+        return this.transitionTo('auth.profile');
+      }
+    }
+    return this._super(transition);
+  }
+}
 
 const ApellaGen = CRUDGen.extend({
   auth: true,
@@ -23,6 +44,7 @@ const ApellaGen = CRUDGen.extend({
     session: Ember.inject.service(),
     role: reads('session.session.authenticated.role')
   },
+  routeMixins: [UserConstraintsRouteMixin],
   resourceName: reads('path'),
   list: {
     layout: 'table',
@@ -301,6 +323,5 @@ export {
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
   preloadRelations, emptyArrayResult,
-  prefixSelect, filterSelectSortTitles
+  prefixSelect, filterSelectSortTitles, UserConstraintsRouteMixin
 };
-

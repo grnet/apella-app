@@ -12,6 +12,7 @@ import {disable_field} from 'ui/utils/common/fields';
 import {change_password, isHelpdesk} from 'ui/utils/common/actions';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
+import {UserConstraintsRouteMixin} from 'ui/lib/common';
 import fetch from "ember-network/fetch";
 
 const {
@@ -133,6 +134,28 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   actions: ['sync_candidacies', 'change_password'],
   partials: { top: 'profile-details-intro' },
   actionsMap: {
+    'accept_terms': {
+      raised: true,
+      primary: true,
+      label: 'accept',
+      action(route, model) {
+        // TODO: instead of dummy reload do a call to the 
+        // accept terms API endpoint.
+        model.reload().then(() => {
+          window.location.reload();
+        });
+      }
+    },
+    'decline_terms': {
+      raised: true,
+      primary: true,
+      label: 'decline',
+      warn: true,
+      action(route) {
+        route.get('session').invalidate();
+        window.location.reload();
+      }
+    },
     'sync_candidacies': {
       label: 'sync.candidacies',
       icon: 'refresh',
@@ -175,6 +198,7 @@ const PositionInterest = gen.GenRoutedObject.extend({
     let user_id = get(this, 'session.session.authenticated.user_id');
     return this.store.queryRecord('user-interest', {user:user_id });
   },
+  routeMixins: [UserConstraintsRouteMixin],
   templateName: 'user-interests',
   routeBaseClass: routes.EditRoute,
   session: Ember.inject.service(),
