@@ -37,6 +37,7 @@ export default {
   'Unable to login with provided credentials.': 'Unable to login with provided credentials.',
   'You have already submitted a candidacy for this position': 'You have already submitted a candidacy for this position',
   'You should first set DEP number for the department': 'You should first set faculty number for department',
+  'acceptTerms.message': 'You must accept the terms of use to continue',
   'accept_application': 'Accept application',
   'activate': 'activate',
   'activateUser': 'Activate user',

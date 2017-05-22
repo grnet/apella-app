@@ -49,6 +49,7 @@ export default {
   'Unable to login with provided credentials.': 'Ανεπιτυχής είσοδος',
   'You have already submitted a candidacy for this position': 'Έχετε ήδη υποβάλει υποψηφιότητα για αυτή τη θέση',
   'You should first set DEP number for the department': 'Πρέπει πρώτα να ορίσετε τον αριθμό μελών ΔΕΠ του Τμήματος',
+  'acceptTerms.message': 'Πρέπει να αποδεχτείτε τους όρους χρήστης της εφαρμογής για να συνεχίσετε',
   'accept_application': 'Αποδοχή αίτησης',
   'activate': 'ενεργοποιηση',
   'activateUser': 'Ενεργοποίηση χρήστη',

@@ -224,7 +224,7 @@ const Register = gen.GenRoutedObject.extend({
     return FIELDSETS;
   }),
   validators: computed('model.is_academic', function(){
-    let res = USER.VALIDATORS;
+    let res = USER.VALIDATORS_CREATE;
     if(get(this, 'model.is_academic')) {
       res['username'] = []
     }
