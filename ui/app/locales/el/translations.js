@@ -276,6 +276,7 @@ export default {
   'manager.menu_label': 'Διαχειριστές ιδρύματος',
   'manager_institution_id.label': 'ID ιδρύματος υπευθύνου',
   'manager_role_verbose.label': 'Ρόλος',
+  'manager.exists': 'Υπάρχει ήδη πιστοποιημένος διαχειριστής γι\' αυτό το ίδρυμα',
   'members.to.add': 'Προσθήκες',
   'members.to.remove': 'Διαγραφές',
   'members_count.label': 'Αρ. Μελών',

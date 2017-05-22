@@ -264,6 +264,7 @@ export default {
   'manager.menu_label': 'Institution managers',
   'manager_institution_id.label': 'Manager institution ID',
   'manager_role_verbose.label': 'Role',
+  'manager.exists': 'A verified manager already exists for this institution',
   'members.to.add': 'Additions',
   'members.to.remove': 'Deletions',
   'members_count.label': 'Number of members',

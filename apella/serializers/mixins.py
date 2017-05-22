@@ -8,7 +8,7 @@ from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
 from apella.models import ApellaUser, Institution, Department, \
-    Position, Professor
+    Position, Professor, InstitutionManager
 from apella import auth_hooks
 from apella.util import move_to_timezone, otz
 from apella.emails import send_user_email, send_create_application_emails
@@ -319,3 +319,26 @@ class UserApplications(object):
     def update(self, instance, validated_data):
         validated_data['updated_at'] = datetime.utcnow()
         return super(UserApplications, self).update(instance, validated_data)
+
+
+class InstitutionManagersMixin(object):
+    def validate(self, data):
+        instance = self.instance
+        curr_institution = instance and instance.institution
+        new_institution = data.get('institution', None)
+        manager_exists = new_institution and \
+                InstitutionManager.objects.filter(
+                    manager_role='institutionmanager',
+                    is_verified=True,
+                    institution=new_institution).exists()
+
+        msg = 'manager.exists'
+        if instance:
+            if new_institution.id != curr_institution.id and \
+                    manager_exists:
+                raise ValidationError(msg)
+        else:
+            if manager_exists:
+                raise ValidationError(msg)
+
+        return data
