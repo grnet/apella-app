@@ -105,14 +105,14 @@ class PositionHookMixin(HookMixin):
                 position, 'electors', {'e': old_participations},
                 {'e': new_participations})
 
-            c = {'committee': []}
-            for com_set in committee_sets:
-                if com_set in obj.validated_data:
-                    committee = obj.validated_data[com_set]
-                    if committee:
-                        for professor in committee:
-                            c['committee'].append(professor)
-            self.stash(extra=c)
+        c = {'committee': []}
+        for com_set in committee_sets:
+            if com_set in obj.validated_data:
+                committee = obj.validated_data[com_set]
+                if committee:
+                    for professor in committee:
+                        c['committee'].append(professor)
+        self.stash(extra=c)
 
 
 class PositionMixin(object):
