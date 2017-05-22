@@ -522,9 +522,9 @@ class Professor(UserProfile, CandidateProfile):
     @property
     def active_elections(self):
         return self.committee_duty.filter(
-            Q(state='posted') | Q(state='electing')).count() + \
+            Q(state='revoked') | Q(state='electing')).count() + \
             self.electorparticipation_set.filter(
-                Q(position__state='posted') |
+                Q(position__state='revoked') |
                 Q(position__state='electing')).count()
 
     def save(self, *args, **kwargs):
