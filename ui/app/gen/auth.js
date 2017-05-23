@@ -530,6 +530,9 @@ export default AuthGen.extend({
         let isVerified = get(user, 'is_verified');
         let role = get(user, 'role');
         let verificationPending = get(user, 'verification_pending');
+        if (!get(user, 'has_accepted_terms')) {
+          this.transitionTo('auth.profile.details');
+        }
         if ((isVerifiable(role) && (verificationPending || isVerified) || isReadOnly(role))) {
           this.transitionTo('auth.profile.details');
         }
