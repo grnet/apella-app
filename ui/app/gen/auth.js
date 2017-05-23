@@ -139,9 +139,12 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
       primary: true,
       label: 'accept',
       action(route, model) {
-        // TODO: instead of dummy reload do a call to the 
-        // accept terms API endpoint.
-        model.reload().then(() => {
+        let adapter = get(route, 'store').adapterFor('user');
+        let url = adapter.buildURL('user', get(model, 'user_id'), 'findRecord');
+        adapter.ajax(url + 'accept_terms/', 'POST').then(() => {
+          window.location.reload();
+        }).catch(() => {
+          route.get('session').invalidate();
           window.location.reload();
         });
       }
