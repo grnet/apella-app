@@ -41,7 +41,7 @@ spec:
                     apella.serializers.mixins.HelpdeskUsers]
                 mixins: [apella.views.mixins.ApellaUsers]
                 ordering_fields: [id, username, email]
-                filter_fields: [role, is_active]
+                filter_fields: [role, is_active, has_accepted_terms]
                 search_fields: [id, username, email, first_name__el, last_name__el, first_name__en, last_name__en]
             .cli_commands: {}
             '*':

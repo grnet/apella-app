@@ -29,7 +29,7 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       meta: {
-        fields: ['role', 'is_active']
+        fields: ['role', 'is_active', field('has_accepted_terms', {label: 'has_accepted_terms.filter.label'})]
       },
       serverSide: true,
       search: true,
@@ -41,7 +41,7 @@ export default ApellaGen.extend({
       fields: ['id', 'username', 'email']
     },
     row: {
-      fields: [field('id', {label: 'user_id.label'}), field('old_user_id'), field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'role_verbose', 'login_method'],
+      fields: [field('id', {label: 'user_id.label'}), field('old_user_id'), 'has_accepted_terms_verbose', field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'role_verbose', 'login_method'],
       actions: ['gen:details', 'gen:edit', 'remove', 'activateUser', 'deactivateUser'],
       actionsMap: {
         deactivateUser: deactivateUser,
