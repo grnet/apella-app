@@ -37,6 +37,7 @@ export default {
   'Unable to login with provided credentials.': 'Unable to login with provided credentials.',
   'You have already submitted a candidacy for this position': 'You have already submitted a candidacy for this position',
   'You should first set DEP number for the department': 'You should first set faculty number for department',
+  'accept': 'accept',
   'acceptTerms.message': 'You must accept the terms of use to continue',
   'accept_application': 'Accept application',
   'activate': 'activate',
@@ -125,6 +126,7 @@ export default {
   'cv_url.label': 'CV URL',
   'deactivate': 'deactivate',
   'deactivateUser': 'Deactivate user',
+  'decline': 'decline',
   'delete': 'Delete', //For top bar
   'delete.file.error': 'Delete file error',
   'delete.file.success': 'Delete file success',

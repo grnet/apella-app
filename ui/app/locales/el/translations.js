@@ -51,6 +51,7 @@ export default {
   'You should first set DEP number for the department': 'Πρέπει πρώτα να ορίσετε τον αριθμό μελών ΔΕΠ του Τμήματος',
   'acceptTerms.message': 'Πρέπει να αποδεχτείτε τους όρους χρήστης της εφαρμογής για να συνεχίσετε',
   'accept_application': 'Αποδοχή αίτησης',
+  'accept': 'Αποδοχη',
   'activate': 'ενεργοποιηση',
   'activateUser': 'Ενεργοποίηση χρήστη',
   'active': 'Ενεργός',
@@ -139,6 +140,7 @@ export default {
   'cv_url.label': 'URL Βιογραφικού',
   'deactivate': 'Απενεργοποιηση',
   'deactivateUser': 'Απενεργοποίηση χρήστη',
+  'decline': 'Απορριψη',
   'delete': 'Διαγραφη', //For top bar
   'delete.file.error': 'Δεν επιτρέπεται η διαγραφή του αρχείου',
   'delete.file.success':  'Επιτυχής διαγραφή αρχείου',
