@@ -4,7 +4,7 @@ from datetime import timedelta, datetime
 from itertools import chain
 
 from django.db import models
-from django.db.models import Q, Max
+from django.db.models import Q, Max, Min
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, \
     UserManager
 from django.conf import settings
@@ -521,11 +521,27 @@ class Professor(UserProfile, CandidateProfile):
 
     @property
     def active_elections(self):
-        return self.committee_duty.filter(
-            Q(state='revoked') | Q(state='electing')).count() + \
-            self.electorparticipation_set.filter(
-                Q(position__state='revoked') |
-                Q(position__state='electing')).count()
+        elector_count = 0
+        committee_count = 0
+        electors_positions = self.electorparticipation_set.values(
+            'position__code').annotate(Min('position_id')).values_list(
+                'position_id__min', flat=True)
+        for p_id in electors_positions:
+            if Position.objects.filter(
+                    id=p_id,
+                    state__in=['electing', 'revoked']). \
+                    exists():
+                elector_count += 1
+        committee_positions = self.committee_duty.values(
+            'code').annotate(Min('id')).values_list(
+                'id__min', flat=True)
+        for p_id in committee_positions:
+            if Position.objects.filter(
+                    id=p_id,
+                    state__in=['electing', 'revoked']). \
+                    exists() and p_id not in electors_positions:
+                committee_count += 1
+        return elector_count + committee_count
 
     def save(self, *args, **kwargs):
         self.user.role = 'professor'
