@@ -17,7 +17,7 @@ from apella.validators import validate_now_is_between_dates, \
     after_today_validator, before_today_validator, \
     validate_position_committee, validate_position_electors, \
     validate_position_state, validate_tenure_candidacy, \
-    validate_create_position_from_application
+    validate_create_position_from_application, validate_subject_fields
 from apella.serials import get_serial
 from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
@@ -147,6 +147,7 @@ class PositionMixin(ValidatorMixin):
         creating = False
         if not instance:
             creating = True
+            validate_subject_fields(data)
 
         position_type = 'election'
         if user_application is not None:

@@ -1798,14 +1798,12 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .ref:
                         to: subject-areas
                 subject:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .required: {}
                     .ref:
                         to: subjects
                 fek:

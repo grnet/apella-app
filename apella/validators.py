@@ -136,3 +136,11 @@ def validate_create_position_from_application(user_application):
 def validate_position_state(position):
         if position.state == 'cancelled':
             raise ValidationError(_('Cancelled position'))
+
+def validate_subject_fields(data):
+    subject = data.get('subject', None)
+    if not subject:
+        raise ValidationError(_('Required field: subject'))
+    subject_area = data.get('subject_area', None)
+    if not subject_area:
+        raise ValidationError(_('Required field: subject_area'))
