@@ -53,10 +53,14 @@ export default ApellaGen.extend({
     },
     getModel(params) {
       let role = get(this, 'session.session.authenticated.role');
+      let user_id = get(this, 'session.session.authenticated.user_id');
       let prof = role === 'professor';
 
       if (params.limit && prof) {
         delete params.limit;
+      }
+      if (prof) {
+        params.user_id = user_id;
       }
       return this.store.query('user_application', params);
     },

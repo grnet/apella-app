@@ -3123,7 +3123,7 @@ spec:
                 model: apella.models.UserApplication
                 mixins: [apella.views.mixins.UserApplicationMixin]
                 model_serializers: [apella.serializers.mixins.UserApplications]
-                filter_fields: [state, app_type]
+                filter_fields: [state, app_type, user_id]
             .cli_commands: {}
             '*':
                 id:
