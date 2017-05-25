@@ -580,5 +580,17 @@ class UserApplicationMixin(object):
             queryset = queryset.filter(
                 department__in=user.institutionmanager.departments.all())
         elif user.is_professor():
-            queryset = queryset.filter(user=user)
+            ua_ids = Position.objects.filter(
+                Q(electors=user.professor) | Q(committee=user.professor)). \
+                    values_list('user_application', flat=True)
+            ua_ids = [ua_id for ua_id in ua_ids if ua_id]
+
+            if user.professor.department:
+                queryset = queryset.filter(
+                    Q(user=user) |
+                    Q(department=user.professor.department) |
+                    Q(id__in=ua_ids))
+            else:
+                queryset = queryset.filter(Q(user=user) | Q(id__in=ua_ids))
+
         return queryset
