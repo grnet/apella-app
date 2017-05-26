@@ -83,7 +83,7 @@ const  position = {
       label: 'fieldsets.labels.details',
       fields: computed('model.position_type', function(){
         let pt = get(this, 'model.position_type');
-        let f1 = ['fek', 'fek_posted_at', 'starts_at', 'ends_at'];
+        let f1 = ['fek', 'fek_posted_at', 'starts_at', 'ends_at', 'ranks'];
         let f2 = [
           field('applicant', {
             type: 'model',
@@ -105,7 +105,7 @@ const  position = {
         return pt === 'election'? f1: f2;
       }),
       layout: {
-        flex: [50, 50, 50, 50]
+        flex: [50, 50, 50, 50, 100]
       },
     }
   },

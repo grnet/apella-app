@@ -132,6 +132,14 @@ export default DS.Model.extend({
   position_type: DS.attr({type: 'select', choices: position_types, defaultValue: 'election'}),
   position_type_verbose: computeI18NChoice('position_type', position_types),
   proceedings_cover_letter: DS.belongsTo('apella-file'),
+  ranks: DS.attr({
+    formComponent: 'multiple-checkboxes',
+    formAttrs: {
+      text:'ranks_select.text',
+      choices: CHOICES.RANKS
+    },
+  }),
+
   revocation_decision: DS.belongsTo('apella-file'),
   second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
   // Use in currentUserCandidacy

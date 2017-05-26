@@ -393,6 +393,7 @@ export default {
   'publications.label': 'Δημοσιεύσεις',
   'rank.label': 'Βαθμίδα',
   'rank_verbose.label': 'Βαθμίδα',
+  'ranks_select.text': 'Παρακαλώ επιλέξτε βαθμίδες για την θέση',
   're_new_password.label': 'Επιβεβαίωση νέου συνθηματικού',
   'register': 'Εγγραφή',
   'register.candidate.intro': 'Συμπληρώστε τα ακόλουθα στοιχεία για να εγγραφείτε ως υποψήφιος',
