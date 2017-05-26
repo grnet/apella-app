@@ -122,7 +122,9 @@ export default ApellaGen.extend({
   create: {
     getModel(params) {
       var store = get(this, 'store');
-      let apps = store.findAll('user_application');
+      let user_id = get(this, 'session.session.authenticated.user_id');
+      let apps = store.query('user_application', {user_id: user_id});
+
       let role = get(this, 'session.session.authenticated.role');
       if (role === 'helpdeskadmin') {
         return store.createRecord('user-application');
