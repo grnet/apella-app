@@ -4,6 +4,7 @@ import {ApellaGen, urlValidator, preloadRelations} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
+import {atLeastRank} from 'ui/validators/common';
 import moment from 'moment';
 import {
   goToDetails, applyCandidacy, positionActions
@@ -71,7 +72,8 @@ export default ApellaGen.extend({
       subject: [validate.presence(true)],
       subject_area: [validate.presence(true)],
       // electors_meeting_to_set_committee_date: [afterToday()],
-      department_dep_number: [validate.presence(true), validate.number({integer: true})]
+      department_dep_number: [validate.presence(true), validate.number({integer: true})],
+      ranks: [atLeastRank(2)],
     }
   },
   create: {

@@ -11,3 +11,9 @@
     {{/paper-checkbox}}
   </md-input-container>
 {{/each}}
+{{#if error}}
+  <div class="md-input-error">{{t error}}</div>
+{{/if}}
+{{#if errors }}
+  <div class="md-input-error flex flex-100">{{errors}}</div>
+{{/if}}
