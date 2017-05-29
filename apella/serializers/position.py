@@ -140,7 +140,6 @@ class PositionMixin(ValidatorMixin):
         user = self.context.get('request').user
 
         committee = data.pop('committee', [])
-        ranks = data.pop('ranks', [])
 
         user_application = data.get('user_application', None)
         instance = getattr(self, 'instance')
@@ -164,7 +163,6 @@ class PositionMixin(ValidatorMixin):
 
         data = super(PositionMixin, self).validate(data)
         data['committee'] = committee
-        data['ranks'] = ranks
 
         return data
 
@@ -209,7 +207,6 @@ class PositionMixin(ValidatorMixin):
         committee = curr_position.committee.all()
         assistant_files = curr_position.assistant_files.all()
         old_committee = [p for p in committee.all()]
-        ranks = curr_position.ranks.all()
 
         validated_data['updated_at'] = datetime.utcnow()
         eps = curr_position.electorparticipation_set.all()
@@ -221,7 +218,6 @@ class PositionMixin(ValidatorMixin):
         if instance.state != curr_position.state:
             curr_position.pk = None
             curr_position.save()
-            curr_position.ranks = ranks
             curr_position.committee = committee
             curr_position.assistant_files = assistant_files
             curr_position.save()

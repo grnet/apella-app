@@ -22,7 +22,6 @@ class Command(ApellaCommand):
         parser.add_argument('starts_at')
         parser.add_argument('ends_at')
         parser.add_argument('discipline')
-        parser.add_argument('rank')
 
     def handle(self, *args, **options):
         title = options['title']
@@ -36,7 +35,6 @@ class Command(ApellaCommand):
         fek_posted_at = options['fek_posted_at']
         starts_at = options['starts_at']
         ends_at = options['ends_at']
-        ranks = options['rank']
 
         try:
             position_author = InstitutionManager.objects.get(id=author)
@@ -53,18 +51,6 @@ class Command(ApellaCommand):
                     department_dep_number=department.dep_number)
             code = settings.POSITION_CODE_PREFIX + str(p.id)
             p.code = code
-
-            if ranks.startswith('['):
-                ranks = ranks[1:]
-            if ranks.endswith(']'):
-                ranks = ranks[:-1]
-            rank_ids = ranks.split(',')
-            for r in rank_ids:
-                try:
-                    rank = ProfessorRank.objects.get(id=int(r))
-                    p.ranks.add(rank)
-                except ProfessorRank.DoesNotExist:
-                    raise CommandError("Rank does not exist %s" % r)
             p.save()
             self.stdout.write(
                 "Created position %s : title = %s author = %s" %

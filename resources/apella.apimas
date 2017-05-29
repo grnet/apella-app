@@ -1973,13 +1973,12 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .integer: {}
-                ranks:
+                rank:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
                     .ref:
                         to: professor-ranks
-                        many: True
                 file_upload:
                     .cli_option: {}
                     .field: {}
