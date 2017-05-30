@@ -723,6 +723,7 @@ class Position(models.Model):
         choices=common.POSITION_TYPES, max_length=30, default='election')
     user_application = models.ForeignKey(
         UserApplication, null=True, on_delete=models.SET_NULL)
+    related = models.ManyToManyField('self', blank=True)
 
 
     def clean(self, *args, **kwargs):

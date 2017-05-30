@@ -201,14 +201,21 @@ class PositionMixin(ValidatorMixin):
         obj.save()
         send_position_create_emails(obj)
 
+        related = [obj]
         for rank in ranks:
             p = Position.objects.create(**validated_data)
             p.code = settings.POSITION_CODE_PREFIX + str(p.id)
             p.rank = ProfessorRank.objects.filter(
                 rank__en=ranks[0])[0]
             p.save()
+            related.append(p)
             send_position_create_emails(p)
 
+        for p in related:
+            for r in related:
+                if p.id != r.id:
+                    p.related.add(r)
+                p.save()
         return obj
 
     def update(self, instance, validated_data):
