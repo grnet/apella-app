@@ -21,69 +21,88 @@ const  position = {
   create: {
     basic: {
       label: 'fieldsets.labels.basic_info',
-      fields: ['title',
-        field('department', {
-          autocomplete: true,
-          disabled: computed('model.position_type', function(){
-            let pt = get(this, 'model.position_type');
-            return pt === 'renewal' || pt === 'tenure';
+      fields: computed('model.changeset.has_multiple_ranks', function(){
+        let res = ['title',
+          field('department', {
+            autocomplete: true,
+            disabled: computed('model.position_type', function(){
+              let pt = get(this, 'model.position_type');
+              return pt === 'renewal' || pt === 'tenure';
+            }),
+            query: function(table, store, field, params) {
+
+              // If the logged in user is an assistant, department field is a
+              // select list  with the assistant's departments
+              let role = get(field, 'session.session.authenticated.role');
+              if (role == 'assistant') {
+                let deps = get(field, 'session.session.authenticated.departments');
+                let promises = deps.map((url) => {
+                  let id = url.split('/').slice(-2)[0];
+                  return store.findRecord('department', id);
+                })
+
+                var promise = Ember.RSVP.all(promises).then((res) => {
+                  return res;
+                }, (error) => {
+                  return [];
+                });
+
+                return DS.PromiseArray.create({
+                  promise : promise
+                })
+              }
+
+              // on load sort by title
+              let locale = get(table, 'i18n.locale');
+              let ordering_param = {
+                ordering: `title__${locale}`
+              };
+              let query;
+              // If the logged in user is an institutionmanager, department field
+              // is a select list with all the deparments that belong to the
+              // institutionmanager's institution
+              if (role == 'institutionmanager') {
+                let user_institution = get(field, 'session.session.authenticated.institution');
+                let id = user_institution.split('/').slice(-2)[0];
+                query = assign({}, { institution: id }, ordering_param);
+              } else {
+                query = ordering_param;
+              }
+              return store.query('department', query);
+            }
           }),
-          query: function(table, store, field, params) {
-
-            // If the logged in user is an assistant, department field is a
-            // select list  with the assistant's departments
-            let role = get(field, 'session.session.authenticated.role');
-            if (role == 'assistant') {
-              let deps = get(field, 'session.session.authenticated.departments');
-              let promises = deps.map((url) => {
-                let id = url.split('/').slice(-2)[0];
-                return store.findRecord('department', id);
-              })
-
-              var promise = Ember.RSVP.all(promises).then((res) => {
-                return res;
-              }, (error) => {
-                return [];
-              });
-
-              return DS.PromiseArray.create({
-                promise : promise
-              })
-            }
-
-            // on load sort by title
-            let locale = get(table, 'i18n.locale');
-            let ordering_param = {
-              ordering: `title__${locale}`
-            };
-            let query;
-            // If the logged in user is an institutionmanager, department field
-            // is a select list with all the deparments that belong to the
-            // institutionmanager's institution
-            if (role == 'institutionmanager') {
-              let user_institution = get(field, 'session.session.authenticated.institution');
-              let id = user_institution.split('/').slice(-2)[0];
-              query = assign({}, { institution: id }, ordering_param);
-            } else {
-              query = ordering_param;
-            }
-            return store.query('department', query);
+          'has_multiple_ranks',
+          'rank',
+          'description',
+          'discipline',
+          'subject_area',
+          'subject'
+        ];
+        if (get(this, 'model.changeset.has_multiple_ranks')) {
+          get(this, 'model.changeset').set('rank', null);
+          res.removeObject('rank');
+          res.insertAt(3, 'ranks');
+        } else {
+          if( get(this, 'model.changeset.ranks') ){
+            get(this, 'model.changeset').set('ranks', []);
           }
-        }),
-        'description',
-        'discipline',
-        'subject_area',
-        'subject'
-      ],
+          if (res.indexOf('rank')<0) {
+            res.removeObject('ranks');
+            res.insertAt(3, 'rank');
+          }
+        }
+        return res;
+      }),
       layout: {
-        flex: [50, 50, 100, 100, 50, 50, 50]
+        flex: [50, 50, 100, 100,  100, 100, 50, 50, 50]
+
       }
     },
     details: {
       label: 'fieldsets.labels.details',
       fields: computed('model.position_type', function(){
         let pt = get(this, 'model.position_type');
-        let f1 = ['fek', 'fek_posted_at', 'starts_at', 'ends_at', 'ranks'];
+        let f1 = ['fek', 'fek_posted_at', 'starts_at', 'ends_at'];
         let f2 = [
           field('applicant', {
             type: 'model',
@@ -105,7 +124,7 @@ const  position = {
         return pt === 'election'? f1: f2;
       }),
       layout: {
-        flex: [50, 50, 50, 50, 100]
+        flex: [50, 50, 50, 50]
       },
     }
   },

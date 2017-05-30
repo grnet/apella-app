@@ -80,6 +80,7 @@ export default DS.Model.extend({
   fek: DS.attr({label: 'position.fek.label', displayComponent: 'url-display'}),
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
+  has_multiple_ranks: DS.attr({type: 'boolean', defaultValue: false }),
   institution: readOnly('department.institution'),
   /*
    * If the position is not the latest we should check the if the position was
@@ -132,6 +133,7 @@ export default DS.Model.extend({
   position_type: DS.attr({type: 'select', choices: position_types, defaultValue: 'election'}),
   position_type_verbose: computeI18NChoice('position_type', position_types),
   proceedings_cover_letter: DS.belongsTo('apella-file'),
+  rank: DS.attr({type: 'select', choices: CHOICES.RANKS}),
   ranks: DS.attr({
     formComponent: 'multiple-checkboxes',
     formAttrs: {

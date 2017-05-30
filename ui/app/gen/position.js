@@ -73,7 +73,6 @@ export default ApellaGen.extend({
       subject_area: [validate.presence(true)],
       // electors_meeting_to_set_committee_date: [afterToday()],
       department_dep_number: [validate.presence(true), validate.number({integer: true})],
-      ranks: [atLeastRank(2)],
     }
   },
   create: {
@@ -222,7 +221,7 @@ export default ApellaGen.extend({
       fields: computed('role', function(){
         let role = get(this, 'role');
         let f = [
-          field('code', { dataKey: 'id' }), 'old_code', 'title', 'state_calc_verbose',
+          field('code', { dataKey: 'id' }), 'old_code', 'title', 'rank', 'state_calc_verbose',
           field('department.title_current', {label: 'department.label'}),
         ];
         if (!(role == 'institutionmanager' || role == 'assistant')) {
