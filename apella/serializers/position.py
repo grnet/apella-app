@@ -11,7 +11,7 @@ from rest_framework import serializers
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     ElectorParticipation, ApellaFile, generate_filename, Institution, \
-    Department, Professor
+    Department, Professor, ProfessorRank
 from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -147,6 +147,9 @@ class PositionMixin(ValidatorMixin):
         if not instance:
             creating = True
             validate_subject_fields(data)
+            ranks = self.context.get('request').data.get('ranks', [])
+            if not ranks:
+                raise ValidationError('ranks.required')
 
         position_type = 'election'
         if user_application is not None:
@@ -181,6 +184,10 @@ class PositionMixin(ValidatorMixin):
             validated_data['ends_at'] = at_day_end(ends_at, otz)
 
     def create(self, validated_data):
+        ranks = self.context.get('request').data.get('ranks', [])
+        validated_data['rank'] = ProfessorRank.objects.filter(
+            rank__en=ranks[0])[0]
+        ranks = ranks[1:]
         validated_data['state'] = 'posted'
         validated_data['department_dep_number'] = \
             get_dep_number(validated_data)
@@ -193,6 +200,15 @@ class PositionMixin(ValidatorMixin):
         obj.code = code
         obj.save()
         send_position_create_emails(obj)
+
+        for rank in ranks:
+            p = Position.objects.create(**validated_data)
+            p.code = settings.POSITION_CODE_PREFIX + str(p.id)
+            p.rank = ProfessorRank.objects.filter(
+                rank__en=ranks[0])[0]
+            p.save()
+            send_position_create_emails(p)
+
         return obj
 
     def update(self, instance, validated_data):
