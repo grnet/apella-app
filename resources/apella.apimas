@@ -2388,6 +2388,12 @@ spec:
                     .drf_field: {}
                     .ref:
                         to: user-applications
+                related:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: positions
             actions:
                 .list: {}
                 .create: {}
