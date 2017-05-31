@@ -185,7 +185,8 @@ export default ApellaGen.extend({
                 return store.query(filter_model, params)
               }
             }),
-            'state_expanded'
+            'state_expanded',
+            'rank',
           ]
         })
       }

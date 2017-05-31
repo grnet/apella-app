@@ -108,6 +108,7 @@ export default ApellaGen.extend({
               return store.query('institution', params)
             }
           }),
+          'rank'
         ]
       },
       serverSide: true,
