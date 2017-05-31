@@ -222,7 +222,7 @@ export default ApellaGen.extend({
       fields: computed('role', function(){
         let role = get(this, 'role');
         let f = [
-          field('code', { dataKey: 'id' }), 'old_code', 'title', 'rank', 'state_calc_verbose',
+          field('code', { dataKey: 'id' }), 'old_code', 'title', 'rank_verbose', 'state_calc_verbose',
           field('department.title_current', {label: 'department.label'}),
         ];
         if (!(role == 'institutionmanager' || role == 'assistant')) {
