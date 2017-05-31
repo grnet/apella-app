@@ -73,6 +73,7 @@ export default ApellaGen.extend({
       subject_area: [validate.presence(true)],
       // electors_meeting_to_set_committee_date: [afterToday()],
       department_dep_number: [validate.presence(true), validate.number({integer: true})],
+      ranks: [atLeastRank(1)],
     }
   },
   create: {
