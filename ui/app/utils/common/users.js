@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import validate from 'ember-gen/validate';
 import {i18nValidate} from 'ui/validators/i18n';
+import {mustAcceptTerms} from 'ui/validators/custom';
 import {field} from 'ember-gen';
 import {disable_field} from 'ui/utils/common/fields';
 import {fileField} from 'ui/lib/common';
@@ -45,7 +46,8 @@ const FIELDS_ALL = [
   'home_phone_number',
   'mobile_phone_number',
   'shibboleth_idp',
-  'shibboleth_schac_home_organization'
+  'shibboleth_schac_home_organization',
+  'has_accepted_terms',
 ];
 
 const VALIDATORS = {
@@ -58,6 +60,11 @@ const VALIDATORS = {
   email: [validate.format({ type: 'email' })],
   id_passport: [validate.presence(true)],
 };
+
+const VALIDATORS_CREATE = Ember.assign({}, VALIDATORS, {
+  has_accepted_terms: [mustAcceptTerms()],
+});
+
 
 const FIELDSET_CREATE = {
   label: 'fieldsets.labels.user_info',
@@ -87,9 +94,10 @@ const FIELDSET_CREATE = {
     'id_passport',
     'home_phone_number',
     'mobile_phone_number',
+    'has_accepted_terms'
   ],
   layout: {
-    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+    flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 100]
   }
 };
 
@@ -261,10 +269,11 @@ const FIELDSET_REGISTER_ACADEMIC = {
     'father_name',
     'id_passport',
     'home_phone_number',
-    'mobile_phone_number'
+    'mobile_phone_number',
+    'has_accepted_terms'
   ],
   layout: {
-    flex: [100, 50, 50, 50, 50, 50, 50, 50, 50]
+    flex: [100, 50, 50, 50, 50, 50, 50, 100]
   }
 };
 
@@ -352,6 +361,7 @@ export {normalizeUser, serializeUser, normalizeUserErrors,
         VALIDATORS,
 
         FIELDSET_CREATE,
+        VALIDATORS_CREATE,
 
         FIELDSET_EDIT_VERIFIABLE,
         FIELDSET_DETAILS_VERIFIABLE,

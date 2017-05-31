@@ -4,7 +4,8 @@ from apimas.modeling.adapters.drf import django_rest
 from apella.common import load_config
 from apimas.modeling.core import documents as doc
 
-permission_classes = []
+
+permission_classes = ['apella.permissions.permissions.TermsPermission', ]
 authentication_classes = ['rest_framework.authentication.TokenAuthentication']
 
 config = load_config()

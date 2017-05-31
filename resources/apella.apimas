@@ -39,8 +39,9 @@ spec:
                 model_serializers: [
                     apella.serializers.mixins.NestedWritableObjectsMixin,
                     apella.serializers.mixins.HelpdeskUsers]
+                mixins: [apella.views.mixins.ApellaUsers]
                 ordering_fields: [id, username, email]
-                filter_fields: [role, is_active]
+                filter_fields: [role, is_active, has_accepted_terms]
                 search_fields: [id, username, email, first_name__el, last_name__el, first_name__en, last_name__en]
             .cli_commands: {}
             '*':
@@ -189,6 +190,16 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .integer: {}
+                has_accepted_terms:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                accepted_terms_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                    .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -953,6 +964,16 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .integer: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -1341,6 +1362,16 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .readonly: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -1699,6 +1730,16 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .integer: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}
@@ -2887,6 +2928,16 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {'format': '%Y-%m-%dT%H:%M:%SZ'}
+                            .datetime: {}
             actions:
                 .list: {}
                 .create: {}

@@ -40,6 +40,9 @@ def validate_new_user(validate, attrs):
         validate_username_unique(user.get('username'))
     if 'id_passport' in user:
         validate_id_passport_unique(user.get('id_passport'))
+    if not user.get('has_accepted_terms', None):
+        raise ValidationError({"non_field_errors": "must.accept.terms"})
+
 
     return validate(attrs)
 

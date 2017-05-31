@@ -92,6 +92,9 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
     remote_data = models.TextField(blank=True)
     old_user_id = models.IntegerField(null=True, blank=True)
 
+    has_accepted_terms = models.BooleanField(default=False)
+    accepted_terms_at = models.DateTimeField(null=True, blank=True)
+
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 

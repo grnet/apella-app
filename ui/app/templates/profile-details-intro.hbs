@@ -4,3 +4,24 @@
 {{#if model.can_set_academic }}
   {{toolbar-message class='md-soft-warn' model=model message='enable.academic.login.prompt' buttonComponent=(component 'enable-academic-action')}}
 {{/if}}
+
+
+{{#unless model.has_accepted_terms}}
+{{#paper-dialog fullscreen=true onClose=(toggle-action 'nullAttr' this) clickOutsideToClose=false}}
+  {{#paper-toolbar warn=warn accent=accent primary=primary}}
+    {{#paper-toolbar-tools}}
+      <h2>{{t "acceptTerms.message" }}</h2>
+      <span class="flex"></span>
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{#paper-dialog-content classNames="md-padding"}}
+  <md-content class="prompt-message">
+  {{t "has_accepted_terms.label" }}
+  </md-content>
+  <md-content class="layout-row layout-align-end" style="padding-top: 15px">
+  {{gen-action actionParams=gen.actionsMap.accept_terms context=(readonly model)}}
+  {{gen-action actionParams=gen.actionsMap.decline_terms context=(readonly model)}}
+  </md-content>
+  {{/paper-dialog-content}}
+{{/paper-dialog}}
+{{/unless}}

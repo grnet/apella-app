@@ -594,3 +594,13 @@ class UserApplicationMixin(object):
                 queryset = queryset.filter(Q(user=user) | Q(id__in=ua_ids))
 
         return queryset
+
+
+class ApellaUsers(object):
+    @detail_route(methods=['post'])
+    def accept_terms(self, request, pk=None):
+        user = self.get_object()
+        user.accepted_terms_at = datetime.utcnow()
+        user.has_accepted_terms = True
+        user.save()
+        return Response(request.data, status=status.HTTP_200_OK)

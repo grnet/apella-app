@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import {computeI18N, computeI18NChoice} from 'ui/lib/common';
+import {booleanFormat, computeI18N, computeI18NChoice} from 'ui/lib/common';
 
 const { computed, get } = Ember,
       CHOICES = ENV.APP.resources;
@@ -31,6 +31,9 @@ export default DS.Model.extend({
   last_name_current: computeI18N('last_name'),
   father_name_current: computeI18N('father_name'),
   login_method: DS.attr('string'),
+
+  has_accepted_terms: DS.attr({type: 'boolean', defaultValue: false }),
+  has_accepted_terms_verbose: booleanFormat('has_accepted_terms'),
 
   shibboleth_idp: DS.attr(),
   shibboleth_schac_home_organization: DS.attr(),
