@@ -133,12 +133,12 @@ export default DS.Model.extend({
   position_type: DS.attr({type: 'select', choices: position_types, defaultValue: 'election'}),
   position_type_verbose: computeI18NChoice('position_type', position_types),
   proceedings_cover_letter: DS.belongsTo('apella-file'),
-  rank: DS.attr({type: 'select', choices: CHOICES.RANKS}),
+  rank: DS.attr({type: 'select', choices: CHOICES.POSITION_RANKS}),
   ranks: DS.attr({
     formComponent: 'multiple-checkboxes',
     formAttrs: {
       text:'ranks_select.text',
-      choices: CHOICES.RANKS
+      choices: CHOICES.POSITION_RANKS
     },
   }),
 
