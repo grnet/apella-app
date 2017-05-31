@@ -1746,33 +1746,6 @@ spec:
                 .update: {}
                 .delete: {}
                 .retrieve: {}
-        professor-ranks:
-            .collection: {}
-            .drf_collection:
-                model: apella.models.ProfessorRank
-            .cli_commands: {}
-            '*':
-                id:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .serial: {}
-                    .readonly: {}
-                url:
-                    .drf_field: {}
-                    .identity: {}
-                rank:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .ref:
-                        to: multilang
-            actions:
-                .list: {}
-                .create: {}
-                .update: {}
-                .delete: {}
-                .retrieve: {}
         positions:
             .collection: {}
             .drf_collection:
@@ -1977,8 +1950,7 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .ref:
-                        to: professor-ranks
+                    .string: {}
                 file_upload:
                     .cli_option: {}
                     .field: {}
@@ -2388,7 +2360,7 @@ spec:
                     .drf_field: {}
                     .ref:
                         to: user-applications
-                related:
+                related_positions:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}

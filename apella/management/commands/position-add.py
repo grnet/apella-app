@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 
 from apella.models import Position, Department, Subject, SubjectArea,\
-    InstitutionManager, ProfessorRank
+    InstitutionManager
 from apella.management.utils import ApellaCommand
 
 

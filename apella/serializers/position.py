@@ -11,7 +11,7 @@ from rest_framework import serializers
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     ElectorParticipation, ApellaFile, generate_filename, Institution, \
-    Department, Professor, ProfessorRank
+    Department, Professor
 from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -185,8 +185,7 @@ class PositionMixin(ValidatorMixin):
 
     def create(self, validated_data):
         ranks = self.context.get('request').data.get('ranks', [])
-        validated_data['rank'] = ProfessorRank.objects.filter(
-            rank__en=ranks[0])[0]
+        validated_data['rank'] = ranks[0]
         ranks = ranks[1:]
         validated_data['state'] = 'posted'
         validated_data['department_dep_number'] = \
@@ -201,20 +200,19 @@ class PositionMixin(ValidatorMixin):
         obj.save()
         send_position_create_emails(obj)
 
-        related = [obj]
+        related_positions = [obj]
         for rank in ranks:
             p = Position.objects.create(**validated_data)
             p.code = settings.POSITION_CODE_PREFIX + str(p.id)
-            p.rank = ProfessorRank.objects.filter(
-                rank__en=ranks[0])[0]
+            p.rank = rank
             p.save()
-            related.append(p)
+            related_positions.append(p)
             send_position_create_emails(p)
 
-        for p in related:
-            for r in related:
+        for p in related_positions:
+            for r in related_positions:
                 if p.id != r.id:
-                    p.related.add(r)
+                    p.related_positions.add(r)
                 p.save()
         return obj
 

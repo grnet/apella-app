@@ -609,10 +609,6 @@ class InstitutionManager(UserProfile):
         super(InstitutionManager, self).save(*args, **kwargs)
 
 
-class ProfessorRank(models.Model):
-    rank = models.ForeignKey(MultiLangFields)
-
-
 class UserApplication(models.Model):
     user = models.ForeignKey(ApellaUser)
     department = models.ForeignKey(Department)
@@ -651,7 +647,8 @@ class Position(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     discipline = models.TextField()
-    rank = models.ForeignKey(ProfessorRank, blank=True, null=True)
+    rank = models.CharField(
+        choices=common.POSITION_RANKS, max_length=30, blank=True)
     author = models.ForeignKey(
             InstitutionManager, related_name='authored_positions',
             blank=True)
@@ -723,7 +720,7 @@ class Position(models.Model):
         choices=common.POSITION_TYPES, max_length=30, default='election')
     user_application = models.ForeignKey(
         UserApplication, null=True, on_delete=models.SET_NULL)
-    related = models.ManyToManyField('self', blank=True)
+    related_positions = models.ManyToManyField('self', blank=True)
 
 
     def clean(self, *args, **kwargs):

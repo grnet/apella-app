@@ -205,42 +205,6 @@
 },
 {
     "user": "1",
-    "action": "professor-rank-add",
-    "input": {
-        "rank_el": "Καθηγητής",
-        "rank_en": "Professor"
-    },
-    "db_state_change" : {
-        "object" : {"Professor rank" : "1"},
-        "change" : "new professor rank"
-    }
-},
-{
-    "user": "1",
-    "action": "professor-rank-add",
-    "input": {
-        "rank_el": "Αναπληρωτής Καθηγητής",
-        "rank_en": "Associate Professor"
-    },
-    "db_state_change" : {
-        "object" : {"Professor rank" : "1"},
-        "change" : "new professor rank"
-    }
-},
-{
-    "user": "1",
-    "action": "professor-rank-add",
-    "input": {
-        "rank_el": "Επίκουρος Καθηγητής",
-        "rank_en": "Assistant Professor"
-    },
-    "db_state_change" : {
-        "object" : {"Professor rank" : "1"},
-        "change" : "new professor rank"
-    }
-},
-{
-    "user": "1",
     "action": "department-modify",
     "input": {
         "arg1": "97",
@@ -248,7 +212,7 @@
     },
     "db_state_change" : {
         "object" : {},
-        "change" : "new professor rank"
+        "change" : ""
     }
 },
 {
