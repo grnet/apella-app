@@ -1,0 +1,5 @@
+{{#each value as |position|}}
+  {{#link-to 'position.record' position}}{{position.code}} ({{t position.rank}}){{/link-to}} &nbsp;
+{{else}}
+  -
+{{/each}}

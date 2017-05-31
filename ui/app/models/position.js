@@ -125,6 +125,7 @@ export default DS.Model.extend({
   nomination_act_fek: DS.attr({displayComponent: 'url-display'}),
   nomination_proceedings: DS.belongsTo('apella-file'),
   old_code: DS.attr(),
+  parent_position: DS.belongsTo('position', {inverse: 'related_positions'}),
   participation: DS.attr(),
   participation_current: computed('participation', 'i18n.locale', function(){
     return this.get('i18n').t(this.get('participation'));
@@ -142,7 +143,10 @@ export default DS.Model.extend({
       choices: CHOICES.POSITION_RANKS
     },
   }),
-
+  related_positions: DS.hasMany('position', {
+    async: true,
+    inverse: 'parent_position',
+    displayComponent: 'related-positions'}),
   revocation_decision: DS.belongsTo('apella-file'),
   second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
   // Use in currentUserCandidacy

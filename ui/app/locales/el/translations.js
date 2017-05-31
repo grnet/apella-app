@@ -427,6 +427,7 @@ export default {
   'reject.user.title': 'Απόρριψη χρήστη',
   'reject_application': 'Απόρριψη αίτησης',
   'rejected': 'Απορριφθείς',
+  'related_positions.label': 'Θέσεις άλλων βαθμίδων',
   'request.changes.error': 'Υπήρξε κάποιο σφάλμα κατά την αίτηση αλλαγής στοιχείων',
   'request.changes.success': 'Η αίτηση αλλαγής στοιχείων καταχωρήθηκε επιτυχώς',
   'request.profile.changes': 'Αίτηση αλλαγής στοιχείων',

@@ -114,7 +114,7 @@ const  position = {
   details: {
     basic: {
       label: 'fieldsets.labels.basic_info',
-      fields: computed('model.position_type', function(){
+      fields: computed('model.position_type',  function(){
         let fields = ['code', 'old_code', 'state_calc_verbose', 'rank_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
         'department.institution.title_current',
@@ -123,10 +123,11 @@ const  position = {
         if (get(this, 'model.position_type') !== 'election') {
           fields.push(field('position_type_verbose', {label: 'position_type.label'}));
         }
+        fields.pushObject('related_positions');
         return fields;
       }),
       layout: {
-        flex: [25, 25, 25, 25, 50, 50, 50, 50, 100, 50, 50, 100]
+        flex: [25, 25, 25, 25, 50, 50, 50, 50, 100, 50, 50, 100, 100]
       }
     },
     details: {
