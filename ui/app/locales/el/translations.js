@@ -405,6 +405,7 @@ export default {
   'register.domestic.intro': '',
   'register.domestic.label': 'καθηγητης/ερευνητης ημεδαπης',
   'register.domestic.title': 'καθηγητής/ερευνητής ημεδαπής',
+  'register.domestic_no_shibboleth.label': 'καθηγητης/ευρενητης ημεδαπης χωρις shibboleth',
   'register.foreign.intro': 'Συμπληρώστε τα ακόλουθα στοιχεία για να εγγραφείτε ως καθηγητής/ερευνητής αλλοδαπής',
   'register.foreign.label': 'καθηγητης/ερευνητης αλλοδαπης',
   'register.foreign.title': 'καθηγητής/ερευνητής αλλοδαπής',

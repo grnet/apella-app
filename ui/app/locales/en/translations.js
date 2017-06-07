@@ -389,6 +389,7 @@ export default {
   'register.domestic.intro': 'Register as domestic Professor/Researcher',
   'register.domestic.label': 'Domestic professor/researcher',
   'register.domestic.title': 'Domestic professor/researcher',
+  'register.domestic_no_shibboleth.label': 'Domestic professor/researcher without Shibboleth',
   'register.foreign.intro': 'Register as foreign Professor/Researcher',
   'register.foreign.label': 'Foreign professor/researcher',
   'register.foreign.title': 'Foreign professor/researcher',

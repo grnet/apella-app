@@ -16,6 +16,10 @@
       raised=true primary=true}}{{paper-icon 'person_pin'}}{{t 'register.foreign.label'}}{{/paper-button}}
     {{#paper-button
       class="no-left-margin"
+      onClick=(transition-to 'auth.register.index' 'domestic-professor')
+      raised=true primary=true}}{{paper-icon 'person'}}{{t 'register.domestic_no_shibboleth.label'}}{{/paper-button}}
+    {{#paper-button
+      class="no-left-margin"
       onClick=(transition-to 'auth.register.index' 'candidate')
       raised=true primary=true}}{{paper-icon 'person_outline'}}{{t 'register.candidate.label'}}{{/paper-button}}
   </md-card-content>
