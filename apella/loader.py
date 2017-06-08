@@ -1,8 +1,8 @@
 from django.conf import settings
 
-from apimas.modeling.adapters.drf import django_rest
+from apimas.drf import django_rest
 from apella.common import load_config
-from apimas.modeling.core import documents as doc
+from apimas import documents as doc
 
 
 permission_classes = ['apella.permissions.permissions.TermsPermission', ]
@@ -11,9 +11,11 @@ authentication_classes = ['rest_framework.authentication.TokenAuthentication']
 config = load_config()
 adapter = django_rest.DjangoRestAdapter()
 spec = config.get('spec')
-spec['.endpoint']['permissions'] = settings.PERMISSION_RULES
+spec['api']['.endpoint']['permissions'] = settings.PERMISSION_RULES
 
-for resource in spec['api'].values():
+for key, resource in spec['api'].iteritems():
+    if key.startswith('.'):
+        continue
     doc.doc_set(
         resource,
         ['.drf_collection', 'permission_classes'],
@@ -24,5 +26,4 @@ for resource in spec['api'].values():
         authentication_classes)
 
 adapter.construct(config.get('spec'))
-adapter.apply()
-api_urls = adapter.urls
+api_urls = adapter.urls.values()

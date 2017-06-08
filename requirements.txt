@@ -1,5 +1,5 @@
 Django>=1.8,<1.9
 djangorestframework==3.3.3
 djoser==0.4.3
-apimas>=0.2
+apimas-drf==0.3
 pytz

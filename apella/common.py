@@ -5,7 +5,7 @@ from cerberus import Validator
 import os
 from django.conf import settings
 
-from apimas.modeling.core.exceptions import ApimasException
+from apimas.exceptions import ApimasException
 from collections import defaultdict
 from apella.util import safe_path_join
 

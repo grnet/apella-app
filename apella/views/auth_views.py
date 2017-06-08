@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils.crypto import get_random_string
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.conf import settings
 
 from djoser import views as djoser_views
 from djoser import serializers as djoser_serializers
@@ -74,7 +75,7 @@ class CustomUserView(djoser_views.UserView):
     def get_serializer_class(self):
         user = self.request.user
         resource = USER_ROLE_MODEL_RESOURCES[user.role]['resource']
-        return adapter.get_serializer(resource)
+        return adapter.get_serializer(settings.API_ENDPOINT, resource)
 
     @transaction.atomic
     def _enable_academic(self, request, *args, **kwargs):
@@ -245,7 +246,8 @@ class CustomRegistrationView(djoser_views.RegistrationView,
             raise ValidationError({"role": "invalid role"})
 
         resource = USER_ROLE_MODEL_RESOURCES[role]['resource']
-        return make_registration_serializer(adapter.get_serializer(resource))
+        return make_registration_serializer(
+            adapter.get_serializer(settings.API_ENDPOINT, resource))
 
     def get_email_context(self, user):
         if not isinstance(user, ApellaUser):
