@@ -10,20 +10,27 @@ const {
   getOwner
 } = Ember;
 
-let POSITION_FIELDS = [
-    field('position', {
-      disabled: true,
-      displayAttr: 'title'
-    }),
-    field('position.old_code', { disabled: true}),
-    field('position.department.institution.title_current', { disabled: true }),
-    field('position.department.title_current', { disabled:true }),
-    field('position.discipline', { disabled: true }),
-    field('position.fek', {disabled: true, displayComponent: 'url-display'}),
-    field('position.fek_posted_at_format', { disabled: true}),
-    field('position.starts_at_format', { disabled: true }),
-    field('position.ends_at_format', { disabled: true}),
-    field('position.state_calc_verbose', {disabled: true}) ];
+let POSITION_FIELDS = computed('model.position.applicant', function() {
+    let res = [
+      field('position', {
+        disabled: true,
+        displayAttr: 'title'
+      }),
+      field('position.old_code', { disabled: true}),
+      field('position.department.institution.title_current', { disabled: true }),
+      field('position.department.title_current', { disabled:true }),
+      field('position.discipline', { disabled: true }),
+      field('position.fek', {disabled: true, displayComponent: 'url-display'}),
+      field('position.fek_posted_at_format', { disabled: true}),
+      field('position.state_calc_verbose', {disabled: true}) ];
+    if (!get(this, 'model.position.applicant')){
+      res.pushObjects([
+        field('position.starts_at_format', {disabled: true}),
+        field('position.ends_at_format', {disabled: true})
+      ]);
+    }
+    return res;
+});
 
 let POSITION_FIELDSET =  {
       label: 'candidacy.position_section.title',
