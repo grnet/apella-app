@@ -411,6 +411,7 @@ export default {
   'reject.user.title': 'Reject user',
   'reject_application': 'Reject application',
   'rejected': 'Rejected',
+  'related_positions.label': 'Related positions',
   'request.changes.error': 'There was an error with profile change request',
   'request.changes.success': 'The profile change request has been successful',
   'request.profile.changes': 'Request profile changes',

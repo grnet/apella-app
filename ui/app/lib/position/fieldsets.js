@@ -21,7 +21,8 @@ const  position = {
   create: {
     basic: {
       label: 'fieldsets.labels.basic_info',
-      fields: ['title',
+      fields: ['ranks',
+        'title',
         field('department', {
           autocomplete: true,
           disabled: computed('model.position_type', function(){
@@ -76,7 +77,8 @@ const  position = {
         'subject'
       ],
       layout: {
-        flex: [50, 50, 100, 100, 50, 50, 50]
+        flex: [100, 50, 50, 100, 100, 50, 50, 50]
+
       }
     },
     details: {
@@ -112,8 +114,8 @@ const  position = {
   details: {
     basic: {
       label: 'fieldsets.labels.basic_info',
-      fields: computed('model.position_type', function(){
-        let fields = ['code', 'old_code', 'state_calc_verbose', 'title',
+      fields: computed('model.position_type',  function(){
+        let fields = ['code', 'old_code', 'state_calc_verbose', 'rank_verbose', 'title',
         field('department.title_current', {label: 'department.label'}),
         'department.institution.title_current',
         'discipline', 'description', field('subject_area.title_current',{label: 'subject_area.label'}),
@@ -121,10 +123,11 @@ const  position = {
         if (get(this, 'model.position_type') !== 'election') {
           fields.push(field('position_type_verbose', {label: 'position_type.label'}));
         }
+        fields.pushObject('related_positions');
         return fields;
       }),
       layout: {
-        flex: [25, 25, 50, 50, 50, 50, 50, 100, 50, 50, 100]
+        flex: [25, 25, 25, 25, 50, 50, 50, 50, 100, 50, 50, 100, 100]
       }
     },
     details: {
@@ -363,6 +366,7 @@ const  position = {
           is_open = get(this, 'model.is_open'),
           is_closed = get(this, 'model.is_closed'),
           before_open = (!(is_open || is_closed) && (state === 'posted')),
+          rank,
           title, department, description, discipline, subject_area, subject,
           is_not_type_election = get(this, 'model.position_type') !== 'election',
           disable_fields = true,
@@ -379,6 +383,7 @@ const  position = {
         }
         if(disable_fields) {
           title = disable_field('title');
+          rank = disable_field('rank');
           department = disable_field('department');
           description = disable_field('description');
           discipline = disable_field('discipline');
@@ -387,6 +392,7 @@ const  position = {
         }
         else {
           title = 'title';
+          rank = 'rank';
           department = field('department', {
             autocomplete: true,
             required: true,
@@ -444,8 +450,8 @@ const  position = {
           subject_area = 'subject_area';
           subject = 'subject';
         }
-        let fields = [disable_field('code'), disable_field('old_code'), disable_field('state_calc_verbose'),
-        department, title, description, discipline, subject_area, subject];
+        let fields = [disable_field('code'), disable_field('old_code'), disable_field('state_calc_verbose'), rank,
+        department, description, discipline, subject_area, subject];
         if (is_not_type_election) {
           fields.push(disable_field('position_type'));
         }

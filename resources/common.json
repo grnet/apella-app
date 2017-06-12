@@ -51,6 +51,12 @@
         ["Affiliated Researcher", "Affiliated Researcher"]
     ],
 
+    "POSITION_RANKS": [
+        ["Professor", "Professor"],
+        ["Associate Professor", "Associate Professor"],
+        ["Assistant Professor", "Assistant Professor"]
+    ],
+
     "FILE_KINDS": [
         ["cv", "CV"],
         ["cv_professor", "CV"],

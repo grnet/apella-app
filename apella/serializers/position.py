@@ -140,7 +140,6 @@ class PositionMixin(ValidatorMixin):
         user = self.context.get('request').user
 
         committee = data.pop('committee', [])
-        ranks = data.pop('ranks', [])
 
         user_application = data.get('user_application', None)
         instance = getattr(self, 'instance')
@@ -148,6 +147,9 @@ class PositionMixin(ValidatorMixin):
         if not instance:
             creating = True
             validate_subject_fields(data)
+            ranks = self.context.get('request').data.get('ranks', [])
+            if not ranks:
+                raise ValidationError('ranks.required')
 
         position_type = 'election'
         if user_application is not None:
@@ -164,7 +166,6 @@ class PositionMixin(ValidatorMixin):
 
         data = super(PositionMixin, self).validate(data)
         data['committee'] = committee
-        data['ranks'] = ranks
 
         return data
 
@@ -183,6 +184,9 @@ class PositionMixin(ValidatorMixin):
             validated_data['ends_at'] = at_day_end(ends_at, otz)
 
     def create(self, validated_data):
+        ranks = self.context.get('request').data.get('ranks', [])
+        validated_data['rank'] = ranks[0]
+        ranks = ranks[1:]
         validated_data['state'] = 'posted'
         validated_data['department_dep_number'] = \
             get_dep_number(validated_data)
@@ -195,6 +199,21 @@ class PositionMixin(ValidatorMixin):
         obj.code = code
         obj.save()
         send_position_create_emails(obj)
+
+        related_positions = [obj]
+        for rank in ranks:
+            p = Position.objects.create(**validated_data)
+            p.code = settings.POSITION_CODE_PREFIX + str(p.id)
+            p.rank = rank
+            p.save()
+            related_positions.append(p)
+            send_position_create_emails(p)
+
+        for p in related_positions:
+            for r in related_positions:
+                if p.id != r.id:
+                    p.related_positions.add(r)
+                p.save()
         return obj
 
     def update(self, instance, validated_data):
@@ -209,7 +228,6 @@ class PositionMixin(ValidatorMixin):
         committee = curr_position.committee.all()
         assistant_files = curr_position.assistant_files.all()
         old_committee = [p for p in committee.all()]
-        ranks = curr_position.ranks.all()
 
         validated_data['updated_at'] = datetime.utcnow()
         eps = curr_position.electorparticipation_set.all()
@@ -221,7 +239,6 @@ class PositionMixin(ValidatorMixin):
         if instance.state != curr_position.state:
             curr_position.pk = None
             curr_position.save()
-            curr_position.ranks = ranks
             curr_position.committee = committee
             curr_position.assistant_files = assistant_files
             curr_position.save()

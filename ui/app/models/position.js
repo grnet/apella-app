@@ -80,6 +80,7 @@ export default DS.Model.extend({
   fek: DS.attr({label: 'position.fek.label', displayComponent: 'url-display'}),
   fek_posted_at: DS.attr('date'),
   fek_posted_at_format: computeDateFormat('fek_posted_at'),
+  has_multiple_ranks: DS.attr({type: 'boolean', defaultValue: false }),
   institution: readOnly('department.institution'),
   /*
    * If the position is not the latest we should check the if the position was
@@ -124,6 +125,7 @@ export default DS.Model.extend({
   nomination_act_fek: DS.attr({displayComponent: 'url-display'}),
   nomination_proceedings: DS.belongsTo('apella-file'),
   old_code: DS.attr(),
+  parent_position: DS.belongsTo('position', {inverse: 'related_positions'}),
   participation: DS.attr(),
   participation_current: computed('participation', 'i18n.locale', function(){
     return this.get('i18n').t(this.get('participation'));
@@ -132,6 +134,19 @@ export default DS.Model.extend({
   position_type: DS.attr({type: 'select', choices: position_types, defaultValue: 'election'}),
   position_type_verbose: computeI18NChoice('position_type', position_types),
   proceedings_cover_letter: DS.belongsTo('apella-file'),
+  rank: DS.attr({type: 'select', choices: CHOICES.POSITION_RANKS}),
+  rank_verbose: computeI18NChoice('rank', CHOICES.POSITION_RANKS),
+  ranks: DS.attr({
+    formComponent: 'multiple-checkboxes',
+    formAttrs: {
+      text:'ranks_select.text',
+      choices: CHOICES.POSITION_RANKS
+    },
+  }),
+  related_positions: DS.hasMany('position', {
+    async: true,
+    inverse: 'parent_position',
+    displayComponent: 'related-positions'}),
   revocation_decision: DS.belongsTo('apella-file'),
   second_best: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
   // Use in currentUserCandidacy

@@ -1746,33 +1746,6 @@ spec:
                 .update: {}
                 .delete: {}
                 .retrieve: {}
-        professor-ranks:
-            .collection: {}
-            .drf_collection:
-                model: apella.models.ProfessorRank
-            .cli_commands: {}
-            '*':
-                id:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .serial: {}
-                    .readonly: {}
-                url:
-                    .drf_field: {}
-                    .identity: {}
-                rank:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .ref:
-                        to: multilang
-            actions:
-                .list: {}
-                .create: {}
-                .update: {}
-                .delete: {}
-                .retrieve: {}
         positions:
             .collection: {}
             .drf_collection:
@@ -1783,7 +1756,7 @@ spec:
                     apella.views.mixins.DestroyProtectedObject,
                     apella.views.mixins.UploadFilesViewSet]
                 hook_class: apella.views.mixins.PositionHookMixin
-                filter_fields: [title, state, department, department__institution, code, old_code, electors, committee]
+                filter_fields: [title, state, department, department__institution, code, old_code, electors, committee, rank]
                 ordering_fields: [title, state, department, code, old_code, id]
                 search_fields: [title, state, code, old_code]
             .cli_commands: {}
@@ -1973,13 +1946,11 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .integer: {}
-                ranks:
+                rank:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .ref:
-                        to: professor-ranks
-                        many: True
+                    .string: {}
                 file_upload:
                     .cli_option: {}
                     .field: {}
@@ -2389,6 +2360,12 @@ spec:
                     .drf_field: {}
                     .ref:
                         to: user-applications
+                related_positions:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: positions
             actions:
                 .list: {}
                 .create: {}

@@ -205,42 +205,6 @@
 },
 {
     "user": "1",
-    "action": "professor-rank-add",
-    "input": {
-        "rank_el": "Καθηγητής",
-        "rank_en": "Professor"
-    },
-    "db_state_change" : {
-        "object" : {"Professor rank" : "1"},
-        "change" : "new professor rank"
-    }
-},
-{
-    "user": "1",
-    "action": "professor-rank-add",
-    "input": {
-        "rank_el": "Αναπληρωτής Καθηγητής",
-        "rank_en": "Associate Professor"
-    },
-    "db_state_change" : {
-        "object" : {"Professor rank" : "1"},
-        "change" : "new professor rank"
-    }
-},
-{
-    "user": "1",
-    "action": "professor-rank-add",
-    "input": {
-        "rank_el": "Επίκουρος Καθηγητής",
-        "rank_en": "Assistant Professor"
-    },
-    "db_state_change" : {
-        "object" : {"Professor rank" : "1"},
-        "change" : "new professor rank"
-    }
-},
-{
-    "user": "1",
     "action": "department-modify",
     "input": {
         "arg1": "97",
@@ -248,7 +212,7 @@
     },
     "db_state_change" : {
         "object" : {},
-        "change" : "new professor rank"
+        "change" : ""
     }
 },
 {
@@ -265,8 +229,7 @@
         "arg8" : "2016-08-15",
         "arg9" : "2016-09-30",
         "arg10" : "2016-10-30",
-        "arg11" : "Θεολογία",
-        "arg12" : "[1,2]"
+        "arg11" : "Θεολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "1"},
@@ -299,8 +262,7 @@
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
         "arg10" : "2017-02-01",
-        "arg11" : "Ψυχολογία",
-        "arg12" : "[2]"
+        "arg11" : "Ψυχολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
@@ -333,8 +295,7 @@
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
         "arg10" : "2017-02-01",
-        "arg11" : "Φυσική",
-        "arg12" : "[2,3]"
+        "arg11" : "Φυσική"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
@@ -355,8 +316,7 @@
         "arg8" : "2016-07-15",
         "arg9" : "2016-09-30",
         "arg10" : "2017-02-01",
-        "arg11" : "Νεογνολογία",
-        "arg12" : "[1,2]"
+        "arg11" : "Νεογνολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "3"},
@@ -377,8 +337,7 @@
         "arg8" : "2016-07-15",
         "arg9" : "2017-01-09",
         "arg10" : "2017-03-30",
-        "arg11" : "Ψυχολογία",
-        "arg12" : "[2]"
+        "arg11" : "Ψυχολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "2"},
@@ -399,8 +358,7 @@
         "arg8" : "2016-07-15",
         "arg9" : "2017-09-30",
         "arg10" : "2017-12-30",
-        "arg11" : "Οικολογία",
-        "arg12" : "[2,3]"
+        "arg11" : "Οικολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "6"},
@@ -421,8 +379,7 @@
         "arg8" : "2015-07-15",
         "arg9" : "2015-09-30",
         "arg10" : "2015-12-30",
-        "arg11" : "Αθλητισμός",
-        "arg12" : "[1,2]"
+        "arg11" : "Αθλητισμός"
     },
     "db_state_change" : {
         "object" : {"Position" : "7"},
@@ -443,8 +400,7 @@
         "arg8" : "2015-07-15",
         "arg9" : "2015-09-30",
         "arg10" : "2015-12-30",
-        "arg11" : "Αθλητισμός",
-        "arg12" : "[1,2]"
+        "arg11" : "Αθλητισμός"
     },
     "db_state_change" : {
         "object" : {"Position" : "7"},
@@ -465,8 +421,7 @@
         "arg8" : "2015-07-15",
         "arg9" : "2015-09-30",
         "arg10" : "2015-12-30",
-        "arg11" : "Αθλητισμός",
-        "arg12" : "[1,2]"
+        "arg11" : "Αθλητισμός"
     },
     "db_state_change" : {
         "object" : {"Position" : "8"},
@@ -487,8 +442,7 @@
         "arg8" : "2015-07-15",
         "arg9" : "2015-09-30",
         "arg10" : "2015-12-30",
-        "arg11" : "Μαγεία",
-        "arg12" : "[1,2]"
+        "arg11" : "Μαγεία"
     },
     "db_state_change" : {
         "object" : {"Position" : "9"},
@@ -509,8 +463,7 @@
         "arg8" : "2015-07-15",
         "arg9" : "2015-09-30",
         "arg10" : "2017-12-30",
-        "arg11" : "Μαγεία",
-        "arg12" : "[1,2]"
+        "arg11" : "Μαγεία"
     },
     "db_state_change" : {
         "object" : {"Position" : "10"},
@@ -531,8 +484,7 @@
         "arg8" : "2016-08-15",
         "arg9" : "2016-09-30",
         "arg10" : "2016-10-30",
-        "arg11" : "Θεολογία",
-        "arg12" : "[1,2]"
+        "arg11" : "Θεολογία"
     },
     "db_state_change" : {
         "object" : {"Position" : "11"},
