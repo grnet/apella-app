@@ -4,6 +4,7 @@ import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
+import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
 const {
   computed,
@@ -84,24 +85,19 @@ export default ApellaGen.extend({
         fields: computed('role', function() {
           let role = get(this, 'user.role'),
             roles_see_only_verified = ['institutionmanager', 'assistant'],
-            fields = undefined;
-          if(roles_see_only_verified.includes(role)) {
             fields = [
               filterSelectSortTitles('institution'),
+              departmentInstitutionFilterField(),
               'rank',
               'is_foreign',
-            ];
-          }
-          else {
-            fields = [
-              filterSelectSortTitles('institution'),
-              'rank',
-              'is_foreign',
-              'is_verified',
-              'is_rejected',
-              'verification_pending',
+          ];
+          if(!roles_see_only_verified.includes(role)) {
+            fields.pushObjects([
+             'is_verified',
+             'is_rejected',
+             'verification_pending',
               field('no_verification_request', { type: 'boolean' })
-            ];
+            ])
           }
           return fields;
         })
