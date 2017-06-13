@@ -2,7 +2,7 @@ import {
   ApellaGen, i18nField, i18nUserSortField, get_registry_members,
   fileField, preloadRelations, filterSelectSortTitles
 } from 'ui/lib/common';
-import {disable_field} from 'ui/utils/common/fields';
+import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
 import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
@@ -302,28 +302,7 @@ export default ApellaGen.extend({
                 return store.query('institution', params);
               }
             }),
-          field('department',
-            {
-              autocomplete: true,
-              label: 'department.label',
-              type: 'model',
-              displayAttr: 'title_current',
-              modelName: 'department',
-              disabled: computed('model.changeset.institution.id', function() {
-                return !this.get('model.changeset.institution');
-              }),
-              dataKey: 'department',
-              query: computed('model.changeset.institution.id', function() {
-                let inst = this.get('model.changeset.institution.id');
-                return function(select, store, field, params) {
-                  let locale = select.get('i18n.locale');
-                  params = params || {};
-                  params.ordering = `title_${locale}`;
-                  params.institution = inst;
-                  return store.query('department', params);
-                }
-              })
-            }),
+          departmentInstitutionFilterField,
           'type',
           field('id', {type: 'string'}),
         ]
