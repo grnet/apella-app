@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {disable_field} from 'ui/utils/common/fields';
+import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
 import {ApellaGen, urlValidator} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
@@ -108,6 +108,7 @@ export default ApellaGen.extend({
               return store.query('institution', params)
             }
           }),
+          departmentInstitutionFilterField(),
           'rank'
         ]
       },

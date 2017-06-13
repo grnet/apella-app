@@ -1,6 +1,7 @@
 import {field} from 'ember-gen';
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
+import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
 const {
   computed,
@@ -82,6 +83,7 @@ export default ApellaGen.extend({
               return store.query('institution', params)
             }
           }),
+          departmentInstitutionFilterField(),
         ]
       }
     },

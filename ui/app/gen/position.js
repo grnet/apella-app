@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {disable_field} from 'ui/utils/common/fields';
+import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
 import {ApellaGen, urlValidator, preloadRelations} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
@@ -164,7 +164,8 @@ export default ApellaGen.extend({
             filter_model = 'institution';
             dataKey = 'department__institution';
           }
-          return [
+
+          let res = [
             field(filter_model, {
               autocomplete: true,
               type: 'model',
@@ -187,7 +188,11 @@ export default ApellaGen.extend({
             }),
             'state_expanded',
             'rank',
-          ]
+          ];
+          if (roles_institution.indexOf(user_role) > -1) {
+            res.insertAt(1, departmentInstitutionFilterField());
+          }
+          return res;
         })
       }
     },
