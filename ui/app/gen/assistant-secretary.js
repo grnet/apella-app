@@ -71,7 +71,7 @@ export default ApellaGen.extend({
                   return store.query('institution', params);
                 }
               }),
-              departmentInstitutionFilterField(true),
+              departmentInstitutionFilterField('departments'),
               'is_verified', 'is_rejected'
             ];
           }

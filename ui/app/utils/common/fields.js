@@ -12,8 +12,7 @@ function disable_field(el) {
   })
 }
 
-function departmentInstitutionFilterField(plural=false) {
-  let dataKey = plural? 'departments': 'department';
+function departmentInstitutionFilterField(dataKey='department') {
   return field(
     'department',
     {
