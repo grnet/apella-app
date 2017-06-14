@@ -109,6 +109,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
         fields: [
           field('user_id', {type: 'string'}),
           filterSelectSortTitles('institution'),
+          departmentInstitutionFilterField(),
           field('rank')
         ]
       }

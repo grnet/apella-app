@@ -1,6 +1,6 @@
 import {field} from 'ember-gen';
 import {i18nField, get_registry_members, fileField, filterSelectSortTitles} from 'ui/lib/common';
-import {disable_field} from 'ui/utils/common/fields';
+import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
 import {getFile} from 'ui/utils/files';
 import moment from 'moment';
 import {
@@ -289,6 +289,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
         fields: [
           field('user_id', {type: 'string'}),
           filterSelectSortTitles('institution'),
+          departmentInstitutionFilterField(),
           field('rank')
         ]
       }
