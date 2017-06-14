@@ -274,6 +274,8 @@ class RegistriesList(viewsets.GenericViewSet):
             members = members.filter(user_id=user_id)
         if 'institution' in query_params:
             members = members.filter(institution=query_params['institution'])
+        if 'members_department' in query_params:
+            members = members.filter(department=query_params['members_department'])
         if 'rank' in query_params:
             members = members.filter(rank=query_params['rank'])
         if 'search' in query_params:
