@@ -4,7 +4,7 @@ import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import USER from 'ui/utils/common/users';
 import {field} from 'ember-gen';
-import {disable_field} from 'ui/utils/common/fields';
+import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
 import {rejectUser, verifyUser} from 'ui/utils/common/actions';
 import { fs_viewed_by_others } from 'ui/utils/common/assistant';
 
@@ -71,6 +71,7 @@ export default ApellaGen.extend({
                   return store.query('institution', params);
                 }
               }),
+              departmentInstitutionFilterField(true),
               'is_verified', 'is_rejected'
             ];
           }
