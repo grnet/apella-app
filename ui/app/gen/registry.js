@@ -302,7 +302,7 @@ export default ApellaGen.extend({
                 return store.query('institution', params);
               }
             }),
-          departmentInstitutionFilterField,
+          departmentInstitutionFilterField(),
           'type',
           field('id', {type: 'string'}),
         ]
