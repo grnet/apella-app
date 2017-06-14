@@ -289,7 +289,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
         fields: [
           field('user_id', {type: 'string'}),
           filterSelectSortTitles('institution'),
-          departmentInstitutionFilterField(),
+          departmentInstitutionFilterField('members_department'),
           field('rank')
         ]
       }
