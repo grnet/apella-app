@@ -520,7 +520,11 @@ class CandidateProfile(object):
 class PositionsPortal(object):
     def get_queryset(self):
         now = datetime.utcnow()
-        return self.queryset.filter(state='posted', ends_at__gte=now)
+        queryset = self.queryset
+        ids = queryset.values('code').annotate(Min('id')). \
+            values('id__min')
+        queryset = queryset.filter(id__in=ids)
+        return queryset.filter(state='posted', ends_at__gte=now)
 
 
 class UserApplicationMixin(object):
