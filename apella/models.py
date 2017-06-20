@@ -996,6 +996,22 @@ class UserInterest(models.Model):
         return request.user.id == self.user.id
 
 
+class JiraIssue(models.Model):
+    code = models.CharField(max_length=255)
+    user = models.ForeignKey(ApellaUser, related_name='user')
+    reporter = models.ForeignKey(ApellaUser, related_name='reporter')
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    state = models.CharField(
+        choices=common.JIRA_ISSUE_STATES, max_length=30, default='open')
+    issue_type = models.CharField(
+        choices=common.JIRA_ISSUE_TYPES, max_length=30, default='complaint')
+    resolution = models.CharField(
+        choices=common.JIRA_ISSUE_RESOLUTION, max_length=30, default='fixed')
+    created_at = models.DateTimeField(default=datetime.utcnow)
+    updated_at = models.DateTimeField(default=datetime.utcnow)
+
+
 from migration_models import (
     OldApellaUserMigrationData,
     OldApellaFileMigrationData,
