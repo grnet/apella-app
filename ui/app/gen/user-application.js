@@ -87,7 +87,7 @@ export default ApellaGen.extend({
     filter: {
       active: true,
       serverSide: true,
-      search: false,
+      search: true,
       meta: {
         fields: ['state', 'app_type' ]
       },
