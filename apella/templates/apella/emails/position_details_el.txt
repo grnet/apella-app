@@ -4,5 +4,7 @@
 Σχολή: {{ position.department.school.title.el }}
 Τμήμα: {{ position.department.title.el }}
 Γνωστικό αντικείμενο: {{ position.discipline }}
+{% if position.position_type == 'election' %}
 {% if starts_at %}Ημερομηνία Έναρξης Υποβολών: {{ starts_at|date:"d/m/Y"}}{% endif %}
 {% if ends_at %}Ημερομηνία Λήξης Υποβολών: {{ ends_at|date:"d/m/Y" }}{% endif %}
+{% endif %}
