@@ -15,7 +15,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 
-from apimas.modeling.adapters.drf.mixins import HookMixin
+from apimas.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
@@ -293,7 +293,7 @@ class RegistriesList(viewsets.GenericViewSet):
             ordering = query_params['ordering']
         members = members.order_by(ordering)
 
-        ser = adapter.get_serializer('professors')
+        ser = adapter.get_serializer(settings.API_ENDPOINT, 'professors')
         page = self.paginate_queryset(members)
         if page is not None:
             return self.get_paginated_response(
@@ -315,7 +315,7 @@ class FilesViewSet(viewsets.ModelViewSet):
         file = self.get_object()
         token = auth_hooks.generate_file_token(user, file)
         url = urljoin(settings.BASE_URL or '/',
-                      reverse('apella-files-downloadfile', args=(pk,)))
+                      reverse('api_apella-files-downloadfile', args=(pk,)))
         response['X-File-Location'] = "%s?token=%s" % (url, token)
         return response
 

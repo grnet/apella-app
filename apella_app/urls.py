@@ -35,8 +35,9 @@ apipatterns = [
     url(r'^api/migrate$', shibboleth_views.legacy_login, name='shibboleth_legacy'),
     url(r'^api/evaluators/(?P<email>[^/]+)/$',
         views.evaluators, name='evaluators'),
-    api_urls
 ]
+
+apipatterns.extend(api_urls)
 
 urlpatterns = [
     url(api_prefix, include(apipatterns))
