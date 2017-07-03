@@ -474,6 +474,9 @@ class CandidateProfile(object):
                     candidate_user.user.can_set_academic = True
                     candidate_user.user.save()
             candidate_user.save()
+            logger.info(
+                'user %s verified profile %r' %
+                (request.user.username, candidate_user.id))
             send_user_email(
                 candidate_user.user,
                 'apella/emails/user_verified_profile_subject.txt',
@@ -491,6 +494,9 @@ class CandidateProfile(object):
                 reason = request.data['rejected_reason']
             auth_hooks.reject_user(candidate_user, reason=reason)
             candidate_user.save()
+            logger.info(
+                'user %s rejected profile %r' %
+                (request.user.username, candidate_user.id))
             send_user_email(
                 candidate_user.user,
                 'apella/emails/user_rejected_profile_subject.txt',
