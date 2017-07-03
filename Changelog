@@ -8,3 +8,8 @@
 * Positions with multiple ranks
     On position creation, user can select one or more ranks. As a result, one
     or more positions are created, respectively.
+
+0.2.4
+=====
+* Upgrade to apimas 0.3
+* Apply department filter that is computed by filter institution
