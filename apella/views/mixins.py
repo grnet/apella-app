@@ -467,6 +467,12 @@ class CandidateProfile(object):
         candidate_user = self.get_object()
         try:
             auth_hooks.verify_user(candidate_user)
+            if isinstance(candidate_user, ProfessorModel) and not\
+                candidate_user.user.shibboleth_id and \
+                candidate_user.institution and \
+                candidate_user.institution.has_shibboleth:
+                    candidate_user.user.can_set_academic = True
+                    candidate_user.user.save()
             candidate_user.save()
             send_user_email(
                 candidate_user.user,
