@@ -94,12 +94,12 @@ let CANDIDACY_FIELDSET =  {
         }),
 
         fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
-          hint: 'five_before_electors_meeting',
+          hint: 'one_before_electors_meeting',
           readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
             let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
             let after_deadline = false;
             if (electors_at) {
-              let limit_day = electors_at.subtract(5, 'days'),
+              let limit_day = electors_at.subtract(1, 'days'),
                 today = moment().startOf('days');
               after_deadline = today.isAfter(limit_day);
             }
@@ -149,7 +149,7 @@ let CANDIDACY_FIELDSET_DETAILS =  {
         }, { replace: true}),
         fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
           readonly: true,
-          hint: 'five_before_electors_meeting',
+          hint: 'one_before_electors_meeting',
         }, { replace: true}),
        fileField('attachment_files', 'candidacy', 'attachment_files', {
           readonly: true,
