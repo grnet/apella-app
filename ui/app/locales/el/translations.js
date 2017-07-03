@@ -94,6 +94,7 @@ export default {
   'candidacy.label.publication': 'Αρχεία Δημοσιεύσεων',
   'candidacy.label.self_evaluation': 'Υπόμνημα Αυτοαξιολόγησης',
   'candidacy.label.state': 'Κατάσταση',
+  'candidacy.label.statement_file': 'Υπόμνημα',
   'candidacy.menu_label': 'Υποψηφιότητες',
   'candidacy.position_section.subtitle': 'Τα στοιχεία της θέσης για την οποία γίνεται η υποβολή υποψηφιότητας.',
   'candidacy.position_section.title': 'Στοιχεία Θέσης',

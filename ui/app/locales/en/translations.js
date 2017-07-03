@@ -79,6 +79,7 @@ export default {
   'candidacy.label.publication': 'Publications',
   'candidacy.label.self_evaluation': 'Self Evaluation Report',
   'candidacy.label.state': 'State',
+  'candidacy.label.statement_file': 'Statement',
   'candidacy.menu_label': 'Candidacies',
   'candidacy.position_section.subtitle': 'Information concerning the position.',
   'candidacy.position_section.title': 'Position Details',
