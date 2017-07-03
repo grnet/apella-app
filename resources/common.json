@@ -75,6 +75,7 @@
         ["failed_election_decision", "Failed Election Decision"],
         ["assistant_file", "Assistant File"],
         ["self_evaluation_report", "Self Evaluation Report"],
+        ["statement_file", "Statement File"],
         ["attachment_file", "Attachment File"],
         ["registry_set_decision_file", "Registry Set Decision File"]
     ],

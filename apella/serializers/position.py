@@ -434,6 +434,7 @@ class CandidacyMixin(object):
         attachment_files = validated_data.pop('attachment_files', [])
         self_evaluation_report = validated_data.pop(
             'self_evaluation_report', [])
+        statement_file = validated_data.pop('statement_file', [])
         cv = validated_data.pop('cv', [])
         diplomas = validated_data.pop('diplomas', [])
         publications = validated_data.pop('publications', [])
