@@ -1,4 +1,5 @@
 import {position} from 'ui/lib/position/fieldsets';
+import _ from 'lodash/lodash';
 
 const {
   computed,
@@ -114,13 +115,29 @@ const pick_details_fs = function() {
     /*
      * Check if the user is a candidate for this position.
      * On getModel we fetch the candidacies, so here we use the peekAll function
-     * to check them.
+     * to check them and keep only the data we need for each candidacy.
      */
-    store.peekAll('candidacy').forEach(function(candidacy) {
-      let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0],
-        candidate_id = candidacy.belongsTo('candidate').link().split('/').slice(-2)[0],
-        candidacy_state = get(candidacy, 'state'),
-        candidacy_is_posted = (candidacy_state === 'posted');
+    candidacies = store.peekAll('candidacy').map(function(candidacy) {
+      return {
+        candidacy_pos_id: candidacy.belongsTo('position').link().split('/').slice(-2)[0],
+        candidate_id: candidacy.belongsTo('candidate').link().split('/').slice(-2)[0],
+        candidacy_is_posted: (get(candidacy, 'state') === 'posted'),
+        updated_at: get(candidacy, 'updated_at')
+      };
+    });
+
+    /*
+     * Only the latest candidacies per position are kept.
+     * The candidacies are sorted by descending updated_at date and then only the
+     * first occurrence of each position is kept.
+    */
+
+    candidacies = _.uniq(_.sortBy(candidacies, ['updated_at']).reverse(), 'candidacy_pos_id');
+
+    candidacies.forEach(function(candidacy) {
+      let candidacy_pos_id = candidacy.candidacy_pos_id,
+        candidate_id = candidacy.candidate_id,
+        candidacy_is_posted = candidacy.candidacy_is_posted;
       // If the candidacy belongs to this position
       if(candidacy_pos_id === position_model.id) {
         /*
