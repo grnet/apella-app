@@ -697,4 +697,8 @@ PERMISSION_RULES = [
     ('user-applications', 'accept_application', 'assistant', '*', 'owned', ''),
     ('user-applications', 'reject_application', 'institutionmanager', '*', 'owned', ''),
     ('user-applications', 'reject_application', 'assistant', '*', 'owned', ''),
+    ('jira-issues', 'list', 'helpdeskadmin', '*', '*', ''),
+    ('jira-issues', 'list', 'helpdeskuser', '*', '*', ''),
+    ('jira-issues', 'retrieve', 'helpdeskuser', '*', '*', ''),
+    ('jira-issues', 'create', '*', '*', '*', ''),
 ]

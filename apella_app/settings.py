@@ -227,3 +227,10 @@ if PERMISSIONS_LIMITED:
     from apella.permissions.permission_rules_limited import PERMISSION_RULES
 else:
     from apella.permissions.permission_rules import PERMISSION_RULES
+
+JIRA_OPTIONS = {
+    'server':  "https://staging.tts.grnet.gr/jira/"
+}
+
+JIRA_LOGIN = ("apella", "password")
+JIRA_PROJECT = "APELLA"
