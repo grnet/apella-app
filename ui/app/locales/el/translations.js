@@ -92,7 +92,7 @@ export default {
   'candidacy.label.others_can_view': 'Οι συνυποψήφιοί μου επιτρέπεται να έχουν πρόσβαση στα στοιχεία της υποψηφιότητάς μου',
   'candidacy.label.position': 'Θέση',
   'candidacy.label.publication': 'Αρχεία Δημοσιεύσεων',
-  'candidacy.label.self_evaluation': 'Υπόμνημα Αυτοαξιολόγησης',
+  'candidacy.label.self_evaluation': 'Έκθεση αυτοαξιολόγησης',
   'candidacy.label.state': 'Κατάσταση',
   'candidacy.label.statement_file': 'Υπόμνημα',
   'candidacy.menu_label': 'Υποψηφιότητες',
