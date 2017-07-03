@@ -700,5 +700,10 @@ PERMISSION_RULES = [
     ('jira-issues', 'list', 'helpdeskadmin', '*', '*', ''),
     ('jira-issues', 'list', 'helpdeskuser', '*', '*', ''),
     ('jira-issues', 'retrieve', 'helpdeskuser', '*', '*', ''),
-    ('jira-issues', 'create', '*', '*', '*', ''),
+    ('jira-issues', 'create', 'professor', '*', '*', ''),
+    ('jira-issues', 'create', 'candidate', '*', '*', ''),
+    ('jira-issues', 'create', 'helpdeskadmin', '*', '*', ''),
+    ('jira-issues', 'create', 'helpdeskuser', '*', '*', ''),
+    ('jira-issues', 'create', 'institutionmanager', '*', '*', ''),
+    ('jira-issues', 'create', 'assistant', '*', '*', ''),
 ]
