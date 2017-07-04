@@ -1,0 +1,16 @@
+{{#gen-page classNames=(if gen.nested 'nested' '') as |page|}}
+  {{page.toolbar
+    pageTitle=(t gen.page.title model)
+    breadcrumbs=gen.breadcrumbs
+    toolbarActions=gen.toolbarActions
+    model=model
+    tabs=gen.tabs
+  }}
+
+  {{#paper-content class="md-padding"}}
+    <p class="md-padding">
+      {{t 'new.user.info'}}
+    </p>
+    {{ partial '_register_card' }}
+  {{/paper-content}}
+{{/gen-page}}

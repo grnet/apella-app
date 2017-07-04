@@ -1,0 +1,17 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι ορίστηκε η ημερομηνία συνεδρίασης της Επιτροπής επιλογής, με σκοπό τον ορισμό των Αξιολογητών για τη θέση:
+
+{% include "apella/emails/position_details_el.txt %}
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We inform you that the election Committee meeting date, regarding the appointment of Evaluators for the position:
+{% include "apella/emails/position_details_en.txt %}
+has been announced.
+
+{% endblock content_en %}

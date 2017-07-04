@@ -1,0 +1,21 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι ο υποψήφιος {{ candidate.first_name.el }} {{ candidate.last_name.el }}
+απέσυρε την υποψηφιότητά του για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+για την οποία έχετε και εσείς υποβάλλει υποψηφιότητα.
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the candidate {{ candidate.first_name.en }} {{ candidate.last_name.en }} has withdrawn his/her candidacy regarding the position:
+
+{% include "apella/emails/position_details_en.txt" %}
+for which you have submitted a candidacy.
+
+{% endblock content_en %}

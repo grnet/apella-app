@@ -1,0 +1,3295 @@
+root: http://localhost:8000
+spec:
+    api:
+        .endpoint: {}
+        multilang:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.MultiLangFields
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                el:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                en:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .retrieve: {}
+        users:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.ApellaUser
+                model_serializers: [
+                    apella.serializers.mixins.NestedWritableObjectsMixin,
+                    apella.serializers.mixins.HelpdeskUsers]
+                mixins: [apella.views.mixins.ApellaUsers]
+                ordering_fields: [id, username, email]
+                filter_fields: [role, is_active, has_accepted_terms]
+                search_fields: [id, username, email, first_name__el, last_name__el, first_name__en, last_name__en]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                username:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                password:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                email:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .email: {}
+                    .required: {}
+                is_active:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                email_verified:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                can_set_academic:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                can_upgrade_role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                shibboleth_idp:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                shibboleth_schac_home_organization:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                id_passport:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                mobile_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                home_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['institutionmanager', 'candidate', 'professor', 'helpdeskadmin', 'helpdeskuser', 'assistant', 'ministry']
+                    .required: {}
+                login_method:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                first_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                last_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                father_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                old_user_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .integer: {}
+                has_accepted_terms:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                accepted_terms_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .retrieve: {}
+        apella-files:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.ApellaFile
+                mixins: [apella.views.mixins.FilesViewSet]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .integer: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['cv']
+                file_content:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .file: {}
+                file_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                owner:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/users
+                source:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['profile', 'candidacy', 'position', 'other']
+                source_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .integer: {}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .retrieve: {}
+        institutions:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Institution
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [title__en, title__el, category, has_shibboleth, idp]
+                ordering_fields: [id, title__el, title__en]
+                search_fields: [title__en, title__el]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                organization:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                regulatory_framework:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                category:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['Institution', 'Research']
+                    .readonly: {}
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                has_shibboleth:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                idp:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                schac_home_organization:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        schools:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.School
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [institution]
+                search_fields: [title__en, title__el]
+                ordering_fields: [id, title__en, title__el]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/institutions
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        departments:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Department
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [institution, school, id]
+                ordering_fields: [id, title__el, title__en, dep_number]
+                search_fields: [title__en, title__el]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/institutions
+                school:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: api/schools
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                dep_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .integer: {}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        subject-areas:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.SubjectArea
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                search_fields: [title__en, title__el]
+                ordering_fields: [id, title__en, title__el]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        subjects:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Subject
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.DestroyProtectedObject]
+                filter_fields: [area, title]
+                search_fields: [title__en, title__el]
+                ordering_fields: [id, title__el, title__en]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                area:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: api/subject-areas
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        professors:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Professor
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin, apella.serializers.mixins.Professors]
+                mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.Professor, apella.views.mixins.SyncCandidacies, apella.views.mixins.CandidateProfile]
+                ordering_fields: [user_id, user__last_name__en, user__last_name__el, user__email, user__username]
+                filter_fields: [user_id, institution, department,  is_verified, is_rejected, verification_pending, is_foreign, rank]
+                search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en, discipline_text, user__old_user_id, user__email]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                active_elections:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .integer: {}
+                file_upload:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                cv_professor:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                cv:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                diplomas:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                publications:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: api/institutions
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: api/departments
+                rank:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer', 'Tenured Assistant Professor', 'Research Director', 'Principal Researcher', 'Affiliated Researcher']
+                institution_freetext:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .blankable: {}
+                    .string: {}
+                is_foreign:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                speaks_greek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                cv_url:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                fek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .blankable: {}
+                discipline_text:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                    .blankable: {}
+                discipline_in_fek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                verification_pending:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                is_verified:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                verified_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                    .readonly: {}
+                is_rejected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                rejected_reason:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                changes_request:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                    .readonly: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .email: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        is_active:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        email_verified:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_set_academic:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_upgrade_role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        shibboleth_idp:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        shibboleth_schac_home_organization:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['professor']
+                            .readonly: {}
+                        login_method:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        old_user_id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        registries:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Registry
+                model_serializers: [apella.serializers.mixins.Registries]
+                mixins: [apella.views.mixins.RegistriesList, apella.views.mixins.UploadFilesViewSet]
+                filter_fields: [id, type, department, department__institution]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                type:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['internal', 'external']
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: api/departments
+                members:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: api/professors
+                        many: True
+                file_upload:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                registry_set_decision_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                members_count:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .integer: {}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        institution-managers:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.InstitutionManager
+                filter_fields: [institution, manager_role, is_verified, is_rejected, verification_pending]
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin, apella.serializers.mixins.InstitutionManagersMixin]
+                mixins: [apella.views.mixins.CandidateProfile]
+                ordering_fields: [user_id, user__email, user__username]
+                search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: api/institutions
+                authority:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['dean', 'president']
+                    .required: {}
+                authority_full_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                manager_role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['institutionmanager', 'assistant']
+                    .readonly: {}
+                sub_mobile_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        allow_blank: False
+                    .required: {}
+                    .string: {}
+                sub_home_phone_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        allow_blank: False
+                    .required: {}
+                    .string: {}
+                sub_email:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        allow_blank: False
+                    .required: {}
+                    .email: {}
+                sub_first_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field:
+                                allow_blank: False
+                            .string: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field:
+                                allow_blank: False
+                            .string: {}
+                sub_last_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field:
+                                allow_blank: False
+                            .string: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field:
+                                allow_blank: False
+                            .string: {}
+                sub_father_name:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        el:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field:
+                                allow_blank: False
+                            .string: {}
+                        en:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field:
+                                allow_blank: False
+                            .string: {}
+                verification_pending:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                is_verified:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                is_rejected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .email: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        is_active:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        email_verified:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_set_academic:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_upgrade_role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        shibboleth_idp:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        shibboleth_schac_home_organization:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['institutionmanager']
+                            .readonly: {}
+                        login_method:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        candidates:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Candidate
+                model_serializers: [apella.serializers.mixins.NestedWritableObjectsMixin]
+                mixins: [apella.views.mixins.UploadFilesViewSet, apella.views.mixins.SyncCandidacies, apella.views.mixins.CandidateProfile]
+                ordering_fields: [user_id, user__email, user__username]
+                search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
+                filter_fields: [user_id, is_verified, is_rejected, verification_pending]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                verification_pending:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                is_verified:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                verified_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                    .readonly: {}
+                is_rejected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                rejected_reason:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                changes_request:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                    .readonly: {}
+                file_upload:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                cv:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                diplomas:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                publications:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                id_passport_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .email: {}
+                            .required: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        is_active:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        email_verified:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_set_academic:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_upgrade_role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        shibboleth_idp:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        shibboleth_schac_home_organization:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['candidate']
+                            .readonly: {}
+                        login_method:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        old_user_id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        positions:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Position
+                model_serializers: [apella.serializers.position.PositionMixin]
+                serializers: [apella.serializers.position.PositionNonModel]
+                mixins: [apella.views.mixins.PositionMixin,
+                    apella.views.mixins.DestroyProtectedObject,
+                    apella.views.mixins.UploadFilesViewSet]
+                hook_class: apella.views.mixins.PositionHookMixin
+                filter_fields: [title, state, department, department__institution, code, old_code, electors, committee, rank]
+                ordering_fields: [title, state, department, code, old_code, id]
+                search_fields: [title, state, code, old_code]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                code:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .required: {}
+                description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                    .required: {}
+                discipline:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                    .required: {}
+                author:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .ref:
+                        to: api/institution-managers
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: api/departments
+                subject_area:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/subject-areas
+                subject:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/subjects
+                fek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                fek_posted_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                electors:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .ref:
+                        to: api/professors
+                        many: True
+                electors_regular_internal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_electors_regular_internal
+                    .ref:
+                        to: api/professors
+                        many: True
+                electors_regular_external:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_electors_regular_external
+                    .ref:
+                        to: api/professors
+                        many: True
+                electors_sub_internal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_electors_sub_internal
+                    .ref:
+                        to: api/professors
+                        many: True
+                electors_sub_external:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_electors_sub_external
+                    .ref:
+                        to: api/professors
+                        many: True
+                committee:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .ref:
+                        to: api/professors
+                        many: True
+                committee_internal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_committee_internal
+                    .ref:
+                        to: api/professors
+                        many: True
+                committee_external:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_committee_external
+                    .ref:
+                        to: api/professors
+                        many: True
+                elected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/users
+                second_best:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/users
+                state:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['draft', 'posted', 'electing', 'successful', 'failed', 'cancelled', 'revoked']
+                    .blankable: {}
+                starts_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                ends_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                created_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                department_dep_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .integer: {}
+                rank:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['Professor', 'Associate Professor', 'Assistant Professor']
+                file_upload:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                electors_meeting_to_set_committee_date:
+                    .cli_option: {}
+                    .field: {}
+                    .nullable: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                electors_meeting_date:
+                    .cli_option: {}
+                    .field: {}
+                    .nullable: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                old_code:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .string: {}
+                committee_set_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                committee_proposal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                committee_note:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                electors_set_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                nomination_act_fek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                electors_meeting_proposal:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                nomination_proceedings:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                proceedings_cover_letter:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                nomination_act:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                revocation_decision:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                failed_election_decision:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                assistant_files:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                position_type:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['election', 'tenure', 'renewal']
+                user_application:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/user-applications
+                related_positions:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/positions
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        candidacies:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Candidacy
+                model_serializers: [apella.serializers.position.CandidacyMixin]
+                filter_fields: [position, candidate, state]
+                ordering_fields: [position__id, candidate__id, position__title]
+                search_fields: [position__code, candidate__id, position__title]
+                mixins: [apella.views.mixins.CandidacyList,
+                    apella.views.mixins.UploadFilesViewSet]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                code:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                    .readonly: {}
+                candidate:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: api/users
+                position:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: api/positions
+                state:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .choices:
+                        allowed: ['posted', 'cancelled']
+                others_can_view:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                submitted_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                file_upload:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .file: {}
+                file_kind:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                file_description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field:
+                        onmodel: False
+                    .string: {}
+                cv:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .nullable: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                diplomas:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                publications:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                self_evaluation_report:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .nullable: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                attachment_files:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .structarray:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        user-interests:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.UserInterest
+                filter_fields: [user]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .ref:
+                        to: api/users
+                area:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/subject-areas
+                subject:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/subjects
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/institutions
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/departments
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        assistants:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.InstitutionManager
+                model_serializers: [apella.serializers.mixins.Assistants]
+                mixins: [apella.views.mixins.AssistantList, apella.views.mixins.CandidateProfile]
+                ordering_fields: [user_id, user__email, user__username]
+                search_fields: [user__id, user__username, user__email, user__first_name__el, user__last_name__el, user__last_name__en, user__first_name__en]
+                filter_fields: [is_verified, is_rejected, verification_pending, departments, is_secretary, can_create_positions, institution]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                institution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .ref:
+                        to: api/institutions
+                departments:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/departments
+                        many: True
+                manager_role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['institutionmanager', 'assistant']
+                    .required: {}
+                can_create_registries:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                can_create_positions:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                is_secretary:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                is_verified:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                verified_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                    .readonly: {}
+                is_rejected:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                    .readonly: {}
+                rejected_reason:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                changes_request:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                    .readonly: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .required: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        username:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        password:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        email:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .email: {}
+                            .required: {}
+                        role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['assistant']
+                            .readonly: {}
+                        first_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        last_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        father_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .struct:
+                                el:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                en:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                        login_method:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        is_active:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        email_verified:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_set_academic:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        can_upgrade_role:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                            .readonly: {}
+                        shibboleth_idp:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        shibboleth_schac_home_organization:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .readonly: {}
+                        id_passport:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        mobile_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        home_phone_number:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .required: {}
+                        has_accepted_terms:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        accepted_terms_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        old-users:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.OldApellaUserMigrationData
+                ordering_fields: [user_id, username, email, surname_el, role, role_status, migrated_at]
+                search_fields: [user_id, username, email, surname_el, shibboleth_id, surname_en, role, role_status]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                user_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .text: {}
+                username:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .text: {}
+                shibboleth_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .text: {}
+                role:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .text: {}
+                name_el:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                surname_el:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                fathername_el:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                name_en:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                surname_en:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                fathername_en:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                email:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .text: {}
+                mobile:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                phone:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                person_id_number:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                is_foreign:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                speaks_greek:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_subject_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_rank:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_institution_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_institution_freetext:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_department_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_appointment_gazette_url:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_subject_from_appointment:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_subject_optional_freetext:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                professor_institution_cv_url:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_institution_id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_appointer_authority:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_appointer_fullname:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_name_el:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_surname_el:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_fathername_el:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_name_en:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_surname_en:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_fathername_en:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_mobile:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_phone:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                manager_deputy_email:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                role_status:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                migrated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                    .readonly: {}
+            .actions:
+                .list: {}
+                .update: {}
+                .retrieve: {}
+        user-applications:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.UserApplication
+                mixins: [apella.views.mixins.UserApplicationMixin]
+                model_serializers: [apella.serializers.mixins.UserApplications]
+                filter_fields: [state, app_type, user_id]
+                search_fields: [user__id, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                app_type:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['tenure', 'renewal']
+                state:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['pending', 'approved', 'rejected']
+                    .readonly: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: api/users
+                department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: api/departments
+                created_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {}
+                    .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                position_id:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .integer: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_position_from_application
+                position_state:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .string: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.get_position_state_from_application
+                can_accept_candidacies:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .boolean: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.position.position_can_accept_candidacies
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .delete: {}
+                .retrieve: {}
+        positions-portal:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.Position
+                model_serializers: [apella.serializers.mixins.PositionsPortal]
+                mixins: [apella.views.mixins.PositionsPortal]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+            .actions:
+                .list: {}
+                .retrieve: {}

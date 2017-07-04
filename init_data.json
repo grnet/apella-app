@@ -1,0 +1,85 @@
+{
+"actions" : [
+{
+    "user": "admin",
+    "action": "loadinstitutions",
+    "input": {
+        "arg1": "resources/institutions.csv"
+    }
+},
+{
+    "user": "admin",
+    "action": "loadschools",
+    "input": {
+        "arg1": "resources/schools.csv"
+    }
+},
+{
+    "user": "admin",
+    "action": "loaddepartments",
+    "input": {
+        "arg1": "resources/departments.csv"
+    }
+},
+{
+    "user": "admin",
+    "action": "loadsubjects",
+    "input": {
+        "arg1": "resources/subject_areas_subjects.csv"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "arg1": "helpdeskadmin",
+        "role": "helpdeskadmin",
+        "arg2": "APELLA_PASSWORDS_FILE",
+        "arg3": "Χαριτίνη",
+        "arg4": "Μπλιάτσιου",
+        "arg5": "Αθανάσιος",
+        "first_name_en": "Charitini",
+        "last_name_en": "Bliatsiou",
+        "father_name_en": "Athanasios",
+        "email": "charitini@grnet.gr"
+    }
+},
+{
+    "user": "1",
+    "action": "professor-rank-add",
+    "input": {
+        "arg1": "Καθηγητής",
+        "arg2": "Professor"
+    },
+    "db_state_change" : {
+        "object" : {"Professor rank" : "1"},
+        "change" : "new professor rank"
+    }
+},
+{
+    "user": "1",
+    "action": "professor-rank-add",
+    "input": {
+        "arg1": "Αναπληρωτής Καθηγητής",
+        "arg2": "Associate Professor"
+    },
+    "db_state_change" : {
+        "object" : {"Professor rank" : "1"},
+        "change" : "new professor rank"
+    }
+},
+{
+    "user": "1",
+    "action": "professor-rank-add",
+    "input": {
+        "arg1": "Επίκουρος Καθηγητής",
+        "arg2": "Assistant Professor"
+    },
+    "db_state_change" : {
+        "object" : {"Professor rank" : "1"},
+        "change" : "new professor rank"
+    }
+}
+]
+}
+

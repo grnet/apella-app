@@ -1,0 +1,19 @@
+{{# if fattrs.text}}
+  <div class="flex flex-100">{{t fattrs.text }}</div>
+{{/if}}
+{{#each choices as |choice|}}
+  <md-input-container class="flex flex-25">
+    {{#paper-checkbox
+      value=(array-contains value choice.[0])
+      onChange=(action 'handleChange' choice.[0])
+      class="md-primary"}}
+      {{t choice.[1] }}
+    {{/paper-checkbox}}
+  </md-input-container>
+{{/each}}
+{{#if error}}
+  <div class="md-input-error">{{t error}}</div>
+{{/if}}
+{{#if errors }}
+  <div class="md-input-error flex flex-100">{{errors}}</div>
+{{/if}}

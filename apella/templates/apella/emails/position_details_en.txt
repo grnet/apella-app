@@ -1,0 +1,10 @@
+Title: {{ position.title }}
+Code: {{ position.code }}
+Institution: {{ position.department.institution.title.en }}
+School: {{ position.department.school.title.en }}
+Department: {{ position.department.title.en }}
+Discipline: {{ position.discipline }}
+{% if position.position_type == 'election' %}
+{% if starts_at %}Submission Opening Date: {{ starts_at|date:"d/m/Y" }}{% endif %}
+{% if ends_at %}Submission End Date: {{ ends_at|date:"d/m/Y" }}{% endif %}
+{% endif %}

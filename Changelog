@@ -1,0 +1,15 @@
+0.2.2
+=====
+* Introduce terms of use.
+    Users must accept terms of use to continue.
+
+0.2.3
+=====
+* Positions with multiple ranks
+    On position creation, user can select one or more ranks. As a result, one
+    or more positions are created, respectively.
+
+0.2.4
+=====
+* Upgrade to apimas 0.3
+* Apply department filter that is computed by filter institution

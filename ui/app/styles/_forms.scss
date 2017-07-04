@@ -1,0 +1,23 @@
+// colors
+$gray-label: rgba(0,0,0,.54);
+$gray-disabled-value: rgba(0,0,0,.5);
+
+*[disabled] *:not(label){
+    color: $gray-disabled-value !important;
+}
+*[disabled] label {
+    color:  $gray-label !important;
+}
+
+.model-form .gen-form-field-select-table + .md-input-hint {
+  top: 0;
+  margin-bottom: 18px;
+}
+
+.add-remove-tables {
+    .table-label {
+        md-icon {
+            vertical-align: top;
+        }
+    }
+}

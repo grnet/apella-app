@@ -1,0 +1,23 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Για την επαλήθευση του e-mail σας πατήστε στον ακόλουθο σύνδεσμο:
+{{ protocol }}://{{ domain }}/{{ url }}
+
+{% if not user.shibboleth_id %}
+Όνομα χρήστη: {{ user.username }}
+{% endif %}
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+To verify your e-mail click on the following link:
+{{ protocol }}://{{ domain }}/{{ url }}
+
+{% if not user.shibboleth_id %}
+Username: {{ user.username }}
+{% endif %}
+
+{% endblock content_en %}

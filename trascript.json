@@ -1,0 +1,792 @@
+{
+"actions" : [
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "manager",
+        "role": "institutionmanager",
+        "first_name_el": "Γεώργιος",
+        "last_name_el": "Κορφιάτης",
+        "father_name_el": "Ιωάννης",
+        "first_name_en": "George",
+        "last_name_en": "Korfiatis",
+        "father_name_en": "John",
+        "email": "george@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "1"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "loadinstitutions",
+    "input": {
+        "arg1": "resources/institutions.csv"
+    },
+    "db_state_change" : {
+        "object" : {},
+        "change" : "load institutions"
+    }
+},
+{
+    "user": "admin",
+    "action": "loadschools",
+    "input": {
+        "arg1": "resources/schools.csv"
+    },
+    "db_state_change" : {
+        "object" : {},
+        "change" : "load schools"
+    }
+},
+{
+    "user": "admin",
+    "action": "loaddepartments",
+    "input": {
+        "arg1": "resources/departments.csv"
+    },
+    "db_state_change" : {
+        "object" : {},
+        "change" : "load departments"
+    }
+},
+{
+    "user": "admin",
+    "action": "loadsubjects",
+    "input": {
+        "arg1": "resources/subject_areas_subjects.csv"
+    },
+    "db_state_change" : {
+        "object" : {},
+        "change" : "load subject areas and subjects"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "manager",
+        "role": "institutionmanager",
+        "arg2": "11"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "1"},
+        "change" : "new user"
+    }
+},
+
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "candidate",
+        "role": "candidate",
+        "first_name_el": "Μαρία",
+        "last_name_el": "Παπαδοπούλου",
+        "father_name_el": "Πέτρος",
+        "first_name_en": "Maria",
+        "last_name_en": "Papadopoulou",
+        "father_name_en": "Peter",
+        "email": "maria@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "2"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "candidate-add",
+    "input": {
+        "arg1": "candidate"
+    },
+    "db_state_change" : {
+        "object" : {"Candidate" : "1"},
+        "change" : "new candidate"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "professor",
+        "role": "professor",
+        "first_name_el": "Παναγιώτης",
+        "last_name_el": "Μαρκάτος",
+        "father_name_el": "Κωνσταντίνος",
+        "first_name_en": "Panos",
+        "last_name_en": "Markatos",
+        "father_name_en": "Konstantinos",
+        "email": "panos@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "3"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "committee",
+        "role": "professor",
+        "first_name_el": "Όλγα",
+        "last_name_el": "Κατεχάκη",
+        "father_name_el": "Σταύρος",
+        "first_name_en": "Olga",
+        "last_name_en": "Katechaki",
+        "father_name_en": "Stavros",
+        "email": "olga@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "4"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "assistant",
+        "role": "assistant",
+        "first_name_el": "Παρασκευή",
+        "last_name_el": "Παρασκευά",
+        "father_name_el": "Σωκράτης",
+        "first_name_en": "Friday",
+        "last_name_en": "Paraskeya",
+        "father_name_en": "Socrates",
+        "email": "friday@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "5"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "assistant",
+        "role": "assistant",
+        "arg2": "11"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "2"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "professor-add",
+    "input": {
+        "arg1": "professor",
+        "arg2": "11",
+        "arg3": "97"
+    },
+    "db_state_change" : {
+        "object" : {"Professor" : "1"},
+        "change" : "new professor"
+    }
+},
+{
+    "user": "admin",
+    "action": "professor-add",
+    "input": {
+        "arg1": "committee",
+        "arg2": "11",
+        "arg3": "97"
+    },
+    "db_state_change" : {
+        "object" : {"Professor" : "2"},
+        "change" : "new professor"
+    }
+},
+{
+    "user": "1",
+    "action": "department-modify",
+    "input": {
+        "arg1": "97",
+        "dep_number": "35"
+    },
+    "db_state_change" : {
+        "object" : {},
+        "change" : ""
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Αναπληρωτής Καθηγητής",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Γενική Εκκλησιαστική Ιστορία, από την άλωση μέχρι σήμερα",
+        "arg5" : "1",
+        "arg6" : "1",
+        "arg7" : "http://www.google.com",
+        "arg8" : "2016-08-15",
+        "arg9" : "2016-09-30",
+        "arg10" : "2016-10-30",
+        "arg11" : "Θεολογία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "1"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "department-modify",
+    "input": {
+        "arg1": "108",
+        "dep_number": "42"
+    },
+    "db_state_change" : {
+        "object" : {},
+        "change" : "new professor rank"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Επίκουρος Καθηγητής",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Κοινωνική Ψυχολογία στην Εκπαίδευση",
+        "arg5" : "1",
+        "arg6" : "1",
+        "arg7" : "http://www.etsy.com",
+        "arg8" : "2016-07-15",
+        "arg9" : "2016-09-30",
+        "arg10" : "2017-02-01",
+        "arg11" : "Ψυχολογία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "2"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "department-modify",
+    "input": {
+        "arg1": "109",
+        "dep_number": "42"
+    },
+    "db_state_change" : {
+        "object" : {},
+        "change" : "new professor rank"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Πρώτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Πειραματική Αστροσωματιδιακή Φυσική – Φυσική Ποζιτρονίου",
+        "arg5" : "2",
+        "arg6" : "2",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2016-07-15",
+        "arg9" : "2016-09-30",
+        "arg10" : "2017-02-01",
+        "arg11" : "Φυσική"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "2"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Αναπληρωτής Καθηγητής",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Νεογνολογία",
+        "arg5" : "1",
+        "arg6" : "3",
+        "arg7" : "http://www.yahoo.com",
+        "arg8" : "2016-07-15",
+        "arg9" : "2016-09-30",
+        "arg10" : "2017-02-01",
+        "arg11" : "Νεογνολογία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "3"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Πρώτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Κοινωνική Ψυχολογία στην Εκπαίδευση",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2016-07-15",
+        "arg9" : "2017-01-09",
+        "arg10" : "2017-03-30",
+        "arg11" : "Ψυχολογία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "2"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Τρίτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Οικολογία",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2016-07-15",
+        "arg9" : "2017-09-30",
+        "arg10" : "2017-12-30",
+        "arg11" : "Οικολογία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "6"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Τεταρτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Αθλητισμός"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "7"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Τεταρτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Αθλητισμός"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "7"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Καθηγητής Πεμπτης Βαθμίδας",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Αθλητισμός"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "8"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Defence Against the Dark Arts",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://www.yarn.com",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2015-12-30",
+        "arg11" : "Μαγεία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Care of Magical Creatures",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Αθλητισμος",
+        "arg5" : "2",
+        "arg6" : "1",
+        "arg7" : "http://harrypotter.wikia.com/wiki/Rubeus_Hagrid",
+        "arg8" : "2015-07-15",
+        "arg9" : "2015-09-30",
+        "arg10" : "2017-12-30",
+        "arg11" : "Μαγεία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "1",
+    "action": "position-add",
+    "input": {
+        "arg1": "Κλειστή θέση",
+        "arg2": "1",
+        "arg3" : "97",
+        "arg4" : "Γενική Εκκλησιαστική Ιστορία, από την άλωση μέχρι σήμερα",
+        "arg5" : "1",
+        "arg6" : "1",
+        "arg7" : "http://www.google.com",
+        "arg8" : "2016-08-15",
+        "arg9" : "2016-09-30",
+        "arg10" : "2016-10-30",
+        "arg11" : "Θεολογία"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "11"},
+        "change" : "new position"
+    }
+},
+{
+    "user": "2",
+    "action": "position-list",
+    "output": {"Position" : "1"}
+},
+{
+    "user": "1",
+    "action": "registry-add",
+    "input": {
+        "arg1" : "97",
+        "arg2" : "internal",
+        "members": "1"
+    },
+    "db_state_change" : {
+        "object" : {"Registry" : "1"},
+        "change" : "new registry"
+    }
+},
+{
+    "user": "1",
+    "action": "registry-add",
+    "input": {
+        "arg1" : "97",
+        "arg2" : "external",
+        "members": "2"
+    },
+    "db_state_change" : {
+        "object" : {"Registry" : "2"},
+        "change" : "new registry"
+    }
+},
+{
+    "user": "2",
+    "action": "candidacy-add",
+    "input": {
+        "arg1" : "1",
+        "arg2" : "2"
+    },
+    "db_state_change" : {
+        "object" : {"Candidacy" : "1"},
+        "change" : "new candidacy"
+    }
+},
+{
+    "user": "2",
+    "action": "candidacy-add",
+    "input": {
+        "arg1" : "4",
+        "arg2" : "2"
+    },
+    "db_state_change" : {
+        "object" : {"Candidacy" : "3"},
+        "change" : "new candidacy"
+    }
+},
+
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "1",
+        "electors" : "1",
+        "committee" : "1"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "1"},
+        "change" : {
+            "position.electors" : "3",
+            "position.state" : "electing"
+        }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "1",
+        "elected" : "2"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "1"},
+        "change" : { "position.elected" : "2", "position.status" : "successful" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "6",
+        "electors" : "1",
+        "state" : "cancelled"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "6"},
+        "change" : {"position.status" : "cancelled" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "8",
+        "electors": "1",
+        "committee": "2",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "8"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "9",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "9",
+        "state" : "failed"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "9"},
+        "change" : {"position.status" : "failed" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "10",
+        "state" : "electing"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : {"position.status" : "electing" }
+    }
+},
+{
+    "user": "1",
+    "action": "position-modify",
+    "input": {
+        "arg1" : "10",
+        "state" : "revoked"
+    },
+    "db_state_change" : {
+        "object" : {"Position" : "10"},
+        "change" : {"position.status" : "revoked" }
+    }
+},
+
+
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "helpdeskadmin",
+        "role": "helpdeskadmin",
+        "first_name_el": "Μαρία",
+        "last_name_el": "Παπαδοπούλου",
+        "father_name_el": "Πέτρος",
+        "first_name_en": "Maria",
+        "last_name_en": "Papadopoulou",
+        "father_name_en": "Peter",
+        "email": "admin@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "6"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "helpdeskuser",
+        "role": "helpdeskuser",
+        "first_name_el": "Ναταλία",
+        "last_name_el": "Τζωρτζίδου",
+        "father_name_el": "Πέτρος",
+        "first_name_en": "Natalia",
+        "last_name_en": "Tzwrtzidou",
+        "father_name_en": "Peter",
+        "email": "natalia@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "7"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "assistant2",
+        "role": "assistant",
+        "first_name_el": "Μαρία",
+        "last_name_el": "Βοηθητική",
+        "father_name_el": "Κωνσταντίνος",
+        "first_name_en": "Mary",
+        "last_name_en": "Assistant",
+        "father_name_en": "Constantine",
+        "email": "mary_ass@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "8"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "assistant2",
+        "role": "assistant",
+        "arg2": "11"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "3"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "manager2",
+        "role": "institutionmanager",
+        "first_name_el": "Νίκος",
+        "last_name_el": "Νικολάου",
+        "father_name_el": "Νικήτα",
+        "first_name_en": "Nick",
+        "last_name_en": "Nikolaou",
+        "father_name_en": "Nikitas",
+        "email": "nicknick@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "9"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "manager2",
+        "role": "institutionmanager",
+        "arg2": "12"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "4"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "user-add",
+    "input": {
+        "username": "assistant3",
+        "role": "assistant",
+        "first_name_el": "Ζωή",
+        "last_name_el": "Ζωηρή",
+        "father_name_el": "Ζώης",
+        "first_name_en": "Zoe",
+        "last_name_en": "Zoere",
+        "father_name_en": "Zoes",
+        "email": "zoe@gmail.com"
+    },
+    "db_state_change" : {
+        "object" : {"ApellaUser" : "10"},
+        "change" : "new user"
+    }
+},
+{
+    "user": "admin",
+    "action": "institutionmanager-add",
+    "input": {
+        "arg1": "assistant3",
+        "role": "assistant",
+        "arg2": "12"
+    },
+    "db_state_change" : {
+        "object" : {"InstitutionManager" : "4"},
+        "change" : "new user"
+    }
+}
+
+]
+}
+

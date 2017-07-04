@@ -1,0 +1,27 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+{% if position.user_application %}
+Σας ενημερώνουμε ότι έχει δημιουργηθεί στο πληροφοριακό σύστημα ΑΠΕΛΛΑ μια νέα θέση που ανιστοιχεί στην αίτηση με κωδικό {{position.user_application.id}}.
+{% else %}
+Σας ενημερώνουμε ότι καταχωρίστηκε στο πληροφοριακό σύστημα ΑΠΕΛΛΑ μία νέα θέση:
+{% endif %}
+
+{% include "apella/emails/position_details_el.txt" %}
+
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+{% if position.user_application %}
+We inform you that a new position which corresponds to the application with ID {{position.user_application.id}}, has been created in the APELLA information system.
+{% else %}
+We inform you that a new position has been announced in the Apella information system:
+{% endif %}
+
+{% include "apella/emails/position_details_en.txt" %}
+
+{% endblock content_en %}

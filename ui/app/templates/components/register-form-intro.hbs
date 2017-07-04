@@ -1,0 +1,21 @@
+{{#if object.warn_legacy }}
+  {{toolbar-message warn=true message='user.register.legacy.warning' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='person')}}
+{{/if}}
+<md-content class="md-padding">
+{{#if (eq object.userRole 'professor') }}
+  {{#if object.registration_token }}
+  {{t 'register.domestic.intro' }}
+  {{#if object.remote_data}}
+  {{partial '_remote_data_card'}}
+  {{/if}}
+  {{else}}
+  {{t 'register.foreign.intro' }}
+  {{/if}}
+{{/if}}
+{{#if (eq object.userRole 'candidate')}}
+  {{t 'register.candidate.intro' }}
+{{/if}}
+{{#if (eq object.userRole 'manager')}}
+  {{t 'register.manager.intro' }}
+{{/if}}
+</md-content>

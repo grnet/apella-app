@@ -1,0 +1,7 @@
+Run queries on old production database.
+
+Copy csv files into /var/lib/apella/data/migrate_data/ on new apella
+worker where apella_init.sh is run.
+
+For testing, comment out the "and p.id in :positions_to_migrate" part since
+those IDs are for the production database.

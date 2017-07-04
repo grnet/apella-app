@@ -1,0 +1,14 @@
+{{#gen-page classNames=(if gen.nested 'nested' '') as |p|}}
+  {{p.toolbar
+    pageTitle=(or (t gen.page.title model) (t 'error.page.title'))
+    breadcrumbs=gen.breadcrumbs
+    toolbarActions=gen.toolbarActions
+    model=model
+    tabs=gen.tabs
+  }}
+
+  {{#p.content classNames='md-padding'}}
+    {{paper-icon "error-outline"}}
+    {{ t 'generic.error' }}
+  {{/p.content}}
+{{/gen-page}}

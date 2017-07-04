@@ -1,0 +1,981 @@
+{
+  "positions": {
+    "retrieve": {
+      "institutionmanager": {
+        "*": {
+          "owned": "4.3.9"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "open": "3.3.4"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "owned": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.14"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "participates": "1.3", 
+          "open": "1.3"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.14"
+        }
+      }
+    }, 
+    "create": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.10"
+        }
+      }
+    }, 
+    "list": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.9"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.2"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.13"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "3.3.2"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.13"
+        }
+      }
+    }, 
+    "partial_update": {
+      "institutionmanager": {
+        "elected": {
+          "electing": "4.3.11.f"
+        }, 
+        "state": {
+          "electing": "4.3.11.h", 
+          "before_open": "4.3.11.b"
+        }, 
+        "committee": {
+          "electing": "4.3.15"
+        }, 
+        "ends_at": {
+          "before_open": "4.3.11.c"
+        }, 
+        "starts_at": {
+          "before_open": "4.3.11.c"
+        }, 
+        "electors": {
+          "closed": "4.3.14"
+        }
+      }, 
+      "helpdeskadmin": {
+        "starts_at": {
+          "*": "5.2.4"
+        }, 
+        "ends_at": {
+          "*": "5.2.4"
+        }
+      }
+    }
+  }, 
+  "subject-areas": {
+    "retrieve": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.10"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.2"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.3.3"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "destroy": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "list": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.10"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.1"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "3.3.1"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }
+  }, 
+  "user-interests": {
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "list": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "partial_update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }
+  }, 
+  "departments": {
+    "retrieve": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.10"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.1"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.2.1"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "partial_update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "destroy": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "list": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.21"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.3.14"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }
+  }, 
+  "professors": {
+    "retrieve": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.3"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.1.3"
+        }
+      }
+    }, 
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "list": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.2"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.1.2"
+        }
+      }
+    }, 
+    "partial_update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.5"
+        }
+      }
+    }
+  }, 
+  "candidacies": {
+    "retrieve": {
+      "professors": {
+        "*": {
+          "participates": "1.3.5", 
+          "others_can_view": "1.3.5", 
+          "owned": "1.3.5"
+        }, 
+        "candidate": {
+          "owned": "1.3.3"
+        }
+      }, 
+      "institutionmanager": {
+        "*": {
+          "owned": "4.3.16"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "others_can_view": "3.3.5", 
+          "owned": "3.3.5"
+        }, 
+        "candidate": {
+          "owned": "3.3.5"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "owned": "4.3.16"
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.17"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.17"
+        }
+      }
+    }, 
+    "partial_update": {
+      "helpdeskadmin": {
+        "active": {
+          "after_closed": "5.2.3.a", 
+          "electors_meeting_open": "5.2.3.a"
+        }
+      }
+    }, 
+    "destroy": {
+      "professors": {
+        "*": {
+          "open": "1.3.13", 
+          "owned": "1.3.13"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "open": "3.3.7", 
+          "owned": "3.3.7"
+        }
+      }
+    }, 
+    "create": {
+      "professors": {
+        "*": {
+          "*": "1.3.9"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.3"
+        }
+      }
+    }, 
+    "list": {
+      "professors": {
+        "*": {
+          "participates": "1.3.3", 
+          "others_can_view": "1.3.3", 
+          "owned": "1.3.3"
+        }, 
+        "candidate": {
+          "owned": "1.3.3"
+        }
+      }, 
+      "institutionmanager": {
+        "*": {
+          "owned": "4.3.16"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "others_can_view": "3.3.5", 
+          "owned": "3.3.5"
+        }, 
+        "candidate": {
+          "owned": "3.3.5"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "owned": "4.3.16"
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.16"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.16"
+        }
+      }
+    }
+  }, 
+  "institution-managers": {
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "list": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "partial_update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }
+  }, 
+  "candidates": {
+    "retrieve": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.3"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.1.3"
+        }
+      }
+    }, 
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "list": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.2"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.1.2"
+        }
+      }
+    }, 
+    "partial_update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.3"
+        }
+      }
+    }
+  }, 
+  "helpdeskusers": {
+    "retrieve": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "list": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "partial_update": {
+      "helpdeskadmin": {
+        "user.en": {
+          "*": ""
+        }, 
+        "user.el": {
+          "*": ""
+        }, 
+        "user.email": {
+          "*": ""
+        }
+      }
+    }
+  }, 
+  "schools": {
+    "retrieve": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.10"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.1"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.2.1"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "partial_update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "destroy": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "list": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.21"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.3.14"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }
+  }, 
+  "assistants": {
+    "retrieve": {
+      "institutionmanager": {
+        "*": {
+          "owned": "4.3.7"
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.2"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.1.2"
+        }
+      }
+    }, 
+    "create": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.7"
+        }
+      }
+    }, 
+    "list": {
+      "institutionmanager": {
+        "*": {
+          "owned": "4.3.7"
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.2"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.1.2"
+        }
+      }
+    }, 
+    "partial_update": {
+      "institutionmanager": {
+        "user.profile": {
+          "owned": "4.3.7"
+        }, 
+        "user.is_active": {
+          "owned": "4.3.7"
+        }
+      }
+    }
+  }, 
+  "subjects": {
+    "retrieve": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.10"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.2"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.3.3"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "destroy": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "list": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.10"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.1"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "3.3.1"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": ""
+        }
+      }
+    }, 
+    "update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": ""
+        }
+      }
+    }
+  }, 
+  "institutions": {
+    "retrieve": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.22"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.10"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.8"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.3.15"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.8"
+        }
+      }
+    }, 
+    "partial_update": {
+      "institutionmanager": {
+        "organization": {
+          "owned": ""
+        }, 
+        "regulatory_framework": {
+          "owned": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "destroy": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "create": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }, 
+    "list": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.22"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.10"
+        }
+      }, 
+      "assistant": {
+        "*": {
+          "*": ""
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.8"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.3.15"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.8"
+        }
+      }
+    }, 
+    "update": {
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.2.5"
+        }
+      }
+    }
+  }, 
+  "registries": {
+    "retrieve": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.1"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.9"
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.9"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.3.14"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.1.9"
+        }
+      }
+    }, 
+    "create": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.3"
+        }
+      }
+    }, 
+    "list": {
+      "institutionmanager": {
+        "*": {
+          "*": "4.3.1"
+        }
+      }, 
+      "candidate": {
+        "*": {
+          "*": "3.3.9"
+        }
+      }, 
+      "helpdeskadmin": {
+        "*": {
+          "*": "5.1.9"
+        }
+      }, 
+      "professor": {
+        "*": {
+          "*": "1.3.14"
+        }
+      }, 
+      "helpdeskuser": {
+        "*": {
+          "*": "5.1.9"
+        }
+      }
+    }, 
+    "partial_update": {
+      "institutionmanager": {
+        "members": {
+          "owned": "4.3.6"
+        }
+      }
+    }
+  }
+}

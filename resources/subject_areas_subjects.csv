@@ -1,0 +1,500 @@
+1;ΛΟΓΙΚΗ;LOGIC
+2;ΜΑΘΗΜΑΤΙΚΑ;MATHEMATICS
+3;ΠΛΗΡΟΦΟΡΙΚΗ;COMPUTER SCIENCE
+4;ΑΣΤΡΟΝΟΜΙΑ ΚΑΙ ΑΣΤΡΟΦΥΣΙΚΗ;ASTRONOMY AND ASTROPHYSICS
+5;ΦΥΣΙΚΗ;PHYSICS
+6;ΧΗΜΕΙΑ;CHEMISTRY
+7;ΕΠΙΣΤΗΜΕΣ THΣ ΖΩΗΣ               ;LIFE SCIENCES
+8;ΕΠΙΣΤΗΜΕΣ ΤΗΣ ΓΗΣ ΚΑΙ TOY ΔΙΑΣΤΗΜΑΤΟΣ;EARTH AND SPACE SCIENCES
+9;ΓΕΩΠΟΝΙΚΕΣ ΕΠΙΣΤΗΜΕΣ;AGRICULTURAL SCIENCES
+10;ΙΑΤΡΙΚΕΣ ΕΠΙΣΤΗΜΕΣ;MEDICAL SCIENCES
+11;ΤΕΧΝΟΛΟΓΙΑ KAI ΕΠΙΣΤΗΜΕΣ ΜΗΧΑΝΙΚΩΝ      ;TECHNOLOGICAL SCIENCES AND ENGINEERING
+12;ΑΝΘΡΩΠΟΛΟΓΙΑ (ΜΗ ΦΥΣΙΚΗ) ;ANTHROPOLOGY (NON PHYSICAL)
+13;ΔΗΜΟΓΡΑΦΙΑ;DEMOGRAPHY
+14;ΟΙΚΟΝΟΜΙΚΕΣ ΕΠΙΣΤΗΜΕΣ;ECONOMIC SCIENCES
+15;ΙΣΤΟΡΙΑ ;HISTORY
+16;ΝΟΜΙΚΕΣ ΕΠΙΣΤΗΜΕΣ;LEGAL SCIENCES
+17;ΓΛΩΣΣΟΛΟΓΙΑ;LINGUISTICS
+18;ΠΑΙΔΑΓΩΓΙΚΗ;PEDAGOGY
+19;ΠΟΛΙΤΙΚΕΣ ΕΠΙΣΤΗΜΕΣ;POLITICAL SCIENCES
+20;ΨΥΧΟΛΟΓΙΑ;PSYCHOLOGY
+21;ΕΠΙΣΤΗΜΕΣ ΤΕΧΝΩΝ ΚΑΙ ΓΡΑΜΜΑΤΩΝ ;SCIENCES OF ARTS AND LETTERS
+22;ΚΟΙΝΩΝΙΟΛΟΓΙΑ ;SOCIOLOGY
+23;ΗΘΙΚΗ ;ΕTHICS
+24;ΦΙΛΟΣΟΦΙΑ ;PHILOSOPHY
+25;ΘΕΟΛΟΓΙΑ ;THEOLOGY
+26;ΦΙΛΟΛΟΓΙΑ;PHILOLOGY
+27;ΕΠΙΣΤΗΜΗ ΤΩΝ ΥΛΙΚΩΝ;MATERIALS SCIENCE
+1.1;ΓΕΝΙΚΗ ΛΟΓΙΚΗ ;GENERAL LOGIC
+1.2;ΠΑΡΑΓΩΓΙΚΗ ΛΟΓΙΚΗ                 ;DEDUCTIVE LOGIC
+1.3;ΜΑΘΗΜΑΤΙΚΗ (ΣΥΜΒΟΛΙΚΗ) ΛΟΓΙΚΗ;MATHEMATICAL (SYMBOLIC) LOGIC
+1.4;ΕΠΑΓΩΓΙΚΗ ΛΟΓΙΚΗ                 ;INDUCTIVE LOGIC
+1.5;ΨΗΦΙΑΚΗ ΛΟΓΙΚΗ;DIGITAL LOGIC
+1.6;ΦΙΛΟΣΟΦΙΚΗ ΛΟΓΙΚΗ;PHILOSOPHICAL LOGIC
+1.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΤΗΣ ΛΟΓΙΚΗΣ;OTHER SPECIALTIES OF LOGIC
+2.1; ΙΣΤΟΡΙΑ ΚΑΙ ΒΙΟΓΡΑΦΙΕΣ;HISTORY AND BIOGRAPHY
+2.2;ΜΑΘΗΜΑΤΙΚΗ ΛΟΓΙΚΗ ΚΑΙ ΘΕΜΕΛΙΩΣΗ ΤΩΝ MΑΘΗΜΑΤΙΚΩΝ;MATHEMATICAL LOGIC AND FOUNDATIONS
+2.3;ΣΥΝΔΥΑΣΤΙΚΗ;COMBINATORICS
+2.4;ΔΙΑΤΑΞΕΙΣ, ΣΥΝΔΕΣΜΟΙ (ΠΛΕΓΜΑΤΑ), ΔΙΑΤΕΤΑΓΜΕΝΕΣ ΑΛΓΕΒΡΙΚΕΣ ΔΟΜΕΣ;ORDER, LATTICES, ORDERED ALGEBRAIC STRUCTURES
+2.5;ΓΕΝΙΚΑ ΑΛΓΕΒΡΙΚΑ ΣΥΣΤΗΜΑΤΑ;GENERAL ALGEBRAIC SYSTEMS
+2.6;ΘΕΩΡΙΑ ΑΡΙΘΜΩΝ;NUMBER THEORY
+2.7;ΘΕΩΡΙΑ ΣΩΜΑΤΩΝ ΚΑΙ ΠΟΛΥΩΝΥΜΩΝ;FIELD THEORY AND POLYNOMIALS
+2.8;(ANTI)ΜΕΤΑΘΕΤΙΚΗ  ΑΛΓΕΒΡΑ;COMMUTATIVE ALGEBRA
+2.9;ΑΛΓΕΒΡΙΚΗ ΓΕΩΜΕΤΡΙΑ;ALGEBRAIC GEOMETRY
+2.10;ΓΡΑΜΜΙΚΗ ΚΑΙ ΠΟΛΥΓΡΑΜΜΙΚΗ ΑΛΓΕΒΡΑ, ΘΕΩΡΙΑ ΠΙΝΑΚΩΝ ;"LINEAR AND MULTILINEAR ALGEBRA, MATRIX THEORY "
+2.11;ΠΡΟΣΕΤΑΙΡΙΣΤΙΚΟΙ ΔΑΚΤΥΛΙΟΙ ΚΑΙ ΑΛΓΕΒΡΕΣ;ASSOCIATIVE RINGS AND ALGEBRAS
+2.12;ΜΗ ΠΡΟΣΕΤΑΙΡΙΣΤΙΚΟΙ ΔΑΚΤΥΛΙΟΙ ΚΑΙ ΑΛΓΕΒΡΕΣ;NONASSOCIATIVE RINGS AND ALGEBRAS
+2.13;ΘΕΩΡΙΑ ΚΑΤΗΓΟΡΙΩΝ, ΟΜΟΛΟΓΙΚΗ ΑΛΓΕΒΡΑ;"CATEGORY THEORY, HOMOLOGICAL ALGEBRA"
+2.14;Κ-ΘΕΩΡΙΑ;K-THEORY
+2.15;ΘΕΩΡΙΑ ΟΜΑΔΩΝ ΚΑΙ ΓΕΝΙΚΕΥΣΕΙΣ;GROUP THEORY AND GENERALIZATIONS
+2.16;ΤΟΠΟΛΟΓΙΚΕΣ ΟΜΑΔΕΣ, ΟΜΑΔΕΣ LIE;TOPOLOGICAL GROUPS, LIE GROUPS
+2.17;ΠΡΑΓΜΑΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ;REAL FUNCTIONS
+2.18;ΜΕΤΡΟ ΚΑΙ ΟΛΟΚΛΗΡΩΣΗ;MEASURE AND INTEGRATION
+2.19;ΣΥΝΑΡΤΗΣΕΙΣ ΜΙΑΣ ΜΙΓΑΔΙΚΗΣ ΜΕΤΑΒΛΗΤΗΣ;FUNCTIONS OF A COMPLEX VARIABLE
+2.20;ΘΕΩΡΙΑ ΔΥΝΑΜΙΚΟΥ;POTENTIAL THEORY
+2.21;ΑΝΑΛΥΤΙΚΟΙ ΧΩΡΟΙ ΜΙΓΑΔΙΚΩΝ ΜΕΤΑΒΛΗΤΩΝ;EVERAL COMPLEX VARIABLES AND ANALYTIC SPACES
+2.22;ΣΥΝΗΘΕΙΣ ΔΙΑΦΟΡΙΚΕΣ ΕΞΙΣΩΣΕΙΣ;ORDINARY DIFFERENTIAL EQUATIONS
+2.23;ΔΙΑΦΟΡΙΚΕΣ ΕΞΙΣΩΣΕΙΣ ΜΕ ΜΕΡΙΚΕΣ ΠΑΡΑΓΩΓΟΥΣ;PARTIAL DIFFERENTIAL EQUATIONS
+2.24; ΣΥΝΑΡΤΗΣΙΑΚΕΣ ΕΞΙΣΩΣΕΙΣ ΚΑΙ ΕΞΙΣΩΣΕΙΣ ΔΙΑΦΟΡΩΝ;DIFFERENCE EQUATIONS
+2.25;ΑΡΜΟΝΙΚΗ ΑΝΑΛΥΣΗ ΕΠΙ ΕΥΚΛΕΙΔΕΙΩΝ ΧΩΡΩΝ;HARMONIC ANALYSIS ON EUCLIDEAN SPACES
+2.26;ΟΛΟΚΛΗΡΩΤΙΚΕΣ ΕΞΙΣΩΣΕΙΣ;INTEGRAL EQUATIONS
+2.27;ΣΥΝΑΡΤΗΣΙΑΚΗ ΑΝΑΛΥΣΗ;FUNCTIONAL ANALYSIS
+2.28;ΘΕΩΡΙΑ ΤΕΛΕΣΤΩΝ;OPERATOR THEORY
+2.29;ΛΟΓΙΣΜΟΣ ΜΕΤΑΒΟΛΩΝ ΚΑΙ ΒΕΛΤΙΣΤΟΣ ΕΛΕΓΧΟΣ, ΒΕΛΤΙΣΤΟΠΟΙΗΣΗ;"CALCULUS OF VARIATIONS AND OPTIMAL CONTROL, OPTIMIZATION "
+2.30;ΓΕΩΜΕΤΡΙΑ;GEOMETRY
+2.31;ΚΥΡΤΗ ΚΑΙ ΔΙΑΚΡΙΤΗ ΓΕΩΜΕΤΡΙΑ;CONVEX AND DISCRETE GEOMETRY
+2.32;ΔΙΑΦΟΡΙΚΗ ΓΕΩΜΕΤΡΙΑ;DIFFERENTIAL GEOMETRY
+2.33;ΓΕΝΙΚΗ ΤΟΠΟΛΟΓΙΑ;GENERAL TOPOLOGY
+2.34;ΑΛΓΕΒΡΙΚΗ ΤΟΠΟΛΟΓΙΑ;ALGEBRAIC TOPOLOGY
+2.35;ΘΕΩΡΙΑ ΠΙΘΑΝΟΤΗΤΩΝ ΚΑΙ ΣΤΟΧΑΣΤΙΚΕΣ ΔΙΑΔΙΚΑΣΙΕΣ;PROBABILITY THEORY AND STOCHASTIC PROCESSES
+2.36;ΣΤΑΤΙΣΤΙΚΗ;STATISTICS
+2.37;ΑΡΙΘΜΗΤΙΚΗ ΑΝΑΛΥΣΗ;NUMERICAL ANALYSIS
+2.38;ΕΠΙΧΕΙΡΗΣΙΑΚΗ ΕΡΕΥΝΑ, ΜΑΘΗΜΑΤΙΚΟΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ;OPERATIONS RESEARCH, MATHEMATICAL PROGRAMMING
+2.39;ΜΑΘΗΜΑΤΙΚΗ ΕΚΠΑΙΔΕΥΣΗ (ΔΙΔΑΚΤΙΚΗ ΜΑΘΗΜΑΤΙΚΩΝ);MATHEMATICS EDUCATION
+2.99;ΑΛΛΕΣ ΜΑΘΗΜΑΤΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER MATHEMATICAL SPECIALTIES
+3.1;ΘΕΩΡΙΑ ΥΠΟΛΟΓΙΣΤΙΚΗΣ ΕΠΙΣΤΗΜΗΣ;THEORETICAL COMPUTER SCIENCE
+3.2;ΛΟΓΙΣΜΙΚΟ;SOFTWARE
+3.3;ΥΛΙΚΟ - ΤΕΧΝΟΛΟΓΙΕΣ ΥΠΟΛΟΓΙΣΤΩΝ;HARDWARE - COMPUTER TECHNOLOGIES
+3.4;ΣΥΣΤΗΜΑΤΑ;SYSTEMS
+3.5;ΤΕΧΝΗΤΗ ΝΟΗΜΟΣΥΝΗ;ARTIFICIAL INTELLIGENCE
+3.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΤΗΣ ΠΛΗΡΟΦΟΡΙΚΗΣ;OTHER COMPUTER SCIENCE SPECIALTIES
+4.1;ΒΑΣΙΚΗ ΑΣΤΡΟΝΟΜΙΑ ΚΑΙ ΑΣΤΡΟΦΥΣΙΚΗ;FUNDAMENTAL ASTRONOMY AND ASTROPHYSICS
+4.2;ΚΟΣΜΟΛΟΓΙΑ ΚΑΙ ΣΚΟΤΕΙΝΗ ΥΛΗ;COSMOLOGY AND DARK MATTER
+4.3;ΟΜΑΔΕΣ ΓΑΛΑΞΙΩΝ, ΣΜΗΝΗ ΚΑΙ ΥΠΕΡΣΜΗΝΗ. ΔΟΜΗ ΤΟΥ ΣΥΜΠΑΝΤΟΣ;"GALAXY GROUPS, CLUSTERS, AND SUPERCLUSTERS, STRUCTURE OF THE UNIVERSE"
+4.4;ΔΟΜΗ ΤΟΥ ΓΑΛΑΞΙΑ, ΑΣΤΡΙΚΑ ΣΜΗΝΗ ΚΑΙ ΠΛΗΘΥΣΜΟΙ;GALACTIC STRUCTURE, STELLAR CLUSTERS AND POPULATIONS
+4.5;ΔΙΑΣΤΡΙΚΗ ΥΛΗ, ΑΣΤΡΙΚΗ ΔΟΜΗ ΚΑΙ ΕΞΕΛΙΞΗ;INTERSTELLAR MATTER, STELLAR STRUCTURE AND EVOLUTION
+4.6;ΗΛΙΑΚΗ ΦΥΣΙΚΗ, ΠΛΑΝΗΤΕΣ ΚΑΙ ΠΛΑΝΗΤΙΚΑ ΣΥΣΤΗΜΑΤΑ ;SOLAR PHYSICS, PLANETS AND PLANETARY SYSTEMS
+4.7;ΟΡΓΑΝΑ ΕΡΕΥΝΑΣ ΓΙΑ ΤΗΝ ΑΣΤΡΟΝΟΜΙΑ ΚΑΙ ΤΟ ΔΙΑΣΤΗΜΑ;ASTRONOMICAL AND SPACE-RESEARCH INSTRUMENTATION
+4.99;ΑΛΛΕΣ ΑΣΤΡΟΝΟΜΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER ASTRONOMICAL SPECIALTIES
+5.1;ΓΕΝΙΚΗ ΦΥΣΙΚΗ;GENERAL PHYSICS
+5.2;ΦΥΣΙΚΗ ΣΤΟΙΧΕΙΩΔΩΝ ΣΩΜΑΤΙΔΙΩΝ ΚΑΙ ΠΕΔΙΩΝ;THE PHYSICS OF ELEMENTARY PARTICLES AND FIELDS
+5.3;ΠΥΡΗΝΙΚΗ ΦΥΣΙΚΗ;NUCLEAR PHYSICS
+5.4;ΑΤΟΜΙΚΗ ΚΑΙ ΜΟΡΙΑΚΗ ΦΥΣΙΚΗ;ATOMIC AND MOLECULAR PHYSICS
+5.5;ΗΛΕΚΤΡΟΜΑΓΝΗΤΙΣΜΟΣ ;ELECTROMAGNETISM
+5.6;ΟΠΤΙΚΗ;OPTICS
+5.7;ΑΚΟΥΣΤΙΚΗ;ACOUSTICS
+5.8;ΜΗΧΑΝΙΚΗ;MECHANICS
+5.9;ΡΕΥΣΤΟΔΥΝΑΜΙΚΗ;FLUID DYNAMICS
+5.10;ΦΥΣΙΚΗ ΠΛΑΣΜΑΤΟΣ ;PHYSICS OF PLASMAS
+5.11;ΦΥΣΙΚΗ ΣΥΜΠΥΚΝΩΜΕΝΗΣ ΎΛΗΣ ΚΑΙ ΣΤΕΡΕΑΣ KΑΤΑΣΤΑΣΗΣ;CONDENSED MATTER AND SOLID STATE PHYSICS
+5.12;ΗΛΕΚΤΡΟΝΙΚΗ ΦΥΣΙΚΗ ΚΑΙ ΣΧΕΤΙΚΕΣ ΕΠΙΣΤΗΜΟΝΙΚΕΣ ΠΕΡΙΟΧΕΣ;ELECTRONIC PHYSICS AND RELATED AREAS OF SCIENCE
+5.13;ΔΙΑΘΕΜΑΤΙΚΕΣ ΠΕΡΙΟΧΕΣ ΤΗΣ ΦΥΣΙΚΗΣ;INDERDISCIPLINARY AREAS OF PHYSICS
+5.14;ΓΕΩΦΥΣΙΚΗ ΚΑΙ ΦΥΣΙΚΗ ΠΕΡΙΒΑΛΛΟΝΤΟΣ;GEOPHYSICS AND ENVIRONMENTAL PHYSICS
+5.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΤΗΣ ΦΥΣΙΚΗΣ;OTHER PHYSICAL SCIENCE SPECIALTIES
+6.1;ΑΝΑΛΥΤΙΚΗ ΧΗΜΕΙΑ;ANALYTICAL CHEMISTRY
+6.2;ΑΝΟΡΓΑΝΗ ΧΗΜΕΙΑ;INORGANIC CHEMISTRY
+6.3;ΒΙΟΧΗΜΕΙΑ                       ;BIOCHEMISTRY
+6.4;ΧΗΜΕΙΑ ΜΑΚΡΟΜΟΡΙΩΝ; MACROMOLECULAR CHEMISTRY
+6.5;ΟΡΓΑΝΙΚΗ ΧΗΜΕΙΑ;ORGANIC CHEMISTRY
+6.6;ΠΥΡΗΝΙΚΗ ΧΗΜΕΙΑ;NUCLEAR CHEMISTRY
+6.7;ΚΛΙΝΙΚΗ ΧΗΜΕΙΑ;CLINICAL CHEMISTRY
+6.8;XHMEIA ΠΕΡΙΒΑΛΛΟΝΤΟΣ;ENVIRONMENTAL CHEMISTRY
+6.9;ΔΙΔΑΚΤΙΚΗ ΤΗΣ ΧΗΜΕΙΑΣ;DIDACTICS OF CHEMISTRY
+6.10;ΧΗΜΕΙΑ ΤΡΟΦΙΜΩΝ;FOOD CHEMISTRY
+6.11;ΦΥΣΙΚΟΧΗΜΕIA;PHYSICAL CHEMISTRY
+6.12;ΡΑΔΙΟΧΗΜΕIA;RADIOCHEMISTRY
+6.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΤΗΣ ΧΗΜΕΙΑΣ;ΟTHER CHEMICAL SCIENCE SPECIALTIES
+7.1;ΦΥΣΙΚΗ ΑΝΘΡΩΠΟΛΟΓΙΑ;PHYSICAL ANTHROPOLOGY
+7.2;ΒΙΟΜΑΘΗΜΑΤΙΚΑ/ΜΑΘΗΜΑΤΙΚΗ ΒΙΟΛΟΓΙΑ;BIOMATHEMATICS
+7.3;ΒΙΟΕΠΙΣΤΗΜΕΣ;BIOSCIENCES
+7.4;ΒΙΟΛΟΓΙΑ ΚΥΤΤΑΡΟΥ/ΚΥΤΤΑΡΙΚΗ ΒΙΟΛΟΓΙΑ;CELL BIOLOGY
+7.5;ΓΕΝΕΤΙΚΗ;GENETICS
+7.6;ΦΥΣΙΟΛΟΓΙΑ ΤΟΥ ΑΝΘΡΩΠΟΥ;HUMAN PHYSIOLOGY
+7.7;ΑΝΟΣΟΛΟΓΙΑ;IMMUNOLOGY
+7.8;ΜΙΚΡΟΒΙΟΛΟΓΙΑ;MICROBIOLOGY
+7.9;ΜΟΡΙΑΚΗ ΒΙΟΛΟΓΙΑ;MOLECULAR BIOLOGY
+7.10;ΡΑΔΙΟΒΙΟΛΟΓΙΑ;RADIOBIOLOGY
+7.11;ΙΟΛΟΓΙΑ;VIROLOGY
+7.12;ΘΑΛΑΣΣΙΑ ΒΙΟΛΟΓΙΑ;AQUATIC/MARINE BIOLOGY
+7.13;ΒΟΤΑΝΙΚΗ/ΒΙΟΛΟΓΙΑ ΦΥΤΩΝ ;BOTANY/PLANT BIOLOGY
+7.14;ΖΩΟΛΟΓΙΑ/ΒΙΟΛΟΓΙΑ ΤΩΝ ΖΩΩΝ;ZOOLOGY/ANIMAL BIOLOGY
+7.15;ΕΝΤΟΜΟΛΟΓΙΑ;ENTOMOLOGY/INSECT BIOLOGY
+7.16;ΑΘΛΗΤΙΚΗ ΕΠΙΣΤΗΜΗ/ΕΠΙΣΤΗΜΗ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;SPORT AND ATHLETIC SCIENCE/PHYSICAL EDUCATION AND SPORT SCIENCE
+7.17;ΟΙΚΟΛΟΓΙΑ ;ECOLOGY
+7.18;ΑΝΑΠΤΥΞΙΑΚΗ ΒΙΟΛΟΓΙΑ;DEVELOPMENTAL BIOLOGY
+7.19;ΑΛΙΕΙΑ;FISHERIES
+7.20;ΒΙΟΛΟΓΙΚΗ ΩΚΕΑΝΟΓΡΑΦΙΑ;BIOLOGICAL OCEANOGRAPHY
+7.21;ΒΙΟΤΕΧΝΟΛΟΓΙΑ;BIOTECHNOLOGY
+7.22;ΒΙΟΧΗΜΕΙΑ;BIOCHEMISTRY
+7.23;ΔΟΜΙΚΗ ΒΙΟΛΟΓΙΑ;STRUCTURAL BIOLOGY
+7.24;ΕΞΕΛΙΚΤΙΚΗ ΒΙΟΛΟΓΙΑ;EVOLUTIONARY BIOLOGY
+7.25;ΘΑΛΑΣΣΙΑ ΟΙΚΟΛΟΓΙΑ;MARINE ECOLOGY
+7.26;ΙΧΘΥΟΛΟΓΙΑ;ICHTHYOLOGY
+7.27;ΜΟΡΦΟΛΟΓΙΑ/ΑΝΑΤΟΜΙΑ ΦΥΤΩΝ;PLANT MORPHOLOGY / ANATOMY
+7.28;ΝΕΥΡΟΒΙΟΛΟΓΙΑ/ ΝΕΥΡΟΕΠΙΣΤΗΜΕΣ;NEUROBIOLOGY / NEUROSCIENCES
+7.29;ΣΥΜΠΕΡΙΦΟΡΙΚΗ ΒΙΟΛΟΓΙΑ;BEHAVIOURAL BIOLOGY
+7.30;ΣΥΣΤΗΜΙΚΗ/ ΦΥΛΟΓΕΝΕΣΗ;SYSTEMATICS / PHYLOGENY
+7.31;ΣΥΣΤΗΜΑΤΙΚΗ ΒΟΤΑΝΙΚΗ / ΒΙΟΓΕΩΓΡΑΦΙΑ;SYSTEMATIC BOTANY / BIOGEOGRAPHY
+7.32;ΥΔΑΤΟΚΑΛΛΙΕΡΓΕΙΕΣ;AQUACULTURE
+7.33;ΦΥΣΙΟΛΟΓΙΑ;PHYSIOLOGY
+7.34;ΦΥΣΙΟΛΟΓΙΑ ΖΩΩΝ;ANIMAL PHYSIOLOGY
+7.35;ΦΥΣΙΟΛΟΓΙΑ ΦΥΤΩΝ;PLANT PHYSIOLOGY
+7.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΕΠΙΣΤΗΜΩΝ ΖΩΗΣ;OTHER LIFE SCIENCE SPECIALTIES
+8.1;ΓΕΩΓΡΑΦΙΑ;GEOGRAPHY
+8.2;ΓΕΝΙΚΗ ΓΕΩΛΟΓΙΑ;GENERAL GEOLOGY
+8.3;ΥΛΙΚΑ ΤΗΣ ΓΗΣ;EARTH MATERIALS
+8.4;ΤΕΚΤΟΝΙΚΗ ΓΕΩΛΟΓΙΑ;ΤECTONIC GEOLOGY
+8.5;ΠΑΛΑΙΟΝΤΟΛΟΓΙΑ;PALAEONTOLOGY
+8.6;ΓΕΩΦΥΣΙΚΗ                            ;GEOPHYSICS
+8.7;ΓΕΩΧΗΜΕΙΑ;GEOCHEMISTRY
+8.8;ΥΔΡΟ(ΓΕΩ)ΛΟΓΙΑ;HYDRO(GEO)LOGY
+8.9;ΤΕΧΝΙΚΗ ΓΕΩΛΟΓΙΑ;ENGINEERING GEOLOGY
+8.10;ΩΚΕΑΝΟΓΡΑΦΙΑ;OCEANOGRAPHY
+8.11;ΚΛΙΜΑΤΟΛΟΓΙΑ;CLIMATOLOGY
+8.12;ΜΕΤΕΩΡΟΛΟΓΙΑ                           ;METEOROLOGY
+8.99;ΑΛΛΕΣ ΕΠΙΣΤΗΜΕΣ ΤΗΣ  ΓΗΣ ΚΑΙ ΤΟΥ ΔΙΑΣΤΗΜΑΤΟΣ;OTHER EARTH AND SPACE SCIENCE SPECIALTIES
+9.1;ΕΔΑΦΟΛΟΓΙΑ;SOIL SCIENCE
+9.2;ΓΕΩΡΓΙΚΗ ΧΗΜΕΙΑ;AGRICULTURAL CHEMISTRY/CHEMURGY
+9.3;ΓΕΩΡΓΙΚΗ ΜΗΧΑΝΙΚΗ            ;AGRICULTURAL ENGINEERING
+9.4;ΕΠΙΣΤΗΜΗ ΦΥΤΙΚΗΣ ΠΑΡΑΓΩΓΗΣ;CROP (PRODUCTION) SCIENCE
+9.5;ΦΥΤΟΠΑΘΟΛΟΓΙΑ         ;PLANT PATHOLOGY/PLANT DISEASES
+9.6;KTHNIATΡΙΚΗ ΕΠΙΣΤΗΜΗ;VETERINARY MEDICINE
+9.7;ΕΠΙΣΤΗΜΗ ΖΩΪΚΗΣ ΠΑΡΑΓΩΓΗΣ;ANIMAL PRODUCTION (SCIENCE)
+9.8;ΙΧΘΥΟΛΟΓΙΑ;ICHTHYOLOGY
+9.9;ΑΓΡΟΤΙΚΗ ΟΙΚΟΝΟΜΙΑ & ΑΝΑΠΤΥΞΗ;AGRICULTURAL ECONOMICS & RURAL DEVELOPMENT
+9.10;ΔΑΣΟΠΟΝΙΑ;FORESTRY
+9.11;ΔΙΑΧΕΙΡΙΣΗ/ΔΙΕΥΘΕΤΗΣΗ ΟΡΕΙΝΩΝ ΥΔΑΤΩΝ;MOUNTAINOUS WATER MANAGEMENT
+9.12;ΛΙΒΑΔΟΠΟΝΙΑ    ;PASTURE
+9.13;ΓΕΩΡΓΙΚΗ ΦΑΡΜΑΚΟΛΟΓΙΑ;PESTICIDE SCIENCE
+9.99;ΑΛΛΕΣ ΓΕΩΠΟΝΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;ΟTHER AGRICULTURAL SPECIALTIES
+10.1;ΚΛΙΝΙΚΗ ΙΑΤΡΙΚΗ;CLINICAL MEDICINE
+10.2;ΕΠΙΔΗΜΙΟΛΟΓΙΑ;EPIDEMIOLOGY
+10.3;ΕΡΓΑΣΙΑΚΗ ΙΑΤΡΙΚΗ;OCCUPATIONAL MEDICINE
+10.4;ΠΥΡΗΝΙΚΗ ΙΑΤΡΙΚΗ ;NUCLEAR MEDICINE
+10.5;ΕΣΩΤΕΡΙΚΗ (ΜΗ ΧΕΙΡΟΥΡΓΙΚΗ) ΙΑΤΡΙΚΗ;INTERNAL MEDΙCINE
+10.6;ΔΙΑΙΤΗΤΙΚΗ (ΔΙΑΙΤΟΛΟΓΙΑ);NUTRITION SCIENCES
+10.7;ΠΑΘΟΛΟΓΙΑ;PATHOLOGY
+10.8;ΦΑΡΜΑΚΕΥΤΙΚΗ;PHARMACY
+10.9;ΦΑΡΜAΚΟΛΟΓΙΑ;PHARMACOLOGY
+10.10;ΠΡΟΛΗΠΤΙΚΗ ΙΑΤΡΙΚΗ;PREVENTIVE MEDICINE
+10.11;ΨΥΧΙΑΤΡΙΚΗ;PSYCHIATRY
+10.12;ΔΗΜΟΣΙΑ ΥΓΕΙΑ;PUBLIC HEALTH
+10.13;ΧΕΙΡΟΥΡΓΙΚΗ                        ;SURGERY
+10.14;ΤΟΞΙΚΟΛΟΓΙΑ ;TOXICOLOGY
+10.15;ΟΔΟΝΤΙΑΤΡΙΚΗ                            ;DENTISTRY
+10.16;ΕΠΙΣΤΗΜΕΣ ΥΓΕΙΑΣ ΚΑΙ ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE SCIENCES
+10.17;ΚΛΙΝΙΚΗ ΦΑΡΜΑΚΟΛΟΓΙΑ - ΤΟΞΙΚΟΛΟΓΙΑ;CLINICAL PHARMACOLOGY - TOXICOLOGY
+10.99;ΑΛΛΕΣ ΙΑΤΡΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER MEDICAL SPECIALTIES
+11.1;ΑΕΡΟΝΑΥΤΙΚΗ ΜΗΧΑΝΟΛΟΓΙΑ KAI ΤΕΧΝΟΛΟΓΙΑ/ΑΕΡΟΝΑΥΠΗΓΙΚΗ ;AIRCRAFT TECHNOLOGY AND ENGINEERING
+11.2;ΒΙΟΧΗΜΙΚΗ ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH-ΒΙΟΤΕΧΝΟΛΟΓΙΑ;BIOCHEMICAL TECHNOLOGY AND ENGINEERING-BIOTECHNOLOGY
+11.3;ΧΗΜΙΚΗ ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH;CHEMICAL TECHNOLOGY AND ENGINEERING
+11.4;ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH KΑΥΣΙΜΩΝ;FUELS TECHNOLOGY AND ENGINEERING
+11.5;ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH ΚΑΤΑΣΚΕΥΩΝ;CONSTRUCTION TECHNOLOGY AND ENGINEERING
+11.6;ΗΛΕΚΤΡΟΛΟΓΙΑ, ΕΝΕΡΓΕΙΑΚΗ ΤΕΧΝΟΛΟΓΙΑ ΚΑΙ ΜΗΧΑΝΙΚΗ;ELECTRICAL, ENERGY TECHNOLOGY AND ENGINEERING
+11.7;ΗΛΕΚΤΡΟΝΙΚΗ ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH;ELECTRONICS TECHNOLOGY AND ENGINEERING
+11.8;ΜΗΧΑΝΙΚΗ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑ ΤΗΛΕΠΙΚΟΙΝΩΝΙΩΝ;TELECOMMUNICATIONS ENGINEERING AND TECHNOLOGY
+11.9;ΤΕΧΝΟΛΟΓΙΑ ΚΑΙ ΜΗΧΑΝΙΚΗ ΠΕΡΙΒΑΛΛΟΝΤΟΣ               ;ENVIRONMENTAL TECHNOLOGY AND ENGINEERING
+11.10;ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH ΤΡΟΦΙΜΩΝ;FOOD TECHNOLOGY AND ENGINEERING
+11.11;ΒΙΟΜΗΧΑΝΙΚΗ ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH;INDUSTRIAL TECHNOLOGY AND ENGINEERING
+11.12;TΕΧΝΟΛΟΓΙΑ KAI MHXANIKH ΟΡΓΑΝΩΝ ΜΕΤΡΗΣHΣ ΚΑΙ ΕΛΕΓΧΟΥ;INSTRUMENTATION TECHNOLOGY AND ENGINEERING
+11.13;ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH ΥΛΙΚΩΝ; MATERIALS TECHNOLOGY AND ENGINEERING
+11.14;ΜΗΧΑΝΟΛΟΓΙΚΗ ΜΗΧΑΝΙΚΗ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑ;MECHANICAL ENGINEERING AND TECHNOLOGY
+11.15;ΙΑΤΡΙΚΗ ΤΕΧΝΟΛΟΓΙΑ ΚΑΙ ΜΗΧΑΝΙΚΗ;MEDICAL ENGINEERING AND TECHNOLOGY
+11.16;ΤΕΧΝΟΛΟΓΙΑ KAI MHXANIKH  ΟΡΥΧΕΙΩΝ KAI ΜΕΤΑΛΛΟΥΡΓΙΑΣ ;MINING AND METALLURGICAL TECHNOLOGY AND ENGINEERING
+11.17;ΤΕΧΝΟΛΟΓΙΑ ΚΑΙ ΜΗΧΑΝΙΚΗ ΜΕΤΑΛΛΙΚΩΝ ΠΡΟΪΟΝΤΩΝ;METAL PRODUCTS TECHNOLOGY AND ENGINEERING
+11.18;ΜΕΤΑΦΟΡΕΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑ ΜΕΤΑΦΟΡΙΚΩΝ ΜΕΣΩΝ;TRANSPORTATIONS AND TRANSPORTATION SYSTEMS TECHNOLOGY
+11.19;ΝΑΥΤΙΚΗ ΤΕΧΝΟΛΟΓΙΑ;NAVAL TECHNOLOGY
+11.20;ΤΕΧΝΟΛΟΓΙΑ ΚΑΙ ΜΗΧΑΝΙΚΗ ΚΛΩΣΤΟΫΦΑΝΤΟΥΡΓΙΑΣ ;TEXTILE TECHNOLOGY AND ENGINEERING
+11.21;ΤΕΧΝΟΛΟΓΙΑ ΔΙΑΣΤΗΜΑΤΟΣ;SPACE TECHNOLOGY
+11.22;ΧΩΡΟΤΑΞΙΑ/ΠΕΡΙΦΕΡΕΙΑΚΟΣ ΣΧΕΔΙΑΣΜΟΣ - ΠΟΛΕΟΔΟΜΙΑ/ΑΣΤΙΚΟΣ ΣΧΕΔΙΑΣΜΟΣ;REGIONAL AND URBAN PLANNING
+11.23;ΑΡΧΙΤΕΚΤΟΝΙΚΗ;ARCHITECTURE
+11.24;ΕΠΙΣΤΗΜΕΣ ΑΓΡΟΝΟΜΟΥ-ΤΟΠΟΓΡΑΦΟΥ ΜΗΧΑΝΙΚΟΥ;RURAL AND SURVEYING ENGINEERING
+11.25;ΕΠΙΣΤΗΜΕΣ ΠΟΛΙΤΙΚΟΥ ΜΗΧΑΝΙΚΟΥ;CIVIL ENGINEERING
+11.99;ΑΛΛΕΣ ΤΕΧΝΟΛΟΓΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER TECHNOLOGICAL SPECIALTIES
+12.1;ΠΟΛΙΤΙΣΤΙΚΗ ΑΝΘΡΩΠΟΛΟΓΙΑ;CULTURAL ANTHROPOLOGY
+12.2;ΚΟΙΝΩΝΙΚΗ ΑΝΘΡΩΠΟΛΟΓΙΑ;SOCIAL ANTHROPOLOGY
+12.3;ΕΘΝΟΓΡΑΦΙΑ ΚΑΙ ΕΘΝΟΛΟΓΙΑ ;ETHNOGRAPHY AND ETHNOLOGY
+12.4;ΕΚΠΑΙΔΕΥΤΙΚΗ ΑΝΘΡΩΠΟΛΟΓΙΑ;EDUCATIONAL ANTHROPOLOGY
+12.5;ΠΟΛΙΤΙΚΗ ΑΝΘΡΩΠΟΛΟΓΙΑ;POLITICAL ANTHROPOLOGY
+12.6;ΟΙΚΟΝΟΜΙΚΗ ΑΝΘΡΩΠΟΛΟΓΙΑ;ECONOMIC ANTHROPOLOGY
+12.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΑΝΘΡΩΠΟΛΟΓΙΑΣ ;OTHER ANTHROPOLOGICAL SPECIALTIES
+13.1;ΘΕΩΡΙΑ ΚΑΙ ΜΕΘΟΔΟΛΟΓΙΑ ΕΡΕΥΝΑΣ ΚΑΙ ΑΝΑΛΥΣΗΣ;THEORY AND METHODOLOGY OF RESEARCH AND ANALYSIS
+13.2;ΘΝΗΣΙΜΟΤΗΤΑ ΚΑΙ ΓΟΝΙΜΟΤΗΤΑ;MORTALITY AND FERTILITY
+13.3;ΙΣΤΟΡΙΚΗ ΔΗΜΟΓΡΑΦΙΑ;HISTORICAL DEMOGRAPHY
+13.4;ΜΕΓΕΘΟΣ ΠΛΗΘΥΣΜΟΥ ΚΑΙ ΔΗΜΟΓΡΑΦΙΚΗ ΕΞΕΛΙΞΗ  ;POPULATION SIZE AND DEMOGRAPHIC EVOLUTION
+13.5;ΓΕΩΓΡΑΦΙΚΗ ΔΗΜΟΓΡΑΦΙΑ;GEOGRAPHICAL DEMOGRAPHY
+13.6;XAΡΑΚΤΗΡΙΣΤΙΚΑ ΠΛΗΘΥΣΜΟΥ ;POPULATION CHARACTERISTICS
+13.99;ΑΛΛΕΣ ΔΗΜΟΓΡΑΦΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER DEMOGRAPHIC SPECIALTIES
+14.1;ΓΕΝΙΚΗ ΟΙΚΟΝΟΜΙΚΗ ΚΑΙ ΔΙΔΑΚΤΙΚΗ;GENERAL ECONOMICS AND TEACHING
+14.2;ΙΣΤΟΡΙΑ ΤΗΣ ΟΙΚΟΝΟΜΙΚΗΣ ΣΚΕΨΗΣ, ΜΕΘΟΔΟΛΟΓΙΑ, ΚΑΙ ΕΤΕΡΟΔΟΞΕΣ ΠΡΟΣΕΓΓΙΣΕΙΣ;HISTORY OF ECONOMIC THOUGHT, METHODOLOGY, AND HETERODOX APPROACHES
+14.3;ΜΑΘΗΜΑΤΙΚΕΣ ΚΑΙ ΠΟΣΟΤΙΚΕΣ ΜΕΘΟΔΟΙ;MATHEMATICAL AND QUANTITATIVE METHODS
+14.4;ΜΙΚΡΟΟΙΚΟΝΟΜΙΚΗ;MICROECONOMICS
+14.5;ΜΑΚΡΟΟΙΚΟΝΟΜΙΚΗ ΚΑΙ ΝΟΜΙΣΜΑΤΙΚΗ ΟΙΚΟΝΟΜΙΚΗ;MACROECONOMICS AND MONETARY ECONOMICS
+14.6;ΔΙΕΘΝΗΣ ΟΙΚΟΝΟΜΙΚΗ;INTERNATIONAL ECONOMICS
+14.7;ΧΡΗΜΑΤΟΟΙΚΟΝΟΜΙΚΗ;FINANCIAL ECONOMICS
+14.8;ΔΗΜΟΣΙΟΝΟΜΙΚΑ;PUBLIC ECONOMICS
+14.9;ΥΓΕΙΑ, ΕΚΠΑΙΔΕΥΣΗ, ΚΑΙ ΠΡΟΝΟΙΑ;HEALTH, EDUCATION, AND WELFARE
+14.10;ΕΡΓΑΣΙΑΚΗ  ΚΑΙ ΔΗΜΟΓΡΑΦΙΚΗ ΟΙΚΟΝΟΜΙΚΗ ;LABOR AND DEMOGRAPHIC ECONOMICS
+14.11;ΔΙΚΑΙΟ ΚΑΙ ΟΙΚΟΝΟΜΙΚΗ;LAW AND ECONOMICS
+14.12;ΒΙΟΜΗΧΑΝΙΚΗ ΟΡΓΑΝΩΣΗ;INDUSTRIAL ORGANIZATION
+14.13;ΔΙΟΙΚΗΣΗ ΕΠΙΧΕΙΡΗΣΕΩΝ ΚΑΙ ΟΙΚΟΝΟΜΙΚΑ ΤΩΝ ΕΠΙΧΕΙΡΗΣΕΩΝ, ΜΑΡΚΕΤΙΝΓΚ, ΛΟΓΙΣΤΙΚΗ;"BUSINESS ADMINISTRATION AND BUSINESS ECONOMICS, MARKETING, ACCOUNTING"
+14.14;ΟΙΚΟΝΟΜΙΚΗ ΙΣΤΟΡΙΑ;ECONOMIC HISTORY
+14.15;ΟΙΚΟΝΟΜΙΚΗ ΑΝΑΠΤΥΞΗ, ΤΕΧΝΟΛΟΓΙΚΗ ΑΛΛΑΓΗ, ΚΑΙ ΑΝΑΠΤΥΞΗ;ECONOMIC DEVELOPMENT, TECHNOLOGICAL CHANGE, AND GROWTH
+14.16;ΟΙΚΟΝΟΜΙΚΑ ΣΥΣΤΗΜΑΤΑ;ECONOMIC SYSTEMS
+14.17;ΑΓΡΟΤΙΚΗ ΟΙΚΟΝΟΜΙΑ ΚΑΙ ΟΙΚΟΝΟΜΙΑ ΦΥΣΙΚΩΝ ΠΟΡΩΝ, ΠΕΡΙΒΑΛΛΟΝΤΙΚΗ ΚΑΙ ΟΙΚΟΛΟΓΙΚΗ ΟΙΚΟΝΟΜΙΑ;"AGRICULTURAL AND NATURAL RESOURCE ECONOMICS, ENVIRONMENTAL AND ECOLOGICAL ECONOMICS"
+14.18;ΑΣΤΙΚΗ, ΑΓΡΟΤΙΚΗ, ΠΕΡΙΦΕΡΕΙΑΚΗ ΟΙΚΟΝΟΜΙΚΗ ΚΑΙ ΟΙΚΟΝΟΜΙΚΗ ΑΚΙΝΗΤΩΝ, ΚΑΙ ΜΕΤΑΦΟΡΩΝ;URBAN, RURAL, REGIONAL, REAL ESTATE, AND TRANSPORTATION ECONOMICS
+14.19;ΔΙΑΦΟΡΕΣ ΚΑΤΗΓΟΡΙΕΣ;MISCELLANEOUS CATEGORIES
+14.20;ΑΛΛΑ ΕΙΔΙΚΑ ΘΕΜΑΤΑ;OTHER SPECIAL TOPICS
+14.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΟΙΚΟΝΟΜΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;OTHER ECONOMIC SCIENCE SPECIALTIES
+15.1;ΓΕΝΙΚΗ ΙΣΤΟΡΙΑ, ΘΕΩΡΙΑ  ;GENERAL HISTORY, THEORY
+15.2;ΙΣΤΟΡΙΑ ΤΩΝ ΧΩΡΩΝ;HISTORY OF COUNTRIES
+15.3;ΙΣΤΟΡΙΑ ΤΩΝ ΕΠΙΣΤΗΜΩΝ ΚΑΙ ΤΗΣ ΤΕΧΝΟΛΟΓΙΑΣ;HISTORY OF SCIENCES AND TECHNOLOGY
+15.4;ΑΡΧΑΙΟΛΟΓΙΑ;ARCHAEOLOGY
+15.99;ΑΛΛΕΣ ΙΣΤΟΡΙΚΕΣ ΕΠΙΣΤΗΜΕΣ;OTHER HISTORICAL SCIENCE SPECIALTIES
+15.100;ΑΡΧΕΙΟΝΟΜΙΑ;ARCHIVING
+16.1;ΓΕΝΙΚΗ ΘΕΩΡΙΑ ΚΑΙ ΜΕΘΟΔΟΙ; GENERAL THEORY AND METHODS
+16.2;ΕΘΝΙΚΟ ΔΙΚΑΙΟ;INTERNAL LAW
+16.3;ΔΙΚΟΝΟΜΙΑ ;PROCEDURE
+16.4;ΔΙΕΘΝΕΣ ΔΙΚΑΙΟ ;INTERNATIONAL LAW
+16.5;ΕΥΡΩΠΑΪΚΟ ΔΙΚΑΙΟ;EUROPEAN LAW
+16.6;ΝΟΜΟΛΟΓΙΑ;CASE LAW
+16.99;ΑΛΛΕΣ ΝΟΜΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER JURIDICAL SCIENCE SPECIALTIES
+17.1;ΕΦΑΡΜΟΣΜΕΝΗ ΓΛΩΣΣΟΛΟΓΙΑ;APPLIED LINGUISTICS
+17.2;ΔΙΑΧΡΟΝΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;DIACHRONIC LINGUISTICS
+17.3;ΘΕΩΡΗΤΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;LINGUISTIC THEORY
+17.4;ΓΕΩΓΡΑΦΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;LINGUISTIC GEOGRAPHY
+17.5;ΣΥΓΧΡΟΝΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;SYNCHRONIC LINGUISTICS
+17.6;ΛΕΞΙΚΟΛΟΓΙΑ;LEXICOLOGY
+17.7;ΚΟΙΝΩΝΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;SOCIOLINGUISTICS
+17.8;ΑΡΧΑΙΕΣ ΓΛΩΣΣΕΣ;ANCIENT LANGUAGES
+17.9;ΚΛΑΣΙΚΕΣ ΓΛΩΣΣΕΣ;CLASSICS
+17.10;ΜΟΝΤΕΡΝΕΣ ΓΛΩΣΣΕΣ;MODERN LANGUAGES
+17.11;ΞΕΝΕΣ ΓΛΩΣΣΕΣ;FOREIGN LANGUAGES
+17.12;ΝΕΚΡΕΣ ΓΛΩΣΣΕΣ;EXTINCT LANGUAGES
+17.13;ΠΟΛΥΓΛΩΣΣΙΑ;MULTILINGUALISM
+17.14;ΔΙΓΛΩΣΣΙΑ;BILINGUALISM
+17.15;ΣΥΓΚΡΙΤΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;COMPARATIVE LINGUISTICS
+17.16;ΓΝΩΣΤΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;COGNITIVE LINGUISTICS
+17.17;ΙΣΤΟΡΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;HISTORICAL LINGUISTICS
+17.18;ΓΕΝΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;GENERAL LINGUISTICS
+17.19;ΒΙΟΓΛΩΣΣΟΛΟΓΙΑ;BIOLINGUISTICS
+17.20;ΝΕΥΡΟΓΛΩΣΣΟΛΟΓΙΑ;NEUROLINGUISTICS
+17.21;ΨΥΧΟΓΛΩΣΣΟΛΟΓΙΑ;PSYCHOLINGUISTICS
+17.22;ΦΙΛΟΣΟΦΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;PHILOSOPHICAL LINGUISTICS
+17.23;ΚΕΙΜΕΝΟΓΛΩΣΣΟΛΟΓΙΑ;TEXTLINGUISTICS
+17.24;ΛΕΙΤΟΥΡΓΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;FUNCTIONAL LINGUISTICS
+17.25;ΤΥΠΟΛΟΓΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;TYPOLOGICAL LINGUISTICS
+17.26;ΥΠΟΛΟΓΙΣΤΙΚΗ ΓΛΩΣΣΟΛΟΓΙΑ;COMPUTATIONAL LINGUISTICS
+17.27;ΕΠΙΚΟΙΝΩΝΙΑ ΚΑΙ ΓΛΩΣΣΟΛΟΓΙΑ;COMMUNICATION AND LINGUISTICS
+17.28;ΓΛΩΣΣΟΛΟΓΙΚΗ ΕΡΕΥΝΑ;LINGUISTIC RESEARCH
+17.29;ΓΡΑΜΜΑΤΙΚΗ, ΣΥΓΚΡΙΤΙΚΗ ΚΑΙ ΓΕΝΙΚΗ;GRAMMAR, COMPARATIVE AND GENERAL
+17.30;ΙΔΙΩΜΑΤΙΣΜΟΙ;IDIOMS
+17.31;ΦΩΝΗΤΙΚΗ;PHONETICS
+17.32;ΦΩΝΟΛΟΓΙΑ;PHONOLOGY
+17.33;ΟΡΘΟΓΡΑΦΙΑ;SPELLING
+17.34;ΣΗΜΕΙΟΛΟΓΙΑ;SEMIOLOGY
+17.35;ΣΗΜΑΣΙΟΛΟΓΙΑ;SEMANTICS
+17.36;ΕΡΜΗΝΕΙΑ;INTERPRETING
+17.37;ΑΝΑΛΥΣΗ ΚΕΙΜΕΝΟΥ;TEXTUAL ANALYSIS
+17.38;ΜΕΤΑΦΡΑΣΗ;TRANSLATION
+17.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΓΛΩΣΣΟΛΟΓΙΑΣ;OTHER LINGUISTIC SCIENCE SPECIALTIES
+18.1;ΘΕΩΡΙΑ ΚΑΙ ΜΕΘΟΔΟΙ ΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ;EDUCATIONAL THEORY AND METHODS
+18.2;ΟΡΓΑΝΩΣΗ ΚΑΙ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ;ORGANIZATION AND PLANNING OF ΕDUCATION
+18.99;ΑΛΛΕΣ ΠΑΙΔΑΓΩΓΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER PEDAGOGICAL SCIENCE SPECIALTIES
+19.1;ΠΟΛΙΤΙΚΗ ΕΠΙΣΤΗΜΗ, ΓΕΝΙΚΑ;GENERAL POLITICAL SCIENCE
+19.2;ΠΟΛΙΤIΚH EΠΙΣΤΗΜΩΝ;POLICY SCIENCES
+19.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΤΩΝ ΠΟΛΙΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;OTHER POLITICAL SCIENCE SPECIALTIES
+20.1;ΓΕΝΙΚΗ ΨΥΧΟΛΟΓΙΑ ;GENERAL PSYCHOLOGY
+20.2;ΨΥΧΟΛΟΓΙΑ ΕΦΗΒΟΥ ΚΑΙ ΠΑΙΔΙΟΥ ;ADOLESCENT AND CHILD PSYCHOLOGY
+20.3;ΚΛΙΝΙΚΗ ΨΥΧΟΛΟΓΙΑ ;CLINICAL PSYCHOLOGY
+20.4;ΠΕΙΡΑΜΑΤΙΚΗ ΨΥΧΟΛΟΓΙΑ;EXPERIMENTAL PSYCHOLOGY
+20.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΤΗΣ ΨΥΧΟΛΟΓΙΑΣ;OTHER PSYCHOLOGICAL SCIENCE SPECIALTIES
+21.1;ΦΙΛΟΛΟΓΙΑ : ΘΕΩΡΙΑ, ΑΝΑΛΥΣΗ ΚΑΙ ΚΡΙΤΙΚΗ    ;LITERATURE: THEORY, ANALYSIS AND CRITISISM
+21.2;ΛΟΓΟΤΕΧΝΙΑ;LITERATURE
+21.3;ΤΕΧΝΕΣ ΤΟΥ ΘΕΑΜΑΤΟΣ;PERFORMING ARTS
+21.4;ΕΙΚΑΣΤΙΚΕΣ ΤΕΧΝΕΣ;VISUAL ARTS
+21.5;ΕΠΙΣΤΗΜΗ ΤΟΥ ΘΕΑΤΡΟΥ:ΘΕΩΡΙΑ ΤΟΥ ΘΕΑΤΡΟΥ;THEATRE STUDIES: THEATRE THEORY
+21.6;ΕΠΙΣΤΗΜΗ ΤΟΥ ΘΕΑΤΡΟΥ:ΙΣΤΟΡΙΑ ΤΟΥ ΘΕΑΤΡΟΥ;THETARE STUDIES: THEATRE HISTORY
+21.7;ΕΠΙΣΤΗΜΗ ΤΟΥ ΚΙΝΗΜΑΤΟΓΡΑΦΟΥ;SCIENCE AND THEORY OF CINEMA
+21.8;ΕΠΙΣΤΗΜΗ ΤΟΥ ΧΟΡΟΥ - ΧΟΡΟΛΟΓΙΑ;SCIENCE OF DANCE - CHOREOLOGY
+21.99;ΑΛΛΕΣ ΚΑΛΛΙΤΕΧΝΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER ART SPECIALTIES
+22.1;ΓΕΝΙΚH KOINΩΝΙΟΛΟΓΙΑ;GENERAL SOCIOLOGY
+22.2;ΚΟΙΝΩΝΙΚΗ ΑΛΛΑΓΗ ΚΑΙ ΑΝΑΠΤΥΞΗ ;SOCIAL CHANGE AND DEVELOPMENT
+22.3;ΚΟΙΝΩΝΙΚΗ ΜΟΡΦΟΛΟΓΙΑ;SOCIAL MORPHOLOGY
+22.99;ΑΛΛΕΣ ΚΟΙΝΩΝΙΟΛΟΓΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ;OTHER SOCIOLOGICAL SCIENCE SPECIALTIES
+23.1;ΚΛΑΣΙΚΗ ΗΘΙΚΗ;CLASSICAL ETHICS
+23.2;ΗΘΙΚΗ ΤΩΝ ΑΤΟΜΩΝ;ETHICS OF INDIVIDUALS
+23.3;ΗΘΙΚΗ ΤΩΝ ΚΟΙΝΩΝΙΚΩΝ ΟΜΑΔΩΝ;ETHICS OF SOCIAL GROUPS
+23.4;ΗΘΙΚΗ ΤΩΝ ΕΠΙΣΤΗΜΩΝ;ETHICS OF SCIENCE
+23.5;ΙΑΤΡΙΚΗ ΗΘΙΚΗ ;MEDICAL ETHICS
+23.6;ΒΙΟΗΘΙΚΗ;BIOETHICS
+23.7;ΠΕΡΙΒΑΛΛΟΝΤΙΚΗ ΗΘΙΚΗ;ENVIRONMENTAL ETHICS
+23.8;ΠΟΛΙΤΙΚΗ ΗΘΙΚΗ;POLITICAL ETHICS
+23.9;ΚΟΙΝΩΝΙΚΗ ΗΘΙΚΗ;SOCIAL ETHICS
+23.10;ΕΠΑΓΓΕΛΜΑΤΙΚΗ ΗΘΙΚΗ;PROFESSIONAL ETHICS
+23.11;ΗΘΙΚΗ ΣΤΗΝ ΕΚΠΑΙΔΕΥΣΗ;ETHICS EDUCATION
+23.12;ΜΕΤΑ-ΗΘΙΚΗ;META-ETHICS
+23.13;ΗΘΙΚΗ ΤΗΣ ΕΠΙΚΟΙΝΩΝΙΑΣ;COMMUNICATION ETHICS
+23.14;ΑΝΘΡΩΠΟΛΟΓΙΚΗ ΗΘΙΚΗ;ANTHROPOLOGICAL ETHICS
+23.15;ΔΕΟΝΤΟΛΟΓΙΚΗ ΗΘΙΚΗ;DEONTOLOGICAL ETHICS
+23.16;ΕΦΑΡΜΟΣΜΕΝΗ ΗΘΙΚΗ;APPLIED ETHICS
+23.17;ΗΘΙΚΗ ΤΩΝ ΕΠΙΧΕΙΡΗΣΕΩΝ;BUSINESS ETHICS
+23.18;ΘΕΩΡΗΤΙΚΗ ΗΘΙΚΗ;THEORΕTICAL ETHICS
+23.19;ΘΡΗΣΚΕΥΤΙΚΗ ΗΘΙΚΗ;RELIGIOUS ETHICS
+23.20;ΧΡΙΣΤΙΑΝΙΚΗ ΗΘΙΚΗ;CHRISTIAN ETHICS
+23.21;ΚΑΝΟΝΙΣΤΙΚΗ ΗΘΙΚΗ;NORMATIVE ETHICS
+23.22;ΝΟΜΙΚΗ ΗΘΙΚΗ;LEGAL ETHICS
+23.23;ΤΕΛΕΟΛΟΓΙΚΗ ΗΘΙΚΗ;TELEOLOGICAL ETHICS
+23.24;ΦΕΜΙΝΙΣΤΙΚΗ ΗΘΙΚΗ;FEMINIST ETHICS
+23.25;ΗΘΙΚΗ ΤΩΝ ΣΠΟΡ;ETHICS OF SPORTS
+23.26;ΗΘΙΚΕΣ ΕΝΝΟΙΕΣ;MORAL CONCEPTS
+23.27;ΗΘΙΚΗ ΑΞΙΑ;MORAL VALUE
+23.28;ΣΥΣΤΗΜΑ ΑΞΙΩΝ;VALUE SYSTEM
+23.29;ΘΕΩΡΙΕΣ ΗΘΙΚΗΣ;ETHICAL THEORIES
+23.30;ΗΘΙΚΗ ΤΗΣ ΤΕΧΝΟΛΟΓΙΑΣ;ETHICS OF TECHNOLOGY
+23.31;ΚΛΙΝΙΚΗ ΗΘΙΚΗ;CLINICAL ETHICS
+23.32;ΥΠΕΥΘΥΝΟΤΗΤΑ;ACCOUNTABILITY
+23.33;ΠΕΙΘΑΡΧΙΑ;DISCIPLINE
+23.34;ΣΥΝΕΙΔΗΣΗ;CONSCIENCE
+23.99;ΑΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΣΧΕΤΙΚΕΣ MΕ ΤΗΝ ΗΘΙΚΗ;OTHER SPECIALTIES TO ETHICS
+24.1;ΦΙΛΟΣΟΦΙΑ ΤΗΣ ΓΝΩΣΗΣ ΚΑΙ ΕΠΙΣΤΗΜΟΛΟΓΙΑ;PHILOSOPHY OF KNOWLEDGE AND EPISTEMOLOGY
+24.2;ΦΙΛΟΣΟΦΙΚΗ ΑΝΘΡΩΠΟΛΟΓΙΑ;PHILOSOPHICAL ANTHROPOLOGY
+24.3;ΓΕΝΙΚΗ ΦΙΛΟΣΟΦΙΑ;GENERAL PHILOSOPHY
+24.4;ΦΙΛΟΣΟΦΙΚΑ ΣΥΣΤΗΜΑΤΑ;PHILOSOPHICAL SYSTEMS
+24.5;ΦΙΛΟΣΟΦΙΑ ΤΗΣ ΕΠΙΣΤΗΜΗΣ;PHILOSOPHY OF SCIENCE
+24.6;ΦΙΛΟΣΟΦΙΑ ΤΗΣ ΦΥΣΗΣ;PHILOSOPHY OF NATURE
+24.7;ΚΟΙΝΩΝΙΚΗ ΦΙΛΟΣΟΦΙΑ;SOCIAL PHILOSOPHY
+24.8;ΙΣΤΟΡΙΑ ΤΗΣ ΦΙΛΟΣΟΦΙΑΣ;HISTORY OF PHILOSOPHY
+24.9;ΦΑΙΝΟΜΕΝΟΛΟΓΙΑ;PHENOMENOLOGY
+24.10;ΦΙΛΟΣΟΦΙΚΗ ΛΟΓΙΚΗ;PHILOSOPHICAL LOGIC
+24.11;ΑΙΣΘΗΤΙΚΗ;AESTHETICS
+24.12;ΔΙΑΛΕΚΤΙΚΗ;DIALECTICS
+24.13;ΑΝΘΡΩΠΙΣΜΟΣ;HUMANISM
+24.14;ΥΠΑΡΞΙΣΜΟΣ;EXISTENTIALISM
+24.15;ΥΛΙΣΜΟΣ;MATERIALISM
+24.16;ΙΔΕΑΛΙΣΜΟΣ;IDEALISM
+24.17;ΠΡΑΓΜΑΤΙΣΜΟΣ;PRAGMATISM
+24.18;ΕΦΑΡΜΟΣΜΕΝΗ ΦΙΛΟΣΟΦΙΑ;APPLIED PHILOSOPHY
+24.19;ΑΝΑΛΥΤΙΚΗ ΦΙΛΟΣΟΦΙΑ;ANALYTIC PHILOSOPHY
+24.20;ΕΚΠΑΙΔΕΥΤΙΚΗ ΦΙΛΟΣΟΦΙΑ;EDUCATIONAL PHILOSOPHY
+24.21;ΦΙΛΟΣΟΦΙΑ ΤΗΣ ΓΛΩΣΣΑΣ;PHILOSOPHY OF LANGUAGE
+24.22;ΠΟΛΙΤΙΚΗ ΦΙΛΟΣΟΦΙΑ;POLITICAL PHILOSOPHY
+24.23;ΦΙΛΟΣΟΦΙΑ ΤΗΣ ΘΡΗΣΚΕΙΑΣ;PHILOSOPHY OF RELIGION
+24.24;ΗΘΙΚΗ ΦΙΛΟΣΟΦΙΑ;MORAL PHILOSOPHY
+24.25;ΠΟΛΙΤΙΣΤΙΚΗ ΦΙΛΟΣΟΦΙΑ;CULTURAL PHILOSOPHY
+24.26;ΤΕΧΝΗ ΚΑΙ ΦΙΛΟΣΟΦΙΑ;ART AND PHILOSOPHY
+24.27;ΜΟΥΣΙΚΗ ΚΑΙ ΦΙΛΟΣΟΦΙΑ;MUSIC AND PHILOSOPHY
+24.28;ΘΕΑΤΡΟ ΚΑΙ ΦΙΛΟΣΟΦΙΑ;THEATER AND PHILOSOPHY
+24.29;ΕΘΝΟΦΙΛΟΣΟΦΙΑ;ETHNOPHILOSOPHY
+24.30;ΑΡΧΑΙΑ ΦΙΛΟΣΟΦΙΑ;ANCIENT PHILOSOPHY
+24.31;ΕΛΛΗΝΙΚΗ ΦΙΛΟΣΟΦΙΑ;GREEK PHILOSOPHY
+24.32;ΦΙΛΟΣΟΦΟΙ;PHILOSOPHERS
+24.33;ΚΥΝΙΣΜΟΣ;CYNICISM
+24.34;ΝΕΟΠΛΑΤΩΝΙΣΜΟΣ;NEOPLATONISM
+24.35;ΠΥΘΑΓΟΡΑΣ ΚΑΙ ΠΥΘΑΓΟΡΕΙΑ ΣΧΟΛΗ;PYTHAGORAS AND PYTHAGOREAN SCHOOL
+24.36;ΣΚΕΠΤΙΚΙΣΤΕΣ;SCEPTICS
+24.37;ΣΟΦΙΣΤΕΣ;SOPHISTS
+24.38;ΣΤΩΙΚΟΙ;STOICS
+24.39;ΡΩΜΑΪΚΗ ΦΙΛΟΣΟΦΙΑ;ROMAN PHILOSOPHY
+24.40;ΜΕΣΑΙΩΝΙΚΗ ΦΙΛΟΣΟΦΙΑ;MEDIEVAL PHILOSOPHY
+24.41;ΜΟΝΤΕΡΝΑ ΦΙΛΟΣΟΦΙΑ;MODERN PHILOSOPHY
+24.42;ΙΝΔΙΚΗ ΦΙΛΟΣΟΦΙΑ;INDIC PHILOSOPHY
+24.43;ΚΙΝΕΖΙΚΗ ΦΙΛΟΣΟΦΙΑ;CHINESE PHILOSOPHY
+24.44;ΦΙΛΟΣΟΦΙΑ ΤΗΣ ΨΥΧΟΛΟΓΙΑΣ;PHILOSOPHY OF PSYCHOLOGY
+24.45;ΦΙΛΟΣΟΦΙΑ ΤΟΥ ΝΟΥ;PHILOSOPHY OF MIND
+24.46;ΦΙΛΟΣΟΦΙΑ ΤΟΥ ΔΙΚΑΙΟΥ;PHILOSOPHY OF LAW
+24.47;ΦΙΛΟΣΟΦΙΑ ΤΗΣ ΦΥΣΙΚΗΣ;PHILOSOPHY OF PHYSICS
+24.48;ΦΙΛΟΣΟΦΙΚΑ ΚΙΝΗΜΑΤΑ;PHILOSOPHICAL MOVEMENTS
+24.49;ΦΙΛΟΣΟΦΙΚΕΣ ΣΧΟΛΕΣ;PHILOSOPHICAL SCHOOLS
+24.50;ΚΟΣΜΟΛΟΓΙΑ;COSMOLOGY
+24.51;ΜΕΤΑΦΥΣΙΚΗ;METAPHYSICS
+24.52;ΟΝΤΟΛΟΓΙΑ;ONTOLOGY
+24.99;AΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΤΗΣ ΦΙΛΟΣΟΦΙΑΣ;OTHER PHILOSOPHICAL SPECIALTIES
+25.1;ΓΕΝΙΚΗ ΘΕΟΛΟΓΙΑ;GENERAL THEOLOGY
+25.2;ΣΥΣΤΗΜΑΤΙΚΗ ΘΕΟΛΟΓΙΑ;SYSTEMATIC THEOLOGY
+25.3;ΒΙΒΛΟΣ;BIBLE
+25.4;ΚΑΙΝΗ ΔΙΑΘΗΚΗ;NEW TESTAMENT
+25.5;ΠΑΛΑΙΑ ΔΙΑΘΗΚΗ;OLD TESTAMENT
+25.6;ΑΠΟΦΑΤΙΚΗ ΘΕΟΛΟΓΙΑ;NEGATIVE THEOLOGY
+25.7;ΑΠΕΛΕΥΘΕΡΩΤΙΚΗ ΘΕΟΛΟΓΙΑ;LIBERATION THEOLOGY
+25.8;ΒΙΒΛΙΚΗ ΘΕΟΛΟΓΙΑ;BIBLICAL THEOLOGY
+25.9;ΔΟΓΜΑΤΙΚΗ ΘΕΟΛΟΓΙΑ;DOCTRINAL THEOLOGY
+25.10;ΕΡΜΗΝΕΥΤΙΚΗ ΘΕΟΛΟΓΙΑ;HERMENEUTICS
+25.11;ΗΘΙΚΗ ΘΕΟΛΟΓΙΑ;ETHICAL THEOLOGY
+25.12;ΘΕΟΛΟΓΙΑ ΤΗΣ ΛΑΤΡΕΙΑΣ;DEVOTIONAL THEOLOGY
+25.13;ΘΕΟΛΟΓΙΑ ΚΑΙ ΤΕΧΝΕΣ;THEOLOGY AND THE ARTS
+25.14;ΘΕΟΛΟΓΙΑ ΤΗΣ ΟΙΚΟΛΟΓΙΑΣ/ΟΙΚΟΛΟΓΙΚΗ ΘΕΟΛΟΓΙΑ;ECO THEOLOGY
+25.15;ΙΣΤΟΡΙΚΗ ΘΕΟΛΟΓΙΑ;HISTORIC THEOLOGY
+25.16;ΠΡΑΚΤΙΚΗ ΘΕΟΛΟΓΙΑ;PRACTICAL THEOLOGY
+25.17;ΠΟΙΜΑΝΤΙΚΗ ΘΕΟΛΟΓΙΑ;PASTORAL THEOLOGY
+25.18;ΠΟΙΜΑΝΤΙΚΗ ΔΙΑΚΟΝΙΑ ΤΗΣ ΥΓΕΙΑΣ;HEALTH CARE CHAPLAINCY
+25.19;ΦΥΣΙΚΗ ΘΕΟΛΟΓΙΑ;NATURAL THEOLOGY
+25.20;ΦΟΝΤΑΜΕΝΤΑΛΙΣΤΙΚΗ ΘΕΟΛΟΓΙΑ;FUNDAMENTALIST THEOLOGY
+25.21;ΟΡΘΟΔΟΞΗ ΘΕΟΛΟΓΙΑ;ORTHODOX THEOLOGY
+25.22;ΧΡΙΣΤΙΑΝΙΚΗ ΘΕΟΛΟΓΙΑ;CHRISTIAN THEOLOGY
+25.23;ΙΣΛΑΜΙΚΗ ΘΕΟΛΟΓΙΑ;ISLAMIC THEOLOGY
+25.24;ΠΡΟΤΕΣΤΑΝΤΙΚΗ ΘΕΟΛΟΓΙΑ;PROTESTANΤ THEOLOGY
+25.25;ΡΩΜΑΙΟΚΑΘΟΛΙΚΗ ΘΕΟΛΟΓΙΑ;ROMAN CATHOLIC THEOLOGY
+25.26;ΘΕΟΛΟΓΙΑ ΤΩΝ ΘΡΗΣΚΕΙΩΝ;THEOLOGY OF RELIGIONS
+25.27;ΑΘΕΪΣΜΟΣ;ATHEISM
+25.28;ΧΡΙΣΤΙΑΝΙΣΜΟΣ;CHRISTIANITY
+25.29;ΚΑΘΟΛΙΚΗ ΕΚΚΛΗΣΙΑ;CATHOLIC CHURCH
+25.30;ΑΓΙΟΛΟΓΙΑ;AGIOLOGY
+25.31;ΠΑΤΕΡΕΣ ΤΗΣ ΕΚΚΛΗΣΙΑΣ;CHURCH FATHERS
+25.32;ΘΕΟΤΟΚΟΣ;THEOTOCOS
+25.33;ΕΚΚΛΗΣΙΑ;CHURCH
+25.34;ΕΚΚΛΗΣΙΑΣΤΙΚΗ ΓΡΑΜΜΑΤΟΛΟΓΙΑ;CHURCH LITTERATURE
+25.35;ΕΚΚΛΗΣΙΟΛΟΓΙΑ;ECCLESIOLOGY
+25.36;ΕΚΚΛΗΣΙΑΣΤΙΚΗ ΙΣΤΟΡΙΑ;CHURCH HISTORY
+25.37;ΙΣΤΟΡΙΑ ΤΩΝ ΔΟΓΜΑΤΩΝ;HISTORY OF DOCTRINES
+25.38;ΘΡΗΣΚΕΙΟΛΟΓΙΑ;SCIENCE OF RELIGION
+25.39;ΘΡΗΣΚΕΥΤΙΚΕΣ ΤΕΛΕΤΕΣ;RELIGIOUS CEREMONIES
+25.40;ΘΡΗΣΚΕΥΤΙΚΗ ΑΓΩΓΗ;RELΙGIOUS EDUCATION
+25.41;ΘΡΗΣΚΕΥΤΙΚΟΙ ΘΕΣΜΟΙ;RELIGIOUS INSTITUTIONS
+25.42;ΑΙΡΕΣΕΙΣ;HERESIES
+25.43;ΙΕΡΑΠΟΣΤΟΛΙΚΗ;MISSIONARY
+25.44;ΕΞΟΜΟΛΟΓΗΤΙΚΗ;CONFESSIONAL
+25.45;ΛΕΙΤΟΥΡΓΙΚΗ;LITURGICS
+25.46;ΚΑΤΗΧΗΤΙΚΗ;CATECHETICS
+25.47;ΑΠΟΛΟΓΗΤΙΚΗ;APOLOGETICS
+25.99;AΛΛΕΣ ΘΕΟΛΟΓΙΚΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ;OTHER THEOLOGICAL SPECIALTIES
+26.1;ΜΥΚΗΝΑΪΚΗ ΦΙΛΟΛΟΓΙΑ;MYCENAEAN PHILOLOGY
+26.2;ΑΡΧΑΙΑ ΕΛΛΗΝΙΚΗ ΦΙΛΟΛΟΓΙΑ ;ANCIENT GREEK PHILOLOGY
+26.3;ΛΑΤΙΝΙΚΗ ΦΙΛΟΛΟΓΙΑ ;LATIN PHILOLOGY
+26.4;ΠΑΠΥΡΟΛΟΓΙΑ ;PAPYROLOGY
+26.5;ΠΑΛΑΙΟΓΡΑΦΙΑ ;PALEOGRAPHY
+26.6;ΒΥΖΑΝΤΙΝΗ ΦΙΛΟΛΟΓΙΑ ;BYZANTINE PHILOLOGY
+26.7;ΜΕΣΑΙΩΝΙΚΗ ΕΛΛΗΝΙΚΗ ΦΙΛΟΛΟΓΙΑ ;MEDIEVAL GREEK PHILOLOGY
+26.8;ΛΟΓΙΑ ΒΥΖΑΝΤΙΝΗ ΦΙΛΟΛΟΓΙΑ ;LEARNED BYZANTINE PHILOLOGY
+26.9;ΔΗΜΩΔΗΣ ΒΥΖΑΝΤΙΝΗ ΦΙΛΟΛΟΓΙΑ ;VERNACULAR BYZANTINE PHILOLOGY
+26.10;ΜΕΤΑΒΥΖΑΝΤΙΝΗ ΦΙΛΟΛΟΓΙΑ ;POST BYZANTINE PHILOLOGY
+26.11;ΔΗΜΩΔΗΣ ΕΛΛΗΝΙΚΗ ΦΙΛΟΛΟΓΙΑ ;VERNACULAR/DEMOTIC GREEK PHILOLOGY
+26.12;ΝΕΑ ΕΛΛΗΝΙΚΗ ΦΙΛΟΛΟΓΙΑ ;MODERN GREEK PHILOLOGY
+26.13;ΣΥΓΚΡΙΤΙΚΗ ΦΙΛΟΛΟΓΙΑ;COMPARATIVE PHILOLOGY
+26.14;AΛΛΕΣ ΕΙΔΙΚΟΤΗΤΕΣ ΦΙΛΟΛΟΓΙΑΣ;OTHER SPECIALTIES OF PHILOLOGY
+27.1;ΜΙΚΡΟΦΑΣΙΚΑ ΚΑΙ ΝΑΝΟΦΑΣΙΚΑ ΥΛΙΚΑ;MICROPHASE AND NANOPHASE MATERIALS
+27.2;ΜΟΡΙΑΚΑ ΥΛΙΚΑ;MOLECULAR MATERIALS
+27.3;ΒΙΟΫΛΙΚΑ ΚΑΙ ΕΠΙΣΤΗΜΗ ΤΩΝ ΥΛΙΚΩΝ ΣΕ ΒΙΟΜΟΡΙΑΚΑ ΣΥΣΤΗΜΑΤΑ;BIOMATERIALS AND MATERIALS SCIENCE IN BIOMOLECULAR SYSTEMS
+27.4;ΦΩΤΟΝΙΚΑ ΚΑΙ ΟΠΤΟΗΛΕΚΤΡΟΝΙΚΑ ΥΛΙΚΑ;PHOTONIC AND OPTOELECTRONIC MATERIALS
+27.5;ΜΑΓΝΗΤΙΚΑ ΥΛΙΚΑ;MAGNETIC MATERIALS
+27.6;ΗΛΕΚΤΡΟΝΙΚΑ ΥΛΙΚΑ;ELECTRONIC MATERIALS
+27.7;ΣΥΝΘΕΤΑ ΚΑΙ ΥΒΡΙΔΙΚΑ ΥΛΙΚΑ;COMPOSITE AND HYBRID MATERIALS
+27.8;ΠΟΛΥΜΕΡΙΚΑ ΥΛΙΚΑ;POLYMERIC MATERIALS
+27.9;ΚΕΡΑΜΙΚΑ ΥΛΙΚΑ ΚΑΙ ΥΑΛΟΙ;CERAMIC MATERIALS AND GLASSES
+27.10;ΜΕΤΑΛΛΙΚΑ ΥΛΙΚΑ ΚΑΙ ΚΡΑΜΑΤΑ;METALLIC MATERIALS AND ALLOYS
+27.11;ΔΙΗΛΕΚΤΡΙΚΑ ΥΛΙΚΑ;DIELECTRIC MATERIALS
+27.12;ΕΥΦΥΗ ΥΛΙΚΑ;SMART MATERIALS
+27.13;ΥΓΡΟΚΡΥΣΤΑΛΛΙΚΑ ΥΛΙΚΑ;LIQUID CRYSTALLINE MATERIALS
+27.14;ΥΛΙΚΑ ΓΙΑ ΒΙΟΪΑΤΡΙΚΕΣ ΕΦΑΡΜΟΓΕΣ;MATERIALS FOR BIOMEDICAL APPLICATIONS
+27.15;ΤΕΧΝΟΛΟΓΙΚΕΣ ΕΦΑΡΜΟΓΕΣ ΤΗΣ ΕΠΙΣΤΗΜΗΣ ΤΩΝ ΥΛΙΚΩΝ;TECHNOLOGICAL APPLICATIONS OF MATERIALS SCIENCE
+27.16;ΔΙΑΘΕΜΑΤΙΚΕΣ ΠΕΡΙΟΧΕΣ ΤΗΣ ΕΠΙΣΤΗΜΗΣ ΤΩΝ ΥΛΙΚΩΝ;INTERDISCIPLINARY AREAS OF MATERIALS SCIENCE

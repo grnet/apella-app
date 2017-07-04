@@ -1,0 +1,13 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι η αίτησή σας με κωδικό {{ application.id }} έχει απορριφθεί από το Τμήμα σας.
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We inform you that your application with ID {{application.id}} has been rejected by your Department.
+
+{% endblock content_en %}

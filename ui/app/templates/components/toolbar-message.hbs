@@ -1,0 +1,12 @@
+<md-toolbar class="{{ if warn "md-warn" ""}} {{if class class ""}}">
+  <div class="md-toolbar-tools">
+    <span class="flex-80">{{t message }}</span>
+    {{#if buttonComponent }}{{ component buttonComponent model=model}}{{/if}}
+    {{#if button }}
+    {{#paper-button
+      class="no-left-margin flex-20"
+      onClick=(route-action button.action)
+      raised=true primary=true}}{{paper-icon button.icon}}{{t button.message}}{{/paper-button}}
+  {{/if}}
+  </div>
+</md-toolbar>

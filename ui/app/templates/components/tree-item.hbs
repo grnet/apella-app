@@ -1,0 +1,29 @@
+{{#paper-button iconButton=true onClick=(action "toggle" item) class="flex-5"}}
+  {{paper-icon toggleIcon}}
+{{/paper-button}}
+
+{{#paper-checkbox value=(array-contains selected item)
+                  onChange=(action "handleChange" (array-contains selected item)  item modelType subModelType)
+                  class="flex-95"}}
+  {{item.title_current}}
+{{/paper-checkbox}}
+
+{{#if expanded}}
+  {{#if nodes.isSettled}}
+    {{#paper-list class="md-padding flex-offset-10 flex-80"}}
+      {{#each nodes as |item|}}
+        <div class="md-no-style md-list-item-inner">
+          {{#paper-checkbox value=(array-contains subSelected item)
+                            onChange=(action "handleChange" (array-contains subSelected item) item subModelType false) }}
+            {{item.title_current}}
+          {{/paper-checkbox}}
+        </div>
+      {{else}}
+        No data
+      {{/each}}
+    {{/paper-list}}
+  {{else}}
+    {{paper-icon "rotate-right" spin=true}}
+  {{/if}}
+
+{{/if}}

@@ -1,0 +1,20 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι έχει αποσυρθεί επιτυχώς η υποψηφιότητά σας για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+που είχατε υποβάλει μέσω του Πληροφοριακού Συστήματος Απέλλα.
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the candidacy for the position:
+
+{% include "apella/emails/position_details_en.txt" %}
+you had submitted through the Apella Information System has been successfully withdrawn.
+
+{% endblock content_en %}

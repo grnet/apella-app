@@ -1,0 +1,20 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι καταχωρίστηκε στο πληροφοριακό σύστημα ΑΠΕΛΛΑ μία νέα θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+σε θεματική περιοχή/Τμήμα του ενδιαφέροντός σας.
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that a new position has been entered in the Apella information system:
+
+{% include "apella/emails/position_details_en.txt" %}
+in a thematic area/Department you are interested in.
+
+{% endblock content_en %}

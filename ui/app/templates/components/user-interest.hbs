@@ -1,0 +1,43 @@
+<p>{{{t 'userInterest.info'}}}</p>
+<div class="container flex layout-column layout-gt-sm-row">
+  <div class="item flex">
+    <h3 class="md-padding">{{ t 'userInterest.headers.subject_area' }}</h3>
+    {{#if subjectAreas.isSettled}}
+      {{#paper-list class="no-padding"}}
+        {{#each subjectAreas as |item|}}
+          {{tree-item item=item
+                      modelType='subject-area'
+                      subModelType='subject'
+                      lookupField='area'
+                      partiallySelected=(and (not (array-contains userInterests.area item)) (array-contains partialArea item) )
+                      selected=userInterests.area
+                      subSelected=userInterests.subject
+                      onChange=(action 'setInterest')}}
+        {{/each}}
+      {{/paper-list}}
+    {{else}}
+      {{paper-icon "rotate-right" spin=true}}
+    {{/if}}
+  </div>
+  <div class="item flex">
+    <h3 class="md-padding">{{ t 'userInterest.headers.institution' }}</h3>
+
+    {{#if institutions.isSettled}}
+      {{#paper-list class="no-padding"}}
+        {{#each institutions as |item|}}
+          {{tree-item item=item
+                      modelType='institution'
+                      subModelType='department'
+                      lookupField='institution'
+                      partiallySelected=(and (not (array-contains userInterests.institution item)) (array-contains partialInstitution item) )
+                      selected=userInterests.institution
+                      subSelected=userInterests.department
+                      onChange=(action 'setInterest')}}
+        {{/each}}
+      {{/paper-list}}
+    {{else}}
+      {{paper-icon "rotate-right" spin=true}}
+    {{/if}}
+  </div>
+</div>
+{{#paper-button onClick=(action 'saveInterest') raised=true primary="true"}}{{t 'form.save.label'}}{{/paper-button}}

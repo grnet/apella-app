@@ -1,0 +1,20 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι ο χρήστης {{ candidate.first_name.el }} {{ candidate.last_name.el }} έχει υποβάλει υποψηφιότητα για τη θέση:
+
+{% include "apella/emails/position_details_el.txt" %}
+που έχετε καταχωρίσει στο Πληροφοριακό Σύστημα Απέλλα.
+
+{% endblock content_el %}
+
+
+{% block content_en %}
+
+We inform you that the user {{ candidate.first_name.en }} {{ candidate.last_name.en }} has submitted his/her candidacy for the position:
+
+{% include "apella/emails/position_details_en.txt" %}
+which you inserted in the Apella Information System.
+
+{% endblock content_en %}

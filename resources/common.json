@@ -1,0 +1,110 @@
+{
+    "USER_ROLES": [
+        ["institutionmanager", "Institution Manager"],
+        ["candidate", "Candidate"],
+        ["professor", "Professor"],
+        ["helpdeskadmin", "Helpdesk Admin"],
+        ["helpdeskuser", "Helpdesk User"],
+        ["assistant", "Assistant"],
+        ["ministry", "Ministry Administrator"]
+    ],
+
+    "POSITION_STATES": [
+        ["draft", "Draft"],
+        ["posted", "Posted"],
+        ["electing", "Electing"],
+        ["successful", "Successful"],
+        ["failed", "Failed"],
+        ["cancelled", "Cancelled"],
+        ["revoked", "Revoked"]
+    ],
+
+    "CANDIDACY_STATES": [
+        ["draft", "Draft"],
+        ["posted", "Posted"],
+        ["cancelled", "Cancelled"]
+    ],
+
+    "REGISTRY_TYPES": [
+        ["internal", "Internal"],
+        ["external", "External"]
+    ],
+
+    "AUTHORITIES": [
+        ["dean", "Dean"],
+        ["president", "President"]
+    ],
+
+    "MANAGER_ROLES": [
+        ["institutionmanager", "Manager"],
+        ["assistant", "Assistant"]
+    ],
+
+    "RANKS": [
+        ["Professor", "Professor"],
+        ["Associate Professor", "Associate Professor"],
+        ["Assistant Professor", "Assistant Professor"],
+        ["Lecturer", "Lecturer"],
+        ["Tenured Assistant Professor", "Tenured Assistant Professor"],
+        ["Research Director", "Research Director"],
+        ["Principal Researcher", "Principal Researcher"],
+        ["Affiliated Researcher", "Affiliated Researcher"]
+    ],
+
+    "POSITION_RANKS": [
+        ["Professor", "Professor"],
+        ["Associate Professor", "Associate Professor"],
+        ["Assistant Professor", "Assistant Professor"]
+    ],
+
+    "FILE_KINDS": [
+        ["cv", "CV"],
+        ["cv_professor", "CV"],
+        ["diploma", "Diploma"],
+        ["publication", "Publication"],
+        ["id_passport", "ID Passport"],
+        ["electors_set_file", "Electors Set File"],
+        ["committee_set_file", "Committee Set File"],
+        ["committee_proposal", "Committee Proposal"],
+        ["committee_note", "Committee Note"],
+        ["electors_meeting_proposal", "Electors Meeting Proposal"],
+        ["nomination_proceedings", "Nomination Proceedings"],
+        ["proceedings_cover_letter", "Proceedings Cover Letter"],
+        ["nomination_act", "Nomination Act"],
+        ["revocation_decision", "Revocation Decision"],
+        ["failed_election_decision", "Failed Election Decision"],
+        ["assistant_file", "Assistant File"],
+        ["self_evaluation_report", "Self Evaluation Report"],
+        ["attachment_file", "Attachment File"],
+        ["registry_set_decision_file", "Registry Set Decision File"]
+    ],
+
+    "INSTITUTION_CATEGORIES": [
+        ["Institution", "Institution"],
+        ["Research", "Research Center"]
+    ],
+
+    "FILE_SOURCE": [
+        ["profile", "Profile"],
+        ["candidacy", "Candidacy"],
+        ["position", "Position"],
+        ["other", "Other"]
+    ],
+
+    "APPLICATION_TYPES": [
+        ["tenure", "Tenure"],
+        ["renewal", "Renewal"]
+    ],
+
+    "APPLICATION_STATES": [
+        ["pending", "Pending"],
+        ["approved", "Approved"],
+        ["rejected", "Rejected"]
+    ],
+
+    "POSITION_TYPES": [
+        ["election", "Election"],
+        ["tenure", "Tenure"],
+        ["renewal", "Renewal"]
+    ]
+}

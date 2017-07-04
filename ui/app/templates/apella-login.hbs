@@ -1,0 +1,71 @@
+
+{{#gen-page classNames=(if gen.nested 'nested' '') as |page|}}
+  {{page.toolbar
+    pageTitle=(t gen.page.title model)
+    breadcrumbs=gen.breadcrumbs
+    toolbarActions=gen.toolbarActions
+    model=model
+    tabs=gen.tabs
+  }}
+
+  {{#if userNotFound }}
+  {{toolbar-message warn=true message='user.not.found.error'}}
+  {{/if}}
+  {{#if userExists }}
+  {{toolbar-message warn=true message='user.exists.error' button=(hash action='shibbolethLogin' message='login.domestic.label' icon='person')}}
+  {{/if}}
+  {{#if migrationError }}
+  {{toolbar-message warn=true message='user.migration.error'}}
+  {{/if}}
+  {{#if userNotEmailVerified }}
+  {{toolbar-message warn=true message='user.not.email_verified.error' buttonComponent=(component 'resend-verification-action')}}
+  {{/if}}
+  {{#if userNotVerified }}
+  {{toolbar-message warn=true message='user.not.verified.error'}}
+  {{/if}}
+  {{#if userEmailVerificationFailed }}
+  {{toolbar-message warn=true message='user.email_verification.error.message'}}
+  {{/if}}
+  {{#if userNotActive }}
+  {{toolbar-message warn=true message='user.not.active.error'}}
+  {{/if}}
+  {{#if resetToken}}
+  {{reset-password token=resetToken visiblePopup=true }}
+  {{/if}}
+  {{#if noAffiliation }}
+  {{toolbar-message warn=true message='user.invalid.affiliation.error'}}
+  {{/if}}
+
+
+  {{#page.content}}
+    <md-content>
+
+    {{#if gen.partials.top}}
+      {{ partial gen.partials.top }}
+    {{/if}}
+
+
+    {{#if (not newUserSelected) }}
+      {{#paper-content class="md-padding"}}
+          <p class="md-padding">
+            {{t 'old.user.info'}}
+          </p>
+          {{ partial '_login_card' }}
+      {{/paper-content}}
+    {{else}}
+      {{#paper-content class="md-padding"}}
+          <p class="md-padding">
+            {{t 'new.user.info'}}
+          </p>
+          {{ partial '_register_card' }}
+      {{/paper-content}}
+    {{/if}}
+
+
+    {{#if gen.partials.bottom}}
+      {{ partial gen.partials.bottom }}
+    {{/if}}
+  </md-content>
+  {{/page.content}}
+
+{{/gen-page}}
