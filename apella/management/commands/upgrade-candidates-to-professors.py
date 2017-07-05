@@ -22,7 +22,7 @@ RANKS = {
     'ΚΑΘΗΓΗΤΗΣ': 'Professor',
     'ΚΥΡΙΟΣ ΕΡΕΥΝΗΤΗΣ': 'Principal Researcher',
     'ΕΝΤΕΤΑΛΜΕΝΟΣ ΕΡΕΥΝΗΤΗΣ': 'Affiliated Researcher',
-    'ΔΙΕΥΘΥΝΤΗΣ ΕΡΕΥΝΩΝ': 'Principal Researcher'
+    'ΔΙΕΥΘΥΝΤΗΣ ΕΡΕΥΝΩΝ': 'Research Director'
 }
 
 
