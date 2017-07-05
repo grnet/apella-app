@@ -116,6 +116,9 @@ const pick_details_fs = function() {
      * Check if the user is a candidate for this position.
      * On getModel we fetch the candidacies, so here we use the peekAll function
      * to check them and keep only the data we need for each candidacy.
+     * The latest candidacies for the position are normally fetched but if the
+     * user has already visited the candidacies list view, all the candidacies
+     * are stored in Ember's local storage.
      */
     candidacies = store.peekAll('candidacy').map(function(candidacy) {
       return {
