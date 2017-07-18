@@ -257,6 +257,7 @@ export default ApellaGen.extend({
      * decide if the candidacies fs should be rendered.
      */
     getModel: function(params, model) {
+
       let position_id = get(model, 'id'),
         store = get(model, 'store'),
         query = {
@@ -267,7 +268,7 @@ export default ApellaGen.extend({
 
       return store.query('candidacy', query).then(function() {
         if (election) {
-          return model;
+          return preloadRelations(model, 'related_positions');
         } else {
           return preloadRelations(model, 'user_application', 'user_application.user');
         }
