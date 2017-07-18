@@ -512,6 +512,16 @@ class Professor(UserProfile, CandidateProfile):
                 'position_id', flat=True)
             prof_committee = user.professor.committee_duty.values_list(
                 'id', flat=True)
+            dep_positions = []
+            if user.professor.department:
+                dep_positions = Position.objects.filter(
+                    department=user.professor.department).values_list(
+                        'id', flat=True)
+                if dep_positions:
+                    for pid in dep_positions:
+                        if pid in self_positions_elector or \
+                                pid in self_positions_elector:
+                            return True
             for pid in prof_committee:
                 if pid in self_positions_committee or \
                         pid in self_positions_elector:
