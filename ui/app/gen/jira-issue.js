@@ -1,6 +1,7 @@
+import {field} from 'ember-gen';
 import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
-import {field} from 'ember-gen';
+import validate from 'ember-gen/validate';
 
 const {
   computed,
@@ -14,19 +15,75 @@ export default ApellaGen.extend({
   resourceName: 'jira-issues',
   auth: true,
   path: 'jira-issues',
+  common: {
+    validators: {
+      title: [validate.presence(true), validate.length({min:3, max:200})],
+      description: [validate.presence(true)],
+    }
+  },
   list : {
     menu: {
       icon: 'mail_outline',
       label: computed('role', function() {
         let role = get(this, 'role');
-        if (role.startsWith('helpdesk')){
+        if (role && role.startsWith('helpdesk')){
           return 'jira.helpdesk.menu_label';
         }
         else {
           return 'jira.user.menu_label';
         }
       }),
-    }
+    },
+    sort: {
+      active: true,
+      fields: ['code', 'user.id'],
+      serverSide: true
+    },
+    filter: {
+      active: computed('role', function() {
+        let role = get(this, 'role');
+        return role && role.startsWith('helpdesk')? true: false;
+      }),
+      serverSide: true,
+      search: computed('role', function() {
+        let role = get(this, 'role');
+        return role && role.startsWith('helpdesk')? true: false;
+      }),
+      meta: {
+        fields: [
+          'issue_type',
+          'state',
+          'resolution',
+        ]
+      }
+    },
+    row: {
+      fields: computed('role', function() {
+        let role = get(this, 'role');
+        if (role && role.startsWith('helpdesk') )  {
+          return [
+            'code',
+            field('user.id', {label: 'user_id.label'}),
+            field('user.full_name_current', {label: 'full_name_current.label'}),
+            field('user.role_verbose', {label: 'role.label'}),
+            field('issue_type_verbose', {label: 'issue_type.label'}),
+            'created_at_format',
+            'updated_at_format',
+            field('state_verbose', {label: 'status_verbose.label'}),
+            field('resolution_verbose', {label: 'resolution.label'}),
+            'reporter_id_if_not_user',
+          ];
+        } else {
+          return [
+            'code',
+            field('issue_type_verbose', {label: 'issue_type.label'}),
+            'created_at_format',
+            field('title', {label: 'jira.title.label'}),
+          ];
+        }
+      }),
+      actions: ['gen:details'],
+    },
   },
   create: {
     routeMixins: {
@@ -86,7 +143,7 @@ export default ApellaGen.extend({
         }
       }),
       layout: {
-        flex: [25, 25, 50, 100, 100]
+        flex: [50, 25, 25, 100, 100]
       }
     }],
 
