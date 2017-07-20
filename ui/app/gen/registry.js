@@ -168,6 +168,7 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFie
 
 
 export default ApellaGen.extend({
+  order: 2000,
   modelName: 'registry',
   auth: true,
   path: 'registries',
