@@ -10,7 +10,7 @@ const {
 
 
 export default ApellaGen.extend({
-  order: 10,
+  order: 2100,
   modelName: 'jira-issue',
   resourceName: 'jira-issues',
   auth: true,
@@ -22,6 +22,17 @@ export default ApellaGen.extend({
     }
   },
   list : {
+    page: {
+      title: computed('role', function() {
+        let role = get(this, 'role');
+        if (role && role.startsWith('helpdesk')){
+          return 'jira.helpdesk.menu_label';
+        }
+        else {
+          return 'jira.user.menu_label';
+        }
+      }),
+    },
     menu: {
       icon: 'mail_outline',
       label: computed('role', function() {
@@ -146,7 +157,50 @@ export default ApellaGen.extend({
         flex: [50, 25, 25, 100, 100]
       }
     }],
-
-
+  },
+  details: {
+    page: {
+       title: computed.readOnly('model.code'),
+    },
+    fieldsets: [{
+      fields: computed('role', function(){
+        let role = get(this, 'role');
+        if (role.startsWith('helpdesk')) {
+          console.log('sfds');
+          return [
+            'code',
+            'user.id',
+            field('user.role_verbose', {label: 'role.label'}),
+            field('user.full_name_current', {label: 'full_name_current.label'}),
+            'issue_type',
+            'state',
+            'resolution',
+            'updated_at_format',
+            'created_at_format',
+            'reporter_id_if_not_user',
+            'reporter.full_name_current',
+            'title',
+            'description'
+          ];
+        } else {
+          return [
+            'code',
+            'created_at_format',
+            'issue_type',
+            'title',
+            'description'
+          ];
+        }
+      }),
+      layout: {
+        flex: computed('role', function(){
+          if (get(this, 'role').startsWith('helpdesk')) {
+            return [100, 25, 25, 50, 25, 25, 50, 50, 50, 50, 50, 100, 100]
+          } else {
+            return [100, 50, 50, 100, 100]
+          }
+        })
+      }
+    }],
   }
 });
