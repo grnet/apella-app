@@ -147,7 +147,7 @@ export default ApellaGen.extend({
           field('title', {label: 'jira.title.label'}),
           'description',
         ]
-        if (role.startsWith('helpdesk')) {
+        if (role && role.startsWith('helpdesk')) {
           return fields;
         } else {
           return fields;
@@ -165,8 +165,7 @@ export default ApellaGen.extend({
     fieldsets: [{
       fields: computed('role', function(){
         let role = get(this, 'role');
-        if (role.startsWith('helpdesk')) {
-          console.log('sfds');
+        if (role && role.startsWith('helpdesk')) {
           return [
             'code',
             'user.id',
@@ -194,7 +193,8 @@ export default ApellaGen.extend({
       }),
       layout: {
         flex: computed('role', function(){
-          if (get(this, 'role').startsWith('helpdesk')) {
+          let role  = get(this, 'role');
+          if (role && role.startsWith('helpdesk')) {
             return [100, 25, 25, 50, 25, 25, 50, 50, 50, 50, 50, 100, 100]
           } else {
             return [100, 50, 50, 100, 100]

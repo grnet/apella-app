@@ -3,7 +3,7 @@ import {ApellaGen} from 'ui/lib/common';
 import gen from 'ember-gen/lib/gen';
 import validate from 'ember-gen/validate';
 import USER from 'ui/utils/common/users';
-import {deactivateUser, activateUser} from 'ui/utils/common/actions';
+import {deactivateUser, activateUser, createIssue} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -42,10 +42,11 @@ export default ApellaGen.extend({
     },
     row: {
       fields: [field('id', {label: 'user_id.label'}), field('old_user_id'), 'has_accepted_terms_verbose', field('status_verbose', {label: 'state.label'}), 'username', 'email', 'full_name_current', 'role_verbose', 'login_method'],
-      actions: ['gen:details', 'gen:edit', 'remove', 'activateUser', 'deactivateUser'],
+      actions: ['gen:details', 'gen:edit', 'remove', 'activateUser', 'deactivateUser', 'createIssue'],
       actionsMap: {
         deactivateUser: deactivateUser,
         activateUser: activateUser,
+        createIssue: createIssue,
       }
 
     },
