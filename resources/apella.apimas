@@ -2623,6 +2623,40 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                statement_file:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .readonly: {}
+                    .nullable: {}
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .integer: {}
+                            .readonly: {}
+                        file_kind:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['cv']
+                        file_name:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                        description:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                        updated_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
                 attachment_files:
                     .cli_option: {}
                     .field: {}

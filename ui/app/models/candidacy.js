@@ -22,6 +22,7 @@ export default DS.Model.extend({
   diplomas: DS.hasMany('apella-files', {label: 'candidacy.label.diploma'}),
   publications: DS.hasMany('apella-files', {label: 'candidacy.label.publication'}),
   self_evaluation_report: DS.belongsTo('apella-file', {label: 'candidacy.label.self_evaluation'}),
+  statement_file: DS.belongsTo('apella-file', {label: 'candidacy.label.statement_file'}),
   attachment_files: DS.hasMany('apella-file', {label: 'candidacy.label.attachment_files'}),
 
   title: computed('position.code', 'candidate.username', function(){

@@ -77,13 +77,29 @@ let CANDIDACY_FIELDSET =  {
       let election = get(this, 'model.position.position_type') === 'election';
 
       let res = [
-        fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+        fileField('statement_file', 'candidacy', 'statement_file', {
           hint: 'five_before_electors_meeting',
           readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
             let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
             let after_deadline = false;
             if (electors_at) {
               let limit_day = electors_at.subtract(5, 'days'),
+                today = moment().startOf('days');
+              after_deadline = today.isAfter(limit_day);
+            }
+            return after_deadline;
+          })
+        }, {
+          replace: true
+        }),
+
+        fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+          hint: 'one_before_electors_meeting',
+          readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
+            let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
+            let after_deadline = false;
+            if (electors_at) {
+              let limit_day = electors_at.subtract(1, 'days'),
                 today = moment().startOf('days');
               after_deadline = today.isAfter(limit_day);
             }
@@ -127,9 +143,13 @@ let CANDIDACY_FIELDSET_DETAILS =  {
     fields: computed('model.position.position_type', function(){
       let election = get(this, 'model.position.position_type') === 'election';
       let res = [
-        fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+        fileField('statement_file', 'candidacy', 'statement_file', {
           readonly: true,
           hint: 'five_before_electors_meeting',
+        }, { replace: true}),
+        fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
+          readonly: true,
+          hint: 'one_before_electors_meeting',
         }, { replace: true}),
        fileField('attachment_files', 'candidacy', 'attachment_files', {
           readonly: true,

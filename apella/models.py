@@ -371,6 +371,10 @@ class ApellaFile(models.Model):
                 row, request, view)
         if self.file_kind == 'self_evaluation_report':
             candidacy = self.self_evaluation_report.all()[0]
+            return candidacy.check_resource_state_one_before_electors_meeting(
+                row, request, view)
+        if self.file_kind == 'statement_file':
+            candidacy = self.statement_file.all()[0]
             return candidacy.check_resource_state_five_before_electors_meeting(
                 row, request, view)
 
@@ -385,7 +389,8 @@ class ApellaFile(models.Model):
         return self.apella_candidacy_cv_files.exists() or \
             self.apella_candidacy_diploma_files.exists() or \
             self.apella_candidacy_publication_files.exists() or \
-            self.file_kind in ['attachment_files', 'self_evaluation_report']
+            self.file_kind in [
+                'attachment_files', 'self_evaluation_report', 'statement_file']
 
     @property
     def is_profile_file(self):
@@ -877,6 +882,9 @@ class Candidacy(CandidateProfile):
     attachment_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='attachment_files')
     old_candidacy_id = models.IntegerField(blank=True, null=True)
+    statement_file = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='statement_file', on_delete=models.SET_NULL)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(

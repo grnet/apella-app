@@ -150,6 +150,10 @@ FILE_KIND_TO_FIELD = {
         "field": "self_evaluation_report",
         "many": False,
     },
+    "statement_file": {
+        "field": "statement_file",
+        "many": False,
+    },
     "attachment_files": {
         "field": "attachment_files",
         "many": True,
