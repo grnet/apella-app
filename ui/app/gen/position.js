@@ -209,7 +209,7 @@ export default ApellaGen.extend({
         else {
           return 'position.menu_label';
         }
-    }),
+      }),
       display: computed('role', function() {
         let role = get(this, 'role'),
           is_foreign = get(this, 'session.session.authenticated.is_foreign'),
@@ -225,14 +225,25 @@ export default ApellaGen.extend({
       })
     },
     row: {
-      fields: computed('role', function(){
-        let role = get(this, 'role');
+      fields: computed(function(){
+        let role = get(this, 'session.session.authenticated.role');
         let f = [
-          field('code', { dataKey: 'id' }), 'old_code', 'title', 'rank_verbose', 'state_calc_verbose',
-          field('department.title_current', {label: 'department.label'}),
+          field('code', { dataKey: 'id' }),
+          'old_code',
+          'title',
+          'rank_verbose',
+          'state_calc_verbose',
         ];
-        if (!(role == 'institutionmanager' || role == 'assistant')) {
-          f.pushObject(field('institution.title_current'));
+        if (role == 'institutionmanager' || role == 'assistant') {
+          f.pushObjects([
+            field('department.title_current', {label: 'department.label'}),
+          ]);
+        }
+        if (role.startsWith('helpdesk')) {
+          f.pushObjects([
+            field('department.title_current', {label: 'department.label'}),
+            field('institution.title_current'),
+          ]);
         }
         return f;
       }),
