@@ -1010,6 +1010,7 @@ class JiraIssue(models.Model):
         choices=common.JIRA_ISSUE_RESOLUTION, max_length=30, default='fixed')
     created_at = models.DateTimeField(default=datetime.utcnow)
     updated_at = models.DateTimeField(default=datetime.utcnow)
+    issue_key = models.CharField(max_length=255, blank=True)
 
 
 from migration_models import (

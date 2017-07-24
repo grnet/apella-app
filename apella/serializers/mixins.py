@@ -348,4 +348,5 @@ class JiraIssues(object):
     def create(self, validated_data):
         jira_issue = JiraIssue(**validated_data)
         new_issue = create_issue(jira_issue)
+        validated_data['issue_key'] = new_issue.key
         return super(JiraIssues, self).create(validated_data)

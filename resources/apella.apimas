@@ -3400,6 +3400,11 @@ spec:
                     .readonly: {}
                     .drf_field: {}
                     .datetime: {'format': ['%Y-%m-%dT%H:%M:%S.%fZ']}
+                issue_key:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
             .actions:
                 .list: {}
                 .create: {}
