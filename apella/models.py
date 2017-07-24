@@ -1007,7 +1007,8 @@ class JiraIssue(models.Model):
     issue_type = models.CharField(
         choices=common.JIRA_ISSUE_TYPES, max_length=30, default='complaint')
     resolution = models.CharField(
-        choices=common.JIRA_ISSUE_RESOLUTION, max_length=30, default='fixed')
+        choices=common.JIRA_ISSUE_RESOLUTION,
+        max_length=30, blank=True, default='')
     created_at = models.DateTimeField(default=datetime.utcnow)
     updated_at = models.DateTimeField(default=datetime.utcnow)
     issue_key = models.CharField(max_length=255, blank=True)

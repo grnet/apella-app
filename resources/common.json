@@ -127,6 +127,7 @@
     ],
 
     "JIRA_ISSUE_RESOLUTION": [
+        ["", ""],
         ["fixed", "Fixed"],
         ["wont_fix", "Won't Fix"],
         ["duplicate", "Duplicate"],
