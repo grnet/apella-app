@@ -622,3 +622,12 @@ class ApellaUsers(object):
         user.has_accepted_terms = True
         user.save()
         return Response(request.data, status=status.HTTP_200_OK)
+
+
+class JiraIssues(object):
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        if not user.is_helpdesk():
+            queryset = queryset.filter(user_id=user.id)
+        return queryset

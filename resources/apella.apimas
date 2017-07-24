@@ -3332,6 +3332,7 @@ spec:
             .drf_collection:
                 model: apella.models.JiraIssue
                 model_serializers: [apella.serializers.mixins.JiraIssues]
+                mixins: [apella.views.mixins.JiraIssues]
                 ordering_fields: [code, user__id]
                 filter_fields: [issue_type, state, resolution]
                 search_fields: [user__id, user__username, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en, user__email, reporter__id, reporter__email]
