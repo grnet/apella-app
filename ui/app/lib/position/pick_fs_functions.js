@@ -111,6 +111,7 @@ const pick_details_fs = function() {
 
   if(roles_conditional_candidacies.indexOf(role) > -1) {
     let candidacies = [];
+    let candidates_ids = [];
 
     /*
      * Check if the user is a candidate for this position.
@@ -119,45 +120,50 @@ const pick_details_fs = function() {
      * The latest candidacies for the position are normally fetched but if the
      * user has already visited the candidacies list view, all the candidacies
      * are stored in Ember's local storage.
+     * We keep only the candidacies that belong to the position for which we
+     * display the details.
      */
     candidacies = store.peekAll('candidacy').map(function(candidacy) {
-      return {
-        candidacy_pos_id: candidacy.belongsTo('position').link().split('/').slice(-2)[0],
-        candidate_id: candidacy.belongsTo('candidate').link().split('/').slice(-2)[0],
-        candidacy_is_posted: (get(candidacy, 'state') === 'posted'),
-        updated_at: get(candidacy, 'updated_at')
-      };
+      let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0];
+      if (candidacy_pos_id == position_model.id) {
+        return {
+          candidate_id: candidacy.belongsTo('candidate').link().split('/').slice(-2)[0],
+          candidacy_is_posted: (get(candidacy, 'state') === 'posted'),
+          updated_at: get(candidacy, 'updated_at')
+        };
+      }
     });
 
     /*
-     * Only the latest candidacies per position are kept.
+     * Only the latest candidacies for the position are kept.
      * The candidacies are sorted by descending updated_at date and then only the
-     * first occurrence of each position is kept.
+     * first occurrence for each candidate is kept.
     */
 
-    candidacies = _.uniq(_.sortBy(candidacies, ['updated_at']).reverse(), 'candidacy_pos_id');
+    candidacies = _.uniq(_.sortBy(candidacies, ['updated_at']).reverse(), 'candidate_id');
 
-    candidacies.forEach(function(candidacy) {
-      let candidacy_pos_id = candidacy.candidacy_pos_id,
-        candidate_id = candidacy.candidate_id,
-        candidacy_is_posted = candidacy.candidacy_is_posted;
-      // If the candidacy belongs to this position
-      if(candidacy_pos_id === position_model.id) {
+    // If there are no candidacies, candidacy.candidate_id and
+    // candidacy.candidacy_is_posted produce typeError
+    if (candidacies.length >0 ) {
+      candidacies.forEach(function(candidacy) {
+        let candidate_id = candidacy.candidate_id,
+          candidacy_is_posted = candidacy.candidacy_is_posted;
+
         /*
          * if the candidacy is posted and not cancelled keep the id of the
          * candidate.
          */
         if(candidacy_is_posted) {
-          candidacies.push(candidate_id);
+          candidates_ids.push(candidate_id);
         }
         // if the candidacy is cancelled limit the view permissions of the user.
         else if(user_id === candidate_id) {
           limited_permissions = true;
         }
-      }
-    });
+      });
+    }
     // Show candidacies fieldset only in fellow candidates
-    if(candidacies.indexOf(user_id) > -1) {
+    if(candidates_ids.indexOf(user_id) > -1) {
       display_candidacies = true;
     }
     // If the user is not an *active* candidate and he is a professor
