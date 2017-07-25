@@ -75,7 +75,7 @@ PERMISSION_RULES = [
     ('candidacies', 'update', 'candidate', 'others_can_view', 'owned_open', ''),
     ('candidacies', 'update', 'candidate', 'state', 'owned_open', '3.3.7'),
     ('candidacies', 'update', 'candidate', 'self_evaluation_report', 'one_before_electors_meeting', ''),
-    ('candidacies', 'update', 'candidate', 'statement', 'five_before_electors_meeting', ''),
+    ('candidacies', 'update', 'candidate', 'statement_file', 'five_before_electors_meeting', ''),
     ('candidacies', 'update', 'candidate', 'attachment_files', 'one_before_electors_meeting', ''),
     ('candidacies', 'partial_update', 'candidate', 'state', 'owned_open', '3.3.7'),
     ('candidacies', 'partial_update', 'helpdeskadmin', 'state', 'after_closed_electors_meeting_open', '5.2.3.a'),
