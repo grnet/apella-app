@@ -35,6 +35,9 @@ let candidacy_quick_details_fs =  {
       fileField('publications', 'candidate', 'publications', {
         readonly: true
       }),
+      fileField('statement_file', 'candidacy', 'statement_file', {
+        readonly: true,
+      }),
       fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
         readonly: true,
       }, {replace: true}),
