@@ -10,6 +10,7 @@ const {
 
 let issue_types = prefixSelect(CHOICES.JIRA_ISSUE_TYPES, 'jira.');
 let states = prefixSelect(CHOICES.JIRA_ISSUE_STATES, 'jira.');
+let resolutions = prefixSelect(CHOICES.JIRA_ISSUE_RESOLUTION, 'jira_resolution.');
 
 export default DS.Model.extend({
   code: DS.attr(),
@@ -28,8 +29,8 @@ export default DS.Model.extend({
   state_verbose: computeI18NChoice('state', states),
   issue_type: DS.attr({type: 'select', choices: issue_types, defaultValue: 'complaint'}),
   issue_type_verbose: computeI18NChoice('issue_type', issue_types),
-  resolution: DS.attr({type: 'select', choices: CHOICES.JIRA_ISSUE_RESOLUTION}),
-  resolution_verbose: computeI18NChoice('resolution', CHOICES.JIRA_ISSUE_RESOLUTION),
+  resolution: DS.attr({type: 'select', choices: resolutions}),
+  resolution_verbose: computeI18NChoice('resolution', resolutions),
   created_at: DS.attr('date'),
   created_at_format: computeDateTimeFormat('created_at'),
   updated_at: DS.attr('date'),

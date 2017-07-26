@@ -165,9 +165,9 @@ export default ApellaGen.extend({
             'user.id',
             field('user.role_verbose', {label: 'role.label'}),
             field('user.full_name_current', {label: 'full_name_current.label'}),
-            'issue_type',
-            'state',
-            'resolution',
+            field('issue_type_verbose', {label: 'issue_type.label'}),
+            field('state_verbose', {label: 'state.label'}),
+            field('resolution_verbose', {label: 'resolution.label'}),
             'updated_at_format',
             'created_at_format',
             'reporter_id_if_not_user',
@@ -179,7 +179,7 @@ export default ApellaGen.extend({
           return [
             field('issue_key', {label: 'code.label'}),
             'created_at_format',
-            'issue_type',
+            field('issue_type_verbose', {label: 'issue_type.label'}),
             'title',
             'description'
           ];
