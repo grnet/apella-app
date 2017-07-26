@@ -28,7 +28,7 @@ export default DS.Model.extend({
   state_verbose: computeI18NChoice('state', states),
   issue_type: DS.attr({type: 'select', choices: issue_types, defaultValue: 'complaint'}),
   issue_type_verbose: computeI18NChoice('issue_type', issue_types),
-  resolution: DS.attr({type: 'select', choices: CHOICES.JIRA_ISSUE_RESOLUTION, defaultValue: 'fixed'}),
+  resolution: DS.attr({type: 'select', choices: CHOICES.JIRA_ISSUE_RESOLUTION}),
   resolution_verbose: computeI18NChoice('resolution', CHOICES.JIRA_ISSUE_RESOLUTION),
   created_at: DS.attr('date'),
   created_at_format: computeDateTimeFormat('created_at'),
