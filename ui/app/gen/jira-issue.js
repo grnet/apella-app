@@ -94,7 +94,9 @@ export default ApellaGen.extend({
     routeMixins: {
       queryParams: {'user_id': { refreshModel: true }},
     },
-
+    onSubmit(model) {
+      this.transitionTo('jira-issue.record.index', model);
+    },
     getModel(params) {
       var store = get(this, 'store');
       let reporter_id = get(this, 'session.session.authenticated.user_id');
