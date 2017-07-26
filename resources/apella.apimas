@@ -3406,6 +3406,12 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .string: {}
+                issue_call:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['incoming', 'outgoing']
             .actions:
                 .list: {}
                 .create: {}

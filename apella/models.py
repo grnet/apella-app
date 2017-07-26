@@ -1012,6 +1012,8 @@ class JiraIssue(models.Model):
     created_at = models.DateTimeField(default=datetime.utcnow)
     updated_at = models.DateTimeField(default=datetime.utcnow)
     issue_key = models.CharField(max_length=255, blank=True)
+    issue_call = models.CharField(
+        choices=common.JIRA_ISSUE_CALLS, max_length=30, default='incoming')
 
 
 from migration_models import (

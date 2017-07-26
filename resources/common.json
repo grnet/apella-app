@@ -134,5 +134,10 @@
         ["incomplete", "Incomplete"],
         ["cannot_reproduce", "Cannot Reproduce"],
         ["fixed_workaround", "Fixed Workaround"]
+    ],
+
+    "JIRA_ISSUE_CALLS": [
+        ["incoming", "Incoming"],
+        ["outgoing", "Outgoing"]
     ]
 }
