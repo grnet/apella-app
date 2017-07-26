@@ -34,4 +34,5 @@ export default DS.Model.extend({
   created_at_format: computeDateTimeFormat('created_at'),
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
+  issue_key: DS.attr(),
 });

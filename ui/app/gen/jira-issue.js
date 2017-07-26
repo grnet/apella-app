@@ -47,7 +47,7 @@ export default ApellaGen.extend({
     },
     sort: {
       active: true,
-      fields: ['code', 'user.id'],
+      fields: ['issue_key', 'user.id'],
       serverSide: true
     },
     filter: {
@@ -73,7 +73,7 @@ export default ApellaGen.extend({
         let role = get(this, 'role');
         if (role && role.startsWith('helpdesk') )  {
           return [
-            'code',
+            field('issue_key', {label: 'code.label'}),
             field('user.id', {label: 'user_id.label'}),
             field('user.full_name_current', {label: 'full_name_current.label'}),
             field('user.role_verbose', {label: 'role.label'}),
@@ -86,7 +86,7 @@ export default ApellaGen.extend({
           ];
         } else {
           return [
-            'code',
+            field('issue_key', {label: 'code.label'}),
             field('issue_type_verbose', {label: 'issue_type.label'}),
             'created_at_format',
             field('title', {label: 'jira.title.label'}),
@@ -160,14 +160,14 @@ export default ApellaGen.extend({
   },
   details: {
     page: {
-       title: computed.readOnly('model.code'),
+       title: computed.readOnly('model.issue_key'),
     },
     fieldsets: [{
       fields: computed('role', function(){
         let role = get(this, 'role');
         if (role && role.startsWith('helpdesk')) {
           return [
-            'code',
+            field('issue_key', {label: 'code.label'}),
             'user.id',
             field('user.role_verbose', {label: 'role.label'}),
             field('user.full_name_current', {label: 'full_name_current.label'}),
@@ -183,7 +183,7 @@ export default ApellaGen.extend({
           ];
         } else {
           return [
-            'code',
+            field('issue_key', {label: 'code.label'}),
             'created_at_format',
             'issue_type',
             'title',
