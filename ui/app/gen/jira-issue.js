@@ -134,23 +134,20 @@ export default ApellaGen.extend({
         }
           return 'jira.fieldset.user.label'
       }),
-      fields: computed('role', function(){
-        let role = get(this, 'role');
-        let fields = [
-          field('user', {disabled: true, label: 'full_name_current.label'}),
-          field('user.id', {disabled: true, label: 'user_id.label'}),
-          'issue_type',
-          field('title', {label: 'jira.title.label'}),
-          'description',
-        ]
-        if (role && role.startsWith('helpdesk')) {
-          return fields;
-        } else {
-          return fields;
-        }
-      }),
+      fields: [
+        field('user', {disabled: true, label: 'full_name_current.label'}),
+        field('user.id', {disabled: true, label: 'user_id.label'}),
+        field('issue_call', {
+          disabled: computed('role', function(){
+            return get(this, 'role').startsWith('helpdesk')? false: true;
+          })
+        }),
+        'issue_type',
+        field('title', {label: 'jira.title.label'}),
+        'description',
+      ],
       layout: {
-        flex: [50, 25, 25, 100, 100]
+        flex: [50, 50, 50, 50, 100, 100]
       }
     }],
   },
@@ -170,6 +167,7 @@ export default ApellaGen.extend({
             field('issue_type_verbose', {label: 'issue_type.label'}),
             field('state_verbose', {label: 'state.label'}),
             field('resolution_verbose', {label: 'resolution.label'}),
+            field('issue_call_verbose', {label: 'issue_call.label'}),
             'updated_at_format',
             'created_at_format',
             'reporter_id_if_not_user',
@@ -191,7 +189,7 @@ export default ApellaGen.extend({
         flex: computed('role', function(){
           let role  = get(this, 'role');
           if (role && role.startsWith('helpdesk')) {
-            return [100, 25, 25, 50, 25, 25, 50, 50, 50, 50, 50, 100, 100]
+            return [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 100, 100]
           } else {
             return [100, 50, 50, 100, 100]
           }

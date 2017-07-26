@@ -11,6 +11,7 @@ const {
 let issue_types = prefixSelect(CHOICES.JIRA_ISSUE_TYPES, 'jira.');
 let states = prefixSelect(CHOICES.JIRA_ISSUE_STATES, 'jira.');
 let resolutions = prefixSelect(CHOICES.JIRA_ISSUE_RESOLUTION, 'jira_resolution.');
+let issue_calls = prefixSelect(CHOICES.JIRA_ISSUE_CALLS, 'jira.');
 
 export default DS.Model.extend({
   code: DS.attr(),
@@ -36,4 +37,7 @@ export default DS.Model.extend({
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
   issue_key: DS.attr(),
+  issue_call: DS.attr({type: 'select', choices: issue_calls, defaultValue: 'outgoing'}),
+  issue_call_verbose: computeI18NChoice('issue_call', issue_calls),
+
 });
