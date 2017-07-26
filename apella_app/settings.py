@@ -234,3 +234,4 @@ JIRA_OPTIONS = {
 
 JIRA_LOGIN = ("apella", "password")
 JIRA_PROJECT = "APELLA"
+JIRA_LABEL = "new_apella"

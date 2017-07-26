@@ -19,6 +19,7 @@ def create_issue(jira_issue):
         options=settings.JIRA_OPTIONS, basic_auth=settings.JIRA_LOGIN)
     issue = {
         'project': settings.JIRA_PROJECT,
+        'labels': [settings.JIRA_LABEL],
         'summary': jira_issue.title,
         'description': jira_issue.description,
         'issuetype': {'name': ISSUE_TYPES.get(jira_issue.issue_type)},
