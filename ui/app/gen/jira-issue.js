@@ -51,15 +51,9 @@ export default ApellaGen.extend({
       serverSide: true
     },
     filter: {
-      active: computed('role', function() {
-        let role = get(this, 'role');
-        return role && role.startsWith('helpdesk')? true: false;
-      }),
+      active: true,
       serverSide: true,
-      search: computed('role', function() {
-        let role = get(this, 'role');
-        return role && role.startsWith('helpdesk')? true: false;
-      }),
+      search: true,
       meta: {
         fields: [
           'issue_type',
