@@ -857,7 +857,8 @@ class Position(models.Model):
 
     @property
     def is_tenure_type(self):
-        return self.position_type == 'tenure'
+        return self.position_type == 'tenure' or \
+            self.position_type == 'renewal'
 
 
 class ElectorParticipation(models.Model):
