@@ -47,7 +47,7 @@ let candidacy_quick_details_fs =  {
       }, {multiple: true} ),
     ],
     layout: {
-      flex: [33, 33, 33, 33, 33, 33, 100, 100, 100, 100, 100]
+      flex: [33, 33, 33, 33, 33, 33, 100, 100, 100, 100, 100, 100]
     }
 };
 
