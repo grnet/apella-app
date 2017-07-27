@@ -141,6 +141,8 @@ const pick_details_fs = function() {
     */
 
     candidacies = _.uniq(_.sortBy(candidacies, ['updated_at']).reverse(), 'candidate_id');
+    // remove undefined values from candidacies
+    candidacies = _.compact(candidacies);
 
     // If there are no candidacies, candidacy.candidate_id and
     // candidacy.candidacy_is_posted produce typeError
