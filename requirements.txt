@@ -4,3 +4,4 @@ djoser==0.4.3
 apimas==0.3
 apimas-drf==0.3
 pytz
+jira==1.0.10
