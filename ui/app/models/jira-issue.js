@@ -24,6 +24,13 @@ export default DS.Model.extend({
       return get(this, 'reporter.id');
     }
   }),
+  reporter_full_name_current_if_not_user: computed('user.id', 'reporter.id', function(){
+    if (get(this, 'user.id') == get(this, 'reporter.id')) {
+      return '-';
+    } else {
+      return get(this, 'reporter.full_name_current');
+    }
+  }),
   title: DS.attr(),
   description: DS.attr({type:'text'}),
   state: DS.attr({type: 'select', choices: states, defaultValue: 'open'}),

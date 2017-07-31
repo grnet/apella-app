@@ -171,7 +171,7 @@ export default ApellaGen.extend({
             'updated_at_format',
             'created_at_format',
             'reporter_id_if_not_user',
-            'reporter.full_name_current',
+            field('reporter_full_name_current_if_not_user', {label: 'reporter.full_name_current.label'}),
             'title',
             'description'
           ];
