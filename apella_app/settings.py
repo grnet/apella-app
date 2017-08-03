@@ -159,6 +159,15 @@ DJOSER = {
 
 APELLA_LEGACY_ACADEMIC_LOGIN_URL = None
 
+
+JIRA_OPTIONS = {
+    'server':  "https://staging.tts.grnet.gr/jira/"
+}
+
+JIRA_LOGIN = ("apella", "password")
+JIRA_PROJECT = "APELLA"
+JIRA_LABEL = "new_apella"
+
 SETTINGS_PATH = os.path.join(SETTINGS_DIR, SETTINGS_FILE)
 
 if not os.path.isfile(SETTINGS_PATH):
@@ -227,11 +236,3 @@ if PERMISSIONS_LIMITED:
     from apella.permissions.permission_rules_limited import PERMISSION_RULES
 else:
     from apella.permissions.permission_rules import PERMISSION_RULES
-
-JIRA_OPTIONS = {
-    'server':  "https://staging.tts.grnet.gr/jira/"
-}
-
-JIRA_LOGIN = ("apella", "password")
-JIRA_PROJECT = "APELLA"
-JIRA_LABEL = "new_apella"
