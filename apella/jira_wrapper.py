@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from jira import JIRA
+import logging
 
+from jira import JIRA
 from django.conf import settings
 
 ISSUE_TYPES = {
@@ -12,6 +13,8 @@ ISSUE_TYPES = {
     "registration": "Εγγραφή/Πιστοποίηση",
     "login": "Θέματα πρόσβασης"
 }
+
+logger = logging.getLogger(__name__)
 
 
 def create_issue(jira_issue):
@@ -29,4 +32,5 @@ def create_issue(jira_issue):
     }
 
     created_issue = jira.create_issue(issue)
+    logger.info("created jira issue %i", created_issue.id)
     return created_issue
