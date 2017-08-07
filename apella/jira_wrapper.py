@@ -34,3 +34,15 @@ def create_issue(jira_issue):
     created_issue = jira.create_issue(issue)
     logger.info("created jira issue %i", created_issue.id)
     return created_issue
+
+
+def update_issue(jira_issue):
+    jira = JIRA(
+        options=settings.JIRA_OPTIONS, basic_auth=settings.JIRA_LOGIN)
+    issue = jira.issue(jira_issue.issue_key)
+    jira_issue.helpdesk_response = issue.fields.customfield_12754
+    if issue.fields.resolution:
+        jira_issue.resolution = issue.fields.resolution.name.lower()
+    jira_issue.save()
+    logger.info("updated jira issue %i", jira_issue.id)
+    return issue
