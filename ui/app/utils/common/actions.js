@@ -69,9 +69,18 @@ const applyCandidacy = {
   icon: 'person_add',
   classNames: 'md-icon-success',
   permissions: [{'resource': 'candidacies', 'action': 'create'}],
-  hidden: computed('model.is_open', 'role', 'model.can_apply', function(){
+  hidden: computed('model.is_open', 'role', 'model.can_apply', 'model.applicant', 'model.position_type', function(){
     let is_helpdeskadmin = get(this, 'role') === 'helpdeskadmin';
     if (is_helpdeskadmin)  { return false; }
+
+    // If the position is of type 'renewal' or 'tenure' and the logged in user
+    // is not the position's applicant hide applyCandidacy action
+    let user_id = get(this, 'session.session.authenticated.user_id');
+    let applicant_id = get(this, 'model.applicant.id');
+    let is_election = get(this, 'model.position_type') === 'election';
+    if (!is_election && (applicant_id != user_id)) { return true; }
+
+
     return !get(this, 'model.is_open') || !get(this, 'model.can_apply');
   }),
   action(route, model){
