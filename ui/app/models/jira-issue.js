@@ -46,5 +46,6 @@ export default DS.Model.extend({
   issue_key: DS.attr(),
   issue_call: DS.attr({type: 'select', choices: issue_calls, defaultValue: 'outgoing'}),
   issue_call_verbose: computeI18NChoice('issue_call', issue_calls),
+  helpdesk_response: DS.attr({type:'text'}),
 
 });

@@ -245,6 +245,7 @@ export default {
   'has_accepted_terms.filter.label': '`Εχει αποδεχτεί τους όρους χρήσης',
   'has_accepted_terms.label': 'Έχω διαβάσει και αποδέχομαι τους <a href="https://apella.minedu.gov.gr/terms" target="_blank">όρους συμμετοχής</a> στην ηλεκτρονική υπηρεσία ΑΠΕΛΛΑ.',
   'has_accepted_terms_verbose.label': 'Aποδοχή όρων',
+  'helpdesk_response.label': 'Τελική απάντηση αιτήματος',
   'home_phone_number.field': 'σταθερό τηλέφωνο',
   'home_phone_number.label': 'Σταθερό τηλέφωνο',
   'id.label': 'Κωδικός',

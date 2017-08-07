@@ -173,7 +173,8 @@ export default ApellaGen.extend({
             'reporter_id_if_not_user',
             field('reporter_full_name_current_if_not_user', {label: 'reporter.full_name_current.label'}),
             'title',
-            'description'
+            'description',
+            'helpdesk_response',
           ];
         } else {
           return [
@@ -181,7 +182,8 @@ export default ApellaGen.extend({
             'created_at_format',
             field('issue_type_verbose', {label: 'issue_type.label'}),
             'title',
-            'description'
+            'description',
+            'helpdesk_response',
           ];
         }
       }),
@@ -189,9 +191,9 @@ export default ApellaGen.extend({
         flex: computed('role', function(){
           let role  = get(this, 'role');
           if (role && role.startsWith('helpdesk')) {
-            return [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 100, 100]
+            return [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 100, 100, 100]
           } else {
-            return [100, 50, 50, 100, 100]
+            return [100, 50, 50, 100, 100, 100]
           }
         })
       }

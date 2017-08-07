@@ -231,6 +231,7 @@ export default {
   'has_accepted_terms_verbose.label': 'Accepted terms',
   'headers.institution': 'Institutions/ Departments',
   'headers.subject_area': 'Subject areas/ Subjects',
+  'helpdesk_response.label': 'Helpdesk response',
   'home_phone_number.field': 'home phone',
   'home_phone_number.label': 'Home phone',
   'id.label': 'ID',
