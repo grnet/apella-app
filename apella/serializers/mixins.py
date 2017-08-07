@@ -12,7 +12,7 @@ from apella.models import ApellaUser, Institution, Department, \
 from apella import auth_hooks
 from apella.util import move_to_timezone, otz
 from apella.emails import send_user_email, send_create_application_emails
-from apella.jira_wrapper import create_issue
+from apella.jira_wrapper import create_issue, update_issue
 
 
 class ValidatorMixin(object):
@@ -344,7 +344,17 @@ class InstitutionManagersMixin(object):
 
         return data
 
+
 class JiraIssues(object):
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
+        if isinstance(instance, JiraIssue):
+            update_issue(instance)
+        elif isinstance(instance, list):
+            for i in instance:
+                update_issue(i)
+        return super(JiraIssues, self).__init__(*args, **kwargs)
+
     def create(self, validated_data):
         jira_issue = JiraIssue(**validated_data)
         new_issue = create_issue(jira_issue)
