@@ -3412,6 +3412,11 @@ spec:
                     .drf_field: {}
                     .choices:
                         allowed: ['incoming', 'outgoing']
+                helpdesk_response:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
             .actions:
                 .list: {}
                 .create: {}

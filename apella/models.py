@@ -1014,6 +1014,7 @@ class JiraIssue(models.Model):
     issue_key = models.CharField(max_length=255, blank=True)
     issue_call = models.CharField(
         choices=common.JIRA_ISSUE_CALLS, max_length=30, default='incoming')
+    helpdesk_response = models.TextField(blank=True, null=True)
 
 
 from migration_models import (
