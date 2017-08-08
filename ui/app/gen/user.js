@@ -65,7 +65,7 @@ const issuesField = field('jira_issues', {
           prompt: {
             title: reads('model.issue_key'),
             cancel: 'close',
-            contentComponent: 'member-quick-view'
+            contentComponent: 'model-quick-view'
           }
         }
       }
