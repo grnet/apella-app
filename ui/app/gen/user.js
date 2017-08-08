@@ -16,7 +16,6 @@ const issuesField = field('jira_issues', {
   valueQuery: function(store, params, model, value) {
     model = model._content ? model._content : model;
     let user_id = model.get('id');
-    console.log(user_id);
     return store.query('jira-issue', { user_id: user_id });
   },
   label: null,
