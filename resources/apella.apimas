@@ -3334,7 +3334,7 @@ spec:
                 model_serializers: [apella.serializers.mixins.JiraIssues]
                 mixins: [apella.views.mixins.JiraIssues]
                 ordering_fields: [issue_key, user__id]
-                filter_fields: [issue_type, state, resolution]
+                filter_fields: [issue_type, state, resolution, user_id]
                 search_fields: [user__id, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en, reporter__email, issue_key]
             .cli_commands: {}
             '*':

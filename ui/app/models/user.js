@@ -54,6 +54,11 @@ export default DS.Model.extend({
     }
   }),
 
+  jira_issues: DS.hasMany('jira_issue', {
+    async: true,
+    inverse: 'user'
+  }),
+
 
 });
 
