@@ -30,7 +30,7 @@ export default ApellaGen.extend({
       label: 'jira.user.menu_label',
       display: computed('role', function() {
         let role = get(this, 'role');
-        return !role.startsWith('helpdesk');
+        return role && !role.startsWith('helpdesk');
       })
     },
     sort: {
