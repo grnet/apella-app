@@ -23,31 +23,19 @@ export default ApellaGen.extend({
   },
   list : {
     page: {
-      title: computed('role', function() {
-        let role = get(this, 'role');
-        if (role && role.startsWith('helpdesk')){
-          return 'jira.helpdesk.menu_label';
-        }
-        else {
-          return 'jira.user.menu_label';
-        }
-      }),
+      title:'jira.user.menu_label',
     },
     menu: {
       icon: 'mail_outline',
-      label: computed('role', function() {
+      label: 'jira.user.menu_label',
+      display: computed('role', function() {
         let role = get(this, 'role');
-        if (role && role.startsWith('helpdesk')){
-          return 'jira.helpdesk.menu_label';
-        }
-        else {
-          return 'jira.user.menu_label';
-        }
-      }),
+        return !role.startsWith('helpdesk');
+      })
     },
     sort: {
       active: true,
-      fields: ['issue_key', 'user.id'],
+      fields: ['issue_key'],
       serverSide: true
     },
     filter: {
@@ -63,30 +51,12 @@ export default ApellaGen.extend({
       }
     },
     row: {
-      fields: computed('role', function() {
-        let role = get(this, 'role');
-        if (role && role.startsWith('helpdesk') )  {
-          return [
-            field('issue_key', {label: 'code.label'}),
-            field('user.id', {label: 'user_id.label'}),
-            field('user.full_name_current', {label: 'full_name_current.label'}),
-            field('user.role_verbose', {label: 'role.label'}),
-            field('issue_type_verbose', {label: 'issue_type.label'}),
-            'created_at_format',
-            'updated_at_format',
-            field('state_verbose', {label: 'status_verbose.label'}),
-            field('resolution_verbose', {label: 'resolution.label'}),
-            'reporter_id_if_not_user',
-          ];
-        } else {
-          return [
-            field('issue_key', {label: 'code.label'}),
-            field('issue_type_verbose', {label: 'issue_type.label'}),
-            'created_at_format',
-            field('title', {label: 'jira.title.label'}),
-          ];
-        }
-      }),
+      fields: [
+        field('issue_key', {label: 'code.label'}),
+        field('issue_type_verbose', {label: 'issue_type.label'}),
+        'created_at_format',
+        field('title', {label: 'jira.title.label'}),
+      ],
       actions: ['gen:details'],
     },
   },
@@ -156,46 +126,16 @@ export default ApellaGen.extend({
        title: computed.readOnly('model.issue_key'),
     },
     fieldsets: [{
-      fields: computed('role', function(){
-        let role = get(this, 'role');
-        if (role && role.startsWith('helpdesk')) {
-          return [
-            field('issue_key', {label: 'code.label'}),
-            'user.id',
-            field('user.role_verbose', {label: 'role.label'}),
-            field('user.full_name_current', {label: 'full_name_current.label'}),
-            field('issue_type_verbose', {label: 'issue_type.label'}),
-            field('state_verbose', {label: 'state.label'}),
-            field('resolution_verbose', {label: 'resolution.label'}),
-            field('issue_call_verbose', {label: 'issue_call.label'}),
-            'updated_at_format',
-            'created_at_format',
-            'reporter_id_if_not_user',
-            field('reporter_full_name_current_if_not_user', {label: 'reporter.full_name_current.label'}),
-            'title',
-            'description',
-            'helpdesk_response',
-          ];
-        } else {
-          return [
-            field('issue_key', {label: 'code.label'}),
-            'created_at_format',
-            field('issue_type_verbose', {label: 'issue_type.label'}),
-            'title',
-            'description',
-            'helpdesk_response',
-          ];
-        }
-      }),
+      fields: [
+        field('issue_key', {label: 'code.label'}),
+        'created_at_format',
+        field('issue_type_verbose', {label: 'issue_type.label'}),
+        'title',
+        'description',
+        'helpdesk_response',
+      ],
       layout: {
-        flex: computed('role', function(){
-          let role  = get(this, 'role');
-          if (role && role.startsWith('helpdesk')) {
-            return [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 100, 100, 100]
-          } else {
-            return [100, 50, 50, 100, 100, 100]
-          }
-        })
+        flex:  [100, 50, 50, 100, 100, 100]
       }
     }],
   }
