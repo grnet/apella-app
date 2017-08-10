@@ -211,6 +211,25 @@ const FIELDSET_REGISTER = Ember.assign({}, FIELDSET, {
   fields: FIELDS_REGISTER
 });
 
+const LEAVE_FIELDSET_DETAILS = {
+  label: 'fieldsets.labels.leave',
+  text: 'fieldsets.text.leave',
+  fields: [
+    'on_leave_verbose',
+    'leave_starts_at_format',
+    'leave_ends_at_format',
+    fileField('leave_file', 'professor', 'leave_file', {
+      readonly: true,
+    }),
+  ],
+  layout: {
+    flex: [50, 25, 25, 100]
+  }
+}
+
+
+
+
 const VALIDATORS = {
   cv_url: [validate.format({allowBlank: true, type:'url'})],
   institution: [validate.presence(true)],
@@ -221,5 +240,6 @@ export {
   FILES_FIELDSET,
   FIELDSET,
   FIELDSET_REGISTER,
-  VALIDATORS
+  VALIDATORS,
+  LEAVE_FIELDSET_DETAILS,
 }

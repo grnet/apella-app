@@ -63,6 +63,7 @@ const PROFILE_FIELDSETS = function(view) {
     let f = [];
     let role = this.get('model').get('role');
     let is_academic = get(this, 'model.login_method') === 'academic';
+    let leave = get(this, 'model.leave_upcoming');
     let _USER_FIELDSET;
 
     if (view === 'details') {
@@ -102,6 +103,9 @@ const PROFILE_FIELDSETS = function(view) {
       f.push(_USER_FIELDSET);
       f.push(PROFESSOR.FIELDSET);
       f.push(PROFESSOR.FILES_FIELDSET);
+      if (leave) {
+        f.push(PROFESSOR.LEAVE_FIELDSET_DETAILS);
+      }
     }
 
     if (role === 'candidate') {

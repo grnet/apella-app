@@ -159,8 +159,10 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.full_name_current')
     },
-    fieldsets: computed('role', function(){
+    fieldsets: computed('role', 'model.leave_upcoming',  function(){
       let role = get(this, 'role');
+      let leave = get(this, 'model.leave_upcoming');
+
       let f = [
         USER.FIELDSET_DETAILS_VERIFIABLE,
         PROFESSOR.FIELDSET,
@@ -168,6 +170,12 @@ export default ApellaGen.extend({
       if (role === 'helpdeskadmin' || role === 'helpdeskuser' || role === 'ministry') {
         f.push(PROFESSOR.FILES_FIELDSET);
       }
+
+      // if there is an upcoming or current leave show leave details
+      if (leave) {
+        f.push(PROFESSOR.LEAVE_FIELDSET_DETAILS);
+      }
+
       return f;
     })
   },
