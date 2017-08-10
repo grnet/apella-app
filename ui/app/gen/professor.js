@@ -3,6 +3,7 @@ import gen from 'ember-gen/lib/gen';
 import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
+import {fileField} from 'ui/lib/common';
 import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
 import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
@@ -21,6 +22,10 @@ export default ApellaGen.extend({
   common: {
     validators: all_validators,
   },
+  abilityStates: {
+    owned_by_manager: true
+  },
+
   list: {
     getModel(params) {
       params = params || {};
@@ -183,7 +188,7 @@ export default ApellaGen.extend({
     fieldsets: [
       USER.FIELDSET_EDIT_VERIFIABLE,
       PROFESSOR.FIELDSET,
-    ]
+    ],
   },
   create: {
     fieldsets: [

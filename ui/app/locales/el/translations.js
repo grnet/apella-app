@@ -274,6 +274,7 @@ export default {
   'leave_file.label': 'Διοικητική πράξη',
   'leave_starts_at.label': 'Ημερομηνία έναρξης άδειας',
   'leave_starts_at_format.label': 'Ημερομηνία έναρξης άδειας',
+  'leaves.menu_label': 'Διαχείριση αδειών',
   'list.filters.apply.label': 'ΕΦΑΡΜΟΓΗ',
   'list.filters.clear.label': 'ΚΑΘΑΡΙΣΜΟΣ',
   'list.filters.title': 'Φίλτρα',

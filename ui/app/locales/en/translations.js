@@ -260,6 +260,7 @@ export default {
   'leave_file.label': 'Act of administration',
   'leave_starts_at.label': 'Leave starting date',
   'leave_starts_at_format.label': 'Leave starting date',
+  'leaves.menu_label': 'Leaves',
   'list.filters.apply.label': 'APPLY',
   'list.filters.clear.label': 'CLEAR',
   'list.filters.title': 'Filters',

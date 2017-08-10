@@ -227,7 +227,19 @@ const LEAVE_FIELDSET_DETAILS = {
   }
 }
 
-
+const LEAVE_FIELDSET_EDIT = {
+  label: 'fieldsets.labels.leave',
+  text: 'fieldsets.text.leave',
+  fields: [
+    'leave_starts_at',
+    'leave_ends_at',
+    fileField('leave_file', 'professor', 'leave_file', {
+    }),
+  ],
+  layout: {
+    flex: [50, 50, 100]
+  }
+}
 
 
 const VALIDATORS = {
@@ -242,4 +254,5 @@ export {
   FIELDSET_REGISTER,
   VALIDATORS,
   LEAVE_FIELDSET_DETAILS,
+  LEAVE_FIELDSET_EDIT,
 }
