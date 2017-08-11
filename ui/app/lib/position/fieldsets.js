@@ -123,13 +123,7 @@ const  position = {
         if (get(this, 'model.position_type') !== 'election') {
           fields.push(field('position_type_verbose', {label: 'position_type.label'}));
         }
-        // Related positions are not visible for candidate and professors
-        // because we cannot make sure that the professor or the candidate has
-        // always permissions to retrieve all related positions.
-        let role = get(this, 'session.session.authenticated.role');
-        if (!['candidate', 'professor'].includes(role)) {
-          fields.pushObject('related_positions');
-        }
+        fields.pushObject('related_positions');
         return fields;
       }),
       layout: {
