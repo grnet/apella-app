@@ -130,7 +130,7 @@ export default ApellaGen.extend({
         field('issue_key', {label: 'code.label'}),
         'created_at_format',
         field('issue_type_verbose', {label: 'issue_type.label'}),
-        'title',
+        field('title', {label: 'jira.title.label'}),
         'description',
         'helpdesk_response',
       ],
