@@ -3,7 +3,7 @@ import gen from 'ember-gen/lib/gen';
 import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
-import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
+import {rejectUser, verifyUser, requestProfileChanges, createIssue} from 'ui/utils/common/actions';
 import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
 const {
@@ -147,11 +147,12 @@ export default ApellaGen.extend({
           }
           return fields;
         }),
-      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
+      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges', 'createIssue'],
       actionsMap: {
         verifyUser: verifyUser,
         rejectUser: rejectUser,
         requestProfileChanges: requestProfileChanges,
+        createIssue: createIssue
       }
     },
   },

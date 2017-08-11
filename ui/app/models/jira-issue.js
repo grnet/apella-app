@@ -48,4 +48,10 @@ export default DS.Model.extend({
   issue_call_verbose: computeI18NChoice('issue_call', issue_calls),
   helpdesk_response: DS.attr({type:'text'}),
 
+  jira_issues: DS.hasMany('jira_issue', {
+    async: true,
+    inverse: 'user'
+  }),
+
+
 });

@@ -2,7 +2,7 @@ import {ApellaGen, emptyArrayResult} from 'ui/lib/common';
 import USER from 'ui/utils/common/users';
 import CANDIDATE from 'ui/utils/common/candidate';
 import {field} from 'ember-gen';
-import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
+import {rejectUser, verifyUser, requestProfileChanges, createIssue} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -76,11 +76,12 @@ export default ApellaGen.extend({
         field('email', {dataKey: 'user__email'}),
         'full_name_current'
       ],
-      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
+      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges', 'createIssue'],
       actionsMap: {
         verifyUser: verifyUser,
         rejectUser: rejectUser,
         requestProfileChanges: requestProfileChanges,
+        createIssue: createIssue
       }
     },
   },

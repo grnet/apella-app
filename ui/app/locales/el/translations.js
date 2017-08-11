@@ -282,7 +282,7 @@ export default {
   'jira.Registration': 'Εγγραφή/Πιστοποίηση',
   'jira.Reopened': 'reopened',
   'jira.Resolved': 'resolved',
-  'jira.fieldset.helpdesk.label': 'Αίτημα',
+  'jira.fieldset.helpdesk.label': 'Νέο αίτημα',
   'jira.fieldset.helpdesk.text': '',
   'jira.fieldset.user.label': 'Επικοινωνία',
   'jira.fieldset.user.text': 'Θα επικοινωνήσουμε μαζί σας',

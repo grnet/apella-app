@@ -3,7 +3,7 @@ import gen from 'ember-gen/lib/gen';
 import USER from 'ui/utils/common/users';
 import MANAGER from 'ui/utils/common/manager'
 import {field} from 'ember-gen';
-import {rejectUser, verifyUser, requestProfileChanges} from 'ui/utils/common/actions';
+import {rejectUser, verifyUser, requestProfileChanges, createIssue} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -100,11 +100,12 @@ export default ApellaGen.extend({
               field('username', {dataKey: 'user__username'}),
               field('email', {dataKey: 'user__email'}),
               'full_name_current', 'institution.title_current'],
-      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges'],
+      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges', 'createIssue'],
       actionsMap: {
         verifyUser: verifyUser,
         rejectUser: rejectUser,
         requestProfileChanges: requestProfileChanges,
+        createIssue: createIssue
       }
     },
   },

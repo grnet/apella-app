@@ -377,7 +377,7 @@ const createIssue = {
     return !get(this, 'role').startsWith('helpdesk');
   }),
   action(route, model){
-    let id = get(model, 'id');
+    let id = get(model, 'user_id');
     route.transitionTo('jira-issue.create', { queryParams: { user_id: id }});
   }
 };
