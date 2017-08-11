@@ -277,11 +277,8 @@ export default ApellaGen.extend({
         };
       let election = get(model, 'position_type') === 'election';
 
-      let role = get(this, 'session.session.authenticated.role');
-      let cand_or_prof = (role === 'professor' || role === 'candidate');
-
       return store.query('candidacy', query).then(function() {
-        if (election && !cand_or_prof) {
+        if (election) {
           return preloadRelations(model, 'related_positions');
         } else {
           return preloadRelations(model, 'user_application', 'user_application.user');
