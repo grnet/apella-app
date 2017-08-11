@@ -629,5 +629,5 @@ class JiraIssues(object):
         queryset = self.queryset
         user = self.request.user
         if not user.is_helpdesk():
-            queryset = queryset.filter(user_id=user.id)
+            queryset = queryset.filter(reporter_id=user.id)
         return queryset
