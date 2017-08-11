@@ -20,19 +20,21 @@ logger = logging.getLogger(__name__)
 def create_issue(jira_issue):
     jira = JIRA(
         options=settings.JIRA_OPTIONS, basic_auth=settings.JIRA_LOGIN)
+    reporter_name = jira_issue.reporter.first_name.el + " " + \
+        jira_issue.reporter.last_name.el
     issue = {
         'project': settings.JIRA_PROJECT,
         'labels': [settings.JIRA_LABEL],
         'summary': jira_issue.title,
         'description': jira_issue.description,
         'issuetype': {'name': ISSUE_TYPES.get(jira_issue.issue_type)},
-        'customfield_12350': jira_issue.reporter.username,
-        'customfield_12552': jira_issue.user.username,
+        'customfield_12552': reporter_name,
+        'customfield_12350': jira_issue.user.username,
         'customfield_12550': jira_issue.user.email
     }
-
     created_issue = jira.create_issue(issue)
-    logger.info("created jira issue %i", created_issue.id)
+    logger.info("created jira issue %s" % created_issue.key)
+
     return created_issue
 
 
@@ -44,5 +46,5 @@ def update_issue(jira_issue):
     if issue.fields.resolution:
         jira_issue.resolution = issue.fields.resolution.name.lower()
     jira_issue.save()
-    logger.info("updated jira issue %i", jira_issue.id)
+    logger.info("updated jira issue %d" % jira_issue.id)
     return issue
