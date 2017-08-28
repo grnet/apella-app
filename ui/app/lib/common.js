@@ -275,6 +275,8 @@ function preloadRelations(model, ...keys) {
         } else {
           return model;
         }
+      }, (error) => {
+        return model;
       });
     })).then(() => { return resolved });
   });
