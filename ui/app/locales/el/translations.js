@@ -185,6 +185,7 @@ export default {
   'email_pending_verification': 'Αναμένεται ενεργοποίηση',
   'enable.academic.login.label': 'Συνδεση',
   'enable.academic.login.prompt': 'Σύνδεση μέσω οικείου φορέα',
+  'ends2After.message': 'Η ημερομηνία πρέπει να είναι μεταγενέστερη της ημερομηνίας έναρξης',
   'ends30After.message': 'Η προθεσμία υποβολής δεν μπορεί να είναι μικρότερη των 30 ημερών',
   'ends_at.label': 'Ημερομηνία Λήξης Υποβολών',
   'existing.entries': 'Αποθηκευμένα Μέλη',

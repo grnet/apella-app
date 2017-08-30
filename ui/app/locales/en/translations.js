@@ -169,6 +169,7 @@ export default {
   'email_pending_verification': 'E-mail pending verification',
   'enable.academic.login.label': 'Academic login',
   'enable.academic.login.prompt': 'Enable academic login',
+  'ends2After.message': 'The date should be after starting date',
   'ends30After.message': 'The submission deadline should not be less then 30 days',
   'ends_at.label': 'Submission End Date',
   'existing.entries': 'Current Members',

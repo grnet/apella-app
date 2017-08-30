@@ -3,6 +3,7 @@ import {ApellaGen, urlValidator} from 'ui/lib/common';
 import validate from 'ember-gen/validate';
 import gen from 'ember-gen/lib/gen';
 import PROFESSOR from 'ui/utils/common/professor';
+import {afterDays} from 'ui/validators/dates';
 
 const {
   computed,
@@ -18,6 +19,12 @@ export default ApellaGen.extend({
   resourceName: 'professors',
   auth: true,
   path: 'leaves',
+
+  common: {
+    validators: {
+      leave_ends_at: [afterDays({on:'leave_starts_at', days:2})],
+    }
+  },
 
   list : {
     getModel: function(params) {
