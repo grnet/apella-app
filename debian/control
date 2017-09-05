@@ -11,7 +11,7 @@ Standards-Version: 3.9.6
 
 Package: apella
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-django (>=1.8), python-apimas (>=0.3), python-apimas-drf (>=0.3), python-djoser (>= 0.4.3), python-djoser (<< 0.5), python-tz (>= 2012)
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-django (>=1.8), python-apimas (>=0.3.1), python-apimas-drf (>=0.3.1), python-djoser (>= 0.4.3), python-djoser (<< 0.5), python-tz (>= 2012)
 Description: Faculty Elections for Greek Academia
  Software for GRNET's APELLA service to Greek academic institutions, to manage
  their faculty positions.
