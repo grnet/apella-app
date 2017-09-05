@@ -101,6 +101,7 @@ export default ApellaGen.extend({
              'is_verified',
              'is_rejected',
              'verification_pending',
+              field('on_leave', { type: 'boolean', label: 'on_leave_verbose.label'}),
               field('no_verification_request', { type: 'boolean' })
             ])
           }

@@ -46,6 +46,11 @@ class DestroyProtectedObject(viewsets.ModelViewSet):
 class Professor(object):
     def get_queryset(self):
         queryset = self.queryset
+        leave_query = self.request.GET.get('on_leave')
+        if leave_query:
+            now = datetime.utcnow()
+            queryset = queryset.filter(Q(leave_starts_at__lte=now) &
+                                       Q(leave_ends_at__gt=now))
         if 'ordering' not in self.request.query_params:
             queryset = self.queryset.order_by('user__last_name__el')
         create_registry = self.request.query_params.get(
