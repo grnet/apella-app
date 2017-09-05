@@ -378,12 +378,15 @@ class ApellaFile(models.Model):
             candidacy = self.statement_file.all()[0]
             return candidacy.check_resource_state_five_before_electors_meeting(
                 row, request, view)
+        if self.file_kind == 'leave_file' and is_owner:
+            return True
 
         return False
 
     def check_resource_state_public_file(self, row, request, view):
         if self.file_kind == 'registry_set_decision_file':
             return True
+        return False
 
     @property
     def is_candidacy_file(self):

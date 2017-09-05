@@ -515,6 +515,8 @@ PERMISSION_RULES = [
     ('professors', 'upload', 'professor', '*', 'owned', ''),
     ('professors', 'upload', 'helpdeskadmin', '*', '*', ''),
     ('professors', 'upload', 'helpdeskuser', '*', '*', ''),
+    ('professors', 'upload', 'institutionmanager', '*', 'owned_by_manager', ''),
+    ('professors', 'upload', 'assistant', '*', 'owned_by_manager', ''),
     ('professors', 'sync_candidacies', 'professor', '*', 'owned', ''),
     ('professors', 'request_verification', 'professor', '*', 'owned', ''),
     ('professors', 'request_changes', 'helpdeskadmin', '*', '*', ''),
