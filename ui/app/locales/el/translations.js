@@ -397,6 +397,8 @@ export default {
   'prompt.setFailed.message': 'Είστε βέβαιος/η ότι θέλετε να θέσετε την θέση σε κατάσταση «Άγονη»;',
   'prompt.setFailed.title': 'Κατάσταση θέσης: «Άγονη»',
   'prompt.setRevoked.message': 'Είστε βέβαιος/η ότι θέλετε να θέσετε την θέση σε κατάσταση «Αναπομπή»;',
+  'prompt.selectOnLeave.message': 'Ο καθηγητής τελεί σε άδεια. Είστε σίγουρος ότι θέλετε να τον/την συμπεριλάβετε στο εκλεκτορικό;',
+  'prompt.selectOnLeave.title': 'Καθηγητής σε άδεια',
   'prompt.setRevoked.title': 'Κατάσταση θέσης: «Αναπομπή»',
   'prompt.setSuccessful.message': 'Είστε βέβαιος/η ότι θέλετε να θέσετε την θέση σε κατάσταση «Στελεχωμένη»;',
   'prompt.setSuccessful.title': 'Κατάσταση θέσης: «Στελεχωμένη»',

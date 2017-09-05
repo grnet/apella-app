@@ -381,6 +381,8 @@ export default {
   'prompt.setElecting.title': 'Set position state: «Electing»',
   'prompt.setFailed.message': 'Are you sure you want to set this position to state «Failed»?',
   'prompt.setFailed.title': 'Set position state: «Failed»',
+  'prompt.selectOnLeave.message': 'The professor is on leave. Are you sure you want to select him/her?',
+  'prompt.selectOnLeave.title': 'Professor on leave',
   'prompt.setRevoked.message': 'Are you sure you want to set this position to state «Revoked»?',
   'prompt.setRevoked.title': 'Set position state: «Revoked»',
   'prompt.setSuccessful.message': 'Are you sure you want to set this position to state «Successful»?',
