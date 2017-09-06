@@ -219,7 +219,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
     row: {
       onSelect(item, selected) {
         let prompt = Ember.getOwner(this).lookup('service:prompt');
-        if (item.get('on_leave') && field_name.startsWith('electors')) {
+        if (item.get('on_leave')) {
           let accept = prompt.prompt(
             {
               ok: 'ok',
