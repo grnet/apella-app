@@ -79,7 +79,6 @@ export default ApellaGen.extend({
       fields: [
         'user_id',
         'full_name_current',
-        field('email', {dataKey: 'user__email'}),
         'department.title_current',
         'rank_verbose',
         'leave_starts_at_format',
@@ -99,7 +98,6 @@ export default ApellaGen.extend({
       sortBy: 'user_id',
       fields: [
         'user_id',
-        'email',
       ]
     },
 
