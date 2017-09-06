@@ -67,7 +67,7 @@ export default ApellaGen.extend({
       title: 'leaves.menu_label',
     },
     menu: {
-      icon: 'pool',
+      icon: 'work',
       label: 'leaves.menu_label',
       display: computed('role', function(){
         let role = get(this, 'role');
