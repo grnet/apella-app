@@ -27,3 +27,7 @@
 0.2.7
 =====
 * Bug fixes
+
+0.2.8
+=====
+* Upgrade to apimas v 0.3.1
