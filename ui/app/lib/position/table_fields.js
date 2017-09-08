@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {i18nField, get_registry_members, fileField, filterSelectSortTitles} from 'ui/lib/common';
+import {i18nField, i18nUserSortField,  get_registry_members, fileField, filterSelectSortTitles} from 'ui/lib/common';
 import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
 import {getFile} from 'ui/utils/files';
 import moment from 'moment';
@@ -206,7 +206,7 @@ const contactField = field('institution-managers', {
 
 
 let rowCommitteeElectors = function(field_name, serverSide) {
-  let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
+  let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'first_name.el','first_name.en', 'email', 'username', 'discipline_text', 'old_user_id']);
 
 
@@ -221,7 +221,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
           let res = [
             'user_id',
             'old_user_id',
-            i18nField('last_name', {label: 'last_name.label'}),
+            i18nUserSortField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
             field('institution_global', {label: 'institution.label'}),
@@ -237,7 +237,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
           let res = [
             'user_id',
             'old_user_id',
-            i18nField('last_name', {label: 'last_name.label'}),
+            i18nUserSortField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
             field('institution_global', {label: 'institution.label'}),
