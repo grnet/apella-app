@@ -213,7 +213,11 @@ const FIELDSET_REGISTER = Ember.assign({}, FIELDSET, {
 
 const LEAVE_FIELDSET_DETAILS = {
   label: 'fieldsets.labels.leave',
-  text: 'fieldsets.text.leave',
+  text: computed('role', function() {
+    let role = get(this, 'role');
+    let leaver = role === 'professor';
+    return leaver? 'fieldsets.text.owner.leave': 'fieldsets.text.observer.leave';
+  }),
   fields: [
     'on_leave_verbose',
     'leave_starts_at_format',
@@ -229,7 +233,11 @@ const LEAVE_FIELDSET_DETAILS = {
 
 const LEAVE_FIELDSET_EDIT = {
   label: 'fieldsets.labels.leave',
-  text: 'fieldsets.text.leave',
+  text: computed('role', function() {
+    let role = get(this, 'role');
+    let leaver = role === 'professor';
+    return leaver? 'fieldsets.text.owner.leave': 'fieldsets.text.observer.leave';
+  }),
   fields: [
     'leave_starts_at',
     'leave_ends_at',
