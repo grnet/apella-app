@@ -56,6 +56,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
            * Display the quickDetails button when:
            * The user is the institution manager or an assistant of
            * institution X and the registry belongs to institution X
+           * or the user is the helpdesk.
            *
            * TODO: Calculate this once per table-field and not per row.
            */
@@ -82,7 +83,8 @@ function membersAllModelMeta(serverSide, hideQuickView) {
                   hidden = false;
                 }
               }
-              else if (role === 'ministry') {
+
+              else if (role === 'ministry' || role.startsWith('helpdesk')) {
                 hidden = false;
               }
               return hidden;
