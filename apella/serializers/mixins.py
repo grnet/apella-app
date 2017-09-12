@@ -350,7 +350,7 @@ class JiraIssues(object):
         instance = kwargs.get('instance', None)
         if isinstance(instance, JiraIssue):
             update_issue(instance)
-        elif isinstance(instance, list):
+        elif instance:
             for i in instance:
                 update_issue(i)
         return super(JiraIssues, self).__init__(*args, **kwargs)
