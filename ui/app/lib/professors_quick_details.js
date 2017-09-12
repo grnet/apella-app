@@ -65,6 +65,22 @@ let fs_prof_foreign = {
   }
 };
 
+let fs_prof_leave = {
+  label: 'fieldsets.labels.leave',
+  fields: [
+    'leave_starts_at',
+    'leave_ends_at',
+    fileField('leave_file', 'professor', 'leave_file', {
+    }, {
+      readonly: true,
+    }),
+  ],
+  layout: {
+    flex: [50, 50, 100]
+  }
+};
+
+
 function peak_fs_professors() {
   let professor = get(this, 'model'),
     is_foreign = professor.get('is_foreign'),
@@ -73,7 +89,15 @@ function peak_fs_professors() {
     return head.concat(fs_prof_foreign);
   }
   else {
-    return head.concat(fs_prof_domestic);
+    let res =  head.concat(fs_prof_domestic);
+    let role = get(field, 'session.session.authenticated.role');
+    let on_leave = get(this, 'model.on_leave');
+    let not_prof_or_candidate = !( role === 'professor' || role === 'candidate');
+    // Professors and candidates do not see leave fieldset in details
+    if (on_leave && not_prof_or_candidate) {
+      res = res.concat(fs_prof_leave);
+    }
+    return res;
   }
 };
 

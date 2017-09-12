@@ -38,7 +38,12 @@ function membersAllModelMeta(serverSide, hideQuickView) {
 
   return {
     row: {
-      fields: fields_members_table,
+      fields: computed('role', function() {
+        let role = get(this, 'role');
+        let prof_or_candidate = role === 'professor' || role == 'candidate';
+        // Professors and candidates do not see leave field in members table
+        return prof_or_candidate?  fields_members_table.slice(0, -1) :fields_members_table;
+      }),
       actions: ['view_details'],
       actionsMap: {
         view_details: {
