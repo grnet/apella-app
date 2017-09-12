@@ -48,6 +48,8 @@ def update_issue(jira_issue):
     jira_issue.helpdesk_response = issue.fields.customfield_12754
     if issue.fields.resolution:
         jira_issue.resolution = issue.fields.resolution.name.lower()
+    if issue.fields.status:
+        jira_issue.state = issue.fields.status.name.lower()
     jira_issue.save()
     logger.info("updated jira issue %d" % jira_issue.id)
     return issue
