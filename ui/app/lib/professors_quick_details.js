@@ -72,7 +72,6 @@ let fs_prof_leave = {
     'leave_ends_at_format',
     'on_leave_verbose',
     fileField('leave_file', 'professor', 'leave_file', {
-    }, {
       readonly: true,
     }),
   ],
