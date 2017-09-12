@@ -94,7 +94,6 @@ function peak_fs_professors() {
     let on_leave = get(this, 'model.on_leave');
     let not_prof_or_candidate = !( role === 'professor' || role === 'candidate');
     // Professors and candidates do not see leave fieldset in details
-    let on_leave = get(this, 'model.on_leave');
     if (on_leave) {
       res = res.concat(fs_prof_leave);
     }
