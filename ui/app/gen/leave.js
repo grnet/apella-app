@@ -88,9 +88,14 @@ export default ApellaGen.extend({
       actions: ['gen:details', 'gen:edit'],
     },
     filter: {
-      active: false,
+      active: true,
       serverSide: true,
       search: true,
+      meta: {
+        fields: [
+          field('on_leave', { type: 'boolean', label: 'on_leave_verbose.label'}),
+        ]
+      }
     },
     sort: {
       active: true,
