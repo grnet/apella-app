@@ -166,13 +166,13 @@ export default ApellaGen.extend({
     fieldsets: computed('role', function() {
       let f = [{
         text: computed('role', function(){
-          if (get(this, 'role').startsWith('helpdesk')) {
+          if (role && get(this, 'role').startsWith('helpdesk')) {
             return 'jira.fieldset.helpdesk.text'
           }
             return 'jira.fieldset.user.text'
         }),
         label: computed('role', function(){
-          if (get(this, 'role').startsWith('helpdesk')) {
+          if ( role && get(this, 'role').startsWith('helpdesk')) {
             return 'jira.fieldset.helpdesk.label'
           }
             return 'jira.fieldset.user.label'
@@ -182,7 +182,7 @@ export default ApellaGen.extend({
           field('user.id', {disabled: true, label: 'user_id.label'}),
           field('issue_call', {
             disabled: computed('role', function(){
-              return get(this, 'role').startsWith('helpdesk')? false: true;
+              return (role && get(this, 'role').startsWith('helpdesk'))? false: true;
             })
           }),
           'issue_type',
@@ -193,7 +193,7 @@ export default ApellaGen.extend({
           flex: [50, 50, 50, 50, 100, 100]
         }
       }];
-      if (get(this, 'role').startsWith('helpdesk')) {
+      if (role && get(this, 'role').startsWith('helpdesk')) {
         f.push({
           label: 'jira.helpdesk.menu_label',
           fields: [issuesField],
