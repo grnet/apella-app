@@ -28,7 +28,6 @@ const issuesField = field('jira_issues', {
         'updated_at_format',
         field('state_verbose', {label: 'status_verbose.label'}),
         field('resolution_verbose', {label: 'resolution.label'}),
-        'reporter_id_if_not_user',
       ],
       actions: ['view_details'],
       actionsMap: {
