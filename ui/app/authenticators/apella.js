@@ -34,6 +34,17 @@ export default ApimasAuthenticator.extend({
     if (data.login_method === 'academic') {
       data.username = data.email;
     }
+
+    if (data.can_set_academic) {
+      let gen = get(this, 'gen');
+      gen.get('gens').forEach((gen) => {
+        let name = get(gen, 'routeName');
+        if (!name.startsWith('auth') && !name.includes('jira-issue')) {
+          set(gen, 'hasPermission', false);
+          set(gen, 'menuDisplay', false);
+        }
+      });
+    }
     return data;
   }
 })
