@@ -31,3 +31,9 @@
 0.2.8
 =====
 * Upgrade to apimas v 0.3.1
+
+0.2.9
+=====
+* Contact
+    Users can now contact helpdesk by creating jira tickets. Helpdesk users
+    can create new tickets for users.
