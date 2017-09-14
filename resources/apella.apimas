@@ -3327,3 +3327,98 @@ spec:
             .actions:
                 .list: {}
                 .retrieve: {}
+        jira-issues:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.JiraIssue
+                model_serializers: [apella.serializers.mixins.JiraIssues]
+                mixins: [apella.views.mixins.JiraIssues]
+                ordering_fields: [issue_key, user__id]
+                filter_fields: [issue_type, state, resolution, user_id]
+                search_fields: [user__id, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en, reporter__email, issue_key]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                user:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: api/users
+                reporter:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: api/users
+                title:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                description:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+                state:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['open', 'closed', 'in_progress', 'reopened', 'resolved']
+                issue_type:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['complaint', 'error', 'login', 'general_information', 'account_modification', 'registration']
+                resolution:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['fixed', 'wont_fix', 'duplicate', 'incomplete', 'cannot_reproduce', 'fixed_workaround']
+                created_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {}
+                    .datetime: {}
+                updated_at:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .drf_field: {}
+                    .datetime: {}
+                issue_key:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .string: {}
+                issue_call:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .choices:
+                        allowed: ['incoming', 'outgoing']
+                helpdesk_response:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .text: {}
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .retrieve: {}

@@ -29,7 +29,8 @@ const UserConstraintsRouteMixin = {
       let set_academic = get(profile, 'can_set_academic');
       let has_accepted_terms = get(profile, 'has_accepted_terms');
       let isProfile = get(transition, 'targetName') === 'auth.profile';
-      if ((set_academic || !has_accepted_terms) && !isProfile) {
+      let isContact = get(transition, 'targetName').includes('jira-issue');
+      if ((set_academic || !has_accepted_terms) && !isProfile && !isContact) {
         transition.abort();
         return this.transitionTo('auth.profile');
       }

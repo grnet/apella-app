@@ -102,7 +102,7 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
                 return this.get('model').get('candidate.full_name_current')
               }),
               cancel: 'close',
-              contentComponent: 'member-quick-view'
+              contentComponent: 'model-quick-view'
             }
           }
         }
@@ -266,7 +266,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
               return get(this, 'model.full_name_current');
             }),
             cancel: 'close',
-            contentComponent: 'member-quick-view'
+            contentComponent: 'model-quick-view'
           }
         }
       }

@@ -89,7 +89,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
               return get(this, 'model.full_name_current');
             }),
             cancel: 'close',
-            contentComponent: 'member-quick-view'
+            contentComponent: 'model-quick-view'
           }
         }
       }
@@ -168,6 +168,7 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFie
 
 
 export default ApellaGen.extend({
+  order: 2000,
   modelName: 'registry',
   auth: true,
   path: 'registries',

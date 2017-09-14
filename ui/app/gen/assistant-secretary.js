@@ -5,7 +5,7 @@ import gen from 'ember-gen/lib/gen';
 import USER from 'ui/utils/common/users';
 import {field} from 'ember-gen';
 import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
-import {rejectUser, verifyUser} from 'ui/utils/common/actions';
+import {rejectUser, verifyUser, createIssue} from 'ui/utils/common/actions';
 import { fs_viewed_by_others } from 'ui/utils/common/assistant';
 
 const {
@@ -113,10 +113,11 @@ export default ApellaGen.extend({
           'full_name_current', 'institution.title_current',
         ]
       }),
-      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser'],
+      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'createIssue'],
       actionsMap: {
         verifyUser: verifyUser,
         rejectUser: rejectUser,
+        createIssue: createIssue
       }
 
     },

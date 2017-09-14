@@ -107,5 +107,37 @@
         ["election", "Election"],
         ["tenure", "Tenure"],
         ["renewal", "Renewal"]
+    ],
+
+    "JIRA_ISSUE_STATES": [
+        ["open", "Open"],
+        ["closed", "Closed"],
+        ["in_progress", "In Progress"],
+        ["reopened", "Reopened"],
+        ["resolved", "Resolved"]
+    ],
+
+    "JIRA_ISSUE_TYPES": [
+        ["complaint", "Complaint"],
+        ["error", "Error"],
+        ["login", "Login"],
+        ["general_information", "General Information"],
+        ["account_modification", "Account Modification"],
+        ["registration", "Registration"]
+    ],
+
+    "JIRA_ISSUE_RESOLUTION": [
+        ["", ""],
+        ["fixed", "Fixed"],
+        ["wont_fix", "Won't Fix"],
+        ["duplicate", "Duplicate"],
+        ["incomplete", "Incomplete"],
+        ["cannot_reproduce", "Cannot Reproduce"],
+        ["fixed_workaround", "Fixed Workaround"]
+    ],
+
+    "JIRA_ISSUE_CALLS": [
+        ["incoming", "Incoming"],
+        ["outgoing", "Outgoing"]
     ]
 }

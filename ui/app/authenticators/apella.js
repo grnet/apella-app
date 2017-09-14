@@ -29,10 +29,21 @@ export default ApimasAuthenticator.extend({
     // process unverified users as no-role users
     if (data.hasOwnProperty('is_verified') && data.is_verified === false) {
       data.pending_role = data.role;
-      delete data.role;
+      data.role = 'unverified-user';
     }
     if (data.login_method === 'academic') {
       data.username = data.email;
+    }
+
+    if (data.can_set_academic) {
+      let gen = get(this, 'gen');
+      gen.get('gens').forEach((gen) => {
+        let name = get(gen, 'routeName');
+        if (!name.startsWith('auth') && !name.includes('jira-issue')) {
+          set(gen, 'hasPermission', false);
+          set(gen, 'menuDisplay', false);
+        }
+      });
     }
     return data;
   }

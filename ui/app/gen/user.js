@@ -7,8 +7,10 @@ import {deactivateUser, activateUser} from 'ui/utils/common/actions';
 
 const {
   computed,
-  get
+  get,
+  computed: {reads}
 } = Ember;
+
 
 export default ApellaGen.extend({
   order: 700,
@@ -55,7 +57,7 @@ export default ApellaGen.extend({
       title: computed.readOnly('model.full_name_current')
     },
     fieldsets: [
-      USER.FIELDSET_DETAILS_USER
+      USER.FIELDSET_DETAILS_USER,
     ]
   },
   edit: {

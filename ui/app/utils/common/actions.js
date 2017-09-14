@@ -370,6 +370,18 @@ const activateUser = {
   }
 };
 
+const createIssue = {
+  label: 'createIssue',
+  icon: 'mail_outline',
+  hidden: computed('role', function(){
+    return !get(this, 'role').startsWith('helpdesk');
+  }),
+  action(route, model){
+    let id = get(model, 'user_id');
+    route.transitionTo('jira-issue.create', { queryParams: { user_id: id }});
+  }
+};
+
 const verifyUser = {
   label: 'verify.user',
   icon: 'check_circle',
@@ -683,6 +695,7 @@ export { goToDetails, applyCandidacy,
   rejectUser, verifyUser,
   requestProfileChanges,
   deactivateUser, activateUser,
+  createIssue,
   change_password,
   isHelpdesk,
   positionActions,
