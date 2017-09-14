@@ -40,6 +40,10 @@ export default ApellaGen.extend({
         return this.store.query('professor', params);
       }
 
+      if (params.department) {
+        return this.store.query('professor', params);
+      }
+
       if (role === 'assistant') {
         let deps = get(this, 'session.session.authenticated.departments');
 
@@ -92,10 +96,25 @@ export default ApellaGen.extend({
       serverSide: true,
       search: true,
       meta: {
-        fields: [
-          field('on_leave', { type: 'boolean', label: 'on_leave_verbose.label'}),
-        ]
-      }
+        fields: computed('user.institution', function() {
+          let inst_id = get(this, 'user.institution').split('/').slice(-2)[0];
+          return [
+            field('on_leave', { type: 'boolean', label: 'on_leave_verbose.label'}),
+            field('department', {
+              dataKey: 'department',
+                autocomplete: true,
+                type: 'model',
+                modelName: 'department',
+                displayAttr: 'title_current',
+              query: function(select, store, field, params) {
+                params = params || {};
+                params.institution = inst_id;
+                return store.query('department', params);
+              }
+            })
+          ]
+        }),
+      },
     },
     sort: {
       active: true,
