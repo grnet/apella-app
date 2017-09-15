@@ -23,7 +23,8 @@ let fields_members_table = [
     i18nField('first_name', {label: 'first_name.label'}),
     field('institution_global', {label: 'institution.label'}),
     i18nField('department.title', {label: 'department.label'}),
-    'discipline_text'
+    'discipline_text',
+    'on_leave_verbose',
 ];
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
@@ -37,7 +38,12 @@ function membersAllModelMeta(serverSide, hideQuickView) {
 
   return {
     row: {
-      fields: fields_members_table,
+      fields: computed('role', function() {
+        let role = get(this, 'role');
+        let prof_or_candidate = role === 'professor' || role == 'candidate';
+        // Professors and candidates do not see leave field in members table
+        return prof_or_candidate?  fields_members_table.slice(0, -1) :fields_members_table;
+      }),
       actions: ['view_details'],
       actionsMap: {
         view_details: {
@@ -50,6 +56,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
            * Display the quickDetails button when:
            * The user is the institution manager or an assistant of
            * institution X and the registry belongs to institution X
+           * or the user is the helpdesk.
            *
            * TODO: Calculate this once per table-field and not per row.
            */
@@ -76,7 +83,8 @@ function membersAllModelMeta(serverSide, hideQuickView) {
                   hidden = false;
                 }
               }
-              else if (role === 'ministry') {
+
+              else if (role === 'ministry' || role.startsWith('helpdesk')) {
                 hidden = false;
               }
               return hidden;

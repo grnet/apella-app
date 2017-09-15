@@ -212,7 +212,27 @@ let rowCommitteeElectors = function(field_name, serverSide) {
 
   let display = serverSide;
   return {
+    /*
+     * For electors table only, make user confirm his choice if he chooses to
+     * select a professor who is currently on leave.
+     */
     row: {
+      onSelect(item, selected) {
+        let prompt = Ember.getOwner(this).lookup('service:prompt');
+        if (item.get('on_leave')) {
+          let accept = prompt.prompt(
+            {
+              ok: 'ok',
+              cancel: 'cancel',
+              message: 'prompt.selectOnLeave.message',
+              title: 'prompt.selectOnLeave.title',
+            }).then( () => {
+            selected.addObject(item);
+          })
+        } else {
+          selected.addObject(item);
+        }
+      },
       fields: computed('role', function() {
         // all electors tables have an extra column
         let role = get(this, 'role');
@@ -226,6 +246,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
             i18nField('department.title', {label: 'department.label'}),
             field('institution_global', {label: 'institution.label'}),
             'is_foreign_descr',
+            'on_leave_verbose',
           ];
           if (!restricted) {
             res.push(field('email', {label: 'email.label'}))
@@ -242,6 +263,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
             i18nField('department.title', {label: 'department.label'}),
             field('institution_global', {label: 'institution.label'}),
             'is_foreign_descr',
+            'on_leave_verbose',
           ];
           if (!restricted) {
             res.push(field('email', {label: 'email.label'}))

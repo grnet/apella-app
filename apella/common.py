@@ -166,4 +166,8 @@ FILE_KIND_TO_FIELD = {
         "field": "registry_set_decision_file",
         "many": False,
     },
+    "leave_file": {
+        "field": "leave_file",
+        "many": False,
+    },
 }

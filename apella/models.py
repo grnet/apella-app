@@ -322,7 +322,8 @@ class ApellaFile(models.Model):
             if candidacy.state == 'posted' and \
                     candidacy.position.department in user_departments:
                 return True
-        if user.is_manager() and self.file_kind == 'cv_professor':
+        if user.is_manager() and \
+                self.file_kind in ['cv_professor', 'leave_file']:
             return True
         return False
 
@@ -377,12 +378,15 @@ class ApellaFile(models.Model):
             candidacy = self.statement_file.all()[0]
             return candidacy.check_resource_state_five_before_electors_meeting(
                 row, request, view)
+        if self.file_kind == 'leave_file' and is_owner:
+            return True
 
         return False
 
     def check_resource_state_public_file(self, row, request, view):
         if self.file_kind == 'registry_set_decision_file':
             return True
+        return False
 
     @property
     def is_candidacy_file(self):
@@ -495,6 +499,11 @@ class Professor(UserProfile, CandidateProfile):
     fek = models.CharField(max_length=255, blank=True, null=True)
     discipline_text = models.TextField(blank=True)
     discipline_in_fek = models.BooleanField(default=True)
+    leave_starts_at = models.DateTimeField(blank=True, null=True)
+    leave_ends_at = models.DateTimeField(blank=True, null=True)
+    leave_file = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name = 'professor_leave_file', on_delete=models.SET_NULL)
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
@@ -536,6 +545,19 @@ class Professor(UserProfile, CandidateProfile):
                         pid in self_positions_elector:
                     return True
         return False
+
+    def check_resource_state_owned_by_manager(self, row, request, view):
+        user = request.user
+        if user.is_institutionmanager():
+            if self.department and self.department.institution:
+                return self.department.institution.id == \
+                    user.institutionmanager.institution.id
+        elif user.is_assistant():
+            if self.department:
+                return self.department in \
+                    user.institutionmanager.departments.all()
+        return False
+
 
     @property
     def active_elections(self):

@@ -3,6 +3,7 @@ import gen from 'ember-gen/lib/gen';
 import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
+import {fileField} from 'ui/lib/common';
 import {rejectUser, verifyUser, requestProfileChanges, createIssue} from 'ui/utils/common/actions';
 import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
@@ -21,6 +22,10 @@ export default ApellaGen.extend({
   common: {
     validators: all_validators,
   },
+  abilityStates: {
+    owned_by_manager: true
+  },
+
   list: {
     getModel(params) {
       params = params || {};
@@ -96,6 +101,7 @@ export default ApellaGen.extend({
              'is_verified',
              'is_rejected',
              'verification_pending',
+              field('on_leave', { type: 'boolean', label: 'on_leave_verbose.label'}),
               field('no_verification_request', { type: 'boolean' })
             ])
           }
@@ -160,8 +166,10 @@ export default ApellaGen.extend({
     page: {
       title: computed.readOnly('model.full_name_current')
     },
-    fieldsets: computed('role', function(){
+    fieldsets: computed('role', 'model.leave_upcoming',  function(){
       let role = get(this, 'role');
+      let leave = get(this, 'model.leave_upcoming');
+
       let f = [
         USER.FIELDSET_DETAILS_VERIFIABLE,
         PROFESSOR.FIELDSET,
@@ -169,6 +177,12 @@ export default ApellaGen.extend({
       if (role === 'helpdeskadmin' || role === 'helpdeskuser' || role === 'ministry') {
         f.push(PROFESSOR.FILES_FIELDSET);
       }
+
+      // if there is an upcoming or current leave show leave details
+      if (leave) {
+        f.push(PROFESSOR.LEAVE_FIELDSET_DETAILS);
+      }
+
       return f;
     })
   },
@@ -176,7 +190,7 @@ export default ApellaGen.extend({
     fieldsets: [
       USER.FIELDSET_EDIT_VERIFIABLE,
       PROFESSOR.FIELDSET,
-    ]
+    ],
   },
   create: {
     fieldsets: [

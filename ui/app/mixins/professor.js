@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
-import {booleanFormat, computeI18NChoice} from 'ui/lib/common';
+import {booleanFormat, computeI18NChoice, computeDateFormat} from 'ui/lib/common';
 
 const {
   get, set, computed, on
@@ -53,5 +53,31 @@ export default Ember.Mixin.create({
     }
   }),
 
-  user_id: DS.attr()
+  user_id: DS.attr(),
+
+  leave_starts_at: DS.attr('date'),
+  leave_starts_at_format: computeDateFormat('leave_starts_at'),
+  leave_ends_at: DS.attr('date'),
+  leave_ends_at_format: computeDateFormat('leave_ends_at'),
+  leave_file: DS.belongsTo('apella-file'),
+   //leave is upcoming if
+   //- the professor is domestic
+   //- there is and leave_ends_at date
+   //- leave_ends_at date has not passed
+  leave_upcoming: computed('is_foreign', 'leave_ends_at', function() {
+    let is_domestic = !get(this, 'is_foreign');
+    let end = moment(get(this, 'leave_ends_at')).endOf('day');
+    return end && is_domestic && end.isAfter();
+  }),
+  // the professor is on leave if leave_upcoming is true and
+  // now is between leave end date and leave start date
+  on_leave: computed('leave_upcoming', 'leave_starts_at', function() {
+    let start = moment(get(this, 'leave_starts_at')).startOf('day');
+    let leave_upcoming = get(this, 'leave_upcoming');
+    return leave_upcoming && start.isBefore();
+  }),
+  on_leave_verbose: booleanFormat('on_leave'),
+
+
+
 });
