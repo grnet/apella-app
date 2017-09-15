@@ -37,3 +37,10 @@
 * Contact
     Users can now contact helpdesk by creating jira tickets. Helpdesk users
     can create new tickets for users.
+
+0.2.10
+=====
+* Professors leaves feature
+    Warn institution managers when adding a professor on leave to electoral
+    committees.
+
