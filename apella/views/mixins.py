@@ -1,11 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os
+import csv
 import logging
 from datetime import datetime, date, time
+from time import strftime, gmtime
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.serializers import ValidationError
 from rest_framework.exceptions import PermissionDenied
 
@@ -44,6 +48,148 @@ class DestroyProtectedObject(viewsets.ModelViewSet):
 
 
 class Professor(object):
+    @list_route()
+    def report(self, request, pk=None):
+        response = HttpResponse(content_type='text/csv')
+        filename = "professors_export_" + \
+            strftime("%Y_%m_%d", gmtime()) + ".csv"
+        response['Content-Disposition'] = 'attachment; filename=' + filename
+
+        writer = csv.writer(response)
+        user = request.user
+        if user.is_manager() or user.is_ministry():
+            report_type = '1'
+        elif user.is_helpdeskadmin():
+            report_type = '2'
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+        if report_type == '1':
+            fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο',
+                'Ίδρυμα', 'Σχολή', 'Τμήμα', 'Βαθμίδα', 'Γνωστικό Αντικείμενο',
+                'Κατηγορία Χρήστη']
+        elif report_type == '2':
+            fields = ['Κωδικός Χρήστη', 'Παλιός Κωδικός Χρήστη', 'Όνομα (el)',
+                'Επώνυμο (el)', 'Πατρώνυμο (el)', 'Όνομα (en)', 'Επώνυμο (en)',
+                'Πατρώνυμο (en)', 'Email', 'Κινητό Τηλέφωνο',
+                'Σταθερό Τηλέφωνο', 'Αρ. Ταυτότητας',
+                'Ημ/νία Δημιουργίας Λογαριασμού', 'login',
+                'Ενεργός', 'Ενεργοποιήθηκε στις', 'Ενεργοποίηση Email',
+                'Ενεργοποίηση Email στις',
+                'Κατάσταση Προφίλ',
+                'Ημ/νία Τελευταίας Αλλαγής Κατάστασης Προφίλ',
+                'Κατηγορία Χρήστη', 'Ίδρυμα', 'Κωδικός Ιδρύματος',
+                'Τμήμα', 'Κωδικός Τμήματος', 'Βαθμίδα',
+                'Υπάρχει URL Βιογραφικού', 'URL Βιογραφικού',
+                'Γνωστικό Αντικείμενο', 'Υπάρχει Γνωστικό Αντικείμενο στο ΦΕΚ',
+                'ΦΕΚ Διορισμού', 'Ομιλεί Ελληνικά',
+                'Έχει αποδεχτεί τους όρους συμμετοχής']
+
+        writer.writerow(fields)
+
+        queryset = self.queryset
+        if report_type == '1':
+            queryset = queryset.filter(is_verified=True)
+
+        for p in queryset:
+            institution_id = '-'
+            try:
+                institution = p.institution.title.el.encode('utf-8')
+                institution_id = p.institution.id
+            except AttributeError:
+                institution = p.institution_freetext.encode('utf-8')
+
+            department_id = '-'
+            try:
+                department = p.department.title.el.encode('utf-8')
+                department_id = p.department.id
+            except AttributeError:
+                department = ''
+
+            try:
+                school = p.department.school.title.el.encode('utf-8')
+            except AttributeError:
+                school = ''
+
+            category = ''
+            if p.is_professor and not p.is_foreign:
+                category = 'Καθηγητής Ημεδαπής'
+            elif p.is_professor and p.is_foreign:
+                category = 'Καθηγητής Αλλοδαπής'
+            elif not p.is_professor and not p.is_foreign:
+                category = 'Ερευνητής Ημεδαπής'
+            else:
+                category = 'Ερευνητής Αλλοδαπής'
+
+            if report_type == '1':
+                row = [
+                    p.user.id,
+                    p.user.first_name.el.encode('utf-8'),
+                    p.user.last_name.el.encode('utf-8'),
+                    institution,
+                    school,
+                    department,
+                    p.rank,
+                    p.discipline_text.encode('utf-8'),
+                    category
+                ]
+            elif report_type == '2':
+                profile_state = ''
+                profile_last_changed_at = '-'
+                if p.is_verified:
+                    profile_state = 'Πιστοποιημένος'
+                    profile_last_changed_at = p.verified_at
+                elif p.is_rejected:
+                    profile_state = 'Απορριφθείς'
+                elif p.verification_pending:
+                    profile_state = 'Αναμονή Πιστοποίησης'
+                    profile_last_changed_at = p.verification_request
+                elif not p.verification_pending and not p.is_rejected \
+                        and not p.is_verified and p.changes_request:
+                    profile_state = 'Ζητήθηκαν αλλαγές'
+                    profile_last_changed_at = p.changes_request
+
+                row = [
+                    p.user.id,
+                    p.user.old_user_id,
+                    p.user.first_name.el.encode('utf-8'),
+                    p.user.last_name.el.encode('utf-8'),
+                    p.user.father_name.el.encode('utf-8'),
+                    p.user.first_name.en.encode('utf-8'),
+                    p.user.last_name.en.encode('utf-8'),
+                    p.user.father_name.en.encode('utf-8'),
+                    p.user.email,
+                    p.user.mobile_phone_number,
+                    p.user.home_phone_number,
+                    p.user.id_passport.encode('utf-8'),
+                    p.user.date_joined,
+                    p.user.login_method,
+                    p.user.is_active,
+                    p.user.activated_at,
+                    p.user.email_verified,
+                    p.user.email_verified_at,
+                    profile_state,
+                    profile_last_changed_at,
+                    'Αλλοδαπής' if p.is_foreign else 'Ημεδαπής',
+                    institution,
+                    institution_id,
+                    department,
+                    department_id,
+                    p.rank,
+                    'ΝΑΙ' if p.cv_url else 'ΟΧΙ',
+                    p.cv_url,
+                    p.discipline_text.encode('utf-8'),
+                    'ΝΑΙ' if p.discipline_in_fek else 'ΟΧΙ',
+                    p.fek.encode('utf-8') if p.fek else '',
+                    'ΝΑΙ' if p.speaks_greek else 'ΟΧΙ',
+                    'ΝΑΙ' if p.user.has_accepted_terms else 'ΟΧΙ'
+                ]
+
+            writer.writerow(row)
+
+        return response
+
     def get_queryset(self):
         queryset = self.queryset
         leave_query = self.request.GET.get('on_leave')
