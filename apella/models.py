@@ -386,6 +386,8 @@ class ApellaFile(models.Model):
     def check_resource_state_public_file(self, row, request, view):
         if self.file_kind == 'registry_set_decision_file':
             return True
+        if self.file_kind == 'leave_file' and self.source_id == request.user.id:
+            return True
         return False
 
     @property
