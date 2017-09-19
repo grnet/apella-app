@@ -3272,7 +3272,7 @@ spec:
                 mixins: [apella.views.mixins.UserApplicationMixin]
                 model_serializers: [apella.serializers.mixins.UserApplications]
                 filter_fields: [state, app_type, user_id]
-                search_fields: [user__id, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
+                search_fields: [id, user__id, user__last_name__en, user__last_name__el, user__first_name__el, user__first_name__en]
             .cli_commands: {}
             '*':
                 id:
