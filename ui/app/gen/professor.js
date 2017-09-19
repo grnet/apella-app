@@ -4,7 +4,7 @@ import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
 import {fileField} from 'ui/lib/common';
-import {rejectUser, verifyUser, requestProfileChanges, createIssue} from 'ui/utils/common/actions';
+import {rejectUser, verifyUser, requestProfileChanges, createIssue, exportProf} from 'ui/utils/common/actions';
 import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
 const {
@@ -27,6 +27,10 @@ export default ApellaGen.extend({
   },
 
   list: {
+    actions: ['exportProf'],
+    actionsMap: {
+      exportProf: exportProf
+    },
     getModel(params) {
       params = params || {};
       let role = get(this, 'user.role'),

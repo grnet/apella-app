@@ -674,6 +674,32 @@ const applyApplicationCandidacy = {
   }
 };
 
+const exportProf = {
+  label: 'exportProf',
+  icon: 'file_download',
+  action: function(route, model) {
+    let token = get(route, 'user.auth_token');
+    let adapter = get(route, 'store').adapterFor('professor');
+    let url = adapter.buildURL('professor')+ 'report/';
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'text/csv; charset=utf-8',
+        'Authorization': `Token ${token}`,
+        'Content-Disposition': 'attachment',
+      }
+    }).then((resp) => {
+      if (resp.status < 200 || resp.status > 299) {
+        throw resp;
+      }
+    }).catch((err) => {
+      throw err;
+    }).finally(() => {
+    });
+  },
+
+};
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
@@ -699,6 +725,7 @@ export { goToDetails, applyCandidacy,
   change_password,
   isHelpdesk,
   positionActions,
-  applicationActions
+  applicationActions,
+  exportProf,
 };
 
