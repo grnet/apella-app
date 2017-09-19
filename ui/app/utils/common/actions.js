@@ -674,30 +674,46 @@ const applyApplicationCandidacy = {
   }
 };
 
-const exportProf = {
-  label: 'exportProf',
-  icon: 'file_download',
-  action: function(route, model) {
-    let token = get(route, 'user.auth_token');
-    let adapter = get(route, 'store').adapterFor('professor');
-    let url = adapter.buildURL('professor')+ 'report/';
-    return fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'text/csv; charset=utf-8',
-        'Authorization': `Token ${token}`,
-        'Content-Disposition': 'attachment',
-      }
-    }).then((resp) => {
-      if (resp.status < 200 || resp.status > 299) {
-        throw resp;
-      }
-    }).catch((err) => {
-      throw err;
-    }).finally(() => {
-    });
-  },
+function exportCSV(route, model, modelName) {
+  let token = get(route, 'user.auth_token');
+  let adapter = get(route, 'store').adapterFor(modelName);
+  let url = adapter.buildURL(modelName)+ 'report/';
+  let m = get(route, 'messageService')
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Token ${token}`,
+    }
+  }).then((resp) => {
+    if (resp.status < 200 || resp.status > 299) {
+      throw resp;
+    }
+    let a = $("<a style='display: none;'/>");
+    let url = window.URL.createObjectURL(resp._bodyBlob);
+    let name = `${modelName}s_${moment().format('DD/MM/YYYY_HH:mm')}.csv`;
+    a.attr("href", url);
+    a.attr("download", name);
+    $("body").append(a);
+    a[0].click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+  }).catch((err) => {
+    m.setError('reason.errors');
+    throw err;
+  }).finally(() => {
+  });
+}
 
+const exportProf = {
+  label: 'exportCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return !(role === 'helpdeskadmin' || role === 'assistant' || role === 'institutionmanager');
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'professor');
+  },
 };
 
 let positionActions = {

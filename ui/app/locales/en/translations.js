@@ -174,6 +174,7 @@ export default {
   'ends30After.message': 'The submission deadline should not be less then 30 days',
   'ends_at.label': 'Submission End Date',
   'existing.entries': 'Current Members',
+  'exportCSV': 'CSV',
   'failed_election_decision.label': 'Failed election decision',
   'father_name.label': 'Father name',
   'father_name_current.label': 'Father name',

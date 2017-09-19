@@ -190,6 +190,7 @@ export default {
   'ends30After.message': 'Η προθεσμία υποβολής δεν μπορεί να είναι μικρότερη των 30 ημερών',
   'ends_at.label': 'Ημερομηνία Λήξης Υποβολών',
   'existing.entries': 'Αποθηκευμένα Μέλη',
+  'exportCSV': 'CSV',
   'failed_election_decision.label': 'Διαπιστωτική πράξη άγονης εκλογής',
   'father_name.label': 'Πατρώνυμο',
   'father_name_current.label': 'Πατρώνυμο',
