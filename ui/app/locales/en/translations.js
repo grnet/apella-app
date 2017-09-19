@@ -520,6 +520,7 @@ export default {
   'state_expanded.label': 'State',
   'status_verbose': 'State',
   'status_verbose.label': 'State',
+  'statement_file.hint': 'Your statement file, as referred to the 5d paragraph of the article 70 of the Νο 4386/2016 law, should be uploaded to this field.<br>It can be uploaded up to 5 days before the electors meeting',
   'subject.label': 'Theme',
   'subject.menu_label': 'Themes',
   'subject_area.label': 'Thematic area',

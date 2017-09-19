@@ -78,7 +78,7 @@ let CANDIDACY_FIELDSET =  {
 
       let res = [
         fileField('statement_file', 'candidacy', 'statement_file', {
-          hint: 'five_before_electors_meeting',
+          hint: 'statement_file.hint',
           readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
             let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
             let after_deadline = false;
@@ -145,7 +145,7 @@ let CANDIDACY_FIELDSET_DETAILS =  {
       let res = [
         fileField('statement_file', 'candidacy', 'statement_file', {
           readonly: true,
-          hint: 'five_before_electors_meeting',
+          hint: 'statement_file.hint',
         }, { replace: true}),
         fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
           readonly: true,
