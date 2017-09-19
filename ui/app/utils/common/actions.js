@@ -716,6 +716,19 @@ const exportProf = {
   },
 };
 
+const exportPositions = {
+  label: 'exportCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return role === 'professor' || role === 'candidate'
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'position');
+  },
+};
+
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
@@ -743,5 +756,6 @@ export { goToDetails, applyCandidacy,
   positionActions,
   applicationActions,
   exportProf,
+  exportPositions,
 };
 
