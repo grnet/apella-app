@@ -427,7 +427,7 @@ export default {
   'rank_verbose.label': 'Rank',
   're_new_password.label': 'Retype new password',
   'register': 'Register',
-  'register.candidate.intro': 'Register as candidate',
+  'register.candidate.intro': 'You can fill in the following fields to register as a candidate.<br>  If you are a Professor (of any rank) or a Lecturer, you should return to the home page and select the "Domestic Professor/Researcher" button.',
   'register.candidate.label': 'Candidate',
   'register.candidate.title': 'Candidate',
   'register.description': 'Select user type',
