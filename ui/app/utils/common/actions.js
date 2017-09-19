@@ -733,7 +733,7 @@ const exportRegistries = {
   icon: 'file_download',
   hidden: computed('role', function(){
     let role = get(this, 'role');
-    return role === 'professor' || role === 'candidate'
+    return role !== 'helpdeskadmin';
   }),
   action: function(route, model) {
     return exportCSV(route, model, 'registry', 'registries');
