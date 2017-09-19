@@ -64,7 +64,6 @@ class Professor(object):
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-
         if report_type == '1':
             fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο',
                 'Ίδρυμα', 'Σχολή', 'Τμήμα', 'Βαθμίδα', 'Γνωστικό Αντικείμενο',
@@ -270,6 +269,68 @@ class PositionHookMixin(HookMixin):
 
 
 class PositionMixin(object):
+    @list_route()
+    def report(self, request, pk=None):
+        response = HttpResponse(content_type='text/csv')
+        filename = "positions_export_" + \
+            strftime("%Y_%m_%d", gmtime()) + ".csv"
+        response['Content-Disposition'] = 'attachment; filename=' + filename
+
+        writer = csv.writer(response)
+        fields = ['Κωδικός Θέσης', 'Παλιός Κωδικός Θέσης',
+            'Τίτλος Θέσης', 'Ίδρυμα', 'Σχολή', 'Τμήμα', 'Βαθμίδα',
+            'Περιγραφή', 'Γνωστικό Αντικείμενο', 'Θεματική Περιοχή',
+            'Θέμα', 'Σχετιζόμενες Θέσεις', 'Φ.Ε.Κ.', 'Ημ/νία Φ.Ε.Κ.',
+            'Κατάσταση Θέσης', 'Ημ/νία Έναρξης Υποβολών',
+            'Ημ/νία Λήξης Υποβολών',
+            'Ημ/νία Σύγκλησης του Εκλεκτορικού Σώματος για τον ορισμό της Εισηγητικής Επιτροπής',
+            'Ημ/νία Σύγκλησης του Εκλεκτορικού Σώματος για Επιλογή',
+            'Εκλεγείς', 'Δεύτερος Καταλληλότερος Υποψήφιος',
+            'Φ.Ε.Κ. Διορισμού']
+
+        writer.writerow(fields)
+
+        for p in self.queryset:
+            elected_full_name = ''
+            if p.elected:
+                elected_full_name = \
+                    p.elected.first_name.el.encode('utf-8') + ' ' + \
+                    p.elected.last_name.el.encode('utf-8')
+
+            second_best_full_name = ''
+            if p.second_best:
+                second_best_full_name = \
+                    p.second_best.first_name.el.encode('utf-8') + ' ' + \
+                    p.second_best.last_name.el.encode('utf-8')
+
+            row = [
+                p.code,
+                p.old_code,
+                p.title.encode('utf-8'),
+                p.department.institution.title.el.encode('utf-8'),
+                p.department.school.title.el.encode('utf-8'),
+                p.department.title.el.encode('utf-8'),
+                p.rank,
+                p.description.encode('utf-8'),
+                p.discipline.encode('utf-8'),
+                p.subject_area.title.el.encode('utf-8'),
+                p.subject.title.el.encode('utf-8'),
+                [rp.code for rp in p.related_positions.all()],
+                p.fek,
+                p.fek_posted_at,
+                p.state,
+                move_to_timezone(p.starts_at, otz).date(),
+                move_to_timezone(p.ends_at, otz).date(),
+                p.electors_meeting_to_set_committee_date,
+                p.electors_meeting_date,
+                elected_full_name,
+                second_best_full_name,
+                p.nomination_act_fek
+            ]
+
+            writer.writerow(row)
+
+        return response
 
     @detail_route()
     def history(self, request, pk=None):
