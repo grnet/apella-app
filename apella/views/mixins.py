@@ -31,7 +31,7 @@ from apella.serializers.position import link_files, \
     upgrade_candidate_to_professor
 from apella.emails import send_user_email, send_emails_file, \
     send_emails_members_change
-from apella.util import urljoin, safe_path_join
+from apella.util import urljoin, safe_path_join, otz, move_to_timezone
 from apella.serials import get_serial
 
 logger = logging.getLogger(__name__)
@@ -139,16 +139,19 @@ class Professor(object):
                 profile_last_changed_at = '-'
                 if p.is_verified:
                     profile_state = 'Πιστοποιημένος'
-                    profile_last_changed_at = p.verified_at
+                    profile_last_changed_at = \
+                        move_to_timezone(p.verified_at, otz)
                 elif p.is_rejected:
                     profile_state = 'Απορριφθείς'
                 elif p.verification_pending:
                     profile_state = 'Αναμονή Πιστοποίησης'
-                    profile_last_changed_at = p.verification_request
+                    profile_last_changed_at = \
+                        move_to_timezone(p.verification_request, otz)
                 elif not p.verification_pending and not p.is_rejected \
                         and not p.is_verified and p.changes_request:
                     profile_state = 'Ζητήθηκαν αλλαγές'
-                    profile_last_changed_at = p.changes_request
+                    profile_last_changed_at = \
+                        move_to_timezone(p.changes_request, otz)
 
                 row = [
                     p.user.id,
@@ -163,12 +166,12 @@ class Professor(object):
                     p.user.mobile_phone_number,
                     p.user.home_phone_number,
                     p.user.id_passport.encode('utf-8'),
-                    p.user.date_joined,
+                    move_to_timezone(p.user.date_joined, otz),
                     p.user.login_method,
                     p.user.is_active,
-                    p.user.activated_at,
+                    move_to_timezone(p.user.activated_at, otz),
                     p.user.email_verified,
-                    p.user.email_verified_at,
+                    move_to_timezone(p.user.email_verified_at, otz),
                     profile_state,
                     profile_last_changed_at,
                     'Αλλοδαπής' if p.is_foreign else 'Ημεδαπής',
