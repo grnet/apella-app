@@ -7,7 +7,7 @@ import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
 import Users  from 'ui/gen/user';
-import {goToDetails} from 'ui/utils/common/actions';
+import {goToDetails, exportRegistries} from 'ui/utils/common/actions';
 import {
   fs_user, fs_contact, fs_prof_domestic, fs_prof_foreign, peak_fs_professors
 } from 'ui/lib/professors_quick_details';
@@ -278,6 +278,10 @@ export default ApellaGen.extend({
   },
 
   list: {
+    actions: ['exportRegistries'],
+    actionsMap: {
+      exportRegistries: exportRegistries
+    },
     menu: {
       icon: 'view list',
       label: 'registry.menu_label'

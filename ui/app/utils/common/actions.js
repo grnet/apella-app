@@ -690,7 +690,7 @@ function exportCSV(route, model, modelName) {
     }
     let a = $("<a style='display: none;'/>");
     let url = window.URL.createObjectURL(resp._bodyBlob);
-    let name = `${modelName}s_${moment().format('DD/MM/YYYY_HH:mm')}.csv`;
+    let name = `${modelName}_${moment().format('DD/MM/YYYY_HH:mm')}.csv`;
     a.attr("href", url);
     a.attr("download", name);
     $("body").append(a);
@@ -728,6 +728,18 @@ const exportPositions = {
   },
 };
 
+const exportRegistries = {
+  label: 'exportCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return role === 'professor' || role === 'candidate'
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'registry', 'registries');
+  },
+};
+
 
 let positionActions = {
   cancelPosition: cancelPosition,
@@ -757,5 +769,6 @@ export { goToDetails, applyCandidacy,
   applicationActions,
   exportProf,
   exportPositions,
+  exportRegistries,
 };
 
