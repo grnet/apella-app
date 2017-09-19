@@ -86,7 +86,18 @@ const applyCandidacy = {
   action(route, model){
     let id = get(model, 'id');
     route.transitionTo('candidacy.create', { queryParams: { position: id }});
+  },
+  confirm: computed('model.position_type', function(){
+     let is_not_election = get(this, 'model.position_type') !== 'election';
+     return is_not_election;
+  }),
+  prompt: {
+    ok: 'ok',
+    cancel: 'cancel',
+    message: 'prompt.applyNotElection.message',
+    title: 'prompt.applyNotElection.title',
   }
+
 };
 
 const cancelPosition = {
