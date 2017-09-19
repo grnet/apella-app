@@ -320,6 +320,7 @@ export default {
   'login.success': 'Επιτυχής είσοδος',
   'login.username.title': 'Είσοδος',
   'login_method.label': 'Σύνδεση',
+  'login.error': 'Σφάλμα εισόδου',
   'logout': 'Eξοδος',
   'manager.label.authority_full_name': 'Ονοματεπώνυμο Πρύτανη/Προέδρου',
   'manager.label.authority_type': 'Αρχή Πιστοποίησης',
