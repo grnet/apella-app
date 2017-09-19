@@ -466,6 +466,47 @@ class CandidacyList(object):
 
 
 class RegistriesList(viewsets.GenericViewSet):
+    @list_route()
+    def report(self, request, pk=None):
+        response = HttpResponse(content_type='text/csv')
+        filename = "registries_export_" + \
+            strftime("%Y_%m_%d", gmtime()) + ".csv"
+        response['Content-Disposition'] = 'attachment; filename=' + filename
+
+        writer = csv.writer(response)
+        user = request.user
+
+        fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο', 'Κατηγορία Χρήστη',
+            'Ίδρυμα Χρήστη', 'Τμήμα Χρήστη', 'Κωδικός Μητρώου',
+            'Ίδρυμα Μητρώου', 'Τμήμα Μητρώου', 'Είδος Μητρώου']
+        writer.writerow(fields)
+        for r in self.queryset:
+            for p in r.members.all():
+                try:
+                    institution = p.institution.title.el.encode('utf-8')
+                except AttributeError:
+                    institution = p.institution_freetext.encode('utf-8')
+
+                try:
+                    department = p.department.title.el.encode('utf-8')
+                except AttributeError:
+                    department = ''
+
+                row = [
+                    p.user.id,
+                    p.user.first_name.el.encode('utf-8'),
+                    p.user.last_name.el.encode('utf-8'),
+                    'Αλλοδαπής' if p.is_foreign else 'Ημεδαπής',
+                    institution,
+                    department,
+                    r.id,
+                    r.department.institution.title.el.encode('utf-8'),
+                    r.department.title.el.encode('utf-8'),
+                    r.type
+                ]
+                writer.writerow(row)
+
+        return response
 
     def get_queryset(self):
         queryset = self.queryset

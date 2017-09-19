@@ -533,6 +533,7 @@ PERMISSION_RULES = [
     ('professors', 'verify_user', 'helpdeskuser', '*', '*', ''),
     ('professors', 'reject_user', 'helpdeskadmin', '*', '*', ''),
     ('professors', 'reject_user', 'helpdeskuser', '*', '*', ''),
+    ('registries', 'report', 'helpdeskadmin', '*', '*', ''),
     ('registries', 'create', 'institutionmanager', '*', '*', '4.3.3'),
     ('registries', 'create', 'assistant', '*', 'can_create', 'T1721'),
     ('registries', 'list', 'candidate', '*', '*', '3.3.9'),
