@@ -57,8 +57,41 @@ class Professor(object):
             'create_registry', None)
         if create_registry:
             queryset = queryset.exclude(rank='Lecturer'). \
-                exclude(rank='Tenured Assistant Professor')
+                exclude(rank='Tenured Assistant Professor'). \
+                exclude(is_disabled=True)
         return queryset
+
+    def set_professor_is_disabled(self, is_disabled, request):
+        professor = self.get_object()
+        if professor.is_disabled is is_disabled:
+            return
+        professor.is_disabled = is_disabled
+        if is_disabled:
+            professor.disabled_at = datetime.utcnow()
+        professor.save()
+        logger.info(
+            'user %s %s professor %r' %
+            (request.user.username,
+            'disabled' if is_disabled else 'enabled',
+            professor.id))
+
+    @detail_route(methods=['post'])
+    def disable_professor(self, request, pk=None):
+        professor = self.get_object()
+        try:
+            self.set_professor_is_disabled(True, request)
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def enable_professor(self, request, pk=None):
+        professor = self.get_object()
+        try:
+            self.set_professor_is_disabled(False, request)
+        except ValidationError as ve:
+            return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_200_OK)
 
 
 class AssistantList(generics.ListAPIView):
@@ -271,6 +304,7 @@ class RegistriesList(viewsets.GenericViewSet):
         registry = self.get_object()
         query_params = self.request.query_params
         members = registry.members
+        members = members.filter(is_disabled=False)
         if 'user_id' in query_params:
             try:
                 user_id = int(query_params['user_id'])

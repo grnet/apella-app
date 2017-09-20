@@ -1030,6 +1030,17 @@ spec:
                             .field: {}
                             .drf_field: {}
                             .datetime: {}
+                is_disabled:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
+                disabled_at:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .datetime: {}
             .actions:
                 .list: {}
                 .create: {}
