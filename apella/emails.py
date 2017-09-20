@@ -235,6 +235,8 @@ def send_emails_file(obj, file_kind, extra_context=()):
         'nomination_proceedings', 'nomination_act', 'assistant_files',
         'revocation_decision', 'failed_election_decision']
 
+    candidacy_file_names = ['statement_file']
+
     if file_kind in position_file_names:
         # send to committee, candidates, electors
         subject = 'apella/emails/position_set_{}_subject.txt'.format(file_kind)
@@ -255,6 +257,42 @@ def send_emails_file(obj, file_kind, extra_context=()):
                 'ends_at': ends_at,
                 'apella_url': position_url
                 })
+
+    if file_kind in candidacy_file_names:
+        pos = obj.position
+        # send to managers, secretaries, electors
+        managers = InstitutionManager.objects.filter(
+            institution=obj.position.department.institution,
+            manager_role='institutionmanager')
+        assistants = InstitutionManager.objects.filter(
+            manager_role='assistant',
+            departments=pos.department,
+            is_secretary=True)
+        electors = pos.electors.filter(is_verified=True).\
+            filter(user__is_active=True)
+
+        subject = 'apella/emails/candidacy_set_{}_subject.txt'.format(file_kind)
+        body = 'apella/emails/candidacy_set_{}_body.txt'.format(file_kind)
+        recipients = chain(managers, electors, assistants)
+        recipients = [x.user for x in recipients]
+
+        starts_at = move_to_timezone(pos.starts_at, otz)
+        ends_at = move_to_timezone(pos.ends_at, otz)
+        ui_url = get_ui_url()
+        position_url = urljoin(ui_url, 'positions/', str(pos.pk))
+
+        for recipient in recipients:
+            send_user_email(
+                recipient,
+                subject,
+                body,
+                {'position': pos,
+                'starts_at': starts_at,
+                'ends_at': ends_at,
+                'apella_url': position_url,
+                'candidate': obj.candidate
+                })
+
 
 
 def send_email_elected(obj, elected='elected'):
