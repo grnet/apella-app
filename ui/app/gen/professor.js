@@ -153,13 +153,20 @@ export default ApellaGen.extend({
           }
           return fields;
         }),
-      actions: ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges', 'createIssue'],
-      actionsMap: {
-        verifyUser: verifyUser,
-        rejectUser: rejectUser,
-        requestProfileChanges: requestProfileChanges,
-        createIssue: createIssue
-      }
+        actions: computed('role', function() {
+          let res =  ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges', 'createIssue'];
+          let role = get(this, 'role');
+          if (!role.startsWith('helpdesk')) {
+            res.splice(1,1);
+          }
+          return res;
+        }),
+        actionsMap: {
+          verifyUser: verifyUser,
+          rejectUser: rejectUser,
+          requestProfileChanges: requestProfileChanges,
+          createIssue: createIssue
+        }
     },
   },
   details: {
