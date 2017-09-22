@@ -260,6 +260,7 @@ export default {
   'institution_freetext.label': 'Foreign institution',
   'institution_users.label': 'Institution users',
   'is_active.label': 'Active',
+  'is_disabled.label': 'Disabled',
   'is_foreign.label': 'Foreign professor',
   'is_foreign_descr.label': 'User Type',
   'is_foreign_verbose.label': 'Foreign professor',

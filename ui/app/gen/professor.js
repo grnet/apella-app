@@ -99,6 +99,7 @@ export default ApellaGen.extend({
           if(!roles_see_only_verified.includes(role)) {
             fields.pushObjects([
              'is_verified',
+             'is_disabled',
              'is_rejected',
              'verification_pending',
               field('on_leave', { type: 'boolean', label: 'on_leave_verbose.label'}),
