@@ -674,6 +674,88 @@ const applyApplicationCandidacy = {
   }
 };
 
+const disableProfessor = {
+  label: 'disable.professor',
+  icon: 'person',
+  accent: true,
+  action: function(route, model) {
+    let token = get(route, 'user.auth_token');
+    let adapter = get(route, 'store').adapterFor('professor');
+    let messages = get(route, 'messageService');
+    let url = adapter.buildURL('professor', get(model, 'id'), 'findRecord');
+    return fetch(url + 'disable_professor/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('disable.professor.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('disable.professor.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'disable.professor.message',
+    title: 'disable.professor.title',
+  },
+  hidden: computed('model.is_disabled', 'role', function() {
+    if (!isHelpdesk) { return true;}
+    return get(this, 'model.is_disabled');
+  }),
+};
+
+const enableProfessor = {
+  label: 'enable.professor',
+  icon: 'person',
+  classNames: 'md-icon-success',
+  action: function(route, model) {
+    let token = get(route, 'user.auth_token');
+    let adapter = get(route, 'store').adapterFor('professor');
+    let messages = get(route, 'messageService');
+    let url = adapter.buildURL('professor', get(model, 'id'), 'findRecord');
+    return fetch(url + 'enable_professor/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('enable.professor.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('enable.professor.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'enable.professor.message',
+    title: 'enable.professor.title',
+  },
+  hidden: computed('model.is_disabled', 'role', function() {
+    if (!isHelpdesk) { return true;}
+    return !get(this, 'model.is_disabled');
+  }),
+};
+
+
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
@@ -690,6 +772,12 @@ let applicationActions = {
   applyApplicationCandidacy: applyApplicationCandidacy
 };
 
+let professorActions = {
+  disableProfessor: disableProfessor,
+  enableProfessor: enableProfessor
+};
+
+
 export { goToDetails, applyCandidacy,
   cancelCandidacy, goToPosition,
   rejectUser, verifyUser,
@@ -699,6 +787,7 @@ export { goToDetails, applyCandidacy,
   change_password,
   isHelpdesk,
   positionActions,
-  applicationActions
+  applicationActions,
+  professorActions
 };
 
