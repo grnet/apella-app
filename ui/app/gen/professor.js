@@ -156,13 +156,14 @@ export default ApellaGen.extend({
       actions: [
         'gen:details',
         'gen:edit',
+        'createIssue',
         'remove',
         'verifyUser',
         'rejectUser',
         'disableProfessor',
         'enableProfessor',
         'requestProfileChanges',
-        'createIssue'],
+      ],
       actionsMap: {
         verifyUser: verifyUser,
         rejectUser: rejectUser,
