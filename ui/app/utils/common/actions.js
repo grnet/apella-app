@@ -679,6 +679,8 @@ function exportCSV(route, model, modelName) {
   let adapter = get(route, 'store').adapterFor(modelName);
   let url = adapter.buildURL(modelName)+ 'report/';
   let m = get(route, 'messageService')
+  m.setWarning('downloading.started');
+  $('md-icon[title="CSV"]').parent('button').attr('disabled', 'disabled');
   return fetch(url, {
     method: 'GET',
     headers: {
@@ -697,10 +699,12 @@ function exportCSV(route, model, modelName) {
     a[0].click();
     window.URL.revokeObjectURL(url);
     a.remove();
+    m.setSuccess('downloading.finished');
   }).catch((err) => {
     m.setError('reason.errors');
     throw err;
   }).finally(() => {
+    $('md-icon[title="CSV"]').parent('button').removeAttr('disabled');
   });
 }
 
