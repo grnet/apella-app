@@ -675,7 +675,9 @@ const applyApplicationCandidacy = {
 };
 
 const disableProfessor = {
-  label: 'disable.professor',
+  label: computed('role', function() {
+    return isHelpdesk(get(this, 'role'))? 'disable.professor': 'disable.professor.self';
+  }),
   icon: 'person',
   accent: true,
   action: function(route, model) {
@@ -708,14 +710,28 @@ const disableProfessor = {
     message: 'disable.professor.message',
     title: 'disable.professor.title',
   },
-  hidden: computed('model.is_disabled', 'role', function() {
-    if (!isHelpdesk) { return true;}
-    return get(this, 'model.is_disabled');
+  hidden: computed('model.is_disabled', 'role', 'model.is_foreign', 'model.insitution.category', function() {
+    /*
+    Disable Professor action is visible if the professor is enabled and
+    the logged in user is
+    - helpdeskadmin or helpdeskuser
+    - foreign professor/researcher
+    - domestic professor who belongs to a research center
+    */
+
+    let helpdesk = isHelpdesk(get(this, 'role'));
+    let foreign = get(this, 'model.is_foreign');
+    let researcher = get(this, 'model.institution.category') === 'Research';
+
+    if (get(this, 'model.is_disabled')) { return true; }
+    return !(helpdesk || foreign || researcher);
   }),
 };
 
 const enableProfessor = {
-  label: 'enable.professor',
+  label: computed('role', function() {
+    return isHelpdesk(get(this, 'role'))? 'enable.professor': 'enable.professor.self';
+  }),
   icon: 'person',
   classNames: 'md-icon-success',
   action: function(route, model) {
@@ -748,9 +764,20 @@ const enableProfessor = {
     message: 'enable.professor.message',
     title: 'enable.professor.title',
   },
-  hidden: computed('model.is_disabled', 'role', function() {
-    if (!isHelpdesk) { return true;}
-    return !get(this, 'model.is_disabled');
+  hidden: computed('model.is_disabled', 'role', 'model.is_foreign', 'model.insitution.category', function() {
+    /*
+    Enable Professor action is visible if the professor is disabled and
+    the logged in user is
+    - helpdeskadmin or helpdeskuser
+    - foreign professor/researcher
+    - domestic professor who belongs to a research center
+    */
+
+    let helpdesk = isHelpdesk(get(this, 'role'));
+    let foreign = get(this, 'model.is_foreign');
+    let researcher = get(this, 'model.institution.category') === 'Research';
+
+    return !(get(this, 'model.is_disabled') && (helpdesk || foreign || researcher));
   }),
 };
 
