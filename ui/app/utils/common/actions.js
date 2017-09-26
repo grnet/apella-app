@@ -709,7 +709,7 @@ const exportProf = {
   icon: 'file_download',
   hidden: computed('role', function(){
     let role = get(this, 'role');
-    return !(role === 'helpdeskadmin' || role === 'assistant' || role === 'institutionmanager');
+    return !(role === 'helpdeskadmin' || role === 'assistant' || role === 'institutionmanager' || role === 'ministry');
   }),
   action: function(route, model) {
     return exportCSV(route, model, 'professor');
