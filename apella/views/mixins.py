@@ -25,7 +25,7 @@ from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
     Professor as ProfessorModel, UserApplication
 from apella.loader import adapter
-from apella.common import FILE_KIND_TO_FIELD
+from apella.common import FILE_KIND_TO_FIELD, RANKS_EL, POSITION_STATES_EL
 from apella import auth_hooks
 from apella.serializers.position import link_files, \
     upgrade_candidate_to_professor
@@ -64,6 +64,7 @@ class Professor(object):
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
+
         if report_type == '1':
             fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο',
                 'Ίδρυμα', 'Σχολή', 'Τμήμα', 'Βαθμίδα', 'Γνωστικό Αντικείμενο',
@@ -87,7 +88,7 @@ class Professor(object):
 
         writer.writerow(fields)
 
-        queryset = self.queryset
+        queryset = self.get_queryset()
         if report_type == '1':
             queryset = queryset.filter(is_verified=True)
 
@@ -121,6 +122,10 @@ class Professor(object):
             else:
                 category = 'Ερευνητής Αλλοδαπής'
 
+            rank_el = ""
+            if p.rank:
+                rank_el = RANKS_EL.get(p.rank)
+
             if report_type == '1':
                 row = [
                     p.user.id,
@@ -129,7 +134,7 @@ class Professor(object):
                     institution,
                     school,
                     department,
-                    p.rank,
+                    rank_el,
                     p.discipline_text.encode('utf-8'),
                     category
                 ]
@@ -173,12 +178,13 @@ class Professor(object):
                     move_to_timezone(p.user.email_verified_at, otz),
                     profile_state,
                     profile_last_changed_at,
-                    'Αλλοδαπής' if p.is_foreign else 'Ημεδαπής',
+                    'Καθηγητής Αλλοδαπής' \
+                        if p.is_foreign else 'Καθηγητής Ημεδαπής',
                     institution,
                     institution_id,
                     department,
                     department_id,
-                    p.rank,
+                    rank_el,
                     'ΝΑΙ' if p.cv_url else 'ΟΧΙ',
                     p.cv_url,
                     p.discipline_text.encode('utf-8'),
@@ -290,7 +296,8 @@ class PositionMixin(object):
 
         writer.writerow(fields)
 
-        for p in self.queryset:
+        queryset = self.get_queryset()
+        for p in queryset:
             elected_full_name = ''
             if p.elected:
                 elected_full_name = \
@@ -303,6 +310,24 @@ class PositionMixin(object):
                     p.second_best.first_name.el.encode('utf-8') + ' ' + \
                     p.second_best.last_name.el.encode('utf-8')
 
+            rank_el = ""
+            if p.rank:
+                rank_el = RANKS_EL.get(p.rank)
+
+            if p.state == 'posted' and p.starts_at > datetime.utcnow():
+                p_state = 'Ενταγμένη'
+            elif p.state == 'posted' and p.ends_at < datetime.utcnow():
+                p_state = 'Κλειστή'
+            elif p.state == 'posted':
+                p_state = 'Ανοιχτή'
+            else:
+                p_state = POSITION_STATES_EL.get(p.state)
+
+            p_related = ""
+            if p.related_positions.count() > 0:
+                p_related = ','.join(str(rp.code) for rp in
+                        p.related_positions.all())
+
             row = [
                 p.code,
                 p.old_code,
@@ -310,15 +335,15 @@ class PositionMixin(object):
                 p.department.institution.title.el.encode('utf-8'),
                 p.department.school.title.el.encode('utf-8'),
                 p.department.title.el.encode('utf-8'),
-                p.rank,
+                rank_el,
                 p.description.encode('utf-8'),
                 p.discipline.encode('utf-8'),
                 p.subject_area.title.el.encode('utf-8'),
                 p.subject.title.el.encode('utf-8'),
-                [rp.code for rp in p.related_positions.all()],
+                p_related,
                 p.fek,
                 p.fek_posted_at,
-                p.state,
+                p_state,
                 p.starts_at and move_to_timezone(p.starts_at, otz).date(),
                 p.ends_at and move_to_timezone(p.ends_at, otz).date(),
                 p.electors_meeting_to_set_committee_date,
@@ -480,7 +505,9 @@ class RegistriesList(viewsets.GenericViewSet):
             'Ίδρυμα Χρήστη', 'Τμήμα Χρήστη', 'Κωδικός Μητρώου',
             'Ίδρυμα Μητρώου', 'Τμήμα Μητρώου', 'Είδος Μητρώου']
         writer.writerow(fields)
-        for r in self.queryset:
+
+        queryset = self.get_queryset()
+        for r in queryset:
             for p in r.members.all():
                 try:
                     institution = p.institution.title.el.encode('utf-8')
@@ -502,7 +529,7 @@ class RegistriesList(viewsets.GenericViewSet):
                     r.id,
                     r.department.institution.title.el.encode('utf-8'),
                     r.department.title.el.encode('utf-8'),
-                    r.type
+                    'Εσωτερικό' if r.type == 'internal' else 'Εξωτερικό'
                 ]
                 writer.writerow(row)
 
