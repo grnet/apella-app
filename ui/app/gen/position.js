@@ -119,7 +119,7 @@ export default ApellaGen.extend({
     }
   },
   list: {
-    actions: ['exportPositions'],
+    actions: ['exportPositions', 'gen:create'],
     actionsMap: {
       exportPositions: exportPositions
     },

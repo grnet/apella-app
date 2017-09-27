@@ -27,7 +27,7 @@ export default ApellaGen.extend({
   },
 
   list: {
-    actions: ['exportProf'],
+    actions: ['exportProf', 'gen:create'],
     actionsMap: {
       exportProf: exportProf
     },

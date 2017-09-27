@@ -278,7 +278,7 @@ export default ApellaGen.extend({
   },
 
   list: {
-    actions: ['exportRegistries'],
+    actions: ['exportRegistries', 'gen:create'],
     actionsMap: {
       exportRegistries: exportRegistries
     },
