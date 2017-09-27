@@ -163,7 +163,7 @@ export default {
   'discipline_in_fek.hint': 'Το γνωστικό αντικείμενο αναγράφεται στο ΦΕΚ διορισμού μου',
   'discipline_in_fek.label': 'Γνωστικό αντικείμενο στο Φ.Ε.Κ. ',
   'discipline_text.label': 'Γνωστικό αντικείμενο',
-  'downloading.started': 'Αναμονή αρχείου',
+  'downloading.started': 'Αναμονή αρχείου <md-icon md-font-icon="rotate-left" aria-label="rotate-left" class="paper-icon md-font material-icons md-spin-reverse">rotate_left </md-icon>',
   'downloading.finished': 'Ολοκλήρωση αρχείου',
   'edit': 'Επεξεργασια', //For top bar
   'edit.label': 'Επεξεργασία',

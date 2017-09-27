@@ -147,6 +147,7 @@ export default {
   'discipline_in_fek.hint': 'Discipline is reported in FEK (Government Gazette)',
   'discipline_in_fek.label': 'Discipline from FEK ',
   'discipline_text.label': 'Discipline',
+  'downloading.started': 'Downloading started <md-icon md-font-icon="rotate-left" aria-label="rotate-left" class="paper-icon md-font material-icons md-spin-reverse">rotate_left </md-icon>',
   'edit': 'Edit',
   'edit.label': 'Edit',
   'edit.menu.label': 'Edit',
