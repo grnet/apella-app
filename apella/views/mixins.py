@@ -635,4 +635,5 @@ class JiraIssues(object):
         user = self.request.user
         if not user.is_helpdesk():
             queryset = queryset.filter(reporter_id=user.id)
+        queryset = queryset.order_by('-updated_at')
         return queryset
