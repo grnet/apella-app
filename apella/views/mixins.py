@@ -347,9 +347,11 @@ class PositionMixin(object):
             if p.rank:
                 rank_el = RANKS_EL.get(p.rank)
 
-            if p.state == 'posted' and p.starts_at > datetime.utcnow():
+            if p.state == 'posted' and p.starts_at \
+                    and p.starts_at > datetime.utcnow():
                 p_state = 'Ενταγμένη'
-            elif p.state == 'posted' and p.ends_at < datetime.utcnow():
+            elif p.state == 'posted' and p.ends_at \
+                    and p.ends_at < datetime.utcnow():
                 p_state = 'Κλειστή'
             elif p.state == 'posted':
                 p_state = 'Ανοιχτή'
