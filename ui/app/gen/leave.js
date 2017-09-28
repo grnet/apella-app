@@ -87,7 +87,7 @@ export default ApellaGen.extend({
         'rank_verbose',
         'leave_starts_at_format',
         'leave_ends_at_format',
-        'on_leave_verbose',
+        'leave_verbose',
       ],
       actions: ['gen:details', 'gen:edit'],
     },
