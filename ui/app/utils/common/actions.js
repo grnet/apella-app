@@ -745,6 +745,115 @@ const exportRegistries = {
 };
 
 
+const disableProfessor = {
+  label: computed('role', function() {
+    return isHelpdesk(get(this, 'role'))? 'disable.professor': 'disable.professor.self';
+  }),
+  icon: 'person',
+  accent: true,
+  action: function(route, model) {
+    let token = get(route, 'user.auth_token');
+    let adapter = get(route, 'store').adapterFor('professor');
+    let messages = get(route, 'messageService');
+    let url = adapter.buildURL('professor', get(model, 'id'), 'findRecord');
+    return fetch(url + 'disable_professor/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('disable.professor.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('disable.professor.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'disable.professor.message',
+    title: 'disable.professor.title',
+  },
+  hidden: computed('model.is_disabled', 'role', 'model.is_foreign', 'model.insitution.category', function() {
+    /*
+    Disable Professor action is visible if the professor is enabled and
+    the logged in user is
+    - helpdeskadmin or helpdeskuser
+    - foreign professor/researcher
+    - domestic professor who belongs to a research center
+    */
+
+    let helpdesk = isHelpdesk(get(this, 'role'));
+    let foreign = get(this, 'model.is_foreign');
+    let researcher = get(this, 'model.institution.category') === 'Research';
+
+    if (get(this, 'model.is_disabled')) { return true; }
+    return !(helpdesk || foreign || researcher);
+  }),
+};
+
+const enableProfessor = {
+  label: computed('role', function() {
+    return isHelpdesk(get(this, 'role'))? 'enable.professor': 'enable.professor.self';
+  }),
+  icon: 'person',
+  classNames: 'md-icon-success',
+  action: function(route, model) {
+    let token = get(route, 'user.auth_token');
+    let adapter = get(route, 'store').adapterFor('professor');
+    let messages = get(route, 'messageService');
+    let url = adapter.buildURL('professor', get(model, 'id'), 'findRecord');
+    return fetch(url + 'enable_professor/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('enable.professor.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('enable.professor.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'enable.professor.message',
+    title: 'enable.professor.title',
+  },
+  hidden: computed('model.is_disabled', 'role', 'model.is_foreign', 'model.insitution.category', function() {
+    /*
+    Enable Professor action is visible if the professor is disabled and
+    the logged in user is
+    - helpdeskadmin or helpdeskuser
+    - foreign professor/researcher
+    - domestic professor who belongs to a research center
+    */
+
+    let helpdesk = isHelpdesk(get(this, 'role'));
+    let foreign = get(this, 'model.is_foreign');
+    let researcher = get(this, 'model.institution.category') === 'Research';
+
+    return !(get(this, 'model.is_disabled') && (helpdesk || foreign || researcher));
+  }),
+};
+
+
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
@@ -761,6 +870,12 @@ let applicationActions = {
   applyApplicationCandidacy: applyApplicationCandidacy
 };
 
+let professorActions = {
+  disableProfessor: disableProfessor,
+  enableProfessor: enableProfessor
+};
+
+
 export { goToDetails, applyCandidacy,
   cancelCandidacy, goToPosition,
   rejectUser, verifyUser,
@@ -774,5 +889,6 @@ export { goToDetails, applyCandidacy,
   exportProf,
   exportPositions,
   exportRegistries,
+  professorActions
 };
 

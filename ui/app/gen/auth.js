@@ -9,7 +9,7 @@ import ASSISTANT from 'ui/utils/common/assistant';
 import CANDIDATE from 'ui/utils/common/candidate';
 import PROFESSOR from 'ui/utils/common/professor';
 import {disable_field} from 'ui/utils/common/fields';
-import {change_password, isHelpdesk} from 'ui/utils/common/actions';
+import {change_password, isHelpdesk, professorActions} from 'ui/utils/common/actions';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
 import {UserConstraintsRouteMixin} from 'ui/lib/common';
@@ -135,7 +135,7 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   routeBaseClass: routes.DetailsRoute,
   fieldsets: PROFILE_FIELDSETS('details'),
   component: 'gen-details',
-  actions: ['sync_candidacies', 'change_password'],
+  actions: ['sync_candidacies', 'change_password', 'disable_professor', 'enable_professor'],
   partials: { top: 'profile-details-intro' },
   actionsMap: {
     'accept_terms': {
@@ -191,7 +191,9 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
         cancel: 'cancel'
       }
     },
-    'change_password': change_password
+    'change_password': change_password,
+    'disable_professor': professorActions.disableProfessor,
+    'enable_professor': professorActions.enableProfessor,
   },
   getModel() {
     return get(this, 'store').findRecord('profile', 'me');

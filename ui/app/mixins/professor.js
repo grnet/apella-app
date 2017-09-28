@@ -78,6 +78,8 @@ export default Ember.Mixin.create({
   }),
   on_leave_verbose: booleanFormat('on_leave'),
 
+  is_disabled: DS.attr({type: 'boolean', displayComponent: 'boolean-display'}),
+
 
 
 });

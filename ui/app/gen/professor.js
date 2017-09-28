@@ -4,7 +4,7 @@ import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
 import {fileField} from 'ui/lib/common';
-import {rejectUser, verifyUser, requestProfileChanges, createIssue, exportProf} from 'ui/utils/common/actions';
+import {rejectUser, verifyUser, requestProfileChanges, createIssue, exportProf, professorActions} from 'ui/utils/common/actions';
 import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
 const {
@@ -103,6 +103,7 @@ export default ApellaGen.extend({
           if(!roles_see_only_verified.includes(role)) {
             fields.pushObjects([
              'is_verified',
+             'is_disabled',
              'is_rejected',
              'verification_pending',
               field('on_leave', { type: 'boolean', label: 'on_leave_verbose.label'}),
@@ -158,7 +159,17 @@ export default ApellaGen.extend({
           return fields;
         }),
         actions: computed('role', function() {
-          let res =  ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges', 'createIssue'];
+          let res = [
+            'gen:details',
+            'gen:edit',
+            'createIssue',
+            'remove',
+            'verifyUser',
+            'rejectUser',
+            'disableProfessor',
+            'enableProfessor',
+            'requestProfileChanges',
+          ];
           let role = get(this, 'role');
           if (!role.startsWith('helpdesk')) {
             res.splice(1,1);
@@ -169,7 +180,9 @@ export default ApellaGen.extend({
           verifyUser: verifyUser,
           rejectUser: rejectUser,
           requestProfileChanges: requestProfileChanges,
-          createIssue: createIssue
+          createIssue: createIssue,
+          disableProfessor: professorActions.disableProfessor,
+          enableProfessor: professorActions.enableProfessor,
         }
     },
   },
