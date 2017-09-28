@@ -147,6 +147,7 @@ export default {
   'disable.professor.self': 'Disable',
   'disable.professor.error': 'Error in disabling professor',
   'disable.professor.message': 'Disable professor message',
+  'disable.professor.message.self': 'Disable professor message',
   'disable.professor.success': 'Success in disabling professor',
   'disable.professor.title': 'Disable professor',
   'discipline.label': 'Discipline',

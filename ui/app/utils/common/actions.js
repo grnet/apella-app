@@ -775,12 +775,15 @@ const disableProfessor = {
     });
   },
   confirm: true,
-  prompt: {
-    ok: 'submit',
-    cancel: 'cancel',
-    message: 'disable.professor.message',
-    title: 'disable.professor.title',
-  },
+  prompt: computed('role', function() {
+    let m = isHelpdesk(get(this, 'role'))? 'disable.professor.message': 'disable.professor.message.self';
+    return {
+      ok: 'submit',
+      cancel: 'cancel',
+      message: m,
+      title: 'disable.professor.title',
+    };
+  }),
   hidden: computed('model.is_disabled', 'role', 'model.is_foreign', 'model.insitution.category', function() {
     /*
     Disable Professor action is visible if the professor is enabled and
