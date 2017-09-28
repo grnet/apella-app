@@ -585,6 +585,11 @@ class Professor(UserProfile, CandidateProfile):
                 committee_count += 1
         return elector_count + committee_count
 
+    @property
+    def is_professor(self):
+        return self.rank in ['Professor', 'Associate Professor',
+            'Assistant Professor', 'Lecturer', 'Tenured Assistant Professor']
+
     def save(self, *args, **kwargs):
         self.user.role = 'professor'
         super(Professor, self).save(*args, **kwargs)

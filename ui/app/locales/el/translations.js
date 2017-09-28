@@ -163,6 +163,8 @@ export default {
   'discipline_in_fek.hint': 'Το γνωστικό αντικείμενο αναγράφεται στο ΦΕΚ διορισμού μου',
   'discipline_in_fek.label': 'Γνωστικό αντικείμενο στο Φ.Ε.Κ. ',
   'discipline_text.label': 'Γνωστικό αντικείμενο',
+  'downloading.started': 'Αναμονή αρχείου <md-icon md-font-icon="rotate-left" aria-label="rotate-left" class="paper-icon md-font material-icons md-spin-reverse">rotate_left </md-icon>',
+  'downloading.finished': 'Ολοκλήρωση αρχείου',
   'edit': 'Επεξεργασια', //For top bar
   'edit.label': 'Επεξεργασία',
   'edit.menu.label': 'Τροποποίηση',
@@ -190,6 +192,7 @@ export default {
   'ends30After.message': 'Η προθεσμία υποβολής δεν μπορεί να είναι μικρότερη των 30 ημερών',
   'ends_at.label': 'Ημερομηνία Λήξης Υποβολών',
   'existing.entries': 'Αποθηκευμένα Μέλη',
+  'exportCSV': 'CSV',
   'failed_election_decision.label': 'Διαπιστωτική πράξη άγονης εκλογής',
   'father_name.label': 'Πατρώνυμο',
   'father_name_current.label': 'Πατρώνυμο',

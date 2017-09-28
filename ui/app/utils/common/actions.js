@@ -674,6 +674,77 @@ const applyApplicationCandidacy = {
   }
 };
 
+function exportCSV(route, model, modelName) {
+  let token = get(route, 'user.auth_token');
+  let adapter = get(route, 'store').adapterFor(modelName);
+  let url = adapter.buildURL(modelName)+ 'report/';
+  let m = get(route, 'messageService')
+  m.setWarning('downloading.started');
+  $('md-icon[title="CSV"]').parent('button').attr('disabled', 'disabled');
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Token ${token}`,
+    }
+  }).then((resp) => {
+    if (resp.status < 200 || resp.status > 299) {
+      throw resp;
+    }
+    let a = $("<a style='display: none;'/>");
+    let url = window.URL.createObjectURL(resp._bodyBlob);
+    let name = `${modelName}_${moment().format('DD/MM/YYYY_HH:mm')}.csv`;
+    a.attr("href", url);
+    a.attr("download", name);
+    $("body").append(a);
+    a[0].click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+    m.setSuccess('downloading.finished');
+  }).catch((err) => {
+    m.setError('reason.errors');
+    throw err;
+  }).finally(() => {
+    $('md-icon[title="CSV"]').parent('button').removeAttr('disabled');
+  });
+}
+
+const exportProf = {
+  label: 'exportCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return !(role === 'helpdeskadmin' || role === 'assistant' || role === 'institutionmanager' || role === 'ministry');
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'professor');
+  },
+};
+
+const exportPositions = {
+  label: 'exportCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return role === 'professor' || role === 'candidate'
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'position');
+  },
+};
+
+const exportRegistries = {
+  label: 'exportCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return role !== 'helpdeskadmin';
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'registry', 'registries');
+  },
+};
+
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
@@ -699,6 +770,9 @@ export { goToDetails, applyCandidacy,
   change_password,
   isHelpdesk,
   positionActions,
-  applicationActions
+  applicationActions,
+  exportProf,
+  exportPositions,
+  exportRegistries,
 };
 

@@ -1,11 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os
+import csv
 import logging
 from datetime import datetime, date, time
+from time import strftime, gmtime
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.serializers import ValidationError
 from rest_framework.exceptions import PermissionDenied
 
@@ -21,13 +25,13 @@ from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
     Professor as ProfessorModel, UserApplication
 from apella.loader import adapter
-from apella.common import FILE_KIND_TO_FIELD
+from apella.common import FILE_KIND_TO_FIELD, RANKS_EL, POSITION_STATES_EL
 from apella import auth_hooks
 from apella.serializers.position import link_files, \
     upgrade_candidate_to_professor
 from apella.emails import send_user_email, send_emails_file, \
     send_emails_members_change
-from apella.util import urljoin, safe_path_join
+from apella.util import urljoin, safe_path_join, otz, move_to_timezone
 from apella.serials import get_serial
 
 logger = logging.getLogger(__name__)
@@ -44,6 +48,156 @@ class DestroyProtectedObject(viewsets.ModelViewSet):
 
 
 class Professor(object):
+    @list_route()
+    def report(self, request, pk=None):
+        response = HttpResponse(content_type='text/csv')
+        filename = "professors_export_" + \
+            strftime("%Y_%m_%d", gmtime()) + ".csv"
+        response['Content-Disposition'] = 'attachment; filename=' + filename
+
+        writer = csv.writer(response)
+        user = request.user
+        if user.is_manager() or user.is_ministry():
+            report_type = '1'
+        elif user.is_helpdeskadmin():
+            report_type = '2'
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+        if report_type == '1':
+            fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο',
+                'Ίδρυμα', 'Σχολή', 'Τμήμα', 'Βαθμίδα', 'Γνωστικό Αντικείμενο',
+                'Κατηγορία Χρήστη']
+        elif report_type == '2':
+            fields = ['Κωδικός Χρήστη', 'Παλιός Κωδικός Χρήστη', 'Όνομα (el)',
+                'Επώνυμο (el)', 'Πατρώνυμο (el)', 'Όνομα (en)', 'Επώνυμο (en)',
+                'Πατρώνυμο (en)', 'Email', 'Κινητό Τηλέφωνο',
+                'Σταθερό Τηλέφωνο', 'Αρ. Ταυτότητας',
+                'Ημ/νία Δημιουργίας Λογαριασμού', 'login',
+                'Ενεργός', 'Ενεργοποιήθηκε στις', 'Ενεργοποίηση Email',
+                'Ενεργοποίηση Email στις',
+                'Κατάσταση Προφίλ',
+                'Ημ/νία Τελευταίας Αλλαγής Κατάστασης Προφίλ',
+                'Κατηγορία Χρήστη', 'Ίδρυμα', 'Κωδικός Ιδρύματος',
+                'Τμήμα', 'Κωδικός Τμήματος', 'Βαθμίδα',
+                'Υπάρχει URL Βιογραφικού', 'URL Βιογραφικού',
+                'Γνωστικό Αντικείμενο', 'Υπάρχει Γνωστικό Αντικείμενο στο ΦΕΚ',
+                'ΦΕΚ Διορισμού', 'Ομιλεί Ελληνικά',
+                'Έχει αποδεχτεί τους όρους συμμετοχής']
+
+        writer.writerow(fields)
+
+        queryset = self.get_queryset()
+        if report_type == '1':
+            queryset = queryset.filter(is_verified=True)
+
+        for p in queryset:
+            institution_id = '-'
+            try:
+                institution = p.institution.title.el.encode('utf-8')
+                institution_id = p.institution.id
+            except AttributeError:
+                institution = p.institution_freetext.encode('utf-8')
+
+            department_id = '-'
+            try:
+                department = p.department.title.el.encode('utf-8')
+                department_id = p.department.id
+            except AttributeError:
+                department = ''
+
+            try:
+                school = p.department.school.title.el.encode('utf-8')
+            except AttributeError:
+                school = ''
+
+            category = ''
+            if p.is_professor and not p.is_foreign:
+                category = 'Καθηγητής Ημεδαπής'
+            elif p.is_professor and p.is_foreign:
+                category = 'Καθηγητής Αλλοδαπής'
+            elif not p.is_professor and not p.is_foreign:
+                category = 'Ερευνητής Ημεδαπής'
+            else:
+                category = 'Ερευνητής Αλλοδαπής'
+
+            rank_el = ""
+            if p.rank:
+                rank_el = RANKS_EL.get(p.rank)
+
+            if report_type == '1':
+                row = [
+                    p.user.id,
+                    p.user.first_name.el.encode('utf-8'),
+                    p.user.last_name.el.encode('utf-8'),
+                    institution,
+                    school,
+                    department,
+                    rank_el,
+                    p.discipline_text.encode('utf-8'),
+                    category
+                ]
+            elif report_type == '2':
+                profile_state = ''
+                profile_last_changed_at = '-'
+                if p.is_verified:
+                    profile_state = 'Πιστοποιημένος'
+                    profile_last_changed_at = \
+                        move_to_timezone(p.verified_at, otz)
+                elif p.is_rejected:
+                    profile_state = 'Απορριφθείς'
+                elif p.verification_pending:
+                    profile_state = 'Αναμονή Πιστοποίησης'
+                    profile_last_changed_at = \
+                        move_to_timezone(p.verification_request, otz)
+                elif not p.verification_pending and not p.is_rejected \
+                        and not p.is_verified and p.changes_request:
+                    profile_state = 'Ζητήθηκαν αλλαγές'
+                    profile_last_changed_at = \
+                        move_to_timezone(p.changes_request, otz)
+
+                row = [
+                    p.user.id,
+                    p.user.old_user_id,
+                    p.user.first_name.el.encode('utf-8'),
+                    p.user.last_name.el.encode('utf-8'),
+                    p.user.father_name.el.encode('utf-8'),
+                    p.user.first_name.en.encode('utf-8'),
+                    p.user.last_name.en.encode('utf-8'),
+                    p.user.father_name.en.encode('utf-8'),
+                    p.user.email,
+                    p.user.mobile_phone_number,
+                    p.user.home_phone_number,
+                    p.user.id_passport.encode('utf-8'),
+                    move_to_timezone(p.user.date_joined, otz),
+                    p.user.login_method,
+                    p.user.is_active,
+                    move_to_timezone(p.user.activated_at, otz),
+                    p.user.email_verified,
+                    move_to_timezone(p.user.email_verified_at, otz),
+                    profile_state,
+                    profile_last_changed_at,
+                    'Καθηγητής Αλλοδαπής' \
+                        if p.is_foreign else 'Καθηγητής Ημεδαπής',
+                    institution,
+                    institution_id,
+                    department,
+                    department_id,
+                    rank_el,
+                    'ΝΑΙ' if p.cv_url else 'ΟΧΙ',
+                    p.cv_url,
+                    p.discipline_text.encode('utf-8'),
+                    'ΝΑΙ' if p.discipline_in_fek else 'ΟΧΙ',
+                    p.fek.encode('utf-8') if p.fek else '',
+                    'ΝΑΙ' if p.speaks_greek else 'ΟΧΙ',
+                    'ΝΑΙ' if p.user.has_accepted_terms else 'ΟΧΙ'
+                ]
+
+            writer.writerow(row)
+
+        return response
+
     def get_queryset(self):
         queryset = self.queryset
         leave_query = self.request.GET.get('on_leave')
@@ -121,6 +275,87 @@ class PositionHookMixin(HookMixin):
 
 
 class PositionMixin(object):
+    @list_route()
+    def report(self, request, pk=None):
+        response = HttpResponse(content_type='text/csv')
+        filename = "positions_export_" + \
+            strftime("%Y_%m_%d", gmtime()) + ".csv"
+        response['Content-Disposition'] = 'attachment; filename=' + filename
+
+        writer = csv.writer(response)
+        fields = ['Κωδικός Θέσης', 'Παλιός Κωδικός Θέσης',
+            'Τίτλος Θέσης', 'Ίδρυμα', 'Σχολή', 'Τμήμα', 'Βαθμίδα',
+            'Περιγραφή', 'Γνωστικό Αντικείμενο', 'Θεματική Περιοχή',
+            'Θέμα', 'Σχετιζόμενες Θέσεις', 'Φ.Ε.Κ.', 'Ημ/νία Φ.Ε.Κ.',
+            'Κατάσταση Θέσης', 'Ημ/νία Έναρξης Υποβολών',
+            'Ημ/νία Λήξης Υποβολών',
+            'Ημ/νία Σύγκλησης του Εκλεκτορικού Σώματος για τον ορισμό της Εισηγητικής Επιτροπής',
+            'Ημ/νία Σύγκλησης του Εκλεκτορικού Σώματος για Επιλογή',
+            'Εκλεγείς', 'Δεύτερος Καταλληλότερος Υποψήφιος',
+            'Φ.Ε.Κ. Διορισμού']
+
+        writer.writerow(fields)
+
+        queryset = self.get_queryset()
+        for p in queryset:
+            elected_full_name = ''
+            if p.elected:
+                elected_full_name = \
+                    p.elected.first_name.el.encode('utf-8') + ' ' + \
+                    p.elected.last_name.el.encode('utf-8')
+
+            second_best_full_name = ''
+            if p.second_best:
+                second_best_full_name = \
+                    p.second_best.first_name.el.encode('utf-8') + ' ' + \
+                    p.second_best.last_name.el.encode('utf-8')
+
+            rank_el = ""
+            if p.rank:
+                rank_el = RANKS_EL.get(p.rank)
+
+            if p.state == 'posted' and p.starts_at > datetime.utcnow():
+                p_state = 'Ενταγμένη'
+            elif p.state == 'posted' and p.ends_at < datetime.utcnow():
+                p_state = 'Κλειστή'
+            elif p.state == 'posted':
+                p_state = 'Ανοιχτή'
+            else:
+                p_state = POSITION_STATES_EL.get(p.state)
+
+            p_related = ""
+            if p.related_positions.count() > 0:
+                p_related = ','.join(str(rp.code) for rp in
+                        p.related_positions.all())
+
+            row = [
+                p.code,
+                p.old_code,
+                p.title.encode('utf-8'),
+                p.department.institution.title.el.encode('utf-8'),
+                p.department.school.title.el.encode('utf-8'),
+                p.department.title.el.encode('utf-8'),
+                rank_el,
+                p.description.encode('utf-8'),
+                p.discipline.encode('utf-8'),
+                p.subject_area.title.el.encode('utf-8'),
+                p.subject.title.el.encode('utf-8'),
+                p_related,
+                p.fek,
+                p.fek_posted_at,
+                p_state,
+                p.starts_at and move_to_timezone(p.starts_at, otz).date(),
+                p.ends_at and move_to_timezone(p.ends_at, otz).date(),
+                p.electors_meeting_to_set_committee_date,
+                p.electors_meeting_date,
+                elected_full_name,
+                second_best_full_name,
+                p.nomination_act_fek
+            ]
+
+            writer.writerow(row)
+
+        return response
 
     @detail_route()
     def history(self, request, pk=None):
@@ -256,6 +491,49 @@ class CandidacyList(object):
 
 
 class RegistriesList(viewsets.GenericViewSet):
+    @list_route()
+    def report(self, request, pk=None):
+        response = HttpResponse(content_type='text/csv')
+        filename = "registries_export_" + \
+            strftime("%Y_%m_%d", gmtime()) + ".csv"
+        response['Content-Disposition'] = 'attachment; filename=' + filename
+
+        writer = csv.writer(response)
+        user = request.user
+
+        fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο', 'Κατηγορία Χρήστη',
+            'Ίδρυμα Χρήστη', 'Τμήμα Χρήστη', 'Κωδικός Μητρώου',
+            'Ίδρυμα Μητρώου', 'Τμήμα Μητρώου', 'Είδος Μητρώου']
+        writer.writerow(fields)
+
+        queryset = self.get_queryset()
+        for r in queryset:
+            for p in r.members.all():
+                try:
+                    institution = p.institution.title.el.encode('utf-8')
+                except AttributeError:
+                    institution = p.institution_freetext.encode('utf-8')
+
+                try:
+                    department = p.department.title.el.encode('utf-8')
+                except AttributeError:
+                    department = ''
+
+                row = [
+                    p.user.id,
+                    p.user.first_name.el.encode('utf-8'),
+                    p.user.last_name.el.encode('utf-8'),
+                    'Αλλοδαπής' if p.is_foreign else 'Ημεδαπής',
+                    institution,
+                    department,
+                    r.id,
+                    r.department.institution.title.el.encode('utf-8'),
+                    r.department.title.el.encode('utf-8'),
+                    'Εσωτερικό' if r.type == 'internal' else 'Εξωτερικό'
+                ]
+                writer.writerow(row)
+
+        return response
 
     def get_queryset(self):
         queryset = self.queryset

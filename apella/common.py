@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from os.path import join
 import json
 import yaml
@@ -170,4 +172,23 @@ FILE_KIND_TO_FIELD = {
         "field": "leave_file",
         "many": False,
     },
+}
+
+RANKS_EL = {
+        "Professor": "Καθηγητής",
+        "Associate Professor": "Αναπληρωτής Καθηγητής",
+        "Assistant Professor": "Επίκουρος Καθηγητής",
+        "Lecturer": "Λέκτορας",
+        "Tenured Assistant Professor": "Επί θητεία Επίκουρος Καθηγητής",
+        "Research Director": "Διευθυντής Ερευνών",
+        "Principal Researcher": "Κύριος Ερευνητής",
+        "Affiliated Researcher": "Εντεταλμένος Ερευνητής"
+}
+
+POSITION_STATES_EL = {
+        "posted": "Ενταγμένη",
+        "electing": "Επιλογή",
+        "successful": "Στελεχωμένη",
+        "cancelled": "Ακυρωθείσα",
+        "revoked": "Αναπομπή"
 }
