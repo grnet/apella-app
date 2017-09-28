@@ -709,7 +709,7 @@ function exportCSV(route, model, modelName) {
 }
 
 const exportProf = {
-  label: 'exportCSV',
+  label: 'exportProfCSV',
   icon: 'file_download',
   hidden: computed('role', function(){
     let role = get(this, 'role');
@@ -721,7 +721,7 @@ const exportProf = {
 };
 
 const exportPositions = {
-  label: 'exportCSV',
+  label: 'exportPositionsCSV',
   icon: 'file_download',
   hidden: computed('role', function(){
     let role = get(this, 'role');
@@ -733,7 +733,7 @@ const exportPositions = {
 };
 
 const exportRegistries = {
-  label: 'exportCSV',
+  label: 'exportRegistriesCSV',
   icon: 'file_download',
   hidden: computed('role', function(){
     let role = get(this, 'role');
