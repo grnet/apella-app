@@ -30,7 +30,7 @@ from apella import auth_hooks
 from apella.serializers.position import link_files, \
     upgrade_candidate_to_professor
 from apella.emails import send_user_email, send_emails_file, \
-    send_emails_members_change
+    send_emails_members_change, send_disable_professor_emails
 from apella.util import urljoin, safe_path_join, otz, move_to_timezone
 from apella.serials import get_serial
 
@@ -228,6 +228,7 @@ class Professor(object):
             (request.user.username,
             'disabled' if is_disabled else 'enabled',
             professor.id))
+        send_disable_professor_emails(professor, is_disabled)
 
     @detail_route(methods=['post'])
     def disable_professor(self, request, pk=None):

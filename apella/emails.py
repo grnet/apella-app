@@ -615,3 +615,32 @@ def send_create_application_emails(user_application):
         'apella/emails/user_application_create_to_professor_subject.txt',
         'apella/emails/user_application_create_to_professor_body.txt',
         {'app': user_application})
+
+def send_disable_professor_emails(professor, is_disabled):
+    send_user_email(
+            professor.user,
+            'apella/emails/professor_{}_subject.txt'. \
+                format('disabled' if is_disabled else 'enabled'),
+            'apella/emails/professor_{}_body.txt'. \
+                format('disabled' if is_disabled else 'enabled')
+        )
+    registries_institutions = professor.registry_set.values_list(
+        'department__institution')
+    registries_departments = professor.registry_set.values_list(
+        'department')
+    managers = InstitutionManager.objects.filter(
+        manager_role='institutionmanager',
+        institution__in=registries_institutions)
+    assistants = InstitutionManager.objects.filter(
+        manager_role='assistant',
+        departments__in=registries_departments,
+        is_secretary=True)
+    recipients = chain(managers, assistants)
+    for r in recipients:
+        send_user_email(
+            r.user,
+            'apella/emails/professor_{}_subject.txt'. \
+                format('disabled' if is_disabled else 'enabled'),
+            'apella/emails/professor_{}_body.txt'. \
+                format('disabled' if is_disabled else 'enabled')
+        )
