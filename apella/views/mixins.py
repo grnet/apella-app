@@ -616,6 +616,7 @@ class UserApplicationMixin(object):
             else:
                 queryset = queryset.filter(Q(user=user) | Q(id__in=ua_ids))
 
+        queryset = queryset.order_by('-id')
         return queryset
 
 
