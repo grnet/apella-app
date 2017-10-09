@@ -111,8 +111,10 @@ export default Ember.Component.extend(BaseFieldMixin, {
       if (file instanceof DS.PromiseObject) {
         file = file.content;
       }
+
+      let newWindow = window.open("");
       file && file.download().then((url) => {
-        window.open(url);
+        newWindow.location = url;
       });
       return false;
     },
