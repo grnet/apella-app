@@ -692,7 +692,7 @@ function exportCSV(route, model, modelName) {
     }
     let a = $("<a style='display: none;'/>");
     let url = window.URL.createObjectURL(resp._bodyBlob);
-    let name = `${modelName}_${moment().format('DD/MM/YYYY_HH:mm')}.csv`;
+    let name = `${modelName}_${moment().format('DD/MM/YYYY_HH:mm')}.xlsx`;
     a.attr("href", url);
     a.attr("download", name);
     $("body").append(a);
@@ -704,7 +704,7 @@ function exportCSV(route, model, modelName) {
     m.setError('reason.errors');
     throw err;
   }).finally(() => {
-    $('md-icon[title="CSV"]').parent('button').removeAttr('disabled');
+    $('md-icon[title="Export"]').parent('button').removeAttr('disabled');
   });
 }
 

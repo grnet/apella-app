@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
-import csv
 import logging
+import xlsxwriter
 from datetime import datetime, date, time
 from time import strftime, gmtime
 
@@ -31,7 +31,8 @@ from apella.serializers.position import link_files, \
     upgrade_candidate_to_professor
 from apella.emails import send_user_email, send_emails_file, \
     send_emails_members_change, send_disable_professor_emails
-from apella.util import urljoin, safe_path_join, otz, move_to_timezone
+from apella.util import urljoin, safe_path_join, otz, move_to_timezone, \
+    write_row
 from apella.serials import get_serial
 
 logger = logging.getLogger(__name__)
@@ -50,12 +51,15 @@ class DestroyProtectedObject(viewsets.ModelViewSet):
 class Professor(object):
     @list_route()
     def report(self, request, pk=None):
-        response = HttpResponse(content_type='text/csv')
+        response = HttpResponse(content_type='application/ms-excel')
         filename = "professors_export_" + \
-            strftime("%Y_%m_%d", gmtime()) + ".csv"
+            strftime("%Y_%m_%d", gmtime()) + ".xlsx"
         response['Content-Disposition'] = 'attachment; filename=' + filename
 
-        writer = csv.writer(response)
+        wb = xlsxwriter.Workbook(
+            response, {'in_memory': True})
+        ws = wb.add_worksheet('Professors')
+
         user = request.user
         if user.is_manager() or user.is_ministry():
             report_type = '1'
@@ -86,29 +90,33 @@ class Professor(object):
                 'ΦΕΚ Διορισμού', 'Ομιλεί Ελληνικά',
                 'Έχει αποδεχτεί τους όρους συμμετοχής']
 
-        writer.writerow(fields)
+        k = 0
+        for field in fields:
+            ws.write(0, k, field.decode('utf-8'))
+            k += 1
 
         queryset = self.get_queryset()
         if report_type == '1':
             queryset = queryset.filter(is_verified=True)
 
+        i = 1
         for p in queryset:
             institution_id = '-'
             try:
-                institution = p.institution.title.el.encode('utf-8')
+                institution = p.institution.title.el
                 institution_id = p.institution.id
             except AttributeError:
-                institution = p.institution_freetext.encode('utf-8')
+                institution = p.institution_freetext
 
             department_id = '-'
             try:
-                department = p.department.title.el.encode('utf-8')
+                department = p.department.title.el
                 department_id = p.department.id
             except AttributeError:
                 department = ''
 
             try:
-                school = p.department.school.title.el.encode('utf-8')
+                school = p.department.school.title.el
             except AttributeError:
                 school = ''
 
@@ -129,14 +137,14 @@ class Professor(object):
             if report_type == '1':
                 row = [
                     p.user.id,
-                    p.user.first_name.el.encode('utf-8'),
-                    p.user.last_name.el.encode('utf-8'),
+                    p.user.first_name.el,
+                    p.user.last_name.el,
                     institution,
                     school,
                     department,
-                    rank_el,
-                    p.discipline_text.encode('utf-8'),
-                    category
+                    rank_el.decode('utf-8'),
+                    p.discipline_text,
+                    category.decode('utf-8')
                 ]
             elif report_type == '2':
                 profile_state = ''
@@ -160,42 +168,49 @@ class Professor(object):
                 row = [
                     p.user.id,
                     p.user.old_user_id,
-                    p.user.first_name.el.encode('utf-8'),
-                    p.user.last_name.el.encode('utf-8'),
-                    p.user.father_name.el.encode('utf-8'),
-                    p.user.first_name.en.encode('utf-8'),
-                    p.user.last_name.en.encode('utf-8'),
-                    p.user.father_name.en.encode('utf-8'),
+                    p.user.first_name.el,
+                    p.user.last_name.el,
+                    p.user.father_name.el,
+                    p.user.first_name.en,
+                    p.user.last_name.en,
+                    p.user.father_name.en,
                     p.user.email,
                     p.user.mobile_phone_number,
                     p.user.home_phone_number,
-                    p.user.id_passport.encode('utf-8'),
-                    move_to_timezone(p.user.date_joined, otz),
+                    p.user.id_passport,
+                    str(move_to_timezone(p.user.date_joined, otz)),
                     p.user.login_method,
                     p.user.is_active,
-                    move_to_timezone(p.user.activated_at, otz),
+                    str(move_to_timezone(p.user.activated_at, otz)),
                     p.user.email_verified,
-                    move_to_timezone(p.user.email_verified_at, otz),
-                    profile_state,
-                    profile_last_changed_at,
-                    'Καθηγητής Αλλοδαπής' \
-                        if p.is_foreign else 'Καθηγητής Ημεδαπής',
+                    str(move_to_timezone(p.user.email_verified_at, otz)),
+                    profile_state.decode('utf-8'),
+                    str(profile_last_changed_at),
+                    'Καθηγητής Αλλοδαπής'.decode('utf-8') \
+                        if p.is_foreign \
+                        else 'Καθηγητής Ημεδαπής'.decode('utf-8'),
                     institution,
                     institution_id,
                     department,
                     department_id,
-                    rank_el,
-                    'ΝΑΙ' if p.cv_url else 'ΟΧΙ',
+                    rank_el.decode('utf-8'),
+                    'ΝΑΙ'.decode('utf-8') \
+                        if p.cv_url else 'ΟΧΙ'.decode('utf-8'),
                     p.cv_url,
-                    p.discipline_text.encode('utf-8'),
-                    'ΝΑΙ' if p.discipline_in_fek else 'ΟΧΙ',
-                    p.fek.encode('utf-8') if p.fek else '',
-                    'ΝΑΙ' if p.speaks_greek else 'ΟΧΙ',
-                    'ΝΑΙ' if p.user.has_accepted_terms else 'ΟΧΙ'
+                    p.discipline_text,
+                    'ΝΑΙ'.decode('utf-8') \
+                        if p.discipline_in_fek else 'ΟΧΙ'.decode('utf-8'),
+                    p.fek,
+                    'ΝΑΙ'.decode('utf-8') \
+                        if p.speaks_greek else 'ΟΧΙ'.decode('utf-8'),
+                    'ΝΑΙ'.decode('utf-8') \
+                        if p.user.has_accepted_terms \
+                        else 'ΟΧΙ'.decode('utf-8')
                 ]
+            write_row(ws, row, i)
+            i += 1
 
-            writer.writerow(row)
-
+        wb.close()
         return response
 
     def get_queryset(self):
@@ -311,12 +326,15 @@ class PositionHookMixin(HookMixin):
 class PositionMixin(object):
     @list_route()
     def report(self, request, pk=None):
-        response = HttpResponse(content_type='text/csv')
+        response = HttpResponse(content_type='application/ms-excel')
         filename = "positions_export_" + \
-            strftime("%Y_%m_%d", gmtime()) + ".csv"
+            strftime("%Y_%m_%d", gmtime()) + ".xlsx"
         response['Content-Disposition'] = 'attachment; filename=' + filename
 
-        writer = csv.writer(response)
+        wb = xlsxwriter.Workbook(
+            response, {'in_memory': True})
+        ws = wb.add_worksheet('Positions')
+
         fields = ['Κωδικός Θέσης', 'Παλιός Κωδικός Θέσης',
             'Τίτλος Θέσης', 'Ίδρυμα', 'Σχολή', 'Τμήμα', 'Βαθμίδα',
             'Περιγραφή', 'Γνωστικό Αντικείμενο', 'Θεματική Περιοχή',
@@ -328,21 +346,25 @@ class PositionMixin(object):
             'Εκλεγείς', 'Δεύτερος Καταλληλότερος Υποψήφιος',
             'Φ.Ε.Κ. Διορισμού']
 
-        writer.writerow(fields)
+        k = 0
+        for field in fields:
+            ws.write(0, k, field.decode('utf-8'))
+            k += 1
 
+        i = 1
         queryset = self.get_queryset()
         for p in queryset:
             elected_full_name = ''
             if p.elected:
                 elected_full_name = \
-                    p.elected.first_name.el.encode('utf-8') + ' ' + \
-                    p.elected.last_name.el.encode('utf-8')
+                    p.elected.first_name.el + ' ' + \
+                    p.elected.last_name.el
 
             second_best_full_name = ''
             if p.second_best:
                 second_best_full_name = \
-                    p.second_best.first_name.el.encode('utf-8') + ' ' + \
-                    p.second_best.last_name.el.encode('utf-8')
+                    p.second_best.first_name.el + ' ' + \
+                    p.second_best.last_name.el
 
             rank_el = ""
             if p.rank:
@@ -367,30 +389,31 @@ class PositionMixin(object):
             row = [
                 p.code,
                 p.old_code,
-                p.title.encode('utf-8'),
-                p.department.institution.title.el.encode('utf-8'),
-                p.department.school.title.el.encode('utf-8'),
-                p.department.title.el.encode('utf-8'),
-                rank_el,
-                p.description.encode('utf-8'),
-                p.discipline.encode('utf-8'),
-                p.subject_area.title.el.encode('utf-8'),
-                p.subject.title.el.encode('utf-8'),
+                p.title,
+                p.department.institution.title.el,
+                p.department.school.title.el,
+                p.department.title.el,
+                rank_el.decode('utf-8'),
+                p.description,
+                p.discipline,
+                p.subject_area.title.el,
+                p.subject.title.el,
                 p_related,
                 p.fek,
                 p.fek_posted_at,
-                p_state,
-                p.starts_at and move_to_timezone(p.starts_at, otz).date(),
-                p.ends_at and move_to_timezone(p.ends_at, otz).date(),
+                p_state and p_state.decode('utf-8'),
+                p.starts_at and str(move_to_timezone(p.starts_at, otz).date()),
+                p.ends_at and str(move_to_timezone(p.ends_at, otz).date()),
                 p.electors_meeting_to_set_committee_date,
                 p.electors_meeting_date,
                 elected_full_name,
                 second_best_full_name,
                 p.nomination_act_fek
             ]
+            write_row(ws, row, i)
+            i += 1
 
-            writer.writerow(row)
-
+        wb.close()
         return response
 
     @detail_route()
@@ -529,46 +552,57 @@ class CandidacyList(object):
 class RegistriesList(viewsets.GenericViewSet):
     @list_route()
     def report(self, request, pk=None):
-        response = HttpResponse(content_type='text/csv')
+        response = HttpResponse(content_type='application/ms-excel')
         filename = "registries_export_" + \
-            strftime("%Y_%m_%d", gmtime()) + ".csv"
+            strftime("%Y_%m_%d", gmtime()) + ".xlsx"
         response['Content-Disposition'] = 'attachment; filename=' + filename
 
-        writer = csv.writer(response)
-        user = request.user
+        wb = xlsxwriter.Workbook(
+            response, {'in_memory': True})
+        ws = wb.add_worksheet('Registries')
 
         fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο', 'Κατηγορία Χρήστη',
             'Ίδρυμα Χρήστη', 'Τμήμα Χρήστη', 'Κωδικός Μητρώου',
             'Ίδρυμα Μητρώου', 'Τμήμα Μητρώου', 'Είδος Μητρώου']
-        writer.writerow(fields)
 
+        k = 0
+        for field in fields:
+            ws.write(0, k, field.decode('utf-8'))
+            k += 1
+
+        i = 1
         queryset = self.get_queryset()
         for r in queryset:
             for p in r.members.all():
                 try:
-                    institution = p.institution.title.el.encode('utf-8')
+                    institution = p.institution.title.el
                 except AttributeError:
-                    institution = p.institution_freetext.encode('utf-8')
+                    institution = p.institution_freetext
 
                 try:
-                    department = p.department.title.el.encode('utf-8')
+                    department = p.department.title.el
                 except AttributeError:
                     department = ''
 
                 row = [
                     p.user.id,
-                    p.user.first_name.el.encode('utf-8'),
-                    p.user.last_name.el.encode('utf-8'),
-                    'Αλλοδαπής' if p.is_foreign else 'Ημεδαπής',
+                    p.user.first_name.el,
+                    p.user.last_name.el,
+                    'Αλλοδαπής'.decode('utf-8') \
+                        if p.is_foreign else 'Ημεδαπής'.decode('utf-8'),
                     institution,
                     department,
                     r.id,
-                    r.department.institution.title.el.encode('utf-8'),
-                    r.department.title.el.encode('utf-8'),
-                    'Εσωτερικό' if r.type == 'internal' else 'Εξωτερικό'
+                    r.department.institution.title.el,
+                    r.department.title.el,
+                    'Εσωτερικό'.decode('utf-8') \
+                        if r.type == 'internal' \
+                        else 'Εξωτερικό'.decode('utf-8')
                 ]
-                writer.writerow(row)
+                write_row(ws, row, i)
+                i += 1
 
+        wb.close()
         return response
 
     def get_queryset(self):
