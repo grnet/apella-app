@@ -680,7 +680,7 @@ function exportCSV(route, model, modelName) {
   let url = adapter.buildURL(modelName)+ 'report/';
   let m = get(route, 'messageService')
   m.setWarning('downloading.started');
-  $('md-icon[title="CSV"]').parent('button').attr('disabled', 'disabled');
+  $('md-icon[aria-label="file_download"]').parent('button').attr('disabled', 'disabled');
   return fetch(url, {
     method: 'GET',
     headers: {
@@ -704,7 +704,7 @@ function exportCSV(route, model, modelName) {
     m.setError('reason.errors');
     throw err;
   }).finally(() => {
-    $('md-icon[title="Export"]').parent('button').removeAttr('disabled');
+    $('md-icon[aria-label="file_download"]').parent('button').removeAttr('disabled');
   });
 }
 
