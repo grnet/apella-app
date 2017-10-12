@@ -46,7 +46,7 @@ export default DS.Model.extend({
       if (resp.status < 200 || resp.status > 299) {
         throw resp;
       }
-      let url = resp.headers.map['x-file-location'];
+      let url = resp.headers.get('x-file-location');
       return url;
     }).catch((err) => {
       // TODO: resolve error message
