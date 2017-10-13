@@ -423,6 +423,7 @@ export default {
   'position_type.Renewal': 'Ανανέωση θητείας',
   'position_type.Tenure': 'Θέση μονιμοποίησης',
   'proceedings_cover_letter.label': 'Διαβιβαστικό πρακτικού επιλογής προς τον Πρύτανη',
+  'professor.is_disabled.prompt': 'Η συμμετοχή σας στο μητρώο ΑΠΕΛΛΑ έχει ανασταλεί. Δεν είναι δυνατή η συμμετοχή σας σε νέα μητρώα ή νέα εκλεκτορικά.',
   'professor.menu_label': 'Καθηγητές',
   'professor.menu_label_alt': 'Γενικό Μητρώο',
   'professor_department_id.label': 'ID τμήματος',
