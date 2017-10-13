@@ -172,8 +172,12 @@ export default ApellaGen.extend({
           ];
           let role = get(this, 'role');
           if (!role.startsWith('helpdesk')) {
+            // only helpdesk can edit professors
             res.splice(1,1);
+            // only helpdesk can disable/enable professors
+            res.splice(5,2);
           }
+          console.log(res, 'afeter');
           return res;
         }),
         actionsMap: {
