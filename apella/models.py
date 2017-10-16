@@ -508,6 +508,7 @@ class Professor(UserProfile, CandidateProfile):
         related_name = 'professor_leave_file', on_delete=models.SET_NULL)
     is_disabled = models.BooleanField(default=False)
     disabled_at = models.DateTimeField(blank=True, null=True)
+    disabled_by_helpdesk = models.BooleanField(default=False)
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id

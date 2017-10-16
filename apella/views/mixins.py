@@ -237,6 +237,7 @@ class Professor(object):
         professor.is_disabled = is_disabled
         if is_disabled:
             professor.disabled_at = datetime.utcnow()
+            professor.disabled_by_helpdesk = request.user.is_helpdesk()
         professor.save()
         logger.info(
             'user %s %s professor %r' %

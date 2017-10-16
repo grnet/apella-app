@@ -1041,6 +1041,11 @@ spec:
                     .drf_field: {}
                     .nullable: {}
                     .datetime: {}
+                disabled_by_helpdesk:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .boolean: {}
             .actions:
                 .list: {}
                 .create: {}
