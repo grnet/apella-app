@@ -44,3 +44,6 @@
     Warn institution managers when adding a professor on leave to electoral
     committees.
 
+0.2.11
+=====
+* Fix Safari download files problem
