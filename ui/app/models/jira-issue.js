@@ -35,7 +35,7 @@ export default DS.Model.extend({
   description: DS.attr({type:'text'}),
   state: DS.attr({type: 'select', choices: states, defaultValue: 'open'}),
   state_verbose: computeI18NChoice('state', states),
-  issue_type: DS.attr({type: 'select', choices: issue_types, defaultValue: 'complaint'}),
+  issue_type: DS.attr({type: 'select', choices: issue_types, defaultValue: 'general_information'}),
   issue_type_verbose: computeI18NChoice('issue_type', issue_types),
   resolution: DS.attr({type: 'select', choices: resolutions}),
   resolution_verbose: computeI18NChoice('resolution', resolutions),
@@ -44,7 +44,7 @@ export default DS.Model.extend({
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
   issue_key: DS.attr(),
-  issue_call: DS.attr({type: 'select', choices: issue_calls, defaultValue: 'outgoing'}),
+  issue_call: DS.attr({type: 'select', choices: issue_calls, defaultValue: 'incoming'}),
   issue_call_verbose: computeI18NChoice('issue_call', issue_calls),
   helpdesk_response: DS.attr({type:'text'}),
 

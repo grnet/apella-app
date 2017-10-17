@@ -246,7 +246,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
             i18nField('department.title', {label: 'department.label'}),
             field('institution_global', {label: 'institution.label'}),
             'is_foreign_descr',
-            'on_leave_verbose',
+            'leave_verbose',
           ];
           if (!restricted) {
             res.push(field('email', {label: 'email.label'}))
@@ -263,7 +263,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
             i18nField('department.title', {label: 'department.label'}),
             field('institution_global', {label: 'institution.label'}),
             'is_foreign_descr',
-            'on_leave_verbose',
+            'leave_verbose',
           ];
           if (!restricted) {
             res.push(field('email', {label: 'email.label'}))

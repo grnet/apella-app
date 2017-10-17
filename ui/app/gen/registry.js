@@ -24,7 +24,7 @@ let fields_members_table = [
     field('institution_global', {label: 'institution.label'}),
     i18nField('department.title', {label: 'department.label'}),
     'discipline_text',
-    'on_leave_verbose',
+    'leave_verbose',
 ];
 
 // serverSide is a boolean value that is used for filtering, sorting, searching

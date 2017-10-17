@@ -62,7 +62,7 @@ export default Ember.Mixin.create({
   leave_file: DS.belongsTo('apella-file'),
    //leave is upcoming if
    //- the professor is domestic
-   //- there is and leave_ends_at date
+   //- there is an leave_ends_at date
    //- leave_ends_at date has not passed
   leave_upcoming: computed('is_foreign', 'leave_ends_at', function() {
     let is_domestic = !get(this, 'is_foreign');
@@ -77,9 +77,16 @@ export default Ember.Mixin.create({
     return leave_upcoming && start.isBefore();
   }),
   on_leave_verbose: booleanFormat('on_leave'),
-
   is_disabled: DS.attr({type: 'boolean', displayComponent: 'boolean-display'}),
 
-
+  leave_verbose: computed('on_leave', 'leave_upcoming', 'i18n.locale', function() {
+    if (get(this, 'on_leave')) {
+      return get(this, 'i18n').t('leave.current');
+    } else if (get(this, 'leave_upcoming')) {
+      return get(this, 'i18n').t('leave.upcoming');
+    } else {
+      return '-'
+    }
+  })
 
 });

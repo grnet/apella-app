@@ -90,8 +90,8 @@ function peak_fs_professors() {
   }
   else {
     let res =  head.concat(fs_prof_domestic);
-    let on_leave = get(this, 'model.on_leave');
-    if (on_leave) {
+    let leave = get(this, 'model.leave_upcoming');
+    if (leave) {
       res = res.concat(fs_prof_leave);
     }
     return res;
