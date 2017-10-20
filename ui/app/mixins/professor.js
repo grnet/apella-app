@@ -78,6 +78,18 @@ export default Ember.Mixin.create({
   }),
   on_leave_verbose: booleanFormat('on_leave'),
   is_disabled: DS.attr({type: 'boolean', displayComponent: 'boolean-display'}),
+  disabled_at: DS.attr('date'),
+  disabled_at_format: computeDateFormat('disabled_at'),
+  disabled_by_helpdesk: DS.attr({type: 'boolean'}),
+  disabled_by: computed('is_disabled', 'disabled_by_helpdesk', 'i18n.locale', function() {
+    let is_disabled = get(this, 'is_disabled'),
+      disabled_by_helpdesk = get(this, 'disabled_by_helpdesk'),
+      disabled_by = '-';
+    if(is_disabled) {
+      disabled_by =  (disabled_by_helpdesk ? 'helpdesk' : 'user');
+    }
+    return get(this, 'i18n').t(disabled_by);
+  }),
 
   leave_verbose: computed('on_leave', 'leave_upcoming', 'i18n.locale', function() {
     if (get(this, 'on_leave')) {

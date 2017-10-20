@@ -197,12 +197,15 @@ export default ApellaGen.extend({
     fieldsets: computed('role', 'model.leave_upcoming',  function(){
       let role = get(this, 'role');
       let leave = get(this, 'model.leave_upcoming');
-
+      let is_disabled = get(this, 'model.is_disabled');
       let f = [
         USER.FIELDSET_DETAILS_VERIFIABLE,
         PROFESSOR.FIELDSET,
-      ]
+      ];
       if (role === 'helpdeskadmin' || role === 'helpdeskuser' || role === 'ministry') {
+        if(is_disabled) {
+          f.unshift(PROFESSOR.DISABLED_ACCOUNT_DETAILS);
+        }
         f.push(PROFESSOR.FILES_FIELDSET);
       }
 
