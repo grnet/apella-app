@@ -359,6 +359,8 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
             return []
           }
           else
+            params = params || {};
+            params.is_disabled = false;
             return get_registry_members(registry, store, params);
           });
       };
