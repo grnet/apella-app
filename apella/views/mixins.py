@@ -620,7 +620,6 @@ class RegistriesList(viewsets.GenericViewSet):
         registry = self.get_object()
         query_params = self.request.query_params
         members = registry.members
-        members = members.filter(is_disabled=False)
         if 'user_id' in query_params:
             try:
                 user_id = int(query_params['user_id'])
