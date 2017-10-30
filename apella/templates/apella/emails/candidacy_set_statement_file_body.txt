@@ -2,7 +2,7 @@
 
 {% block content_el %}
 
-Σας ενημερώνουμε ότι ο υποψήφιος {{ candidate.first_name.el }} {{candidate.last_name.el }} έχει αναρτήσει ένα υπόμνημα στην υποψηφιότητά του για την παρακάτω θέση:
+Σας ενημερώνουμε ότι ο/η υποψήφιος/-α {{ candidate.first_name.el }} {{candidate.last_name.el }} έχει αναρτήσει ένα υπόμνημα στην υποψηφιότητά του για την παρακάτω θέση:
 
 {% include "apella/emails/position_details_el.txt" %}
 
