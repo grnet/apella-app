@@ -1,0 +1,28 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι έχει ανασταλεί η συμμετοχή του/της καθηγητή/-τριας {{ professor.user.first_name.el }} {{ professor.user.last_name.el }} (id: {{ professor.user.id }}) στο γενικό μητρώο ΑΠΕΛΛΑ. O/Η καθηγητής /-τρια εξακολουθεί να έχει πρόσβαση στο λογαριασμό του/της, διατηρώντας τη δυνατότητα συμμετοχής σε όσες ενεργές διαδικασίες εκλογής συμμετέχει ήδη, ενώ δεν είναι πλέον δυνατή η προσθήκη του/της σε νέο μητρώο, εκλεκτορικό σώμα ή εισηγητική επιτροπή.
+
+Σας υπενθυμίζουμε ότι ο/η καθηγητής/-τρια συμμετέχει στα παρακάτω μητρώα του Ιδρύματός σας:
+
+{% for reg in registries %}
+{{reg.department.title.el}} - {% if reg.type == 'internal' %} Εσωτερικό {% else %} Εξωτερικό {% endif %}
+{% endfor %}
+
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We inform you that the participation of professor {{ professor.user.first_name.en }} {{ professor.user.last_name.en }} (id: {{ professor.user.id }}) in the Apella registry has been suspended.
+
+The professor still has access to his/her account, retaining the right to participate in the active election procedures in which he/she is already involved, while it is no longer possible to add him/her to a new registry, electing committee or evaluating committee.
+
+We remind you that the professor participates in the following registries of your Institution:
+
+{% for reg in registries %}
+{{reg.department.title.en}} - {{ reg.type }}
+{% endfor %}
+
+{% endblock content_en %}

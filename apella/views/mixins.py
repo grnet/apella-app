@@ -244,7 +244,8 @@ class Professor(object):
             (request.user.username,
             'disabled' if is_disabled else 'enabled',
             professor.id))
-        send_disable_professor_emails(professor, is_disabled)
+        if is_disabled:
+            send_disable_professor_emails(professor, is_disabled)
 
     @detail_route(methods=['post'])
     def disable_professor(self, request, pk=None):
