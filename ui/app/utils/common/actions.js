@@ -86,7 +86,18 @@ const applyCandidacy = {
   action(route, model){
     let id = get(model, 'id');
     route.transitionTo('candidacy.create', { queryParams: { position: id }});
+  },
+  confirm: computed('model.position_type', function(){
+     let is_not_election = get(this, 'model.position_type') !== 'election';
+     return is_not_election;
+  }),
+  prompt: {
+    ok: 'ok',
+    cancel: 'cancel',
+    message: 'prompt.applyNotElection.message',
+    title: 'prompt.applyNotElection.title',
   }
+
 };
 
 const cancelPosition = {
@@ -671,8 +682,201 @@ const applyApplicationCandidacy = {
   action(route, model){
     let id = get(model, 'position_id');
     route.transitionTo('candidacy.create', { queryParams: { position: id }});
+  },
+  confirm: computed('model.position_type', function(){
+     let is_not_election = get(this, 'model.position_type') !== 'election';
+     return is_not_election;
+  }),
+  prompt: {
+    ok: 'ok',
+    cancel: 'cancel',
+    message: 'prompt.applyNotElection.message',
+    title: 'prompt.applyNotElection.title',
   }
 };
+
+function exportCSV(route, model, modelName) {
+  let token = get(route, 'user.auth_token');
+  let adapter = get(route, 'store').adapterFor(modelName);
+  let url = adapter.buildURL(modelName)+ 'report/';
+  let m = get(route, 'messageService')
+  m.setWarning('downloading.started');
+  $('md-icon[aria-label="file_download"]').parent('button').attr('disabled', 'disabled');
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Token ${token}`,
+    }
+  }).then((resp) => {
+    if (resp.status < 200 || resp.status > 299) {
+      throw resp;
+    }
+    let a = $("<a style='display: none;'/>");
+    let url = window.URL.createObjectURL(resp._bodyBlob);
+    let name = `${modelName}_${moment().format('DD/MM/YYYY_HH:mm')}.xlsx`;
+    a.attr("href", url);
+    a.attr("download", name);
+    $("body").append(a);
+    a[0].click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+    m.setSuccess('downloading.finished');
+  }).catch((err) => {
+    m.setError('reason.errors');
+    throw err;
+  }).finally(() => {
+    $('md-icon[aria-label="file_download"]').parent('button').removeAttr('disabled');
+  });
+}
+
+const exportProf = {
+  label: 'exportProfCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return !(role === 'helpdeskadmin' || role === 'assistant' || role === 'institutionmanager' || role === 'ministry');
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'professor');
+  },
+};
+
+const exportPositions = {
+  label: 'exportPositionsCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return role === 'professor' || role === 'candidate'
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'position');
+  },
+};
+
+const exportRegistries = {
+  label: 'exportRegistriesCSV',
+  icon: 'file_download',
+  hidden: computed('role', function(){
+    let role = get(this, 'role');
+    return role !== 'helpdeskadmin';
+  }),
+  action: function(route, model) {
+    return exportCSV(route, model, 'registry', 'registries');
+  },
+};
+
+
+const disableProfessor = {
+  label: computed('role', function() {
+    return isHelpdesk(get(this, 'role'))? 'disable.professor': 'disable.professor.self';
+  }),
+  icon: 'person',
+  accent: true,
+  action: function(route, model) {
+    let token = get(route, 'user.auth_token');
+    let adapter = get(route, 'store').adapterFor('professor');
+    let messages = get(route, 'messageService');
+    let url = adapter.buildURL('professor', get(model, 'id'), 'findRecord');
+    return fetch(url + 'disable_professor/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('disable.professor.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('disable.professor.error');
+    });
+  },
+  confirm: true,
+  prompt: computed('role', function() {
+    let m = isHelpdesk(get(this, 'role'))? 'disable.professor.message': 'disable.professor.message.self';
+    return {
+      ok: 'submit',
+      cancel: 'cancel',
+      message: m,
+      title: 'disable.professor.title',
+    };
+  }),
+  hidden: computed('model.is_disabled', 'role', 'model.is_foreign', 'model.insitution.category', function() {
+    /*
+    Disable Professor action is visible if the professor is enabled and
+    the logged in user is
+    - helpdeskadmin or helpdeskuser
+    - foreign professor/researcher
+    - domestic professor who belongs to a research center
+    */
+
+    let helpdesk = isHelpdesk(get(this, 'role'));
+    let foreign = get(this, 'model.is_foreign');
+    let researcher = get(this, 'model.institution.category') === 'Research';
+
+    if (get(this, 'model.is_disabled')) { return true; }
+    return !(helpdesk || foreign || researcher);
+  }),
+};
+
+const enableProfessor = {
+  label: computed('role', function() {
+    return isHelpdesk(get(this, 'role'))? 'enable.professor': 'enable.professor.self';
+  }),
+  icon: 'person',
+  classNames: 'md-icon-success',
+  action: function(route, model) {
+    let token = get(route, 'user.auth_token');
+    let adapter = get(route, 'store').adapterFor('professor');
+    let messages = get(route, 'messageService');
+    let url = adapter.buildURL('professor', get(model, 'id'), 'findRecord');
+    return fetch(url + 'enable_professor/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('enable.professor.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('enable.professor.error');
+    });
+  },
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'enable.professor.message',
+    title: 'enable.professor.title',
+  },
+  hidden: computed('model.is_disabled', 'role', 'model.is_foreign', 'model.insitution.category', function() {
+    /*
+    Enable Professor action is visible if the professor is disabled and
+    the logged in user is
+    - helpdeskadmin or helpdeskuser
+    - foreign professor/researcher
+    - domestic professor who belongs to a research center
+    */
+
+    let helpdesk = isHelpdesk(get(this, 'role'));
+    let foreign = get(this, 'model.is_foreign');
+    let researcher = get(this, 'model.institution.category') === 'Research';
+
+    return !(get(this, 'model.is_disabled') && (helpdesk || foreign || researcher));
+  }),
+};
+
+
 
 let positionActions = {
   cancelPosition: cancelPosition,
@@ -690,6 +894,12 @@ let applicationActions = {
   applyApplicationCandidacy: applyApplicationCandidacy
 };
 
+let professorActions = {
+  disableProfessor: disableProfessor,
+  enableProfessor: enableProfessor
+};
+
+
 export { goToDetails, applyCandidacy,
   cancelCandidacy, goToPosition,
   rejectUser, verifyUser,
@@ -699,6 +909,10 @@ export { goToDetails, applyCandidacy,
   change_password,
   isHelpdesk,
   positionActions,
-  applicationActions
+  applicationActions,
+  exportProf,
+  exportPositions,
+  exportRegistries,
+  professorActions
 };
 

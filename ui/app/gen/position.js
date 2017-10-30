@@ -7,7 +7,8 @@ import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
 import {atLeastRank} from 'ui/validators/common';
 import moment from 'moment';
 import {
-  goToDetails, applyCandidacy, positionActions
+  goToDetails, applyCandidacy, positionActions,
+  exportPositions,
 } from 'ui/utils/common/actions';
 import {pick_edit_fs, pick_details_fs, pick_create_fs} from 'ui/lib/position/pick_fs_functions';
 import {abilityStates} from 'ui/lib/position/abilityStates';
@@ -118,6 +119,10 @@ export default ApellaGen.extend({
     }
   },
   list: {
+    actions: ['exportPositions', 'gen:create'],
+    actionsMap: {
+      exportPositions: exportPositions
+    },
     getModel: function(params) {
       params = params || {};
       let user = get(this, 'session.session.authenticated'),

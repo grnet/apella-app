@@ -24,10 +24,10 @@ const issuesField = field('jira_issues', {
       fields: [
         field('issue_key', {label: 'code.label'}),
         field('issue_type_verbose', {label: 'issue_type.label'}),
+        'title',
         'created_at_format',
         'updated_at_format',
         field('state_verbose', {label: 'status_verbose.label'}),
-        field('resolution_verbose', {label: 'resolution.label'}),
       ],
       actions: ['view_details'],
       actionsMap: {

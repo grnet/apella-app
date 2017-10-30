@@ -506,6 +506,9 @@ class Professor(UserProfile, CandidateProfile):
     leave_file = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name = 'professor_leave_file', on_delete=models.SET_NULL)
+    is_disabled = models.BooleanField(default=False)
+    disabled_at = models.DateTimeField(blank=True, null=True)
+    disabled_by_helpdesk = models.BooleanField(default=False)
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
@@ -584,6 +587,11 @@ class Professor(UserProfile, CandidateProfile):
                     exists() and p_id not in electors_positions:
                 committee_count += 1
         return elector_count + committee_count
+
+    @property
+    def is_professor(self):
+        return self.rank in ['Professor', 'Associate Professor',
+            'Assistant Professor', 'Lecturer', 'Tenured Assistant Professor']
 
     def save(self, *args, **kwargs):
         self.user.role = 'professor'

@@ -4,7 +4,7 @@ import USER from 'ui/utils/common/users';
 import PROFESSOR from 'ui/utils/common/professor';
 import {field} from 'ember-gen';
 import {fileField} from 'ui/lib/common';
-import {rejectUser, verifyUser, requestProfileChanges, createIssue} from 'ui/utils/common/actions';
+import {rejectUser, verifyUser, requestProfileChanges, createIssue, exportProf, professorActions} from 'ui/utils/common/actions';
 import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
 const {
@@ -27,6 +27,10 @@ export default ApellaGen.extend({
   },
 
   list: {
+    actions: ['exportProf', 'gen:create'],
+    actionsMap: {
+      exportProf: exportProf
+    },
     getModel(params) {
       params = params || {};
       let role = get(this, 'user.role'),
@@ -99,6 +103,7 @@ export default ApellaGen.extend({
           if(!roles_see_only_verified.includes(role)) {
             fields.pushObjects([
              'is_verified',
+             'is_disabled',
              'is_rejected',
              'verification_pending',
               field('on_leave', { type: 'boolean', label: 'on_leave_verbose.label'}),
@@ -154,18 +159,34 @@ export default ApellaGen.extend({
           return fields;
         }),
         actions: computed('role', function() {
-          let res =  ['gen:details', 'gen:edit', 'remove', 'verifyUser', 'rejectUser', 'requestProfileChanges', 'createIssue'];
+          let res = [
+            'gen:details',
+            'gen:edit',
+            'createIssue',
+            'remove',
+            'verifyUser',
+            'rejectUser',
+            'disableProfessor',
+            'enableProfessor',
+            'requestProfileChanges',
+          ];
           let role = get(this, 'role');
           if (!role.startsWith('helpdesk')) {
+            // only helpdesk can edit professors
             res.splice(1,1);
+            // only helpdesk can disable/enable professors
+            res.splice(5,2);
           }
+          console.log(res, 'afeter');
           return res;
         }),
         actionsMap: {
           verifyUser: verifyUser,
           rejectUser: rejectUser,
           requestProfileChanges: requestProfileChanges,
-          createIssue: createIssue
+          createIssue: createIssue,
+          disableProfessor: professorActions.disableProfessor,
+          enableProfessor: professorActions.enableProfessor,
         }
     },
   },
@@ -176,12 +197,15 @@ export default ApellaGen.extend({
     fieldsets: computed('role', 'model.leave_upcoming',  function(){
       let role = get(this, 'role');
       let leave = get(this, 'model.leave_upcoming');
-
+      let is_disabled = get(this, 'model.is_disabled');
       let f = [
         USER.FIELDSET_DETAILS_VERIFIABLE,
         PROFESSOR.FIELDSET,
-      ]
+      ];
       if (role === 'helpdeskadmin' || role === 'helpdeskuser' || role === 'ministry') {
+        if(is_disabled) {
+          f.unshift(PROFESSOR.DISABLED_ACCOUNT_DETAILS);
+        }
         f.push(PROFESSOR.FILES_FIELDSET);
       }
 

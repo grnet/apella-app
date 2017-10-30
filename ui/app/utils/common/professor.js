@@ -249,6 +249,13 @@ const LEAVE_FIELDSET_EDIT = {
   }
 }
 
+const DISABLED_ACCOUNT_DETAILS = {
+  label: 'fieldsets.labels.account_disabled',
+  fields: [
+    'disabled_by',
+    field('disabled_at_format', {label: 'disabled_at.label'})
+  ]
+}
 
 const VALIDATORS = {
   cv_url: [validate.format({allowBlank: true, type:'url'})],
@@ -263,4 +270,5 @@ export {
   VALIDATORS,
   LEAVE_FIELDSET_DETAILS,
   LEAVE_FIELDSET_EDIT,
+  DISABLED_ACCOUNT_DETAILS
 }

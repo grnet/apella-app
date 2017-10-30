@@ -4,6 +4,9 @@
 {{#if model.can_set_academic }}
   {{toolbar-message class='md-soft-warn' model=model message='enable.academic.login.prompt' buttonComponent=(component 'enable-academic-action')}}
 {{/if}}
+{{#if model.is_disabled }}
+  {{toolbar-message class='md-soft-warn' model=model message='professor.is_disabled.prompt'}}
+{{/if}}
 
 
 {{#unless model.has_accepted_terms}}

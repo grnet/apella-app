@@ -67,3 +67,10 @@ def urljoin(*args):
 def safe_path_join(base, path, sep=path.sep):
     safe_path = sep.join(x for x in path.split(sep) if x and x != '..')
     return base.rstrip(sep) + sep + safe_path
+
+
+def write_row(sheet, datarow, row):
+    col = 0
+    for d in datarow:
+        sheet.write(row, col, d)
+        col += 1

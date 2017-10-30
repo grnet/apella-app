@@ -62,7 +62,7 @@ export default Ember.Mixin.create({
   leave_file: DS.belongsTo('apella-file'),
    //leave is upcoming if
    //- the professor is domestic
-   //- there is and leave_ends_at date
+   //- there is an leave_ends_at date
    //- leave_ends_at date has not passed
   leave_upcoming: computed('is_foreign', 'leave_ends_at', function() {
     let is_domestic = !get(this, 'is_foreign');
@@ -77,7 +77,28 @@ export default Ember.Mixin.create({
     return leave_upcoming && start.isBefore();
   }),
   on_leave_verbose: booleanFormat('on_leave'),
+  is_disabled: DS.attr({type: 'boolean', displayComponent: 'boolean-display'}),
+  disabled_at: DS.attr('date'),
+  disabled_at_format: computeDateFormat('disabled_at'),
+  disabled_by_helpdesk: DS.attr({type: 'boolean'}),
+  disabled_by: computed('is_disabled', 'disabled_by_helpdesk', 'i18n.locale', function() {
+    let is_disabled = get(this, 'is_disabled'),
+      disabled_by_helpdesk = get(this, 'disabled_by_helpdesk'),
+      disabled_by = '-';
+    if(is_disabled) {
+      disabled_by =  (disabled_by_helpdesk ? 'helpdesk' : 'user');
+    }
+    return get(this, 'i18n').t(disabled_by);
+  }),
 
-
+  leave_verbose: computed('on_leave', 'leave_upcoming', 'i18n.locale', function() {
+    if (get(this, 'on_leave')) {
+      return get(this, 'i18n').t('leave.current');
+    } else if (get(this, 'leave_upcoming')) {
+      return get(this, 'i18n').t('leave.upcoming');
+    } else {
+      return '-'
+    }
+  })
 
 });

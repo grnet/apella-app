@@ -7,7 +7,7 @@ import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
 import Users  from 'ui/gen/user';
-import {goToDetails} from 'ui/utils/common/actions';
+import {goToDetails, exportRegistries} from 'ui/utils/common/actions';
 import {
   fs_user, fs_contact, fs_prof_domestic, fs_prof_foreign, peak_fs_professors
 } from 'ui/lib/professors_quick_details';
@@ -24,7 +24,7 @@ let fields_members_table = [
     field('institution_global', {label: 'institution.label'}),
     i18nField('department.title', {label: 'department.label'}),
     'discipline_text',
-    'on_leave_verbose',
+    'leave_verbose',
 ];
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
@@ -278,6 +278,10 @@ export default ApellaGen.extend({
   },
 
   list: {
+    actions: ['exportRegistries', 'gen:create'],
+    actionsMap: {
+      exportRegistries: exportRegistries
+    },
     menu: {
       icon: 'view list',
       label: 'registry.menu_label'
