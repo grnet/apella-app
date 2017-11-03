@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import logging
+from datetime import datetime
 
 from jira import JIRA
 from django.conf import settings
@@ -50,6 +51,10 @@ def update_issue(jira_issue):
         jira_issue.resolution = issue.fields.resolution.name.lower()
     if issue.fields.status:
         jira_issue.state = issue.fields.status.name.lower()
+    if issue.fields.updated:
+        updated_at = issue.fields.updated.split('+')[0]
+        jira_issue.updated_at = datetime.strptime(
+            updated_at, "%Y-%m-%dT%H:%M:%S.%f")
     jira_issue.save()
     logger.info("updated jira issue %d" % jira_issue.id)
     return issue
