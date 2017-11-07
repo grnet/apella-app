@@ -18,7 +18,7 @@ const {
   inject
 } = Ember;
 
-// A route mixin which should apply for all authenticated routes. Handles 
+// A route mixin which should apply for all authenticated routes. Handles
 // cross app things such as non accepted terms.
 const UserConstraintsRouteMixin = {
   messageService: inject.service('messages'),
