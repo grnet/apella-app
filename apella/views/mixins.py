@@ -23,7 +23,7 @@ from apimas.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
-    Professor as ProfessorModel, UserApplication
+    Professor as ProfessorModel, UserApplication, ApellaUser
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD, RANKS_EL, POSITION_STATES_EL
 from apella import auth_hooks
@@ -993,6 +993,29 @@ class ApellaUsers(object):
         user.has_accepted_terms = True
         user.save()
         return Response(request.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def release_shibboleth(self, request, pk=None):
+        user = self.get_object()
+        if user.login_method == 'password':
+            msg = 'no.shibboleth'
+            return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+        user.login_method = 'password'
+        user.shibboleth_id = None
+        user.shibboleth_idp = ''
+        user.shibooleth_schac_home_organization = ''
+        password = ApellaUser.objects.make_random_password(length=15)
+        user.set_password(password)
+        user.can_set_academic = True
+        user.save()
+        send_user_email(
+            user,
+            'apella/emails/user_forgot_password_subject.txt',
+            'apella/emails/user_forgot_password_body.txt')
+        logger.info('User %s released shibboleth for %s' %
+            (request.user.username, user.username))
+        return Response(request.data, status=status.HTTP_200_OK)
+
 
 
 class JiraIssues(object):
