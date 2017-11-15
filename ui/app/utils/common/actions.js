@@ -381,6 +381,49 @@ const activateUser = {
   }
 };
 
+const releaseShibboleth = {
+  label: 'release.shibboleth',
+  icon: 'new_releases',
+  accent: true,
+  action: function(route, model) {
+    let token = get(route, 'user.auth_token');
+    let adapter = get(route, 'store').adapterFor('user');
+    let url = adapter.buildURL('user', get(model, 'id'), 'findRecord');
+    let messages = get(route, 'messageService');
+
+    return fetch(url + 'release_shibboleth/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    }).then((resp) => {
+      if (resp.status === 200) {
+        model.reload().then(() => {
+          messages.setSuccess('release.shibboleth.success');
+        });
+      } else {
+        throw new Error('error');
+      }
+    }).catch((err) => {
+      messages.setError('release.shibboleth.error');
+    });
+  },
+  hidden: computed('model.login_method', 'role', function(){
+    let shibboleth = get(this, 'model.login_method') === 'academic';
+    let admin = get(this, 'role') === 'helpdeskadmin';
+    return !(shibboleth && admin);
+  }),
+  confirm: true,
+  prompt: {
+    ok: 'submit',
+    cancel: 'cancel',
+    message: 'release.shibboleth.message',
+    title: 'release.shibboleth.title',
+  }
+};
+
+
 const createIssue = {
   label: 'createIssue',
   icon: 'mail_outline',
@@ -908,6 +951,7 @@ export { goToDetails, applyCandidacy,
   rejectUser, verifyUser,
   requestProfileChanges,
   deactivateUser, activateUser,
+  releaseShibboleth,
   createIssue,
   change_password,
   isHelpdesk,
