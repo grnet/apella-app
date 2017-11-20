@@ -142,7 +142,7 @@ class Professor(object):
                     institution,
                     school,
                     department,
-                    rank_el.decode('utf-8'),
+                    rank_el and rank_el.decode('utf-8'),
                     p.discipline_text,
                     category.decode('utf-8')
                 ]
@@ -193,7 +193,7 @@ class Professor(object):
                     institution_id,
                     department,
                     department_id,
-                    rank_el.decode('utf-8'),
+                    rank_el and rank_el.decode('utf-8'),
                     'ΝΑΙ'.decode('utf-8') \
                         if p.cv_url else 'ΟΧΙ'.decode('utf-8'),
                     p.cv_url,
@@ -395,7 +395,7 @@ class PositionMixin(object):
                 p.department.institution.title.el,
                 p.department.school and p.department.school.title.el,
                 p.department.title.el,
-                rank_el.decode('utf-8'),
+                rank_el and rank_el.decode('utf-8'),
                 p.description,
                 p.discipline,
                 p.subject_area.title.el,
