@@ -393,7 +393,7 @@ class PositionMixin(object):
                 p.old_code,
                 p.title,
                 p.department.institution.title.el,
-                p.department.school.title.el,
+                p.department.school and p.department.school.title.el,
                 p.department.title.el,
                 rank_el.decode('utf-8'),
                 p.description,
