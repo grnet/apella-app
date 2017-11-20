@@ -438,61 +438,65 @@ class PositionMixin(object):
                 values('id__min')
             queryset = queryset.filter(id__in=ids)
 
-        if user.is_institutionmanager():
-            queryset = queryset.filter(
-                department__in=user.institutionmanager.
-                institution.department_set.all())
-        elif user.is_assistant():
-            queryset = queryset.filter(
-                department__in=user.institutionmanager.
-                departments.all())
-        elif user.is_professor():
-            position_codes = list(Candidacy.objects.filter(
-                candidate=user).values_list('position__code', flat=True))
-            if user.professor.department:
-                department_position_codes = list(Position.objects.filter(
-                    department=user.professor.department).
-                    values_list('code', flat=True))
-                position_codes += department_position_codes
+        if user.is_authenticated():
+            if user.is_institutionmanager():
+                queryset = queryset.filter(
+                    department__in=user.institutionmanager.
+                    institution.department_set.all())
+            elif user.is_assistant():
+                queryset = queryset.filter(
+                    department__in=user.institutionmanager.
+                    departments.all())
+            elif user.is_professor():
+                position_codes = list(Candidacy.objects.filter(
+                    candidate=user).values_list('position__code', flat=True))
+                if user.professor.department:
+                    department_position_codes = list(Position.objects.filter(
+                        department=user.professor.department).
+                        values_list('code', flat=True))
+                    position_codes += department_position_codes
 
-            position_codes += list(
-                user.userapplication_set.values_list(
-                'position__code', flat=True))
-            queryset = queryset.filter(
-                Q(state='posted', ends_at__gte=now) |
-                Q(code__in=position_codes) |
-                Q(committee=user.professor.id) |
-                Q(electors=user.professor.id))
-        elif user.is_candidate():
-            position_codes = Candidacy.objects.filter(
-                candidate=user).values_list('position__code', flat=True)
-            queryset = queryset.filter(
-                Q(state='posted', ends_at__gte=now) |
-                Q(code__in=position_codes))
+                position_codes += list(
+                    user.userapplication_set.values_list(
+                    'position__code', flat=True))
+                queryset = queryset.filter(
+                    Q(state='posted', ends_at__gte=now) |
+                    Q(code__in=position_codes) |
+                    Q(committee=user.professor.id) |
+                    Q(electors=user.professor.id))
+            elif user.is_candidate():
+                position_codes = Candidacy.objects.filter(
+                    candidate=user).values_list('position__code', flat=True)
+                queryset = queryset.filter(
+                    Q(state='posted', ends_at__gte=now) |
+                    Q(code__in=position_codes))
 
-        state_query = self.request.GET.get('state_expanded')
-        if state_query:
-            now = datetime.utcnow()
-            if state_query in ('electing', 'successful',
-                               'failed', 'cancelled', 'revoked'):
-                queryset = queryset.filter(Q(state=state_query))
+            state_query = self.request.GET.get('state_expanded')
+            if state_query:
+                now = datetime.utcnow()
+                if state_query in ('electing', 'successful',
+                                   'failed', 'cancelled', 'revoked'):
+                    queryset = queryset.filter(Q(state=state_query))
 
-            elif state_query == 'posted':
-                queryset = queryset.filter(Q(state='posted') &
-                                           Q(starts_at__gte=now))
+                elif state_query == 'posted':
+                    queryset = queryset.filter(Q(state='posted') &
+                                               Q(starts_at__gte=now))
 
-            elif state_query == 'open':
-                queryset = queryset.filter(Q(state='posted') &
-                                           Q(starts_at__lte=now) &
-                                           Q(ends_at__gt=now))
-            elif state_query == 'closed':
-                queryset = queryset.filter(Q(state='posted') &
-                                           Q(ends_at__lte=now))
+                elif state_query == 'open':
+                    queryset = queryset.filter(Q(state='posted') &
+                                               Q(starts_at__lte=now) &
+                                               Q(ends_at__gt=now))
+                elif state_query == 'closed':
+                    queryset = queryset.filter(Q(state='posted') &
+                                               Q(ends_at__lte=now))
 
-            elif state_query == 'before_closed':
-                queryset = queryset.filter((Q(state='posted') &
-                                           Q(ends_at__gt=now)) | Q(ends_at=None))
-        queryset = queryset.distinct()
+                elif state_query == 'before_closed':
+                    queryset = queryset.filter(
+                        (Q(state='posted') &
+                        Q(ends_at__gt=now)) |
+                        Q(ends_at=None))
+
+            queryset = queryset.distinct()
         return queryset
 
     def update(self, request, *args, **kwargs):
