@@ -287,7 +287,7 @@ export default {
   'institution_freetext.label': 'Ιδρυμα αλλοδαπής',
   'institution_users.label': 'Χρήστες ιδρύματος',
   'is_active.label': 'Ενεργός',
-  'is_disabled.label': 'Απενερποιημένος',
+  'is_disabled.label': 'Σε αναστολή',
   'is_foreign.label': 'Καθηγητής αλλοδαπής',
   'is_foreign_descr.label': 'Κατηγορία Χρήστη',
   'is_foreign_verbose.label': 'Καθηγητής αλλοδαπής',
