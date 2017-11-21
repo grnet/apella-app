@@ -671,12 +671,14 @@ def send_disable_professor_emails(professor, is_disabled):
 
     # Send email to manager
     for m in managers:
+        registries = professor.registry_set.filter(
+            department__institution=m.institution)
         send_user_email(
             m.user,
             'apella/emails/professor_{}_subject.txt'. \
                 format('disabled' if is_disabled else 'enabled'),
             'apella/emails/professor_disabled_to_manager.txt',
-            {'registries': professor.registry_set.all(), 'professor': professor}
+            {'registries': registries, 'professor': professor}
         )
 
     # Send email to secretaries
