@@ -700,7 +700,7 @@ function exportCSV(route, model, modelName) {
   let adapter = get(route, 'store').adapterFor(modelName);
   let url = adapter.buildURL(modelName)+ 'report/';
   let m = get(route, 'messageService')
-  m.setWarning('downloading.started');
+  m.setWarning('downloading.started', { closeTimeout: 180000});
   $('md-icon[aria-label="file_download"]').parent('button').attr('disabled', 'disabled');
   return fetch(url, {
     method: 'GET',
