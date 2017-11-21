@@ -6,6 +6,8 @@ from datetime import datetime
 from jira import JIRA
 from django.conf import settings
 
+from apella.util import utc, otz
+
 ISSUE_TYPES = {
     "complaint": "Παράπονα",
     "error": "Πρόβλημα",
@@ -53,8 +55,9 @@ def update_issue(jira_issue):
         jira_issue.state = issue.fields.status.name.lower()
     if issue.fields.updated:
         updated_at = issue.fields.updated.split('+')[0]
-        jira_issue.updated_at = datetime.strptime(
-            updated_at, "%Y-%m-%dT%H:%M:%S.%f")
+        updated_at = datetime.strptime(updated_at, "%Y-%m-%dT%H:%M:%S.%f")
+        local = otz.localize(updated_at)
+        jira_issue.updated_at = local.astimezone(utc)
     jira_issue.save()
     logger.info("updated jira issue %d" % jira_issue.id)
     return issue
