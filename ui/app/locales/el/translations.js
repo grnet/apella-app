@@ -453,6 +453,7 @@ export default {
   'prompt.cancelPosition.title': 'Ακύρωση θέσης',
   'prompt.deactivateUser.message': 'Είστε βέβαιος/η ότι θέλετε να απενεργοποιήσετε τον χρήστη;',
   'prompt.deactivateUser.title': 'Aπενεργοποίηση χρήστη',
+  'prompt.member.no_remove.message': 'Δεν μπορείτε να διαγράψετε το μέλος του μητρώου, όσο συμμετέχει σε εκλεκτορικό σώμα<br> ή εισηγητική επιτροπή θέσης που βρίσκεται σε διαδικασία εκλογής.',
   'prompt.removeInstitution.message': 'Είστε βέβαιος/η ότι θέλετε να διαγράψετε το κανονιστικό πλαίσιο;',
   'prompt.removeInstitution.title': 'Διαγραφή κανονιστικού πλαισίου',
   'prompt.selectOnLeave.message': 'Ο καθηγητής τελεί σε άδεια. Είστε σίγουρος ότι θέλετε να τον/την συμπεριλάβετε;',

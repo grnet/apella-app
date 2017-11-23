@@ -44,8 +44,44 @@ function membersAllModelMeta(serverSide, hideQuickView) {
         // Professors and candidates do not see leave field in members table
         return prof_or_candidate?  fields_members_table.slice(0, -1) :fields_members_table;
       }),
-      actions: ['view_details'],
+      actions: ['view_details', 'remove'],
       actionsMap: {
+        remove: {
+          // If the professor has active elections, he/she cannot be deleted
+          classNames: computed('model.active_elections', function(){
+            let can_remove = get(this, 'model.active_elections') === 0;
+            return can_remove ? '': 'md-icon-warning';
+          }),
+          icon: computed('model.active_elections', function(){
+            let can_remove = get(this, 'model.active_elections') === 0;
+            return can_remove ? 'delete_forever': 'warning';
+          }),
+          warn: computed('model.active_elections', function(){
+            let can_remove = get(this, 'model.active_elections') === 0;
+            return can_remove;
+          }),
+          primary: computed('model.active_elections', function(){
+            let can_remove = get(this, 'model.active_elections') === 0;
+            return !can_remove;
+          }),
+          prompt: computed('model.active_elections', function(){
+            let can_remove = get(this, 'model.active_elections') === 0;
+            if (can_remove) {
+              return {
+                ok: 'row.remove.ok',
+                cancel: 'row.remove.cancel',
+                title: 'row.remove.confirm.title',
+                message: 'row.remove.confirm.message'
+              }
+            } else {
+              return {
+                noControls: true,
+                title: 'row.remove.confirm.title',
+                message: 'prompt.member.no_remove.message',
+              }
+            }
+          })
+        },
         view_details: {
           icon: 'open_in_new',
           detailsMeta: {
