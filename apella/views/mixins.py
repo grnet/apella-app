@@ -907,11 +907,15 @@ class PositionsPortal(object):
 class UserApplicationMixin(object):
     def _can_accept_application(self):
         application = self.get_object()
-        if UserApplication.objects.filter(
+        apps = UserApplication.objects.filter(
                 user=application.user,
                 app_type=application.app_type,
-                state='approved').exists():
-            return False
+                state='approved')
+        if not apps:
+            return True
+        for app in apps:
+            if not app.position_set.filter(state='cancelled').exists():
+                return False
         return True
 
     @detail_route(methods=['post'])
