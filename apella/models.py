@@ -15,7 +15,7 @@ from apella.validators import validate_dates_interval
 from apella import common
 from apella.helpers import assistant_can_edit, professor_participates,\
     position_is_latest
-from apella.util import safe_path_join
+from apella.util import safe_path_join, move_to_timezone, otz, at_day_end
 
 logger = logging.getLogger(__name__)
 
@@ -954,8 +954,12 @@ class Candidacy(CandidateProfile):
             return True
         elif position_state == 'electing' and \
                 self.position.electors_meeting_date:
-            if self.position.electors_meeting_date - datetime.utcnow() > \
-                    timedelta(days=days):
+            now = move_to_timezone(datetime.utcnow(), otz).date()
+            emd = move_to_timezone(
+                self.position.electors_meeting_date, otz)
+            emd = at_day_end(emd, otz).date()
+
+            if emd - now > timedelta(days=days):
                 return True
         return False
 
