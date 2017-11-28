@@ -578,6 +578,13 @@ spec:
                     .drf_field: {}
                     .readonly: {}
                     .integer: {}
+                active_registries:
+                    .cli_option: {}
+                    .field: {}
+                    .string: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.mixins.get_professor_registries
                 file_upload:
                     .cli_option: {}
                     .field: {}
