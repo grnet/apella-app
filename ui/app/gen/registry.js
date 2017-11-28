@@ -32,6 +32,16 @@ function membersAllModelMeta(serverSide, hideQuickView) {
    let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text', 'old_user_id'] : ['last_name.el', 'last_name.en', 'discipline_text', 'old_user_id']);
 
+  /* If current registry ID is included in the active registries list,
+   * then the professor cannot be removed from the registry.
+   * */
+  function can_remove (el) {
+    let id = el.container.lookup('controller:registry.record').get('registry_id');
+    let  active_regitries = get(el, 'model.active_registries');
+    let registries_arr = active_regitries.replace(/\[|\]/g, '').split('');
+    return !registries_arr.includes(id);
+   };
+
 
    // For now, hide client side functionality
   let display = serverSide;
@@ -47,26 +57,22 @@ function membersAllModelMeta(serverSide, hideQuickView) {
       actions: ['view_details', 'remove'],
       actionsMap: {
         remove: {
-          // If the professor has active elections, he/she cannot be deleted
-          classNames: computed('model.active_elections', function(){
-            let can_remove = get(this, 'model.active_elections') === 0;
-            return can_remove ? '': 'md-icon-warning';
+          // If the professor's active_registries contain the current registry,
+          // he/she cannot be deleted.
+          classNames: computed('model.active_regitries', function(){
+            return can_remove(this) ? '': 'md-icon-warning';
           }),
-          icon: computed('model.active_elections', function(){
-            let can_remove = get(this, 'model.active_elections') === 0;
-            return can_remove ? 'delete_forever': 'warning';
+          icon: computed('model.active_regitries', function(){
+            return can_remove(this) ? 'delete_forever': 'warning';
           }),
-          warn: computed('model.active_elections', function(){
-            let can_remove = get(this, 'model.active_elections') === 0;
-            return can_remove;
+          warn: computed('model.active_regitries', function(){
+            return can_remove(this);
           }),
-          primary: computed('model.active_elections', function(){
-            let can_remove = get(this, 'model.active_elections') === 0;
-            return !can_remove;
+          primary: computed('model.active_registries', function(){
+            return !can_remove(this);
           }),
-          prompt: computed('model.active_elections', function(){
-            let can_remove = get(this, 'model.active_elections') === 0;
-            if (can_remove) {
+          prompt: computed('model.active_registries', function(){
+            if (can_remove(this)) {
               return {
                 ok: 'row.remove.ok',
                 cancel: 'row.remove.cancel',
