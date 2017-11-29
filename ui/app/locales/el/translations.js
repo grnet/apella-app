@@ -528,7 +528,7 @@ export default {
   'role_verbose.label': 'Ρόλος',
   'row.remove.cancel': 'ΑΚΥΡΩΣΗ',
   'row.remove.confirm.message': 'Είστε σίγουρος/η πως θέλετε να αφαιρέσετε αυτή την εγγραφή;',
-  'row.remove.confirm.title': 'Αφαίρεση',
+  'row.remove.confirm.title': 'Διαγραφή',
   'row.remove.ok': 'ΝΑΙ',
   'row.restore.confirm.cancel': 'ΑΚΥΡΩΣΗ',
   'row.restore.confirm.message': 'Θέλετε να επαναφέρετε τον χρήστη στο μητρώο;',
