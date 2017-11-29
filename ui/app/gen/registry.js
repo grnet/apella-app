@@ -37,9 +37,8 @@ function membersAllModelMeta(serverSide, hideQuickView) {
    * */
   function can_remove (el) {
     let id = el.container.lookup('controller:registry.record').get('registry_id');
-    let  active_regitries = get(el, 'model.active_registries');
-    let registries_arr = active_regitries.replace(/\[|\]/g, '').split('');
-    return !registries_arr.includes(id);
+    let  active_registries = JSON.parse(get(el, 'model.active_registries'));
+    return !active_registries.includes(parseInt(id));
    };
 
 
@@ -57,8 +56,12 @@ function membersAllModelMeta(serverSide, hideQuickView) {
       actions: ['view_details', 'remove'],
       actionsMap: {
         remove: {
-          // If the professor's active_registries contain the current registry,
-          // he/she cannot be deleted.
+          /* If the professor's active_registries contain the current registry,
+          * he/she cannot be deleted.
+          * If the professor can be deleted a standard red delete icon is shown.
+          * If the professor cannot be deleted, a yellow warning icon is shown
+          * and the prompt has a different message and no action buttons.
+          */
           classNames: computed('model.active_regitries', function(){
             return can_remove(this) ? '': 'md-icon-warning';
           }),
