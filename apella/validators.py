@@ -120,10 +120,12 @@ def validate_position_electors(r_i, r_e, dep_number):
             raise ValidationError(
                 _('Regular electors must be exactly 11'))
 
+
 def validate_tenure_candidacy(position, candidate):
     if position.user_application.user != candidate:
         raise ValidationError(
             _('Tenure position; cannot apply candidacy'))
+
 
 def validate_create_position_from_application(user_application):
     positions = user_application.position_set.all()
@@ -133,9 +135,23 @@ def validate_create_position_from_application(user_application):
         raise ValidationError(
             _('A position already exists for this application'))
 
+    user = user_application.user
+    uas = user.userapplication_set.filter(
+        app_type=user_application.app_type,
+        state='approved')
+    for ua in uas:
+        ps = ua.position_set.all()
+        p_ids = ua.position_set.values('code').annotate(Min('id')). \
+            values_list('id__min', flat=True)
+        if ps and ps.filter(id=max(p_ids))[0].state != 'cancelled':
+            raise ValidationError(
+                _('A position already exist from another user application'))
+
+
 def validate_position_state(position):
         if position.state == 'cancelled':
             raise ValidationError(_('Cancelled position'))
+
 
 def validate_subject_fields(data):
     subject = data.get('subject', None)
