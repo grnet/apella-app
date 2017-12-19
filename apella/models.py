@@ -959,7 +959,7 @@ class Candidacy(CandidateProfile):
                 self.position.electors_meeting_date, otz)
             emd = at_day_end(emd, otz).date()
 
-            if emd - now > timedelta(days=days):
+            if emd - now >= timedelta(days=days):
                 return True
         return False
 
