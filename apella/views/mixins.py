@@ -34,6 +34,7 @@ from apella.emails import send_user_email, send_emails_file, \
 from apella.util import urljoin, safe_path_join, otz, move_to_timezone, \
     write_row
 from apella.serials import get_serial
+from apella.helpers import position_is_latest
 
 logger = logging.getLogger(__name__)
 
@@ -914,8 +915,10 @@ class UserApplicationMixin(object):
         if not apps:
             return True
         for app in apps:
-            if not app.position_set.filter(state='cancelled').exists():
-                return False
+            positions = app.position_set.all()
+            for p in positions:
+                if p.state != 'cancelled' and position_is_latest(p):
+                    return False
         return True
 
     @detail_route(methods=['post'])

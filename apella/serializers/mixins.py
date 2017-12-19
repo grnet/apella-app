@@ -8,11 +8,12 @@ from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
 from apella.models import ApellaUser, Institution, Department, \
-    Position, Professor, InstitutionManager, JiraIssue
+    Position, Professor, InstitutionManager, JiraIssue, UserApplication
 from apella import auth_hooks
 from apella.util import move_to_timezone, otz
 from apella.emails import send_user_email, send_create_application_emails
 from apella.jira_wrapper import create_issue, update_issue
+from apella.helpers import position_is_latest
 
 
 class ValidatorMixin(object):
@@ -300,6 +301,29 @@ class PositionsPortal(object):
 
 
 class UserApplications(object):
+    def validate(self, data):
+        app_type = self.instance and self.instace.app_type \
+            or data.get('app_type')
+        user = data.get('user', None)
+        if not user:
+            user = self.context.get('request').user
+        if UserApplication.objects.filter(
+                user=user,
+                app_type=app_type,
+                state='pending').exists():
+            raise ValidationError('cannot.create.application')
+
+        approved_apps = UserApplication.objects.filter(
+            user=user,
+            app_type=app_type,
+            state='approved')
+        for app in approved_apps:
+            positions = app.position_set.all()
+            for p in positions:
+                if p.state != 'cancelled' and position_is_latest(p):
+                    raise ValidationError('cannot.create.application')
+        return super(UserApplications, self).validate(data)
+
     def create(self, validated_data):
         user = validated_data.get('user', None)
         if not user:
