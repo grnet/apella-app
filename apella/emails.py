@@ -5,10 +5,15 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.db.models import Q
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from apella.util import urljoin, otz, move_to_timezone
 from apella.models import InstitutionManager, UserInterest, \
     ApellaUser
+
 
 logger = logging.getLogger(__name__)
 
@@ -699,3 +704,25 @@ def send_disable_professor_emails(professor, is_disabled):
                     department__in=a.departments.all()),
                 'professor': professor}
         )
+
+def send_release_shibboleth_email(user, request):
+    uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+    p = PasswordResetTokenGenerator()
+    token = p.make_token(user)
+    context = {
+        'uid': uid,
+        'token': token
+    }
+
+    current_site = get_current_site(request)
+    extra = {
+        'site_name': current_site.name,
+        'protocol': 'https' if request.is_secure() else 'http',
+        'domain': current_site.domain,
+        'url': settings.DJOSER.get('PASSWORD_RESET_CONFIRM_URL').format(**context)
+    }
+    send_user_email(
+        user,
+        'password_reset_email_subject.txt',
+        'password_reset_email_body.txt',
+        extra)

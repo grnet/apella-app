@@ -30,11 +30,13 @@ from apella import auth_hooks
 from apella.serializers.position import link_files, \
     upgrade_candidate_to_professor
 from apella.emails import send_user_email, send_emails_file, \
-    send_emails_members_change, send_disable_professor_emails
+    send_emails_members_change, send_disable_professor_emails, \
+    send_release_shibboleth_email
 from apella.util import urljoin, safe_path_join, otz, move_to_timezone, \
     write_row
 from apella.serials import get_serial
 from apella.helpers import position_is_latest
+
 
 logger = logging.getLogger(__name__)
 
@@ -1008,10 +1010,8 @@ class ApellaUsers(object):
         user.set_password(password)
         user.can_set_academic = True
         user.save()
-        send_user_email(
-            user,
-            'apella/emails/user_forgot_password_subject.txt',
-            'apella/emails/user_forgot_password_body.txt')
+        send_release_shibboleth_email(user, request)
+
         logger.info('User %s released shibboleth for %s' %
             (request.user.username, user.username))
         return Response(request.data, status=status.HTTP_200_OK)
