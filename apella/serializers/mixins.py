@@ -15,6 +15,23 @@ from apella.emails import send_user_email, send_create_application_emails
 from apella.jira_wrapper import create_issue, update_issue
 from apella.helpers import position_is_latest
 
+def user_application_cannot_create_position(instance):
+    """
+    Returns true if there exists at least one not cancelled latest position
+    with approved user_application whose user and app_type are the same as
+    the instance application.
+    """
+    approved_apps = UserApplication.objects.filter(
+        user=instance.user,
+        app_type=instance.app_type,
+        state='approved'
+    )
+    positions = Position.objects.filter(
+        user_application__in=approved_apps
+    ).exclude(state='cancelled')
+    latest_positions = [x for x in positions if position_is_latest(x)]
+    return len(latest_positions)>0
+
 
 class ValidatorMixin(object):
 

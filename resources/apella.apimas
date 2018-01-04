@@ -3363,6 +3363,14 @@ spec:
                     .drf_field:
                         onmodel: False
                         instance_source: apella.serializers.position.position_can_accept_candidacies
+                cannot_create_position:
+                    .cli_option: {}
+                    .field: {}
+                    .readonly: {}
+                    .boolean: {}
+                    .drf_field:
+                        onmodel: False
+                        instance_source: apella.serializers.mixins.user_application_cannot_create_position
             .actions:
                 .list: {}
                 .create: {}
