@@ -58,6 +58,10 @@ export function afterDays(options) {
    */
   let count_days = days - 1;
   return (key, value, _o, changes) => {
+    // If no start date and end date are set, do not validate
+    if (!get(changes, on) && !value) {
+      return true;
+    }
     let baseDate = moment(get(changes, on)).startOf('days');
     let nextDate = baseDate.add(count_days, 'days');
     if (moment(value).isAfter(nextDate)) {
