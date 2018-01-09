@@ -9,7 +9,11 @@ const {
 
 function can_create(app_list) {
   const types = ['electing', 'posted', 'successful'];
-  let memo = {};
+  let memo = {
+    can_create_renewal: true,
+    can_create_tenure: true
+  };
+
   let groups = _.groupBy(app_list, (item) => {
     return get(item.getRecord(), 'app_type');
   });
