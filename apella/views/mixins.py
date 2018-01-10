@@ -18,6 +18,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError as DjangoValidationError
 
 from apimas.drf.mixins import HookMixin
 
@@ -36,6 +37,7 @@ from apella.util import urljoin, safe_path_join, otz, move_to_timezone, \
     write_row
 from apella.serials import get_serial
 from apella.helpers import position_is_latest
+from apella.validators import validate_candidate_files
 
 
 logger = logging.getLogger(__name__)
@@ -791,6 +793,11 @@ class SyncCandidacies(object):
     def sync_candidacies(self, request, pk=None):
         now = datetime.utcnow()
         candidate_user = self.get_object()
+        try:
+            validate_candidate_files(candidate_user.user)
+        except DjangoValidationError as ve:
+            return Response(ve.message, status=status.HTTP_400_BAD_REQUEST)
+
         active_candidacies = Candidacy.objects.filter(
             candidate=candidate_user.user,
             state='posted',
