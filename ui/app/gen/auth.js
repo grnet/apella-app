@@ -177,9 +177,19 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
           messages.setError('sync.candidacies.error');
         });
       },
-      hidden: computed('model.is_verified', 'model.role', function() {
+      hidden: computed('model.is_verified', 'model.publications', 'model.cv', 'model.diplomas','model.cv_professor','model.role', function() {
+        let p_f = get(this, 'model.publications');
+        let d_f = get(this, 'model.diplomas');
+        let c_f = get(this, 'model.cv')
+        let cv = c_f && c_f.content;
+        let publications = p_f && p_f.content && p_f.content.length>0;
+        let diplomas = d_f && d_f.content && d_f.content.length>0;
+
         let verified = get(this, 'model.is_verified');
         let role = get(this, 'model.role');
+
+        if (!cv || !publications || !diplomas) { return true;}
+
         if (canApply(role)) { return !verified; }
         return true;
       }),
