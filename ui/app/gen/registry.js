@@ -32,6 +32,15 @@ function membersAllModelMeta(serverSide, hideQuickView) {
    let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text', 'old_user_id'] : ['last_name.el', 'last_name.en', 'discipline_text', 'old_user_id']);
 
+  /* If current registry ID is included in the active registries list,
+   * then the professor cannot be removed from the registry.
+   * */
+  function can_remove (el) {
+    let id = el.container.lookup('controller:registry.record').get('registry_id');
+    let  active_registries = JSON.parse(get(el, 'model.active_registries'));
+    return !active_registries.includes(parseInt(id));
+   };
+
 
    // For now, hide client side functionality
   let display = serverSide;
@@ -44,8 +53,44 @@ function membersAllModelMeta(serverSide, hideQuickView) {
         // Professors and candidates do not see leave field in members table
         return prof_or_candidate?  fields_members_table.slice(0, -1) :fields_members_table;
       }),
-      actions: ['view_details'],
+      actions: ['view_details', 'remove'],
       actionsMap: {
+        remove: {
+          /* If the professor's active_registries contain the current registry,
+          * he/she cannot be deleted.
+          * If the professor can be deleted a standard red delete icon is shown.
+          * If the professor cannot be deleted, a yellow warning icon is shown
+          * and the prompt has a different message and no action buttons.
+          */
+          classNames: computed('model.active_regitries', function(){
+            return can_remove(this) ? '': 'md-icon-warning';
+          }),
+          icon: computed('model.active_regitries', function(){
+            return can_remove(this) ? 'delete_forever': 'warning';
+          }),
+          warn: computed('model.active_regitries', function(){
+            return can_remove(this);
+          }),
+          primary: computed('model.active_registries', function(){
+            return !can_remove(this);
+          }),
+          prompt: computed('model.active_registries', function(){
+            if (can_remove(this)) {
+              return {
+                ok: 'row.remove.ok',
+                cancel: 'row.remove.cancel',
+                title: 'row.remove.confirm.title',
+                message: 'row.remove.confirm.message'
+              }
+            } else {
+              return {
+                noControls: true,
+                title: 'row.remove.confirm.title',
+                message: 'prompt.member.no_remove.message',
+              }
+            }
+          })
+        },
         view_details: {
           icon: 'open_in_new',
           detailsMeta: {

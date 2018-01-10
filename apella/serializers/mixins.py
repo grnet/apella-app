@@ -3,6 +3,7 @@
 from datetime import datetime
 
 from django.conf import settings
+from django.db.models import Min
 from rest_framework import serializers
 from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
@@ -384,3 +385,23 @@ class JiraIssues(object):
         new_issue = create_issue(jira_issue)
         validated_data['issue_key'] = new_issue.key
         return super(JiraIssues, self).create(validated_data)
+
+
+def get_professor_registries(instance):
+    active_registries = []
+    registries = instance.registry_set.all()
+    electors_positions = instance.electorparticipation_set.values(
+        'position__code').annotate(Min('position_id')).values_list(
+        'position_id__min', flat=True)
+    committee_positions = instance.committee_duty.values(
+        'code').annotate(Min('id')).values_list(
+        'id__min', flat=True)
+    for r in registries:
+        if electors_positions.filter(
+                position__state__in=['electing', 'revoked'],
+                position__department=r.department).exists() or \
+                committee_positions.filter(
+                    state__in=['electing', 'revoked'],
+                    department=r.department).exists():
+            active_registries.append(r.id)
+    return active_registries

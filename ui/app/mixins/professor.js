@@ -44,6 +44,7 @@ export default Ember.Mixin.create({
   discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true, displayComponent: 'boolean-display'}),
   discipline_in_fek_verbose: booleanFormat('discipline_in_fek'),
   active_elections: DS.attr('number'),
+  active_registries: DS.attr(),
 
   institution_global: computed('is_foreign', 'institution.title_current', 'institution_freetext', function(){
     if (get(this, 'is_foreign')) {

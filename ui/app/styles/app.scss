@@ -9,6 +9,7 @@
 @import 'forms';
 
 $success-color: color($color-light-green, '600');
+$warning-color: color($color-yellow, '800');
 
 .site-header {
   text-align: center;
@@ -54,6 +55,12 @@ $success-color: color($color-light-green, '600');
 .md-icon-success {
   md-icon {
     color: $success-color !important;
+  }
+}
+
+.md-icon-warning {
+  md-icon {
+    color: $warning-color !important;
   }
 }
 
