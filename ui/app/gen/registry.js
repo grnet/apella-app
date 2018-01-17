@@ -28,7 +28,7 @@ let fields_members_table = [
 ];
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
-function membersAllModelMeta(serverSide, hideQuickView) {
+function membersAllModelMeta(serverSide, hideQuickView, hideRemove) {
    let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text', 'old_user_id'] : ['last_name.el', 'last_name.en', 'discipline_text', 'old_user_id']);
 
@@ -62,6 +62,9 @@ function membersAllModelMeta(serverSide, hideQuickView) {
           * If the professor cannot be deleted, a yellow warning icon is shown
           * and the prompt has a different message and no action buttons.
           */
+          hidden: computed('', function() {
+            return hideRemove;
+          }),
           classNames: computed('model.active_regitries', function(){
             return can_remove(this) ? '': 'md-icon-warning';
           }),
@@ -175,7 +178,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
   };
 };
 
-function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFields) {
+function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, hideRemove) {
 
   return field('members', {
     formComponent: 'apella-members-edit-field',
@@ -208,8 +211,8 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFie
     },
     // a list-like gen config
     label: null,
-    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView),
-    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView),
+    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView, hideRemove),
+    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, hideRemove),
     modelName: 'professor',
     displayComponent: 'gen-display-field-table',
     dialog: {
@@ -318,7 +321,7 @@ export default ApellaGen.extend({
       }
     }, {
       label: 'registry.members_section.title',
-      fields: [membersField(false, true, false)]
+      fields: [membersField(false, true, false, false)]
     }]
   },
 
@@ -414,7 +417,7 @@ export default ApellaGen.extend({
       ]
     }, {
       label: 'registry.members_section.title',
-      fields: [membersField(true, true)]
+      fields: [membersField(true, true, undefined, true)]
     }]
   },
   edit: {
@@ -455,7 +458,7 @@ export default ApellaGen.extend({
       ]
     }, {
       label: 'registry.members_section.title',
-      fields: [membersField(true, true, false)]
+      fields: [membersField(true, true, false, false)]
     }]
   }
 });
