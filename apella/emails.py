@@ -723,6 +723,6 @@ def send_release_shibboleth_email(user, request):
     }
     send_user_email(
         user,
-        'password_reset_email_subject.txt',
-        'password_reset_email_body.txt',
+        'apella/emails/password_reset_email_subject.txt',
+        'apella/emails/password_reset_email_body.txt',
         extra)
