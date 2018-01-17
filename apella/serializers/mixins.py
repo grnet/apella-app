@@ -20,8 +20,11 @@ def user_application_cannot_create_position(instance):
     """
     Returns true if there exists at least one not cancelled latest position
     with approved user_application whose user and app_type are the same as
-    the instance application.
+    the instance application or user application is in pending state.
     """
+    if instance.state == 'pending':
+        return True
+
     approved_apps = UserApplication.objects.filter(
         user=instance.user,
         app_type=instance.app_type,
