@@ -110,6 +110,7 @@ PERMISSION_RULES = [
     ('candidacies', 'upload', 'professor', 'self_evaluation_report', 'one_before_electors_meeting', ''),
     ('candidacies', 'upload', 'professor', 'attachment_files', 'one_before_electors_meeting', ''),
     ('candidacies', 'upload', 'helpdeskadmin', '*', '*', ''),
+    ('candidacies', 'upgrade_role', 'helpdeskadmin', '*', '*', ''),
     ('candidates', 'list', 'helpdeskadmin', '*', '*', '5.1.2'),
     ('candidates', 'list', 'helpdeskuser', '*', '*', '5.1.2'),
     ('candidates', 'list', 'ministry', '*', '*', 'T2217'),

@@ -1,17 +1,23 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os
+import csv
+import re
 import logging
 from datetime import datetime, timedelta
+from time import strftime, gmtime
 
 from django.conf import settings
 from django.core.files import File
 from django.db import transaction
 from django.db.models import Min
+from django.db.utils import IntegrityError
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     ElectorParticipation, ApellaFile, generate_filename, Institution, \
-    Department, Professor
+    Department, Professor, ApellaUser
 from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -23,7 +29,7 @@ from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
     send_emails_members_change, send_position_create_emails
 from apella.util import at_day_end, at_day_start, otz, safe_path_join
-from apella.common import RANKS
+from apella.common import RANKS, RANKS_EL_EN
 
 logger = logging.getLogger(__name__)
 
@@ -504,3 +510,74 @@ def upgrade_candidate_to_professor(
     professor.user.save()
 
     return professor
+
+@transaction.atomic
+def upgrade_candidates_to_professors(csv_file, owner):
+    filename = 'upgradeCandidatesToProfessors_' + \
+        strftime("%Y%m%d_%H%M%S", gmtime()) + ".csv"
+    file_path = os.path.join(settings.MEDIA_ROOT, owner.username)
+    if not os.path.isdir(file_path):
+        os.makedirs(file_path)
+
+    f = os.path.join(file_path, filename)
+    with open(f, 'wb+') as destination:
+        for chunk in csv_file.chunks():
+            destination.write(chunk)
+
+    csv_reader = csv.reader(csv_file)
+
+    csv_iterator = iter(csv_reader)
+    for header in csv_iterator:
+        break
+    else:
+        raise serializers.ValidationError("no.csv.data")
+
+    output = []
+    try:
+        for user_id, last_name, first_name, father_name, department_id, \
+            email, rank, fek, fek_subject, subject_in_fek \
+                in csv_iterator:
+            try:
+                user = ApellaUser.objects.get(id=user_id)
+            except ApellaUser.DoesNotExist:
+                msg = "User %s does not exist" % user_id
+                output.append(msg)
+                continue
+
+            p_rank = [v for k, v in RANKS_EL_EN.items() if k == rank.strip()]
+            if not p_rank:
+                msg = "Rank error: %s" % rank
+                output.append(msg)
+                continue
+
+            try:
+                upgrade_candidate_to_professor(
+                        user,
+                        department=department_id,
+                        rank=p_rank[0],
+                        fek=fek,
+                        discipline_text=fek_subject,
+                        discipline_in_fek=bool(
+                            re.match('true', subject_in_fek, re.I)))
+            except serializers.ValidationError as ve:
+                msg = "Failed to upgrade user %r: %s" % (user_id, ve)
+                output.append(msg)
+                continue
+            except OSError as ose:
+                msg = "Failed to upgrade user %r: %s" % (user_id, ose)
+                output.append(msg)
+                continue
+            except IntegrityError:
+                msg = "User %r is already a professor" % user_id
+                output.append(msg)
+                continue
+
+            output.append("Upgraded user %r" % user_id)
+    except ValueError:
+        output = []
+        msg = "Incorrect csv file format, error in line %r" % \
+            csv_iterator.line_num
+        output.append(msg)
+
+    logger.info("Upgrade candidates to professors: %r" % output)
+    return output
