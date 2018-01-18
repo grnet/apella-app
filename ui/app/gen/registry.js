@@ -212,7 +212,7 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, hideRem
     // a list-like gen config
     label: null,
     modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView, hideRemove),
-    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, hideRemove),
+    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, true),
     modelName: 'professor',
     displayComponent: 'gen-display-field-table',
     dialog: {
