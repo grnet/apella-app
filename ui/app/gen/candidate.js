@@ -2,7 +2,7 @@ import {ApellaGen, emptyArrayResult} from 'ui/lib/common';
 import USER from 'ui/utils/common/users';
 import CANDIDATE from 'ui/utils/common/candidate';
 import {field} from 'ember-gen';
-import {rejectUser, verifyUser, requestProfileChanges, createIssue} from 'ui/utils/common/actions';
+import {rejectUser, verifyUser, requestProfileChanges, createIssue, upgradeRole} from 'ui/utils/common/actions';
 
 const {
   computed,
@@ -18,6 +18,10 @@ export default ApellaGen.extend({
     validators: USER.VALIDATORS,
   },
   list: {
+    actions: ['upgradeRole'],
+    actionsMap: {
+      upgradeRole: upgradeRole
+    },
     getModel(params) {
       params = params || {};
       /*
