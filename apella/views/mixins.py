@@ -1012,7 +1012,7 @@ class ApellaUsers(object):
         user.login_method = 'password'
         user.shibboleth_id = None
         user.shibboleth_idp = ''
-        user.shibooleth_schac_home_organization = ''
+        user.shibboleth_schac_home_organization = ''
         password = ApellaUser.objects.make_random_password(length=15)
         user.set_password(password)
         user.can_set_academic = True
