@@ -25,6 +25,7 @@
 25;ΘΕΟΛΟΓΙΑ ;THEOLOGY
 26;ΦΙΛΟΛΟΓΙΑ;PHILOLOGY
 27;ΕΠΙΣΤΗΜΗ ΤΩΝ ΥΛΙΚΩΝ;MATERIALS SCIENCE
+28;ΕΠΙΣΤΗΜΗ ΤΗΣ ΠΛΗΡΟΦΟΡΙΑΣ;INFORMATION SCIENCE
 1.1;ΓΕΝΙΚΗ ΛΟΓΙΚΗ ;GENERAL LOGIC
 1.2;ΠΑΡΑΓΩΓΙΚΗ ΛΟΓΙΚΗ                 ;DEDUCTIVE LOGIC
 1.3;ΜΑΘΗΜΑΤΙΚΗ (ΣΥΜΒΟΛΙΚΗ) ΛΟΓΙΚΗ;MATHEMATICAL (SYMBOLIC) LOGIC
@@ -498,3 +499,4 @@
 27.14;ΥΛΙΚΑ ΓΙΑ ΒΙΟΪΑΤΡΙΚΕΣ ΕΦΑΡΜΟΓΕΣ;MATERIALS FOR BIOMEDICAL APPLICATIONS
 27.15;ΤΕΧΝΟΛΟΓΙΚΕΣ ΕΦΑΡΜΟΓΕΣ ΤΗΣ ΕΠΙΣΤΗΜΗΣ ΤΩΝ ΥΛΙΚΩΝ;TECHNOLOGICAL APPLICATIONS OF MATERIALS SCIENCE
 27.16;ΔΙΑΘΕΜΑΤΙΚΕΣ ΠΕΡΙΟΧΕΣ ΤΗΣ ΕΠΙΣΤΗΜΗΣ ΤΩΝ ΥΛΙΚΩΝ;INTERDISCIPLINARY AREAS OF MATERIALS SCIENCE
+28.1;ΒΙΒΛΙΟΘΗΚΟΝΟΜΙΑ;LIBRARY SCIENCE
