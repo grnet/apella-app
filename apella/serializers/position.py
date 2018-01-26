@@ -149,7 +149,7 @@ class PositionMixin(ValidatorMixin):
             validate_subject_fields(data)
             ranks = self.context.get('request').data.get('ranks', [])
             if not ranks:
-                raise ValidationError('ranks.required')
+                raise serializers.ValidationError('ranks.required')
 
         position_type = 'election'
         if user_application is not None:
