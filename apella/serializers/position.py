@@ -536,6 +536,7 @@ def upgrade_candidates_to_professors(csv_file, owner):
         raise serializers.ValidationError("no.csv.data")
 
     output = []
+    success = True
     try:
         for user_id, last_name, first_name, father_name, department_id, \
             email, rank, fek, fek_subject, subject_in_fek \
@@ -545,12 +546,14 @@ def upgrade_candidates_to_professors(csv_file, owner):
             except ApellaUser.DoesNotExist:
                 msg = "User %s does not exist" % user_id
                 output.append(msg)
+                success = False
                 continue
 
             p_rank = [v for k, v in RANKS_EL_EN.items() if k == rank.strip()]
             if not p_rank:
                 msg = "Rank error: %s" % rank
                 output.append(msg)
+                success = False
                 continue
 
             try:
@@ -565,14 +568,17 @@ def upgrade_candidates_to_professors(csv_file, owner):
             except serializers.ValidationError as ve:
                 msg = "Failed to upgrade user %r: %s" % (user_id, ve)
                 output.append(msg)
+                success = False
                 continue
             except OSError as ose:
                 msg = "Failed to upgrade user %r: %s" % (user_id, ose)
                 output.append(msg)
+                success = False
                 continue
             except IntegrityError:
                 msg = "User %r is already a professor" % user_id
                 output.append(msg)
+                success = False
                 continue
 
             output.append("Upgraded user %r" % user_id)
@@ -581,6 +587,7 @@ def upgrade_candidates_to_professors(csv_file, owner):
         msg = "Incorrect csv file format, error in line %r" % \
             csv_iterator.line_num
         output.append(msg)
+        success = False
 
     logger.info("Upgrade candidates to professors: %r" % output)
-    return output
+    return output, success

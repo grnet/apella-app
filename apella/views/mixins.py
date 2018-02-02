@@ -568,11 +568,12 @@ class CandidacyList(object):
 
         owner = request.user
         try:
-            errors = upgrade_candidates_to_professors(file_upload, owner)
+            errors, success = \
+                upgrade_candidates_to_professors(file_upload, owner)
         except ValidationError as ve:
             return Response(ve.detail, status=status.HTTP_400_BAD_REQUEST)
 
-        if errors:
+        if not success:
             return Response(errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_200_OK)
