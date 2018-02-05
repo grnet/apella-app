@@ -17,7 +17,7 @@ from rest_framework import serializers
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     ElectorParticipation, ApellaFile, generate_filename, Institution, \
-    Department, Professor, ApellaUser
+    Department, Professor, ApellaUser, Candidate
 from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -541,10 +541,19 @@ def upgrade_candidates_to_professors(csv_file, owner):
         for user_id, last_name, first_name, father_name, department_id, \
             email, rank, fek, fek_subject, subject_in_fek \
                 in csv_iterator:
+
             try:
                 user = ApellaUser.objects.get(id=user_id)
             except ApellaUser.DoesNotExist:
                 msg = "User %s does not exist" % user_id
+                output.append(msg)
+                success = False
+                continue
+
+            try:
+                canidate = Candidate.objects.get(user=user)
+            except Candidate.DoesNotExist:
+                msg = "User %s is not a candidate" % user_id
                 output.append(msg)
                 success = False
                 continue
