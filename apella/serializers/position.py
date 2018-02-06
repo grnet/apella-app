@@ -535,8 +535,8 @@ def upgrade_candidates_to_professors(csv_file, owner):
     else:
         raise serializers.ValidationError("no.csv.data")
 
-    output = []
-    success = True
+    errors = []
+    success = []
     try:
         for user_id, last_name, first_name, father_name, department_id, \
             email, rank, fek, fek_subject, subject_in_fek \
@@ -546,23 +546,20 @@ def upgrade_candidates_to_professors(csv_file, owner):
                 user = ApellaUser.objects.get(id=user_id)
             except ApellaUser.DoesNotExist:
                 msg = "User %s does not exist" % user_id
-                output.append(msg)
-                success = False
+                errors.append(msg)
                 continue
 
             try:
                 canidate = Candidate.objects.get(user=user)
             except Candidate.DoesNotExist:
                 msg = "User %s is not a candidate" % user_id
-                output.append(msg)
-                success = False
+                errors.append(msg)
                 continue
 
             p_rank = [v for k, v in RANKS_EL_EN.items() if k == rank.strip()]
             if not p_rank:
                 msg = "Rank error: %s" % rank
-                output.append(msg)
-                success = False
+                errors.append(msg)
                 continue
 
             try:
@@ -576,27 +573,24 @@ def upgrade_candidates_to_professors(csv_file, owner):
                             re.match('true', subject_in_fek, re.I)))
             except serializers.ValidationError as ve:
                 msg = "Failed to upgrade user %r: %s" % (user_id, ve)
-                output.append(msg)
-                success = False
+                errors.append(msg)
                 continue
             except OSError as ose:
                 msg = "Failed to upgrade user %r: %s" % (user_id, ose)
-                output.append(msg)
-                success = False
+                errors.append(msg)
                 continue
             except IntegrityError:
                 msg = "User %r is already a professor" % user_id
-                output.append(msg)
-                success = False
+                errors.append(msg)
                 continue
 
-            output.append("Upgraded user %r" % user_id)
+            success.append("Upgraded user %r" % user_id)
     except ValueError:
-        output = []
         msg = "Incorrect csv file format, error in line %r" % \
             csv_iterator.line_num
-        output.append(msg)
-        success = False
+        errors.append(msg)
 
-    logger.info("Upgrade candidates to professors: %r" % output)
-    return output, success
+    logger.info(
+        "Upgrade candidates to professors: failed: %r, succeeded %r" %
+        (errors, success))
+    return errors, success
