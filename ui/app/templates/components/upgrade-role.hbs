@@ -22,24 +22,24 @@
   <input type="file" onchange={{ action "handleFile" }} style="display: none" class="file-input"/>
 
   <div class="md-errors-spacer"></div>
-  {{#if errors.length }}
+  {{#if errorsA.length }}
   <div class="md-input-messages-animation md-auto-hide" ng-messages>
-    {{#each errors as |error index|}}
-      <div
-        id="error-{{index}}"
-        class="md-input-error no-position">
-        {{error}}
-      </div>
+    <ul>
+    {{#each errorsA as |msg|}}
+      <li>{{msg}}</li>
     {{/each}}
+    </ul>
   </div>
   {{/if}}
 
 
-  {{#if success}}
-  <div class="md-auto-hide">
-    <div class="md-input-success">
-      {{success}}
-    </div>
+  {{#if successA.length}}
+  <div class="md-input-success">
+    <ul>
+    {{#each successA as |msg|}}
+      <li>{{msg}}</li>
+    {{/each}}
+    </ul>
   </div>
   {{/if}}
 

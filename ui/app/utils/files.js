@@ -35,6 +35,30 @@ function uploadFile(file, url, token, file_data_key='file_upload') {
   })
 }
 
+function uploadFileForUpgrade(file, url, token, file_data_key='file_upload') {
+  let data = new FormData();
+  data.append(file_data_key, file.file);
+
+  Object.keys(file).forEach((key) => {
+    if (key !== file_data_key) {
+      data.append(key, file[key]);
+    }
+  });
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+    body: data
+  }).then((resp) => {
+      return resp.json().then((jresp) => {
+        throw jresp;
+      })
+  })
+}
+
 
 function uploadFiles(files, url, token) {
   // TODO: support for multiple uploads?
@@ -48,4 +72,4 @@ function getFile(content, key) {
 }
 
 
-export { uploadFile, uploadFiles, getFile };
+export { uploadFile, uploadFiles, getFile, uploadFileForUpgrade };
