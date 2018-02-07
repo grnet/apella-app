@@ -177,7 +177,6 @@ export default ApellaGen.extend({
             // only helpdesk can disable/enable professors
             res.splice(5,2);
           }
-          console.log(res, 'afeter');
           return res;
         }),
         actionsMap: {
