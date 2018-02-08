@@ -592,6 +592,22 @@ const change_password = {
   }
 };
 
+const upgradeRole = {
+  label: 'upgradeRole',
+  confirm: true,
+  icon: 'verified_user',
+  classNames: 'md-icon-success',
+  action: function() {},
+  hidden: computed('role', function(){
+    return get(this, 'role') !== 'helpdeskadmin';
+  }),
+  prompt: {
+    noControls: true,
+    title: 'prompt.upgradeRole.title',
+    contentComponent: 'upgrade-role'
+  }
+};
+
 // Applications
 
 const acceptApplication = {
@@ -921,6 +937,7 @@ const enableProfessor = {
 
 
 
+
 let positionActions = {
   cancelPosition: cancelPosition,
   setElecting: setElecting,
@@ -957,6 +974,7 @@ export { goToDetails, applyCandidacy,
   exportProf,
   exportPositions,
   exportRegistries,
-  professorActions
+  professorActions,
+  upgradeRole
 };
 

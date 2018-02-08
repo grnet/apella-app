@@ -192,3 +192,14 @@ POSITION_STATES_EL = {
         "cancelled": "Ακυρωθείσα",
         "revoked": "Αναπομπή"
 }
+
+RANKS_EL_EN = {
+        'ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Assistant Professor',
+        'ΛΕΚΤΟΡΑΣ': 'Lecturer',
+        'ΕΠΙ ΘΗΤΕΙΑ ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Tenured Assistant Professor',
+        'ΑΝΑΠΛΗΡΩΤΗΣ ΚΑΘΗΓΗΤΗΣ': 'Associate Professor',
+        'ΚΑΘΗΓΗΤΗΣ': 'Professor',
+        'ΚΥΡΙΟΣ ΕΡΕΥΝΗΤΗΣ': 'Principal Researcher',
+        'ΕΝΤΕΤΑΛΜΕΝΟΣ ΕΡΕΥΝΗΤΗΣ': 'Affiliated Researcher',
+        'ΔΙΕΥΘΥΝΤΗΣ ΕΡΕΥΝΩΝ': 'Research Director'
+}

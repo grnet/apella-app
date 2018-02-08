@@ -29,7 +29,7 @@ from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD, RANKS_EL, POSITION_STATES_EL
 from apella import auth_hooks
 from apella.serializers.position import link_files, \
-    upgrade_candidate_to_professor
+    upgrade_candidate_to_professor, upgrade_candidates_to_professors
 from apella.emails import send_user_email, send_emails_file, \
     send_emails_members_change, send_disable_professor_emails, \
     send_release_shibboleth_email
@@ -558,6 +558,29 @@ class CandidacyList(object):
         if code != str(candidacy.id):
             return Response(status=status.HTTP_403_FORBIDDEN)
         return super(CandidacyList, self).update(request, pk=None)
+
+    @list_route(methods=['POST'])
+    def upgrade_role(self, request, pk=None):
+
+        file_upload = request.FILES.get('file_upload', None)
+        if not file_upload:
+            return Response('no.csv.file', status=status.HTTP_400_BAD_REQUEST)
+
+        owner = request.user
+        try:
+            errors, success = \
+                upgrade_candidates_to_professors(file_upload, owner)
+        except ValidationError as ve:
+            return Response(
+                {'errors': ve.detail}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not errors:
+            return Response(
+                {'success': success}, status=status.HTTP_200_OK)
+        else:
+            return Response(
+                {'errors': errors, 'success': success},
+                    status=status.HTTP_409_CONFLICT)
 
 
 class RegistriesList(viewsets.GenericViewSet):

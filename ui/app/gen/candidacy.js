@@ -324,8 +324,6 @@ export default ApellaGen.extend({
     }
   },
   list: {
-    actions: [],
-
     getModel: function(params) {
       let role = get(this, 'session.session.authenticated.role');
       if (role === 'candidate' || role === 'professor') {
