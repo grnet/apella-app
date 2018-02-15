@@ -93,7 +93,8 @@ class Professor(object):
                 'Υπάρχει URL Βιογραφικού', 'URL Βιογραφικού',
                 'Γνωστικό Αντικείμενο', 'Υπάρχει Γνωστικό Αντικείμενο στο ΦΕΚ',
                 'ΦΕΚ Διορισμού', 'Ομιλεί Ελληνικά',
-                'Έχει αποδεχτεί τους όρους συμμετοχής']
+                'Έχει αποδεχτεί τους όρους συμμετοχής',
+                'Συμμετοχές']
 
         k = 0
         for field in fields:
@@ -210,7 +211,8 @@ class Professor(object):
                         if p.speaks_greek else 'ΟΧΙ'.decode('utf-8'),
                     'ΝΑΙ'.decode('utf-8') \
                         if p.user.has_accepted_terms \
-                        else 'ΟΧΙ'.decode('utf-8')
+                        else 'ΟΧΙ'.decode('utf-8'),
+                    p.active_elections
                 ]
             write_row(ws, row, i)
             i += 1
