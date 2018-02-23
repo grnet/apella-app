@@ -414,20 +414,18 @@ def get_professor_registries(instance):
         'position__code').annotate(Min('position_id')).values_list(
         'position_id__min', flat=True)
     electors_list = list(electors_positions)
-    electors_positions = Position.objects.filter(id__in=electors_list)
 
     committee_positions = instance.committee_duty.values(
         'code').annotate(Min('id')).values_list(
         'id__min', flat=True)
     committee_list = list(committee_positions)
-    committee_positions = Position.objects.filter(id__in=committee_positions)
+
+    positions_list = electors_list + committee_list
 
     for r in registries:
-        if electors_positions.filter(
+        if Position.objects.filter(
                 state__in=['electing', 'revoked'],
-                department=r.department).exists() or \
-                committee_positions.filter(
-                    state__in=['electing', 'revoked'],
-                    department=r.department).exists():
+                department=r.department,
+                id__in=positions_list).exists():
             active_registries.append(r.id)
     return active_registries
