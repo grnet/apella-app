@@ -571,21 +571,18 @@ class Professor(UserProfile, CandidateProfile):
         electors_positions = self.electorparticipation_set.values(
             'position__code').annotate(Min('position_id')).values_list(
                 'position_id__min', flat=True)
-        for p_id in electors_positions:
-            if Position.objects.filter(
-                    id=p_id,
-                    state__in=['electing', 'revoked']). \
-                    exists():
-                elector_count += 1
+        elector_count = Position.objects.filter(
+                    state__in=['electing', 'revoked'],
+                    id__in=electors_positions).count()
+
         committee_positions = self.committee_duty.values(
             'code').annotate(Min('id')).values_list(
                 'id__min', flat=True)
-        for p_id in committee_positions:
-            if Position.objects.filter(
-                    id=p_id,
-                    state__in=['electing', 'revoked']). \
-                    exists() and p_id not in electors_positions:
-                committee_count += 1
+        committee_count = Position.objects.filter(
+                    state__in=['electing', 'revoked'],
+                    id__in=committee_positions). \
+                    exclude(id__in=electors_positions).count()
+
         return elector_count + committee_count
 
     @property
