@@ -279,7 +279,7 @@ class CustomRegistrationView(djoser_views.RegistrationView,
         if resend_email:
             return self.resend_verification(request, resend_email)
 
-        user = request.data['user']
+        user = request.data.get('user', None)
         if not user:
             request.data['user'] = user = {}
 
