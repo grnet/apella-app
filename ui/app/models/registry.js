@@ -13,7 +13,7 @@ export default DS.Model.extend({
     normalize: function(hash, serializer) {
       delete hash.members;
       hash.links = {
-        members: ENV.APP.backend_host + '/registries/' + hash.id + '/members/?ordering=user__last_name__en&limit=1'
+        members: ENV.APP.backend_host + '/registries/' + hash.id + '/members/?ordering=user__last_name__en'
       };
       return hash;
     }
