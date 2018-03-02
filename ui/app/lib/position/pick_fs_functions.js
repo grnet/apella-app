@@ -129,6 +129,7 @@ const pick_details_fs = function() {
         return {
           candidate_id: candidacy.belongsTo('candidate').link().split('/').slice(-2)[0],
           candidacy_is_posted: (get(candidacy, 'state') === 'posted'),
+          updated_at_ms: Date.parse(get(candidacy, 'updated_at')),
           updated_at: get(candidacy, 'updated_at')
         };
       }
@@ -140,7 +141,11 @@ const pick_details_fs = function() {
      * first occurrence for each candidate is kept.
     */
 
-    candidacies = _.uniq(_.sortBy(candidacies, ['updated_at']).reverse(), 'candidate_id');
+    candidacies.sort(function (a, b) {
+        return b.updated_at_ms - a.updated_at_ms;
+    });
+
+    candidacies = _.uniq(candidacies, 'candidate_id');
     // remove undefined values from candidacies
     candidacies = _.compact(candidacies);
 
