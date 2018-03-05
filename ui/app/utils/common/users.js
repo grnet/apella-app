@@ -328,6 +328,11 @@ const serializeUser = function(json) {
   if (Object.keys(user_info).length) {
     json['user'] = user_info;
   }
+
+  if (json.hasOwnProperty('cv_in_url') && !json['cv_in_url']){
+      json['cv_url'] ='';
+  }
+
   return json;
 }
 
