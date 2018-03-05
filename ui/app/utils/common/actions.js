@@ -242,9 +242,10 @@ const setSuccessful = {
     });
   },
   permissions: [{action: 'edit'}],
-  hidden: computed('model.nomination_act', 'model.nomination_act_fek', 'model.state', function(){
+  hidden: computed('model.nomination_act', 'model.nomination_act_fek', 'model.state', 'model.elected.id', function(){
     let file = get(this, 'model.nomination_act');
     let fek = get(this, 'model.nomination_act_fek');
+    if (!get(this, 'model.elected.id')) { return true }
     return !(file && file.content && fek && get(this, 'model.state') === 'electing');
   }),
   confirm: true,
