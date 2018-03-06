@@ -1044,6 +1044,11 @@ class Registry(models.Model):
             can_create_registries=True).exists()
 
 
+class RegistryMembership(models.Model):
+    registry = models.ForeignKey(Registry, on_delete=models.PROTECT)
+    professor = models.ForeignKey(Professor, on_delete=models.PROTECT)
+
+
 class UserInterest(models.Model):
     user = models.ForeignKey(ApellaUser)
     area = models.ManyToManyField(SubjectArea, blank=True)

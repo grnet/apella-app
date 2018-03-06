@@ -419,7 +419,8 @@ class JiraIssues(object):
 
 def get_professor_registries(instance):
     active_registries = []
-    registries = instance.registry_set.all()
+    memberships = instance.registrymembership_set.values_list(
+        'registry_id', 'registry__department_id')
     electors_positions = instance.electorparticipation_set.values(
         'position__code').annotate(Min('position_id')).values_list(
         'position_id__min', flat=True)
@@ -432,10 +433,10 @@ def get_professor_registries(instance):
 
     positions_list = electors_list + committee_list
 
-    for r in registries:
+    for m in memberships:
         if Position.objects.filter(
                 state__in=['electing', 'revoked'],
-                department=r.department,
+                department=m[1],
                 id__in=positions_list).exists():
-            active_registries.append(r.id)
+            active_registries.append(m[0])
     return active_registries

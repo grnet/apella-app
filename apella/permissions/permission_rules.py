@@ -773,4 +773,8 @@ PERMISSION_RULES = [
     ('jira-issues', 'create', 'institutionmanager', '*', '*', ''),
     ('jira-issues', 'create', 'assistant', '*', '*', ''),
     ('jira-issues', 'create', 'unverified-user', '*', '*', ''),
+    ('registry-members', 'list', 'helpdeskadmin', '*', '*', ''),
+    ('registry-members', 'retrieve', 'helpdeskadmin', '*', '*', ''),
+    ('registry-members', 'create', 'helpdeskadmin', '*', '*', ''),
+    ('registry-members', 'destroy', 'helpdeskadmin', '*', '*', ''),
 ]

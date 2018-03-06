@@ -3511,3 +3511,36 @@ spec:
                 .create: {}
                 .update: {}
                 .retrieve: {}
+        registry-members:
+            .collection: {}
+            .drf_collection:
+                model: apella.models.RegistryMembership
+                filter_fields: [registry_id]
+            .cli_commands: {}
+            '*':
+                id:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .serial: {}
+                    .readonly: {}
+                url:
+                    .drf_field: {}
+                    .identity: {}
+                registry:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/registries
+                professor:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .ref:
+                        to: api/professors
+            .actions:
+                .list: {}
+                .create: {}
+                .update: {}
+                .retrieve: {}
