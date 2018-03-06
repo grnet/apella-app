@@ -283,7 +283,8 @@ class PositionMixin(ValidatorMixin):
 
         # send emails when electors_meeting_date is set/updated
         d1 = validated_data.get('electors_meeting_date', None)
-        if d1 and curr_position.state != 'revoked':
+        if d1 and curr_position.state != 'revoked' and \
+                instance.state != 'cancelled':
             d1 = d1.date()
             if not curr_position.electors_meeting_date:
                 send_emails_field(instance, 'electors_meeting_date')
@@ -295,7 +296,8 @@ class PositionMixin(ValidatorMixin):
         # send emails when electors_meeting_to_set_committee_date is
         # set/updated
         d2 = validated_data.get('electors_meeting_to_set_committee_date', None)
-        if d2 and curr_position.state != 'revoked':
+        if d2 and curr_position.state != 'revoked' \
+                and instance.state != 'cancelled':
             d2 = d2.date()
             if not curr_position.electors_meeting_to_set_committee_date:
                 send_emails_field(instance,
@@ -307,7 +309,7 @@ class PositionMixin(ValidatorMixin):
                     send_emails_field(instance,
                             'electors_meeting_to_set_committee_date', True)
 
-        if curr_position.state != 'revoked':
+        if curr_position.state != 'revoked' and instance.state != 'cancelled':
             new_committee = [p for p in instance.committee.all()]
             send_emails_members_change(instance, 'committee', {'c': old_committee},
                 {'c': new_committee})
