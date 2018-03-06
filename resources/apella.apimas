@@ -3531,14 +3531,333 @@ spec:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .ref:
-                        to: api/registries
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
+                        type:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['internal', 'external']
+                        department:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .required: {}
+                            .ref:
+                                to: api/departments
+                        registry_set_decision_file:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .readonly: {}
+                            .struct:
+                                id:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .integer: {}
+                                    .readonly: {}
+                                file_kind:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .choices:
+                                        allowed: ['cv']
+                                file_name:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                description:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .text: {}
+                                updated_at:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .datetime: {}
+                        members_count:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .readonly: {}
+                            .integer: {}
                 professor:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}
-                    .ref:
-                        to: api/professors
+                    .struct:
+                        id:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .serial: {}
+                            .readonly: {}
+                        url:
+                            .drf_field: {}
+                            .identity: {}
+                        active_elections:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .readonly: {}
+                            .integer: {}
+                        active_registries:
+                            .cli_option: {}
+                            .field: {}
+                            .string: {}
+                            .drf_field:
+                                onmodel: False
+                                instance_source: apella.serializers.mixins.get_professor_registries
+                        cv_professor:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .readonly: {}
+                            .struct:
+                                id:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .integer: {}
+                                    .readonly: {}
+                                file_kind:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .choices:
+                                        allowed: ['cv']
+                                file_name:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                description:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .text: {}
+                                updated_at:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .datetime: {}
+                        leave_file:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .readonly: {}
+                            .nullable: {}
+                            .struct:
+                                id:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .integer: {}
+                                    .readonly: {}
+                                file_kind:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .choices:
+                                        allowed: ['cv']
+                                file_name:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                description:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .text: {}
+                                updated_at:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .datetime: {}
+                        leave_starts_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .nullable: {}
+                            .datetime: {}
+                        leave_ends_at:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .nullable: {}
+                            .datetime: {}
+                        institution:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .nullable: {}
+                            .ref:
+                                to: api/institutions
+                        department:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .nullable: {}
+                            .ref:
+                                to: api/departments
+                        rank:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .choices:
+                                allowed: ['Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer', 'Tenured Assistant Professor', 'Research Director', 'Principal Researcher', 'Affiliated Researcher']
+                        institution_freetext:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .blankable: {}
+                            .string: {}
+                        is_foreign:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        speaks_greek:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        cv_url:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                        fek:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .string: {}
+                            .blankable: {}
+                        discipline_text:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .text: {}
+                            .blankable: {}
+                        discipline_in_fek:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .boolean: {}
+                        user:
+                            .cli_option: {}
+                            .field: {}
+                            .drf_field: {}
+                            .required: {}
+                            .struct:
+                                id:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .serial: {}
+                                    .readonly: {}
+                                username:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                email:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .email: {}
+                                    .required: {}
+                                first_name:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .struct:
+                                        el:
+                                            .cli_option: {}
+                                            .field: {}
+                                            .drf_field: {}
+                                            .string: {}
+                                            .required: {}
+                                        en:
+                                            .cli_option: {}
+                                            .field: {}
+                                            .drf_field: {}
+                                            .string: {}
+                                            .required: {}
+                                last_name:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .struct:
+                                        el:
+                                            .cli_option: {}
+                                            .field: {}
+                                            .drf_field: {}
+                                            .string: {}
+                                            .required: {}
+                                        en:
+                                            .cli_option: {}
+                                            .field: {}
+                                            .drf_field: {}
+                                            .string: {}
+                                            .required: {}
+                                father_name:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .struct:
+                                        el:
+                                            .cli_option: {}
+                                            .field: {}
+                                            .drf_field: {}
+                                            .string: {}
+                                            .required: {}
+                                        en:
+                                            .cli_option: {}
+                                            .field: {}
+                                            .drf_field: {}
+                                            .string: {}
+                                            .required: {}
+                                id_passport:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                mobile_phone_number:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                home_phone_number:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .string: {}
+                                    .required: {}
+                                role:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .choices:
+                                        allowed: ['professor']
+                                    .readonly: {}
             .actions:
                 .list: {}
                 .create: {}
