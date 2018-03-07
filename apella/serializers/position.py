@@ -89,15 +89,22 @@ def get_electors_sub_external(instance):
 
 
 def get_committee_internal(instance):
-    return instance.committee.filter(
-        registry__type='internal',
-        registry__department_id=instance.department.id).distinct()
+    internal = []
+    committee = instance.committee.all()
+    for professor in committee:
+        if professor.registry_set.filter(
+                department=instance.department,
+                type='internal').exists() or \
+                professor.department \
+                and professor.department is instance.department:
+            internal.append(professor)
+
+    return internal
 
 
 def get_committee_external(instance):
-    return instance.committee.filter(
-        registry__type='external',
-        registry__department_id=instance.department.id).distinct()
+    internal = get_committee_internal(instance)
+    return [ext for ext in instance.committee.all() if ext not in internal]
 
 
 def get_dep_number(data):
