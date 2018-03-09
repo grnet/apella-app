@@ -584,6 +584,30 @@ class Professor(UserProfile, CandidateProfile):
                     user.institutionmanager.departments.all()
         return False
 
+    @property
+    def active_registries(self):
+        active_registries = []
+        memberships = self.registrymembership_set.values_list(
+            'registry_id', 'registry__department_id')
+        electors_positions = self.electorparticipation_set.values(
+            'position__code').annotate(Min('position_id')).values_list(
+                'position_id__min', flat=True)
+        electors_list = list(electors_positions)
+
+        committee_positions = self.committee_duty.values(
+            'code').annotate(Min('id')).values_list(
+                'id__min', flat=True)
+        committee_list = list(committee_positions)
+        positions_list = electors_list + committee_list
+
+        for m in memberships:
+            if Position.objects.filter(
+                    state__in=['electing', 'revoked'],
+                    department=m[1],
+                    id__in=positions_list).exists():
+                active_registries.append(m[0])
+
+        return active_registries
 
     @property
     def active_elections(self):
