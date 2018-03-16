@@ -9,7 +9,8 @@ from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
 from apella.models import ApellaUser, Institution, Department, \
-    Position, Professor, InstitutionManager, JiraIssue, UserApplication
+    Position, Professor, InstitutionManager, JiraIssue, UserApplication, \
+    Registry, RegistryMembership
 from apella import auth_hooks
 from apella.util import move_to_timezone, otz
 from apella.emails import send_user_email, send_create_application_emails
@@ -440,3 +441,28 @@ def get_professor_registries(instance):
                 id__in=positions_list).exists():
             active_registries.append(m[0])
     return active_registries
+
+class RegistryMembers(object):
+    def create(self, validated_data):
+        data = self.context.get('request').data
+        professor_id = data.get('professor_id', None)
+        registry_id = data.get('registry_id', None)
+        if not professor_id:
+            raise ValidationError("professor.id.required")
+        if not registry_id:
+            raise ValidationError("registry.id.required")
+
+        try:
+            professor = Professor.objects.get(id=professor_id)
+        except Professor.DoesNotExist:
+            raise ValidationError("professor.not.found")
+
+        try:
+            registry = Registry.objects.get(id=registry_id)
+        except Registry.DoesNotExist:
+            raise ValidationError("registry.not.found")
+
+        rm = RegistryMembership.objects.create(
+            professor=professor, registry=registry)
+
+        return rm

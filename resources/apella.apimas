@@ -3514,6 +3514,7 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.RegistryMembership
+                model_serializers: [apella.serializers.mixins.RegistryMembers]
                 filter_fields: [registry_id]
             .cli_commands: {}
             '*':
@@ -3546,13 +3547,6 @@ spec:
                             .drf_field: {}
                             .choices:
                                 allowed: ['internal', 'external']
-                        department:
-                            .cli_option: {}
-                            .field: {}
-                            .drf_field: {}
-                            .required: {}
-                            .ref:
-                                to: api/departments
                         registry_set_decision_file:
                             .cli_option: {}
                             .field: {}
@@ -3760,7 +3754,6 @@ spec:
                             .cli_option: {}
                             .field: {}
                             .drf_field: {}
-                            .required: {}
                             .struct:
                                 id:
                                     .cli_option: {}
@@ -3768,18 +3761,6 @@ spec:
                                     .drf_field: {}
                                     .serial: {}
                                     .readonly: {}
-                                username:
-                                    .cli_option: {}
-                                    .field: {}
-                                    .drf_field: {}
-                                    .string: {}
-                                    .required: {}
-                                email:
-                                    .cli_option: {}
-                                    .field: {}
-                                    .drf_field: {}
-                                    .email: {}
-                                    .required: {}
                                 first_name:
                                     .cli_option: {}
                                     .field: {}
@@ -3790,13 +3771,11 @@ spec:
                                             .field: {}
                                             .drf_field: {}
                                             .string: {}
-                                            .required: {}
                                         en:
                                             .cli_option: {}
                                             .field: {}
                                             .drf_field: {}
                                             .string: {}
-                                            .required: {}
                                 last_name:
                                     .cli_option: {}
                                     .field: {}
@@ -3807,13 +3786,11 @@ spec:
                                             .field: {}
                                             .drf_field: {}
                                             .string: {}
-                                            .required: {}
                                         en:
                                             .cli_option: {}
                                             .field: {}
                                             .drf_field: {}
                                             .string: {}
-                                            .required: {}
                                 father_name:
                                     .cli_option: {}
                                     .field: {}
@@ -3824,31 +3801,26 @@ spec:
                                             .field: {}
                                             .drf_field: {}
                                             .string: {}
-                                            .required: {}
                                         en:
                                             .cli_option: {}
                                             .field: {}
                                             .drf_field: {}
                                             .string: {}
-                                            .required: {}
                                 id_passport:
                                     .cli_option: {}
                                     .field: {}
                                     .drf_field: {}
                                     .string: {}
-                                    .required: {}
                                 mobile_phone_number:
                                     .cli_option: {}
                                     .field: {}
                                     .drf_field: {}
                                     .string: {}
-                                    .required: {}
                                 home_phone_number:
                                     .cli_option: {}
                                     .field: {}
                                     .drf_field: {}
                                     .string: {}
-                                    .required: {}
                                 role:
                                     .cli_option: {}
                                     .field: {}
