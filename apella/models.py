@@ -1072,6 +1072,8 @@ class RegistryMembership(models.Model):
     registry = models.ForeignKey(Registry, on_delete=models.PROTECT)
     professor = models.ForeignKey(Professor, on_delete=models.PROTECT)
 
+    class Meta:
+        unique_together = (("registry", "professor"),)
 
 class UserInterest(models.Model):
     user = models.ForeignKey(ApellaUser)
