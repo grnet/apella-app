@@ -326,9 +326,6 @@ export default ApellaGen.extend({
       layout: {
         flex: [70, 30]
       }
-    }, {
-      label: 'registry.members_section.title',
-      fields: [membersField(false, true, false, false)]
     }]
   },
 
