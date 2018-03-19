@@ -1091,14 +1091,6 @@ spec:
                     .required: {}
                     .ref:
                         to: api/departments
-                members:
-                    .cli_option: {}
-                    .field: {}
-                    .drf_field: {}
-                    .required: {}
-                    .ref:
-                        to: api/professors
-                        many: True
                 file_upload:
                     .cli_option: {}
                     .field: {}
