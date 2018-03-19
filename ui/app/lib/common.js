@@ -194,11 +194,13 @@ function fileField(key, path, kind, attrs, formAttrs) {
   }, attrs || {}));
 }
 
+
 function get_registry_members(registry, store, params) {
   let registry_id = registry.get('id'),
-    query = assign({}, params, { id: registry_id, registry_members: true});
-  return preloadRelations(store.query('professor', query), 'department', 'institution');
-};
+      query = assign({}, params, {registry_id: registry_id});
+  let members = store.query('registry-member', query);
+  return preloadRelations(members, 'department', 'institution');
+}
 
 // Helper to resolve model relations along with store query entries.
 //
