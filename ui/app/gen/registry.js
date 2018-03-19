@@ -13,7 +13,7 @@ import {
 } from 'ui/lib/professors_quick_details';
 
 let {
-  computed, get, assign
+  computed, get, assign, set
 } = Ember;
 
 let fields_members_table = [
@@ -214,6 +214,13 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, hideRem
     modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView, hideRemove),
     selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, true),
     modelName: 'professor',
+    /*
+     * Hacky trick
+     * The component won't accept query for a model, unless
+     * type starts with "model-"
+     *
+     * */
+    type: 'model-hack',
     displayComponent: 'gen-display-field-table',
     dialog: {
       cancel: null,
@@ -426,7 +433,8 @@ export default ApellaGen.extend({
      * Use in the abilityState "owned".
      */
     getModel: function(params, model) {
-      return preloadRelations(model, 'department', 'members', 'department.institution');
+      set(model, 'members', {add: [], remove: []});
+      return model;
     },
     onSubmit(model) {
       this.refresh();
