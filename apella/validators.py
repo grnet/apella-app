@@ -128,6 +128,10 @@ def validate_tenure_candidacy(position, candidate):
 
 
 def validate_create_position_from_application(user_application):
+    if user_application.state == 'rejected':
+        raise ValidationError(
+            _('Cannot create position, application rejected'))
+
     positions = user_application.position_set.all()
     ids = positions.values('code').annotate(Min('id')). \
         values_list('id__min', flat=True)

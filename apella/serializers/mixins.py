@@ -22,7 +22,7 @@ def user_application_cannot_create_position(instance):
     with approved user_application whose user and app_type are the same as
     the instance application or user application is in pending state.
     """
-    if instance.state == 'pending':
+    if instance.state == 'pending' or instance.state == 'rejected':
         return True
 
     approved_apps = UserApplication.objects.filter(
