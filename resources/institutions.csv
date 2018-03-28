@@ -37,12 +37,12 @@
 101;ΑΚΑΔΗΜΙΑ ΑΘΗΝΩΝ;ACADEMY OF ATHENS;Research;1;https://login.academyofathens.gr/idp/shibboleth;academyofathens.gr
 102;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΔΗΜΟΣΙΑΣ ΔΙΟΙΚΗΣΗΣ & ΑΥΤΟΔΙΟΙΚΗΣΗΣ;NATIONAL SCHOOL OF PUBLIC ADMINISTRATION AND LOCAL GOVERNMENT;Research;0;;
 103;ΕΘΝΙΚΟ ΑΣΤΕΡΟΣΚΟΠΕΙΟ ΑΘΗΝΩΝ - ΕΑΑ ;NATIONAL OBSERVATORY OF ATHENS - NOA;Research;1;https://login.noa.gr/idp/shibboleth;noa.gr
-104;"ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ ΦΥΣΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ""ΔΗΜΟΚΡΙΤΟΣ""";"NATIONAL CENTRE OF SCIENTIFIC RESEARCH ""DEMOKRITOS""";Research;1;https://idp.ariadne-t.gr/idp/shibboleth;demokritos.gr
+104;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ ΦΥΣΙΚΩΝ ΕΠΙΣΤΗΜΩΝ "ΔΗΜΟΚΡΙΤΟΣ";NATIONAL CENTRE OF SCIENTIFIC RESEARCH "DEMOKRITOS";Research;1;https://idp.ariadne-t.gr/idp/shibboleth;demokritos.gr
 105;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΚΟΙΝΩΝΙΚΩΝ ΕΡΕΥΝΩΝ - ΕΚΚΕ;NATIONAL CENTRE FOR SOCIAL RESEARCH (EKKE);Research;0;;
 106;ΕΛΛΗΝΙΚΟ ΚΕΝΤΡΟ ΘΑΛΑΣΣΙΩΝ ΕΡΕΥΝΩΝ - ΕΛΚΕΘΕ ;HELLENIC CENTRE FOR MARINE RESEARCH - HCMR;Research;1;https://aai-logon.hcmr.gr/idp/shibboleth;hcmr.gr
 107;ΙΝΣΤΙΤΟΥΤΟ ΤΕΧΝΙΚΗΣ ΣΕΙΣΜΟΛΟΓΙΑΣ & ΑΝΤΙΣΕΙΣΜΙΚΩΝ ΚΑΤΑΣΚΕΥΩΝ – ΙΤΣΑΚ ;INSTITUTE OF ENGINEERING SEISMOLOGY & EARTHQUAKE ENGINEERING (ITSAK);Research;1;https://login.itsak.gr/idp/shibboleth;itsak.gr
 108;ΓΕΩΡΓΙΚΗ ΚΑΙ ΒΙΟΤΕΧΝΙΚΗ ΣΧΟΛΗ ;AMERICAN FARM SCHOOL;Research;0;;
-109;"Ε.Π.Ι. "" ΝΕΥΡΟΧΕΙΡΟΥΡΓΙΚΟ ""  - ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ";NEUROSURGICAL INSTITUTE - UNIVERSITY OF IOANNINA;Research;0;;
+109;Ε.Π.Ι. ΝΕΥΡΟΧΕΙΡΟΥΡΓΙΚΟ - ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;NEUROSURGICAL INSTITUTE - UNIVERSITY OF IOANNINA;Research;0;;
 110;Ε.Π.Ι. ΑΣΤΙΚΟΥ ΠΕΡΙΒΑΛΛΟΝΤΟΣ ΚΑΙ ΑΝΘΡΩΠΙΝΟΥ ΔΥΝΑΜΙΚΟΥ - ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;RESEARCH INSTITUTE OF URBAN ENVIRONMENT AND HUMAN RESOURCES - PANTEION UNIVERSITY OF ATHENS;Research;0;;
 111;Ε.Π.Ι. ΔΙΕΘΝΩΝ ΣΧΕΣΕΩΝ  -  ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;INSTITUTE OF INTERNATIONAL RELATIONS OF PANTEION UNIVERSITY;Research;0;;
 112;Ε.Π.Ι. ΔΙΚΟΝΟΜΙΚΩΝ ΜΕΛΕΤΩΝ  - ΕΚΠΑ;RESEARCH INSTITUTE OF PROCEDURAL STUDIES - UOA;Research;0;;
@@ -61,11 +61,11 @@
 125;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ, ΠΡΟΛΗΨΗΣ ΚΑΙ ΘΕΡΑΠΕΙΑΣ ΤΟΥ ΣΑΚΧΑΡΩΔΗ ΔΙΑΒΗΤΗ ΚΑΙ ΤΩΝ ΕΠΙΠΛΟΚΩΝ ΤΟΥ (Ε.ΚΕ.ΔΙ.);HELLENIC NATIONAL CENTER FOR THE RESEARCH, PREVENTION AND TREATMENT OF DIABETES MELLITUS AND ITS COMPLICATIONS (H.N.D.C.);Research;0;;
 126;ΕΘΝΙΚΟ ΙΔΡΥΜΑ ΕΡΕΥΝΩΝ ;NATIONAL HELLENIC RESEARCH FOUNDATION (NHRF);Research;1;https://idp.eie.gr/idp/shibboleth;eie.gr
 127;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ & ΤΕΧΝΟΛΟΓΙΚΗΣ ΑΝΑΠΤΥΞΗΣ – ΕΚΕΤΑ;CENTRE FOR RESEARCH & TECHNOLOGY HELLAS;Research;1;https://aai.certh.gr/idp/shibboleth;certh.gr
-128;ΕΛΛΗΝΙΚΟ ΙΝΣΤΙΤΟΥΤΟ ΠΑΣΤΕΡ - ΕΙΠ ;HELLENIC PASTEUR INSTITUTE (HPI);Research;0;;
+128;ΕΛΛΗΝΙΚΟ ΙΝΣΤΙΤΟΥΤΟ ΠΑΣΤΕΡ - ΕΙΠ ;HELLENIC PASTEUR INSTITUTE (HPI);Research;1;https://idp.pasteur.gr/idp/shibboleth;pasteur.gr
 129;ΕΛΛΗΝΙΚΟ ΙΝΣΤΙΤΟΥΤΟ ΥΓΙΕΙΝΗΣ & ΑΣΦΑΛΕΙΑΣ ΤΗΣ ΕΡΓΑΣΙΑΣ ;HELLENIC INSTITUTE FOR OCCUPATIONAL HEALTH AND SAFETY ;Research;1;https://shib.elinyae.gr/idp/shibboleth;elinyae.gr
 130;ΕΛΛΗΝΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ ΤΥΠΟΠΟΙΗΣΗΣ ;HELLENIC ORGANIZATION FOR STANDARDIZATION (ELOT);Research;0;;
-132;"ΕΡΕΥΝΗΤΙΚΟ ΚΕΝΤΡΟ ΒΙΟΙΑΤΡΙΚΩΝ ΕΠΙΣΤΗΜΩΝ - ΕΚEΒΕ ""ΑΛΕΞΑΝΔΡΟΣ ΦΛΕΜΙΓΚ""";"BIOMEDICAL SCIENCES RESEARCH CENTER ""ALEXANDER FLEMING""";Research;1;https://idpro.fleming.gr/idp/shibboleth;fleming.gr
-133;"ΕΡΕΥΝΗΤΙΚΟ ΚΕΝΤΡΟ ΚΑΙΝΟΤΟΜΙΑΣ ΣΤΙΣ ΤΕΧΝΟΛΟΓΙΕΣ ΤΗΣ ΠΛΗΡΟΦΟΡΙΑΣ, ΤΩΝ ΕΠΙΚΟΙΝΩΝΙΩΝ & ΤΗΣ ΓΝΩΣΗΣ - ""ΑΘΗΝΑ"" ";ATHENA RESEARCH AND INNOVATION CENTER IN INFORMATION, COMMUNICATION AND KNOWLEDGE TECHNOLOGIES;Research;1;https://login.athena-innovation.gr/idp/shibboleth;athena-innovation.gr
+132;ΕΡΕΥΝΗΤΙΚΟ ΚΕΝΤΡΟ ΒΙΟΙΑΤΡΙΚΩΝ ΕΠΙΣΤΗΜΩΝ - ΕΚEΒΕ "ΑΛΕΞΑΝΔΡΟΣ ΦΛΕΜΙΓΚ";BIOMEDICAL SCIENCES RESEARCH CENTER "ALEXANDER FLEMING";Research;1;https://idpro.fleming.gr/idp/shibboleth;fleming.gr
+133;ΕΡΕΥΝΗΤΙΚΟ ΚΕΝΤΡΟ ΚΑΙΝΟΤΟΜΙΑΣ ΣΤΙΣ ΤΕΧΝΟΛΟΓΙΕΣ ΤΗΣ ΠΛΗΡΟΦΟΡΙΑΣ, ΤΩΝ ΕΠΙΚΟΙΝΩΝΙΩΝ & ΤΗΣ ΓΝΩΣΗΣ - "ΑΘΗΝΑ";ATHENA RESEARCH AND INNOVATION CENTER IN INFORMATION, COMMUNICATION AND KNOWLEDGE TECHNOLOGIES;Research;1;https://login.athena-innovation.gr/idp/shibboleth;athena-innovation.gr
 134;ΙΔΡΥΜΑ ΕΥΓΕΝΙΔΟΥ;EUGENIDES FOUNDATION;Research;1;https://login.eugenfound.edu.gr/idp/shibboleth;eugenfound.edu.gr
 135;ΙΔΡΥΜΑ ΙΑΤΡΟΒΙΟΛΟΓΙΚΩΝ ΕΡΕΥΝΩΝ ΑΚΑΔΗΜΙΑΣ ΑΘΗΝΩΝ;BIOMEDICAL RESEARCH FOUNDATION ACADEMY OF ATHENS (BRFAA);Research;1;https://idp.bioacademy.gr/idp/shibboleth;bioacademy.gr
 136;ΙΔΡΥΜΑ ΜΕΙΖΟΝΟΣ ΕΛΛΗΝΙΣΜΟΥ;FOUNDATION OF THE HELLENIC WORLD;Research;0;;
@@ -79,6 +79,7 @@
 144;ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ ΓΙΑ ΘΕΜΑΤΑ ΙΣΟΤΗΤΑΣ ;RESEARCH CENTER FOR GENDER EQUALITY;Research;0;;
 146;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΤΕΚΜΗΡΙΩΣΗΣ (ΕΚΤ);NATIONAL DOCUMENTATION CENTRE;Research;1;https://idp.ekt.gr/idp/shibboleth;ekt.gr
 147;ΕΥΡΩΠΑΪΚΟ ΚΕΝΤΡΟ ΓΙΑ ΤΗΝ ΑΝΑΠΤΥΞΗ ΤΗΣ ΕΠΑΓΓΕΛΜΑΤΙΚΗΣ ΚΑΤΑΡΤΙΣΗΣ;EUROPEAN CENTRE FOR THE DEVELOPMENT OF VOCATIONAL TRAINING;Research;1;https://giant.cedefop.europa.eu/idp/shibboleth;cedefop.europa.eu
-148;"ΙΝΣΤΙΤΟΥΤΟ ΤΕΧΝΟΛΟΓΙΑΣ ΥΠΟΛΟΓΙΣΤΩΝ & ΕΚΔΟΣΕΩΝ (ΙΤΥΕ ""ΔΙΟΦΑΝΤΟΣ"")";"COMPUTER TECHNOLOGY INSTITUTE AND PRESS ""DIOPHANTUS""";Research;1;https://idp.cti.gr/idp/shibboleth;cti.gr
-149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";Research;1;https://login.nagref-cha.gr/idp/shibboleth;elgo.gr
+148;ΙΝΣΤΙΤΟΥΤΟ ΤΕΧΝΟΛΟΓΙΑΣ ΥΠΟΛΟΓΙΣΤΩΝ & ΕΚΔΟΣΕΩΝ (ΙΤΥΕ "ΔΙΟΦΑΝΤΟΣ");COMPUTER TECHNOLOGY INSTITUTE AND PRESS "DIOPHANTUS";Research;1;https://idp.cti.gr/idp/shibboleth;cti.gr
+149;ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - "ΔΗΜΗΤΡΑ";HELLENIC AGRICULTURAL ORGANIZATION - "DEMETER";Research;1;https://login.nagref-cha.gr/idp/shibboleth;elgo.gr
 150;ΜΠΕΝΑΚΕΙΟ ΦΥΤΟΠΑΘΟΛΟΓΙΚΟ ΙΝΣΤΙΤΟΥΤΟ;BENAKI PHYTOPATHOLOGICAL INSTITUTE;Research;0;;
+151;ΠΑΝΕΠΙΣΤΗΜΙΟ ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ;UNIVERSITY OF WESTERN ATTICA;Institution;1;;
