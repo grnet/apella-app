@@ -275,6 +275,9 @@ class PositionMixin(ValidatorMixin):
                 instance.electors_meeting_to_set_committee_date = None
                 instance.electors_set_file = None
                 instance.revocation_decision = None
+                instance.nomination_proceedings = None
+                instance.proceedings_cover_letter = None
+                instance.nomination_act = None
                 instance.save()
 
 
