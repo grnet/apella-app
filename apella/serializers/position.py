@@ -178,7 +178,8 @@ class PositionMixin(ValidatorMixin):
                     before_today_validator(data['fek_posted_at'])
 
         data = super(PositionMixin, self).validate(data)
-        data['committee'] = committee
+        if committee:
+            data['committee'] = committee
 
         return data
 
@@ -319,7 +320,7 @@ class PositionMixin(ValidatorMixin):
                     send_emails_field(instance,
                             'electors_meeting_to_set_committee_date', True)
 
-        if curr_position.state != 'revoked' and instance.state != 'cancelled':
+        if curr_position.state == 'electing':
             new_committee = [p for p in instance.committee.all()]
             send_emails_members_change(instance, 'committee', {'c': old_committee},
                 {'c': new_committee})
