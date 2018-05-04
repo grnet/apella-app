@@ -279,6 +279,8 @@ class PositionMixin(ValidatorMixin):
                 instance.nomination_proceedings = None
                 instance.proceedings_cover_letter = None
                 instance.nomination_act = None
+                instance.elected = None
+                instance.second_best = None
                 instance.save()
 
 
