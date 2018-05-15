@@ -309,7 +309,7 @@ function prefixSelect(arr, prefix) {
  * current language.
  */
 
-function filterSelectSortTitles(modelName) {
+function filterSelectSortTitles(modelName, dataKey) {
   return field(modelName, {
     query: function(select, store, field, params) {
       let locale = get(select, 'i18n.locale'),
@@ -319,7 +319,8 @@ function filterSelectSortTitles(modelName) {
 
       return store.query(modelName, params);
     },
-    autocomplete: true
+    autocomplete: true,
+    dataKey: dataKey || modelName
   })
 };
 
