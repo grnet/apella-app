@@ -17,7 +17,7 @@ let {
 } = Ember;
 
 let fields_members_table = [
-    field('user_id', {type: 'string', dataKey: 'user__id'}),
+    field('user_id', {type: 'string', dataKey: 'professor__user__id'}),
     'old_user_id',
     i18nUserSortField('last_name', {label: 'last_name.label'}),
     i18nField('first_name', {label: 'first_name.label'}),
@@ -29,7 +29,7 @@ let fields_members_table = [
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
 function membersAllModelMeta(serverSide, hideQuickView, hideRemove) {
-   let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_current', 'first_name_current']),
+   let sortFields = (serverSide ? ['user_id'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text', 'old_user_id'] : ['last_name.el', 'last_name.en', 'discipline_text', 'old_user_id']);
 
   /* If current registry ID is included in the active registries list,
@@ -163,10 +163,10 @@ function membersAllModelMeta(serverSide, hideQuickView, hideRemove) {
       searchFields: searchFields,
       meta: {
         fields: [
-          field('user_id', {type: 'string'}),
-          filterSelectSortTitles('institution'),
-          departmentInstitutionFilterField('members_department'),
-          field('rank')
+          field('user_id', {type: 'string', dataKey: 'professor__user__id'}),
+          filterSelectSortTitles('institution', 'professor__institution'),
+          departmentInstitutionFilterField('professor__department'),
+          field('rank', { dataKey: 'professor__rank'})
         ]
       }
     },
