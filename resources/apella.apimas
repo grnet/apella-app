@@ -3507,7 +3507,8 @@ spec:
             .drf_collection:
                 model: apella.models.RegistryMembership
                 model_serializers: [apella.serializers.mixins.RegistryMembers]
-                filter_fields: [registry_id]
+                filter_fields: [registry_id, professor__user__id, professor__rank, professor__department, professor__institution]
+                ordering_fields: [professor__user__id]
             .cli_commands: {}
             '*':
                 id:
