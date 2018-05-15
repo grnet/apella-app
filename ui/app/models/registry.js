@@ -47,6 +47,11 @@ export default DS.Model.extend({
     let store = this.get('store');
     let membersToAdd = get(this, 'members.add');
     let membersToRemove = this.get('members.remove');
+    // If there are not member to add or remove, just
+    // save the model
+    if (!(membersToAdd || membersToRemove)) {
+      return this._internalModel.save(options);
+    }
 
     return DS.PromiseObject.create({
       promise: this.removeMembers(membersToRemove).then(()=> {
@@ -57,5 +62,6 @@ export default DS.Model.extend({
     });
 
   },
+
 
 });

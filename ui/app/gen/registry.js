@@ -244,6 +244,7 @@ export default ApellaGen.extend({
     owned: computed('model.institution.id', 'user.institution.id', function() {
       let registry_institution_id =  this.get('model.institution.id'),
         user_institution_id = get(this, 'user.institution').split('/').slice(-2)[0];
+      if (!registry_institution_id) { return true;}
       return registry_institution_id === user_institution_id;
     }),
     /*
@@ -273,7 +274,7 @@ export default ApellaGen.extend({
 
   create: {
     onSubmit(model) {
-      this.transitionTo('registry.record.edit.index', model);
+      this.transitionTo('registry.record.edit.index', model.id);
     },
     fieldsets: [{
       label: 'registry.main_section.title',
