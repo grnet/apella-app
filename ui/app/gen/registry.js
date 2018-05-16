@@ -28,7 +28,7 @@ let fields_members_table = [
 ];
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
-function membersAllModelMeta(serverSide, hideQuickView, hideRemove) {
+function membersAllModelMeta(serverSide, hideQuickView, hideRemove, type="member") {
    let sortFields = (serverSide ? ['user_id'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text', 'old_user_id'] : ['last_name.el', 'last_name.en', 'discipline_text', 'old_user_id']);
 
@@ -162,12 +162,25 @@ function membersAllModelMeta(serverSide, hideQuickView, hideRemove) {
       active: display,
       searchFields: searchFields,
       meta: {
-        fields: [
-          field('user_id', {type: 'string', dataKey: 'professor__user__id'}),
-          filterSelectSortTitles('institution', 'professor__institution'),
-          departmentInstitutionFilterField('professor__department'),
-          field('rank', { dataKey: 'professor__rank'})
-        ]
+        fields: computed('', ()  => {
+          if (type === 'member') {
+            return [
+              field('user_id', {type: 'string', dataKey: 'professor__user__id'}),
+              filterSelectSortTitles('institution', 'professor__institution'),
+              departmentInstitutionFilterField('professor__department'),
+              field('rank', { dataKey: 'professor__rank'})
+            ];
+          }
+          if (type === 'professor') {
+            return [
+              field('user_id', {type: 'string'}),
+              filterSelectSortTitles('institution'),
+              departmentInstitutionFilterField('department'),
+              field('rank')
+            ];
+          }
+          return [];
+        })
       }
     },
     sort: {
@@ -211,8 +224,8 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, hideRem
     },
     // a list-like gen config
     label: null,
-    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView, hideRemove),
-    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, true),
+    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView, hideRemove, "member"),
+    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, true, "professor"),
     modelName: 'professor',
     /*
      * Hacky trick
