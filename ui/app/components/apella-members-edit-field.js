@@ -47,6 +47,11 @@ export default TableSelectField.extend({
     },
 
     handleItemRemove(item, model) {
+      /*
+       * @param {route} item: registry record edit route (unused)
+       * @param {model} model: registry-member model to be removed
+       * */
+
       let removeMembers = get(this, 'removeMembers');
       let addMembers = get(this, 'addMembers');
       let value_remove = get(this, 'value.remove') || [];
