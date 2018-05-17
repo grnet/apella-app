@@ -65,8 +65,11 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
     refreshValueQuery: true,
     valueQuery: function(store, params, model, value) {
       model = model._content ? model._content : model;
-      let position_id = model.get('id'),
+      let code = model.get('code'),
         position_department = model.belongsTo('department').link();
+
+      let position_id = code.replace('APP', '');
+
       // no use of params for now
       let query = {
         position: position_id,
@@ -75,6 +78,9 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
       return store.query('candidacy', query).then(function(candidacies) {
         return candidacies.setEach('position_department', position_department)
       });
+
+
+
     },
     label: null,
     modelMeta: {
