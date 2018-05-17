@@ -442,6 +442,7 @@ def get_professor_registries(instance):
             active_registries.append(m[0])
     return active_registries
 
+
 class RegistryMembers(object):
     def create(self, validated_data):
         data = self.context.get('request').data
@@ -461,6 +462,11 @@ class RegistryMembers(object):
             registry = Registry.objects.get(id=registry_id)
         except Registry.DoesNotExist:
             raise ValidationError("registry.not.found")
+
+        if RegistryMembership.objects.filter(
+                professor_id=professor_id,
+                registry_id=registry_id).exists():
+            raise ValidationError("already.in.registry")
 
         rm = RegistryMembership.objects.create(
             professor=professor, registry=registry)
