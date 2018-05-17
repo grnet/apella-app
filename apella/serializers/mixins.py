@@ -464,9 +464,23 @@ class RegistryMembers(object):
             raise ValidationError("registry.not.found")
 
         if RegistryMembership.objects.filter(
-                professor_id=professor_id,
-                registry_id=registry_id).exists():
+                professor=professor,
+                registry=registry).exists():
             raise ValidationError("already.in.registry")
+
+        other_type = 'external' if registry.type == 'internal' \
+            else 'internal'
+        try:
+            other_registry = Registry.objects.get(
+                department=registry.department,
+                type=other_type)
+            if RegistryMembership.objects.filter(
+                    registry=other_registry,
+                    professor=professor).exists():
+                raise ValidationError("already.in.other.registry")
+
+        except Registry.DoesNotExist:
+            pass
 
         rm = RegistryMembership.objects.create(
             professor=professor, registry=registry)
