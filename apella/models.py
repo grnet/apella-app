@@ -1058,7 +1058,7 @@ class Registry(models.Model):
 
     @property
     def members_count(self):
-        return self.members.count()
+        return RegistryMembership.objects.filter(registry=self).count()
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
