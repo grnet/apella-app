@@ -1072,6 +1072,31 @@ class RegistryMembership(models.Model):
     registry = models.ForeignKey(Registry, on_delete=models.PROTECT)
     professor = models.ForeignKey(Professor, on_delete=models.PROTECT)
 
+    @classmethod
+    def check_collection_state_owned(self, row, request, view):
+        registry = Registry.objects.get(id=request.data['registry_id'])
+        departments = Department.objects.filter(
+            institution=request.user.institutionmanager.institution)
+        return registry.department in departments
+
+    def check_resource_state_owned(self, row, request, view):
+        departments = Department.objects.filter(
+            institution=request.user.institutionmanager.institution)
+        return self.registry.department in departments
+
+    @classmethod
+    def check_collection_state_can_create_owned(self, row, request, view):
+        assistant = request.user.institutionmanager
+        registry = Registry.objects.get(id=request.data['registry_id'])
+        departments = assistant.departments.all()
+        return registry.department in departments and \
+            assistant.can_create_registries
+
+    def check_resource_state_can_create_owned(self, row, request, view):
+        return self.registry.department in \
+            request.user.institutionmanager.departments.all() and \
+            request.user.institutionmanager.can_create_registries
+
 
 class UserInterest(models.Model):
     user = models.ForeignKey(ApellaUser)
