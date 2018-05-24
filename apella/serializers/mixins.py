@@ -349,6 +349,8 @@ class UserApplications(object):
         user = validated_data.get('user', None)
         if not user:
             user = self.context.get('request').user
+            if user.is_helpdesk():
+                raise ValidationError("user.missing")
             validated_data['user'] = user
         try:
             department = user.professor.department
@@ -358,8 +360,13 @@ class UserApplications(object):
         except Department.DoesNotExist:
             raise ValidationError("invalid.department")
 
+        if validated_data.get('app_type', '') == 'move' and \
+                self.context.get('request').user.is_helpdesk():
+            validated_data['state'] = 'approved'
+
         obj = super(UserApplications, self).create(validated_data)
-        send_create_application_emails(obj)
+        if not obj.is_move_type():
+            send_create_application_emails(obj)
         return obj
 
     def update(self, instance, validated_data):

@@ -721,6 +721,7 @@ PERMISSION_RULES = [
     ('positions-portal', 'list', 'anonymous', '*', '*', ''),
     ('positions-portal', 'retrieve', 'anonymous', '*', '*', ''),
     ('user-applications', 'create', 'professor', '*', 'can_create', ''),
+    ('user-applications', 'create', 'helpdeskadmin', '*', '*', ''),
     ('user-applications', 'list', 'helpdeskadmin', '*', '*', ''),
     ('user-applications', 'list', 'professor', '*', '*', ''),
     ('user-applications', 'list', 'helpdeskuser', '*', '*', ''),
