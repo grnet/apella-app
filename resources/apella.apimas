@@ -3312,7 +3312,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .choices:
-                        allowed: ['tenure', 'renewal']
+                        allowed: ['tenure', 'renewal', 'move']
                 state:
                     .cli_option: {}
                     .field: {}
@@ -3328,6 +3328,13 @@ spec:
                     .ref:
                         to: api/users
                 department:
+                    .cli_option: {}
+                    .field: {}
+                    .drf_field: {}
+                    .nullable: {}
+                    .ref:
+                        to: api/departments
+                receiving_department:
                     .cli_option: {}
                     .field: {}
                     .drf_field: {}

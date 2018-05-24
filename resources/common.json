@@ -95,7 +95,8 @@
 
     "APPLICATION_TYPES": [
         ["tenure", "Tenure"],
-        ["renewal", "Renewal"]
+        ["renewal", "Renewal"],
+        ["move", "Change Department"]
     ],
 
     "APPLICATION_STATES": [

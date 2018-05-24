@@ -665,14 +665,19 @@ class InstitutionManager(UserProfile):
 
 class UserApplication(models.Model):
     user = models.ForeignKey(ApellaUser)
-    department = models.ForeignKey(Department)
+    department = models.ForeignKey(Department, related_name='init_department')
     app_type = models.CharField(
         choices=common.APPLICATION_TYPES, max_length=30, default='tenure')
     state = models.CharField(
         choices=common.APPLICATION_STATES, max_length=30, default='pending')
     created_at = models.DateTimeField(default=datetime.utcnow)
     updated_at = models.DateTimeField(default=datetime.utcnow)
+    receiving_department = models.ForeignKey(
+        Department, related_name='receiving_department', null=True)
 
+
+    def is_move_type(self):
+        return self.app_type == 'move'
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
