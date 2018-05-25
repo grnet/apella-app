@@ -92,16 +92,28 @@ export default ApellaGen.extend({
         .then(function(user){
           return store.queryRecord('professor', {user_id: get(user, 'id')});
         })
-        .then(function(user){
+        .then(function(professor){
           return application.get('department');
         })
         .then(function(department) {
-          let p = store.createRecord('position', {
-            user_application: application,
-            department: department,
-            position_type: get(application, 'app_type')
-          });
-          return p;
+          if (get(application, 'app_type') === 'move')  {
+            return application.get('receiving_department').then(function(department) {
+              let p = store.createRecord('position', {
+                  user_application: application,
+                  department: department,
+                  position_type: get(application, 'app_type')
+                });
+                return p;
+            })
+
+          } else {
+            let p = store.createRecord('position', {
+              user_application: application,
+              department: department,
+              position_type: get(application, 'app_type')
+            });
+            return p;
+          }
         })
         .catch(function(error) {
           self.transitionTo('position.index');

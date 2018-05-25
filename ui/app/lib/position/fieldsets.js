@@ -27,7 +27,7 @@ const  position = {
           autocomplete: true,
           disabled: computed('model.position_type', function(){
             let pt = get(this, 'model.position_type');
-            return pt === 'renewal' || pt === 'tenure';
+            return pt === 'renewal' || pt === 'tenure' || pt === 'move';
           }),
           query: function(table, store, field, params) {
 
