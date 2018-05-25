@@ -1,4 +1,4 @@
-import {ApellaGen} from 'ui/lib/common';
+import {ApellaGen, prefixSelect} from 'ui/lib/common';
 import {field} from 'ember-gen';
 import {applicationActions, goToPosition} from 'ui/utils/common/actions';
 import USERAPP from 'ui/utils/common/user-application';
@@ -8,6 +8,10 @@ const {
   computed,
   get
 } = Ember;
+
+const USER_APP_TYPES = prefixSelect([["tenure", "Tenure"], ["renewal", "Renewal"]], 'user_application.');
+
+
 
 export default ApellaGen.extend({
   order: 1600,
@@ -177,6 +181,7 @@ export default ApellaGen.extend({
 
       let fields_restricted = [
         field('app_type', {
+          choices: USER_APP_TYPES,
           disabled: computed('model.disable', function(){
             return get(this, 'model.disable');
           })
