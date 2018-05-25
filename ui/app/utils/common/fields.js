@@ -12,9 +12,9 @@ function disable_field(el) {
   })
 }
 
-function departmentInstitutionFilterField(dataKey='department') {
+function departmentInstitutionFilterField({dataKey='department', fieldName='department'} = {}) {
   return field(
-    'department',
+    fieldName,
     {
       autocomplete: true,
       label: 'department.label',
@@ -22,9 +22,9 @@ function departmentInstitutionFilterField(dataKey='department') {
       displayAttr: 'title_current',
       modelName: 'department',
       disabled: computed('model.changeset.institution.id', function() {
-        return !this.get('model.changeset.institution');
+        return !this.get('model.changeset.institution.id');
       }),
-      dataKey: dataKey,
+      dataKey: 'department',
       query: computed('model.changeset.institution.id', function() {
         let inst = this.get('model.changeset.institution.id');
         return function(select, store, field, params) {
