@@ -203,8 +203,9 @@ export default ApellaGen.extend({
     },
     fieldsets: [{
       label: 'fieldsets.labels.user_application',
-      fields: computed('role', function(){
+      fields: computed('role', 'model.app_type', function(){
         let role = get(this, 'role');
+        let is_move = get(this, 'model.app_type') === 'move';
         let fields = [
           field('user.id', {label: 'user_id.label'}),
           field('user.full_name_current', {label: 'full_name_current.label'}),
@@ -212,16 +213,26 @@ export default ApellaGen.extend({
           field('app_type_verbose', {label: 'app_type.label'}),
           field('created_at_format', {label: 'created_at.label'}),
           field('updated_at_format', {label: 'updated_at.label'}),
-          'department.title_current',
-          'department.institution.title_current',
+          field('department.title_current', {label: 'user_department.title_current.label'}),
+          field('department.institution.title_current', {label: 'user_institution.title_current.label'}),
         ];
         if (role === 'professor' || role === 'candidate') {
-          fields.splice(0, 2);
+          fields.splice(0, 3);
         }
+        if (is_move) {
+          fields.push(
+            field('receiving_department.title_current', {
+              label: 'receiving_department.title_current.label'
+            }),
+            'receiving_department.institution.title_current',
+             field('id', {label: 'user_application.id.label' }),
+          );
+        }
+
         return fields;
       }),
       layout: {
-        flex: [50, 50, 50, 50, 50, 50, 50, 50]
+        flex: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 100]
       }
     }]
   }
