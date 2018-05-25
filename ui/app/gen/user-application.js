@@ -103,9 +103,11 @@ export default ApellaGen.extend({
           field('state_verbose', {label: 'state.label'}),
           field('app_type_verbose', {label: 'app_type.label'}),
           field('created_at_format', {label: 'created_at.label'}),
+          'receiving_department.title_current',
         ];
         if (role === 'professor' || role === 'candidate') {
           fields.splice(1, 2);
+          fields.splice(-1,1);
         }
         return fields;
       }),
