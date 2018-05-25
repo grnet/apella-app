@@ -32,4 +32,12 @@ export default DS.Model.extend({
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
   user: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
+  receiving_department: DS.belongsTo('department'),
+  institution: DS.belongsTo('institution', {
+    autocomplete: true,
+    formAttrs: {
+      optionLabelAttr: 'title_current'
+    },
+  }),
+
 });

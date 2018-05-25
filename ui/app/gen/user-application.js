@@ -2,6 +2,7 @@ import {ApellaGen} from 'ui/lib/common';
 import {field} from 'ember-gen';
 import {applicationActions, goToPosition} from 'ui/utils/common/actions';
 import USERAPP from 'ui/utils/common/user-application';
+import {departmentInstitutionFilterField} from 'ui/utils/common/fields';
 
 const {
   computed,
@@ -153,7 +154,7 @@ export default ApellaGen.extend({
       });
     },
     fieldsets: computed('role', function(){
-      let fields = [
+      let fields_all = [
         field('user', {
           label: 'user_id.label',
           formComponent: 'select-model-id-field'
@@ -162,11 +163,29 @@ export default ApellaGen.extend({
           disabled: computed('model.disable', function(){
             return get(this, 'model.disable');
           })
-
-        })
+        }),
+        field('institution', {
+          disabled: computed('model.changeset.app_type', function(){
+            let app_type = get(this, 'model.changeset.app_type');
+            return app_type != 'move';
+          }),
+        }),
+        departmentInstitutionFilterField({fieldName:'receiving_department'}),
       ];
-      if (get(this, 'role') === 'professor') {
-        fields.splice(0,1);
+
+      let fields_restricted = [
+        field('app_type', {
+          disabled: computed('model.disable', function(){
+            return get(this, 'model.disable');
+          })
+        }),
+      ];
+      let fields;
+
+      if (get(this, 'role') === 'helpdeskadmin') {
+        fields = fields_all;
+      } else {
+        fields = fields_restricted;
       }
       return [{
         label: 'fieldsets.labels.user_application_create',
