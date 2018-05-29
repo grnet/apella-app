@@ -1012,6 +1012,7 @@ class UserApplicationMixin(object):
                 queryset = queryset.filter(
                     Q(user=user) |
                     Q(department=user.professor.department) |
+                    Q(receiving_department=user.professor.department) |
                     Q(id__in=ua_ids))
             else:
                 queryset = queryset.filter(Q(user=user) | Q(id__in=ua_ids))

@@ -176,6 +176,10 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
             if pid in prof_positions_committee or \
                     pid in prof_positions_elector:
                 return True
+        if UserApplication.objects.filter(user=self).filter(
+                Q(receiving_department=request.user.professor.department) |
+                Q(department=request.user.professor.department)).exists():
+            return True
         return False
 
 
