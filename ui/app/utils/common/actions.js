@@ -685,14 +685,16 @@ const rejectApplication = {
     message: 'user_application.reject_application.message',
     title: 'user_application.prompt.title',
   },
-  hidden: computed('role', 'model.state', 'model.position_id', function(){
+  hidden: computed('role', 'model.state', 'model.position_id', 'model.app_type', function(){
     let role = get(this, 'role'),
         state = get(this, 'model.state'),
         has_position = get(this, 'model.position_id') > 0;
     let manager_or_assistant = (role === 'institutionmanager' || role === 'assistant');
+    let is_move = get(this, 'model.app_type') === 'move';
     if (!manager_or_assistant) { return true; }
     if (state === 'rejected')  { return true; }
     if (has_position) { return true; }
+    if (is_move) { return true; }
   }),
 };
 
