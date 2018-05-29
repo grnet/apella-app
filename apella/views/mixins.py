@@ -995,10 +995,13 @@ class UserApplicationMixin(object):
             departments = Department.objects.filter(
                 institution=user.institutionmanager.institution)
             queryset = queryset.filter(
-                department__in=departments)
+                Q(department__in=departments) |
+                Q(receiving_department__in=departments))
         elif user.is_assistant():
+            departments = user.institutionmanager.departments.all()
             queryset = queryset.filter(
-                department__in=user.institutionmanager.departments.all())
+                Q(department__in=departments) |
+                Q(receiving_department__in=departments))
         elif user.is_professor():
             ua_ids = Position.objects.filter(
                 Q(electors=user.professor) | Q(committee=user.professor)). \
