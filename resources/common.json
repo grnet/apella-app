@@ -108,7 +108,8 @@
     "POSITION_TYPES": [
         ["election", "Election"],
         ["tenure", "Tenure"],
-        ["renewal", "Renewal"]
+        ["renewal", "Renewal"],
+        ["move", "Move"]
     ],
 
     "JIRA_ISSUE_STATES": [
