@@ -325,6 +325,9 @@ class UserApplications(object):
     def validate(self, data):
         app_type = self.instance and self.instace.app_type \
             or data.get('app_type')
+        if app_type == 'move' and not data.get('receiving_department', None):
+            raise ValidationError('receiving_department.required')
+
         user = data.get('user', None)
         if not user:
             user = self.context.get('request').user
