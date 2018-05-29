@@ -411,6 +411,7 @@ export default {
   'position_details.label': 'Position details',
   'position_search.menu_label': 'Search new positions',
   'position_type.Change Department': 'Change department',
+  'position_type.Move': 'Move',
   'position_type.Renewal': 'Renewal',
   'position_type.Tenure': 'Establishment',
   'position_type.label': 'Position type',

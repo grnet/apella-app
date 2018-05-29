@@ -429,6 +429,7 @@ export default {
   'position_details.label': 'Λεπτομέρειες θέσης',
   'position_search.menu_label': 'Αναζήτηση νέων θέσεων',
   'position_type.Change Department': 'Μετακίνηση',
+  'position_type.Move': 'Θέση μετακίνησης',
   'position_type.Renewal': 'Ανανέωση θητείας',
   'position_type.Tenure': 'Θέση μονιμοποίησης',
   'position_type.label': 'Είδος θέσης',
