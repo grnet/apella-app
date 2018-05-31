@@ -289,6 +289,16 @@ class ApellaFile(models.Model):
             return self.apella_candidacy_publication_files.filter(
                 others_can_view=True,
                 position__in=user_candidacies_positions_ids).exists()
+        if self.attachment_files.filter(
+                others_can_view=True).exists():
+            return self.attachment_files.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
+        if self.self_evaluation_report.filter(
+                others_can_view=True).exists():
+            return self.self_evaluation_report.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
         return False
 
     def check_resource_state_owned_by_manager(self, row, request, view):
