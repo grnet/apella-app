@@ -621,42 +621,65 @@ def send_position_create_emails(position):
 
 
 def send_create_application_emails(user_application):
+    institution = user_application.user.professor.department.institution \
+        if not user_application.is_move_type() \
+        else user_application.receiving_department.institution
+
     managers = InstitutionManager.objects.filter(
-        institution=user_application.user.professor.department.institution,
-        manager_role='institutionmanager')
+        institution=institution, manager_role='institutionmanager')
 
     ui_url = get_ui_url()
     app_url = urljoin(ui_url, 'user-applications/', str(user_application.pk))
+    email_manager_subject = \
+        'apella/emails/user_application_create_to_manager_subject.txt' \
+        if not user_application.is_move_type() \
+        else 'apella/emails/user_application_move_create_to_manager_subject.txt'
+    email_manager_body = \
+        'apella/emails/user_application_create_to_manager_body.txt' \
+        if not user_application.is_move_type() \
+        else 'apella/emails/user_application_move_create_to_manager_body.txt'
+
     for manager in managers:
         send_user_email(
             manager.user,
-            'apella/emails/user_application_create_to_manager_subject.txt',
-            'apella/emails/user_application_create_to_manager_body.txt',
+            email_manager_subject,
+            email_manager_body,
             {
                 'app': user_application,
                 'apella_url': app_url
             })
 
     assistants = InstitutionManager.objects.filter(
-        institution=user_application.user.professor.department.institution,
-        manager_role='assistant',
-        is_secretary=True)
+        institution=institution, manager_role='assistant', is_secretary=True)
+
     for assistant in assistants:
-        if user_application.user.professor.department in \
-                assistant.departments.all():
+        department = user_application.user.professor.department \
+            if not user_application.is_move_type() \
+            else user_application.receiving_department
+
+        if department in assistant.departments.all():
             send_user_email(
                 assistant.user,
-                'apella/emails/user_application_create_to_manager_subject.txt',
-                'apella/emails/user_application_create_to_manager_body.txt',
+                email_manager_subject,
+                email_manager_body,
                 {
                     'app': user_application,
                     'apella_url': app_url
                 })
 
+    email_professor_subject = \
+        'apella/emails/user_application_create_to_professor_subject.txt' \
+        if not user_application.is_move_type() \
+        else 'apella/emails/user_application_move_create_to_professor_subject.txt'
+    email_professor_body = \
+        'apella/emails/user_application_create_to_professor_body.txt' \
+        if not user_application.is_move_type() \
+        else 'apella/emails/user_application_move_create_to_professor_body.txt'
+
     send_user_email(
         user_application.user,
-        'apella/emails/user_application_create_to_professor_subject.txt',
-        'apella/emails/user_application_create_to_professor_body.txt',
+        email_professor_subject,
+        email_professor_body,
         {'app': user_application})
 
 def send_disable_professor_emails(professor, is_disabled):

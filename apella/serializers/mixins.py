@@ -368,8 +368,8 @@ class UserApplications(object):
             validated_data['state'] = 'approved'
 
         obj = super(UserApplications, self).create(validated_data)
-        if not obj.is_move_type():
-            send_create_application_emails(obj)
+        send_create_application_emails(obj)
+
         return obj
 
     def update(self, instance, validated_data):
