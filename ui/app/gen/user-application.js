@@ -134,7 +134,9 @@ export default ApellaGen.extend({
 
       let role = get(this, 'session.session.authenticated.role');
       if (role === 'helpdeskadmin') {
-        return store.createRecord('user-application');
+        return store.createRecord('user-application', {
+          app_type: 'move'
+        });
       }
       var self = this;
       return apps.then(function(apps){
@@ -160,15 +162,15 @@ export default ApellaGen.extend({
       });
     },
     fieldsets: computed('role', function(){
+      let label, text, fields;
+
       let fields_all = [
         field('user', {
           label: 'user_id.label',
           formComponent: 'select-model-id-field'
         }),
         field('app_type', {
-          disabled: computed('model.disable', function(){
-            return get(this, 'model.disable');
-          })
+          disabled: true,
         }),
         field('institution', {
           disabled: computed('model.changeset.app_type', function(){
@@ -187,17 +189,20 @@ export default ApellaGen.extend({
           })
         }),
       ];
-      let fields;
 
       if (get(this, 'role') === 'helpdeskadmin') {
         fields = fields_all;
+        label = 'fieldsets.labels.user_application_create.helpdesk';
+        text = 'fieldsets.text.user_application_create.helpdesk';
       } else {
         fields = fields_restricted;
+        label = 'fieldsets.labels.user_application_create.applicant';
+        text = 'fieldsets.text.user_application_create.applicant';
       }
       return [{
-        label: 'fieldsets.labels.user_application_create',
-        text: 'fieldsets.text.user_application_create',
-        fields: fields
+        label,
+        text,
+        fields,
       }];
     }),
     onSubmit(model) {
