@@ -3,6 +3,7 @@
 import os
 import logging
 import xlsxwriter
+import StringIO
 from datetime import datetime, date, time
 from time import strftime, gmtime
 
@@ -61,8 +62,9 @@ class Professor(object):
             strftime("%Y_%m_%d", gmtime()) + ".xlsx"
         response['Content-Disposition'] = 'attachment; filename=' + filename
 
+        output = StringIO.StringIO()
         wb = xlsxwriter.Workbook(
-            response, {'in_memory': True})
+            output, {'constant_memory': True})
         ws = wb.add_worksheet('Professors')
 
         user = request.user
@@ -101,7 +103,12 @@ class Professor(object):
             ws.write(0, k, field.decode('utf-8'))
             k += 1
 
-        queryset = self.get_queryset()
+        queryset = self.get_queryset().select_related(
+                'user__first_name__el', 'user__last_name__el',
+                'user__father_name__el', 'user', 'institution',
+                'institution__title__el', 'department__title__el',
+                'department', 'department__school__title__el')
+
         if report_type == '1':
             queryset = queryset.filter(is_verified=True)
 
@@ -212,12 +219,14 @@ class Professor(object):
                     'ΝΑΙ'.decode('utf-8') \
                         if p.user.has_accepted_terms \
                         else 'ΟΧΙ'.decode('utf-8'),
-                    p.active_elections
+                    #p.active_elections
                 ]
             write_row(ws, row, i)
             i += 1
 
         wb.close()
+        xlsx_data = output.getvalue()
+        response.write(xlsx_data)
         return response
 
     def get_queryset(self):
@@ -338,8 +347,9 @@ class PositionMixin(object):
             strftime("%Y_%m_%d", gmtime()) + ".xlsx"
         response['Content-Disposition'] = 'attachment; filename=' + filename
 
+        output = StringIO.StringIO()
         wb = xlsxwriter.Workbook(
-            response, {'in_memory': True})
+            output, {'constant_memory': True})
         ws = wb.add_worksheet('Positions')
 
         fields = ['Κωδικός Θέσης', 'Παλιός Κωδικός Θέσης',
@@ -359,7 +369,13 @@ class PositionMixin(object):
             k += 1
 
         i = 1
-        queryset = self.get_queryset()
+        queryset = self.get_queryset().select_related(
+            'elected__first_name__el', 'elected__last_name__el',
+            'second_best__first_name__el', 'second_best__last_name__el',
+            'department__title__el', 'department__school__title__el',
+            'department__institution__title__el', 'subject__title__el',
+            'subject_area__title__el')
+
         for p in queryset:
             elected_full_name = ''
             if p.elected:
@@ -421,6 +437,8 @@ class PositionMixin(object):
             i += 1
 
         wb.close()
+        xlsx_data = output.getvalue()
+        response.write(xlsx_data)
         return response
 
     @detail_route()
@@ -591,8 +609,9 @@ class RegistriesList(viewsets.GenericViewSet):
             strftime("%Y_%m_%d", gmtime()) + ".xlsx"
         response['Content-Disposition'] = 'attachment; filename=' + filename
 
+        output = StringIO.StringIO()
         wb = xlsxwriter.Workbook(
-            response, {'in_memory': True})
+            output, {'constant_memory': True})
         ws = wb.add_worksheet('Registries')
 
         fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο', 'Κατηγορία Χρήστη',
@@ -607,7 +626,11 @@ class RegistriesList(viewsets.GenericViewSet):
         i = 1
         queryset = self.get_queryset()
         for r in queryset:
-            for p in r.members.all():
+            members = r.members.select_related(
+                'institution__title__el', 'department__title__el',
+                'user__first_name__el', 'user__last_name__el',
+                'institution', 'department').all()
+            for p in members:
                 try:
                     institution = p.institution.title.el
                 except AttributeError:
@@ -637,6 +660,8 @@ class RegistriesList(viewsets.GenericViewSet):
                 i += 1
 
         wb.close()
+        xlsx_data = output.getvalue()
+        response.write(xlsx_data)
         return response
 
     def get_queryset(self):
