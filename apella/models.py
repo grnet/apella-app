@@ -910,8 +910,8 @@ class Position(models.Model):
 
 
 class ElectorParticipation(models.Model):
-    professor = models.ForeignKey(Professor)
-    position = models.ForeignKey(Position)
+    professor = models.ForeignKey(Professor, on_delete=models.PROTECT)
+    position = models.ForeignKey(Position, on_delete=models.PROTECT)
     is_regular = models.BooleanField(default=True)
     is_internal = models.BooleanField(default=True)
 
