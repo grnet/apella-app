@@ -265,9 +265,10 @@ class PositionMixin(ValidatorMixin):
 
             if curr_position.state == 'revoked' and \
                     instance.state == 'electing':
-                ElectorParticipation.objects.filter(
-                    position=instance).delete()
-                instance.committee.all().delete()
+                for ep in ElectorParticipation.objects.filter(position=instance):
+                    ep.delete()
+                for p in instance.committee.all():
+                    instance.committee.remove(p)
                 instance.committee_note = None
                 instance.committee_proposal = None
                 instance.committee_set_file = None
