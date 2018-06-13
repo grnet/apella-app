@@ -283,13 +283,16 @@ export default ApellaGen.extend({
     /*
      * for details view should preload candidacies in order to run checks and
      * decide if the candidacies fs should be rendered.
+     * When candidacies are queried, the position parameter is always the
+     * most recent instance of a historic position.
+     * We extract this parameter via the position code attribute.
      */
     getModel: function(params, model) {
 
-      let position_id = get(model, 'id'),
+      let code_id = get(model, 'code').replace('APP', ''),
         store = get(model, 'store'),
         query = {
-          position: position_id,
+          position: code_id,
           latest: true
         };
       let election = get(model, 'position_type') === 'election';

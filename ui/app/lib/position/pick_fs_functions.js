@@ -97,6 +97,7 @@ const pick_details_fs = function() {
     before_open = now.isBefore(starts_at),
     fs = position.details,
     position_type = get(this, 'model.position_type'),
+    position_code = get(this, 'model.code').replace('APP', ''),
     position_model = get(this, 'model'),
     store = get(position_model, 'store'),
     /*
@@ -122,10 +123,14 @@ const pick_details_fs = function() {
      * are stored in Ember's local storage.
      * We keep only the candidacies that belong to the position for which we
      * display the details.
+     * In order to keep these candidacies we check if the position they belong
+     * is equal to the most recent instance of this position, as extracted from
+     * the position code.
      */
+
     candidacies = store.peekAll('candidacy').map(function(candidacy) {
       let candidacy_pos_id = candidacy.belongsTo('position').link().split('/').slice(-2)[0];
-      if (candidacy_pos_id == position_model.id) {
+      if (candidacy_pos_id == position_code) {
         return {
           candidate_id: candidacy.belongsTo('candidate').link().split('/').slice(-2)[0],
           candidacy_is_posted: (get(candidacy, 'state') === 'posted'),
