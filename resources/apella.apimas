@@ -585,6 +585,12 @@ spec:
                     .string: {}
                     .drf_field: {}
                     .readonly: {}
+                registries:
+                    .cli_option: {}
+                    .field: {}
+                    .string: {}
+                    .drf_field: {}
+                    .readonly: {}
                 file_upload:
                     .cli_option: {}
                     .field: {}

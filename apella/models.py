@@ -585,6 +585,11 @@ class Professor(UserProfile, CandidateProfile):
         return False
 
     @property
+    def registries(self):
+        return self.registrymembership_set.values_list(
+            'registry_id', flat=True)
+
+    @property
     def active_registries(self):
         active_registries = []
         memberships = self.registrymembership_set.values_list(
