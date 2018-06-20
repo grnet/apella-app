@@ -66,6 +66,7 @@ spec:
                     .drf_field: {}
                     .string: {}
                     .required: {}
+                    .writeonly: {}
                 email:
                     .cli_option: {}
                     .field: {}
@@ -899,6 +900,7 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                            .writeonly: {}
                         email:
                             .cli_option: {}
                             .field: {}
@@ -1323,6 +1325,7 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                            .writeonly: {}
                         email:
                             .cli_option: {}
                             .field: {}
@@ -1691,6 +1694,7 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                            .writeonly: {}
                         email:
                             .cli_option: {}
                             .field: {}
@@ -2927,6 +2931,7 @@ spec:
                             .drf_field: {}
                             .string: {}
                             .required: {}
+                            .writeonly: {}
                         email:
                             .cli_option: {}
                             .field: {}
