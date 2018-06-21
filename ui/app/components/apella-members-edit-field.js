@@ -12,6 +12,17 @@ export default TableSelectField.extend({
   activeSubTable: 'add',
   removeMembers: computed('value.remove', function() { return get(this, 'value.remove') || Ember.A([]); }),
   addMembers: computed('value.add', function() { return get(this, 'value.add') || Ember.A([]); }),
+  inRegistryMembers: computed('value.[]', function() {
+    let registry_id = parseInt(get(this, 'form.model.id'));
+    let members = Ember.A();
+    // hacky trick
+    members.includes = function(professor) {
+      // do check if registry is included in registries
+      let professor_registries = get(professor, 'registries').replace('\"', '') ;
+      return professor_registries.includes(registry_id)
+    }
+    return members;
+  }),
   allMembers: [],
   removeRowGen: computed('gen.rowGen', function() {
     let component = this;
