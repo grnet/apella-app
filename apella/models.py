@@ -392,8 +392,15 @@ class ApellaFile(models.Model):
             candidacy = self.statement_file.all()[0]
             return candidacy.check_resource_state_five_before_electors_meeting(
                 row, request, view)
-        if self.file_kind == 'leave_file' and is_owner:
-            return True
+        if self.file_kind == 'leave_file':
+            if is_owner:
+                return True
+            same_institution = self.owner.institutionmanager.institution == \
+                user.institutionmanager.institution
+            if user.is_manager() and same_institution:
+                return True
+            if user.is_assistant() and same_institution:
+                return True
 
         return False
 
