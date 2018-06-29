@@ -645,7 +645,7 @@ class RegistriesList(viewsets.GenericViewSet):
 
         i = 1
         queryset = self.get_queryset()
-        for r in queryset:
+        for r in self.filtered_queryset(queryset):
             memberships = RegistryMembership.objects.filter(
                 registry=r).select_related(
                 'professor__institution__title__el',
@@ -705,6 +705,19 @@ class RegistriesList(viewsets.GenericViewSet):
             ordering = self.request.query_params['ordering']
             queryset = queryset.order_by(ordering)
         return queryset
+
+    def filtered_queryset(self, queryset):
+        user = self.request.user
+        if user.is_helpdesk():
+            return queryset
+        elif user.is_assistant():
+            assistantDepartments = user.institutionmanager.departments.all()
+            return queryset.filter(department__in=assistantDepartments)
+        elif user.is_manager():
+            managerInstitution = user.institutionmanager.institution
+            return queryset.filter(department__institution=managerInstitution)
+        else:
+            return []
 
 USE_X_SEND_FILE = getattr(settings, 'USE_X_SEND_FILE', False)
 
