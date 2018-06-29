@@ -633,9 +633,10 @@ class RegistriesList(viewsets.GenericViewSet):
             output, {'constant_memory': True})
         ws = wb.add_worksheet('Registries')
 
-        fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο', 'Κατηγορία Χρήστη',
-            'Ίδρυμα Χρήστη', 'Τμήμα Χρήστη', 'Κωδικός Μητρώου',
-            'Ίδρυμα Μητρώου', 'Τμήμα Μητρώου', 'Είδος Μητρώου']
+        fields = ['Κωδικός Μητρώου', 'Ίδρυμα Μητρώου', 'Τμήμα Μητρώου',
+                  'Είδος Μητρώου', 'Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο',
+                  'Κατηγορία Χρήστη', 'Ίδρυμα Χρήστη', 'Σχολή Χρήστη',
+                  'Τμήμα Χρήστη', 'ΦΕΚ Διορισμού', 'Γνωστικό Αντικείμενο']
 
         k = 0
         for field in fields:
@@ -652,6 +653,7 @@ class RegistriesList(viewsets.GenericViewSet):
                 'professor__user__first_name__el',
                 'professor__user__last_name__el',
                 'registry__department__institution',
+                'registry__department__school__title_el',
                 'registry__department').all()
             for m in memberships:
                 try:
@@ -664,20 +666,28 @@ class RegistriesList(viewsets.GenericViewSet):
                 except AttributeError:
                     department = ''
 
+                try:
+                    school = p.department.school.title.el
+                except AttributeError:
+                    school = ''
+
                 row = [
+                    r.id,
+                    r.department.institution.title.el,
+                    r.department.title.el,
+                    'Εσωτερικό'.decode('utf-8') \
+                        if r.type == 'internal' \
+                        else 'Εξωτερικό'.decode('utf-8'),
                     m.professor.user.id,
                     m.professor.user.first_name.el,
                     m.professor.user.last_name.el,
                     'Αλλοδαπής'.decode('utf-8') \
                         if m.professor.is_foreign else 'Ημεδαπής'.decode('utf-8'),
                     institution,
+                    school,
                     department,
-                    r.id,
-                    r.department.institution.title.el,
-                    r.department.title.el,
-                    'Εσωτερικό'.decode('utf-8') \
-                        if r.type == 'internal' \
-                        else 'Εξωτερικό'.decode('utf-8')
+                    p.fek,
+                    p.discipline_text,
                 ]
                 write_row(ws, row, i)
                 i += 1
@@ -695,7 +705,6 @@ class RegistriesList(viewsets.GenericViewSet):
             ordering = self.request.query_params['ordering']
             queryset = queryset.order_by(ordering)
         return queryset
-
 
 USE_X_SEND_FILE = getattr(settings, 'USE_X_SEND_FILE', False)
 
