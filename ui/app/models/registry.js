@@ -1,7 +1,6 @@
 import DS from 'ember-data';
 import ENV from 'ui/config/environment';
 import {computeI18NChoice} from 'ui/lib/common';
-import _ from 'lodash/lodash';
 
 const {
   computed: { readOnly }, get, set,
@@ -65,7 +64,7 @@ export default DS.Model.extend({
     let i18n = get(this, 'i18n');
     // Aggregate error messages
     // outcome: {'already.in.registy': [42], 'in.other.registry': [17]}
-    errors =  _.reduce( errors , function(result, error) {
+    errors =  errors.reduce((result, error) => {
         (result[error[0]] || (result[error[0]] = [])).push(error[1])
         return result;
     }, {});
@@ -74,7 +73,8 @@ export default DS.Model.extend({
 
     // Translate errors and concat to error message string
     // outcome: 'Errors for users: 42 (Already in registry) 17 (In other registry)
-    errors = _.reduce( errors, function(result, value, key) {
+    errors = Object.keys(errors).reduce( (result, key) => {
+      let value = errors[key];
       return `${result} ${value.join(' , ')} (${i18n.t(key)})`
     }, errors_for);
 
@@ -85,7 +85,7 @@ export default DS.Model.extend({
     let store = this.get('store');
     let membersToAdd = get(this, 'members.add');
     let membersToRemove = this.get('members.remove');
-    // If there are not member to add or remove, just
+    // If there are not members to add or remove, just
     // save the model
     if (!(membersToAdd || membersToRemove)) {
       return this._internalModel.save(options);
