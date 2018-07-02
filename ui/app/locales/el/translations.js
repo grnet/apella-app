@@ -212,7 +212,7 @@ export default {
   'existing.entries': 'Αποθηκευμένα Μέλη',
   'exportPositionsCSV': 'Εξαγωγη θεσεων',
   'exportProfCSV': 'Εξαγωγη γενικου μητρωου',
-  'exportRegistriesCSV': 'Συμμετοχη σε μητρωα',
+  'exportRegistriesCSV': 'Εξαγωγη μητρωων',
   'failed_election_decision.label': 'Διαπιστωτική πράξη άγονης εκλογής',
   'father_name.label': 'Πατρώνυμο',
   'father_name_current.label': 'Πατρώνυμο',
