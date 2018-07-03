@@ -30,14 +30,12 @@ $ python manage.py migrate
 ```
 $ python run_transcript.py trascript.json
 ```
-6. Add the following line in .bashrc, .zshrc or your shell's configuration
-file. Replace ~/apella/ with the path of the repo in your system.
+6. Add the following line in .bashrc, .zshrc or your shell's configuration file. Replace ~/apella/ with the path of the repo in your system.
 ```
 export APELLA_SETTINGS_DIR=~/apella
 export APELLA_PASSWORD_FROM_JSON=~/apella/users.json
 ```
-7. Create a file named settings.conf in the root folder of the repo and add the
-following lines (IP and all ~/apella paths should be changed):
+7. Create a file named settings.conf in the root folder of the repo and add the following lines (IP and all ~/apella paths should be changed):
 ```
 DATA_DIR = '~/apella/data'
 RESOURCES_DIR = '~/apella/resources'
@@ -50,8 +48,7 @@ ALLOWED_HOSTS = ['SERVICE.IP.HERE']
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = DATA_DIR
 ```
-8. Create a file named users.json in the root folder of the repo and add all users
-to be created. e.g.
+8. Create a file named users.json in the root folder of the repo and add all users to be created. e.g.
 ```
 {
     "helpdeskadmin": "12345",
@@ -67,13 +64,11 @@ to be created. e.g.
     "assistant3": "12345"
 }
 ```
-9. Create a file named evaluators_allow_addr in the root folder of the repo and add the
-service ip as shown:
+9. Create a file named evaluators_allow_addr in the root folder of the repo and add the service ip as shown:
 ```
 ["SERVICE.IP.HERE", "127.0.0.1"]
 ```
-10. Create a file named evaluators_auth_token in the root folder of the repo and add the
-following token:
+10. Create a file named evaluators_auth_token in the root folder of the repo and add the following token:
 ```
 1234567890
 ```
