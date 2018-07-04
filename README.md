@@ -1,46 +1,26 @@
-Apella App 
-==========
+# Apella App
 
-Prerequisites
-------------
+## Prerequisites
 * git
-* virualenvwrapper
+* virtualenvwrapper
 
 
-Development instructions
-------------------------
-
-## Backend installation
-1. Clone this repo and checkout to develop branch
-2. Create a virtualenv for your project
+## Development instructions
+### Backend installation
+#### Getting the repo and installing dependencies
+* Clone this repo and checkout to develop branch
+* Create a virtualenv for your project
 ```
-$ cd apella_app
 $ mkvirtualenv apella
 ```
-3. Install python dependencies
+* Install python dependencies
 ```
 pip install -r requirements.txt
 ```
-4. Initialize database and run server
-```
-$ python manage.py makemigrations apella
-$ python manage.py migrate
-```
-5. If you want to initialize database with dummy data, run
-```
-$ python run_transcript.py trascript.json
-```
-6. Add the following line in .bashrc, .zshrc or your shell's configuration file. Replace ~/apella/ with the path of the repo in your system.
-```
-export APELLA_SETTINGS_DIR=~/apella
-export APELLA_PASSWORD_FROM_JSON=~/apella/users.json
-```
-7. Create a file named settings.conf in the root folder of the repo and add the following lines (IP and all ~/apella paths should be changed):
-```
-DATA_DIR = '~/apella/data'
-RESOURCES_DIR = '~/apella/resources'
-LOGFILE = '~/apella/apella.log'
 
+#### Configuration
+* You must create a settings.conf file. The default path for it is /etc/apella. You can override the path by setting the APELLA_SETTINGS_DIR shell variable. This file overrides Django's settings.py and it should contain at least the following lines (change IP accordingly):
+```
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -48,7 +28,27 @@ ALLOWED_HOSTS = ['SERVICE.IP.HERE']
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = DATA_DIR
 ```
-8. Create a file named users.json in the root folder of the repo and add all users to be created. e.g.
+* Create a file named evaluators_allow_addr in the same folder as settings.conf and add the service ip as shown:
+```
+["SERVICE.IP.HERE", "127.0.0.1"]
+```
+* Create a file named evaluators_auth_token in the root folder of the repo and add the following token in it:
+```
+1234567890
+```
+* You must create an apella.log file. The default path for it is /var/lib/apella/apella.log. You can override the path by setting the LOGFILE shell variable.
+* You must create a data folder for the uploaded files and sent emails. The default path for it is /var/lib/apella/data. You can override the path by setting the APELLA_DATA_DIR shell variable.
+* The service also expects a resources directory at /usr/lib/apella/resources. Those resources can be found in the resources directory in the root folder of the repo. You can override the path by setting the APELLA_RESOURCES_DIR shell variable.
+
+#### Database initialization
+* Initialize database and run the migrations
+```
+$ python manage.py makemigrations apella
+$ python manage.py migrate
+```
+
+#### Adding dummy data
+* If you would like to add dummy data to the database you should first create a filename named users.json and add the following data (format is username: password):
 ```
 {
     "helpdeskadmin": "12345",
@@ -64,15 +64,14 @@ EMAIL_FILE_PATH = DATA_DIR
     "assistant3": "12345"
 }
 ```
-9. Create a file named evaluators_allow_addr in the root folder of the repo and add the service ip as shown:
+* Then run the following commands (changing the path):
 ```
-["SERVICE.IP.HERE", "127.0.0.1"]
+$ export APELLA_PASSWORD_FROM_JSON=/PATH/TO/users.json
+$ python run_transcript.py trascript.json
 ```
-10. Create a file named evaluators_auth_token in the root folder of the repo and add the following token:
-```
-1234567890
-```
-11. Run server
+
+#### Running the server
+* Use the following command:
 ```
 $ python manage.py runserver
 ```
