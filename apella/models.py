@@ -333,7 +333,7 @@ class ApellaFile(models.Model):
                 logger.error('failed to get Candidacy %r from file %r' %
                     (self.source_id, self.id))
                 return False
-            if candidacy.state == 'posted' and \
+            if candidacy.state in ['posted', 'cancelled'] and \
                     candidacy.position.department in user_departments:
                 return True
         if user.is_manager() and \
