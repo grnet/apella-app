@@ -1,13 +1,13 @@
-# Apella App
+= Apella App =
 
-## Prerequisites
+== Prerequisites ==
 * git
 * virtualenvwrapper
 
 
-## Development instructions
-### Backend installation
-#### Getting the repo and installing dependencies
+== Development instructions ==
+=== Backend installation ===
+==== Getting the repo and installing dependencies ====
 * Clone this repo and checkout to develop branch
 * Create a virtualenv for your project
 ```
@@ -18,7 +18,7 @@ $ mkvirtualenv apella
 pip install -r requirements.txt
 ```
 
-#### Configuration
+==== Configuration ====
 * You must create a settings.conf file. The default path for it is /etc/apella. You can override the path by setting the APELLA_SETTINGS_DIR shell variable. This file overrides Django's settings.py and it should contain at least the following lines (change IP accordingly):
 ```
 DEBUG = True
@@ -40,14 +40,14 @@ EMAIL_FILE_PATH = DATA_DIR
 * You must create a data folder for the uploaded files and sent emails. The default path for it is /var/lib/apella/data. You can override the path by setting the APELLA_DATA_DIR shell variable.
 * The service also expects a resources directory at /usr/lib/apella/resources. Those resources can be found in the resources directory in the root folder of the repo. You can override the path by setting the APELLA_RESOURCES_DIR shell variable.
 
-#### Database initialization
+==== Database initialization ====
 * Initialize database and run the migrations
 ```
 $ python manage.py makemigrations apella
 $ python manage.py migrate
 ```
 
-#### Adding dummy data
+==== Adding dummy data ====
 * If you would like to add dummy data to the database you should first create a filename named users.json and add the following data (format is username: password):
 ```
 {
@@ -70,22 +70,22 @@ $ export APELLA_PASSWORD_FROM_JSON=/PATH/TO/users.json
 $ python run_transcript.py trascript.json
 ```
 
-#### Running the server
+==== Running the server ====
 * Use the following command:
 ```
 $ python manage.py runserver
 ```
 You can now view your api at http://127.0.0.1:8000/api/
 
-## Frontend installation
+== Frontend installation ==
 
-1. Install node and bower dependencies
+* Install node and bower dependencies
 ```
 $ cd ui
 $ npm install && bower install
 ```
 
-2. Build static files
+* Build static files
 ```
 $ ember build --watch --environment=development
 ```
