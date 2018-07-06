@@ -36,7 +36,7 @@ EMAIL_FILE_PATH = DATA_DIR
 ```
 1234567890
 ```
-* You must create an apella.log file. The default path for it is /var/lib/apella/apella.log. You can override the path by setting the LOGFILE shell variable.
+* You must create an apella.log file. The default path for it is /var/lib/apella/apella.log. You can override the path by setting the APELLA_LOGFILE shell variable.
 * You must create a data folder for the uploaded files and sent emails. The default path for it is /var/lib/apella/data. You can override the path by setting the APELLA_DATA_DIR shell variable.
 * The service also expects a resources directory at /usr/lib/apella/resources. Those resources can be found in the resources directory in the root folder of the repo. You can override the path by setting the APELLA_RESOURCES_DIR shell variable.
 
