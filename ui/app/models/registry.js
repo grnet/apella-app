@@ -94,7 +94,7 @@ export default DS.Model.extend({
     return DS.PromiseObject.create({
       promise: this.handleMembers(membersToAdd, membersToRemove).then((res) => {
         let error_msg = this.cleanResult(res);
-        this._internalModel.save().then((res) => {
+        return this._internalModel.save().then((res) => {
           if (error_msg) {
             get(this, 'messages').setError(error_msg, {closeTimeout: 100000});
           }

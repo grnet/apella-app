@@ -12,7 +12,7 @@ export default TableSelectField.extend({
   activeSubTable: 'add',
   removeMembers: computed('value.remove', function() { return get(this, 'value.remove') || Ember.A([]); }),
   addMembers: computed('value.add', function() { return get(this, 'value.add') || Ember.A([]); }),
-  inRegistryMembers: computed('value.[]', function() {
+  inRegistryMembers: computed('value', function() {
     let registry_id = parseInt(get(this, 'form.model.id'));
     let members = Ember.A();
     // hacky trick
@@ -23,7 +23,9 @@ export default TableSelectField.extend({
     }
     return members;
   }),
-  allMembers: [],
+  allMembers: computed('value', function(){
+    return [];
+  }),
   removeRowGen: computed('gen.rowGen', function() {
     let component = this;
     return get(this, 'gen.rowGen').extend({
