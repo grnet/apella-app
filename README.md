@@ -28,7 +28,7 @@ ALLOWED_HOSTS = ['SERVICE.IP.HERE']
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = DATA_DIR
 ```
-Consider also setting DEBUG and TEMPLATE_DEBUG to True.
+Consider also setting `DEBUG` and `TEMPLATE_DEBUG` to True.
 
 * Create a file named `evaluators_allow_addr` in the same folder as `settings.conf` and write in it the following (changing the IP):
 ```
@@ -118,4 +118,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see [http://www.gnu.org/licenses/]([http://www.gnu.org/licenses/).
+along with this program.  If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/).
