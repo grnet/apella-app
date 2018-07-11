@@ -1,10 +1,10 @@
-= Apella =
+# Apella
 
 ![Apella logo](images/apella_logo.png "Apella logo")
 
 The electronic service [Apella](https://service-apella.grnet.gr/apella/ui/) provides for the centralized management of faculty elections and promotions, as well as the compilation and maintenance of the registries of the internal and external evaluation members of the Greek Higher Educational Institutions.
 
-== Prerequisites ==
+## Prerequisites
 * git
 * virtualenvwrapper
 * pip
@@ -12,9 +12,9 @@ The electronic service [Apella](https://service-apella.grnet.gr/apella/ui/) prov
 * Yarn
 
 
-== Development instructions ==
-=== Backend installation ===
-==== Getting the repo and installing dependencies ====
+## Development instructions
+### Backend installation
+#### Getting the repo and installing dependencies
 * Clone this repo and checkout to `develop` branch
 * Create a virtualenv for your project
 ```
@@ -25,7 +25,7 @@ $ mkvirtualenv apella
 pip install -r requirements.txt
 ```
 
-==== Configuration ====
+#### Configuration
 * Create a `settings.conf` file. The default path for it is `/etc/apella`. The path can be overriden by setting the `APELLA_SETTINGS_DIR` shell variable. This file overrides Django's `settings.py` and it should contain at least the following lines (change IP accordingly):
 ```
 ALLOWED_HOSTS = ['SERVICE.IP.HERE']
@@ -46,14 +46,14 @@ Consider also setting `DEBUG` and `TEMPLATE_DEBUG` to True.
 * Create a data folder for the uploaded files and sent emails. The default path for it is `/var/lib/apella/data`. The path can be overriden by setting the `APELLA_DATA_DIR` shell variable.
 * The service also expects a resources directory at `/usr/lib/apella/resources`. Those resources can be found in the resources directory in the root folder of the repo. The path can be overriden by setting the `APELLA_RESOURCES_DIR` shell variable.
 
-==== Database initialization ====
+#### Database initialization
 * Initialize database and run the migrations
 ```
 $ python manage.py makemigrations apella
 $ python manage.py migrate
 ```
 
-==== Adding dummy data ====
+#### Adding dummy data
 * If you would like to add dummy data to the database you should first create a filename named `users.json` and add the following data (format is username: password):
 ```
 {
@@ -76,7 +76,7 @@ $ export APELLA_PASSWORD_FROM_JSON=/PATH/TO/users.json
 $ python run_transcript.py trascript.json
 ```
 
-==== Running the server ====
+#### Running the server
 * Use the following command:
 ```
 $ python manage.py runserver
@@ -84,9 +84,9 @@ $ python manage.py runserver
 You can now view your api at [ http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)
 
 
-== Frontend installation ==
+## Frontend installation
 
-=== Install requirements ===
+### Install requirements
 * Install dependencies by running `yarn`
 ```
 $ cd ui
@@ -105,25 +105,25 @@ $ ember build --watch --environment=development
 You can now view the full app at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 
-== Screenshots ==
+## Screenshots
 
-==== Login screen ====
+### Login screen
 ![Apella login screen](images/apella_login.png)
 
-==== Register screen ====
+### Register screen
 ![Apella register screen](images/apella_register.png)
 
-==== Positions list screen ====
+### Positions list screen
 A logged in candidate can view all open and posted positions.
 ![Apella positions list](images/apella_positions_list.png)
 
-==== Position create screen ====
+### Position create screen
 A verified institution manager can create positions.
 ![Apella position create screen](images/apella_position_create.png)
 
 
 
-== Copyright and license ==
+## Copyright and license
 
 
 Copyright (C) 2017-2018 GRNET S.A.
