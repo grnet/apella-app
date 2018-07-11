@@ -1,7 +1,5 @@
 # Apella
 
-![Apella logo](images/apella_logo.png "Apella logo")
-
 The electronic service [Apella](https://service-apella.grnet.gr/apella/ui/) provides for the centralized management of faculty elections and promotions, as well as the compilation and maintenance of the registries of the internal and external evaluation members of the Greek Higher Educational Institutions.
 
 ## Prerequisites
@@ -107,19 +105,24 @@ You can now view the full app at [http://127.0.0.1:8000/](http://127.0.0.1:8000/
 
 ## Screenshots
 
-### Login screen
-![Apella login screen](images/apella_login.png)
+Below are some screenshots from an existing installation of Apella.
+You can view the login and the register pages, as well as a list of all open and posted positions that a candidate can view and a position creation form for an institution manager.
 
-### Register screen
-![Apella register screen](images/apella_register.png)
+| ![Apella login screen](images/apella_login.png) |
+|:--:|
+| Login |
 
-### Positions list screen
-A logged in candidate can view all open and posted positions.
-![Apella positions list](images/apella_positions_list.png)
+| ![Apella register screen](images/apella_register.png) |
+|:--:|
+| Register |
 
-### Position create screen
-A verified institution manager can create positions.
-![Apella position create screen](images/apella_position_create.png)
+| ![Apella positions list](images/apella_positions_list.png) |
+|:--:|
+| Positions list |
+
+| ![Apella position create screen](images/apella_position_create.png) |
+|:--:|
+| Position create screen |
 
 
 
