@@ -3,6 +3,7 @@
 The electronic service [Apella](https://service-apella.grnet.gr/apella/ui/) provides for the centralized management of faculty elections and promotions, as well as the compilation and maintenance of the registries of the internal and external evaluation members of the Greek Higher Educational Institutions.
 
 ## Prerequisites
+
 * git
 * virtualenvwrapper
 * pip
@@ -11,8 +12,11 @@ The electronic service [Apella](https://service-apella.grnet.gr/apella/ui/) prov
 
 
 ## Development instructions
+
 ### Backend installation
+
 #### Getting the repo and installing dependencies
+
 * Clone this repo and checkout to `develop` branch
 * Create a virtualenv for your project
 ```
@@ -24,6 +28,7 @@ pip install -r requirements.txt
 ```
 
 #### Configuration
+
 * Create a `settings.conf` file. The default path for it is `/etc/apella`. The path can be overriden by setting the `APELLA_SETTINGS_DIR` shell variable. This file overrides Django's `settings.py` and it should contain at least the following lines (change IP accordingly):
 ```
 ALLOWED_HOSTS = ['SERVICE.IP.HERE']
@@ -45,6 +50,7 @@ Consider also setting `DEBUG` and `TEMPLATE_DEBUG` to True.
 * The service also expects a resources directory at `/usr/lib/apella/resources`. Those resources can be found in the resources directory in the root folder of the repo. The path can be overriden by setting the `APELLA_RESOURCES_DIR` shell variable.
 
 #### Database initialization
+
 * Initialize database and run the migrations
 ```
 $ python manage.py makemigrations apella
@@ -52,6 +58,7 @@ $ python manage.py migrate
 ```
 
 #### Adding dummy data
+
 * If you would like to add dummy data to the database you should first create a filename named `users.json` and add the following data (format is username: password):
 ```
 {
@@ -75,6 +82,7 @@ $ python run_transcript.py trascript.json
 ```
 
 #### Running the server
+
 * Use the following command:
 ```
 $ python manage.py runserver
@@ -85,6 +93,7 @@ You can now view your api at [ http://127.0.0.1:8000/api/](http://127.0.0.1:8000
 ## Frontend installation
 
 ### Install requirements
+
 * Install dependencies by running `yarn`
 ```
 $ cd ui
