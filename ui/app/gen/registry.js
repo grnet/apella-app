@@ -220,6 +220,11 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, hideRem
       }
       params.is_verified = true;
       params.create_registry = true;
+      let registry_id = store.container.lookup('controller:registry.record').get('registry_id')
+      if (registry_id) {
+        params.registry_id = registry_id;
+      }
+
       return store.query('professor', params);
     },
     // a list-like gen config
