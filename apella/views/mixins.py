@@ -27,7 +27,8 @@ from apimas.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
-    Professor as ProfessorModel, UserApplication, ApellaUser
+    Professor as ProfessorModel, UserApplication, ApellaUser, \
+    Registry
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD, RANKS_EL, POSITION_STATES_EL
 from apella import auth_hooks
@@ -246,6 +247,22 @@ class Professor(object):
             queryset = queryset.exclude(rank='Lecturer'). \
                 exclude(rank='Tenured Assistant Professor'). \
                 exclude(is_disabled=True)
+            registry_id = self.request.query_params.get(
+                'registry_id', None)
+            if registry_id:
+                try:
+                    registry = Registry.objects.get(id=registry_id)
+                    queryset = queryset.exclude(
+                        registrymembership__registry=registry)
+                    other_type = 'internal' if registry.type == 'external' \
+                        else 'external'
+                    other_registry = Registry.objects.get(
+                        department=registry.department,
+                        type=other_type)
+                    queryset = queryset.exclude(
+                        registrymembership__registry=other_registry)
+                except Registry.DoesNotExist:
+                    pass
         return queryset
 
     def set_professor_is_disabled(self, is_disabled, request):
