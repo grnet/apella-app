@@ -4,8 +4,8 @@ The electronic service [Apella](https://service-apella.grnet.gr/apella/ui/) prov
 
 ## Prerequisites
 
+* Python 2.7
 * git
-* virtualenvwrapper
 * pip
 * NodeJS
 * Yarn
@@ -18,11 +18,7 @@ The electronic service [Apella](https://service-apella.grnet.gr/apella/ui/) prov
 #### Getting the repo and installing dependencies
 
 * Clone this repo and checkout to `develop` branch
-* Create a virtualenv for your project
-```
-$ mkvirtualenv apella
-```
-* Install python dependencies
+* Install python dependencies (it's highly recommended to use a virtualenv)
 ```
 $ pip install -r requirements.txt
 ```
@@ -45,40 +41,36 @@ Consider also setting `DEBUG` and `TEMPLATE_DEBUG` to True.
 ```
 1234567890
 ```
-* Create an `apella.log` file. The default path for it is `/var/lib/apella/apella.log`. The path can be overriden by setting the `APELLA_LOGFILE` shell variable.
+* Create an `apella.log` file. The default path for it is `/var/log/apella/apella.log`. The path can be overriden by setting the `APELLA_LOGFILE` shell variable.
 * Create a data folder for the uploaded files and sent emails. The default path for it is `/var/lib/apella/data`. The path can be overriden by setting the `APELLA_DATA_DIR` shell variable.
 * The service also expects a resources directory at `/usr/lib/apella/resources`. Those resources can be found in the resources directory in the root folder of the repo. The path can be overriden by setting the `APELLA_RESOURCES_DIR` shell variable.
 
 #### Database initialization
 
-* Initialize database and run the migrations
+* Initialize database
 ```
-$ python manage.py makemigrations apella
 $ python manage.py migrate
 ```
 
-#### Adding dummy data
+#### Adding dummy data (Optional)
 
-* If you would like to add dummy data to the database you should first create a filename named `users.json` and add the following data (format is username: password):
+* Before adding data you may alter the passwords of the users that will be created. To do so, create a json file with the passwords and set the `APELLA_PASSWORD_FROM_JSON` environment variable to point to it. An example file is `passwords.json` in the `resources` directory. The default username-password combinations are listed below:
 ```
-{
-    "helpdeskadmin": "12345",
-    "helpdeskuser": "12345",
-    "manager": "12345",
-    "assistant": "12345",
-    "candidate": "12345",
-    "professor": "12345",
-    "committee": "12345",
-    "assistant2": "12345",
-    "manager2": "12345",
-    "assistant2": "12345",
-    "assistant3": "12345"
-}
+"helpdeskadmin": "12345",
+"helpdeskuser": "12345",
+"manager": "12345",
+"assistant": "12345",
+"candidate": "12345",
+"professor": "12345",
+"committee": "12345",
+"assistant2": "12345",
+"manager2": "12345",
+"assistant2": "12345",
+"assistant3": "12345"
 ```
-* Then run the following commands (changing the path):
+* To add dummy data to the database run the following command.
 ```
-$ export APELLA_PASSWORD_FROM_JSON=/PATH/TO/users.json
-$ python run_transcript.py trascript.json
+$ python run_transcript.py transcript.json
 ```
 
 #### Running the server
@@ -87,7 +79,7 @@ $ python run_transcript.py trascript.json
 ```
 $ python manage.py runserver
 ```
-You can now view your api at [ http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)
+You can now view your api at [http://127.0.0.1:8000/apella/api/](http://127.0.0.1:8000/apella/api/)
 
 
 ## Frontend installation
