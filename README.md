@@ -52,6 +52,14 @@ Consider also setting `DEBUG` and `TEMPLATE_DEBUG` to True.
 $ python manage.py migrate
 ```
 
+#### Running the server
+
+* Use the following command:
+```
+$ python manage.py runserver
+```
+You can now view your api at [http://127.0.0.1:8000/apella/api/](http://127.0.0.1:8000/apella/api/)
+
 #### Adding dummy data (Optional)
 
 * Before adding data you may alter the passwords of the users that will be created. To do so, create a json file with the passwords and set the `APELLA_PASSWORD_FROM_JSON` environment variable to point to it. An example file is `passwords.json` in the `resources` directory. The default username-password combinations are listed below:
@@ -71,14 +79,6 @@ committee     : 12345
 ```
 $ python run_transcript.py transcript.json
 ```
-
-#### Running the server
-
-* Use the following command:
-```
-$ python manage.py runserver
-```
-You can now view your api at [http://127.0.0.1:8000/apella/api/](http://127.0.0.1:8000/apella/api/)
 
 
 ## Frontend installation
