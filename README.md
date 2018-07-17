@@ -27,7 +27,7 @@ $ pip install -r requirements.txt
 
 * Create a `settings.conf` file. The default path for it is `/etc/apella`. The path can be overriden by setting the `APELLA_SETTINGS_DIR` shell variable. This file overrides Django's `settings.py` and it should contain at least the following lines (change IP accordingly):
 ```
-ALLOWED_HOSTS = ['SERVICE.IP.HERE']
+ALLOWED_HOSTS = [u'SERVICE.IP.HERE', u'127.0.0.1']
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = DATA_DIR
 ```
@@ -35,7 +35,7 @@ Consider also setting `DEBUG` and `TEMPLATE_DEBUG` to True.
 
 * Create a file named `evaluators_allow_addr` in the same folder as `settings.conf` and write in it the following (changing the IP):
 ```
-["SERVICE.IP.HERE", "127.0.0.1"]
+[u'SERVICE.IP.HERE', u'127.0.0.1']
 ```
 * Create a file named `evaluators_auth_token` in the root folder of the repo and add the following token in it:
 ```
@@ -56,17 +56,16 @@ $ python manage.py migrate
 
 * Before adding data you may alter the passwords of the users that will be created. To do so, create a json file with the passwords and set the `APELLA_PASSWORD_FROM_JSON` environment variable to point to it. An example file is `passwords.json` in the `resources` directory. The default username-password combinations are listed below:
 ```
-"helpdeskadmin": "12345",
-"helpdeskuser": "12345",
-"manager": "12345",
-"assistant": "12345",
-"candidate": "12345",
-"professor": "12345",
-"committee": "12345",
-"assistant2": "12345",
-"manager2": "12345",
-"assistant2": "12345",
-"assistant3": "12345"
+helpdeskadmin : 12345
+helpdeskuser  : 12345
+manager       : 12345
+manager2      : 12345
+assistant     : 12345
+assistant2    : 12345
+assistant3    : 12345
+candidate     : 12345
+professor     : 12345
+committee     : 12345
 ```
 * To add dummy data to the database run the following command.
 ```
