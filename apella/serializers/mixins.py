@@ -485,4 +485,5 @@ class RegistryMembers(object):
         rm = RegistryMembership.objects.create(
             professor=professor, registry=registry)
 
+        send_registry_emails([professor], registry.department)
         return rm
