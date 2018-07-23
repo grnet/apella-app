@@ -691,16 +691,18 @@ def send_disable_professor_emails(professor, is_disabled):
             'apella/emails/professor_{}_body.txt'. \
                 format('disabled' if is_disabled else 'enabled')
         )
-    registries_institutions = professor.registry_set.values_list(
-        'department__institution')
+    registries_institutions = professor.registrymembership_set.values_list(
+        'registry__department__institution', flat=True)
     managers = InstitutionManager.objects.filter(
         manager_role='institutionmanager',
         institution__in=registries_institutions)
 
     # Send email to manager
     for m in managers:
-        registries = professor.registry_set.filter(
-            department__institution=m.institution)
+        registries = []
+        for rm in professor.registrymembership_set.filter(
+                registry__department__institution=m.institution):
+            registries.append(rm.registry)
         send_user_email(
             m.user,
             'apella/emails/professor_{}_subject.txt'. \
@@ -710,21 +712,24 @@ def send_disable_professor_emails(professor, is_disabled):
         )
 
     # Send email to secretaries
-    registries_departments = professor.registry_set.values_list(
-        'department')
+    registries_departments = professor.registrymembership_set.values_list(
+        'registry__department')
     assistants = InstitutionManager.objects.filter(
         manager_role='assistant',
         departments__in=registries_departments,
         is_secretary=True)
     for a in assistants:
+        registries = []
+        for rm in professor.registrymembership_set.filter(
+                registry__department__in=a.departments.all()):
+            registries.append(rm.registry)
         send_user_email(
             a.user,
             'apella/emails/professor_{}_subject.txt'. \
                 format('disabled' if is_disabled else 'enabled'),
             'apella/emails/professor_disabled_to_secretary.txt',
             {
-                'registries': professor.registry_set.filter(
-                    department__in=a.departments.all()),
+                'registries': registries,
                 'professor': professor}
         )
 
