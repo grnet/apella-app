@@ -1041,7 +1041,6 @@ class Registry(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=20, default='internal')
-    members = models.ManyToManyField(Professor)
     registry_set_decision_file = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='registry_set_decision_files', on_delete=models.SET_NULL)

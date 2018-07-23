@@ -645,10 +645,13 @@ class RegistriesList(viewsets.GenericViewSet):
         i = 1
         queryset = self.get_queryset()
         for r in queryset:
-            members = r.members.select_related(
-                'institution__title__el', 'department__title__el',
-                'user__first_name__el', 'user__last_name__el',
-                'institution', 'department').all()
+            members = RegistryMembership.objects.filter(
+                registry=r).select_related(
+                'professor__institution__title__el',
+                'professor__department__title__el',
+                'professor__user__first_name__el',
+                'professor__user__last_name__el',
+                'registry__institution', 'registry__department').all()
             for p in members:
                 try:
                     institution = p.institution.title.el
@@ -691,52 +694,6 @@ class RegistriesList(viewsets.GenericViewSet):
             ordering = self.request.query_params['ordering']
             queryset = queryset.order_by(ordering)
         return queryset
-
-    @detail_route()
-    def members(self, request, pk=None):
-        registry = self.get_object()
-        query_params = self.request.query_params
-        members = registry.members
-        if 'user_id' in query_params:
-            try:
-                user_id = int(query_params['user_id'])
-            except ValueError:
-                user_id = 0
-            members = members.filter(user_id=user_id)
-        if 'institution' in query_params:
-            members = members.filter(institution=query_params['institution'])
-        if 'members_department' in query_params:
-            members = members.filter(
-                department=query_params['members_department'])
-        if 'rank' in query_params:
-            members = members.filter(rank=query_params['rank'])
-        if 'is_disabled' in query_params:
-            members = members.filter(
-                is_disabled=query_params['is_disabled'] == 'True')
-        if 'search' in query_params:
-            search = query_params['search']
-            members = members.filter(
-                Q(user__last_name__en__icontains=search) |
-                Q(user__first_name__en__icontains=search) |
-                Q(user__last_name__el__icontains=search) |
-                Q(user__first_name__el__icontains=search) |
-                Q(user__email__icontains=search) |
-                Q(user__old_user_id__icontains=search) |
-                Q(user__id__icontains=search) |
-                Q(discipline_text__icontains=search))
-        if 'ordering' not in query_params:
-            ordering = 'user__last_name__el'
-        else:
-            ordering = query_params['ordering']
-        members = members.order_by(ordering)
-
-        ser = adapter.get_serializer(settings.API_ENDPOINT, 'professors')
-        page = self.paginate_queryset(members)
-        if page is not None:
-            return self.get_paginated_response(
-                ser(page, many=True, context={'request': request}).data)
-        return Response(
-            ser(members, many=True, context={'request': request}).data)
 
 
 USE_X_SEND_FILE = getattr(settings, 'USE_X_SEND_FILE', False)

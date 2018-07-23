@@ -1070,7 +1070,6 @@ spec:
             .collection: {}
             .drf_collection:
                 model: apella.models.Registry
-                model_serializers: [apella.serializers.mixins.Registries]
                 mixins: [apella.views.mixins.RegistriesList, apella.views.mixins.UploadFilesViewSet]
                 filter_fields: [id, type, department, department__institution]
             .cli_commands: {}

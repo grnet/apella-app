@@ -223,25 +223,6 @@ def send_registry_emails(members, department):
         )
 
 
-class Registries(object):
-    def create(self, validated_data):
-        members = validated_data.get('members', [])
-        department = validated_data.get('department', None)
-        registry = super(Registries, self).create(validated_data)
-        send_registry_emails(members, department)
-        return registry
-
-    def update(self, instance, validated_data):
-        department = validated_data.get('department', instance.department)
-        members_before = instance.members.all()
-        members_after = validated_data.get('members', [])
-        members_to_send = [
-            member for member in members_after if member not in members_before]
-        instance = super(Registries, self).update(instance, validated_data)
-        send_registry_emails(members_to_send, department)
-        return instance
-
-
 class PositionsPortal(object):
     def to_representation(self, obj):
         now = move_to_timezone(datetime.utcnow(), otz)
