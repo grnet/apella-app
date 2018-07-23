@@ -28,7 +28,7 @@ from apimas.drf.mixins import HookMixin
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
     Professor as ProfessorModel, UserApplication, ApellaUser, \
-    Registry
+    Registry, RegistryMembership
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD, RANKS_EL, POSITION_STATES_EL
 from apella import auth_hooks
@@ -645,30 +645,31 @@ class RegistriesList(viewsets.GenericViewSet):
         i = 1
         queryset = self.get_queryset()
         for r in queryset:
-            members = RegistryMembership.objects.filter(
+            memberships = RegistryMembership.objects.filter(
                 registry=r).select_related(
                 'professor__institution__title__el',
                 'professor__department__title__el',
                 'professor__user__first_name__el',
                 'professor__user__last_name__el',
-                'registry__institution', 'registry__department').all()
-            for p in members:
+                'registry__department__institution',
+                'registry__department').all()
+            for m in memberships:
                 try:
-                    institution = p.institution.title.el
+                    institution = m.professor.institution.title.el
                 except AttributeError:
-                    institution = p.institution_freetext
+                    institution = m.professor.institution_freetext
 
                 try:
-                    department = p.department.title.el
+                    department = m.professor.department.title.el
                 except AttributeError:
                     department = ''
 
                 row = [
-                    p.user.id,
-                    p.user.first_name.el,
-                    p.user.last_name.el,
+                    m.professor.user.id,
+                    m.professor.user.first_name.el,
+                    m.professor.user.last_name.el,
                     'Αλλοδαπής'.decode('utf-8') \
-                        if p.is_foreign else 'Ημεδαπής'.decode('utf-8'),
+                        if m.professor.is_foreign else 'Ημεδαπής'.decode('utf-8'),
                     institution,
                     department,
                     r.id,
