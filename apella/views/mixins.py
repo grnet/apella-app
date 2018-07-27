@@ -653,7 +653,7 @@ class RegistriesList(viewsets.GenericViewSet):
                 'professor__user__first_name__el',
                 'professor__user__last_name__el',
                 'registry__department__institution',
-                'registry__department__school__title_el',
+                'registry__department__school__title__el',
                 'registry__department').all()
             for m in memberships:
                 try:
@@ -667,7 +667,7 @@ class RegistriesList(viewsets.GenericViewSet):
                     department = ''
 
                 try:
-                    school = p.department.school.title.el
+                    school = m.professor.department.school.title.el
                 except AttributeError:
                     school = ''
 
@@ -686,8 +686,8 @@ class RegistriesList(viewsets.GenericViewSet):
                     institution,
                     school,
                     department,
-                    p.fek,
-                    p.discipline_text,
+                    m.professor.fek,
+                    m.professor.discipline_text,
                 ]
                 write_row(ws, row, i)
                 i += 1
