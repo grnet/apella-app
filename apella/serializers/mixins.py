@@ -268,10 +268,10 @@ class PositionsPortal(object):
                         'en': obj.department.title.en
                     },
                     'school': {
-                        'id': obj.department.school.id,
+                        'id': obj.department.school and obj.department.school.id,
                         'name': {
-                            'el': obj.department.school.title.el,
-                            'en': obj.department.school.title.en
+                            'el': obj.department.school and obj.department.school.title.el,
+                            'en': ob.department.school and obj.department.school.title.en
                         },
                         'institution': {
                             'id': obj.department.institution.id,
