@@ -474,6 +474,7 @@ export default {
   'prompt.upgradeRole.title': 'Αναβάθμιση υποψηφίων',
   'prompt.withdrawal.message': 'Είστε βέβαιος/η ότι θέλετε να αποσύρετε την υποψηφιότητα;',
   'prompt.withdrawal.title': 'Απόσυρση Υποψηφιότητας',
+  'prompt.withdrawal_electing.message': 'Η προθεσμία υποβολής υποψηφιοτήτων έχει λήξει.<br> Εάν θέλετε να αποσύρετε την υποψηφιότητά σας, παρακαλούμε επικοινωνήστε με το Γραφείο Αρωγής.',
   'prompt.withdrawal_helpdesk.message': 'Η θέση είναι κλειστή.<br> Επικοινωνήστε με το Γραφείο Αρωγής για να αποσύρετε την υποψηφιότητά σας.',
   'publications.label': 'Δημοσιεύσεις',
   'rank.label': 'Βαθμίδα',

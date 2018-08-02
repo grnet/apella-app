@@ -296,7 +296,7 @@ const cancelCandidacy = {
     }
 
     if (is_helpdeskadmin && (position_closed || position_electing) && before_deadline) { return false; }
-    if (is_candidate && (position_open || position_closed)) { return false; }
+    if (is_candidate && (position_open || position_closed || position_electing)) { return false; }
 
     return true;
 
@@ -305,6 +305,7 @@ const cancelCandidacy = {
   prompt: computed('model.position.is_open', function(){
     let role = get(this, 'session.session.authenticated.role');
     let position_open = get(this, 'model.position.is_open');
+    let position_electing = get(this, 'model.position.state') === 'electing';
     let is_helpdeskadmin = role === 'helpdeskadmin';
     let message = 'prompt.withdrawal_helpdesk.message';
     let noControls = true;
@@ -312,6 +313,11 @@ const cancelCandidacy = {
     if (is_helpdeskadmin || position_open ) {
       message = 'prompt.withdrawal.message';
       noControls = false;
+    }
+
+    if (!is_helpdeskadmin && position_electing) {
+      noControls = true;
+      message = 'prompt.withdrawal_electing.message';
     }
 
     return {

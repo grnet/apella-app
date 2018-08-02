@@ -459,6 +459,7 @@ export default {
   'prompt.withdrawal.message': 'Are you sure you want to withdraw your candidacy?',
   'prompt.withdrawal.title': 'Withdraw Candidacy',
   'prompt.withdrawal_helpdesk.message': 'Position is closed.<br> Please contact the Helpdesk in order to withdraw your candidacy.',
+  'prompt.withdrawal_electing.message': 'The period of submissions is over.<br> If you wish to withdraw your candidacy, please contact our Helpdesk.',
   'publications.label': 'Publications',
   'rank.label': 'Rank',
   'rank_verbose.label': 'Rank',
