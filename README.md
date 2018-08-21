@@ -35,7 +35,7 @@ Consider also setting `DEBUG` and `TEMPLATE_DEBUG` to True.
 
 * Create a file named `evaluators_allow_addr` in the same folder as `settings.conf` and write in it the following (changing the IP):
 ```
-[u'SERVICE.IP.HERE', u'127.0.0.1']
+["SERVICE.IP.HERE", "127.0.0.1"]
 ```
 * Create a file named `evaluators_auth_token` in the root folder of the repo and add the following token in it:
 ```
