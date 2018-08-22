@@ -398,6 +398,13 @@ class JiraIssues(object):
         validated_data['issue_key'] = new_issue.key
         return super(JiraIssues, self).create(validated_data)
 
+    def validate(self,data):
+        request_user = self.context.get('request').user
+        if data['reporter'] != request_user:
+            raise ValidationError('cannot.create.application')
+        if not request_user.is_helpdesk() and data['user'] != request_user:
+            raise ValidationError('cannot.create.application')
+        return super(JiraIssues, self).validate(data)
 
 def get_professor_registries(instance):
     active_registries = []
