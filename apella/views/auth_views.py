@@ -55,6 +55,7 @@ USER_ROLE_MODEL_RESOURCES = {
     }
 }
 
+USER_ROLE_MODEL_ALLOWED_FOR_CREATION = ['candidate', 'professor']
 
 class CustomUserView(djoser_views.UserView):
 
@@ -284,7 +285,7 @@ class CustomRegistrationView(djoser_views.RegistrationView,
             request.data['user'] = user = {}
 
         role = self.request.data.get('user_role', None)
-        if not role or role not in USER_ROLE_MODEL_RESOURCES:
+        if not role or role not in USER_ROLE_MODEL_ALLOWED_FOR_CREATION:
             raise ValidationError({"role": "invalid role"})
 
         request.data['user']['role'] = role
