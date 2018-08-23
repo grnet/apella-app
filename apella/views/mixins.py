@@ -16,10 +16,12 @@ from rest_framework.exceptions import PermissionDenied
 
 from django.db.models import ProtectedError, Min, Q, Max
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, \
+    StreamingHttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.core.servers.basehttp import FileWrapper
 
 from apimas.drf.mixins import HookMixin
 
@@ -762,7 +764,11 @@ class FilesViewSet(viewsets.ModelViewSet):
         if USE_X_SEND_FILE:
             response['X-Sendfile'] = file.file_content.path
         else:
-            response.content = open(file.file_content.path)
+            chunk_size = 8192
+            response = StreamingHttpResponse(
+                           FileWrapper(
+                               open(file.file_content.path, 'rb'), chunk_size),
+                                  content_type="application/octet-stream")
         return response
 
     def destroy(self, request, pk=None):
