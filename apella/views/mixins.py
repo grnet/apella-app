@@ -741,7 +741,6 @@ class FilesViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['get'], url_path='downloadfile')
     def download_get(self, request, pk=None):
-        response = HttpResponse(content_type='application/force-download')
         token = request.GET.get('token', None)
         if token is None:
             raise PermissionDenied("no.token")
@@ -760,7 +759,6 @@ class FilesViewSet(viewsets.ModelViewSet):
             filename = filename.encode('utf-8')
         filename = filename.replace('"', '')
         disp = 'attachment; filename="%s"' % filename
-        response['Content-Disposition'] = disp
         if USE_X_SEND_FILE:
             response['X-Sendfile'] = file.file_content.path
         else:
@@ -768,7 +766,8 @@ class FilesViewSet(viewsets.ModelViewSet):
             response = StreamingHttpResponse(
                            FileWrapper(
                                open(file.file_content.path, 'rb'), chunk_size),
-                                  content_type="application/octet-stream")
+                                  content_type="application/force-download")
+        response['Content-Disposition'] = disp
         return response
 
     def destroy(self, request, pk=None):
