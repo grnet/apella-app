@@ -1028,6 +1028,9 @@ class UserApplicationMixin(object):
     def get_queryset(self):
         queryset = self.queryset
         user = self.request.user
+        if user.is_anonymous():
+            return UserApplication.objects.none()
+
         if user.is_institutionmanager():
             departments = Department.objects.filter(
                 institution=user.institutionmanager.institution)
