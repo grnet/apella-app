@@ -202,6 +202,14 @@ function get_registry_members(registry, store, params) {
   return preloadRelations(members, 'department', 'institution');
 }
 
+function get_registry_members_for_position(registry, store, params) {
+  let registry_id = registry.get('id'),
+      query = assign({}, params, {registry_id: registry_id});
+  let members = store.query('registry-member-position', query);
+  return preloadRelations(members, 'department', 'institution');
+}
+
+
 // Helper to resolve model relations along with store query entries.
 //
 // Given a store.query result modify query promise in order to resolve
@@ -328,6 +336,7 @@ export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
+  get_registry_members_for_position,
   preloadRelations, emptyArrayResult,
   prefixSelect, filterSelectSortTitles, UserConstraintsRouteMixin
 };

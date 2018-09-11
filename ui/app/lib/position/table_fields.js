@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {i18nField, i18nUserSortField,  get_registry_members, fileField, filterSelectSortTitles} from 'ui/lib/common';
+import {i18nField, i18nUserSortField,  get_registry_members_for_position, fileField, filterSelectSortTitles} from 'ui/lib/common';
 import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
 import {getFile} from 'ui/utils/files';
 import moment from 'moment';
@@ -367,7 +367,7 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
           else
             params = params || {};
             params.is_disabled = false;
-            return get_registry_members(registry, store, params);
+            return get_registry_members_for_position(registry, store, params);
           });
       };
     }),
