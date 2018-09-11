@@ -14,6 +14,7 @@ from rest_framework.decorators import detail_route, list_route
 from rest_framework.serializers import ValidationError
 from rest_framework.exceptions import PermissionDenied
 
+from django.db import transaction
 from django.db.models import ProtectedError, Min, Q, Max
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, Http404, \
@@ -798,6 +799,7 @@ class UploadFilesViewSet(viewsets.ModelViewSet):
     }
 
     @detail_route(methods=['post'])
+    @transaction.atomic
     def upload(self, request, pk=None):
         obj = self.get_object()
         if 'file_upload' not in request.FILES:
