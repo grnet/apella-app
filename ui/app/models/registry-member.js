@@ -47,9 +47,34 @@ export default Professor.extend({
         hash.cv_in_url = true;
       }
       delete hash['user'];
+      hash['professor_id'] = hash['id'];
       hash['id'] = id;
       return hash;
     },
   },
+  
+  asProfessor() {
+    let store = this.get('store');
+    let id = this.get('professor_id');
+    let modelName = 'professor';
+    let record = store.peekRecord(modelName, id);
 
+    if (!record) {
+      // 1. resolve serialized registry-member
+      // 2. convert to store payload
+      // 3. push payload as professor
+      // 4. expect professor with user.id to exist
+      let serializer = store.serializerFor(modelName);
+      let snapshot = this._internalModel.createSnapshot();
+      snapshot.modelName = modelName;
+
+      let payload = serializer.serialize(snapshot);
+      let pload = serializer.serialize(snapshot);
+      payload.id = id + '';
+      store.pushPayload(modelName, { professors: [payload] });
+      let record = store.peekRecord(modelName, id);
+      return record;
+    }
+    return record;
+  }
 });

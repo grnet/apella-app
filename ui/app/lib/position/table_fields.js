@@ -338,6 +338,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
 function committeeElectorsField(field_name, registry_type, modelMetaSide, selectModelMetaSide) {
   let label = `registry.type.${registry_type}`;
   return field(field_name, {
+    formComponent: 'apella-position-electors-field',
     label: label,
     refreshValueQuery: modelMetaSide,
     disabled: computed('model.changeset.committee_set_file', 'model.changeset.electors_set_file', function(){
