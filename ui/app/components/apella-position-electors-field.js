@@ -4,7 +4,7 @@ const { observer, get } = Ember;
 
 function asProfessor(item) {
   let professor = item;
-  if (item.constructor.modelName == 'registry-member') {
+  if (item.constructor.modelName.indexOf('registry-member') == 0) {
     professor = item.asProfessor();
   }
   return professor;
@@ -28,7 +28,7 @@ export default TableSelectField.extend({
         return removeObject.apply(value, [asProfessor(item)]);
       }
       value.includes = function(item) {
-        if (item && item.constructor.modelName == 'registry-member') {
+        if (item && item.constructor.modelName.indexOf('registry-member') == 0) {
           let ids = value.getEach('id').map(String);
           return ids.includes(item.get('professor_id') + '');
         }

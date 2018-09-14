@@ -24,6 +24,7 @@ export default RegistryMember.extend({
         hash.cv_in_url = true;
       }
       delete hash['user'];
+      hash['professor_id'] = hash['id'];
       hash['id'] = id;
       return hash;
     },
