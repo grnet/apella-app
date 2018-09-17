@@ -3512,7 +3512,7 @@ spec:
             .drf_collection:
                 model: apella.models.RegistryMembership
                 model_serializers: [apella.serializers.mixins.RegistryMembers]
-                filter_fields: [registry_id, professor__user__id, professor__rank, professor__department, professor__institution]
+                filter_fields: [registry_id, professor__user__id, professor__rank, professor__department, professor__institution, professor__is_disabled]
                 ordering_fields: [professor__user__id]
                 search_fields: [professor__user__id, professor__user__old_user_id, professor__user__last_name__en, professor__user__last_name__el, professor__user__first_name__en, professor__user__first_name__el, professor__user__email, professor__discipline_text]
             .cli_commands: {}
