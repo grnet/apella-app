@@ -367,7 +367,7 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
           }
           else
             params = params || {};
-            params.is_disabled = false;
+            params.professor__is_disabled = false;
             return get_registry_members_for_position(registry, store, params);
           });
       };
