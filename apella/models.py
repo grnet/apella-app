@@ -722,7 +722,8 @@ class UserApplication(models.Model):
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
         return request.user.is_academic_professor() and \
-            request.user.professor.rank == 'Tenured Assistant Professor'
+            request.user.professor.rank == 'Tenured Assistant Professor' or \
+            request.user.professor.rank == 'Lecturer'
 
     def check_resource_state_owned(self, row, request, view):
         if not self.user.is_academic_professor() or \

@@ -26,17 +26,19 @@ export default ApellaGen.extend({
           rank = get(this, 'user.rank'),
           domestic = !get(this, 'user.is_foreign');
       let professor = role === 'professor',
+          lecturer = rank === 'Lecturer',
           tenured = rank === 'Tenured Assistant Professor';
       let apps = get(this, 'model');
+      let eligible_rank = tenured || lecturer;
       if(apps && apps.content) {
         let {
           can_create_tenure: can_tenure,
           can_create_renewal: can_renewal
         } = USERAPP.can_create(apps.content);
 
-        return professor && domestic && tenured && (can_tenure || can_renewal);
+        return professor && domestic && eligible_rank && (can_tenure || can_renewal);
       } else {
-        return professor && domestic && tenured
+        return professor && domestic && eligible_rank;
       }
     }),
     owned: computed('', function(){
@@ -76,8 +78,10 @@ export default ApellaGen.extend({
             rank = get(this, 'session.session.authenticated.rank'),
             domestic = !get(this, 'session.session.authenticated.is_foreign');
         let professor = role === 'professor',
-            tenured = rank === 'Tenured Assistant Professor';
-        return !(professor && (!domestic || !tenured));
+            tenured = rank === 'Tenured Assistant Professor',
+            lecturer = rank === 'Lecturer';
+        let eligible_rank = tenured || lecturer;
+        return !(professor && (!domestic || !eligible_rank));
       }),
       label: computed('role', function() {
         let role = get(this, 'role');

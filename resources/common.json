@@ -54,7 +54,8 @@
     "POSITION_RANKS": [
         ["Professor", "Professor"],
         ["Associate Professor", "Associate Professor"],
-        ["Assistant Professor", "Assistant Professor"]
+        ["Assistant Professor", "Assistant Professor"],
+        ["Lecturer", "Lecturer"]
     ],
 
     "FILE_KINDS": [
