@@ -584,6 +584,35 @@ class Professor(UserProfile, CandidateProfile):
                     user.institutionmanager.departments.all()
         return False
 
+    @property
+    def registries(self):
+        return self.registrymembership_set.values_list(
+            'registry_id', flat=True)
+
+    @property
+    def active_registries(self):
+        active_registries = []
+        memberships = self.registrymembership_set.values_list(
+            'registry_id', 'registry__department_id')
+        electors_positions = self.electorparticipation_set.values(
+            'position__code').annotate(Min('position_id')).values_list(
+                'position_id__min', flat=True)
+        electors_list = list(electors_positions)
+
+        committee_positions = self.committee_duty.values(
+            'code').annotate(Min('id')).values_list(
+                'id__min', flat=True)
+        committee_list = list(committee_positions)
+        positions_list = electors_list + committee_list
+
+        for m in memberships:
+            if Position.objects.filter(
+                    state__in=['electing', 'revoked'],
+                    department=m[1],
+                    id__in=positions_list).exists():
+                active_registries.append(m[0])
+
+        return active_registries
 
     @property
     def active_elections(self):
@@ -1012,7 +1041,6 @@ class Registry(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=20, default='internal')
-    members = models.ManyToManyField(Professor)
     registry_set_decision_file = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='registry_set_decision_files', on_delete=models.SET_NULL)
@@ -1034,7 +1062,7 @@ class Registry(models.Model):
 
     @property
     def members_count(self):
-        return self.members.count()
+        return RegistryMembership.objects.filter(registry=self).count()
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
@@ -1042,6 +1070,36 @@ class Registry(models.Model):
             user_id=request.user.id,
             manager_role='assistant',
             can_create_registries=True).exists()
+
+
+class RegistryMembership(models.Model):
+    registry = models.ForeignKey(Registry, on_delete=models.PROTECT)
+    professor = models.ForeignKey(Professor, on_delete=models.PROTECT)
+
+    @classmethod
+    def check_collection_state_owned(self, row, request, view):
+        registry = Registry.objects.get(id=request.data['registry_id'])
+        departments = Department.objects.filter(
+            institution=request.user.institutionmanager.institution)
+        return registry.department in departments
+
+    def check_resource_state_owned(self, row, request, view):
+        departments = Department.objects.filter(
+            institution=request.user.institutionmanager.institution)
+        return self.registry.department in departments
+
+    @classmethod
+    def check_collection_state_can_create_owned(self, row, request, view):
+        assistant = request.user.institutionmanager
+        registry = Registry.objects.get(id=request.data['registry_id'])
+        departments = assistant.departments.all()
+        return registry.department in departments and \
+            assistant.can_create_registries
+
+    def check_resource_state_can_create_owned(self, row, request, view):
+        return self.registry.department in \
+            request.user.institutionmanager.departments.all() and \
+            request.user.institutionmanager.can_create_registries
 
 
 class UserInterest(models.Model):

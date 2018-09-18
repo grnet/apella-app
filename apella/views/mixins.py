@@ -28,7 +28,8 @@ from apimas.drf.mixins import HookMixin
 
 from apella.models import InstitutionManager, Position, Department, \
     Candidacy, ApellaFile, ElectorParticipation, Candidate, \
-    Professor as ProfessorModel, UserApplication, ApellaUser
+    Professor as ProfessorModel, UserApplication, ApellaUser, \
+    Registry, RegistryMembership
 from apella.loader import adapter
 from apella.common import FILE_KIND_TO_FIELD, RANKS_EL, POSITION_STATES_EL
 from apella import auth_hooks
@@ -247,6 +248,22 @@ class Professor(object):
             queryset = queryset.exclude(rank='Lecturer'). \
                 exclude(rank='Tenured Assistant Professor'). \
                 exclude(is_disabled=True)
+            registry_id = self.request.query_params.get(
+                'registry_id', None)
+            if registry_id:
+                try:
+                    registry = Registry.objects.get(id=registry_id)
+                    queryset = queryset.exclude(
+                        registrymembership__registry=registry)
+                    other_type = 'internal' if registry.type == 'external' \
+                        else 'external'
+                    other_registry = Registry.objects.get(
+                        department=registry.department,
+                        type=other_type)
+                    queryset = queryset.exclude(
+                        registrymembership__registry=other_registry)
+                except Registry.DoesNotExist:
+                    pass
         return queryset
 
     def set_professor_is_disabled(self, is_disabled, request):
@@ -617,9 +634,10 @@ class RegistriesList(viewsets.GenericViewSet):
             output, {'constant_memory': True})
         ws = wb.add_worksheet('Registries')
 
-        fields = ['Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο', 'Κατηγορία Χρήστη',
-            'Ίδρυμα Χρήστη', 'Τμήμα Χρήστη', 'Κωδικός Μητρώου',
-            'Ίδρυμα Μητρώου', 'Τμήμα Μητρώου', 'Είδος Μητρώου']
+        fields = ['Κωδικός Μητρώου', 'Ίδρυμα Μητρώου', 'Τμήμα Μητρώου',
+                  'Είδος Μητρώου', 'Κωδικός Χρήστη', 'Όνομα', 'Επώνυμο',
+                  'Κατηγορία Χρήστη', 'Ίδρυμα Χρήστη', 'Σχολή Χρήστη',
+                  'Τμήμα Χρήστη', 'ΦΕΚ Διορισμού', 'Γνωστικό Αντικείμενο']
 
         k = 0
         for field in fields:
@@ -628,36 +646,49 @@ class RegistriesList(viewsets.GenericViewSet):
 
         i = 1
         queryset = self.get_queryset()
-        for r in queryset:
-            members = r.members.select_related(
-                'institution__title__el', 'department__title__el',
-                'user__first_name__el', 'user__last_name__el',
-                'institution', 'department').all()
-            for p in members:
+        for r in self.filtered_queryset(queryset):
+            memberships = RegistryMembership.objects.filter(
+                registry=r).select_related(
+                'professor__institution__title__el',
+                'professor__department__title__el',
+                'professor__user__first_name__el',
+                'professor__user__last_name__el',
+                'registry__department__institution',
+                'registry__department__school__title__el',
+                'registry__department').all()
+            for m in memberships:
                 try:
-                    institution = p.institution.title.el
+                    institution = m.professor.institution.title.el
                 except AttributeError:
-                    institution = p.institution_freetext
+                    institution = m.professor.institution_freetext
 
                 try:
-                    department = p.department.title.el
+                    department = m.professor.department.title.el
                 except AttributeError:
                     department = ''
 
+                try:
+                    school = m.professor.department.school.title.el
+                except AttributeError:
+                    school = ''
+
                 row = [
-                    p.user.id,
-                    p.user.first_name.el,
-                    p.user.last_name.el,
-                    'Αλλοδαπής'.decode('utf-8') \
-                        if p.is_foreign else 'Ημεδαπής'.decode('utf-8'),
-                    institution,
-                    department,
                     r.id,
                     r.department.institution.title.el,
                     r.department.title.el,
                     'Εσωτερικό'.decode('utf-8') \
                         if r.type == 'internal' \
-                        else 'Εξωτερικό'.decode('utf-8')
+                        else 'Εξωτερικό'.decode('utf-8'),
+                    m.professor.user.id,
+                    m.professor.user.first_name.el,
+                    m.professor.user.last_name.el,
+                    'Αλλοδαπής'.decode('utf-8') \
+                        if m.professor.is_foreign else 'Ημεδαπής'.decode('utf-8'),
+                    institution,
+                    school,
+                    department,
+                    m.professor.fek,
+                    m.professor.discipline_text,
                 ]
                 write_row(ws, row, i)
                 i += 1
@@ -676,52 +707,18 @@ class RegistriesList(viewsets.GenericViewSet):
             queryset = queryset.order_by(ordering)
         return queryset
 
-    @detail_route()
-    def members(self, request, pk=None):
-        registry = self.get_object()
-        query_params = self.request.query_params
-        members = registry.members
-        if 'user_id' in query_params:
-            try:
-                user_id = int(query_params['user_id'])
-            except ValueError:
-                user_id = 0
-            members = members.filter(user_id=user_id)
-        if 'institution' in query_params:
-            members = members.filter(institution=query_params['institution'])
-        if 'members_department' in query_params:
-            members = members.filter(
-                department=query_params['members_department'])
-        if 'rank' in query_params:
-            members = members.filter(rank=query_params['rank'])
-        if 'is_disabled' in query_params:
-            members = members.filter(
-                is_disabled=query_params['is_disabled'] == 'True')
-        if 'search' in query_params:
-            search = query_params['search']
-            members = members.filter(
-                Q(user__last_name__en__icontains=search) |
-                Q(user__first_name__en__icontains=search) |
-                Q(user__last_name__el__icontains=search) |
-                Q(user__first_name__el__icontains=search) |
-                Q(user__email__icontains=search) |
-                Q(user__old_user_id__icontains=search) |
-                Q(user__id__icontains=search) |
-                Q(discipline_text__icontains=search))
-        if 'ordering' not in query_params:
-            ordering = 'user__last_name__el'
+    def filtered_queryset(self, queryset):
+        user = self.request.user
+        if user.is_helpdesk():
+            return queryset
+        elif user.is_assistant():
+            assistantDepartments = user.institutionmanager.departments.all()
+            return queryset.filter(department__in=assistantDepartments)
+        elif user.is_manager():
+            managerInstitution = user.institutionmanager.institution
+            return queryset.filter(department__institution=managerInstitution)
         else:
-            ordering = query_params['ordering']
-        members = members.order_by(ordering)
-
-        ser = adapter.get_serializer(settings.API_ENDPOINT, 'professors')
-        page = self.paginate_queryset(members)
-        if page is not None:
-            return self.get_paginated_response(
-                ser(page, many=True, context={'request': request}).data)
-        return Response(
-            ser(members, many=True, context={'request': request}).data)
-
+            return []
 
 USE_X_SEND_FILE = getattr(settings, 'USE_X_SEND_FILE', False)
 

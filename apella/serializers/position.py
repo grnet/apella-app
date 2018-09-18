@@ -17,7 +17,7 @@ from rest_framework import serializers
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     ElectorParticipation, ApellaFile, generate_filename, Institution, \
-    Department, Professor, ApellaUser, Candidate
+    Department, Professor, ApellaUser, Candidate, RegistryMembership
 from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -92,11 +92,12 @@ def get_committee_internal(instance):
     internal = []
     committee = instance.committee.all()
     for professor in committee:
-        if professor.registry_set.filter(
-                department=instance.department,
-                type='internal').exists() or \
-                professor.department \
-                and professor.department is instance.department:
+        if RegistryMembership.objects.filter(
+                professor=professor,
+                registry__department=instance.department,
+                registry__type='internal').exists() or \
+                professor.department and \
+                professor.department is instance.department:
             internal.append(professor)
 
     return internal

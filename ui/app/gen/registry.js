@@ -13,11 +13,11 @@ import {
 } from 'ui/lib/professors_quick_details';
 
 let {
-  computed, get, assign
+  computed, get, assign, set
 } = Ember;
 
 let fields_members_table = [
-    field('user_id', {type: 'string', dataKey: 'user__id'}),
+    field('user_id', {type: 'string', dataKey: 'professor__user__id'}),
     'old_user_id',
     i18nUserSortField('last_name', {label: 'last_name.label'}),
     i18nField('first_name', {label: 'first_name.label'}),
@@ -28,8 +28,8 @@ let fields_members_table = [
 ];
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
-function membersAllModelMeta(serverSide, hideQuickView, hideRemove) {
-   let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_current', 'first_name_current']),
+function membersAllModelMeta(serverSide, hideQuickView, hideRemove, type="member") {
+   let sortFields = (serverSide ? ['user_id'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text', 'old_user_id'] : ['last_name.el', 'last_name.en', 'discipline_text', 'old_user_id']);
 
   /* If current registry ID is included in the active registries list,
@@ -162,12 +162,25 @@ function membersAllModelMeta(serverSide, hideQuickView, hideRemove) {
       active: display,
       searchFields: searchFields,
       meta: {
-        fields: [
-          field('user_id', {type: 'string'}),
-          filterSelectSortTitles('institution'),
-          departmentInstitutionFilterField('members_department'),
-          field('rank')
-        ]
+        fields: computed('', ()  => {
+          if (type === 'member') {
+            return [
+              field('user_id', {type: 'string', dataKey: 'professor__user__id'}),
+              filterSelectSortTitles('institution', 'professor__institution'),
+              departmentInstitutionFilterField('professor__department'),
+              field('rank', { dataKey: 'professor__rank'})
+            ];
+          }
+          if (type === 'professor') {
+            return [
+              field('user_id', {type: 'string'}),
+              filterSelectSortTitles('institution'),
+              departmentInstitutionFilterField('department'),
+              field('rank')
+            ];
+          }
+          return [];
+        })
       }
     },
     sort: {
@@ -207,13 +220,25 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, hideRem
       }
       params.is_verified = true;
       params.create_registry = true;
+      let registry_id = store.container.lookup('controller:registry.record').get('registry_id')
+      if (registry_id) {
+        params.registry_id = registry_id;
+      }
+
       return store.query('professor', params);
     },
     // a list-like gen config
     label: null,
-    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView, hideRemove),
-    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, true),
+    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView, hideRemove, "member"),
+    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, true, "professor"),
     modelName: 'professor',
+    /*
+     * Hacky trick
+     * The component won't accept query for a model, unless
+     * type starts with "model-"
+     *
+     * */
+    type: 'model-hack',
     displayComponent: 'gen-display-field-table',
     dialog: {
       cancel: null,
@@ -237,6 +262,7 @@ export default ApellaGen.extend({
     owned: computed('model.institution.id', 'user.institution.id', function() {
       let registry_institution_id =  this.get('model.institution.id'),
         user_institution_id = get(this, 'user.institution').split('/').slice(-2)[0];
+      if (!registry_institution_id) { return true;}
       return registry_institution_id === user_institution_id;
     }),
     /*
@@ -266,7 +292,7 @@ export default ApellaGen.extend({
 
   create: {
     onSubmit(model) {
-      this.transitionTo('registry.record.edit.index', model);
+      this.transitionTo('registry.record.edit.index', model.id);
     },
     fieldsets: [{
       label: 'registry.main_section.title',
@@ -319,9 +345,6 @@ export default ApellaGen.extend({
       layout: {
         flex: [70, 30]
       }
-    }, {
-      label: 'registry.members_section.title',
-      fields: [membersField(false, true, false, false)]
     }]
   },
 
@@ -426,7 +449,8 @@ export default ApellaGen.extend({
      * Use in the abilityState "owned".
      */
     getModel: function(params, model) {
-      return preloadRelations(model, 'department', 'members', 'department.institution');
+      set(model, 'members', {add: [], remove: []});
+      return model;
     },
     onSubmit(model) {
       this.refresh();

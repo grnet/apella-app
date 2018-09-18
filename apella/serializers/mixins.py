@@ -9,7 +9,8 @@ from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
 from apella.models import ApellaUser, Institution, Department, \
-    Position, Professor, InstitutionManager, JiraIssue, UserApplication
+    Position, Professor, InstitutionManager, JiraIssue, UserApplication, \
+    Registry, RegistryMembership
 from apella import auth_hooks
 from apella.util import move_to_timezone, otz
 from apella.emails import send_user_email, send_create_application_emails
@@ -222,25 +223,6 @@ def send_registry_emails(members, department):
         )
 
 
-class Registries(object):
-    def create(self, validated_data):
-        members = validated_data.get('members', [])
-        department = validated_data.get('department', None)
-        registry = super(Registries, self).create(validated_data)
-        send_registry_emails(members, department)
-        return registry
-
-    def update(self, instance, validated_data):
-        department = validated_data.get('department', instance.department)
-        members_before = instance.members.all()
-        members_after = validated_data.get('members', [])
-        members_to_send = [
-            member for member in members_after if member not in members_before]
-        instance = super(Registries, self).update(instance, validated_data)
-        send_registry_emails(members_to_send, department)
-        return instance
-
-
 class PositionsPortal(object):
     def to_representation(self, obj):
         now = move_to_timezone(datetime.utcnow(), otz)
@@ -419,7 +401,8 @@ class JiraIssues(object):
 
 def get_professor_registries(instance):
     active_registries = []
-    registries = instance.registry_set.all()
+    memberships = instance.registrymembership_set.values_list(
+        'registry_id', 'registry__department_id')
     electors_positions = instance.electorparticipation_set.values(
         'position__code').annotate(Min('position_id')).values_list(
         'position_id__min', flat=True)
@@ -432,10 +415,56 @@ def get_professor_registries(instance):
 
     positions_list = electors_list + committee_list
 
-    for r in registries:
+    for m in memberships:
         if Position.objects.filter(
                 state__in=['electing', 'revoked'],
-                department=r.department,
+                department=m[1],
                 id__in=positions_list).exists():
-            active_registries.append(r.id)
+            active_registries.append(m[0])
     return active_registries
+
+
+class RegistryMembers(object):
+    def create(self, validated_data):
+        data = self.context.get('request').data
+        professor_id = data.get('professor_id', None)
+        registry_id = data.get('registry_id', None)
+        if not professor_id:
+            raise ValidationError("professor.id.required")
+        if not registry_id:
+            raise ValidationError("registry.id.required")
+
+        try:
+            professor = Professor.objects.get(id=professor_id)
+        except Professor.DoesNotExist:
+            raise ValidationError("professor.not.found")
+
+        try:
+            registry = Registry.objects.get(id=registry_id)
+        except Registry.DoesNotExist:
+            raise ValidationError("registry.not.found")
+
+        if RegistryMembership.objects.filter(
+                professor=professor,
+                registry=registry).exists():
+            raise ValidationError("already.in.registry")
+
+        other_type = 'external' if registry.type == 'internal' \
+            else 'internal'
+        try:
+            other_registry = Registry.objects.get(
+                department=registry.department,
+                type=other_type)
+            if RegistryMembership.objects.filter(
+                    registry=other_registry,
+                    professor=professor).exists():
+                raise ValidationError("already.in.other.registry")
+
+        except Registry.DoesNotExist:
+            pass
+
+        rm = RegistryMembership.objects.create(
+            professor=professor, registry=registry)
+
+        send_registry_emails([professor], registry.department)
+        return rm

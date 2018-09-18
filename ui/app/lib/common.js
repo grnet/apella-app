@@ -194,11 +194,21 @@ function fileField(key, path, kind, attrs, formAttrs) {
   }, attrs || {}));
 }
 
+
 function get_registry_members(registry, store, params) {
   let registry_id = registry.get('id'),
-    query = assign({}, params, { id: registry_id, registry_members: true});
-  return preloadRelations(store.query('professor', query), 'department', 'institution');
-};
+      query = assign({}, params, {registry_id: registry_id});
+  let members = store.query('registry-member', query);
+  return preloadRelations(members, 'department', 'institution');
+}
+
+function get_registry_members_for_position(registry, store, params) {
+  let registry_id = registry.get('id'),
+      query = assign({}, params, {registry_id: registry_id});
+  let members = store.query('registry-member-position', query);
+  return preloadRelations(members, 'department', 'institution');
+}
+
 
 // Helper to resolve model relations along with store query entries.
 //
@@ -307,7 +317,7 @@ function prefixSelect(arr, prefix) {
  * current language.
  */
 
-function filterSelectSortTitles(modelName) {
+function filterSelectSortTitles(modelName, dataKey) {
   return field(modelName, {
     query: function(select, store, field, params) {
       let locale = get(select, 'i18n.locale'),
@@ -317,7 +327,8 @@ function filterSelectSortTitles(modelName) {
 
       return store.query(modelName, params);
     },
-    autocomplete: true
+    autocomplete: true,
+    dataKey: dataKey || modelName
   })
 };
 
@@ -325,6 +336,7 @@ export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
+  get_registry_members_for_position,
   preloadRelations, emptyArrayResult,
   prefixSelect, filterSelectSortTitles, UserConstraintsRouteMixin
 };

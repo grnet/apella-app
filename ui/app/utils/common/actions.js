@@ -823,7 +823,13 @@ const exportRegistries = {
   icon: 'file_download',
   hidden: computed('role', function(){
     let role = get(this, 'role');
-    return role !== 'helpdeskadmin';
+    let allowed_roles = [
+      'helpdeskadmin',
+      'helpdeskuser',
+      'institutionmanager',
+      'assistant',
+    ]
+    return !allowed_roles.includes(role);
   }),
   action: function(route, model) {
     return exportCSV(route, model, 'registry', 'registries');
