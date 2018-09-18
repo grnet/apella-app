@@ -651,10 +651,13 @@ class RegistriesList(viewsets.GenericViewSet):
                 registry=r).select_related(
                 'professor__institution__title__el',
                 'professor__department__title__el',
+                'professor__department__school__title__el',
                 'professor__user__first_name__el',
                 'professor__user__last_name__el',
                 'registry__department__institution',
+                'registry__department__institution__title__el',
                 'registry__department__school__title__el',
+                'registry__department__title__el',
                 'registry__department').all()
             for m in memberships:
                 try:
