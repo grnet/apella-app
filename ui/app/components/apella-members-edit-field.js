@@ -19,7 +19,12 @@ export default TableSelectField.extend({
     members.includes = function(professor) {
       // do check if registry is included in registries
       let professor_registries = get(professor, 'registries').replace('\"', '') ;
-      return professor_registries.includes(registry_id)
+      try {
+           professor_registries = JSON.parse(professor_registries).map(String)
+      } catch(err) {
+        professor_registries = [];
+      }
+      return professor_registries.includes(registry_id+ '')
     }
     return members;
   }),
