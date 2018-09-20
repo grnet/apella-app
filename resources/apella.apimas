@@ -2041,7 +2041,7 @@ spec:
                     .field: {}
                     .drf_field: {}
                     .choices:
-                        allowed: ['Professor', 'Associate Professor', 'Assistant Professor']
+                        allowed: ['Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer']
                 file_upload:
                     .cli_option: {}
                     .field: {}
