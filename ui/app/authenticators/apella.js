@@ -19,10 +19,28 @@ export default ApimasAuthenticator.extend({
     }
     merge(data, user);
     merge(data, profile);
-    for (let key of FILE_FIELDS) {
-      delete data[key];
+
+    // pick just the attributes which are used for session handling
+    let SESSION_FIELDS = [
+      'auth_token',
+      'user_id',
+      'role',
+      'institution',
+      'departments',
+      'rank',
+      'is_foreign',
+      'is_secretary',
+      'can_set_academic',
+      'id'
+    ];
+
+    let cleaned = {}
+    for (let key of SESSION_FIELDS) {
+      cleaned[key] = data[key];
     }
-    if(data.id) {
+    data = cleaned;
+
+    if (data.id) {
       data.id = data.id.toString();
     }
 
