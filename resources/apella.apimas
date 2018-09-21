@@ -3760,6 +3760,18 @@ spec:
                                     .drf_field: {}
                                     .serial: {}
                                     .readonly: {}
+                                email:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .email: {}
+                                    .readonly: {}
+                                old_user_id:
+                                    .cli_option: {}
+                                    .field: {}
+                                    .drf_field: {}
+                                    .integer: {}
+                                    .readonly: {}
                                 first_name:
                                     .cli_option: {}
                                     .field: {}
