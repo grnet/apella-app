@@ -36,7 +36,9 @@ export default ApimasAuthenticator.extend({
 
     let cleaned = {}
     for (let key of SESSION_FIELDS) {
-      cleaned[key] = data[key];
+      if (data.hasOwnProperty(key)) {
+        cleaned[key] = data[key];
+      }
     }
     data = cleaned;
 
