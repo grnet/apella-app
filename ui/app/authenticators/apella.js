@@ -24,6 +24,7 @@ export default ApimasAuthenticator.extend({
     let SESSION_FIELDS = [
       'auth_token',
       'user_id',
+      'username',
       'role',
       'institution',
       'departments',
@@ -31,7 +32,12 @@ export default ApimasAuthenticator.extend({
       'is_foreign',
       'is_secretary',
       'can_set_academic',
-      'id'
+      'id',
+      'pending_role',
+      'is_verified',
+      'login_method',
+      'email',
+      'has_accepted_terms'
     ];
 
     let cleaned = {}
