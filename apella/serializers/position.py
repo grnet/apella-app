@@ -359,15 +359,20 @@ def link_single_file(existing_file, dest_obj, source='candidacy'):
 def link_files(dest_obj, user, source='candidacy'):
     if user.is_professor():
         cv = user.professor.cv
+        pubs_note = user.professor.pubs_note
         diplomas = user.professor.diplomas.all()
         publications = user.professor.publications.all()
     elif user.is_candidate():
         cv = user.candidate.cv
+        pubs_note = user.candidate.pubs_note
         diplomas = user.candidate.diplomas.all()
         publications = user.candidate.publications.all()
 
     new_cv = link_single_file(cv, dest_obj, source=source)
     dest_obj.cv = new_cv
+
+    new_pubs_note = link_single_file(pubs_note, dest_obj, source=source)
+    dest_obj.pubs_note = new_pubs_note
 
     dest_obj.diplomas.all().delete()
     dest_obj.publications.all().delete()
@@ -459,6 +464,7 @@ class CandidacyMixin(object):
             'self_evaluation_report', [])
         statement_file = validated_data.pop('statement_file', [])
         cv = validated_data.pop('cv', [])
+        pubs_note = validated_data.pop('pubs_note', [])
         diplomas = validated_data.pop('diplomas', [])
         publications = validated_data.pop('publications', [])
         instance = super(CandidacyMixin, self).update(instance, validated_data)
