@@ -69,11 +69,8 @@ def safe_path_join(base, path, sep=path.sep):
     return base.rstrip(sep) + sep + safe_path
 
 def escape(payload):
-    if payload is None:
-        return ''
-
-    payload = str(payload)
-    if payload and payload[0] in ('@', '+', '-', '=', '|', '%'):
+    if (payload and isinstance(payload, basestring) and
+       payload[0] in ('@', '+', '-', '=', '|', '%')):
         payload = payload.replace("|", "\|")
         payload = "'" + payload
     return payload
