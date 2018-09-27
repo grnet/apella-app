@@ -9,5 +9,6 @@ export default Serializer.extend(DS.EmbeddedRecordsMixin, {
     cv: embedded,
     diplomas: embedded,
     publications: embedded,
+    pubs_note: embedded,
   }
 });
