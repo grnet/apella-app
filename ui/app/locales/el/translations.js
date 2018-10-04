@@ -284,6 +284,7 @@ export default {
   'id_passport.field': 'Αρ. δελτίου ταυτότητας ή διαβατήριου',
   'id_passport.label': 'Αρ. δελτίου ταυτότητας ή διαβατηρίου',
   'id_passport_file.label': 'Ταυτότητα ή διαβατήριο',
+  'id_passport_file.required.error': 'Για την πιστοποίησή σας χρειάζεται να προσκομίσετε ταυτότητα ή διαβατήριο.',
   'identification.field': 'όνομα χρήστη',
   'inactive': 'Aνενεργός',
   'institution.label': 'Ίδρυμα',

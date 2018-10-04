@@ -269,6 +269,7 @@ export default {
   'id_passport.field': 'ID or passport number',
   'id_passport.label': 'ID or passport number',
   'id_passport_file.label': 'ID or passport file',
+  'id_passport_file.required.error': 'ID or passport file required in order to request verification',
   'identification.field': 'username',
   'in.other.registry': 'In other registry',
   'inactive': 'inactive',
