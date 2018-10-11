@@ -33,14 +33,6 @@ EMAIL_FILE_PATH = DATA_DIR
 ```
 Consider also setting `DEBUG` and `TEMPLATE_DEBUG` to True.
 
-* Create a file named `evaluators_allow_addr` in the same folder as `settings.conf` and write in it the following (changing the IP):
-```
-["SERVICE.IP.HERE", "127.0.0.1"]
-```
-* Create a file named `evaluators_auth_token` in the root folder of the repo and add the following token in it:
-```
-1234567890
-```
 * Create an `apella.log` file. The default path for it is `/var/log/apella/apella.log`. The path can be overriden by setting the `APELLA_LOGFILE` shell variable.
 * Create a data folder for the uploaded files and sent emails. The default path for it is `/var/lib/apella/data`. The path can be overriden by setting the `APELLA_DATA_DIR` shell variable.
 * The service also expects a resources directory at `/usr/lib/apella/resources`. Those resources can be found in the resources directory in the root folder of the repo. The path can be overriden by setting the `APELLA_RESOURCES_DIR` shell variable.
