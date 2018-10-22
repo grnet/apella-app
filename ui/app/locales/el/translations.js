@@ -484,6 +484,7 @@ export default {
   'rank_verbose.label': 'Βαθμίδα',
   'ranks_select.text': 'Παρακαλώ επιλέξτε βαθμίδες για την θέση',
   're_new_password.label': 'Επιβεβαίωση νέου συνθηματικού',
+  'reason.errors': 'Σφάλμα Εφαρμογής, παρακαλώ πατήστε ανανέωση και αν το πρόβλημα επιμείνει επικοινωνήστε με το Γραφείο Αρωγής.',
   'receiving_department.title_current.label': 'Τμήμα μετακίνησης',
   'receiving_department.institution.title_current.label': 'Ίδρυμα μετακίνησης',
   'register': 'Εγγραφή',

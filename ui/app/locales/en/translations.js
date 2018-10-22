@@ -467,6 +467,7 @@ export default {
   'rank.label': 'Rank',
   'rank_verbose.label': 'Rank',
   're_new_password.label': 'Retype new password',
+  'reason.errors': 'Application Error; please press Refresh and if the problem persists contact the Helpdesk.',
   'receiving_department.institution.title_current.label': 'Move institution',
   'receiving_department.title_current.label': 'Move department',
   'register': 'Register',
