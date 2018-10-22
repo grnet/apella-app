@@ -704,7 +704,9 @@ class RegistriesList(viewsets.GenericViewSet):
     def get_queryset(self):
         queryset = self.queryset
         if 'ordering' not in self.request.query_params:
-            queryset = queryset.order_by('department')
+            queryset = queryset.order_by(
+                    'department__institution__title__el',
+                    'department__title__el')
         else:
             ordering = self.request.query_params['ordering']
             queryset = queryset.order_by(ordering)
