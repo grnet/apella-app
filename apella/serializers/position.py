@@ -371,8 +371,9 @@ def link_files(dest_obj, user, source='candidacy'):
     new_cv = link_single_file(cv, dest_obj, source=source)
     dest_obj.cv = new_cv
 
-    new_pubs_note = link_single_file(pubs_note, dest_obj, source=source)
-    dest_obj.pubs_note = new_pubs_note
+    if pubs_note:
+        new_pubs_note = link_single_file(pubs_note, dest_obj, source=source)
+        dest_obj.pubs_note = new_pubs_note
 
     dest_obj.diplomas.all().delete()
     dest_obj.publications.all().delete()
