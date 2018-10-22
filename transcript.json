@@ -12,7 +12,8 @@
         "first_name_en": "George",
         "last_name_en": "Korfiatis",
         "father_name_en": "John",
-        "email": "george@gmail.com"
+        "email": "george@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "1"},
@@ -89,7 +90,8 @@
         "first_name_en": "Maria",
         "last_name_en": "Papadopoulou",
         "father_name_en": "Peter",
-        "email": "maria@gmail.com"
+        "email": "maria@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "2"},
@@ -119,7 +121,8 @@
         "first_name_en": "Panos",
         "last_name_en": "Markatos",
         "father_name_en": "Konstantinos",
-        "email": "panos@gmail.com"
+        "email": "panos@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "3"},
@@ -138,7 +141,8 @@
         "first_name_en": "Olga",
         "last_name_en": "Katechaki",
         "father_name_en": "Stavros",
-        "email": "olga@gmail.com"
+        "email": "olga@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "4"},
@@ -157,7 +161,8 @@
         "first_name_en": "Friday",
         "last_name_en": "Paraskeya",
         "father_name_en": "Socrates",
-        "email": "friday@gmail.com"
+        "email": "friday@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "5"},
@@ -664,7 +669,8 @@
         "first_name_en": "Maria",
         "last_name_en": "Papadopoulou",
         "father_name_en": "Peter",
-        "email": "admin@gmail.com"
+        "email": "admin@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "6"},
@@ -683,7 +689,8 @@
         "first_name_en": "Natalia",
         "last_name_en": "Tzwrtzidou",
         "father_name_en": "Peter",
-        "email": "natalia@gmail.com"
+        "email": "natalia@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "7"},
@@ -702,7 +709,8 @@
         "first_name_en": "Mary",
         "last_name_en": "Assistant",
         "father_name_en": "Constantine",
-        "email": "mary_ass@gmail.com"
+        "email": "mary_ass@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "8"},
@@ -734,7 +742,8 @@
         "first_name_en": "Nick",
         "last_name_en": "Nikolaou",
         "father_name_en": "Nikitas",
-        "email": "nicknick@gmail.com"
+        "email": "nicknick@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "9"},
@@ -766,7 +775,8 @@
         "first_name_en": "Zoe",
         "last_name_en": "Zoere",
         "father_name_en": "Zoes",
-        "email": "zoe@gmail.com"
+        "email": "zoe@gmail.com",
+        "password": "12345"
     },
     "db_state_change" : {
         "object" : {"ApellaUser" : "10"},
