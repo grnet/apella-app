@@ -374,6 +374,8 @@ def link_files(dest_obj, user, source='candidacy'):
     if pubs_note:
         new_pubs_note = link_single_file(pubs_note, dest_obj, source=source)
         dest_obj.pubs_note = new_pubs_note
+    else:
+        dest_obj.pubs_note = None
 
     dest_obj.diplomas.all().delete()
     dest_obj.publications.all().delete()
