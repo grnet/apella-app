@@ -283,6 +283,11 @@ class ApellaFile(models.Model):
             return self.apella_candidacy_cv_files.filter(
                 others_can_view=True,
                 position__in=user_candidacies_positions_ids).exists()
+        if self.apella_candidacy_pubs_note_files.filter(
+                others_can_view=True).exists():
+            return self.apella_candidacy_pubs_note_files.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
         if self.apella_candidacy_diploma_files.filter(
                 others_can_view=True).exists():
             return self.apella_candidacy_diploma_files.filter(
@@ -415,6 +420,7 @@ class ApellaFile(models.Model):
     def is_candidacy_file(self):
         return self.apella_candidacy_cv_files.exists() or \
             self.apella_candidacy_diploma_files.exists() or \
+            self.apella_candidacy_pubs_note_files.exists() or \
             self.apella_candidacy_publication_files.exists() or \
             self.file_kind in [
                 'attachment_files', 'self_evaluation_report', 'statement_file']
@@ -424,9 +430,11 @@ class ApellaFile(models.Model):
         return self.apella_candidate_cv_files.exists() or \
             self.apella_candidate_diploma_files.exists() or \
             self.apella_candidate_publication_files.exists() or \
+            self.apella_candidate_pubs_note_files.exists() or \
             self.apella_professor_cv_files.exists() or \
             self.apella_professor_diploma_files.exists() or \
-            self.apella_professor_publication_files.exists()
+            self.apella_professor_publication_files.exists() or \
+            self.apella_professor_pubs_note_files.exists()
 
 
 class Institution(models.Model):
@@ -501,6 +509,9 @@ class CandidateProfile(models.Model):
     publications = models.ManyToManyField(
         ApellaFile, blank=True,
         related_name='%(app_label)s_%(class)s_publication_files')
+    pubs_note = models.ForeignKey(
+        ApellaFile, blank=True, null=True, on_delete=models.SET_NULL,
+        related_name='%(app_label)s_%(class)s_pubs_note_files')
 
     class Meta:
         abstract = True

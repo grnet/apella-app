@@ -66,9 +66,24 @@ const FILES_FIELDSET = {
     }, {
       multiple: true
     }),
+    fileField('pubs_note', 'professor', 'pubs_note', {
+      readonly: computed('role', function() {
+        let user_role = get(this, 'role'),
+          forbid_edit_roles = ['helpdeskuser', 'ministry'];
+        if(forbid_edit_roles.indexOf(user_role) > -1) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+    }, {
+      replace: true
+    }),
+
   ],
   layout: {
-    flex: [100, 100, 100]
+    flex: [100, 100, 100, 100]
   }
 };
 

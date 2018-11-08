@@ -104,6 +104,10 @@ FILE_KIND_TO_FIELD = {
         "field": "publications",
         "many": True,
     },
+    "pubs_note": {
+        "field": "pubs_note",
+        "many": False,
+    },
     "id_passport": {
         "field": "id_passport_file",
         "many": False,

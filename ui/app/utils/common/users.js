@@ -30,7 +30,8 @@ const FILE_FIELDS = [
   'id_passport_file',
   'diplomas',
   'cv',
-  'cv_professor'
+  'cv_professor',
+  'pubs_note'
 ];
 
 const FIELDS_ALL = [

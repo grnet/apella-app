@@ -39,6 +39,7 @@ export default Ember.Mixin.create({
   cv_professor: DS.belongsTo('apella-file'),
   diplomas: DS.hasMany('apella-file'),
   publications: DS.hasMany('apella-file'),
+  pubs_note: DS.belongsTo('apella-file'),
   fek: DS.attr(),
   discipline_text: DS.attr(),
   discipline_in_fek: DS.attr({type: 'boolean', defaultValue: true, displayComponent: 'boolean-display'}),

@@ -45,9 +45,13 @@ let candidacy_quick_details_fs =  {
         readonly: true,
         sortBy: 'filename',
       }, {multiple: true} ),
+      fileField('pubs_note', 'candidate', 'pubs_note', {
+        readonly: true,
+      }),
+
     ],
     layout: {
-      flex: [33, 33, 33, 33, 33, 33, 100, 100, 100, 100, 100, 100]
+      flex: [33, 33, 33, 33, 33, 33, 100, 100, 100, 100, 100, 100, 100]
     }
 };
 

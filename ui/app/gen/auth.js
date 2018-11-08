@@ -511,7 +511,7 @@ export default AuthGen.extend({
                       messages.setError(errorResp.non_field_errors);
                     } else {
                       let keys = Object.keys(errorResp);
-                      let msg = keys.reduce((acc, key) => { return acc + '\n' + errorResp[key]; }, '');
+                      let msg = keys.reduce((acc, key) => { return acc + errorResp[key]; }, '');
                       messages.setError(msg);
                     }
                   });

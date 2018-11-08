@@ -64,9 +64,13 @@ let CANDIDATE_FIELDSET =  {
         }),
         fileField('publications', 'candidate', 'publications', {
           readonly: true
-        })],
+        }),
+        fileField('pubs_note', 'candidate', 'pubs_note', {
+          readonly: true,
+        }),
+      ],
       layout: {
-        flex: [100, 100, 100, 100]
+        flex: [100, 100, 100, 100, 100]
       },
       flex: 100,
 };
@@ -325,6 +329,7 @@ export default ApellaGen.extend({
     }
   },
   list: {
+    actions: [],
     getModel: function(params) {
       let role = get(this, 'session.session.authenticated.role');
       if (role === 'candidate' || role === 'professor') {
@@ -431,7 +436,8 @@ export default ApellaGen.extend({
               user,
               get(me, 'cv'),
               get(me, 'diplomas'),
-              get(me, 'publications')
+              get(me, 'publications'),
+              get(me, 'pubs_note'),
             ];
 
             return Ember.RSVP.all(promises).then((res) => {
@@ -439,6 +445,7 @@ export default ApellaGen.extend({
                 set(c, 'cv', res[1]);
                 set(c, 'diplomas', res[2]);
                 set(c, 'publications', res[3]);
+                set(c, 'pubs_note', res[4]);
                 return c;
             });
 

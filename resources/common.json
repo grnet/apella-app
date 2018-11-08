@@ -63,6 +63,7 @@
         ["cv_professor", "CV"],
         ["diploma", "Diploma"],
         ["publication", "Publication"],
+        ["pubs_note", "Publications Note"],
         ["id_passport", "ID Passport"],
         ["electors_set_file", "Electors Set File"],
         ["committee_set_file", "Committee Set File"],
