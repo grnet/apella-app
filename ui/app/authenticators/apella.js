@@ -37,7 +37,9 @@ export default ApimasAuthenticator.extend({
       'is_verified',
       'login_method',
       'email',
-      'has_accepted_terms'
+      'has_accepted_terms',
+      'can_create_positions',
+      'can_create_registries'
     ];
 
     let cleaned = {}
