@@ -1,3 +1,9 @@
+<p>
+    <a href="https://service-apella.grnet.gr/apella/ui/" title="">
+        <img src="images/full-logo-en.png" alt="Apella">
+    </a>
+</p>
+
 # Apella
 
 The electronic service [Apella](https://service-apella.grnet.gr/apella/ui/) provides for the centralized management of faculty elections and promotions, as well as the compilation and maintenance of the registries of the internal and external evaluation members of the Greek Higher Educational Institutions.
