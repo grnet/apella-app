@@ -1,0 +1,13 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι η αίτηση μετακίνησής σας έχει υποβληθεί στο πληροφοριακό σύστημα ΑΠΕΛΛΑ.
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We inform you that your relocation application has been submitted in the Apella information system.
+
+{% endblock content_en %}

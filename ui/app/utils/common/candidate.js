@@ -65,6 +65,20 @@ const FILES_FIELDS = [
   }, {
     multiple: true
   }),
+  fileField('pubs_note', 'candidate', 'pubs_note', {
+    readonly: computed('role', function() {
+      // NOTE: When the candidate is in his profile the role is undefined
+      let user_role = get(this, 'role'),
+        forbid_edit_roles = ['helpdeskuser', 'ministry'];
+      if(forbid_edit_roles.indexOf(user_role) > -1) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    })
+  }, { replace: true }),
+
 ]
 
 const FILES_FIELDSET = {
@@ -77,7 +91,7 @@ const FILES_FIELDSET = {
   }),
   fields: FILES_FIELDS,
   layout: {
-    flex: [100, 100, 100, 100]
+    flex: [100, 100, 100, 100, 100]
   }
 }
 export {

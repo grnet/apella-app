@@ -53,11 +53,12 @@ def get_evaluators_auth_token():
         m = "read evaluators auth token from %r"
         m %= settings.EVALUATORS_AUTH_TOKEN_FILE
         logger.info(m)
+        return token
     except Exception as e:
         logger.exception(e)
-        raise
-    return token
-
+        if not settings.DEBUG:
+            raise
+    return None
 
 def get_evaluators_allow_addr():
     try:
@@ -66,11 +67,12 @@ def get_evaluators_allow_addr():
         m = "read evaluators allow address list from %r"
         m %= settings.EVALUATORS_ALLOW_ADDR_FILE
         logger.info(m)
+        return allow_addr
     except Exception as e:
         logger.exception(e)
-        raise
-    return allow_addr
-
+        if not settings.DEBUG:
+            raise
+    return None
 
 EVALUATORS_AUTH_TOKEN = get_evaluators_auth_token()
 EVALUATORS_ALLOW_ADDR = get_evaluators_allow_addr()

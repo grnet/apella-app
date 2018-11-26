@@ -1,11 +1,11 @@
-1;ΑΛΕΞΑΝΔΡΕΙΟ ΤΕΙ ΘΕΣΣΑΛΟΝΙΚΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALONIKI;1;-;-
+20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;1;ΠΟΛΥΤΕΧΝΙΚΗ;ENGINEERING
 1;ΑΛΕΞΑΝΔΡΕΙΟ ΤΕΙ ΘΕΣΣΑΛΟΝΙΚΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALONIKI;2;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
 1;ΑΛΕΞΑΝΔΡΕΙΟ ΤΕΙ ΘΕΣΣΑΛΟΝΙΚΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALONIKI;3;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
 1;ΑΛΕΞΑΝΔΡΕΙΟ ΤΕΙ ΘΕΣΣΑΛΟΝΙΚΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALONIKI;4;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;FOOD TECHNOLOGY AND NUTRITION
 1;ΑΛΕΞΑΝΔΡΕΙΟ ΤΕΙ ΘΕΣΣΑΛΟΝΙΚΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALONIKI;5;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
 6;ΑΝΩΤΑΤΗ ΣΧΟΛΗ ΚΑΛΩΝ ΤΕΧΝΩΝ;ATHENS SCHOOL OF FINE ARTS;6;ΚΑΛΩΝ ΤΕΧΝΩΝ;FINE ARTS
 8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;7;ΓΕΩΠΟΝΙΑΣ, ΔΑΣΟΛΟΓΙΑΣ ΚΑΙ ΦΥΣΙΚΟΥ ΠΕΡΙΒΑΛΛΟΝΤΟΣ;AGRICULTURE, FORESTRY AND NATURAL ENVIRONMENT
-8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;8;ΕΠΙΣΤΗΜΗΣ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;PHYSICAL EDUCATION AND SPORT SCIENCES
+8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;8;ΕΠΙΣΤΗΜΩΝ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;PHYSICAL EDUCATION AND SPORT SCIENCES
 8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;9;ΕΠΙΣΤΗΜΩΝ ΥΓΕΙΑΣ;HEALTH SCIENCES
 8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;10;ΘΕΟΛΟΓΙΚΗ;THEOLOGY
 8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;11;ΘΕΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SCIENCE AND TECHNOLOGY  OF INFORMATION
@@ -15,7 +15,7 @@
 8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;15;ΠΑΙΔΑΓΩΓΙΚΗ;EDUCATION
 8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;16;ΠΟΛΥΤΕΧΝΙΚΗ;ENGINEERING
 8;ΑΡΙΣΤΟΤΕΛΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣ/ΝΙΚΗΣ;ARISTOTLE UNIVERSITY OF THESSALONIKI;17;ΦΙΛΟΣΟΦΙΚΗ;PHILOSOPHY
-9;ΑΝΩΤΑΤΗ ΣΧΟΛΗ ΠΑΙΔΑΓΩΓΙΚΗΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΚΗΣ ΕΚΠΑΙΔΕΥΣΗΣ;SCHOOL OF PEDAGOGICAL AND TECHNOLOGICAL EDUCATION;18;ΑΝΩΤΑΤΗ ΣΧΟΛΗ ΠΑΙΔΑΓΩΓΙΚΗΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΚΗΣ ΕΚΠΑΙΔΕΥΣΗΣ;SCHOOL OF PEDAGOGICAL AND TECHNOLOGICAL EDUCATION
+9;ΑΣΠΑΙΤΕ;SCHOOL OF PEDAGOGICAL AND TECHNOLOGICAL EDUCATION;18;ΑΝΩΤΑΤΗ ΣΧΟΛΗ ΠΑΙΔΑΓΩΓΙΚΗΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΚΗΣ ΕΚΠΑΙΔΕΥΣΗΣ;SCHOOL OF PEDAGOGICAL AND TECHNOLOGICAL EDUCATION
 10;ΓΕΩΠΟΝΙΚΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΘΗΝΩΝ;AGRICULTURAL UNIVERSITY OF ATHENS;19;ΑΓΡΟΤΙΚΗΣ ΠΑΡΑΓΩΓΗΣ ΥΠΟΔΟΜΩΝ ΚΑΙ ΠΕΡΙΒΑΛΛΟΝΤΟΣ;AGRICULTURAL PRODUCTION, INFRASTUCTURES AND ENVIRONMENT
 10;ΓΕΩΠΟΝΙΚΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΘΗΝΩΝ;AGRICULTURAL UNIVERSITY OF ATHENS;20;ΤΡΟΦΙΜΩΝ ΒΙΟΤΕΧΝΟΛΟΓΙΑΣ ΚΑΙ ΑΝΑΠΤΥΞΗΣ;FOOD, BIOTECHNOLOGY AND DEVELOPMENT
 11;ΔΗΜΟΚΡΙΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΡΑΚΗΣ;DEMOCRITUS UNIVERSITY OF THRACE;21;ΕΠΙΣΤΗΜΗΣ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;HUMANITIES
@@ -26,6 +26,9 @@
 11;ΔΗΜΟΚΡΙΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΡΑΚΗΣ;DEMOCRITUS UNIVERSITY OF THRACE;26;ΚΟΙΝΩΝΙΚΩΝ ΠΟΛΙΤΙΚΩΝ ΚΑΙ ΟΙΚΟΝΟΜΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SOCIAL, POLITICAL AND ECONOMIC SCIENCES
 11;ΔΗΜΟΚΡΙΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΡΑΚΗΣ;DEMOCRITUS UNIVERSITY OF THRACE;27;ΝΟΜΙΚΗ;LAW
 11;ΔΗΜΟΚΡΙΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΡΑΚΗΣ;DEMOCRITUS UNIVERSITY OF THRACE;28;ΠΟΛΥΤΕΧΝΙΚΗ;ENGINEERING
+45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;29;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;HUMANITIES
+45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;30;ΕΠΙΣΤΗΜΩΝ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY
+45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;31;ΟΙΚΟΝΟΜΙΑΣ, ΔΙΟΙΚΗΣΗΣ ΚΑΙ ΝΟΜΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;ECONOMICS, BUSINESS ADMINISTRATION & LEGAL STUDIES
 12;ΕΘΝΙΚΟ & ΚΑΠΟΔΙΣΤΡΙΑΚΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΘΗΝΩΝ;NATIONAL AND KAPODISTRIAN UNIVERSITY OF ATHENS;32;ΕΠΙΣΤΗΜΗΣ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;PHYSICAL EDUCATION AND SPORT SCIENCES
 12;ΕΘΝΙΚΟ & ΚΑΠΟΔΙΣΤΡΙΑΚΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΘΗΝΩΝ;NATIONAL AND KAPODISTRIAN UNIVERSITY OF ATHENS;33;ΕΠΙΣΤΗΜΩΝ ΤΗΣ ΑΓΩΓΗΣ;EDUCATIONAL SCIENCE
 12;ΕΘΝΙΚΟ & ΚΑΠΟΔΙΣΤΡΙΑΚΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΘΗΝΩΝ;NATIONAL AND KAPODISTRIAN UNIVERSITY OF ATHENS;34;ΕΠΙΣΤΗΜΩΝ ΥΓΕΙΑΣ;HEALTH SCIENCES
@@ -43,6 +46,10 @@
 13;ΕΘΝΙΚΟ ΜΕΤΣΟΒΙΟ ΠΟΛΥΤΕΧΝΕΙΟ;NATIONAL TECHNICAL UNIVERSITY OF ATHENS;46;ΝΑΥΠΗΓΩΝ ΜΗΧΑΝΟΛΟΓΩΝ ΜΗΧΑΝΙΚΩΝ;NAVAL ARCHITECTURE AND MARINE ENGINEERING
 13;ΕΘΝΙΚΟ ΜΕΤΣΟΒΙΟ ΠΟΛΥΤΕΧΝΕΙΟ;NATIONAL TECHNICAL UNIVERSITY OF ATHENS;47;ΠΟΛΙΤΙΚΩΝ ΜΗΧΑΝΙΚΩΝ;CIVIL ENGINEERING
 13;ΕΘΝΙΚΟ ΜΕΤΣΟΒΙΟ ΠΟΛΥΤΕΧΝΕΙΟ;NATIONAL TECHNICAL UNIVERSITY OF ATHENS;48;ΧΗΜΙΚΩΝ ΜΗΧΑΝΙΚΩΝ;CHEMICAL ENGINEERING
+44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;49;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΣΠΟΥΔΩΝ;HUMANITIES
+44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;50;ΕΦΑΡΜΟΣΜΕΝΩΝ ΤΕΧΝΩΝ;APPLIED ARTS
+44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;51;ΘΕΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY
+44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;52;ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SOCIAL SCIENCIES
 14;ΙΟΝΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;IONIAN UNIVERSITY;53;ΕΠΙΣΤΗΜΗΣ ΤΗΣ ΠΛΗΡΟΦΟΡΙΑΣ ΚΑΙ ΠΛΗΡΟΦΟΡΙΚΗΣ;INFORMATION SCIENCE  AND INFORMATICS
 14;ΙΟΝΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;IONIAN UNIVERSITY;54;ΙΣΤΟΡΙΑΣ ΚΑΙ ΜΕΤΑΦΡΑΣΗΣ-ΔΙΕΡΜΗΝΕΙΑΣ;HISTORY AND TRANSLATION-INTERPRETATION
 14;ΙΟΝΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;IONIAN UNIVERSITY;55;ΜΟΥΣΙΚΗΣ ΚΑΙ ΟΠΤΙΚΟΑΚΟΥΣΤΙΚΩΝ ΤΕΧΝΩΝ;MUSIC AND AUDIOVISUAL ARTS
@@ -62,14 +69,12 @@
 19;ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣΣΑΛΙΑΣ;UNIVERSITY OF THESSALY;69;ΕΠΙΣΤΗΜΩΝ ΥΓΕΙΑΣ;HEALTH SCIENCES
 19;ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣΣΑΛΙΑΣ;UNIVERSITY OF THESSALY;70;ΘΕΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SCIENCES
 19;ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣΣΑΛΙΑΣ;UNIVERSITY OF THESSALY;71;ΠΟΛΥΤΕΧΝΙΚΗ;ENGINEERING
-19;ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣΣΑΛΙΑΣ;UNIVERSITY OF THESSALY;174;ΕΠΙΣΤΗΜΗΣ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;PHYSICAL EDUCATION AND SPORTS SCIENCE
 20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;72;ΕΠΙΣΤΗΜΩΝ ΑΓΩΓΗΣ;EDUCATION
 20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;73;ΕΠΙΣΤΗΜΩΝ ΥΓΕΙΑΣ;HEALTH SCIENCES
 20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;74;ΘΕΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SCIENCES
 20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;75;ΚΑΛΩΝ ΤΕΧΝΩΝ;FINE ARTS
 20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;76;ΟΙΚΟΝΟΜΙΚΩΝ ΚΑΙ ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;ECONOMICS & SOCIAL SCIENCES
 20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;77;ΦΙΛΟΣΟΦΙΚΗ;PHILOSOPHY
-20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;1224;ΑΡΧΙΤΕΚΤΟΝΩΝ ΜΗΧΑΝΙΚΩΝ;ARCHITECTURE
 21;ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΡΗΤΗΣ;UNIVERSITY OF CRETE;78;ΕΠΙΣΤΗΜΩΝ ΑΓΩΓΗΣ;EDUCATION
 21;ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΡΗΤΗΣ;UNIVERSITY OF CRETE;79;ΕΠΙΣΤΗΜΩΝ ΥΓΕΙΑΣ;HEALTH SCIENCES
 21;ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΡΗΤΗΣ;UNIVERSITY OF CRETE;80;ΘΕΤΙΚΩΝ & ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SCIENCES & ENGINEERING
@@ -95,10 +100,10 @@
 25;ΠΑΝΕΠΙΣΤΗΜΙΟ ΠΕΛΟΠΟΝΝΗΣΟΥ;UNIVERSITY OF PELOPONNESE;100;ΟΙΚΟΝΟΜΙΑΣ, ΔΙΟΙΚΗΣΗΣ ΚΑΙ ΠΛΗΡΟΦΟΡΙΚΗΣ;ECONOMY, MANAGEMENT AND INFORMATICS
 27;ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΟΙΝΩΝΙΚΩΝ & ΠΟΛΙΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;PANTEIO UNIVERSITY OF SOCIAL AND POLITICAL SCIENCES;101;ΔΙΕΘΝΩΝ ΣΠΟΥΔΩΝ ΕΠΙΚΟΙΝΩΝΙΑΣ ΚΑΙ ΠΟΛΙΤΙΣΜΟΥ;INTERNATIONAL STUDIES OF COMMUNICATION AND CIVILISATION
 27;ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΟΙΝΩΝΙΚΩΝ & ΠΟΛΙΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;PANTEIO UNIVERSITY OF SOCIAL AND POLITICAL SCIENCES;102;ΕΠΙΣΤΗΜΩΝ ΟΙΚΟΝΟΜΙΑΣ ΚΑΙ ΔΗΜΟΣΙΑΣ ΔΙΟΙΚΗΣΗΣ;SCIENCE OF ECONOMIC AND PUBLIC MANAGEMENT
-27;ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΟΙΝΩΝΙΚΩΝ & ΠΟΛΙΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;PANTEIO UNIVERSITY OF SOCIAL AND POLITICAL SCIENCES;103;ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ΚΑΙ ΨΥΧΟΛΟΓΙΑΣ;SOCIAL SCIENCES AND PSYCHOLOGY
+27;ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΟΙΝΩΝΙΚΩΝ & ΠΟΛΙΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;PANTEIO UNIVERSITY OF SOCIAL AND POLITICAL SCIENCES;103;ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SOCIAL SCIENCES AND PSYCHOLOGY
 27;ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΟΙΝΩΝΙΚΩΝ & ΠΟΛΙΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;PANTEIO UNIVERSITY OF SOCIAL AND POLITICAL SCIENCES;104;ΠΟΛΙΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;POLITICAL SCIENCE AND HISTORY
 28;ΠΟΛΥΤΕΧΝΕΙΟ ΚΡΗΤΗΣ;TECHNICAL UNIVERSITY OF CRETE;105;ΑΡΧΙΤΕΚΤΟΝΩΝ ΜΗΧΑΝΙΚΩΝ;ARCHITECTURAL ENGINEERING
-28;ΠΟΛΥΤΕΧΝΕΙΟ ΚΡΗΤΗΣ;TECHNICAL UNIVERSITY OF CRETE;106;ΗΛΕΚΤΡΟΝΙΚΩΝ ΜΗΧΑΝΙΚΩΝ ΚΑΙ ΜΗΧΑΝΙΚΩΝ ΥΠΟΛΟΓΙΣΤΩΝ;ELECTRONIC AND COMPUTER ENGINEERING
+28;ΠΟΛΥΤΕΧΝΕΙΟ ΚΡΗΤΗΣ;TECHNICAL UNIVERSITY OF CRETE;106;ΗΛΕΚΤΡΟΛΟΓΩΝ ΜΗΧΑΝΙΚΩΝ ΚΑΙ ΜΗΧΑΝΙΚΩΝ ΥΠΟΛΟΓΙΣΤΩΝ;ELECTRICAL AND COMPUTER ENGINEERING
 28;ΠΟΛΥΤΕΧΝΕΙΟ ΚΡΗΤΗΣ;TECHNICAL UNIVERSITY OF CRETE;107;ΜΗΧΑΝΙΚΩΝ ΟΡΥΚΤΩΝ ΠΟΡΩΝ;MINERAL RESOURCES ENGINEERING
 28;ΠΟΛΥΤΕΧΝΕΙΟ ΚΡΗΤΗΣ;TECHNICAL UNIVERSITY OF CRETE;108;ΜΗΧΑΝΙΚΩΝ ΠΑΡΑΓΩΓΗΣ ΚΑΙ ΔΙΟΙΚΗΣΗΣ;PRODUCTION ENGINEERING AND MANAGEMENT
 28;ΠΟΛΥΤΕΧΝΕΙΟ ΚΡΗΤΗΣ;TECHNICAL UNIVERSITY OF CRETE;109;ΜΗΧΑΝΙΚΩΝ ΠΕΡΙΒΑΛΛΟΝΤΟΣ;ENVIRONMENTAL ENGINEERING
@@ -107,7 +112,16 @@
 29;ΤΕΙ ΑΘΗΝΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF ATHENS;112;ΚΑΛΛΙΤΕΧΝΙΚΩΝ ΣΠΟΥΔΩΝ;FINE ARTS AND DESIGN
 29;ΤΕΙ ΑΘΗΝΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF ATHENS;113;ΤΕΧΝΟΛ. ΤΡΟΦΙΜΩΝ & ΔΙΑΤΡΟΦΗΣ;FOOD TECHNOLOGY AND NUTRITION
 29;ΤΕΙ ΑΘΗΝΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF ATHENS;114;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
-30;ΤΕΙ ΔΥΤΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN MACEDONIA;128;-;-
+33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;115;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;MANAGEMENT AND ECONOMICS
+33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;116;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
+33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;117;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ;AGRICULTURAL TECHNOLOGY
+33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;118;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURAL TECHNOLOGY
+33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;119;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL ENGINEERING
+39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;122;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
+39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;124;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
+39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;125;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ;AGRICULTURAL TECHNOLOGY
+39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;126;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURE AND FOOD TECHNOLOGY AND NUTRITION
+39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;127;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
 30;ΤΕΙ ΔΥΤΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN MACEDONIA;129;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
 30;ΤΕΙ ΔΥΤΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN MACEDONIA;130;ΔΙΟΙΚΗΣΗΣ ΟΙΚΟΝΟΜΙΑΣ;MANAGEMENT AND ECONOMICS
 30;ΤΕΙ ΔΥΤΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN MACEDONIA;131;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
@@ -118,103 +132,41 @@
 31;ΤΕΙ ΗΠΕΙΡΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF EPIRUS;136;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURAL TECHNOLOGY, FOOD TECHNOLOGY AND NUTRITION
 31;ΤΕΙ ΗΠΕΙΡΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF EPIRUS;137;ΚΑΛΛΙΤΕΧΝΙΚΩΝ ΣΠΟΥΔΩΝ;ARTS
 31;ΤΕΙ ΗΠΕΙΡΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF EPIRUS;138;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;APPLIED TECHNOLOGY
-32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;145;-;-
-32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;146;ΔΙΟΙΚΗΣΗΣ ΚΑΙ ΟΙΚΟΝΟΜΙΑΣ;MANAGEMENT AND ECONOMICS
-32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;147;ΜΟΥΣΙΚΗΣ ΤΕΧΝΟΛΟΓΙΑΣ;MUSIC TECHNOLOGY
-32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;148;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURE AND FOOD TECHNOLOGY AND NUTRITION
-32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;149;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
-33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;115;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;MANAGEMENT AND ECONOMICS
-33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;116;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
-33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;117;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ;AGRICULTURAL TECHNOLOGY
-33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;118;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURAL TECHNOLOGY
-33;ΤΕΙ ΑΝΑΤΟΛΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ ΚΑΙ ΘΡΑΚΗΣ;EASTERN MACEDONIA & THRACE INSTITUTE OF TECHNOLOGY;119;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL ENGINEERING
-34;ΤΕΙ ΠΕΛΟΠΟΝΝΗΣΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF PELOPONNESE;161;-;-
-34;ΤΕΙ ΠΕΛΟΠΟΝΝΗΣΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF PELOPONNESE;162;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
-34;ΤΕΙ ΠΕΛΟΠΟΝΝΗΣΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF PELOPONNESE;164;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURAL TECHNOLOGY
-34;ΤΕΙ ΠΕΛΟΠΟΝΝΗΣΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF PELOPONNESE;165;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
-35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;153;-;-
-35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;154;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
-35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;155;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
-35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;156;ΕΦΑΡΜΟΣΜΕΝΩΝ ΕΠΙΣΤΗΜΩΝ;APPLIED SCIENCES
-35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;157;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ;AGRICULTURAL TECHNOLOGY
-35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;158;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
-36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;166;-;-
-36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;167;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
-36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;168;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
-36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;169;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURE AND FOOD TECHNOLOGY AND NUTRITION
-36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;170;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
 37;ΤΕΙ ΘΕΣΣΑΛΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALY;139;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
 37;ΤΕΙ ΘΕΣΣΑΛΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALY;140;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
 37;ΤΕΙ ΘΕΣΣΑΛΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALY;141;ΠΑΡΑΡΤΗΜΑ ΚΑΡΔΙΤΣΑΣ;KARDITSA BRANCH
 37;ΤΕΙ ΘΕΣΣΑΛΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALY;142;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ;AGRICULTURAL TECHNOLOGY
 37;ΤΕΙ ΘΕΣΣΑΛΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALY;143;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURAL TECHNOLOGY
 37;ΤΕΙ ΘΕΣΣΑΛΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF THESSALY;144;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
-39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;120;-;-
-39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;122;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
-39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;124;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
-39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;125;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ;AGRICULTURAL TECHNOLOGY
-39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;126;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURE AND FOOD TECHNOLOGY AND NUTRITION
-39;ΤΕΙ ΔΥΤΙΚΗΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF WESTERN GREECE;127;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
-40;ΤΕΙ ΠΕΙΡΑΙΑ;TECHNOLOGICAL EDUCATION INSTITUTE OF PIRAEUS;159;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
-40;ΤΕΙ ΠΕΙΡΑΙΑ;TECHNOLOGICAL EDUCATION INSTITUTE OF PIRAEUS;160;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
+32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;146;ΔΙΟΙΚΗΣΗΣ ΚΑΙ ΟΙΚΟΝΟΜΙΑΣ;MANAGEMENT AND ECONOMICS
+32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;147;ΜΟΥΣΙΚΗΣ ΤΕΧΝΟΛΟΓΙΑΣ;MUSIC TECHNOLOGY
+32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;148;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURE AND FOOD TECHNOLOGY AND NUTRITION
+32;ΤΕΙ ΙΟΝΙΩΝ ΝΗΣΩΝ;TECHNOLOGICAL EDUCATIONAL INSTITUTION OF IONIAN ISLANDS;149;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
 41;ΤΕΙ ΚΕΝΤΡΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL MACEDONIA;150;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
 41;ΤΕΙ ΚΕΝΤΡΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL MACEDONIA;151;ΣΧΟΛΗ ΓΡΑΦΙΚΩΝ ΤΕΧΝΩΝ & ΚΑΛΛΙΤΕΧΝΙΚΩΝ ΣΠΟΥΔΩΝ;FINE ARTS & DESIGN
 41;ΤΕΙ ΚΕΝΤΡΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL MACEDONIA;152;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
+35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;154;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
+35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;155;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
+35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;156;ΕΦΑΡΜΟΣΜΕΝΩΝ ΕΠΙΣΤΗΜΩΝ;APPLIED SCIENCES
+35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;157;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ;AGRICULTURAL TECHNOLOGY
+35;ΤΕΙ ΚΡΗΤΗΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CRETE;158;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
+40;ΤΕΙ ΠΕΙΡΑΙΑ;TECHNOLOGICAL EDUCATION INSTITUTE OF PIRAEUS;159;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
+40;ΤΕΙ ΠΕΙΡΑΙΑ;TECHNOLOGICAL EDUCATION INSTITUTE OF PIRAEUS;160;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
+34;ΤΕΙ ΠΕΛΟΠΟΝΝΗΣΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF PELOPONNESE;162;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
+34;ΤΕΙ ΠΕΛΟΠΟΝΝΗΣΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF PELOPONNESE;164;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURAL TECHNOLOGY
+34;ΤΕΙ ΠΕΛΟΠΟΝΝΗΣΟΥ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF PELOPONNESE;165;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
+36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;167;ΔΙΟΙΚΗΣΗΣ & ΟΙΚΟΝΟΜΙΑΣ;BUSINESS ADMINISTRATION AND ECONOMICS
+36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;168;ΕΠΑΓΓΕΛΜΑΤΩΝ ΥΓΕΙΑΣ & ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE
+36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;169;ΤΕΧΝΟΛΟΓΙΑΣ ΓΕΩΠΟΝΙΑΣ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΤΡΟΦΙΜΩΝ ΚΑΙ ΔΙΑΤΡΟΦΗΣ;AGRICULTURE AND FOOD TECHNOLOGY AND NUTRITION
+36;ΤΕΙ ΣΤΕΡΕΑΣ ΕΛΛΑΔΑΣ;TECHNOLOGICAL EDUCATIONAL INSTITUTE OF CENTRAL GREECE;170;ΤΕΧΝΟΛΟΓΙΚΩΝ ΕΦΑΡΜΟΓΩΝ;TECHNOLOGICAL APPLICATIONS
 43;ΧΑΡΟΚΟΠΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HAROKOPIO UNIVERSITY;171;ΕΠΙΣΤΗΜΩΝ ΥΓΕΙΑΣ ΚΑΙ ΑΓΩΓΗΣ;HEALTH & EDUCATIONAL SCIENCES
 43;ΧΑΡΟΚΟΠΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HAROKOPIO UNIVERSITY;172;ΠΕΡΙΒΑΛΛΟΝΤΟΣ ΓΕΩΓΡΑΦΙΑΣ ΚΑΙ ΕΦΑΡΜΟΣΜΕΝΩΝ ΟΙΚΟΝΟΜΙΚΩΝ;ENVIRONMENTAL GEOGRAPHY AND APPLIED ECONOMICS
 43;ΧΑΡΟΚΟΠΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HAROKOPIO UNIVERSITY;173;ΨΗΦΙΑΚΗΣ ΤΕΧΝΟΛΟΓΙΑΣ;DIGITAL TECHNOLOGY
-44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;49;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΣΠΟΥΔΩΝ;HUMANITIES
-44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;50;ΕΦΑΡΜΟΣΜΕΝΩΝ ΤΕΧΝΩΝ;APPLIED ARTS
-44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;51;ΘΕΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY
-44;ΕΛΛΗΝΙΚΟ ΑΝΟΙΚΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;HELLENIC OPEN UNIVERSITY;52;ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;SOCIAL SCIENCIES
-45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;29;ΑΝΘΡΩΠΙΣΤΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;HUMANITIES
-45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;30;ΕΠΙΣΤΗΜΩΝ ΤΕΧΝΟΛΟΓΙΑΣ;SCIENCE AND TECHNOLOGY
-45;ΔΙΕΘΝΕΣ ΠΑΝΕΠΙΣΤΗΜΙΟ ΤΗΣ ΕΛΛΑΔΟΣ;INTERNATIONAL HELLENIC UNIVERSITY;31;ΟΙΚΟΝΟΜΙΑΣ, ΔΙΟΙΚΗΣΗΣ ΚΑΙ ΝΟΜΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;ECONOMICS, BUSINESS ADMINISTRATION & LEGAL STUDIES
-101;ΑΚΑΔΗΜΙΑ ΑΘΗΝΩΝ;ACADEMY OF ATHENS;1174;-;-
-102;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΔΗΜΟΣΙΑΣ ΔΙΟΙΚΗΣΗΣ & ΑΥΤΟΔΙΟΙΚΗΣΗΣ;NATIONAL SCHOOL OF PUBLIC ADMINISTRATION AND LOCAL GOVERNMENT;1175;-;-
-103;ΕΘΝΙΚΟ ΑΣΤΕΡΟΣΚΟΠΕΙΟ ΑΘΗΝΩΝ - ΕΑΑ ;NATIONAL OBSERVATORY OF ATHENS - NOA;1176;-;-
-104;"ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ ΦΥΣΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ""ΔΗΜΟΚΡΙΤΟΣ""";"NATIONAL CENTRE OF SCIENTIFIC RESEARCH ""DEMOKRITOS""";1177;-;-
-105;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΚΟΙΝΩΝΙΚΩΝ ΕΡΕΥΝΩΝ - ΕΚΚΕ;NATIONAL CENTRE FOR SOCIAL RESEARCH (EKKE);1178;-;-
-106;ΕΛΛΗΝΙΚΟ ΚΕΝΤΡΟ ΘΑΛΑΣΣΙΩΝ ΕΡΕΥΝΩΝ - ΕΛΚΕΘΕ ;HELLENIC CENTRE FOR MARINE RESEARCH - HCMR;1179;-;-
-107;ΙΝΣΤΙΤΟΥΤΟ ΤΕΧΝΙΚΗΣ ΣΕΙΣΜΟΛΟΓΙΑΣ & ΑΝΤΙΣΕΙΣΜΙΚΩΝ ΚΑΤΑΣΚΕΥΩΝ – ΙΤΣΑΚ ;INSTITUTE OF ENGINEERING SEISMOLOGY & EARTHQUAKE ENGINEERING (ITSAK);1180;-;-
-108;ΓΕΩΡΓΙΚΗ ΚΑΙ ΒΙΟΤΕΧΝΙΚΗ ΣΧΟΛΗ ;AMERICAN FARM SCHOOL;1181;-;-
-109;"Ε.Π.Ι. "" ΝΕΥΡΟΧΕΙΡΟΥΡΓΙΚΟ ""  - ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ";NEUROSURGICAL INSTITUTE - UNIVERSITY OF IOANNINA;1182;-;-
-110;Ε.Π.Ι. ΑΣΤΙΚΟΥ ΠΕΡΙΒΑΛΛΟΝΤΟΣ ΚΑΙ ΑΝΘΡΩΠΙΝΟΥ ΔΥΝΑΜΙΚΟΥ - ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;RESEARCH INSTITUTE OF URBAN ENVIRONMENT AND HUMAN RESOURCES - PANTEION UNIVERSITY OF ATHENS;1183;-;-
-111;Ε.Π.Ι. ΔΙΕΘΝΩΝ ΣΧΕΣΕΩΝ  -  ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;INSTITUTE OF INTERNATIONAL RELATIONS OF PANTEION UNIVERSITY;1184;-;-
-112;Ε.Π.Ι. ΔΙΚΟΝΟΜΙΚΩΝ ΜΕΛΕΤΩΝ  - ΕΚΠΑ;RESEARCH INSTITUTE OF PROCEDURAL STUDIES - UOA;1185;-;-
-113;Ε.Π.Ι. ΕΠΙΤΑΧΥΝΤΙΚΩΝ ΣΥΣΤΗΜΑΤΩΝ ΚΑΙ ΕΦΑΡΜΟΓΩΝ ΕΚΠΑ;INSTITUTE OF ACCELERATING SYSTEMS AND APPLICATIONS, ATHENS, GREECE;1186;-;-
-114;Ε.Π.Ι. ΕΦΗΡΜΟΣΜΕΝΗΣ ΕΠΙΚΟΙΝΩΝΙΑΣ - ΕΚΠΑ;UNIVERSITY RESEARCH INSTITUTE OF APPLIED COMMUNICATION - UOA;1187;-;-
-115;Ε.Π.Ι. ΜΕΛΕΤΗΣ ΚΑΙ ΑΝΤΙΜΕΤΩΠΙΣΗΣ ΓΕΝΕΤΙΚΩΝ ΚΑΚΟΗΘΩΝ ΝΟΣΗΜΑΤΩΝ ΤΗΣ ΠΑΙΔΙΚΗΣ ΗΛΙΚΙΑΣ-ΕΚΠΑ;RESEARCH INSTITUTE FOR THE STUDY OF GENETIC AND MALIGNANT DISORDERS IN CHILDHOOD, UNIVERSITY OF ATHENS, GREECE;1188;-;-
-116;Ε.Π.Ι. ΟΙΚΟΝΟΜΙΚΩΝ ΚΑΙ ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ ΠΑΝΕΠΙΣΤΗΜΙΟ ΜΑΚΕΔΟΝΙΑΣ;S, INSTITUTE OF APPLIED ECONOMIC AND SOCIAL SCIENCES, UNIVERSITY OF MACEDONIA;1189;-;-
-117;Ε.Π.Ι. ΠΕΡΙΦΕΡΕΙΑΚΗΣ ΑΝΑΠΤΥΞΗΣ  -  ΠΑΝΤΕΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟ;REGIONAL DEVELOPMENT INSTITUTE OF PANTEION UNIVERSITY;1190;-;-
-118;Ε.Π.Ι. ΣΤΑΤΙΣΤΙΚΗΣ ΤΕΚΜΗΡΙΩΣΗΣ, ΑΝΑΛΥΣΗΣ & ΕΡΕΥΝΑΣ;INSTITUTE OF STATISTICAL DOCUMENTATION RESEARCH AND ANALYSIS;1191;-;-
-119;Ε.Π.Ι. ΣΥΝΤΑΓΜΑΤΙΚΩΝ ΕΡΕΥΝΩΝ  (Ι.Σ.Ε) -  ΕΚΠΑ;CONSTITUTIONAL RESEARCH INSTITUTE (UOA);1192;-;-
-120;Ε.Π.Ι. ΣΥΣΤΗΜΑΤΩΝ ΕΠΙΚΟΙΝΩΝΙΑΣ ΚΑΙ ΥΠΟΛΟΓΙΣΤΩΝ (Ε.Μ.Π.);INSTITUTE OF COMMUNICATION AND COMPUTER SYSTEMS (NTUA);1193;-;-
-121;Ε.Π.Ι. ΤΗΛΕΠΙΚΟΙΝΩΝΙΩΝ ΚΡΗΤΗΣ - ΠΟΛΥΤΕΧΝΕΙΟ ΚΡΗΤΗΣ;TELECOMMUNICATION SYSTEMS RESEARCH INSTITUTE (T.S.I.);1194;-;-
-122;Ε.Π.Ι. ΦΥΣΙΚΗΣ ΠΛΑΣΜΑΤΟΣ - ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΡΗΤΗΣ;INSTITUTE OF PLASMA PHYSICS (UOC);1195;-;-
-123;Ε.Π.Ι. ΦΥΣΙΚΗΣ ΤΟΥ ΣΤΕΡΕΟΥ ΦΛΟΙΟΥ ΤΗΣ ΓΗΣ - ΕΚΠΑ;SOLID EARTH PHYSICS INSTITUTE (UOA);1196;-;-
-124;Ε.Π.Ι. ΨΥΧΙΚΗΣ ΥΓΙΕΙΝΗΣ - ΕΚΠΑ;UNIVERSITY MENTAL HEALTH RESEARCH INSTITUTE, ATHENS, GREECE;1197;-;-
-125;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ, ΠΡΟΛΗΨΗΣ ΚΑΙ ΘΕΡΑΠΕΙΑΣ ΤΟΥ ΣΑΚΧΑΡΩΔΗ ΔΙΑΒΗΤΗ ΚΑΙ ΤΩΝ ΕΠΙΠΛΟΚΩΝ ΤΟΥ (Ε.ΚΕ.ΔΙ.);HELLENIC NATIONAL CENTER FOR THE RESEARCH, PREVENTION AND TREATMENT OF DIABETES MELLITUS AND ITS COMPLICATIONS (H.N.D.C.);1198;-;-
-126;ΕΘΝΙΚΟ ΙΔΡΥΜΑ ΕΡΕΥΝΩΝ ;NATIONAL HELLENIC RESEARCH FOUNDATION (NHRF);1199;-;-
-127;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ & ΤΕΧΝΟΛΟΓΙΚΗΣ ΑΝΑΠΤΥΞΗΣ – ΕΚΕΤΑ;CENTRE FOR RESEARCH & TECHNOLOGY HELLAS;1200;-;-
-128;ΕΛΛΗΝΙΚΟ ΙΝΣΤΙΤΟΥΤΟ ΠΑΣΤΕΡ - ΕΙΠ ;HELLENIC PASTEUR INSTITUTE (HPI);1201;-;-
-129;ΕΛΛΗΝΙΚΟ ΙΝΣΤΙΤΟΥΤΟ ΥΓΙΕΙΝΗΣ & ΑΣΦΑΛΕΙΑΣ ΤΗΣ ΕΡΓΑΣΙΑΣ ;HELLENIC INSTITUTE FOR OCCUPATIONAL HEALTH AND SAFETY ;1202;-;-
-130;ΕΛΛΗΝΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ ΤΥΠΟΠΟΙΗΣΗΣ ;HELLENIC ORGANIZATION FOR STANDARDIZATION (ELOT);1203;-;-
-132;"ΕΡΕΥΝΗΤΙΚΟ ΚΕΝΤΡΟ ΒΙΟΙΑΤΡΙΚΩΝ ΕΠΙΣΤΗΜΩΝ - ΕΚEΒΕ ""ΑΛΕΞΑΝΔΡΟΣ ΦΛΕΜΙΓΚ""";"BIOMEDICAL SCIENCES RESEARCH CENTER ""ALEXANDER FLEMING""";1205;-;-
-133;"ΕΡΕΥΝΗΤΙΚΟ ΚΕΝΤΡΟ ΚΑΙΝΟΤΟΜΙΑΣ ΣΤΙΣ ΤΕΧΝΟΛΟΓΙΕΣ ΤΗΣ ΠΛΗΡΟΦΟΡΙΑΣ, ΤΩΝ ΕΠΙΚΟΙΝΩΝΙΩΝ & ΤΗΣ ΓΝΩΣΗΣ - ""ΑΘΗΝΑ"" ";ATHENA RESEARCH AND INNOVATION CENTER IN INFORMATION, COMMUNICATION AND KNOWLEDGE TECHNOLOGIES;1206;-;-
-134;ΙΔΡΥΜΑ ΕΥΓΕΝΙΔΟΥ;EUGENIDES FOUNDATION;1207;-;-
-135;ΙΔΡΥΜΑ ΙΑΤΡΟΒΙΟΛΟΓΙΚΗΣ ΕΡΕΥΝΑΣ ΑΚΑΔΗΜΙΑΣ ΑΘΗΝΩΝ;BIOMEDICAL RESEARCH FOUNDATION OF THE ACADEMY OF ATHENS (BRFAA);1208;-;-
-136;ΙΔΡΥΜΑ ΜΕΙΖΟΝΟΣ ΕΛΛΗΝΙΣΜΟΥ;FOUNDATION OF THE HELLENIC WORLD;1209;-;-
-137;ΙΔΡΥΜΑ ΤΕΧΝΟΛΟΓΙΑΣ & ΕΡΕΥΝΑΣ - ΙΤΕ ;FOUNDATION FOR RESEARCH AND TECHNOLOGY-HELLAS (FORTH);1210;-;-
-138;ΙΝΣΤΙΤΟΥΤΟ  ΕΡΕΥΝΑΣ ΜΟΥΣΙΚΗΣ ΚΑΙ ΑΚΟΥΣΤΙΚΗΣ ;INSTITUTE FOR RESEARCH ON MUSIC AND ACOUSTICS;1211;-;-
-139;ΙΝΣΤΙΤΟΥΤΟ ΓΕΩΛΟΓΙΚΩΝ & ΜΕΤΑΛΛΕΥΤΙΚΩΝ ΕΡΕΥΝΩΝ ;INSTITUTE OF GEOLOGY & MINERAL EXPLORATION;1212;-;-
-140;ΙΝΣΤΙΤΟΥΤΟ ΕΛΙΑΣ ΚΑΙ ΥΠΟΤΡΟΠΙΚΩΝ ΦΥΤΩΝ ΧΑΝΙΩΝ ;INSTITUTE FOR OLIVE TREE AND SUBTROPICAL PLANTS;1213;-;-
-141;ΚΕΝΤΡΟ ΑΝΑΝΕΩΣΙΜΩΝ ΠΗΓΩΝ ΚΑΙ ΕΞΟΙΚΟΝΟΜΗΣΗΣ ΕΝΕΡΓΕΙΑΣ - ΚΑΠΕ;CENTRE FOR RENEWABLE ENERGY SOURCES AND SAVING (CRES);1214;-;-
-142;ΙΝΣΤΙΤΟΥΤΟ ΕΚΠΑΙΔΕΥΤΙΚΗΣ ΠΟΛΙΤΙΚΗΣ (Ι.Ε.Π.);INSTITUTE OF EDUCATIONAL POLICY (IEP);1215;-;-
-143;ΚΕΝΤΡΟ ΕΛΛΗΝΙΚΗΣ ΓΛΩΣΣΑΣ;CENTRE FOR THE GREEK LANGUAGE;1216;-;-
-144;ΚΕΝΤΡΟ ΕΡΕΥΝΑΣ ΓΙΑ ΘΕΜΑΤΑ ΙΣΟΤΗΤΑΣ ;RESEARCH CENTER FOR GENDER EQUALITY;1217;-;-
-146;ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΤΕΚΜΗΡΙΩΣΗΣ (ΕΚΤ);NATIONAL DOCUMENTATION CENTRE;1219;-;-
-147;ΕΥΡΩΠΑΪΚΟ ΚΕΝΤΡΟ ΓΙΑ ΤΗΝ ΑΝΑΠΤΥΞΗ ΤΗΣ ΕΠΑΓΓΕΛΜΑΤΙΚΗΣ ΚΑΤΑΡΤΙΣΗΣ;EUROPEAN CENTRE FOR THE DEVELOPMENT OF VOCATIONAL TRAINING;1220;-;-
-148;"ΙΝΣΤΙΤΟΥΤΟ ΤΕΧΝΟΛΟΓΙΑΣ ΥΠΟΛΟΓΙΣΤΩΝ & ΕΚΔΟΣΕΩΝ (ΙΤΥΕ ""ΔΙΟΦΑΝΤΟΣ"")";"COMPUTER TECHNOLOGY INSTITUTE AND PRESS ""DIOPHANTUS""";1221;-;-
-149;"ΕΛΛΗΝΙΚΟΣ ΓΕΩΡΓΙΚΟΣ ΟΡΓΑΝΙΣΜΟΣ - ""ΔΗΜΗΤΡΑ""";"HELLENIC AGRICULTURAL ORGANIZATION - ""DEMETER""";1222;-;-
-150;ΜΠΕΝΑΚΕΙΟ ΦΥΤΟΠΑΘΟΛΟΓΙΚΟ ΙΝΣΤΙΤΟΥΤΟ;BENAKI PHYTOPATHOLOGICAL INSTITUTE;1223;-;-
+19;ΠΑΝΕΠΙΣΤΗΜΙΟ ΘΕΣΣΑΛΙΑΣ;UNIVERSITY OF THESSALY;174;ΕΠΙΣΤΗΜΗΣ ΦΥΣΙΚΗΣ ΑΓΩΓΗΣ ΚΑΙ ΑΘΛΗΤΙΣΜΟΥ;PHYSICAL EDUCATION AND SPORTS SCIENCE
+20;ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ;UNIVERSITY OF IOANNINA;1224;ΑΡΧΙΤΕΚΤΟΝΩΝ ΜΗΧΑΝΙΚΩΝ;ARCHITECTURE
+16;ΠΑΝΕΠΙΣΤΗΜΙΟ ΑΙΓΑΙΟΥ;UNIVERSITY OF THE AEGEAN;1225;ΠΟΛΥΤΕΧΝΙΚΗ;ENGINEERING
+151;ΠΑΝΕΠΙΣΤΗΜΙΟ ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ;UNIVERSITY OF WESTERN ATTICA;1226;ΜΗΧΑΝΙΚΩΝ;ENGINEERING
+151;ΠΑΝΕΠΙΣΤΗΜΙΟ ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ;UNIVERSITY OF WESTERN ATTICA;1227;ΔΙΟΙΚΗΤΙΚΩΝ, ΟΙΚΟΝΟΜΙΚΩΝ ΚΑΙ ΚΟΙΝΩΝΙΚΩΝ ΕΠΙΣΤΗΜΩΝ;BUSINESS ADMINISTRATION, ECONOMICS AND SOCIAL SCIENCES
+151;ΠΑΝΕΠΙΣΤΗΜΙΟ ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ;UNIVERSITY OF WESTERN ATTICA;1228;ΕΦΑΡΜΟΣΜΕΝΩΝ ΤΕΧΝΩΝ ΚΑΙ ΠΟΛΙΤΙΣΜΟΥ;APPLIED ARTS AND CULTURE
+151;ΠΑΝΕΠΙΣΤΗΜΙΟ ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ;UNIVERSITY OF WESTERN ATTICA;1229;ΕΠΙΣΤΗΜΩΝ ΥΓΕΙΑΣ ΚΑΙ ΠΡΟΝΟΙΑΣ;HEALTH AND MEDICAL CARE SCIENCES
+151;ΠΑΝΕΠΙΣΤΗΜΙΟ ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ;UNIVERSITY OF WESTERN ATTICA;1230;ΕΠΙΣΤΗΜΩΝ ΤΡΟΦΙΜΩΝ;FOOD SCIENCES

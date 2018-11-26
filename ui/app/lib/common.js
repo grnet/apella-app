@@ -18,7 +18,7 @@ const {
   inject
 } = Ember;
 
-// A route mixin which should apply for all authenticated routes. Handles 
+// A route mixin which should apply for all authenticated routes. Handles
 // cross app things such as non accepted terms.
 const UserConstraintsRouteMixin = {
   messageService: inject.service('messages'),
@@ -29,7 +29,8 @@ const UserConstraintsRouteMixin = {
       let set_academic = get(profile, 'can_set_academic');
       let has_accepted_terms = get(profile, 'has_accepted_terms');
       let isProfile = get(transition, 'targetName') === 'auth.profile';
-      if ((set_academic || !has_accepted_terms) && !isProfile) {
+      let isContact = get(transition, 'targetName').includes('jira-issue');
+      if ((set_academic || !has_accepted_terms) && !isProfile && !isContact) {
         transition.abort();
         return this.transitionTo('auth.profile');
       }
@@ -193,11 +194,21 @@ function fileField(key, path, kind, attrs, formAttrs) {
   }, attrs || {}));
 }
 
+
 function get_registry_members(registry, store, params) {
   let registry_id = registry.get('id'),
-    query = assign({}, params, { id: registry_id, registry_members: true});
-  return preloadRelations(store.query('professor', query), 'department', 'institution');
-};
+      query = assign({}, params, {registry_id: registry_id});
+  let members = store.query('registry-member', query);
+  return preloadRelations(members, 'department', 'institution');
+}
+
+function get_registry_members_for_position(registry, store, params) {
+  let registry_id = registry.get('id'),
+      query = assign({}, params, {registry_id: registry_id});
+  let members = store.query('registry-member-position', query);
+  return preloadRelations(members, 'department', 'institution');
+}
+
 
 // Helper to resolve model relations along with store query entries.
 //
@@ -275,6 +286,8 @@ function preloadRelations(model, ...keys) {
         } else {
           return model;
         }
+      }, (error) => {
+        return model;
       });
     })).then(() => { return resolved });
   });
@@ -304,7 +317,7 @@ function prefixSelect(arr, prefix) {
  * current language.
  */
 
-function filterSelectSortTitles(modelName) {
+function filterSelectSortTitles(modelName, dataKey) {
   return field(modelName, {
     query: function(select, store, field, params) {
       let locale = get(select, 'i18n.locale'),
@@ -314,7 +327,8 @@ function filterSelectSortTitles(modelName) {
 
       return store.query(modelName, params);
     },
-    autocomplete: true
+    autocomplete: true,
+    dataKey: dataKey || modelName
   })
 };
 
@@ -322,6 +336,7 @@ export {
   ApellaGen, i18nField, computeI18N, computeI18NChoice,
   booleanFormat, computeDateFormat, computeDateTimeFormat, urlValidator,
   VerifiedUserMixin, fileField, i18nUserSortField, get_registry_members,
+  get_registry_members_for_position,
   preloadRelations, emptyArrayResult,
   prefixSelect, filterSelectSortTitles, UserConstraintsRouteMixin
 };

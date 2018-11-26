@@ -64,9 +64,13 @@ let CANDIDATE_FIELDSET =  {
         }),
         fileField('publications', 'candidate', 'publications', {
           readonly: true
-        })],
+        }),
+        fileField('pubs_note', 'candidate', 'pubs_note', {
+          readonly: true,
+        }),
+      ],
       layout: {
-        flex: [100, 100, 100, 100]
+        flex: [100, 100, 100, 100, 100]
       },
       flex: 100,
 };
@@ -78,12 +82,12 @@ let CANDIDACY_FIELDSET =  {
 
       let res = [
         fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
-          hint: 'five_before_electors_meeting',
+          hint: 'one_before_electors_meeting',
           readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
             let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
             let after_deadline = false;
             if (electors_at) {
-              let limit_day = electors_at.subtract(5, 'days'),
+              let limit_day = electors_at.subtract(1, 'days'),
                 today = moment().startOf('days');
               after_deadline = today.isAfter(limit_day);
             }
@@ -106,7 +110,24 @@ let CANDIDACY_FIELDSET =  {
           })
         }, {
           multiple: true
-        })
+        }),
+        fileField('statement_file', 'candidacy', 'statement_file', {
+          hint: 'statement_file.hint',
+          readonly: computed('model.position.is_open', 'model.position.electors_meeting_date', function() {
+            let electors_at = moment(get(this, 'model.position.electors_meeting_date')).startOf('days');
+            let after_deadline = false;
+            if (electors_at) {
+              let limit_day = electors_at.subtract(5, 'days'),
+                today = moment().startOf('days');
+              after_deadline = today.isAfter(limit_day);
+            }
+            return after_deadline;
+          })
+        }, {
+          replace: true
+        }),
+
+
       ];
       if (election) {
         res.pushObject(
@@ -129,13 +150,17 @@ let CANDIDACY_FIELDSET_DETAILS =  {
       let res = [
         fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
           readonly: true,
-          hint: 'five_before_electors_meeting',
+          hint: 'one_before_electors_meeting',
         }, { replace: true}),
        fileField('attachment_files', 'candidacy', 'attachment_files', {
           readonly: true,
           sortBy: 'filename',
           hint: 'one_before_electors_meeting',
-        }, { replace: true, multiple: true})
+        }, { replace: true, multiple: true}),
+        fileField('statement_file', 'candidacy', 'statement_file', {
+          readonly: true,
+          hint: 'statement_file.hint',
+        }, { replace: true}),
       ];
       if (election) {
         res.pushObject('othersCanView');
@@ -305,7 +330,6 @@ export default ApellaGen.extend({
   },
   list: {
     actions: [],
-
     getModel: function(params) {
       let role = get(this, 'session.session.authenticated.role');
       if (role === 'candidate' || role === 'professor') {
@@ -412,7 +436,8 @@ export default ApellaGen.extend({
               user,
               get(me, 'cv'),
               get(me, 'diplomas'),
-              get(me, 'publications')
+              get(me, 'publications'),
+              get(me, 'pubs_note'),
             ];
 
             return Ember.RSVP.all(promises).then((res) => {
@@ -420,6 +445,7 @@ export default ApellaGen.extend({
                 set(c, 'cv', res[1]);
                 set(c, 'diplomas', res[2]);
                 set(c, 'publications', res[3]);
+                set(c, 'pubs_note', res[4]);
                 return c;
             });
 

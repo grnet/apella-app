@@ -65,6 +65,22 @@ let fs_prof_foreign = {
   }
 };
 
+let fs_prof_leave = {
+  label: 'fieldsets.labels.leave',
+  fields: [
+    'leave_starts_at_format',
+    'leave_ends_at_format',
+    'on_leave_verbose',
+    fileField('leave_file', 'professor', 'leave_file', {
+      readonly: true,
+    }),
+  ],
+  layout: {
+    flex: [50, 25, 25, 100]
+  }
+};
+
+
 function peak_fs_professors() {
   let professor = get(this, 'model'),
     is_foreign = professor.get('is_foreign'),
@@ -73,7 +89,12 @@ function peak_fs_professors() {
     return head.concat(fs_prof_foreign);
   }
   else {
-    return head.concat(fs_prof_domestic);
+    let res =  head.concat(fs_prof_domestic);
+    let leave = get(this, 'model.leave_upcoming');
+    if (leave) {
+      res = res.concat(fs_prof_leave);
+    }
+    return res;
   }
 };
 

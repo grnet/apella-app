@@ -328,7 +328,7 @@ def generate_file_token(user, file):
 
 def consume_file_token(token):
     file_id = cache.get(token)
-    if not file_id:
+    if file_id is None:
         raise PermissionDenied()
     cache.delete(token)
     return file_id

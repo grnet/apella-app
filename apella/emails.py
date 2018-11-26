@@ -5,10 +5,15 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.db.models import Q
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from apella.util import urljoin, otz, move_to_timezone
 from apella.models import InstitutionManager, UserInterest, \
     ApellaUser
+
 
 logger = logging.getLogger(__name__)
 
@@ -235,6 +240,8 @@ def send_emails_file(obj, file_kind, extra_context=()):
         'nomination_proceedings', 'nomination_act', 'assistant_files',
         'revocation_decision', 'failed_election_decision']
 
+    candidacy_file_names = ['statement_file']
+
     if file_kind in position_file_names:
         # send to committee, candidates, electors
         subject = 'apella/emails/position_set_{}_subject.txt'.format(file_kind)
@@ -255,6 +262,42 @@ def send_emails_file(obj, file_kind, extra_context=()):
                 'ends_at': ends_at,
                 'apella_url': position_url
                 })
+
+    if file_kind in candidacy_file_names:
+        pos = obj.position
+        # send to managers, secretaries, electors
+        managers = InstitutionManager.objects.filter(
+            institution=obj.position.department.institution,
+            manager_role='institutionmanager')
+        assistants = InstitutionManager.objects.filter(
+            manager_role='assistant',
+            departments=pos.department,
+            is_secretary=True)
+        electors = pos.electors.filter(is_verified=True).\
+            filter(user__is_active=True)
+
+        subject = 'apella/emails/candidacy_set_{}_subject.txt'.format(file_kind)
+        body = 'apella/emails/candidacy_set_{}_body.txt'.format(file_kind)
+        recipients = chain(managers, electors, assistants)
+        recipients = [x.user for x in recipients]
+
+        starts_at = move_to_timezone(pos.starts_at, otz)
+        ends_at = move_to_timezone(pos.ends_at, otz)
+        ui_url = get_ui_url()
+        position_url = urljoin(ui_url, 'positions/', str(pos.pk))
+
+        for recipient in recipients:
+            send_user_email(
+                recipient,
+                subject,
+                body,
+                {'position': pos,
+                'starts_at': starts_at,
+                'ends_at': ends_at,
+                'apella_url': position_url,
+                'candidate': obj.candidate
+                })
+
 
 
 def send_email_elected(obj, elected='elected'):
@@ -578,40 +621,136 @@ def send_position_create_emails(position):
 
 
 def send_create_application_emails(user_application):
+    institution = user_application.user.professor.department.institution \
+        if not user_application.is_move_type() \
+        else user_application.receiving_department.institution
+
     managers = InstitutionManager.objects.filter(
-        institution=user_application.user.professor.department.institution,
-        manager_role='institutionmanager')
+        institution=institution, manager_role='institutionmanager')
 
     ui_url = get_ui_url()
     app_url = urljoin(ui_url, 'user-applications/', str(user_application.pk))
+    email_manager_subject = \
+        'apella/emails/user_application_create_to_manager_subject.txt' \
+        if not user_application.is_move_type() \
+        else 'apella/emails/user_application_move_create_to_manager_subject.txt'
+    email_manager_body = \
+        'apella/emails/user_application_create_to_manager_body.txt' \
+        if not user_application.is_move_type() \
+        else 'apella/emails/user_application_move_create_to_manager_body.txt'
+
     for manager in managers:
         send_user_email(
             manager.user,
-            'apella/emails/user_application_create_to_manager_subject.txt',
-            'apella/emails/user_application_create_to_manager_body.txt',
+            email_manager_subject,
+            email_manager_body,
             {
                 'app': user_application,
                 'apella_url': app_url
             })
 
     assistants = InstitutionManager.objects.filter(
-        institution=user_application.user.professor.department.institution,
-        manager_role='assistant',
-        is_secretary=True)
+        institution=institution, manager_role='assistant', is_secretary=True)
+
     for assistant in assistants:
-        if user_application.user.professor.department in \
-                assistant.departments.all():
+        department = user_application.user.professor.department \
+            if not user_application.is_move_type() \
+            else user_application.receiving_department
+
+        if department in assistant.departments.all():
             send_user_email(
                 assistant.user,
-                'apella/emails/user_application_create_to_manager_subject.txt',
-                'apella/emails/user_application_create_to_manager_body.txt',
+                email_manager_subject,
+                email_manager_body,
                 {
                     'app': user_application,
                     'apella_url': app_url
                 })
 
+    email_professor_subject = \
+        'apella/emails/user_application_create_to_professor_subject.txt' \
+        if not user_application.is_move_type() \
+        else 'apella/emails/user_application_move_create_to_professor_subject.txt'
+    email_professor_body = \
+        'apella/emails/user_application_create_to_professor_body.txt' \
+        if not user_application.is_move_type() \
+        else 'apella/emails/user_application_move_create_to_professor_body.txt'
+
     send_user_email(
         user_application.user,
-        'apella/emails/user_application_create_to_professor_subject.txt',
-        'apella/emails/user_application_create_to_professor_body.txt',
+        email_professor_subject,
+        email_professor_body,
         {'app': user_application})
+
+def send_disable_professor_emails(professor, is_disabled):
+    # Send email to professor
+    send_user_email(
+            professor.user,
+            'apella/emails/professor_{}_subject.txt'. \
+                format('disabled' if is_disabled else 'enabled'),
+            'apella/emails/professor_{}_body.txt'. \
+                format('disabled' if is_disabled else 'enabled')
+        )
+    registries_institutions = professor.registrymembership_set.values_list(
+        'registry__department__institution', flat=True)
+    managers = InstitutionManager.objects.filter(
+        manager_role='institutionmanager',
+        institution__in=registries_institutions)
+
+    # Send email to manager
+    for m in managers:
+        registries = []
+        for rm in professor.registrymembership_set.filter(
+                registry__department__institution=m.institution):
+            registries.append(rm.registry)
+        send_user_email(
+            m.user,
+            'apella/emails/professor_{}_subject.txt'. \
+                format('disabled' if is_disabled else 'enabled'),
+            'apella/emails/professor_disabled_to_manager.txt',
+            {'registries': registries, 'professor': professor}
+        )
+
+    # Send email to secretaries
+    registries_departments = professor.registrymembership_set.values_list(
+        'registry__department')
+    assistants = InstitutionManager.objects.filter(
+        manager_role='assistant',
+        departments__in=registries_departments,
+        is_secretary=True)
+    for a in assistants:
+        registries = []
+        for rm in professor.registrymembership_set.filter(
+                registry__department__in=a.departments.all()):
+            registries.append(rm.registry)
+        send_user_email(
+            a.user,
+            'apella/emails/professor_{}_subject.txt'. \
+                format('disabled' if is_disabled else 'enabled'),
+            'apella/emails/professor_disabled_to_secretary.txt',
+            {
+                'registries': registries,
+                'professor': professor}
+        )
+
+def send_release_shibboleth_email(user, request):
+    uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+    p = PasswordResetTokenGenerator()
+    token = p.make_token(user)
+    context = {
+        'uid': uid,
+        'token': token
+    }
+
+    current_site = get_current_site(request)
+    extra = {
+        'site_name': current_site.name,
+        'protocol': 'https' if request.is_secure() else 'http',
+        'domain': current_site.domain,
+        'url': settings.DJOSER.get('PASSWORD_RESET_CONFIRM_URL').format(**context)
+    }
+    send_user_email(
+        user,
+        'apella/emails/password_reset_email_subject.txt',
+        'apella/emails/password_reset_email_body.txt',
+        extra)

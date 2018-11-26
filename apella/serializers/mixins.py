@@ -3,15 +3,39 @@
 from datetime import datetime
 
 from django.conf import settings
+from django.db.models import Min
 from rest_framework import serializers
 from rest_framework.utils import model_meta
 from rest_framework.serializers import ValidationError
 
 from apella.models import ApellaUser, Institution, Department, \
-    Position, Professor, InstitutionManager
+    Position, Professor, InstitutionManager, JiraIssue, UserApplication, \
+    Registry, RegistryMembership
 from apella import auth_hooks
 from apella.util import move_to_timezone, otz
 from apella.emails import send_user_email, send_create_application_emails
+from apella.jira_wrapper import create_issue, update_issue
+from apella.helpers import position_is_latest
+
+def user_application_cannot_create_position(instance):
+    """
+    Returns true if there exists at least one not cancelled latest position
+    with approved user_application whose user and app_type are the same as
+    the instance application or user application is in pending state.
+    """
+    if instance.state == 'pending' or instance.state == 'rejected':
+        return True
+
+    approved_apps = UserApplication.objects.filter(
+        user=instance.user,
+        app_type=instance.app_type,
+        state='approved'
+    )
+    positions = Position.objects.filter(
+        user_application__in=approved_apps
+    ).exclude(state='cancelled')
+    latest_positions = [x for x in positions if position_is_latest(x)]
+    return len(latest_positions)>0
 
 
 class ValidatorMixin(object):
@@ -199,25 +223,6 @@ def send_registry_emails(members, department):
         )
 
 
-class Registries(object):
-    def create(self, validated_data):
-        members = validated_data.get('members', [])
-        department = validated_data.get('department', None)
-        registry = super(Registries, self).create(validated_data)
-        send_registry_emails(members, department)
-        return registry
-
-    def update(self, instance, validated_data):
-        department = validated_data.get('department', instance.department)
-        members_before = instance.members.all()
-        members_after = validated_data.get('members', [])
-        members_to_send = [
-            member for member in members_after if member not in members_before]
-        instance = super(Registries, self).update(instance, validated_data)
-        send_registry_emails(members_to_send, department)
-        return instance
-
-
 class PositionsPortal(object):
     def to_representation(self, obj):
         now = move_to_timezone(datetime.utcnow(), otz)
@@ -245,10 +250,10 @@ class PositionsPortal(object):
                         'en': obj.department.title.en
                     },
                     'school': {
-                        'id': obj.department.school.id,
+                        'id': obj.department.school and obj.department.school.id,
                         'name': {
-                            'el': obj.department.school.title.el,
-                            'en': obj.department.school.title.en
+                            'el': obj.department.school and obj.department.school.title.el,
+                            'en': obj.department.school and obj.department.school.title.en
                         },
                         'institution': {
                             'id': obj.department.institution.id,
@@ -299,10 +304,38 @@ class PositionsPortal(object):
 
 
 class UserApplications(object):
+    def validate(self, data):
+        app_type = self.instance and self.instace.app_type \
+            or data.get('app_type')
+        if app_type == 'move' and not data.get('receiving_department', None):
+            raise ValidationError('receiving_department.required')
+
+        user = data.get('user', None)
+        if not user:
+            user = self.context.get('request').user
+        if UserApplication.objects.filter(
+                user=user,
+                app_type=app_type,
+                state='pending').exists():
+            raise ValidationError('cannot.create.application')
+
+        approved_apps = UserApplication.objects.filter(
+            user=user,
+            app_type=app_type,
+            state='approved')
+        for app in approved_apps:
+            positions = app.position_set.all()
+            for p in positions:
+                if p.state != 'cancelled' and position_is_latest(p):
+                    raise ValidationError('cannot.create.application')
+        return super(UserApplications, self).validate(data)
+
     def create(self, validated_data):
         user = validated_data.get('user', None)
         if not user:
             user = self.context.get('request').user
+            if user.is_helpdesk():
+                raise ValidationError("user.missing")
             validated_data['user'] = user
         try:
             department = user.professor.department
@@ -312,8 +345,13 @@ class UserApplications(object):
         except Department.DoesNotExist:
             raise ValidationError("invalid.department")
 
+        if validated_data.get('app_type', '') == 'move' and \
+                self.context.get('request').user.is_helpdesk():
+            validated_data['state'] = 'approved'
+
         obj = super(UserApplications, self).create(validated_data)
         send_create_application_emails(obj)
+
         return obj
 
     def update(self, instance, validated_data):
@@ -342,3 +380,98 @@ class InstitutionManagersMixin(object):
                 raise ValidationError(msg)
 
         return data
+
+
+class JiraIssues(object):
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
+        if isinstance(instance, JiraIssue):
+            update_issue(instance)
+        elif instance:
+            for i in instance:
+                update_issue(i)
+        return super(JiraIssues, self).__init__(*args, **kwargs)
+
+    def create(self, validated_data):
+        jira_issue = JiraIssue(**validated_data)
+        new_issue = create_issue(jira_issue)
+        validated_data['issue_key'] = new_issue.key
+        return super(JiraIssues, self).create(validated_data)
+
+    def validate(self,data):
+        request_user = self.context.get('request').user
+        if data['reporter'] != request_user:
+            raise ValidationError('cannot.create.application')
+        if not request_user.is_helpdesk() and data['user'] != request_user:
+            raise ValidationError('cannot.create.application')
+        return super(JiraIssues, self).validate(data)
+
+def get_professor_registries(instance):
+    active_registries = []
+    memberships = instance.registrymembership_set.values_list(
+        'registry_id', 'registry__department_id')
+    electors_positions = instance.electorparticipation_set.values(
+        'position__code').annotate(Min('position_id')).values_list(
+        'position_id__min', flat=True)
+    electors_list = list(electors_positions)
+
+    committee_positions = instance.committee_duty.values(
+        'code').annotate(Min('id')).values_list(
+        'id__min', flat=True)
+    committee_list = list(committee_positions)
+
+    positions_list = electors_list + committee_list
+
+    for m in memberships:
+        if Position.objects.filter(
+                state__in=['electing', 'revoked'],
+                department=m[1],
+                id__in=positions_list).exists():
+            active_registries.append(m[0])
+    return active_registries
+
+
+class RegistryMembers(object):
+    def create(self, validated_data):
+        data = self.context.get('request').data
+        professor_id = data.get('professor_id', None)
+        registry_id = data.get('registry_id', None)
+        if not professor_id:
+            raise ValidationError("professor.id.required")
+        if not registry_id:
+            raise ValidationError("registry.id.required")
+
+        try:
+            professor = Professor.objects.get(id=professor_id)
+        except Professor.DoesNotExist:
+            raise ValidationError("professor.not.found")
+
+        try:
+            registry = Registry.objects.get(id=registry_id)
+        except Registry.DoesNotExist:
+            raise ValidationError("registry.not.found")
+
+        if RegistryMembership.objects.filter(
+                professor=professor,
+                registry=registry).exists():
+            raise ValidationError("already.in.registry")
+
+        other_type = 'external' if registry.type == 'internal' \
+            else 'internal'
+        try:
+            other_registry = Registry.objects.get(
+                department=registry.department,
+                type=other_type)
+            if RegistryMembership.objects.filter(
+                    registry=other_registry,
+                    professor=professor).exists():
+                raise ValidationError("already.in.other.registry")
+
+        except Registry.DoesNotExist:
+            pass
+
+        rm = RegistryMembership.objects.create(
+            professor=professor, registry=registry)
+
+        send_registry_emails([professor], registry.department)
+        return rm

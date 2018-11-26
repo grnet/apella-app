@@ -12,5 +12,6 @@ export default Ember.Mixin.create({
   cv: DS.belongsTo('apella-file'),
   diplomas: DS.hasMany('apella-file'),
   publications: DS.hasMany('apella-file'),
+  pubs_note: DS.belongsTo('apella-file'),
 });
 

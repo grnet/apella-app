@@ -4,7 +4,10 @@ A translation in English follows
 {% block content_el %}{% endblock content_el %}{% block more_el %}{% if apella_url %}Mπορείτε να δείτε περισσότερα πραγματοποιώντας είσοδο στον λογαριασμό σας ({{ login_url }}) και μεταβαίνοντας στον σύνδεσμο: {{ apella_url }} {% endif %}
 
 ΠΡΟΣΟΧΗ:
-Παρακαλούμε MHN απαντήσετε σε αυτό το e-mail. Για οποιαδήποτε απορία ή διευκρίνιση μπορείτε να επικοινωνήσετε με το Γραφείο Αρωγής Χρηστών (https://apella.minedu.gov.gr/contact).{% endblock more_el %}
+Παρακαλούμε MHN απαντήσετε σε αυτό το e-mail. Για οποιαδήποτε απορία ή διευκρίνιση μπορείτε να επικοινωνήσετε με το Γραφείο Αρωγής Χρηστών (https://apella.minedu.gov.gr/contact).
+
+powered by GRNET www.grnet.gr
+Twitter: @grnet_gr || Facebook: @grnet.gr || LinkedIn: grnet || YouTube: GRNET EDET{% endblock more_el %}
 
 ---------
 
@@ -12,6 +15,9 @@ To user {{ user.first_name.en }} {{ user.last_name.en }},
 {% block content_en %}{% endblock content_en %}{% block more_en %}{% if apella_url %}You can view more by signing in ({{login_url}}) your account and visiting the link: {{ apella_url }}{% endif %}
 
 NOTICE:
-Please do NOT reply to this e-mail. For any questions or clarification please contact the Helpdesk (https://apella.minedu.gov.gr/en/contact-en).{% endblock more_en %}
+Please do NOT reply to this e-mail. For any questions or clarification please contact the Helpdesk (https://apella.minedu.gov.gr/en/contact-en).
+
+powered by GRNET www.grnet.gr
+Twitter: @grnet_gr || Facebook: @grnet.gr || LinkedIn: grnet || YouTube: GRNET EDET{% endblock more_en %}
 
 {% block note %}{% endblock note %}

@@ -11,19 +11,9 @@ from rest_framework import serializers
 from apella.models import ApellaUser
 from apella.management.utils import ApellaCommand
 from apella.serializers.position import upgrade_candidate_to_professor
+from apella.common import RANKS_EL_EN as RANKS
 
 logger = logging.getLogger(__name__)
-
-RANKS = {
-    'ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Assistant Professor',
-    'ΛΕΚΤΟΡΑΣ': 'Lecturer',
-    'ΕΠΙ ΘΗΤΕΙΑ ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Tenured Assistant Professor',
-    'ΑΝΑΠΛΗΡΩΤΗΣ ΚΑΘΗΓΗΤΗΣ': 'Associate Professor',
-    'ΚΑΘΗΓΗΤΗΣ': 'Professor',
-    'ΚΥΡΙΟΣ ΕΡΕΥΝΗΤΗΣ': 'Principal Researcher',
-    'ΕΝΤΕΤΑΛΜΕΝΟΣ ΕΡΕΥΝΗΤΗΣ': 'Affiliated Researcher',
-    'ΔΙΕΥΘΥΝΤΗΣ ΕΡΕΥΝΩΝ': 'Principal Researcher'
-}
 
 
 class Command(ApellaCommand):

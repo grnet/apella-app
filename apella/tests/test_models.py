@@ -93,4 +93,4 @@ class CandidacyTest(TestCase):
                 candidate=self.candidate,
                 position=self.position,
                 others_can_view=True)
-        self.assertEqual(self.candidacy.state, 'posted')
+        self.assertEqual(self.candidacy.state, 'draft')

@@ -1,0 +1,26 @@
+{% extends "apella/emails/email_base.txt" %}
+
+{% block content_el %}
+
+Σας ενημερώνουμε ότι έχει ανασταλεί η συμμετοχή σας στο γενικό μητρώο ΑΠΕΛΛΑ.
+
+Σας υπενθυμίζουμε ότι θα εξακολουθήσετε να έχετε πρόσβαση στο λογαριασμό σας και σε όσες ενεργές διαδικασίες εκλογής ήδη συμμετέχετε, ενώ δε θα είναι δυνατή η συμμετοχή σας σε νέο μητρώο, εκλεκτορικό σώμα ή εισηγητική επιτροπή.
+
+
+{% if not user.shibboleth_id %}
+Όνομα χρήστη: {{ user.username }}
+{% endif %}
+
+{% endblock content_el %}
+
+{% block content_en %}
+
+We inform you that your participation in the Apella registry has been suspended.
+
+We remind you that you still have access to your account and all the active election procedures in which you are already involved, while you will not be able to participate in a new registry, electing committee or evaluating committee.
+
+{% if not user.shibboleth_id %}
+Username: {{ user.username }}
+{% endif %}
+
+{% endblock content_en %}

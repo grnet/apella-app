@@ -21,6 +21,12 @@ class Command(ApellaCommand):
         )
 
         parser.add_argument(
+            '--password',
+            dest='password',
+            help='pasword',
+        )
+
+        parser.add_argument(
             '--password-from-json',
             dest='password_from_json',
             help='Read password using the username as key in this json file',
@@ -75,27 +81,21 @@ class Command(ApellaCommand):
 
     def handle(self, *args, **options):
 
+        data = {}
         password_from_json = options['password_from_json']
-        if not password_from_json:
+        if not password_from_json \
+           and 'APELLA_PASSWORD_FROM_JSON' in os.environ:
             password_from_json = os.environ['APELLA_PASSWORD_FROM_JSON']
 
-        if not password_from_json:
-            raise CommandError(
-                "Neither --password-from-json option "
-                "nor APELLA_PASSWORD_FROM_JSON environment variable is present")
-
-        try:
-            with open(password_from_json) as password_file:
-                data = json.load(password_file)
-        except IOError as ioe:
-            raise CommandError(ioe)
+        if password_from_json:
+            try:
+                with open(password_from_json) as password_file:
+                    data = json.load(password_file)
+            except IOError as ioe:
+                raise CommandError(ioe)
 
         username = options['username']
-        if not username in data:
-            m = "Cannot find %r in file %s" % (username, password_from_json)
-            raise CommandError(m)
-
-        password = data[username]
+        password = data.get(username, options['password'])
         first_name_el = options['first_name_el']
         last_name_el = options['last_name_el']
         father_name_el = options['father_name_el']

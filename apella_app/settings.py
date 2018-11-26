@@ -83,6 +83,9 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
 }
 
 MIDDLEWARE_CLASSES = (
@@ -159,6 +162,15 @@ DJOSER = {
 
 APELLA_LEGACY_ACADEMIC_LOGIN_URL = None
 
+
+JIRA_OPTIONS = {
+    'server':  "https://staging.tts.grnet.gr/jira/"
+}
+
+JIRA_LOGIN = ("apella", "password")
+JIRA_PROJECT = "APELLA"
+JIRA_LABEL = "new_apella"
+
 SETTINGS_PATH = os.path.join(SETTINGS_DIR, SETTINGS_FILE)
 
 if not os.path.isfile(SETTINGS_PATH):
@@ -169,8 +181,8 @@ if not os.path.isfile(SETTINGS_PATH):
 
 LOGGING = None
 
-EVALUATORS_AUTH_TOKEN_FILE = '/etc/apella/evaluators_auth_token'
-EVALUATORS_ALLOW_ADDR_FILE = '/etc/apella/evaluators_allow_addr'
+EVALUATORS_AUTH_TOKEN_FILE = os.path.join(SETTINGS_DIR, 'evaluators_auth_token')
+EVALUATORS_ALLOW_ADDR_FILE = os.path.join(SETTINGS_DIR, 'evaluators_allow_addr')
 
 execfile(SETTINGS_PATH)
 
@@ -217,13 +229,14 @@ if not LOGGING:
         },
     }
 
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
+            'rest_framework.renderers.JSONRenderer',
+            'rest_framework.renderers.BrowsableAPIRenderer',
+        )
 
 if not DEBUG and not BASE_URL:
     raise Exception("BASE_URL setting is required when DEBUG is set to False.")
 
 DEFAULT_FROM_EMAIL = 'no-reply@apella.grnet.gr'
-PERMISSIONS_LIMITED = False
-if PERMISSIONS_LIMITED:
-    from apella.permissions.permission_rules_limited import PERMISSION_RULES
-else:
-    from apella.permissions.permission_rules import PERMISSION_RULES
+from apella.permissions.permission_rules import PERMISSION_RULES

@@ -30,7 +30,8 @@ const FILE_FIELDS = [
   'id_passport_file',
   'diplomas',
   'cv',
-  'cv_professor'
+  'cv_professor',
+  'pubs_note'
 ];
 
 const FIELDS_ALL = [
@@ -328,6 +329,11 @@ const serializeUser = function(json) {
   if (Object.keys(user_info).length) {
     json['user'] = user_info;
   }
+
+  if (json.hasOwnProperty('cv_in_url') && !json['cv_in_url']){
+      json['cv_url'] ='';
+  }
+
   return json;
 }
 

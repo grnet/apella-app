@@ -17,6 +17,7 @@ export default DS.Model.extend({
   app_type: DS.attr({type: 'select', choices: application_types, defaultValue: 'tenure'}),
   app_type_verbose: computeI18NChoice('app_type', application_types),
   can_accept_candidacies: DS.attr(),
+  cannot_create_position: DS.attr(),
   created_at: DS.attr('date'),
   created_at_format: computeDateTimeFormat('created_at'),
   department: DS.belongsTo('department', {formAttrs: {optionLabelAttr: 'title_current'}}),
@@ -31,4 +32,12 @@ export default DS.Model.extend({
   updated_at: DS.attr('date'),
   updated_at_format: computeDateTimeFormat('updated_at'),
   user: DS.belongsTo('user', {formAttrs: {optionLabelAttr: 'full_name_current'}}),
+  receiving_department: DS.belongsTo('department'),
+  institution: DS.belongsTo('institution', {
+    autocomplete: true,
+    formAttrs: {
+      optionLabelAttr: 'title_current'
+    },
+  }),
+
 });

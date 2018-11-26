@@ -144,6 +144,7 @@ const Register = gen.GenRoutedObject.extend({
   components: { beforeForm: 'register-form-intro' },
   getModel(params) {
     let token = extractToken(window.location);
+    let is_domestic = false;
     if (token) { resetHash(window); };
     if (params.academic && !token) {
       this.transitionTo('auth.register-intro');
@@ -156,6 +157,10 @@ const Register = gen.GenRoutedObject.extend({
     };
 
     let userRole = this.paramsFor('auth.register').userRole;
+
+    if (userRole == 'domestic-professor') {
+      is_domestic = true;
+    }
 
     if (userRole == 'foreign-professor') {
       defaults['is_foreign'] = true
@@ -179,6 +184,7 @@ const Register = gen.GenRoutedObject.extend({
     set(model, 'warn_legacy', params.warn_legacy);
     set(model, 'remote_data', remote_data);
     set(model, 'userRole', userRole);
+    set(model, 'is_domestic', is_domestic);
     return Ember.RSVP.Promise.resolve(model);
   },
 
@@ -238,9 +244,11 @@ const Register = gen.GenRoutedObject.extend({
     title: computed('model.registration_token', 'model.userRole', function() {
       let token = get(this, 'model.registration_token');
       let type = get(this, 'model.userRole');
+      let is_domestic = get(this, 'model.is_domestic');
       if (token) { return 'register.domestic.title'; }
       if (type === 'manager') { return 'register.manager.title'; }
       if (type === 'candidate') { return 'register.candidate.title'; }
+      if (is_domestic) { return 'register.domestic.title';}
       if (type === 'professor') { return 'register.foreign.title'; }
       return 'register.title';
     })

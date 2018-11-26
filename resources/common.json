@@ -44,8 +44,8 @@
         ["Professor", "Professor"],
         ["Associate Professor", "Associate Professor"],
         ["Assistant Professor", "Assistant Professor"],
-        ["Lecturer", "Lecturer"],
         ["Tenured Assistant Professor", "Tenured Assistant Professor"],
+        ["Lecturer", "Lecturer"],
         ["Research Director", "Research Director"],
         ["Principal Researcher", "Principal Researcher"],
         ["Affiliated Researcher", "Affiliated Researcher"]
@@ -54,7 +54,8 @@
     "POSITION_RANKS": [
         ["Professor", "Professor"],
         ["Associate Professor", "Associate Professor"],
-        ["Assistant Professor", "Assistant Professor"]
+        ["Assistant Professor", "Assistant Professor"],
+        ["Lecturer", "Lecturer"]
     ],
 
     "FILE_KINDS": [
@@ -62,6 +63,7 @@
         ["cv_professor", "CV"],
         ["diploma", "Diploma"],
         ["publication", "Publication"],
+        ["pubs_note", "Publications Note"],
         ["id_passport", "ID Passport"],
         ["electors_set_file", "Electors Set File"],
         ["committee_set_file", "Committee Set File"],
@@ -75,8 +77,10 @@
         ["failed_election_decision", "Failed Election Decision"],
         ["assistant_file", "Assistant File"],
         ["self_evaluation_report", "Self Evaluation Report"],
+        ["statement_file", "Statement File"],
         ["attachment_file", "Attachment File"],
-        ["registry_set_decision_file", "Registry Set Decision File"]
+        ["registry_set_decision_file", "Registry Set Decision File"],
+        ["leave_file", "Leave File"]
     ],
 
     "INSTITUTION_CATEGORIES": [
@@ -93,7 +97,8 @@
 
     "APPLICATION_TYPES": [
         ["tenure", "Tenure"],
-        ["renewal", "Renewal"]
+        ["renewal", "Renewal"],
+        ["move", "Change Department"]
     ],
 
     "APPLICATION_STATES": [
@@ -105,6 +110,39 @@
     "POSITION_TYPES": [
         ["election", "Election"],
         ["tenure", "Tenure"],
-        ["renewal", "Renewal"]
+        ["renewal", "Renewal"],
+        ["move", "Move"]
+    ],
+
+    "JIRA_ISSUE_STATES": [
+        ["open", "Open"],
+        ["closed", "Closed"],
+        ["in_progress", "In Progress"],
+        ["reopened", "Reopened"],
+        ["resolved", "Resolved"]
+    ],
+
+    "JIRA_ISSUE_TYPES": [
+        ["complaint", "Complaint"],
+        ["error", "Error"],
+        ["login", "Login"],
+        ["general_information", "General Information"],
+        ["account_modification", "Account Modification"],
+        ["registration", "Registration"]
+    ],
+
+    "JIRA_ISSUE_RESOLUTION": [
+        ["", ""],
+        ["fixed", "Fixed"],
+        ["wont_fix", "Won't Fix"],
+        ["duplicate", "Duplicate"],
+        ["incomplete", "Incomplete"],
+        ["cannot_reproduce", "Cannot Reproduce"],
+        ["fixed_workaround", "Fixed Workaround"]
+    ],
+
+    "JIRA_ISSUE_CALLS": [
+        ["incoming", "Incoming"],
+        ["outgoing", "Outgoing"]
     ]
 }

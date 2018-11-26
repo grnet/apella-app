@@ -15,7 +15,7 @@ from apella.validators import validate_dates_interval
 from apella import common
 from apella.helpers import assistant_can_edit, professor_participates,\
     position_is_latest
-from apella.util import safe_path_join
+from apella.util import safe_path_join, move_to_timezone, otz, at_day_end
 
 logger = logging.getLogger(__name__)
 
@@ -176,6 +176,10 @@ class ApellaUser(AbstractBaseUser, PermissionsMixin):
             if pid in prof_positions_committee or \
                     pid in prof_positions_elector:
                 return True
+        if UserApplication.objects.filter(user=self).filter(
+                Q(receiving_department=request.user.professor.department) |
+                Q(department=request.user.professor.department)).exists():
+            return True
         return False
 
 
@@ -279,6 +283,11 @@ class ApellaFile(models.Model):
             return self.apella_candidacy_cv_files.filter(
                 others_can_view=True,
                 position__in=user_candidacies_positions_ids).exists()
+        if self.apella_candidacy_pubs_note_files.filter(
+                others_can_view=True).exists():
+            return self.apella_candidacy_pubs_note_files.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
         if self.apella_candidacy_diploma_files.filter(
                 others_can_view=True).exists():
             return self.apella_candidacy_diploma_files.filter(
@@ -287,6 +296,16 @@ class ApellaFile(models.Model):
         if self.apella_candidacy_publication_files.filter(
                 others_can_view=True).exists():
             return self.apella_candidacy_publication_files.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
+        if self.attachment_files.filter(
+                others_can_view=True).exists():
+            return self.attachment_files.filter(
+                others_can_view=True,
+                position__in=user_candidacies_positions_ids).exists()
+        if self.self_evaluation_report.filter(
+                others_can_view=True).exists():
+            return self.self_evaluation_report.filter(
                 others_can_view=True,
                 position__in=user_candidacies_positions_ids).exists()
         return False
@@ -319,10 +338,11 @@ class ApellaFile(models.Model):
                 logger.error('failed to get Candidacy %r from file %r' %
                     (self.source_id, self.id))
                 return False
-            if candidacy.state == 'posted' and \
+            if candidacy.state in ['posted', 'cancelled'] and \
                     candidacy.position.department in user_departments:
                 return True
-        if user.is_manager() and self.file_kind == 'cv_professor':
+        if user.is_manager() and \
+                self.file_kind in ['cv_professor', 'leave_file']:
             return True
         return False
 
@@ -371,30 +391,50 @@ class ApellaFile(models.Model):
                 row, request, view)
         if self.file_kind == 'self_evaluation_report':
             candidacy = self.self_evaluation_report.all()[0]
+            return candidacy.check_resource_state_one_before_electors_meeting(
+                row, request, view)
+        if self.file_kind == 'statement_file':
+            candidacy = self.statement_file.all()[0]
             return candidacy.check_resource_state_five_before_electors_meeting(
                 row, request, view)
+        if self.file_kind == 'leave_file':
+            if is_owner:
+                return True
+            same_institution = self.owner.institutionmanager.institution == \
+                user.institutionmanager.institution
+            if user.is_manager() and same_institution:
+                return True
+            if user.is_assistant() and same_institution:
+                return True
 
         return False
 
     def check_resource_state_public_file(self, row, request, view):
         if self.file_kind == 'registry_set_decision_file':
             return True
+        if self.file_kind == 'leave_file' and self.source_id == request.user.id:
+            return True
+        return False
 
     @property
     def is_candidacy_file(self):
         return self.apella_candidacy_cv_files.exists() or \
             self.apella_candidacy_diploma_files.exists() or \
+            self.apella_candidacy_pubs_note_files.exists() or \
             self.apella_candidacy_publication_files.exists() or \
-            self.file_kind in ['attachment_files', 'self_evaluation_report']
+            self.file_kind in [
+                'attachment_files', 'self_evaluation_report', 'statement_file']
 
     @property
     def is_profile_file(self):
         return self.apella_candidate_cv_files.exists() or \
             self.apella_candidate_diploma_files.exists() or \
             self.apella_candidate_publication_files.exists() or \
+            self.apella_candidate_pubs_note_files.exists() or \
             self.apella_professor_cv_files.exists() or \
             self.apella_professor_diploma_files.exists() or \
-            self.apella_professor_publication_files.exists()
+            self.apella_professor_publication_files.exists() or \
+            self.apella_professor_pubs_note_files.exists()
 
 
 class Institution(models.Model):
@@ -469,6 +509,9 @@ class CandidateProfile(models.Model):
     publications = models.ManyToManyField(
         ApellaFile, blank=True,
         related_name='%(app_label)s_%(class)s_publication_files')
+    pubs_note = models.ForeignKey(
+        ApellaFile, blank=True, null=True, on_delete=models.SET_NULL,
+        related_name='%(app_label)s_%(class)s_pubs_note_files')
 
     class Meta:
         abstract = True
@@ -490,6 +533,14 @@ class Professor(UserProfile, CandidateProfile):
     fek = models.CharField(max_length=255, blank=True, null=True)
     discipline_text = models.TextField(blank=True)
     discipline_in_fek = models.BooleanField(default=True)
+    leave_starts_at = models.DateTimeField(blank=True, null=True)
+    leave_ends_at = models.DateTimeField(blank=True, null=True)
+    leave_file = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name = 'professor_leave_file', on_delete=models.SET_NULL)
+    is_disabled = models.BooleanField(default=False)
+    disabled_at = models.DateTimeField(blank=True, null=True)
+    disabled_by_helpdesk = models.BooleanField(default=False)
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
@@ -512,6 +563,16 @@ class Professor(UserProfile, CandidateProfile):
                 'position_id', flat=True)
             prof_committee = user.professor.committee_duty.values_list(
                 'id', flat=True)
+            dep_positions = []
+            if user.professor.department:
+                dep_positions = Position.objects.filter(
+                    department=user.professor.department).values_list(
+                        'id', flat=True)
+                if dep_positions:
+                    for pid in dep_positions:
+                        if pid in self_positions_elector or \
+                                pid in self_positions_elector:
+                            return True
             for pid in prof_committee:
                 if pid in self_positions_committee or \
                         pid in self_positions_elector:
@@ -522,6 +583,48 @@ class Professor(UserProfile, CandidateProfile):
                     return True
         return False
 
+    def check_resource_state_owned_by_manager(self, row, request, view):
+        user = request.user
+        if user.is_institutionmanager():
+            if self.department and self.department.institution:
+                return self.department.institution.id == \
+                    user.institutionmanager.institution.id
+        elif user.is_assistant():
+            if self.department:
+                return self.department in \
+                    user.institutionmanager.departments.all()
+        return False
+
+    @property
+    def registries(self):
+        return self.registrymembership_set.values_list(
+            'registry_id', flat=True)
+
+    @property
+    def active_registries(self):
+        active_registries = []
+        memberships = self.registrymembership_set.values_list(
+            'registry_id', 'registry__department_id')
+        electors_positions = self.electorparticipation_set.values(
+            'position__code').annotate(Min('position_id')).values_list(
+                'position_id__min', flat=True)
+        electors_list = list(electors_positions)
+
+        committee_positions = self.committee_duty.values(
+            'code').annotate(Min('id')).values_list(
+                'id__min', flat=True)
+        committee_list = list(committee_positions)
+        positions_list = electors_list + committee_list
+
+        for m in memberships:
+            if Position.objects.filter(
+                    state__in=['electing', 'revoked'],
+                    department=m[1],
+                    id__in=positions_list).exists():
+                active_registries.append(m[0])
+
+        return active_registries
+
     @property
     def active_elections(self):
         elector_count = 0
@@ -529,22 +632,24 @@ class Professor(UserProfile, CandidateProfile):
         electors_positions = self.electorparticipation_set.values(
             'position__code').annotate(Min('position_id')).values_list(
                 'position_id__min', flat=True)
-        for p_id in electors_positions:
-            if Position.objects.filter(
-                    id=p_id,
-                    state__in=['electing', 'revoked']). \
-                    exists():
-                elector_count += 1
+        elector_count = Position.objects.filter(
+                    state__in=['electing', 'revoked'],
+                    id__in=electors_positions).count()
+
         committee_positions = self.committee_duty.values(
             'code').annotate(Min('id')).values_list(
                 'id__min', flat=True)
-        for p_id in committee_positions:
-            if Position.objects.filter(
-                    id=p_id,
-                    state__in=['electing', 'revoked']). \
-                    exists() and p_id not in electors_positions:
-                committee_count += 1
+        committee_count = Position.objects.filter(
+                    state__in=['electing', 'revoked'],
+                    id__in=committee_positions). \
+                    exclude(id__in=electors_positions).count()
+
         return elector_count + committee_count
+
+    @property
+    def is_professor(self):
+        return self.rank in ['Professor', 'Associate Professor',
+            'Assistant Professor', 'Lecturer', 'Tenured Assistant Professor']
 
     def save(self, *args, **kwargs):
         self.user.role = 'professor'
@@ -611,19 +716,25 @@ class InstitutionManager(UserProfile):
 
 class UserApplication(models.Model):
     user = models.ForeignKey(ApellaUser)
-    department = models.ForeignKey(Department)
+    department = models.ForeignKey(Department, related_name='init_department')
     app_type = models.CharField(
         choices=common.APPLICATION_TYPES, max_length=30, default='tenure')
     state = models.CharField(
         choices=common.APPLICATION_STATES, max_length=30, default='pending')
     created_at = models.DateTimeField(default=datetime.utcnow)
     updated_at = models.DateTimeField(default=datetime.utcnow)
+    receiving_department = models.ForeignKey(
+        Department, related_name='receiving_department', null=True)
 
+
+    def is_move_type(self):
+        return self.app_type == 'move'
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
         return request.user.is_academic_professor() and \
-            request.user.professor.rank == 'Tenured Assistant Professor'
+            request.user.professor.rank == 'Tenured Assistant Professor' or \
+            request.user.professor.rank == 'Lecturer'
 
     def check_resource_state_owned(self, row, request, view):
         if not self.user.is_academic_professor() or \
@@ -842,12 +953,13 @@ class Position(models.Model):
 
     @property
     def is_tenure_type(self):
-        return self.position_type == 'tenure'
+        return self.position_type == 'tenure' or \
+            self.position_type == 'renewal'
 
 
 class ElectorParticipation(models.Model):
-    professor = models.ForeignKey(Professor)
-    position = models.ForeignKey(Position)
+    professor = models.ForeignKey(Professor, on_delete=models.PROTECT)
+    position = models.ForeignKey(Position, on_delete=models.PROTECT)
     is_regular = models.BooleanField(default=True)
     is_internal = models.BooleanField(default=True)
 
@@ -867,6 +979,9 @@ class Candidacy(CandidateProfile):
     attachment_files = models.ManyToManyField(
         ApellaFile, blank=True, related_name='attachment_files')
     old_candidacy_id = models.IntegerField(blank=True, null=True)
+    statement_file = models.ForeignKey(
+        ApellaFile, blank=True, null=True,
+        related_name='statement_file', on_delete=models.SET_NULL)
 
     def check_resource_state_owned(self, row, request, view):
         return InstitutionManager.objects.filter(
@@ -903,8 +1018,12 @@ class Candidacy(CandidateProfile):
             return True
         elif position_state == 'electing' and \
                 self.position.electors_meeting_date:
-            if self.position.electors_meeting_date - datetime.utcnow() > \
-                    timedelta(days=days):
+            now = move_to_timezone(datetime.utcnow(), otz).date()
+            emd = move_to_timezone(
+                self.position.electors_meeting_date, otz)
+            emd = at_day_end(emd, otz).date()
+
+            if emd - now >= timedelta(days=days):
                 return True
         return False
 
@@ -934,7 +1053,6 @@ class Registry(models.Model):
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     type = models.CharField(
         choices=common.REGISTRY_TYPES, max_length=20, default='internal')
-    members = models.ManyToManyField(Professor)
     registry_set_decision_file = models.ForeignKey(
         ApellaFile, blank=True, null=True,
         related_name='registry_set_decision_files', on_delete=models.SET_NULL)
@@ -956,7 +1074,7 @@ class Registry(models.Model):
 
     @property
     def members_count(self):
-        return self.members.count()
+        return RegistryMembership.objects.filter(registry=self).count()
 
     @classmethod
     def check_collection_state_can_create(cls, row, request, view):
@@ -964,6 +1082,36 @@ class Registry(models.Model):
             user_id=request.user.id,
             manager_role='assistant',
             can_create_registries=True).exists()
+
+
+class RegistryMembership(models.Model):
+    registry = models.ForeignKey(Registry, on_delete=models.PROTECT)
+    professor = models.ForeignKey(Professor, on_delete=models.PROTECT)
+
+    @classmethod
+    def check_collection_state_owned(self, row, request, view):
+        registry = Registry.objects.get(id=request.data['registry_id'])
+        departments = Department.objects.filter(
+            institution=request.user.institutionmanager.institution)
+        return registry.department in departments
+
+    def check_resource_state_owned(self, row, request, view):
+        departments = Department.objects.filter(
+            institution=request.user.institutionmanager.institution)
+        return self.registry.department in departments
+
+    @classmethod
+    def check_collection_state_can_create_owned(self, row, request, view):
+        assistant = request.user.institutionmanager
+        registry = Registry.objects.get(id=request.data['registry_id'])
+        departments = assistant.departments.all()
+        return registry.department in departments and \
+            assistant.can_create_registries
+
+    def check_resource_state_can_create_owned(self, row, request, view):
+        return self.registry.department in \
+            request.user.institutionmanager.departments.all() and \
+            request.user.institutionmanager.can_create_registries
 
 
 class UserInterest(models.Model):
@@ -975,6 +1123,27 @@ class UserInterest(models.Model):
 
     def check_resource_state_owned(self, row, request, view):
         return request.user.id == self.user.id
+
+
+class JiraIssue(models.Model):
+    code = models.CharField(max_length=255)
+    user = models.ForeignKey(ApellaUser, related_name='user')
+    reporter = models.ForeignKey(ApellaUser, related_name='reporter')
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    state = models.CharField(
+        choices=common.JIRA_ISSUE_STATES, max_length=30, default='open')
+    issue_type = models.CharField(
+        choices=common.JIRA_ISSUE_TYPES, max_length=30, default='complaint')
+    resolution = models.CharField(
+        choices=common.JIRA_ISSUE_RESOLUTION,
+        max_length=30, blank=True, default='')
+    created_at = models.DateTimeField(default=datetime.utcnow)
+    updated_at = models.DateTimeField(default=datetime.utcnow)
+    issue_key = models.CharField(max_length=255, blank=True)
+    issue_call = models.CharField(
+        choices=common.JIRA_ISSUE_CALLS, max_length=30, default='incoming')
+    helpdesk_response = models.TextField(blank=True, null=True)
 
 
 from migration_models import (

@@ -7,7 +7,8 @@ import {afterToday, beforeToday, afterDays} from 'ui/validators/dates';
 import {atLeastRank} from 'ui/validators/common';
 import moment from 'moment';
 import {
-  goToDetails, applyCandidacy, positionActions
+  goToDetails, applyCandidacy, positionActions,
+  exportPositions,
 } from 'ui/utils/common/actions';
 import {pick_edit_fs, pick_details_fs, pick_create_fs} from 'ui/lib/position/pick_fs_functions';
 import {abilityStates} from 'ui/lib/position/abilityStates';
@@ -91,16 +92,28 @@ export default ApellaGen.extend({
         .then(function(user){
           return store.queryRecord('professor', {user_id: get(user, 'id')});
         })
-        .then(function(user){
+        .then(function(professor){
           return application.get('department');
         })
         .then(function(department) {
-          let p = store.createRecord('position', {
-            user_application: application,
-            department: department,
-            position_type: get(application, 'app_type')
-          });
-          return p;
+          if (get(application, 'app_type') === 'move')  {
+            return application.get('receiving_department').then(function(department) {
+              let p = store.createRecord('position', {
+                  user_application: application,
+                  department: department,
+                  position_type: get(application, 'app_type')
+                });
+                return p;
+            })
+
+          } else {
+            let p = store.createRecord('position', {
+              user_application: application,
+              department: department,
+              position_type: get(application, 'app_type')
+            });
+            return p;
+          }
         })
         .catch(function(error) {
           self.transitionTo('position.index');
@@ -118,6 +131,10 @@ export default ApellaGen.extend({
     }
   },
   list: {
+    actions: ['exportPositions', 'gen:create'],
+    actionsMap: {
+      exportPositions: exportPositions
+    },
     getModel: function(params) {
       params = params || {};
       let user = get(this, 'session.session.authenticated'),
@@ -209,7 +226,7 @@ export default ApellaGen.extend({
         else {
           return 'position.menu_label';
         }
-    }),
+      }),
       display: computed('role', function() {
         let role = get(this, 'role'),
           is_foreign = get(this, 'session.session.authenticated.is_foreign'),
@@ -225,14 +242,25 @@ export default ApellaGen.extend({
       })
     },
     row: {
-      fields: computed('role', function(){
-        let role = get(this, 'role');
+      fields: computed(function(){
+        let role = get(this, 'session.session.authenticated.role');
         let f = [
-          field('code', { dataKey: 'id' }), 'old_code', 'title', 'rank_verbose', 'state_calc_verbose',
-          field('department.title_current', {label: 'department.label'}),
+          field('code', { dataKey: 'id' }),
+          'old_code',
+          'title',
+          'rank_verbose',
+          'state_calc_verbose',
         ];
-        if (!(role == 'institutionmanager' || role == 'assistant')) {
-          f.pushObject(field('institution.title_current'));
+        if (role == 'institutionmanager' || role == 'assistant') {
+          f.pushObjects([
+            field('department.title_current', {label: 'department.label'}),
+          ]);
+        }
+        if (role.startsWith('helpdesk')) {
+          f.pushObjects([
+            field('department.title_current', {label: 'department.label'}),
+            field('institution.title_current'),
+          ]);
         }
         return f;
       }),
@@ -255,19 +283,23 @@ export default ApellaGen.extend({
     /*
      * for details view should preload candidacies in order to run checks and
      * decide if the candidacies fs should be rendered.
+     * When candidacies are queried, the position parameter is always the
+     * most recent instance of a historic position.
+     * We extract this parameter via the position code attribute.
      */
     getModel: function(params, model) {
-      let position_id = get(model, 'id'),
+
+      let code_id = get(model, 'code').replace('APP', ''),
         store = get(model, 'store'),
         query = {
-          position: position_id,
+          position: code_id,
           latest: true
         };
       let election = get(model, 'position_type') === 'election';
 
       return store.query('candidacy', query).then(function() {
         if (election) {
-          return model;
+          return preloadRelations(model, 'related_positions');
         } else {
           return preloadRelations(model, 'user_application', 'user_application.user');
         }

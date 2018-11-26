@@ -9,7 +9,7 @@ import ASSISTANT from 'ui/utils/common/assistant';
 import CANDIDATE from 'ui/utils/common/candidate';
 import PROFESSOR from 'ui/utils/common/professor';
 import {disable_field} from 'ui/utils/common/fields';
-import {change_password, isHelpdesk} from 'ui/utils/common/actions';
+import {change_password, isHelpdesk, professorActions} from 'ui/utils/common/actions';
 import ENV from 'ui/config/environment';
 import {Register, RegisterIntro, resetHash} from 'ui/lib/register';
 import {UserConstraintsRouteMixin} from 'ui/lib/common';
@@ -63,6 +63,7 @@ const PROFILE_FIELDSETS = function(view) {
     let f = [];
     let role = this.get('model').get('role');
     let is_academic = get(this, 'model.login_method') === 'academic';
+    let leave = get(this, 'model.leave_upcoming');
     let _USER_FIELDSET;
 
     if (view === 'details') {
@@ -102,6 +103,9 @@ const PROFILE_FIELDSETS = function(view) {
       f.push(_USER_FIELDSET);
       f.push(PROFESSOR.FIELDSET);
       f.push(PROFESSOR.FILES_FIELDSET);
+      if (leave) {
+        f.push(PROFESSOR.LEAVE_FIELDSET_DETAILS);
+      }
     }
 
     if (role === 'candidate') {
@@ -131,7 +135,7 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
   routeBaseClass: routes.DetailsRoute,
   fieldsets: PROFILE_FIELDSETS('details'),
   component: 'gen-details',
-  actions: ['sync_candidacies', 'change_password'],
+  actions: ['sync_candidacies', 'change_password', 'disable_professor', 'enable_professor'],
   partials: { top: 'profile-details-intro' },
   actionsMap: {
     'accept_terms': {
@@ -173,9 +177,19 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
           messages.setError('sync.candidacies.error');
         });
       },
-      hidden: computed('model.is_verified', 'model.role', function() {
+      hidden: computed('model.is_verified', 'model.publications', 'model.cv', 'model.diplomas','model.cv_professor','model.role', function() {
+        let p_f = get(this, 'model.publications');
+        let d_f = get(this, 'model.diplomas');
+        let c_f = get(this, 'model.cv')
+        let cv = c_f && c_f.content;
+        let publications = p_f && p_f.content && p_f.content.length>0;
+        let diplomas = d_f && d_f.content && d_f.content.length>0;
+
         let verified = get(this, 'model.is_verified');
         let role = get(this, 'model.role');
+
+        if (!cv || !publications || !diplomas) { return true;}
+
         if (canApply(role)) { return !verified; }
         return true;
       }),
@@ -187,7 +201,9 @@ const ProfileDetailsView = gen.GenRoutedObject.extend({
         cancel: 'cancel'
       }
     },
-    'change_password': change_password
+    'change_password': change_password,
+    'disable_professor': professorActions.disableProfessor,
+    'enable_professor': professorActions.enableProfessor,
   },
   getModel() {
     return get(this, 'store').findRecord('profile', 'me');
@@ -495,7 +511,7 @@ export default AuthGen.extend({
                       messages.setError(errorResp.non_field_errors);
                     } else {
                       let keys = Object.keys(errorResp);
-                      let msg = keys.reduce((acc, key) => { return acc + '\n' + errorResp[key]; }, '');
+                      let msg = keys.reduce((acc, key) => { return acc + errorResp[key]; }, '');
                       messages.setError(msg);
                     }
                   });

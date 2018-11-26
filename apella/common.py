@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from os.path import join
 import json
 import yaml
@@ -80,6 +82,10 @@ APPLICATION_TYPES = RESOURCES['APPLICATION_TYPES']
 APPLICATION_STATES = RESOURCES['APPLICATION_STATES']
 POSITION_TYPES = RESOURCES['POSITION_TYPES']
 POSITION_RANKS = RESOURCES['POSITION_RANKS']
+JIRA_ISSUE_STATES = RESOURCES['JIRA_ISSUE_STATES']
+JIRA_ISSUE_TYPES = RESOURCES['JIRA_ISSUE_TYPES']
+JIRA_ISSUE_RESOLUTION = RESOURCES['JIRA_ISSUE_RESOLUTION']
+JIRA_ISSUE_CALLS = RESOURCES['JIRA_ISSUE_CALLS']
 
 FILE_KIND_TO_FIELD = {
     "cv": {
@@ -97,6 +103,10 @@ FILE_KIND_TO_FIELD = {
     "publication": {
         "field": "publications",
         "many": True,
+    },
+    "pubs_note": {
+        "field": "pubs_note",
+        "many": False,
     },
     "id_passport": {
         "field": "id_passport_file",
@@ -150,6 +160,10 @@ FILE_KIND_TO_FIELD = {
         "field": "self_evaluation_report",
         "many": False,
     },
+    "statement_file": {
+        "field": "statement_file",
+        "many": False,
+    },
     "attachment_files": {
         "field": "attachment_files",
         "many": True,
@@ -158,4 +172,38 @@ FILE_KIND_TO_FIELD = {
         "field": "registry_set_decision_file",
         "many": False,
     },
+    "leave_file": {
+        "field": "leave_file",
+        "many": False,
+    },
+}
+
+RANKS_EL = {
+        "Professor": "Καθηγητής",
+        "Associate Professor": "Αναπληρωτής Καθηγητής",
+        "Assistant Professor": "Επίκουρος Καθηγητής",
+        "Lecturer": "Λέκτορας",
+        "Tenured Assistant Professor": "Επί θητεία Επίκουρος Καθηγητής",
+        "Research Director": "Διευθυντής Ερευνών",
+        "Principal Researcher": "Κύριος Ερευνητής",
+        "Affiliated Researcher": "Εντεταλμένος Ερευνητής"
+}
+
+POSITION_STATES_EL = {
+        "posted": "Ενταγμένη",
+        "electing": "Επιλογή",
+        "successful": "Στελεχωμένη",
+        "cancelled": "Ακυρωθείσα",
+        "revoked": "Αναπομπή"
+}
+
+RANKS_EL_EN = {
+        'ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Assistant Professor',
+        'ΛΕΚΤΟΡΑΣ': 'Lecturer',
+        'ΕΠΙ ΘΗΤΕΙΑ ΕΠΙΚΟΥΡΟΣ ΚΑΘΗΓΗΤΗΣ': 'Tenured Assistant Professor',
+        'ΑΝΑΠΛΗΡΩΤΗΣ ΚΑΘΗΓΗΤΗΣ': 'Associate Professor',
+        'ΚΑΘΗΓΗΤΗΣ': 'Professor',
+        'ΚΥΡΙΟΣ ΕΡΕΥΝΗΤΗΣ': 'Principal Researcher',
+        'ΕΝΤΕΤΑΛΜΕΝΟΣ ΕΡΕΥΝΗΤΗΣ': 'Affiliated Researcher',
+        'ΔΙΕΥΘΥΝΤΗΣ ΕΡΕΥΝΩΝ': 'Research Director'
 }

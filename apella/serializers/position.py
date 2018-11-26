@@ -1,17 +1,23 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os
+import csv
+import re
 import logging
 from datetime import datetime, timedelta
+from time import strftime, gmtime
 
 from django.conf import settings
 from django.core.files import File
 from django.db import transaction
 from django.db.models import Min
+from django.db.utils import IntegrityError
 from rest_framework import serializers
 
 from apella.serializers.mixins import ValidatorMixin
 from apella.models import Position, InstitutionManager, Candidacy, \
     ElectorParticipation, ApellaFile, generate_filename, Institution, \
-    Department, Professor
+    Department, Professor, ApellaUser, Candidate, RegistryMembership
 from apella.validators import validate_now_is_between_dates, \
     validate_candidate_files, validate_unique_candidacy, \
     after_today_validator, before_today_validator, \
@@ -23,7 +29,7 @@ from apella.emails import send_create_candidacy_emails, \
     send_remove_candidacy_emails, send_email_elected, send_emails_field, \
     send_emails_members_change, send_position_create_emails
 from apella.util import at_day_end, at_day_start, otz, safe_path_join
-from apella.common import RANKS
+from apella.common import RANKS, RANKS_EL_EN
 
 logger = logging.getLogger(__name__)
 
@@ -83,15 +89,23 @@ def get_electors_sub_external(instance):
 
 
 def get_committee_internal(instance):
-    return instance.committee.filter(
-        registry__type='internal',
-        registry__department_id=instance.department.id).distinct()
+    internal = []
+    committee = instance.committee.all()
+    for professor in committee:
+        if RegistryMembership.objects.filter(
+                professor=professor,
+                registry__department=instance.department,
+                registry__type='internal').exists() or \
+                professor.department and \
+                professor.department is instance.department:
+            internal.append(professor)
+
+    return internal
 
 
 def get_committee_external(instance):
-    return instance.committee.filter(
-        registry__type='external',
-        registry__department_id=instance.department.id).distinct()
+    internal = get_committee_internal(instance)
+    return [ext for ext in instance.committee.all() if ext not in internal]
 
 
 def get_dep_number(data):
@@ -149,7 +163,7 @@ class PositionMixin(ValidatorMixin):
             validate_subject_fields(data)
             ranks = self.context.get('request').data.get('ranks', [])
             if not ranks:
-                raise ValidationError('ranks.required')
+                raise serializers.ValidationError('ranks.required')
 
         position_type = 'election'
         if user_application is not None:
@@ -165,7 +179,8 @@ class PositionMixin(ValidatorMixin):
                     before_today_validator(data['fek_posted_at'])
 
         data = super(PositionMixin, self).validate(data)
-        data['committee'] = committee
+        if committee:
+            data['committee'] = committee
 
         return data
 
@@ -251,9 +266,10 @@ class PositionMixin(ValidatorMixin):
 
             if curr_position.state == 'revoked' and \
                     instance.state == 'electing':
-                ElectorParticipation.objects.filter(
-                    position=instance).delete()
-                instance.committee.all().delete()
+                for ep in ElectorParticipation.objects.filter(position=instance):
+                    ep.delete()
+                for p in instance.committee.all():
+                    instance.committee.remove(p)
                 instance.committee_note = None
                 instance.committee_proposal = None
                 instance.committee_set_file = None
@@ -262,6 +278,11 @@ class PositionMixin(ValidatorMixin):
                 instance.electors_meeting_to_set_committee_date = None
                 instance.electors_set_file = None
                 instance.revocation_decision = None
+                instance.nomination_proceedings = None
+                instance.proceedings_cover_letter = None
+                instance.nomination_act = None
+                instance.elected = None
+                instance.second_best = None
                 instance.save()
 
 
@@ -277,7 +298,8 @@ class PositionMixin(ValidatorMixin):
 
         # send emails when electors_meeting_date is set/updated
         d1 = validated_data.get('electors_meeting_date', None)
-        if d1 and curr_position.state != 'revoked':
+        if d1 and curr_position.state != 'revoked' and \
+                instance.state != 'cancelled':
             d1 = d1.date()
             if not curr_position.electors_meeting_date:
                 send_emails_field(instance, 'electors_meeting_date')
@@ -289,7 +311,8 @@ class PositionMixin(ValidatorMixin):
         # send emails when electors_meeting_to_set_committee_date is
         # set/updated
         d2 = validated_data.get('electors_meeting_to_set_committee_date', None)
-        if d2 and curr_position.state != 'revoked':
+        if d2 and curr_position.state != 'revoked' \
+                and instance.state != 'cancelled':
             d2 = d2.date()
             if not curr_position.electors_meeting_to_set_committee_date:
                 send_emails_field(instance,
@@ -301,7 +324,7 @@ class PositionMixin(ValidatorMixin):
                     send_emails_field(instance,
                             'electors_meeting_to_set_committee_date', True)
 
-        if curr_position.state != 'revoked':
+        if curr_position.state == 'electing':
             new_committee = [p for p in instance.committee.all()]
             send_emails_members_change(instance, 'committee', {'c': old_committee},
                 {'c': new_committee})
@@ -336,15 +359,23 @@ def link_single_file(existing_file, dest_obj, source='candidacy'):
 def link_files(dest_obj, user, source='candidacy'):
     if user.is_professor():
         cv = user.professor.cv
+        pubs_note = user.professor.pubs_note
         diplomas = user.professor.diplomas.all()
         publications = user.professor.publications.all()
     elif user.is_candidate():
         cv = user.candidate.cv
+        pubs_note = user.candidate.pubs_note
         diplomas = user.candidate.diplomas.all()
         publications = user.candidate.publications.all()
 
     new_cv = link_single_file(cv, dest_obj, source=source)
     dest_obj.cv = new_cv
+
+    if pubs_note:
+        new_pubs_note = link_single_file(pubs_note, dest_obj, source=source)
+        dest_obj.pubs_note = new_pubs_note
+    else:
+        dest_obj.pubs_note = None
 
     dest_obj.diplomas.all().delete()
     dest_obj.publications.all().delete()
@@ -434,7 +465,9 @@ class CandidacyMixin(object):
         attachment_files = validated_data.pop('attachment_files', [])
         self_evaluation_report = validated_data.pop(
             'self_evaluation_report', [])
+        statement_file = validated_data.pop('statement_file', [])
         cv = validated_data.pop('cv', [])
+        pubs_note = validated_data.pop('pubs_note', [])
         diplomas = validated_data.pop('diplomas', [])
         publications = validated_data.pop('publications', [])
         instance = super(CandidacyMixin, self).update(instance, validated_data)
@@ -492,14 +525,98 @@ def upgrade_candidate_to_professor(
         verified_at=datetime.utcnow())
     logger.info('created new professor object for user %r' % user.id)
     cv = user.candidate.cv
-    if cv:
-        cv.file_kind = 'cv_professor'
-        cv_professor = link_single_file(cv, professor, source='profile')
-        professor.cv_professor = cv_professor
-        professor.save()
+    if not cv:
+        raise serializers.ValidationError(
+            {"cv": "missing.file"})
+
+    cv.file_kind = 'cv_professor'
+    cv_professor = link_single_file(cv, professor, source='profile')
+    professor.cv_professor = cv_professor
+    professor.save()
     user.role = 'candidate'
     link_files(professor, user, source='profile')
     professor.user.role = 'professor'
     professor.user.save()
 
     return professor
+
+@transaction.atomic
+def upgrade_candidates_to_professors(csv_file, owner):
+    filename = 'upgradeCandidatesToProfessors_' + \
+        strftime("%Y%m%d_%H%M%S", gmtime()) + ".csv"
+    file_path = os.path.join(settings.MEDIA_ROOT, owner.username)
+    if not os.path.isdir(file_path):
+        os.makedirs(file_path)
+
+    f = os.path.join(file_path, filename)
+    with open(f, 'wb+') as destination:
+        for chunk in csv_file.chunks():
+            destination.write(chunk)
+
+    csv_reader = csv.reader(csv_file)
+
+    csv_iterator = iter(csv_reader)
+    for header in csv_iterator:
+        break
+    else:
+        raise serializers.ValidationError("no.csv.data")
+
+    errors = []
+    success = []
+    try:
+        for user_id, last_name, first_name, father_name, department_id, \
+            email, rank, fek, fek_subject, subject_in_fek \
+                in csv_iterator:
+
+            try:
+                user = ApellaUser.objects.get(id=user_id)
+            except ApellaUser.DoesNotExist:
+                msg = "User %s does not exist" % user_id
+                errors.append(msg)
+                continue
+
+            try:
+                canidate = Candidate.objects.get(user=user)
+            except Candidate.DoesNotExist:
+                msg = "User %s is not a candidate" % user_id
+                errors.append(msg)
+                continue
+
+            p_rank = [v for k, v in RANKS_EL_EN.items() if k == rank.strip()]
+            if not p_rank:
+                msg = "Rank error: %s" % rank
+                errors.append(msg)
+                continue
+
+            try:
+                upgrade_candidate_to_professor(
+                        user,
+                        department=department_id,
+                        rank=p_rank[0],
+                        fek=fek,
+                        discipline_text=fek_subject,
+                        discipline_in_fek=bool(
+                            re.match('true', subject_in_fek, re.I)))
+            except serializers.ValidationError as ve:
+                msg = "Failed to upgrade user %r: %s" % (user_id, ve)
+                errors.append(msg)
+                continue
+            except OSError as ose:
+                msg = "Failed to upgrade user %r: %s" % (user_id, ose)
+                errors.append(msg)
+                continue
+            except IntegrityError:
+                msg = "User %r is already a professor" % user_id
+                errors.append(msg)
+                continue
+
+            success.append("Upgraded user %r" % user_id)
+    except ValueError:
+        msg = "Incorrect csv file format, error in line %r" % \
+            csv_iterator.line_num
+        errors.append(msg)
+
+    logger.info(
+        "Upgrade candidates to professors: failed: %r, succeeded %r" %
+        (errors, success))
+    return errors, success

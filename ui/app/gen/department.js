@@ -191,7 +191,24 @@ export default ApellaGen.extend({
             field('school', {disabled: true}),
             field('institution', {disabled: true}) ]
         } else {
-          return ['title', 'dep_number', 'school', 'institution']
+          return [
+            'title',
+            'dep_number',
+            field('school', {
+              autocomplete: true,
+              type: 'model',
+              displayAttr: 'title_current',
+              modelName: 'school',
+              dataKey: 'school',
+              query: computed('model.institution.id', function(){
+                let id = get(this, 'model.institution.id');
+                return function(select, store, field, params) {
+                  return store.query('school', {institution: id});
+                };
+              }),
+            }),
+            'institution'
+          ]
         }
       }),
     layout: {

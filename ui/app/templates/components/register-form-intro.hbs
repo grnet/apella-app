@@ -3,7 +3,7 @@
 {{/if}}
 <md-content class="md-padding">
 {{#if (eq object.userRole 'professor') }}
-  {{#if object.registration_token }}
+  {{#if (or object.registration_token object.is_domestic) }}
   {{t 'register.domestic.intro' }}
   {{#if object.remote_data}}
   {{partial '_remote_data_card'}}

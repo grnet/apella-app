@@ -7,29 +7,39 @@ import gen from 'ember-gen/lib/gen';
 import {field} from 'ember-gen';
 import _ from 'lodash/lodash'
 import Users  from 'ui/gen/user';
-import {goToDetails} from 'ui/utils/common/actions';
+import {goToDetails, exportRegistries} from 'ui/utils/common/actions';
 import {
   fs_user, fs_contact, fs_prof_domestic, fs_prof_foreign, peak_fs_professors
 } from 'ui/lib/professors_quick_details';
 
 let {
-  computed, get, assign
+  computed, get, assign, set
 } = Ember;
 
 let fields_members_table = [
-    field('user_id', {type: 'string', dataKey: 'user__id'}),
+    field('user_id', {type: 'string', dataKey: 'professor__user__id'}),
     'old_user_id',
     i18nUserSortField('last_name', {label: 'last_name.label'}),
     i18nField('first_name', {label: 'first_name.label'}),
     field('institution_global', {label: 'institution.label'}),
     i18nField('department.title', {label: 'department.label'}),
-    'discipline_text'
+    'discipline_text',
+    'leave_verbose',
 ];
 
 // serverSide is a boolean value that is used for filtering, sorting, searching
-function membersAllModelMeta(serverSide, hideQuickView) {
-   let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
+function membersAllModelMeta(serverSide, hideQuickView, hideRemove, type="member") {
+   let sortFields = (serverSide ? ['user_id'] : ['user_id', 'last_name_current', 'first_name_current']),
     searchFields = (serverSide ? ['last_name_current', 'discipline_text', 'old_user_id'] : ['last_name.el', 'last_name.en', 'discipline_text', 'old_user_id']);
+
+  /* If current registry ID is included in the active registries list,
+   * then the professor cannot be removed from the registry.
+   * */
+  function can_remove (el) {
+    let id = el.container.lookup('controller:registry.record').get('registry_id');
+    let  active_registries = JSON.parse(get(el, 'model.active_registries'));
+    return !active_registries.includes(parseInt(id));
+   };
 
 
    // For now, hide client side functionality
@@ -37,9 +47,53 @@ function membersAllModelMeta(serverSide, hideQuickView) {
 
   return {
     row: {
-      fields: fields_members_table,
-      actions: ['view_details'],
+      fields: computed('role', function() {
+        let role = get(this, 'role');
+        let prof_or_candidate = role === 'professor' || role == 'candidate';
+        // Professors and candidates do not see leave field in members table
+        return prof_or_candidate?  fields_members_table.slice(0, -1) :fields_members_table;
+      }),
+      actions: ['view_details', 'remove'],
       actionsMap: {
+        remove: {
+          /* If the professor's active_registries contain the current registry,
+          * he/she cannot be deleted.
+          * If the professor can be deleted a standard red delete icon is shown.
+          * If the professor cannot be deleted, a yellow warning icon is shown
+          * and the prompt has a different message and no action buttons.
+          */
+          hidden: computed('', function() {
+            return hideRemove;
+          }),
+          classNames: computed('model.active_regitries', function(){
+            return can_remove(this) ? '': 'md-icon-warning';
+          }),
+          icon: computed('model.active_regitries', function(){
+            return can_remove(this) ? 'delete_forever': 'warning';
+          }),
+          warn: computed('model.active_regitries', function(){
+            return can_remove(this);
+          }),
+          primary: computed('model.active_registries', function(){
+            return !can_remove(this);
+          }),
+          prompt: computed('model.active_registries', function(){
+            if (can_remove(this)) {
+              return {
+                ok: 'row.remove.ok',
+                cancel: 'row.remove.cancel',
+                title: 'row.remove.confirm.title',
+                message: 'row.remove.confirm.message'
+              }
+            } else {
+              return {
+                noControls: true,
+                title: 'row.remove.confirm.title',
+                message: 'prompt.member.no_remove.message',
+              }
+            }
+          })
+        },
         view_details: {
           icon: 'open_in_new',
           detailsMeta: {
@@ -50,6 +104,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
            * Display the quickDetails button when:
            * The user is the institution manager or an assistant of
            * institution X and the registry belongs to institution X
+           * or the user is the helpdesk.
            *
            * TODO: Calculate this once per table-field and not per row.
            */
@@ -76,7 +131,8 @@ function membersAllModelMeta(serverSide, hideQuickView) {
                   hidden = false;
                 }
               }
-              else if (role === 'ministry') {
+
+              else if (role === 'ministry' || role.startsWith('helpdesk')) {
                 hidden = false;
               }
               return hidden;
@@ -89,7 +145,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
               return get(this, 'model.full_name_current');
             }),
             cancel: 'close',
-            contentComponent: 'member-quick-view'
+            contentComponent: 'model-quick-view'
           }
         }
       }
@@ -106,12 +162,25 @@ function membersAllModelMeta(serverSide, hideQuickView) {
       active: display,
       searchFields: searchFields,
       meta: {
-        fields: [
-          field('user_id', {type: 'string'}),
-          filterSelectSortTitles('institution'),
-          departmentInstitutionFilterField('members_department'),
-          field('rank')
-        ]
+        fields: computed('', ()  => {
+          if (type === 'member') {
+            return [
+              field('user_id', {type: 'string', dataKey: 'professor__user__id'}),
+              filterSelectSortTitles('institution', 'professor__institution'),
+              departmentInstitutionFilterField('professor__department'),
+              field('rank', { dataKey: 'professor__rank'})
+            ];
+          }
+          if (type === 'professor') {
+            return [
+              field('user_id', {type: 'string'}),
+              filterSelectSortTitles('institution'),
+              departmentInstitutionFilterField('department'),
+              field('rank')
+            ];
+          }
+          return [];
+        })
       }
     },
     sort: {
@@ -122,7 +191,7 @@ function membersAllModelMeta(serverSide, hideQuickView) {
   };
 };
 
-function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFields) {
+function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, hideRemove) {
 
   return field('members', {
     formComponent: 'apella-members-edit-field',
@@ -151,13 +220,25 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFie
       }
       params.is_verified = true;
       params.create_registry = true;
+      let registry_id = store.container.lookup('controller:registry.record').get('registry_id')
+      if (registry_id) {
+        params.registry_id = registry_id;
+      }
+
       return store.query('professor', params);
     },
     // a list-like gen config
     label: null,
-    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView),
-    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView),
+    modelMeta: membersAllModelMeta(modelMetaSide, hideQuickView, hideRemove, "member"),
+    selectModelMeta: membersAllModelMeta(selectModelMetaSide, hideQuickView, true, "professor"),
     modelName: 'professor',
+    /*
+     * Hacky trick
+     * The component won't accept query for a model, unless
+     * type starts with "model-"
+     *
+     * */
+    type: 'model-hack',
     displayComponent: 'gen-display-field-table',
     dialog: {
       cancel: null,
@@ -168,6 +249,7 @@ function membersField(modelMetaSide, selectModelMetaSide, hideQuickView, lessFie
 
 
 export default ApellaGen.extend({
+  order: 2000,
   modelName: 'registry',
   auth: true,
   path: 'registries',
@@ -180,6 +262,7 @@ export default ApellaGen.extend({
     owned: computed('model.institution.id', 'user.institution.id', function() {
       let registry_institution_id =  this.get('model.institution.id'),
         user_institution_id = get(this, 'user.institution').split('/').slice(-2)[0];
+      if (!registry_institution_id) { return true;}
       return registry_institution_id === user_institution_id;
     }),
     /*
@@ -209,7 +292,7 @@ export default ApellaGen.extend({
 
   create: {
     onSubmit(model) {
-      this.transitionTo('registry.record.edit.index', model);
+      this.transitionTo('registry.record.edit.index', model.id);
     },
     fieldsets: [{
       label: 'registry.main_section.title',
@@ -262,13 +345,14 @@ export default ApellaGen.extend({
       layout: {
         flex: [70, 30]
       }
-    }, {
-      label: 'registry.members_section.title',
-      fields: [membersField(false, true, false)]
     }]
   },
 
   list: {
+    actions: ['exportRegistries', 'gen:create'],
+    actionsMap: {
+      exportRegistries: exportRegistries
+    },
     menu: {
       icon: 'view list',
       label: 'registry.menu_label'
@@ -356,7 +440,7 @@ export default ApellaGen.extend({
       ]
     }, {
       label: 'registry.members_section.title',
-      fields: [membersField(true, true)]
+      fields: [membersField(true, true, undefined, true)]
     }]
   },
   edit: {
@@ -365,7 +449,8 @@ export default ApellaGen.extend({
      * Use in the abilityState "owned".
      */
     getModel: function(params, model) {
-      return preloadRelations(model, 'department', 'members', 'department.institution');
+      set(model, 'members', {add: [], remove: []});
+      return model;
     },
     onSubmit(model) {
       this.refresh();
@@ -397,7 +482,7 @@ export default ApellaGen.extend({
       ]
     }, {
       label: 'registry.members_section.title',
-      fields: [membersField(true, true, false)]
+      fields: [membersField(true, true, false, false)]
     }]
   }
 });

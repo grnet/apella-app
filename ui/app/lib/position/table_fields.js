@@ -1,5 +1,5 @@
 import {field} from 'ember-gen';
-import {i18nField, get_registry_members, fileField, filterSelectSortTitles} from 'ui/lib/common';
+import {i18nField, i18nUserSortField,  get_registry_members_for_position, fileField, filterSelectSortTitles} from 'ui/lib/common';
 import {disable_field, departmentInstitutionFilterField} from 'ui/utils/common/fields';
 import {getFile} from 'ui/utils/files';
 import moment from 'moment';
@@ -35,6 +35,9 @@ let candidacy_quick_details_fs =  {
       fileField('publications', 'candidate', 'publications', {
         readonly: true
       }),
+      fileField('statement_file', 'candidacy', 'statement_file', {
+        readonly: true,
+      }),
       fileField('self_evaluation_report', 'candidacy', 'self_evaluation_report', {
         readonly: true,
       }, {replace: true}),
@@ -42,9 +45,13 @@ let candidacy_quick_details_fs =  {
         readonly: true,
         sortBy: 'filename',
       }, {multiple: true} ),
+      fileField('pubs_note', 'candidate', 'pubs_note', {
+        readonly: true,
+      }),
+
     ],
     layout: {
-      flex: [33, 33, 33, 33, 33, 33, 100, 100, 100, 100, 100]
+      flex: [33, 33, 33, 33, 33, 33, 100, 100, 100, 100, 100, 100, 100]
     }
 };
 
@@ -62,8 +69,11 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
     refreshValueQuery: true,
     valueQuery: function(store, params, model, value) {
       model = model._content ? model._content : model;
-      let position_id = model.get('id'),
+      let code = model.get('code'),
         position_department = model.belongsTo('department').link();
+
+      let position_id = code.replace('APP', '');
+
       // no use of params for now
       let query = {
         position: position_id,
@@ -72,6 +82,9 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
       return store.query('candidacy', query).then(function(candidacies) {
         return candidacies.setEach('position_department', position_department)
       });
+
+
+
     },
     label: null,
     modelMeta: {
@@ -99,7 +112,7 @@ const candidaciesField = function(type, hidden, calc, calc_params) {
                 return this.get('model').get('candidate.full_name_current')
               }),
               cancel: 'close',
-              contentComponent: 'member-quick-view'
+              contentComponent: 'model-quick-view'
             }
           }
         }
@@ -203,13 +216,33 @@ const contactField = field('institution-managers', {
 
 
 let rowCommitteeElectors = function(field_name, serverSide) {
-  let sortFields = (serverSide ? ['user_id', 'last_name'] : ['user_id', 'last_name_current', 'first_name_current']),
-    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'first_name.el','first_name.en', 'email', 'username', 'discipline_text', 'old_user_id']);
+  let sortFields = (serverSide ? ['user_id', 'last_name_current'] : ['user_id', 'last_name_current', 'first_name_current']),
+    searchFields = (serverSide ? ['last_name_current', 'discipline_text'] : ['last_name.el', 'last_name.en', 'first_name.el','first_name.en', 'email', 'username', 'discipline_text', 'old_user_id', 'user_id']);
 
 
   let display = serverSide;
   return {
+    /*
+     * For electors table only, make user confirm his choice if he chooses to
+     * select a professor who is currently on leave.
+     */
     row: {
+      onSelect(item, selected) {
+        let prompt = Ember.getOwner(this).lookup('service:prompt');
+        if (item.get('on_leave')) {
+          let accept = prompt.prompt(
+            {
+              ok: 'ok',
+              cancel: 'cancel',
+              message: 'prompt.selectOnLeave.message',
+              title: 'prompt.selectOnLeave.title',
+            }).then( () => {
+            selected.addObject(item);
+          })
+        } else {
+          selected.addObject(item);
+        }
+      },
       fields: computed('role', function() {
         // all electors tables have an extra column
         let role = get(this, 'role');
@@ -218,11 +251,12 @@ let rowCommitteeElectors = function(field_name, serverSide) {
           let res = [
             'user_id',
             'old_user_id',
-            i18nField('last_name', {label: 'last_name.label'}),
+            i18nUserSortField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
             field('institution_global', {label: 'institution.label'}),
             'is_foreign_descr',
+            'leave_verbose',
           ];
           if (!restricted) {
             res.push(field('email', {label: 'email.label'}))
@@ -234,11 +268,12 @@ let rowCommitteeElectors = function(field_name, serverSide) {
           let res = [
             'user_id',
             'old_user_id',
-            i18nField('last_name', {label: 'last_name.label'}),
+            i18nUserSortField('last_name', {label: 'last_name.label'}),
             i18nField('first_name', {label: 'first_name.label'}),
             i18nField('department.title', {label: 'department.label'}),
             field('institution_global', {label: 'institution.label'}),
             'is_foreign_descr',
+            'leave_verbose',
           ];
           if (!restricted) {
             res.push(field('email', {label: 'email.label'}))
@@ -263,7 +298,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
               return get(this, 'model.full_name_current');
             }),
             cancel: 'close',
-            contentComponent: 'member-quick-view'
+            contentComponent: 'model-quick-view'
           }
         }
       }
@@ -307,6 +342,7 @@ let rowCommitteeElectors = function(field_name, serverSide) {
 function committeeElectorsField(field_name, registry_type, modelMetaSide, selectModelMetaSide) {
   let label = `registry.type.${registry_type}`;
   return field(field_name, {
+    formComponent: 'apella-position-electors-field',
     label: label,
     refreshValueQuery: modelMetaSide,
     disabled: computed('model.changeset.committee_set_file', 'model.changeset.electors_set_file', function(){
@@ -334,7 +370,9 @@ function committeeElectorsField(field_name, registry_type, modelMetaSide, select
             return []
           }
           else
-            return get_registry_members(registry, store, params);
+            params = params || {};
+            params.professor__is_disabled = false;
+            return get_registry_members_for_position(registry, store, params);
           });
       };
     }),

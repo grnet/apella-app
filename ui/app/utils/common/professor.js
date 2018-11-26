@@ -66,9 +66,24 @@ const FILES_FIELDSET = {
     }, {
       multiple: true
     }),
+    fileField('pubs_note', 'professor', 'pubs_note', {
+      readonly: computed('role', function() {
+        let user_role = get(this, 'role'),
+          forbid_edit_roles = ['helpdeskuser', 'ministry'];
+        if(forbid_edit_roles.indexOf(user_role) > -1) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+    }, {
+      replace: true
+    }),
+
   ],
   layout: {
-    flex: [100, 100, 100]
+    flex: [100, 100, 100, 100]
   }
 };
 
@@ -211,6 +226,52 @@ const FIELDSET_REGISTER = Ember.assign({}, FIELDSET, {
   fields: FIELDS_REGISTER
 });
 
+const LEAVE_FIELDSET_DETAILS = {
+  label: 'fieldsets.labels.leave',
+  text: computed('role', function() {
+    let role = get(this, 'role');
+    let leaver = role === 'professor';
+    return leaver? 'fieldsets.text.owner.leave': 'fieldsets.text.observer.leave';
+  }),
+  fields: [
+    'on_leave_verbose',
+    'leave_starts_at_format',
+    'leave_ends_at_format',
+    fileField('leave_file', 'professor', 'leave_file', {
+      readonly: true,
+    }),
+  ],
+  layout: {
+    flex: [50, 25, 25, 100]
+  }
+}
+
+const LEAVE_FIELDSET_EDIT = {
+  label: 'fieldsets.labels.leave',
+  text: computed('role', function() {
+    let role = get(this, 'role');
+    let leaver = role === 'professor';
+    return leaver? 'fieldsets.text.owner.leave': 'fieldsets.text.observer.leave';
+  }),
+  fields: [
+    'leave_starts_at',
+    'leave_ends_at',
+    fileField('leave_file', 'professor', 'leave_file', {
+    }),
+  ],
+  layout: {
+    flex: [50, 50, 100]
+  }
+}
+
+const DISABLED_ACCOUNT_DETAILS = {
+  label: 'fieldsets.labels.account_disabled',
+  fields: [
+    'disabled_by',
+    field('disabled_at_format', {label: 'disabled_at.label'})
+  ]
+}
+
 const VALIDATORS = {
   cv_url: [validate.format({allowBlank: true, type:'url'})],
   institution: [validate.presence(true)],
@@ -221,5 +282,8 @@ export {
   FILES_FIELDSET,
   FIELDSET,
   FIELDSET_REGISTER,
-  VALIDATORS
+  VALIDATORS,
+  LEAVE_FIELDSET_DETAILS,
+  LEAVE_FIELDSET_EDIT,
+  DISABLED_ACCOUNT_DETAILS
 }
